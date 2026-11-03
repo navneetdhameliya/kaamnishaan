@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   shared:
-    name: Design tokens + translations in sync
+    name: Tokens, translations, API contract
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,6 +18,9 @@ jobs:
         with: { node-version: 22 }
       - run: node shared/design-tokens/build.mjs --check
       - run: node shared/i18n/build.mjs --check
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install pyyaml openapi-spec-validator && python shared/api/validate.py
 
   backend:
     name: Backend (ruff + pytest)
