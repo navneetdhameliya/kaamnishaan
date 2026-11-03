@@ -21,6 +21,7 @@ htmlcov/
 # node
 node_modules/
 dist/
+!shared/design-tokens/dist/
 .vite/
 coverage/
 # flutter / dart
