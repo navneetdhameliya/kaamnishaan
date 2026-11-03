@@ -13,8 +13,8 @@ jobs:
     name: Tokens, translations, API contract
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version: 22 }
       - run: node shared/design-tokens/build.mjs --check
       - run: node shared/i18n/build.mjs --check
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: backend } }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install -e ".[dev]"
@@ -41,8 +41,8 @@ jobs:
       matrix: { app: [web, admin] }
     defaults: { run: { working-directory: "${{ matrix.app }}" } }
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with: { node-version: 22, cache: npm, cache-dependency-path: "${{ matrix.app }}/package-lock.json" }
       - run: npm ci
       - run: npm run build
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: mobile } }
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: subosito/flutter-action@v2
         with: { channel: stable }
       - run: flutter pub get
