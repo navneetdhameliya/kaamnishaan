@@ -1,0 +1,4 @@
+@import '../../shared/design-tokens/dist/tokens.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
