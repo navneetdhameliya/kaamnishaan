@@ -1,0 +1,1235 @@
+openapi: 3.1.0
+info:
+  title: KaamNishaan API
+  version: 0.1.0-draft
+  description: |
+    Draft contract (Step 0) — change this file first, then the code.
+
+    Conventions
+    - Base path `/v1`. JSON everywhere. Times are ISO-8601 UTC; the app shows them in the company timezone (default Asia/Kolkata).
+    - Auth: `Authorization: Bearer <access JWT>` (15 min) + refresh token rotation.
+    - Tenancy: the company comes from the token, never from the request body.
+    - Offline-safe creates: send `Idempotency-Key` (UUID made on the device). Retrying with the same key returns the first result.
+    - Language: `Accept-Language` (en, hi, gu, es, fr) picks translated content and error messages.
+    - Lists: `?cursor=&limit=` → `{ "items": [...], "next_cursor": "..." }`.
+    - Errors: `{ "error": { "code": "evidence_locked", "message": "...", "details": {} } }`.
+    - All UI text that is content (plans, industries, pages, testimonials, strings) comes from `/v1/content/*` — apps hard-code nothing.
+servers:
+  - url: http://localhost:8000
+    description: local
+  - url: https://kaamnishaan-api.onrender.com
+    description: staging (Render, Singapore) — temporary address
+
+tags:
+  - { name: system }
+  - { name: auth }
+  - { name: me }
+  - { name: company }
+  - { name: team }
+  - { name: customers }
+  - { name: jobs }
+  - { name: evidence }
+  - { name: checklists }
+  - { name: reports }
+  - { name: reviews }
+  - { name: billing }
+  - { name: dashboard }
+  - { name: notifications }
+  - { name: public, description: "Customer-facing, no login. Secured by the share-link token." }
+  - { name: content, description: "Public website/app content served from the database." }
+  - { name: webhooks }
+  - { name: admin, description: "Super admin only (/v1/admin/*)." }
+
+security:
+  - bearer: []
+
+paths:
+  /v1/health:
+    get:
+      tags: [system]
+      security: []
+      summary: Health check
+      responses:
+        "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/Health" } } } }
+
+  # ---------------------------------------------------------------- auth
+  /v1/auth/otp/request:
+    post:
+      tags: [auth]
+      security: []
+      summary: Send a 4-digit login code by SMS (technicians, and managers who use phone)
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/OtpRequest" } } }
+      responses:
+        "202": { description: "Code sent", content: { application/json: { schema: { $ref: "#/components/schemas/OtpRequested" } } } }
+        "429": { $ref: "#/components/responses/RateLimited" }
+  /v1/auth/otp/verify:
+    post:
+      tags: [auth]
+      security: []
+      summary: Verify the code and sign in
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/OtpVerify" } } }
+      responses:
+        "200": { description: "Signed in", content: { application/json: { schema: { $ref: "#/components/schemas/Session" } } } }
+        "400": { $ref: "#/components/responses/Invalid" }
+  /v1/auth/login:
+    post:
+      tags: [auth]
+      security: []
+      summary: Email + password sign-in (managers and owners)
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/EmailLogin" } } }
+      responses:
+        "200": { description: "Signed in", content: { application/json: { schema: { $ref: "#/components/schemas/Session" } } } }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+  /v1/auth/signup:
+    post:
+      tags: [auth]
+      security: []
+      summary: Owner sign-up step 1 (M07) — sends email verification (M09)
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/OwnerSignup" } } }
+      responses:
+        "201": { description: "Account created, verification email sent", content: { application/json: { schema: { $ref: "#/components/schemas/Session" } } } }
+        "409": { $ref: "#/components/responses/Conflict" }
+  /v1/auth/email/verify:
+    post:
+      tags: [auth]
+      security: []
+      summary: Confirm email from the link (M09). Expired → 410 (M09 link expired)
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [token], properties: { token: { type: string } } } } }
+      responses:
+        "204": { description: "Verified" }
+        "410": { $ref: "#/components/responses/Gone" }
+  /v1/auth/email/resend:
+    post:
+      tags: [auth]
+      summary: Resend the verification email
+      responses: { "202": { description: "Sent" }, "429": { $ref: "#/components/responses/RateLimited" } }
+  /v1/auth/password/forgot:
+    post:
+      tags: [auth]
+      security: []
+      summary: Send a password reset email (M08). Always 202 so emails can't be probed
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [email], properties: { email: { type: string, format: email } } } } }
+      responses: { "202": { description: "Sent if the account exists" } }
+  /v1/auth/password/reset:
+    post:
+      tags: [auth]
+      security: []
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [token, password], properties: { token: { type: string }, password: { type: string, minLength: 8 } } } } }
+      responses: { "204": { description: "Password changed" }, "410": { $ref: "#/components/responses/Gone" } }
+  /v1/auth/refresh:
+    post:
+      tags: [auth]
+      security: []
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [refresh_token], properties: { refresh_token: { type: string } } } } }
+      responses:
+        "200": { description: "New tokens", content: { application/json: { schema: { $ref: "#/components/schemas/Session" } } } }
+        "401": { $ref: "#/components/responses/Unauthorized" }
+  /v1/auth/logout:
+    post:
+      tags: [auth]
+      summary: Revoke this device's session (M37 log out; app warns first if items are waiting to send)
+      responses: { "204": { description: "Logged out" } }
+
+  # ---------------------------------------------------------------- me
+  /v1/me:
+    get:
+      tags: [me]
+      summary: Current user, membership, company and permissions
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/Me" } } } } }
+    patch:
+      tags: [me]
+      summary: Update name, avatar, app language (M11, M38)
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/MeUpdate" } } }
+      responses: { "200": { description: "Updated", content: { application/json: { schema: { $ref: "#/components/schemas/Me" } } } } }
+  /v1/me/devices:
+    post:
+      tags: [me]
+      summary: Register a push token
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/DeviceRegister" } } }
+      responses: { "204": { description: "Registered" } }
+  /v1/me/reviews:
+    get:
+      tags: [reviews]
+      summary: Technician's own reviews and rating summary (M44)
+      parameters: [{ $ref: "#/components/parameters/Cursor" }, { $ref: "#/components/parameters/Limit" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/MyReviews" } } } } }
+
+  # ---------------------------------------------------------------- company & team
+  /v1/companies:
+    post:
+      tags: [company]
+      summary: Owner sign-up step 2 — create the company (M07 company setup). Starts the 14-day Professional trial
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/CompanyCreate" } } }
+      responses: { "201": { description: "Created", content: { application/json: { schema: { $ref: "#/components/schemas/Company" } } } } }
+  /v1/company:
+    get:
+      tags: [company]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/Company" } } } } }
+    patch:
+      tags: [company]
+      summary: Company settings (M39) — owner only
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/CompanyUpdate" } } }
+      responses: { "200": { description: "Updated", content: { application/json: { schema: { $ref: "#/components/schemas/Company" } } } }, "403": { $ref: "#/components/responses/Forbidden" } }
+  /v1/company/review-settings:
+    get:
+      tags: [reviews]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/ReviewSettings" } } } } }
+    put:
+      tags: [reviews]
+      summary: Review follow-up timeline and switches (M46)
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/ReviewSettings" } } }
+      responses: { "200": { description: "Saved", content: { application/json: { schema: { $ref: "#/components/schemas/ReviewSettings" } } } } }
+  /v1/team:
+    get:
+      tags: [team]
+      summary: Team list with roles, status, jobs today (M40, M17 assign)
+      parameters:
+        - { name: role, in: query, schema: { $ref: "#/components/schemas/Role" } }
+      responses: { "200": { description: "OK", content: { application/json: { schema: { type: object, properties: { items: { type: array, items: { $ref: "#/components/schemas/Member" } } } } } } } }
+  /v1/team/invitations:
+    post:
+      tags: [team]
+      summary: Invite by phone (M40). Counts against the plan's technician limit
+      parameters: [{ $ref: "#/components/parameters/IdempotencyKey" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/InvitationCreate" } } }
+      responses:
+        "201": { description: "Invite sent", content: { application/json: { schema: { $ref: "#/components/schemas/Member" } } } }
+        "402": { $ref: "#/components/responses/PlanLimit" }
+  /v1/team/invitations/{id}/resend:
+    post:
+      tags: [team]
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "202": { description: "Sent" } }
+  /v1/team/members/{id}:
+    patch:
+      tags: [team]
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, properties: { role: { $ref: "#/components/schemas/Role" }, status: { type: string, enum: [active, removed] } } } } }
+      responses: { "200": { description: "Updated", content: { application/json: { schema: { $ref: "#/components/schemas/Member" } } } } }
+  /v1/invitations/{token}:
+    get:
+      tags: [team]
+      security: []
+      summary: Invite preview for M10 (company, inviter)
+      parameters: [{ name: token, in: path, required: true, schema: { type: string } }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/InvitationPreview" } } } }, "410": { $ref: "#/components/responses/Gone" } }
+  /v1/invitations/{token}/accept:
+    post:
+      tags: [team]
+      summary: Join the company (M10). Requires a phone-OTP session for the invited number
+      parameters: [{ name: token, in: path, required: true, schema: { type: string } }]
+      responses: { "200": { description: "Joined", content: { application/json: { schema: { $ref: "#/components/schemas/Me" } } } } }
+
+  # ---------------------------------------------------------------- customers
+  /v1/customers:
+    get:
+      tags: [customers]
+      parameters: [{ $ref: "#/components/parameters/Q" }, { $ref: "#/components/parameters/Cursor" }, { $ref: "#/components/parameters/Limit" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/CustomerPage" } } } } }
+    post:
+      tags: [customers]
+      parameters: [{ $ref: "#/components/parameters/IdempotencyKey" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/CustomerCreate" } } }
+      responses: { "201": { description: "Created", content: { application/json: { schema: { $ref: "#/components/schemas/Customer" } } } } }
+  /v1/customers/{id}:
+    get:
+      tags: [customers]
+      summary: Customer details with sites and past jobs (M18)
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/CustomerDetail" } } } } }
+    patch:
+      tags: [customers]
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/CustomerCreate" } } }
+      responses: { "200": { description: "Updated", content: { application/json: { schema: { $ref: "#/components/schemas/Customer" } } } } }
+
+  # ---------------------------------------------------------------- jobs
+  /v1/jobs:
+    get:
+      tags: [jobs]
+      summary: Job list (M14) — technicians only see their own jobs
+      parameters:
+        - { name: status, in: query, schema: { type: array, items: { $ref: "#/components/schemas/JobStatus" } }, style: form, explode: false }
+        - { name: assignee, in: query, schema: { type: string, format: uuid } }
+        - { name: date, in: query, schema: { type: string, format: date }, description: "Company-local date" }
+        - { $ref: "#/components/parameters/Q" }
+        - { $ref: "#/components/parameters/Cursor" }
+        - { $ref: "#/components/parameters/Limit" }
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/JobPage" } } } } }
+    post:
+      tags: [jobs]
+      summary: Create a job (M16), or a technician quick job
+      parameters: [{ $ref: "#/components/parameters/IdempotencyKey" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/JobCreate" } } }
+      responses:
+        "201": { description: "Created", content: { application/json: { schema: { $ref: "#/components/schemas/Job" } } } }
+        "422": { $ref: "#/components/responses/Validation" }
+  /v1/jobs/today:
+    get:
+      tags: [jobs]
+      summary: Technician home (M12) — today's jobs, the "Now" job, counts
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/Today" } } } } }
+  /v1/jobs/{id}:
+    get:
+      tags: [jobs]
+      summary: Job details (M15 / A12) incl. capture progress and review status
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/JobDetail" } } } }, "404": { $ref: "#/components/responses/NotFound" } }
+    patch:
+      tags: [jobs]
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/JobUpdate" } } }
+      responses: { "200": { description: "Updated", content: { application/json: { schema: { $ref: "#/components/schemas/Job" } } } } }
+  /v1/jobs/{id}/assign:
+    post:
+      tags: [jobs]
+      summary: Assign technician (M17)
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [technician_id], properties: { technician_id: { type: string, format: uuid } } } } }
+      responses: { "200": { description: "Assigned", content: { application/json: { schema: { $ref: "#/components/schemas/Job" } } } } }
+  /v1/jobs/{id}/transitions:
+    post:
+      tags: [jobs]
+      summary: Move the job through its status machine (accept, start, cancel). Invalid moves → 409
+      parameters: [{ $ref: "#/components/parameters/Id" }, { $ref: "#/components/parameters/IdempotencyKey" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/JobTransition" } } }
+      responses: { "200": { description: "Moved", content: { application/json: { schema: { $ref: "#/components/schemas/Job" } } } }, "409": { $ref: "#/components/responses/Conflict" } }
+  /v1/jobs/{id}/timeline:
+    get:
+      tags: [jobs]
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { type: object, properties: { items: { type: array, items: { $ref: "#/components/schemas/JobEvent" } } } } } } } }
+
+  # ---------------------------------------------------------------- evidence
+  /v1/jobs/{id}/evidence:
+    get:
+      tags: [evidence]
+      summary: Photos, voice notes, signatures for a job (M19–M23, M28)
+      parameters: [{ $ref: "#/components/parameters/Id" }, { name: stage, in: query, schema: { $ref: "#/components/schemas/Stage" } }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { type: object, properties: { items: { type: array, items: { $ref: "#/components/schemas/Evidence" } } } } } } } }
+    post:
+      tags: [evidence]
+      summary: Step 1 of upload — register the file and get a presigned R2 URL. Works for items captured offline (send device time + GPS)
+      parameters: [{ $ref: "#/components/parameters/Id" }, { $ref: "#/components/parameters/IdempotencyKey" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/EvidenceCreate" } } }
+      responses:
+        "201": { description: "Registered", content: { application/json: { schema: { $ref: "#/components/schemas/EvidenceUpload" } } } }
+        "409": { $ref: "#/components/responses/Conflict" }
+  /v1/evidence/{id}/complete:
+    post:
+      tags: [evidence]
+      summary: Step 2 — confirm the upload finished. Server checks size + sha256, then runs transcription / photo checks
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "200": { description: "Stored", content: { application/json: { schema: { $ref: "#/components/schemas/Evidence" } } } }, "422": { $ref: "#/components/responses/Validation" } }
+  /v1/evidence/{id}:
+    patch:
+      tags: [evidence]
+      summary: Add a note or change stage. Locked evidence → 409 evidence_locked (M23)
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, properties: { note: { type: string, maxLength: 500 }, stage: { $ref: "#/components/schemas/Stage" } } } } }
+      responses: { "200": { description: "Updated", content: { application/json: { schema: { $ref: "#/components/schemas/Evidence" } } } }, "409": { $ref: "#/components/responses/Conflict" } }
+    delete:
+      tags: [evidence]
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "204": { description: "Deleted" }, "409": { $ref: "#/components/responses/Conflict" } }
+  /v1/evidence/{id}/transcript:
+    get:
+      tags: [evidence]
+      summary: Voice note transcript (M29)
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/Transcript" } } } } }
+    patch:
+      tags: [evidence]
+      summary: Correct the transcript text. The recording itself is always kept
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [text], properties: { text: { type: string } } } } }
+      responses: { "200": { description: "Saved", content: { application/json: { schema: { $ref: "#/components/schemas/Transcript" } } } } }
+
+  # ---------------------------------------------------------------- checklists
+  /v1/checklist-templates:
+    get:
+      tags: [checklists]
+      summary: Global + company templates
+      responses: { "200": { description: "OK", content: { application/json: { schema: { type: object, properties: { items: { type: array, items: { $ref: "#/components/schemas/ChecklistTemplate" } } } } } } } }
+    post:
+      tags: [checklists]
+      summary: Create a company template (M26 builder, v1.1)
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/ChecklistTemplateInput" } } }
+      responses: { "201": { description: "Created", content: { application/json: { schema: { $ref: "#/components/schemas/ChecklistTemplate" } } } } }
+  /v1/checklist-templates/{id}:
+    put:
+      tags: [checklists]
+      summary: Save template — published templates get a new version
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/ChecklistTemplateInput" } } }
+      responses: { "200": { description: "Saved", content: { application/json: { schema: { $ref: "#/components/schemas/ChecklistTemplate" } } } } }
+  /v1/jobs/{id}/checklists:
+    get:
+      tags: [checklists]
+      summary: Checklists on this job with answers and progress (M24)
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { type: object, properties: { items: { type: array, items: { $ref: "#/components/schemas/JobChecklist" } } } } } } } }
+  /v1/jobs/{id}/checklists/{checklistId}/answers/{questionId}:
+    put:
+      tags: [checklists]
+      summary: Answer a question (M25). Photo-required answers without evidence → 422 photo_required
+      parameters:
+        - { $ref: "#/components/parameters/Id" }
+        - { name: checklistId, in: path, required: true, schema: { type: string, format: uuid } }
+        - { name: questionId, in: path, required: true, schema: { type: string, format: uuid } }
+        - { $ref: "#/components/parameters/IdempotencyKey" }
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/AnswerInput" } } }
+      responses: { "200": { description: "Saved", content: { application/json: { schema: { $ref: "#/components/schemas/Answer" } } } }, "422": { $ref: "#/components/responses/Validation" } }
+
+  # ---------------------------------------------------------------- reports
+  /v1/jobs/{id}/report:
+    post:
+      tags: [reports]
+      summary: Make the AI report (M31). Async — poll GET /v1/reports/{id} or listen for a push
+      parameters: [{ $ref: "#/components/parameters/Id" }, { $ref: "#/components/parameters/IdempotencyKey" }]
+      responses:
+        "202": { description: "Generating", content: { application/json: { schema: { $ref: "#/components/schemas/Report" } } } }
+        "402": { $ref: "#/components/responses/PlanLimit" }
+        "422": { $ref: "#/components/responses/Validation" }
+  /v1/reports:
+    get:
+      tags: [reports]
+      summary: Reports list / manager review queue (M30)
+      parameters:
+        - { name: status, in: query, schema: { $ref: "#/components/schemas/ReportStatus" } }
+        - { $ref: "#/components/parameters/Cursor" }
+        - { $ref: "#/components/parameters/Limit" }
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/ReportPage" } } } } }
+  /v1/reports/{id}:
+    get:
+      tags: [reports]
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/Report" } } } } }
+    patch:
+      tags: [reports]
+      summary: Edit report sections (M32 technician editor, M33 manager edit). Creates a new version
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/ReportContent" } } }
+      responses: { "200": { description: "Saved", content: { application/json: { schema: { $ref: "#/components/schemas/Report" } } } }, "409": { $ref: "#/components/responses/Conflict" } }
+  /v1/reports/{id}/submit:
+    post:
+      tags: [reports]
+      summary: Technician sends to manager. Locks all evidence on the job
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "200": { description: "Pending review", content: { application/json: { schema: { $ref: "#/components/schemas/Report" } } } } }
+  /v1/reports/{id}/approve:
+    post:
+      tags: [reports]
+      summary: Manager approves (M33). Queued review requests start
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "200": { description: "Approved", content: { application/json: { schema: { $ref: "#/components/schemas/Report" } } } }, "403": { $ref: "#/components/responses/Forbidden" } }
+  /v1/reports/{id}/request-changes:
+    post:
+      tags: [reports]
+      summary: Ask for changes (M33 sheet). Job returns to in_progress; technician is notified
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/ChangeRequest" } } }
+      responses: { "200": { description: "Sent back", content: { application/json: { schema: { $ref: "#/components/schemas/Report" } } } } }
+  /v1/reports/{id}/pdf:
+    get:
+      tags: [reports]
+      summary: Short-lived download URL for the PDF (M34)
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/SignedUrl" } } } }, "202": { description: "PDF still building" } }
+  /v1/reports/{id}/share:
+    post:
+      tags: [reports]
+      summary: Share with the customer (M35). Only approved reports. Optionally starts the review request
+      parameters: [{ $ref: "#/components/parameters/Id" }, { $ref: "#/components/parameters/IdempotencyKey" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/ShareCreate" } } }
+      responses:
+        "201": { description: "Shared", content: { application/json: { schema: { $ref: "#/components/schemas/Share" } } } }
+        "409": { $ref: "#/components/responses/Conflict" }
+  /v1/share-links/{id}:
+    delete:
+      tags: [reports]
+      summary: Turn off a link (M35)
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "204": { description: "Revoked" } }
+
+  # ---------------------------------------------------------------- reviews
+  /v1/jobs/{id}/review-request:
+    get:
+      tags: [reviews]
+      summary: Review status for the job — drives the Request review button (M15 states)
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/ReviewStatus" } } } } }
+    post:
+      tags: [reviews]
+      summary: Ask the customer for a review (technician or manager). 409 if already rated, opted out, or a request exists
+      parameters: [{ $ref: "#/components/parameters/Id" }, { $ref: "#/components/parameters/IdempotencyKey" }]
+      responses:
+        "201": { description: "Requested (queued until approval if needed)", content: { application/json: { schema: { $ref: "#/components/schemas/ReviewStatus" } } } }
+        "403": { $ref: "#/components/responses/Forbidden" }
+        "409": { $ref: "#/components/responses/Conflict" }
+    delete:
+      tags: [reviews]
+      summary: Cancel a queued request (before it is sent)
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "204": { description: "Cancelled" } }
+  /v1/review-requests:
+    get:
+      tags: [reviews]
+      summary: Where each job's rating stands (M45 requests, delivery problems)
+      parameters:
+        - { name: state, in: query, schema: { type: string, enum: [waiting, rated, opted_out, problems] } }
+        - { $ref: "#/components/parameters/Cursor" }
+        - { $ref: "#/components/parameters/Limit" }
+      responses: { "200": { description: "OK", content: { application/json: { schema: { type: object, properties: { items: { type: array, items: { $ref: "#/components/schemas/ReviewStatus" } }, next_cursor: { type: [string, "null"] } } } } } } }
+  /v1/review-requests/{id}/resend:
+    post:
+      tags: [reviews]
+      summary: Send the link again (uses 1 credit) — e.g. after fixing a number
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      requestBody:
+        content: { application/json: { schema: { type: object, properties: { channel: { $ref: "#/components/schemas/Channel" }, phone: { type: string }, email: { type: string, format: email } } } } }
+      responses: { "202": { description: "Sent" }, "402": { $ref: "#/components/responses/PlanLimit" } }
+  /v1/reviews:
+    get:
+      tags: [reviews]
+      summary: Company reviews with summary (M45)
+      parameters:
+        - { name: filter, in: query, schema: { type: string, enum: [all, needs_reply, low] } }
+        - { name: technician, in: query, schema: { type: string, format: uuid } }
+        - { $ref: "#/components/parameters/Cursor" }
+        - { $ref: "#/components/parameters/Limit" }
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/ReviewPage" } } } } }
+  /v1/reviews/{id}:
+    get:
+      tags: [reviews]
+      summary: Review detail incl. AI call recording + transcript when source = ai_call
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/Review" } } } } }
+  /v1/reviews/{id}/replies:
+    post:
+      tags: [reviews]
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [body], properties: { body: { type: string, maxLength: 1000 } } } } }
+      responses: { "201": { description: "Replied", content: { application/json: { schema: { $ref: "#/components/schemas/Review" } } } } }
+  /v1/reviews/{id}/visibility:
+    put:
+      tags: [reviews]
+      summary: Hide from / show on the company page. Nobody can edit or delete a customer's words
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [hidden], properties: { hidden: { type: boolean } } } } }
+      responses: { "200": { description: "Saved", content: { application/json: { schema: { $ref: "#/components/schemas/Review" } } } } }
+  /v1/reviews/{id}/follow-up:
+    patch:
+      tags: [reviews]
+      summary: Low-rating case note / resolve (M45 low rating)
+      parameters: [{ $ref: "#/components/parameters/Id" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, properties: { note: { type: string }, resolved: { type: boolean } } } } }
+      responses: { "200": { description: "Saved", content: { application/json: { schema: { $ref: "#/components/schemas/Review" } } } } }
+
+  # ---------------------------------------------------------------- dashboard, notifications
+  /v1/dashboard:
+    get:
+      tags: [dashboard]
+      summary: Manager home (M13) — KPIs, to-review list, team now, rating widget, get-started checklist
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/Dashboard" } } } } }
+  /v1/notifications:
+    get:
+      tags: [notifications]
+      parameters: [{ $ref: "#/components/parameters/Cursor" }, { $ref: "#/components/parameters/Limit" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { type: object, properties: { items: { type: array, items: { $ref: "#/components/schemas/Notification" } }, unread: { type: integer }, next_cursor: { type: [string, "null"] } } } } } } }
+  /v1/notifications/read:
+    post:
+      tags: [notifications]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, properties: { ids: { type: array, items: { type: string, format: uuid } }, all: { type: boolean } } } } }
+      responses: { "204": { description: "Marked read" } }
+
+  # ---------------------------------------------------------------- billing
+  /v1/billing:
+    get:
+      tags: [billing]
+      summary: Plan, usage, credits (M41) — owner only
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/Billing" } } } } }
+  /v1/billing/checkout:
+    post:
+      tags: [billing]
+      summary: Start a plan change or credit top-up. Returns a Razorpay order for the app/web checkout
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/CheckoutCreate" } } }
+      responses: { "201": { description: "Order created", content: { application/json: { schema: { $ref: "#/components/schemas/Checkout" } } } } }
+  /v1/billing/auto-top-up:
+    put:
+      tags: [billing]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [enabled], properties: { enabled: { type: boolean }, pack_id: { type: string, format: uuid }, below: { type: integer, minimum: 0 } } } } }
+      responses: { "204": { description: "Saved" } }
+  /v1/billing/invoices:
+    get:
+      tags: [billing]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { type: object, properties: { items: { type: array, items: { $ref: "#/components/schemas/Invoice" } } } } } } } }
+
+  # ---------------------------------------------------------------- public (customer, no login)
+  /v1/public/reports/{token}:
+    get:
+      tags: [public]
+      security: []
+      summary: Customer report page (W29). Expired/revoked → 410 (W29 link expired)
+      parameters: [{ $ref: "#/components/parameters/Token" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/PublicReport" } } } }, "410": { $ref: "#/components/responses/Gone" } }
+  /v1/public/reports/{token}/review:
+    put:
+      tags: [public]
+      security: []
+      summary: Submit or edit (within 24 h) the customer's review. Stops all follow-ups
+      parameters: [{ $ref: "#/components/parameters/Token" }]
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/PublicReviewInput" } } }
+      responses:
+        "200": { description: "Saved", content: { application/json: { schema: { $ref: "#/components/schemas/PublicReviewSaved" } } } }
+        "410": { $ref: "#/components/responses/Gone" }
+        "422": { $ref: "#/components/responses/Validation" }
+  /v1/public/reports/{token}/new-link:
+    post:
+      tags: [public]
+      security: []
+      summary: Customer asks for a fresh link from the expired page
+      parameters: [{ $ref: "#/components/parameters/Token" }]
+      responses: { "202": { description: "Sent to the number/email on file" } }
+  /v1/public/opt-out:
+    post:
+      tags: [public]
+      security: []
+      summary: Stop review messages and calls ("Don't ask again", email footer link)
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [token], properties: { token: { type: string }, scope: { type: string, enum: [reviews, all], default: reviews } } } } }
+      responses: { "204": { description: "Opted out" } }
+
+  # ---------------------------------------------------------------- content (public)
+  /v1/content/pages/{slug}:
+    get:
+      tags: [content]
+      security: []
+      summary: Website page blocks (home, pricing, features/*, industries/*, about, contact, legal/*)
+      parameters: [{ name: slug, in: path, required: true, schema: { type: string } }, { $ref: "#/components/parameters/Locale" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/ContentPage" } } } }, "404": { $ref: "#/components/responses/NotFound" } }
+  /v1/content/plans:
+    get:
+      tags: [content]
+      security: []
+      summary: Public plans and credit packs (website pricing, M41, upgrade screens)
+      parameters: [{ $ref: "#/components/parameters/Locale" }, { name: currency, in: query, schema: { type: string, enum: [INR, USD], default: INR } }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { $ref: "#/components/schemas/PublicPlans" } } } } }
+  /v1/content/industries:
+    get:
+      tags: [content]
+      security: []
+      parameters: [{ $ref: "#/components/parameters/Locale" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { type: object, properties: { items: { type: array, items: { $ref: "#/components/schemas/Industry" } } } } } } } }
+  /v1/content/testimonials:
+    get:
+      tags: [content]
+      security: []
+      parameters: [{ $ref: "#/components/parameters/Locale" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { type: object, properties: { items: { type: array, items: { $ref: "#/components/schemas/Testimonial" } } } } } } } }
+  /v1/content/blog:
+    get:
+      tags: [content]
+      security: []
+      parameters: [{ $ref: "#/components/parameters/Locale" }, { $ref: "#/components/parameters/Cursor" }, { $ref: "#/components/parameters/Limit" }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { type: object, properties: { items: { type: array, items: { $ref: "#/components/schemas/BlogPost" } }, next_cursor: { type: [string, "null"] } } } } } } }
+  /v1/content/strings:
+    get:
+      tags: [content]
+      security: []
+      summary: App string overrides changed since a version (A25). Apps ship bundled strings and merge these
+      parameters: [{ $ref: "#/components/parameters/Locale" }, { name: since, in: query, schema: { type: integer } }]
+      responses: { "200": { description: "OK", content: { application/json: { schema: { type: object, properties: { version: { type: integer }, strings: { type: object, additionalProperties: { type: string } } } } } } } }
+  /v1/content/demo-requests:
+    post:
+      tags: [content]
+      security: []
+      summary: Website "Book a demo"
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/DemoRequest" } } }
+      responses: { "202": { description: "Received" }, "429": { $ref: "#/components/responses/RateLimited" } }
+
+  # ---------------------------------------------------------------- webhooks (provider → us, signature-verified)
+  /v1/webhooks/razorpay:
+    post: { tags: [webhooks], security: [], summary: "Payments and subscriptions", responses: { "204": { description: "OK" }, "401": { $ref: "#/components/responses/Unauthorized" } } }
+  /v1/webhooks/sms:
+    post: { tags: [webhooks], security: [], summary: "SMS delivery reports and replies (1–5 ratings, STOP)", responses: { "204": { description: "OK" } } }
+  /v1/webhooks/whatsapp:
+    post: { tags: [webhooks], security: [], summary: "WhatsApp delivery, quick-reply buttons, STOP", responses: { "204": { description: "OK" } } }
+  /v1/webhooks/email:
+    post: { tags: [webhooks], security: [], summary: "Bounces and complaints", responses: { "204": { description: "OK" } } }
+  /v1/webhooks/voice:
+    post: { tags: [webhooks], security: [], summary: "AI review call events, outcome, recording, transcript", responses: { "204": { description: "OK" } } }
+
+  # ---------------------------------------------------------------- admin (super admin)
+  /v1/admin/auth/login:
+    post:
+      tags: [admin]
+      security: []
+      summary: Admin sign-in (A01). Two-step verification is required
+      requestBody:
+        required: true
+        content: { application/json: { schema: { $ref: "#/components/schemas/EmailLogin" } } }
+      responses: { "200": { description: "Signed in", content: { application/json: { schema: { $ref: "#/components/schemas/Session" } } } } }
+  /v1/admin/dashboard:
+    get: { tags: [admin], summary: "A03 KPIs, plan mix, needs attention", responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/companies:
+    get: { tags: [admin], summary: "A04 list", parameters: [{ $ref: "#/components/parameters/Q" }, { $ref: "#/components/parameters/Cursor" }], responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+    post: { tags: [admin], summary: "A06 create company", responses: { "201": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/companies/{id}:
+    get: { tags: [admin], summary: "A05 details", parameters: [{ $ref: "#/components/parameters/Id" }], responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+    patch: { tags: [admin], summary: "A07 edit / suspend", parameters: [{ $ref: "#/components/parameters/Id" }], responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/users:
+    get: { tags: [admin], summary: "A08", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+  /v1/admin/users/{id}:
+    get: { tags: [admin], summary: "A09", parameters: [{ $ref: "#/components/parameters/Id" }], responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/jobs:
+    get: { tags: [admin], summary: "A11", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+  /v1/admin/reports:
+    get: { tags: [admin], summary: "A14", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+  /v1/admin/plans:
+    get: { tags: [admin], summary: "A17", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+    put: { tags: [admin], summary: "A17 publish plan changes (new sign-ups only)", responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/subscriptions:
+    get: { tags: [admin], summary: "A16", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+  /v1/admin/payments:
+    get: { tags: [admin], summary: "A18", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+  /v1/admin/usage:
+    get: { tags: [admin], summary: "A40 credits used per company, provider cost", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+  /v1/admin/companies/{id}/credits:
+    post: { tags: [admin], summary: "A40 manual credit adjustment (audited)", parameters: [{ $ref: "#/components/parameters/Id" }], responses: { "201": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/ai/usage:
+    get: { tags: [admin], summary: "A20 AI usage and cost", responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/ai/config:
+    get: { tags: [admin], summary: "A19", responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+    put: { tags: [admin], summary: "A19", responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/ai/prompts:
+    get: { tags: [admin], summary: "A21", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+    post: { tags: [admin], summary: "A21 new version", responses: { "201": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/ai/prompts/{id}/publish:
+    post: { tags: [admin], summary: "A21 make live", parameters: [{ $ref: "#/components/parameters/Id" }], responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/ai-calls:
+    get: { tags: [admin], summary: "A38 call log", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+  /v1/admin/ai-calls/config:
+    put: { tags: [admin], summary: "A38 voice, hours, attempts (disclosure + DND check cannot be turned off)", responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/message-templates:
+    get: { tags: [admin], summary: "A39", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+    put: { tags: [admin], summary: "A39 publish (STOP line and DLT template id required for SMS)", responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/reviews:
+    get: { tags: [admin], summary: "A37 moderation queue", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+  /v1/admin/reviews/{id}/moderate:
+    post: { tags: [admin], summary: "A37 publish with edit (redact personal data only) / hide / ask company", parameters: [{ $ref: "#/components/parameters/Id" }], responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/checklist-templates:
+    get: { tags: [admin], summary: "A23 global templates", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+  /v1/admin/industries:
+    get: { tags: [admin], summary: "A22", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+  /v1/admin/content/pages/{slug}:
+    put: { tags: [admin], summary: "A24 save draft / publish", parameters: [{ name: slug, in: path, required: true, schema: { type: string } }], responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/content/strings:
+    put: { tags: [admin], summary: "A25 localized strings", responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/blog:
+    get: { tags: [admin], summary: "A26", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+  /v1/admin/testimonials:
+    get: { tags: [admin], summary: "A27", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+  /v1/admin/support-tickets:
+    get: { tags: [admin], summary: "A28", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+  /v1/admin/notifications:
+    get: { tags: [admin], summary: "A29 rules and announcements", responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/analytics:
+    get: { tags: [admin], summary: "A30", responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+  /v1/admin/audit-logs:
+    get: { tags: [admin], summary: "A31 (read-only)", responses: { "200": { $ref: "#/components/responses/AdminList" } } }
+  /v1/admin/settings/{area}:
+    get: { tags: [admin], summary: "A32 platform, A33 email, A34 storage, A35 localization", parameters: [{ name: area, in: path, required: true, schema: { type: string, enum: [platform, email, storage, localization] } }], responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+    put: { tags: [admin], parameters: [{ name: area, in: path, required: true, schema: { type: string, enum: [platform, email, storage, localization] } }], responses: { "200": { $ref: "#/components/responses/AdminObject" } } }
+
+components:
+  securitySchemes:
+    bearer: { type: http, scheme: bearer, bearerFormat: JWT }
+
+  parameters:
+    Id: { name: id, in: path, required: true, schema: { type: string, format: uuid } }
+    Token: { name: token, in: path, required: true, schema: { type: string }, description: "Share-link token (only its hash is stored)" }
+    Cursor: { name: cursor, in: query, schema: { type: string } }
+    Limit: { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 100, default: 20 } }
+    Q: { name: q, in: query, schema: { type: string }, description: "Search text" }
+    Locale: { name: locale, in: query, schema: { $ref: "#/components/schemas/Locale" } }
+    IdempotencyKey: { name: Idempotency-Key, in: header, required: false, schema: { type: string, format: uuid }, description: "Device-generated; makes offline retries safe" }
+
+  responses:
+    Invalid: { description: "Bad request", content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+    Unauthorized: { description: "Not signed in or token expired", content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+    Forbidden: { description: "Role not allowed (e.g. technician approving)", content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+    NotFound: { description: "Not found (or not in your company)", content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+    Conflict: { description: "State conflict — codes: evidence_locked, invalid_transition, review_exists, customer_opted_out, request_exists, report_not_approved", content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+    Gone: { description: "Link or code expired", content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+    Validation: { description: "Field errors — e.g. photo_required, missing_after_photo", content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+    PlanLimit: { description: "Plan or credit limit reached — codes: report_limit, technician_limit, out_of_credits (M41 limit screens)", content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+    RateLimited: { description: "Too many attempts", content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+    AdminObject: { description: "OK", content: { application/json: { schema: { type: object, additionalProperties: true } } } }
+    AdminList: { description: "OK", content: { application/json: { schema: { type: object, properties: { items: { type: array, items: { type: object, additionalProperties: true } }, next_cursor: { type: [string, "null"] } } } } } }
+
+  schemas:
+    # -------- primitives
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string, examples: [evidence_locked] }
+            message: { type: string, description: "Translated per Accept-Language" }
+            details: { type: object, additionalProperties: true }
+    Health: { type: object, required: [status, env, version], properties: { status: { type: string }, env: { type: string }, version: { type: string } } }
+    Locale: { type: string, enum: [en, hi, gu, es, fr] }
+    Role: { type: string, enum: [owner, manager, technician] }
+    Stage: { type: string, enum: [before, during, after] }
+    Channel: { type: string, enum: [whatsapp, sms, email] }
+    Money: { type: object, required: [amount_minor, currency], properties: { amount_minor: { type: integer }, currency: { type: string, enum: [INR, USD] } } }
+    Localized: { type: object, description: "Per-locale text", additionalProperties: { type: string }, examples: [{ en: "Is the air filter clean?", hi: "क्या एयर फ़िल्टर साफ़ है?" }] }
+    SignedUrl: { type: object, required: [url, expires_at], properties: { url: { type: string, format: uri }, expires_at: { type: string, format: date-time } } }
+    PersonRef: { type: object, required: [id, name], properties: { id: { type: string, format: uuid }, name: { type: string }, avatar_url: { type: [string, "null"], format: uri } } }
+
+    # -------- auth
+    OtpRequest: { type: object, required: [phone], properties: { phone: { type: string, description: "E.164, examples: ['+919876543210']" }, purpose: { type: string, enum: [login, verify_phone], default: login } } }
+    OtpRequested: { type: object, required: [challenge_id, resend_after_s], properties: { challenge_id: { type: string, format: uuid }, resend_after_s: { type: integer, examples: [45] } } }
+    OtpVerify: { type: object, required: [challenge_id, code], properties: { challenge_id: { type: string, format: uuid }, code: { type: string, pattern: "^[0-9]{4}$" }, device_id: { type: string } } }
+    EmailLogin: { type: object, required: [email, password], properties: { email: { type: string, format: email }, password: { type: string }, otp: { type: string, description: "Admin two-step code" } } }
+    OwnerSignup: { type: object, required: [name, email, password], properties: { name: { type: string }, email: { type: string, format: email }, password: { type: string, minLength: 8 }, phone: { type: string }, accept_terms: { type: boolean, const: true } } }
+    Session:
+      type: object
+      required: [access_token, refresh_token, expires_in, user]
+      properties:
+        access_token: { type: string }
+        refresh_token: { type: string }
+        expires_in: { type: integer, examples: [900] }
+        user: { $ref: "#/components/schemas/Me" }
+        needs: { type: array, items: { type: string, enum: [profile, company, email_verification, join_company] }, description: "Onboarding steps still to do" }
+
+    # -------- me / company / team
+    Me:
+      type: object
+      required: [id, name, app_language]
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        phone: { type: [string, "null"] }
+        email: { type: [string, "null"] }
+        avatar_url: { type: [string, "null"], format: uri }
+        app_language: { $ref: "#/components/schemas/Locale" }
+        role: { oneOf: [{ $ref: "#/components/schemas/Role" }, { type: "null" }] }
+        company: { oneOf: [{ $ref: "#/components/schemas/Company" }, { type: "null" }] }
+        permissions: { type: array, items: { type: string }, examples: [["jobs.create", "reports.approve", "reports.share", "reviews.request"]] }
+    MeUpdate: { type: object, properties: { name: { type: string }, app_language: { $ref: "#/components/schemas/Locale" }, avatar_evidence_upload: { type: boolean, description: "If true, response includes a presigned avatar upload URL" } } }
+    DeviceRegister: { type: object, required: [push_token, platform], properties: { push_token: { type: string }, platform: { type: string, enum: [android, ios, macos, web] }, app_version: { type: string } } }
+    Company:
+      type: object
+      required: [id, name, country, timezone, status]
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        industry: { type: [string, "null"], examples: [hvac] }
+        country: { type: string, examples: [IN] }
+        timezone: { type: string, examples: [Asia/Kolkata] }
+        report_language: { $ref: "#/components/schemas/Locale" }
+        logo_url: { type: [string, "null"], format: uri }
+        status: { type: string, enum: [trial, active, past_due, suspended, cancelled] }
+        trial_ends_at: { type: [string, "null"], format: date-time }
+        settings: { type: object, properties: { technicians_can_share: { type: boolean }, technicians_can_request_reviews: { type: boolean } } }
+    CompanyCreate: { type: object, required: [name, industry, country], properties: { name: { type: string }, industry: { type: string }, country: { type: string, default: IN }, timezone: { type: string, default: Asia/Kolkata } } }
+    CompanyUpdate: { type: object, properties: { name: { type: string }, industry: { type: string }, report_language: { $ref: "#/components/schemas/Locale" }, settings: { type: object, additionalProperties: true } } }
+    Member:
+      type: object
+      required: [id, name, role, status]
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string }
+        phone: { type: [string, "null"] }
+        avatar_url: { type: [string, "null"], format: uri }
+        role: { $ref: "#/components/schemas/Role" }
+        status: { type: string, enum: [invited, active, removed] }
+        live_status: { type: [string, "null"], enum: [on_job, driving, idle, offline, null] }
+        jobs_today: { type: integer }
+    InvitationCreate: { type: object, required: [phone, name, role], properties: { phone: { type: string }, name: { type: string }, role: { type: string, enum: [technician, manager] } } }
+    InvitationPreview: { type: object, required: [company_name, invited_by], properties: { company_name: { type: string }, company_logo_url: { type: [string, "null"], format: uri }, invited_by: { $ref: "#/components/schemas/PersonRef" }, role: { $ref: "#/components/schemas/Role" } } }
+
+    # -------- customers
+    Customer:
+      type: object
+      required: [id, name]
+      properties:
+        id: { type: string, format: uuid }
+        name: { type: string, examples: [Green Valley Clinic] }
+        contact_name: { type: [string, "null"] }
+        phone: { type: [string, "null"] }
+        email: { type: [string, "null"], format: email }
+        preferred_language: { $ref: "#/components/schemas/Locale" }
+        opted_out: { type: boolean }
+    CustomerCreate:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string }
+        contact_name: { type: string }
+        phone: { type: string }
+        email: { type: string, format: email }
+        preferred_language: { $ref: "#/components/schemas/Locale" }
+        site: { $ref: "#/components/schemas/SiteInput" }
+    SiteInput: { type: object, properties: { name: { type: string }, address_line: { type: string }, city: { type: string }, state: { type: string }, postal_code: { type: string }, lat: { type: number }, lng: { type: number } } }
+    Site: { allOf: [{ $ref: "#/components/schemas/SiteInput" }, { type: object, required: [id], properties: { id: { type: string, format: uuid } } }] }
+    CustomerDetail: { allOf: [{ $ref: "#/components/schemas/Customer" }, { type: object, properties: { sites: { type: array, items: { $ref: "#/components/schemas/Site" } }, recent_jobs: { type: array, items: { $ref: "#/components/schemas/Job" } } } }] }
+    CustomerPage: { type: object, properties: { items: { type: array, items: { $ref: "#/components/schemas/Customer" } }, next_cursor: { type: [string, "null"] } } }
+
+    # -------- jobs
+    JobStatus: { type: string, enum: [draft, assigned, accepted, in_progress, ai_draft, pending_review, completed, cancelled] }
+    Job:
+      type: object
+      required: [id, number, title, status]
+      properties:
+        id: { type: string, format: uuid }
+        number: { type: string, examples: [J-2231] }
+        title: { type: string, examples: [AC not cooling in room 2] }
+        status: { $ref: "#/components/schemas/JobStatus" }
+        customer: { $ref: "#/components/schemas/Customer" }
+        site: { $ref: "#/components/schemas/Site" }
+        scheduled_at: { type: [string, "null"], format: date-time }
+        assigned_to: { oneOf: [{ $ref: "#/components/schemas/PersonRef" }, { type: "null" }] }
+        is_quick_job: { type: boolean }
+        cover_photo_url: { type: [string, "null"], format: uri }
+        distance_km: { type: [number, "null"], description: "From the caller's last known location" }
+    JobCreate:
+      type: object
+      required: [title]
+      properties:
+        title: { type: string }
+        description: { type: string }
+        customer_id: { type: string, format: uuid }
+        customer: { $ref: "#/components/schemas/CustomerCreate" }
+        site_id: { type: string, format: uuid }
+        scheduled_at: { type: string, format: date-time }
+        checklist_template_ids: { type: array, items: { type: string, format: uuid } }
+        technician_id: { type: string, format: uuid }
+        is_quick_job: { type: boolean, default: false }
+    JobUpdate: { type: object, properties: { title: { type: string }, description: { type: string }, scheduled_at: { type: string, format: date-time }, site_id: { type: string, format: uuid } } }
+    JobTransition: { type: object, required: [action], properties: { action: { type: string, enum: [accept, start, cancel] }, reason: { type: string }, lat: { type: number }, lng: { type: number } } }
+    JobEvent: { type: object, required: [type, at], properties: { type: { type: string }, at: { type: string, format: date-time }, actor: { $ref: "#/components/schemas/PersonRef" }, data: { type: object, additionalProperties: true } } }
+    CaptureProgress:
+      type: object
+      properties:
+        photos: { type: object, properties: { before: { type: integer }, during: { type: integer }, after: { type: integer } } }
+        checklist_answered: { type: integer }
+        checklist_total: { type: integer }
+        voice_notes: { type: integer }
+        missing: { type: array, items: { type: string }, examples: [[after_photo]] }
+    JobDetail: { allOf: [{ $ref: "#/components/schemas/Job" }, { type: object, properties: { description: { type: string }, progress: { $ref: "#/components/schemas/CaptureProgress" }, report_id: { type: [string, "null"], format: uuid }, review: { $ref: "#/components/schemas/ReviewStatus" } } }] }
+    JobPage: { type: object, properties: { items: { type: array, items: { $ref: "#/components/schemas/Job" } }, next_cursor: { type: [string, "null"] } } }
+    Today:
+      type: object
+      properties:
+        date: { type: string, format: date }
+        counts: { type: object, properties: { total: { type: integer }, done: { type: integer }, waiting_to_send: { type: integer } } }
+        now: { oneOf: [{ $ref: "#/components/schemas/Job" }, { type: "null" }] }
+        items: { type: array, items: { $ref: "#/components/schemas/Job" } }
+
+    # -------- evidence
+    Evidence:
+      type: object
+      required: [id, kind, status]
+      properties:
+        id: { type: string, format: uuid }
+        kind: { type: string, enum: [photo, voice, signature] }
+        stage: { oneOf: [{ $ref: "#/components/schemas/Stage" }, { type: "null" }] }
+        status: { type: string, enum: [pending_upload, uploaded, processed, rejected] }
+        url: { type: [string, "null"], format: uri, description: "Short-lived signed URL" }
+        thumb_url: { type: [string, "null"], format: uri }
+        captured_at: { type: string, format: date-time }
+        captured_by: { $ref: "#/components/schemas/PersonRef" }
+        gps: { type: [object, "null"], properties: { lat: { type: number }, lng: { type: number }, accuracy_m: { type: number } } }
+        duration_ms: { type: [integer, "null"] }
+        note: { type: [string, "null"] }
+        locked: { type: boolean }
+        quality_flags: { type: array, items: { type: string, enum: [blurry, too_dark, duplicate] } }
+    EvidenceCreate:
+      type: object
+      required: [kind, mime, bytes, sha256, captured_at]
+      properties:
+        kind: { type: string, enum: [photo, voice, signature] }
+        stage: { $ref: "#/components/schemas/Stage" }
+        mime: { type: string, examples: [image/jpeg, audio/m4a] }
+        bytes: { type: integer, maximum: 12582912 }
+        sha256: { type: string }
+        captured_at: { type: string, format: date-time, description: "Device time when taken (may be hours before upload if offline)" }
+        lat: { type: number }
+        lng: { type: number }
+        gps_accuracy_m: { type: number }
+        duration_ms: { type: integer }
+        checklist_answer: { type: object, properties: { job_checklist_id: { type: string, format: uuid }, question_id: { type: string, format: uuid } } }
+    EvidenceUpload: { type: object, required: [evidence, upload_url, upload_expires_at], properties: { evidence: { $ref: "#/components/schemas/Evidence" }, upload_url: { type: string, format: uri }, upload_headers: { type: object, additionalProperties: { type: string } }, upload_expires_at: { type: string, format: date-time } } }
+    Transcript: { type: object, required: [status], properties: { status: { type: string, enum: [pending, done, failed] }, language_detected: { type: string, examples: [gu] }, text_original: { type: string }, text_report_language: { type: string }, edited: { type: boolean } } }
+
+    # -------- checklists
+    Question:
+      type: object
+      required: [id, position, type, prompt]
+      properties:
+        id: { type: string, format: uuid }
+        position: { type: integer }
+        type: { type: string, enum: [yes_no, pass_fail, number, photo, signature, text] }
+        prompt: { $ref: "#/components/schemas/Localized" }
+        unit: { type: [string, "null"], examples: [psi] }
+        photo_rule: { type: string, enum: [never, always, on_no, on_fail] }
+        reference_photo_url: { type: [string, "null"], format: uri }
+    ChecklistTemplate: { type: object, required: [id, name, version, questions], properties: { id: { type: string, format: uuid }, name: { $ref: "#/components/schemas/Localized" }, industry: { type: string }, version: { type: integer }, status: { type: string, enum: [draft, published, archived] }, is_global: { type: boolean }, translations_ready: { type: array, items: { $ref: "#/components/schemas/Locale" } }, questions: { type: array, items: { $ref: "#/components/schemas/Question" } } } }
+    ChecklistTemplateInput: { type: object, required: [name, questions], properties: { name: { $ref: "#/components/schemas/Localized" }, industry: { type: string }, publish: { type: boolean }, questions: { type: array, items: { type: object, required: [type, prompt], properties: { type: { type: string }, prompt: { $ref: "#/components/schemas/Localized" }, unit: { type: string }, photo_rule: { type: string } } } } } }
+    Answer: { type: object, required: [question_id], properties: { question_id: { type: string, format: uuid }, value: { description: "bool | number | string by question type" }, evidence_id: { type: [string, "null"], format: uuid }, answered_at: { type: string, format: date-time } } }
+    AnswerInput: { type: object, required: [value], properties: { value: {}, evidence_id: { type: string, format: uuid }, answered_at: { type: string, format: date-time } } }
+    JobChecklist: { type: object, required: [id, template], properties: { id: { type: string, format: uuid }, template: { $ref: "#/components/schemas/ChecklistTemplate" }, answers: { type: array, items: { $ref: "#/components/schemas/Answer" } }, answered: { type: integer }, total: { type: integer } } }
+
+    # -------- reports
+    ReportStatus: { type: string, enum: [generating, draft, pending_review, changes_requested, approved, failed] }
+    ReportContent: { type: object, properties: { summary: { type: string }, work_done: { type: string }, advice: { type: string } } }
+    AiCheck: { type: object, required: [code, ok], properties: { code: { type: string, examples: [all_sentences_linked, checklist_complete, missing_after_photo, no_invented_work] }, ok: { type: boolean }, message: { type: string } } }
+    Report:
+      type: object
+      required: [id, number, status, job_id]
+      properties:
+        id: { type: string, format: uuid }
+        number: { type: string, examples: [R-1042] }
+        job_id: { type: string, format: uuid }
+        status: { $ref: "#/components/schemas/ReportStatus" }
+        language: { $ref: "#/components/schemas/Locale" }
+        content: { $ref: "#/components/schemas/ReportContent" }
+        ai_checks: { type: array, items: { $ref: "#/components/schemas/AiCheck" } }
+        photos: { type: array, items: { $ref: "#/components/schemas/Evidence" } }
+        source: { type: string, enum: [ai, edited_by_technician, edited_by_manager] }
+        submitted_by: { $ref: "#/components/schemas/PersonRef" }
+        submitted_at: { type: [string, "null"], format: date-time }
+        change_request: { oneOf: [{ $ref: "#/components/schemas/ChangeRequest" }, { type: "null" }] }
+        waiting_minutes: { type: [integer, "null"], description: "For the review queue" }
+    ChangeRequest: { type: object, required: [reasons], properties: { reasons: { type: array, items: { type: string, enum: [add_after_photo, retake_blurry_photo, finish_checklist, fix_text, other] } }, note: { type: string } } }
+    ReportPage: { type: object, properties: { items: { type: array, items: { $ref: "#/components/schemas/Report" } }, counts: { type: object, properties: { to_review: { type: integer }, approved: { type: integer }, changes: { type: integer } } }, next_cursor: { type: [string, "null"] } } }
+    ShareCreate:
+      type: object
+      required: [channels]
+      properties:
+        channels: { type: array, items: { $ref: "#/components/schemas/Channel" }, minItems: 1 }
+        phone: { type: string }
+        email: { type: string, format: email }
+        ask_for_review: { type: boolean, default: true }
+    Share: { type: object, required: [id, url, expires_at], properties: { id: { type: string, format: uuid }, url: { type: string, format: uri }, expires_at: { type: string, format: date-time }, review: { $ref: "#/components/schemas/ReviewStatus" } } }
+
+    # -------- reviews
+    ReviewStatus:
+      type: object
+      description: "One object answers 'what should the Request review button show?'"
+      required: [state, can_request]
+      properties:
+        state: { type: string, enum: [not_asked, queued_until_approval, link_sent, reminder_sent, ai_call_scheduled, rated, opted_out, problem, paused_no_credits] }
+        can_request: { type: boolean, description: "False once any review exists, the customer opted out, a request is active, or the company disabled technician requests" }
+        requested_by: { oneOf: [{ $ref: "#/components/schemas/PersonRef" }, { type: "null" }] }
+        steps: { type: array, items: { $ref: "#/components/schemas/FollowupStep" } }
+        review: { oneOf: [{ $ref: "#/components/schemas/ReviewSummary" }, { type: "null" }] }
+        problem: { type: [string, "null"], enum: [sms_failed, email_bounced, not_on_whatsapp, call_not_connected, null] }
+        job: { type: object, properties: { id: { type: string, format: uuid }, title: { type: string }, customer_name: { type: string } } }
+    FollowupStep: { type: object, required: [step, status], properties: { step: { type: string, enum: [day0_link, day2_reminder, day5_ai_call, missed_call_sms, thank_you_sms] }, channel: { type: string, enum: [whatsapp, sms, email, voice] }, status: { type: string, enum: [scheduled, sent, delivered, failed, skipped, cancelled] }, at: { type: string, format: date-time }, failure_reason: { type: [string, "null"] } } }
+    ReviewSummary: { type: object, required: [id, service_rating, source], properties: { id: { type: string, format: uuid }, service_rating: { type: integer, minimum: 1, maximum: 5 }, source: { type: string, enum: [form, email_star, sms_reply, whatsapp, ai_call] }, comment: { type: [string, "null"] }, submitted_at: { type: string, format: date-time } } }
+    Review:
+      allOf:
+        - { $ref: "#/components/schemas/ReviewSummary" }
+        - type: object
+          properties:
+            technician_rating: { type: [integer, "null"], minimum: 1, maximum: 5 }
+            tags: { type: array, items: { type: string, examples: [on_time, clean_work, explained_clearly, came_late, not_fixed] } }
+            customer: { $ref: "#/components/schemas/Customer" }
+            technician: { $ref: "#/components/schemas/PersonRef" }
+            job: { $ref: "#/components/schemas/Job" }
+            allow_public: { type: boolean }
+            hidden: { type: boolean }
+            callback_requested: { type: boolean }
+            replies: { type: array, items: { type: object, properties: { author: { $ref: "#/components/schemas/PersonRef" }, body: { type: string }, at: { type: string, format: date-time } } } }
+            follow_up: { type: [object, "null"], properties: { status: { type: string, enum: [open, resolved] }, note: { type: string } } }
+            ai_call: { type: [object, "null"], properties: { duration_s: { type: integer }, recording_url: { type: string, format: uri }, transcript: { type: array, items: { type: object, properties: { who: { type: string, enum: [ai, customer] }, text: { type: string } } } }, disclosure_played: { type: boolean }, recording_consent: { type: boolean } } }
+    ReviewPage:
+      type: object
+      properties:
+        summary: { type: object, properties: { average: { type: number, examples: [4.7] }, count: { type: integer }, distribution: { type: object, additionalProperties: { type: integer } }, needs_reply: { type: integer }, low: { type: integer } } }
+        items: { type: array, items: { $ref: "#/components/schemas/Review" } }
+        next_cursor: { type: [string, "null"] }
+    MyReviews: { type: object, properties: { average: { type: [number, "null"] }, count: { type: integer }, top_tags: { type: array, items: { type: object, properties: { tag: { type: string }, count: { type: integer } } } }, waiting_for_rating: { type: integer }, items: { type: array, items: { $ref: "#/components/schemas/Review" } }, next_cursor: { type: [string, "null"] } } }
+    ReviewSettings:
+      type: object
+      properties:
+        ask_for_review: { type: boolean, default: true }
+        reminder_enabled: { type: boolean, default: true }
+        reminder_after_days: { type: integer, default: 2 }
+        ai_call_enabled: { type: boolean, default: true }
+        ai_call_after_days: { type: integer, default: 5 }
+        calling_hours: { type: object, properties: { from: { type: string, default: "10:00" }, to: { type: string, default: "19:00" } } }
+        low_rating_alert_at_or_below: { type: integer, default: 2 }
+        technicians_see_reviews: { type: boolean, default: true }
+        technicians_can_request_reviews: { type: boolean, default: true }
+        show_good_reviews_publicly: { type: boolean, default: false }
+        google_review_url: { type: [string, "null"], format: uri }
+
+    # -------- dashboard / notifications
+    Dashboard:
+      type: object
+      properties:
+        week: { type: object, properties: { reports_sent: { type: integer }, change_vs_last_week_pct: { type: number }, per_day: { type: array, items: { type: integer } } } }
+        tiles: { type: object, properties: { to_review: { type: integer }, in_progress: { type: integer }, done_today: { type: integer } } }
+        to_review: { type: array, items: { $ref: "#/components/schemas/Report" } }
+        rating: { type: object, properties: { average: { type: [number, "null"] }, count: { type: integer }, low_open: { type: integer } } }
+        team_now: { type: array, items: { $ref: "#/components/schemas/Member" } }
+        get_started: { type: [array, "null"], items: { type: object, properties: { key: { type: string, enum: [invite_technician, create_job, share_report] }, done: { type: boolean } } } }
+    Notification: { type: object, required: [id, type, title, created_at], properties: { id: { type: string, format: uuid }, type: { type: string, examples: [changes_asked, report_approved, new_job, new_review, low_rating, plan_limit] }, title: { type: string }, body: { type: string }, image_url: { type: [string, "null"], format: uri }, deep_link: { type: string, examples: ["kn://reviews/0b7…"] }, read: { type: boolean }, created_at: { type: string, format: date-time } } }
+
+    # -------- billing
+    PlanPublic:
+      type: object
+      required: [code, name, price]
+      properties:
+        code: { type: string, enum: [free, starter, professional, business, enterprise] }
+        name: { type: string }
+        price: { oneOf: [{ $ref: "#/components/schemas/Money" }, { type: "null" }], description: "null = contact us" }
+        technician_limit: { type: [integer, "null"] }
+        report_limit_monthly: { type: [integer, "null"], description: "null = fair use" }
+        monthly_credits: { type: [integer, "null"] }
+        most_popular: { type: boolean }
+        features: { type: array, items: { type: string } }
+    CreditPack: { type: object, required: [id, credits, price], properties: { id: { type: string, format: uuid }, credits: { type: integer }, price: { $ref: "#/components/schemas/Money" } } }
+    PublicPlans: { type: object, properties: { plans: { type: array, items: { $ref: "#/components/schemas/PlanPublic" } }, credit_packs: { type: array, items: { $ref: "#/components/schemas/CreditPack" } }, credit_rules: { type: object, properties: { sms: { type: integer, const: 1 }, whatsapp: { type: integer, const: 1 }, ai_call: { type: integer, const: 10 }, email: { type: integer, const: 0 } } }, trial_days: { type: integer, examples: [14] } } }
+    Billing:
+      type: object
+      properties:
+        plan: { $ref: "#/components/schemas/PlanPublic" }
+        status: { type: string, enum: [trialing, active, past_due, cancelled] }
+        renews_at: { type: [string, "null"], format: date-time }
+        usage: { type: object, properties: { technicians: { type: object, properties: { used: { type: integer }, limit: { type: [integer, "null"] } } }, reports: { type: object, properties: { used: { type: integer }, limit: { type: [integer, "null"] } } }, ai_questions: { type: object, properties: { used: { type: integer }, limit: { type: [integer, "null"] } } } } }
+        credits: { type: object, properties: { balance: { type: integer }, monthly_grant: { type: integer }, resets_at: { type: string, format: date-time }, breakdown: { type: object, properties: { reminders: { type: integer }, ai_calls: { type: integer } } }, auto_top_up: { type: object, properties: { enabled: { type: boolean }, below: { type: integer } } } } }
+        payment_method: { type: [object, "null"], properties: { brand: { type: string }, last4: { type: string }, method: { type: string, enum: [card, upi, netbanking] } } }
+    CheckoutCreate: { type: object, required: [kind], properties: { kind: { type: string, enum: [plan, credits] }, plan_code: { type: string }, pack_id: { type: string, format: uuid } } }
+    Checkout: { type: object, required: [provider, order_id, amount], properties: { provider: { type: string, enum: [razorpay] }, order_id: { type: string }, key_id: { type: string, description: "Public Razorpay key" }, amount: { $ref: "#/components/schemas/Money" } } }
+    Invoice: { type: object, required: [id, number, amount, status], properties: { id: { type: string, format: uuid }, number: { type: string }, amount: { $ref: "#/components/schemas/Money" }, status: { type: string, enum: [issued, paid, failed, refunded] }, issued_at: { type: string, format: date-time }, pdf_url: { type: [string, "null"], format: uri } } }
+
+    # -------- public customer page
+    PublicReport:
+      type: object
+      required: [company, report]
+      properties:
+        company: { type: object, properties: { name: { type: string }, logo_url: { type: [string, "null"], format: uri }, phone: { type: [string, "null"] } } }
+        report:
+          type: object
+          properties:
+            number: { type: string }
+            title: { type: string }
+            site: { type: string }
+            performed_at: { type: object, properties: { start: { type: string, format: date-time }, end: { type: string, format: date-time } } }
+            technician: { $ref: "#/components/schemas/PersonRef" }
+            approved_by: { type: string }
+            language: { $ref: "#/components/schemas/Locale" }
+            available_languages: { type: array, items: { $ref: "#/components/schemas/Locale" } }
+            content: { $ref: "#/components/schemas/ReportContent" }
+            before_after: { type: array, items: { type: object, properties: { before_url: { type: string, format: uri }, after_url: { type: string, format: uri }, caption: { type: string } } } }
+            proof: { type: object, properties: { photos: { type: integer }, checklist_passed: { type: integer }, checklist_total: { type: integer }, voice_notes: { type: integer } } }
+            pdf_url: { type: string, format: uri }
+        review: { description: "Existing review (edit within 24 h) or null", oneOf: [{ $ref: "#/components/schemas/PublicReviewSaved" }, { type: "null" }] }
+        can_review: { type: boolean }
+        prefill_rating: { type: [integer, "null"], description: "From the email star the customer tapped" }
+        google_review_url: { type: [string, "null"], format: uri }
+    PublicReviewInput:
+      type: object
+      required: [service_rating]
+      properties:
+        service_rating: { type: integer, minimum: 1, maximum: 5 }
+        technician_rating: { type: integer, minimum: 1, maximum: 5 }
+        tags: { type: array, items: { type: string }, maxItems: 8 }
+        comment: { type: string, maxLength: 1000 }
+        allow_public: { type: boolean, default: false }
+        callback_requested: { type: boolean, default: false }
+        language: { $ref: "#/components/schemas/Locale" }
+    PublicReviewSaved: { type: object, required: [service_rating, editable_until], properties: { service_rating: { type: integer }, technician_rating: { type: [integer, "null"] }, tags: { type: array, items: { type: string } }, comment: { type: [string, "null"] }, editable_until: { type: string, format: date-time } } }
+
+    # -------- content
+    ContentPage: { type: object, required: [slug, locale, blocks], properties: { slug: { type: string }, locale: { $ref: "#/components/schemas/Locale" }, seo: { type: object, properties: { title: { type: string }, description: { type: string } } }, blocks: { type: array, items: { type: object, required: [type], properties: { type: { type: string, examples: [hero, trust_bar, how_it_works, features, industries, before_after, ai_demo, testimonials, pricing, faq, cta] }, data: { type: object, additionalProperties: true } } } } } }
+    Industry: { type: object, required: [slug, name], properties: { slug: { type: string }, name: { type: string }, image_url: { type: [string, "null"], format: uri }, page_slug: { type: [string, "null"] } } }
+    Testimonial: { type: object, required: [quote, person_name], properties: { quote: { type: string }, person_name: { type: string }, role: { type: string }, company_name: { type: string }, avatar_url: { type: [string, "null"], format: uri } } }
+    BlogPost: { type: object, required: [slug, title], properties: { slug: { type: string }, title: { type: string }, excerpt: { type: string }, cover_url: { type: [string, "null"], format: uri }, author_name: { type: string }, read_minutes: { type: integer }, published_at: { type: string, format: date-time } } }
+    DemoRequest: { type: object, required: [name, phone], properties: { name: { type: string }, company: { type: string }, phone: { type: string }, email: { type: string, format: email }, team_size: { type: string, enum: ["1", "2-5", "6-15", "16-50", "50+"] }, industry: { type: string }, message: { type: string, maxLength: 1000 } } }

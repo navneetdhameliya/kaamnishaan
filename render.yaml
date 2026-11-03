@@ -1,0 +1,35 @@
+# Render Blueprint — India-first: everything in the Singapore region.
+# Secrets (OpenAI, R2, MSG91) are added in the Render dashboard, never here.
+databases:
+  - name: kaamnishaan-db
+    region: singapore
+    databaseName: kaamnishaan
+    user: kaamnishaan
+    postgresMajorVersion: "16"
+
+services:
+  - type: web
+    name: kaamnishaan-api
+    runtime: docker
+    region: singapore
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /v1/health
+    autoDeploy: true
+    envVars:
+      - key: KN_ENV
+        value: staging
+      - key: KN_DATABASE_URL
+        fromDatabase: { name: kaamnishaan-db, property: connectionString }
+      - key: KN_SECRET_KEY
+        generateValue: true
+      - key: KN_CORS_ORIGINS
+        value: '["https://kaamnishaan-web.vercel.app","https://kaamnishaan-admin.vercel.app"]'
+      - key: KN_OPENAI_API_KEY
+        sync: false
+      - key: KN_STORAGE_ENDPOINT
+        sync: false
+      - key: KN_STORAGE_ACCESS_KEY
+        sync: false
+      - key: KN_STORAGE_SECRET_KEY
+        sync: false
