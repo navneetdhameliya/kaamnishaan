@@ -23,16 +23,35 @@ jobs:
       - run: pip install pyyaml openapi-spec-validator && python shared/api/validate.py
 
   backend:
-    name: Backend (ruff + pytest)
+    name: Backend (ruff + migrations + pytest + contract)
     runs-on: ubuntu-latest
     defaults: { run: { working-directory: backend } }
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: kaamnishaan
+          POSTGRES_PASSWORD: kaamnishaan
+          POSTGRES_DB: kaamnishaan_test
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U kaamnishaan" --health-interval 5s --health-timeout 5s --health-retries 10
+    env:
+      KN_TEST_DATABASE_URL: postgresql+asyncpg://kaamnishaan:kaamnishaan@localhost:5432/kaamnishaan_test
     steps:
       - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
-      - run: pip install -e ".[dev]"
+      - run: pip install -e ".[dev]" openapi-spec-validator
       - run: ruff check . && ruff format --check .
       - run: pytest -q
+      - name: Migrations go down and up again, and match the models
+        env: { KN_ENV: test, KN_DATABASE_URL: "${{ env.KN_TEST_DATABASE_URL }}", KN_SECRET_KEY: ci-only-test-secret }
+        run: alembic downgrade base && alembic upgrade head && alembic check
+      - name: API contract generated from code is up to date and valid
+        run: |
+          python scripts/export_openapi.py --check
+          python -c "import json; from openapi_spec_validator import validate; validate(json.load(open('../shared/api/openapi.generated.json')))"
 
   frontends:
     name: ${{ matrix.app }} (typecheck + build)
