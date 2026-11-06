@@ -56,20 +56,22 @@ def _open_invite_filter():
 async def list_members(
     db: AsyncSession, company_id: uuid.UUID, role: str | None, q: str | None
 ) -> MemberList:
-    inv = (
-        select(Invitation.id, Invitation.name, Invitation.membership_id)
-        .where(Invitation.company_id == company_id, *_open_invite_filter())
-        .distinct(Invitation.membership_id)
-        .order_by(Invitation.membership_id, Invitation.created_at.desc())
-        .subquery()
-    )
-    base = (
-        select(Membership, User, inv.c.id, inv.c.name)
-        .join(User, User.id == Membership.user_id)
-        .outerjoin(inv, inv.c.membership_id == Membership.id)
-        .where(Membership.company_id == company_id, Membership.status.in_(("active", "invited")))
-    )
-    rows = (await db.execute(base)).all()
+    open_invites = (
+        await db.execute(
+            select(Invitation.membership_id, Invitation.id, Invitation.name)
+            .where(Invitation.company_id == company_id, *_open_invite_filter())
+            .order_by(Invitation.created_at)
+        )
+    ).all()
+    latest = {mid: (iid, name) for mid, iid, name in open_invites}  # newest wins
+    members = (
+        await db.execute(
+            select(Membership, User)
+            .join(User, User.id == Membership.user_id)
+            .where(Membership.company_id == company_id, Membership.status.in_(("active", "invited")))
+        )
+    ).all()
+    rows = [(m, u, *latest.get(m.id, (None, None))) for m, u in members]
     counts = {"all": len(rows), "owner": 0, "manager": 0, "technician": 0, "invited": 0}
     for m, *_ in rows:
         counts[m.role] += 1
