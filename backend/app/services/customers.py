@@ -145,56 +145,72 @@ async def list_customers(
     db: AsyncSession, p: Principal, q: str | None, cursor: str | None, limit: int
 ) -> CustomerList:
     offset = decode_cursor(cursor)
-    primary = (
-        select(CustomerContact.name, CustomerContact.phone)
-        .where(CustomerContact.customer_id == Customer.id, CustomerContact.deleted_at.is_(None))
-        .order_by(CustomerContact.is_primary.desc(), CustomerContact.created_at)
-        .limit(1)
-        .lateral()
-    )
-    city = (
-        select(Site.city)
-        .where(Site.customer_id == Customer.id, Site.deleted_at.is_(None))
-        .order_by(Site.created_at)
-        .limit(1)
-        .scalar_subquery()
-    )
-    jobs = (
-        select(func.count(Job.id), func.max(Job.scheduled_at))
-        .where(Job.customer_id == Customer.id, Job.deleted_at.is_(None))
-        .lateral()
-    )
-    base = select(Customer.id).where(Customer.company_id == p.company_id, Customer.deleted_at.is_(None))
+    base = select(Customer).where(Customer.company_id == p.company_id, Customer.deleted_at.is_(None))
     if q:
         like = f"%{q.strip()}%"
-        phones = select(CustomerContact.customer_id).where(
-            CustomerContact.company_id == p.company_id,
-            or_(CustomerContact.phone.ilike(like), CustomerContact.name.ilike(like)),
+        digits = "".join(ch for ch in q if ch.isdigit())
+        match = [CustomerContact.name.ilike(like)]
+        if len(digits) >= 4:
+            match.append(CustomerContact.phone.like(f"%{digits}%"))
+        by_contact = select(CustomerContact.customer_id).where(
+            CustomerContact.company_id == p.company_id, CustomerContact.deleted_at.is_(None), or_(*match)
         )
-        base = base.where(or_(Customer.name.ilike(like), Customer.id.in_(phones)))
+        base = base.where(or_(Customer.name.ilike(like), Customer.id.in_(by_contact)))
     total = (await db.execute(select(func.count()).select_from(base.subquery()))).scalar_one()
     rows = (
-        await db.execute(
-            select(Customer.id, Customer.name, primary.c.name, primary.c.phone, city, jobs)
-            .outerjoin(primary, func.true())
-            .join(jobs, func.true())
-            .where(Customer.id.in_(base))
-            .order_by(func.lower(Customer.name), Customer.id)
-            .offset(offset)
-            .limit(limit + 1)
+        (
+            await db.execute(
+                base.order_by(func.lower(Customer.name), Customer.id).offset(offset).limit(limit + 1)
+            )
         )
-    ).all()
-    items = [
-        CustomerListItem(
-            id=cid,
-            name=name,
-            primary_contact=ContactBrief(name=cn, phone=cp) if cn else None,
-            city=cty,
-            job_count=jc or 0,
-            last_job_at=last,
-        )  # fmt: skip
-        for cid, name, cn, cp, cty, jc, last in rows[:limit]
-    ]
+        .scalars()
+        .all()
+    )
+    page = list(rows[:limit])
+    ids = [c.id for c in page] or [uuid.uuid4()]
+
+    contacts: dict = {}
+    for x in (
+        await db.execute(
+            select(CustomerContact)
+            .where(CustomerContact.customer_id.in_(ids), CustomerContact.deleted_at.is_(None))
+            .order_by(CustomerContact.is_primary.desc(), CustomerContact.created_at)
+        )
+    ).scalars():
+        contacts.setdefault(x.customer_id, x)
+    cities: dict = {}
+    for cid, city in (
+        await db.execute(
+            select(Site.customer_id, Site.city)
+            .where(Site.customer_id.in_(ids), Site.deleted_at.is_(None))
+            .order_by(Site.created_at)
+        )
+    ).all():
+        cities.setdefault(cid, city)
+    jobs = {
+        cid: (n, last)
+        for cid, n, last in (
+            await db.execute(
+                select(Job.customer_id, func.count(), func.max(Job.scheduled_at))
+                .where(Job.customer_id.in_(ids), Job.deleted_at.is_(None))
+                .group_by(Job.customer_id)
+            )
+        ).all()
+    }
+    items = []
+    for c in page:
+        pc = contacts.get(c.id)
+        n, last = jobs.get(c.id, (0, None))
+        items.append(
+            CustomerListItem(
+                id=c.id,
+                name=c.name,
+                primary_contact=ContactBrief(name=pc.name, phone=pc.phone) if pc else None,
+                city=cities.get(c.id),
+                job_count=n,
+                last_job_at=last,
+            )  # fmt: skip
+        )
     return CustomerList(
         data=items, meta=ListMeta(counts={"all": total}, next_cursor=next_cursor(offset, limit, len(rows)))
     )

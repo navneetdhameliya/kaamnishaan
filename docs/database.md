@@ -93,7 +93,7 @@ erDiagram
 | `evidence` | `company_id`, `job_id`, `kind` (`photo`, `voice`, `signature`), `stage` (`before`, `during`, `after`), `storage_key`, `mime`, `bytes`, `width`, `height`, `duration_ms`, `sha256`, `captured_at` (device clock), `uploaded_at`, `captured_by`, `lat`, `lng`, `gps_accuracy_m`, `note`, `status` (`pending_upload`, `uploaded`, `processed`, `rejected`), `quality_flags` jsonb, `locked_at`, `client_id` (unique) | `sha256` proves the file was not changed. Trigger blocks edits after `locked_at`. |
 | `transcripts` | `company_id`, `evidence_id` (unique), `language_detected`, `text_original`, `text_report_language`, `status`, `model`, `edited_by`, `edited_at` | The original recording is always kept (M29). |
 
-**Job status machine** (from the PRD): `draft → assigned → accepted → in_progress → ai_draft → pending_review → completed`. `changes_requested` sends the job back to `in_progress`. `cancelled` is allowed any time before `completed`. Transitions are enforced in one service function and recorded in `job_events`.
+**Job status machine** (API document, final): `unassigned → assigned → in_progress → in_review → completed`; `in_review → changes_requested → in_review`; `cancelled` any time before `completed`. Draft and Accepted were dropped (the design starts work with "Start job"). A technician's quick job starts as `assigned` to themselves. Transitions live in `app/services/jobs.py` and each writes a `job_events` row.
 
 ### Reports and sharing
 

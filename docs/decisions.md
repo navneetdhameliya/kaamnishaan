@@ -18,6 +18,9 @@
 | D-14 | Backend follows "KaamNishaan — API Analysis (Final version)": `/api/v1` paths and names, error codes, OTP 10 min / 3 tries / 5 per hour, email login lock after 5 fails for 15 min, 30-day refresh extended on use | Approved contract | 2026-11-06 |
 | D-15 | `{data, meta}` wrapper on lists only; single objects returned as is | Simpler app code; tab counts still in `meta.counts` | 2026-11-06 (default taken while Navneet was away; easy to change) |
 | D-16 | API contract generated from the code (`shared/api/openapi.generated.json`), checked in CI | Code and contract can't drift | 2026-11-06 (default taken while Navneet was away) |
+| D-17 | Job numbers per company start at J-1001; each technician has a daily job capacity (default 6) shown on Assign technician; a full day is a hint, not a block | M15, M17 | 2026-11-06 |
+| D-18 | A technician's quick job can name a new customer (name, phone, address) on the spot; technicians read only customers of their own jobs | M16 quick job, Roles grid | 2026-11-06 |
+| D-19 | Sync feed: cursor is the newest `updated_at` sent, next call overlaps 2 s; the app keeps the highest `version` per job. Jobs moved to someone else are listed in `removed_job_ids` | Offline-first technicians | 2026-11-06 |
 
 ## Still open
 - Credit pack INR prices (placeholders ₹799 / 500 and ₹2,799 / 2,000).
