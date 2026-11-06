@@ -4,7 +4,8 @@ import uuid
 from collections.abc import AsyncIterator, Callable
 from dataclasses import dataclass, field
 
-from fastapi import Depends, Header, Request
+from fastapi import Depends, Request
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -13,6 +14,11 @@ from app.core.errors import Forbidden, Unauthorized
 from app.core.permissions import permissions_for
 from app.core.security import decode_access_token, now
 from app.models import AuthSession, Company, Membership, User
+
+# Shows the "Authorize" button on /docs; we raise our own error shape when the token is missing.
+bearer = HTTPBearer(
+    auto_error=False, description="Access token from /auth/otp/verify, /auth/login or /auth/refresh"
+)
 
 
 async def get_db() -> AsyncIterator[AsyncSession]:
@@ -49,11 +55,13 @@ class Principal:
 
 
 async def get_principal(
-    request: Request, authorization: str | None = Header(default=None), db: AsyncSession = Depends(get_db)
+    request: Request,
+    creds: HTTPAuthorizationCredentials | None = Depends(bearer),
+    db: AsyncSession = Depends(get_db),
 ) -> Principal:
-    if not authorization or not authorization.lower().startswith("bearer "):
+    if not creds or creds.scheme.lower() != "bearer":
         raise Unauthorized("not_signed_in", "Please sign in.")
-    claims = decode_access_token(authorization.split(" ", 1)[1])
+    claims = decode_access_token(creds.credentials)
     sess = await db.get(AuthSession, uuid.UUID(claims["sid"]))
     if not sess or sess.revoked_at or sess.expires_at < now():
         raise Unauthorized("session_ended", "Please sign in again.")

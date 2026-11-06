@@ -13,6 +13,16 @@ alembic upgrade head
 uvicorn app.main:app --reload   # http://localhost:8000/docs
 ```
 
+## Try the API in your browser
+1. Run it locally (steps above), then open http://localhost:8000/docs
+2. **Log in by phone:** `POST /api/v1/auth/otp/send` with `{"phone": "9876543210"}`.
+   SMS is not really sent on your computer: the code is printed in the terminal, and
+   `GET /api/v1/dev/outbox` shows it too (local only, never on the live server).
+3. `POST /api/v1/auth/otp/verify` with the `challenge_id` and `code` → copy `access_token`.
+4. Click **Authorize** (top right), paste the token, and every other endpoint now works as that person.
+5. Owner flow: `POST /auth/register` → `POST /companies` → `POST /auth/refresh` (token now carries the company)
+   → `POST /invites` → log in with the invited phone → `GET /invites/mine` → `POST /invites/{id}/accept`.
+
 ## Checks
 Tests use a real PostgreSQL database `kaamnishaan_test` (override with `KN_TEST_DATABASE_URL`);
 it is migrated once per run and emptied between tests.
