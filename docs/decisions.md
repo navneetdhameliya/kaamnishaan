@@ -12,9 +12,20 @@
 | D-08 | Phone OTP for technicians (MSG91 + DLT), email+password for managers/owners, 2-step for admins | PRD low-literacy rule; India SMS law | 2026-11-04 |
 | D-09 | Offline-safe writes via device `Idempotency-Key` / `client_id` | Technicians often have no signal on site | 2026-11-04 |
 | D-10 | Payments via Razorpay (UPI, cards); credits as a ledger | India first; credits model chosen 2026-11-03 | 2026-11-04 |
+| D-11 | A user can belong to several companies; active company is chosen at login and switchable | Technicians who work for more than one company | 2026-11-04 |
+| D-12 | INR prices ₹499 / ₹1,299 / ₹2,499 per month; USD $9 / $25 / $49 kept for other countries | India-first pricing | 2026-11-04 |
+| D-13 | Evidence retained 7 years by default | Warranty and disputes | 2026-11-04 |
+| D-14 | Backend follows "KaamNishaan — API Analysis (Final version)": `/api/v1` paths and names, error codes, OTP 10 min / 3 tries / 5 per hour, email login lock after 5 fails for 15 min, 30-day refresh extended on use | Approved contract | 2026-11-06 |
+| D-15 | `{data, meta}` wrapper on lists only; single objects returned as is | Simpler app code; tab counts still in `meta.counts` | 2026-11-06 (default taken while Navneet was away; easy to change) |
+| D-16 | API contract generated from the code (`shared/api/openapi.generated.json`), checked in CI | Code and contract can't drift | 2026-11-06 (default taken while Navneet was away) |
 
 ## Still open
-- INR plan prices (pricing is designed in USD).
+- Credit pack INR prices (placeholders ₹799 / 500 and ₹2,799 / 2,000).
+- Figma: "Choose company" screen + company switcher; ₹ prices on pricing and billing screens (design first, before those screens are coded).
 - Voice-call and WhatsApp Business providers (needed in Step 4).
 - Where the manager's Capture button goes.
-- Domain name.
+- Domain name (purchase planned 16 Nov 2026).
+- Background workers: ARQ + Render Redis (recommended) or Celery — needed from Step 1c.
+- Admin staff accounts with authenticator code (separate `staff_users` table) — next foundation step.
+- Error messages translated by `Accept-Language` (codes are final; English text for now).
+- Live technician location in v1, testimonial source, where public reviews show.

@@ -140,6 +140,16 @@ paths:
       responses:
         "200": { description: "New tokens", content: { application/json: { schema: { $ref: "#/components/schemas/Session" } } } }
         "401": { $ref: "#/components/responses/Unauthorized" }
+  /v1/auth/switch-company:
+    post:
+      tags: [auth]
+      summary: Choose or switch the active company (multi-company users). Returns new tokens scoped to that company
+      requestBody:
+        required: true
+        content: { application/json: { schema: { type: object, required: [company_id], properties: { company_id: { type: string, format: uuid } } } } }
+      responses:
+        "200": { description: Switched, content: { application/json: { schema: { $ref: "#/components/schemas/Session" } } } }
+        "403": { $ref: "#/components/responses/Forbidden" }
   /v1/auth/logout:
     post:
       tags: [auth]
@@ -159,6 +169,11 @@ paths:
         required: true
         content: { application/json: { schema: { $ref: "#/components/schemas/MeUpdate" } } }
       responses: { "200": { description: "Updated", content: { application/json: { schema: { $ref: "#/components/schemas/Me" } } } } }
+  /v1/me/companies:
+    get:
+      tags: [me]
+      summary: Companies this user belongs to and pending invitations ("Choose company" screen, company switcher)
+      responses: { "200": { description: OK, content: { application/json: { schema: { $ref: "#/components/schemas/MyCompanies" } } } } }
   /v1/me/devices:
     post:
       tags: [me]
@@ -882,7 +897,8 @@ components:
         refresh_token: { type: string }
         expires_in: { type: integer, examples: [900] }
         user: { $ref: "#/components/schemas/Me" }
-        needs: { type: array, items: { type: string, enum: [profile, company, email_verification, join_company] }, description: "Onboarding steps still to do" }
+        needs: { type: array, items: { type: string, enum: [profile, choose_company, create_or_join_company, email_verification] }, description: "Onboarding steps still to do" }
+        companies: { type: array, items: { $ref: "#/components/schemas/CompanyChoice" }, description: "Active memberships, for the Choose company screen" }
 
     # -------- me / company / team
     Me:
@@ -898,6 +914,20 @@ components:
         role: { oneOf: [{ $ref: "#/components/schemas/Role" }, { type: "null" }] }
         company: { oneOf: [{ $ref: "#/components/schemas/Company" }, { type: "null" }] }
         permissions: { type: array, items: { type: string }, examples: [["jobs.create", "reports.approve", "reports.share", "reviews.request"]] }
+    CompanyChoice:
+      type: object
+      required: [company_id, name, role]
+      properties:
+        company_id: { type: string, format: uuid }
+        name: { type: string }
+        logo_url: { type: [string, "null"], format: uri }
+        role: { $ref: "#/components/schemas/Role" }
+        active: { type: boolean, description: "True for the company in the current token" }
+    MyCompanies:
+      type: object
+      properties:
+        items: { type: array, items: { $ref: "#/components/schemas/CompanyChoice" } }
+        invitations: { type: array, items: { allOf: [{ $ref: "#/components/schemas/InvitationPreview" }, { type: object, properties: { token: { type: string } } }] } }
     MeUpdate: { type: object, properties: { name: { type: string }, app_language: { $ref: "#/components/schemas/Locale" }, avatar_evidence_upload: { type: boolean, description: "If true, response includes a presigned avatar upload URL" } } }
     DeviceRegister: { type: object, required: [push_token, platform], properties: { push_token: { type: string }, platform: { type: string, enum: [android, ios, macos, web] }, app_version: { type: string } } }
     Company:

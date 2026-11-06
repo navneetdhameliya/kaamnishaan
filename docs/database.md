@@ -60,10 +60,10 @@ erDiagram
 |---|---|---|
 | `users` | `phone` (E.164, unique, nullable), `email` (unique, nullable), `password_hash` (nullable), `name`, `avatar_key`, `app_language` (`en`/`hi`/`gu`/`es`/`fr`), `status` (`invited`, `active`, `disabled`), `is_super_admin`, `last_seen_at` | Technicians sign in by phone OTP (no password). Managers/owners by email + password, or phone. At least one of phone/email is required (check constraint). |
 | `companies` | `name`, `industry_id`, `country` (default `IN`), `timezone` (default `Asia/Kolkata`), `report_language`, `logo_key`, `status` (`trial`, `active`, `past_due`, `suspended`, `cancelled`), `trial_ends_at`, `settings` jsonb | `settings`: `technicians_can_share`, `technicians_can_request_reviews`, review follow-up schedule, calling hours. |
-| `memberships` | `company_id`, `user_id`, `role` (`owner`, `manager`, `technician`), `status` (`invited`, `active`, `removed`), `invited_by`, `joined_at` | Unique `(company_id, user_id)`. One company per user in the MVP; the table allows more later. |
+| `memberships` | `company_id`, `user_id`, `role` (`owner`, `manager`, `technician`), `status` (`invited`, `active`, `removed`), `invited_by`, `joined_at` | Unique `(company_id, user_id)`. **A user can belong to several companies** (decided 2026-11-04) with a different role in each. The active company is chosen at login and stored on the session. |
 | `invitations` | `company_id`, `phone`, `name`, `role`, `token_hash`, `expires_at`, `accepted_at`, `invited_by` | M40 invite → SMS link → M10 join. |
 | `otp_challenges` | `phone`, `code_hash`, `purpose` (`login`, `verify_phone`), `attempts`, `expires_at`, `consumed_at`, `ip` | 4-digit code, 5-minute expiry, max 5 attempts, rate-limited per phone and IP. |
-| `sessions` | `user_id`, `refresh_token_hash`, `device_id`, `platform`, `app_version`, `expires_at`, `revoked_at` | Short-lived JWT access token + rotating refresh token. Logout and "log out everywhere" revoke rows. |
+| `sessions` | `user_id`, `active_company_id` (nullable), `refresh_token_hash`, `device_id`, `platform`, `app_version`, `expires_at`, `revoked_at` | Short-lived JWT access token + rotating refresh token. Logout and "log out everywhere" revoke rows. |
 | `devices` | `user_id`, `push_token`, `platform`, `locale`, `last_seen_at` | Push notifications. |
 | `company_counters` | `company_id`, `key` (`job`, `report`, `invoice`), `value` | Gives `J-2231`, `R-1042` with `SELECT … FOR UPDATE`. |
 
@@ -119,9 +119,9 @@ erDiagram
 
 | Table | Key columns | Notes |
 |---|---|---|
-| `plans` | `code` (`free`, `starter`, `professional`, `business`, `enterprise`), `name` jsonb, `prices` jsonb (`{"INR": 74900, "USD": 900}` per month), `technician_limit`, `report_limit_monthly` (null = fair use), `monthly_credits`, `features` jsonb, `is_public`, `sort` | Website pricing, M41 and A17 all read this table. |
+| `plans` | `code` (`free`, `starter`, `professional`, `business`, `enterprise`), `name` jsonb, `prices` jsonb (monthly, minor units: Starter `{"INR": 49900, "USD": 900}`, Professional `{"INR": 129900, "USD": 2500}`, Business `{"INR": 249900, "USD": 4900}`), `technician_limit`, `report_limit_monthly` (null = fair use), `monthly_credits`, `features` jsonb, `is_public`, `sort` | Website pricing, M41 and A17 all read this table. |
 | `subscriptions` | `company_id`, `plan_id`, `status` (`trialing`, `active`, `past_due`, `cancelled`), `provider` (`razorpay`, `stripe`, `manual`), `provider_ref`, `current_period_start`, `current_period_end`, `cancel_at` | |
-| `credit_packs` | `credits`, `prices` jsonb, `active` | 500 / 2,000 packs. |
+| `credit_packs` | `credits`, `prices` jsonb, `active` | 500 credits ₹799 / $10 and 2,000 credits ₹2,799 / $35 (INR placeholders, to confirm). |
 | `credit_ledger` | `company_id`, `delta`, `reason` (`monthly_grant`, `top_up`, `sms`, `whatsapp`, `ai_call`, `refund`, `adjustment`, `expiry`), `ref_type`, `ref_id`, `balance_after`, `actor_id` | Spending checks balance in the same transaction (`SELECT … FOR UPDATE` on the company). |
 | `invoices` | `company_id`, `number`, `amount_minor`, `currency`, `tax_minor` (GST), `status` (`draft`, `issued`, `paid`, `failed`, `refunded`), `provider_ref`, `issued_at`, `paid_at`, `pdf_key` | GST fields added when billing goes live. |
 | `payments` | `company_id`, `invoice_id`, `provider`, `provider_ref`, `method` (`upi`, `card`, `netbanking`), `status`, `failure_reason`, `amount_minor` | Card numbers are never stored — only provider references. |
@@ -176,8 +176,8 @@ erDiagram
 - OTP challenges: deleted after 24 hours. Sessions: 90 days after expiry.
 - Account deletion request: personal fields anonymised within 30 days; job proof kept for the company (DPDP-compliant notice in the privacy policy).
 
-## Open questions for you
+## Decisions taken (2026-11-04)
 
-1. **One company per user** in the MVP (a technician can't work for two companies at once). OK?
-2. **Prices in both INR and USD** in `plans.prices`, so the website can show ₹ for India and $ elsewhere. OK, and what INR prices?
-3. **7-year evidence retention** by default. OK for India pilots?
+1. **Several companies per user** — login shows "Choose company" when a user has more than one; the Me/Profile screen gets a company switcher. The access token carries the active company.
+2. **Prices in INR and USD** — ₹499 / ₹1,299 / ₹2,499 a month (Starter / Professional / Business); USD stays $9 / $25 / $49. The website shows ₹ for India.
+3. **Evidence kept 7 years** by default.
