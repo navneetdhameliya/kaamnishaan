@@ -34,3 +34,4 @@ mobile/pubspec.lock
 mobile/ios/Pods/
 mobile/android/.gradle/
 mobile/android/local.properties
+*.egg-info/

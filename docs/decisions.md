@@ -12,9 +12,13 @@
 | D-08 | Phone OTP for technicians (MSG91 + DLT), email+password for managers/owners, 2-step for admins | PRD low-literacy rule; India SMS law | 2026-11-04 |
 | D-09 | Offline-safe writes via device `Idempotency-Key` / `client_id` | Technicians often have no signal on site | 2026-11-04 |
 | D-10 | Payments via Razorpay (UPI, cards); credits as a ledger | India first; credits model chosen 2026-11-03 | 2026-11-04 |
+| D-11 | A user can belong to several companies; active company is chosen at login and switchable | Technicians who work for more than one company | 2026-11-04 |
+| D-12 | INR prices ₹499 / ₹1,299 / ₹2,499 per month; USD $9 / $25 / $49 kept for other countries | India-first pricing | 2026-11-04 |
+| D-13 | Evidence retained 7 years by default | Warranty and disputes | 2026-11-04 |
 
 ## Still open
-- INR plan prices (pricing is designed in USD).
+- Credit pack INR prices (placeholders ₹799 / 500 and ₹2,799 / 2,000).
+- Figma: "Choose company" screen + company switcher; ₹ prices on pricing and billing screens (design first, before those screens are coded).
 - Voice-call and WhatsApp Business providers (needed in Step 4).
 - Where the manager's Capture button goes.
 - Domain name.
