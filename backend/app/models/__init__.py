@@ -12,6 +12,7 @@ from app.models.identity import (
     OtpChallenge,
     User,
 )
+from app.models.work import Customer, CustomerContact, Equipment, Job, JobEvent, Site
 
 __all__ = [
     "AuditLog",
@@ -20,6 +21,12 @@ __all__ = [
     "Company",
     "CompanyCounter",
     "CreditPack",
+    "Customer",
+    "CustomerContact",
+    "Equipment",
+    "Job",
+    "JobEvent",
+    "Site",
     "Device",
     "Industry",
     "Invitation",

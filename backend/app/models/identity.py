@@ -89,6 +89,7 @@ class Membership(IdMixin, TimestampMixin, Base):
     )
     invited_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
     joined_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    daily_job_capacity: Mapped[int] = mapped_column(Integer, default=6, server_default=text("6"))  # M17
 
     user: Mapped[User] = relationship(back_populates="memberships", foreign_keys=[user_id])
     company: Mapped[Company] = relationship()
