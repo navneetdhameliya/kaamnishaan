@@ -7,7 +7,8 @@ OWNER = {
 }  # fmt: skip
 MANAGER = {
     "team.invite_technician", "team.manage", "customers.manage", "jobs.create", "jobs.assign",
-    "jobs.view_all", "reports.approve", "reports.share", "reviews.manage", "reviews.request", "checklists.manage",
+    "jobs.view_all", "reports.approve", "reports.share", "reviews.manage", "reviews.request",
+    "checklists.manage",
 }  # fmt: skip
 TECHNICIAN = {"jobs.create_quick", "jobs.view_own", "evidence.capture", "reports.submit"}
 

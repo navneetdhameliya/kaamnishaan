@@ -11,7 +11,9 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 class AppError(Exception):
     status = 400
 
-    def __init__(self, code: str, message: str, details: dict[str, Any] | None = None, status: int | None = None):
+    def __init__(
+        self, code: str, message: str, details: dict[str, Any] | None = None, status: int | None = None
+    ):
         super().__init__(message)
         self.code, self.message, self.details = code, message, details or {}
         if status:

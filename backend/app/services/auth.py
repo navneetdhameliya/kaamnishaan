@@ -46,12 +46,17 @@ async def request_otp(db: AsyncSession, raw_phone: str, purpose: str, ip: str | 
     t = now()
     last = (
         await db.execute(
-            select(OtpChallenge).where(OtpChallenge.phone == phone).order_by(OtpChallenge.created_at.desc()).limit(1)
+            select(OtpChallenge)
+            .where(OtpChallenge.phone == phone)
+            .order_by(OtpChallenge.created_at.desc())
+            .limit(1)
         )
     ).scalar_one_or_none()
     if last and (t - last.created_at).total_seconds() < OTP_RESEND_AFTER_S:
         wait = OTP_RESEND_AFTER_S - int((t - last.created_at).total_seconds())
-        raise RateLimited("otp_too_soon", "Please wait before asking for a new code.", {"retry_after_s": wait})
+        raise RateLimited(
+            "otp_too_soon", "Please wait before asking for a new code.", {"retry_after_s": wait}
+        )
     hour = t - timedelta(hours=1)
     per_phone = (
         await db.execute(
@@ -61,10 +66,14 @@ async def request_otp(db: AsyncSession, raw_phone: str, purpose: str, ip: str | 
     per_ip = 0
     if ip:
         per_ip = (
-            await db.execute(select(func.count()).where(OtpChallenge.ip == ip, OtpChallenge.created_at > hour))
+            await db.execute(
+                select(func.count()).where(OtpChallenge.ip == ip, OtpChallenge.created_at > hour)
+            )
         ).scalar_one()
     if per_phone >= OTP_PER_PHONE_HOUR or per_ip >= OTP_PER_IP_HOUR:
-        raise RateLimited("otp_limit", "Too many codes asked for. Try again in an hour.", {"retry_after_s": 3600})
+        raise RateLimited(
+            "otp_limit", "Too many codes asked for. Try again in an hour.", {"retry_after_s": 3600}
+        )
 
     code = otp_code()
     ch = OtpChallenge(phone=phone, code_hash=digest(code), purpose=purpose, expires_at=t + OTP_TTL, ip=ip)
@@ -108,7 +117,9 @@ async def verify_otp(
 
 # ---- email + password -------------------------------------------------------------------
 async def login_email(db: AsyncSession, email: str, password: str) -> SessionOut:
-    user = (await db.execute(select(User).where(func.lower(User.email) == email.lower()))).scalar_one_or_none()
+    user = (
+        await db.execute(select(User).where(func.lower(User.email) == email.lower()))
+    ).scalar_one_or_none()
     # same answer for unknown email and wrong password
     if not user or not verify_password(password, user.password_hash):
         raise Unauthorized("wrong_credentials", "Email or password is not right.")
@@ -163,7 +174,9 @@ async def verify_email(db: AsyncSession, token: str) -> None:
 
 async def forgot_password(db: AsyncSession, email: str) -> None:
     """Always looks the same to the caller, whether or not the email exists."""
-    user = (await db.execute(select(User).where(func.lower(User.email) == email.lower()))).scalar_one_or_none()
+    user = (
+        await db.execute(select(User).where(func.lower(User.email) == email.lower()))
+    ).scalar_one_or_none()
     if not user or user.status == "disabled":
         return
     if await audit.count_recent(db, "password.reset_sent", user.id, timedelta(hours=1)) >= EMAILS_PER_HOUR:
@@ -196,7 +209,9 @@ def _refresh_value(session_id: uuid.UUID, secret: str) -> str:
     return f"{session_id}.{secret}"
 
 
-async def _pick_company(db: AsyncSession, user: User, rows: list[tuple[Membership, Company]]) -> uuid.UUID | None:
+async def _pick_company(
+    db: AsyncSession, user: User, rows: list[tuple[Membership, Company]]
+) -> uuid.UUID | None:
     if len(rows) == 1:
         return rows[0][1].id
     if not rows:
@@ -284,7 +299,9 @@ async def refresh(db: AsyncSession, refresh_token: str) -> SessionOut:
     if not hmac.compare_digest(sess.refresh_token_hash, digest(secret)):
         # an old refresh token was replayed: someone may have copied it, so end this session
         sess.revoked_at = now()
-        await audit.record(db, "session.reuse_detected", actor_id=sess.user_id, target_type="session", target_id=sess.id)
+        await audit.record(
+            db, "session.reuse_detected", actor_id=sess.user_id, target_type="session", target_id=sess.id
+        )
         await db.commit()
         raise Unauthorized("session_ended", "Please sign in again.")
     user = await db.get(User, sess.user_id)
@@ -293,11 +310,15 @@ async def refresh(db: AsyncSession, refresh_token: str) -> SessionOut:
     return await _rotate(db, user, sess)
 
 
-async def switch_company(db: AsyncSession, user: User, session_id: uuid.UUID, company_id: uuid.UUID) -> SessionOut:
+async def switch_company(
+    db: AsyncSession, user: User, session_id: uuid.UUID, company_id: uuid.UUID
+) -> SessionOut:
     member = (
         await db.execute(
             select(Membership.id).where(
-                Membership.user_id == user.id, Membership.company_id == company_id, Membership.status == "active"
+                Membership.user_id == user.id,
+                Membership.company_id == company_id,
+                Membership.status == "active",
             )
         )
     ).first()

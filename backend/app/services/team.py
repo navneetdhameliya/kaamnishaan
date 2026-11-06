@@ -112,7 +112,9 @@ async def invite(db: AsyncSession, p: Principal, body: InvitationCreate, ip: str
     if m:  # was removed before: invite again
         m.role, m.status, m.invited_by, m.joined_at = body.role, "invited", p.user.id, None
     else:
-        m = Membership(company_id=p.company.id, user_id=user.id, role=body.role, status="invited", invited_by=p.user.id)
+        m = Membership(
+            company_id=p.company.id, user_id=user.id, role=body.role, status="invited", invited_by=p.user.id
+        )
         db.add(m)
     await db.flush()
     await _issue(db, p, m, phone, body.name)
@@ -181,7 +183,11 @@ async def patch_member(db: AsyncSession, p: Principal, member_id: uuid.UUID, bod
         m.status = "removed"
         await db.execute(
             update(Invitation)
-            .where(Invitation.membership_id == m.id, Invitation.accepted_at.is_(None), Invitation.revoked_at.is_(None))
+            .where(
+                Invitation.membership_id == m.id,
+                Invitation.accepted_at.is_(None),
+                Invitation.revoked_at.is_(None),
+            )
             .values(revoked_at=now())
         )
         await db.execute(

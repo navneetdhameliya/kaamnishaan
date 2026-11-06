@@ -48,11 +48,14 @@ class Settings(BaseSettings):
 
     @model_validator(mode="after")
     def _real_secret_outside_local(self) -> "Settings":
-        weak = self.secret_key.get_secret_value() in ("", "change-me-locally-only") or len(
-            self.secret_key.get_secret_value()
-        ) < 32
+        weak = (
+            self.secret_key.get_secret_value() in ("", "change-me-locally-only")
+            or len(self.secret_key.get_secret_value()) < 32
+        )
         if self.env in ("staging", "production") and weak:
-            raise ValueError("KN_SECRET_KEY must be a strong random value (32+ characters) outside local/test")
+            raise ValueError(
+                "KN_SECRET_KEY must be a strong random value (32+ characters) outside local/test"
+            )
         return self
 
     @property

@@ -50,4 +50,6 @@ async def active_memberships(db: AsyncSession, user_id: uuid.UUID) -> list[tuple
 
 
 def choices(rows: list[tuple[Membership, Company]], active_id: uuid.UUID | None) -> list[CompanyChoice]:
-    return [CompanyChoice(company_id=c.id, name=c.name, role=m.role, active=c.id == active_id) for m, c in rows]
+    return [
+        CompanyChoice(company_id=c.id, name=c.name, role=m.role, active=c.id == active_id) for m, c in rows
+    ]

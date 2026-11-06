@@ -38,6 +38,10 @@ ignore = ["S101"]
 
 [tool.ruff.lint.per-file-ignores]
 "alembic/versions/*" = ["E501"]
+"tests/*" = ["S105", "S106"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Header", "fastapi.Query", "app.core.deps.requires"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["app"]

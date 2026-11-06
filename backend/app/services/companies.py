@@ -39,7 +39,9 @@ async def create_company(
     )
     db.add(company)
     await db.flush()
-    membership = Membership(company_id=company.id, user_id=user.id, role="owner", status="active", joined_at=t)
+    membership = Membership(
+        company_id=company.id, user_id=user.id, role="owner", status="active", joined_at=t
+    )
     db.add(membership)
     # the new company becomes the one this session works in
     sess = await db.get(AuthSession, session_id)
@@ -53,7 +55,9 @@ async def create_company(
     return company, membership
 
 
-async def update_company(db: AsyncSession, company: Company, body: CompanyUpdate, actor: User, role: str) -> Company:
+async def update_company(
+    db: AsyncSession, company: Company, body: CompanyUpdate, actor: User, role: str
+) -> Company:
     changed: dict = {}
     if body.name is not None:
         company.name = changed["name"] = body.name
