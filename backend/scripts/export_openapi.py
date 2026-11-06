@@ -17,6 +17,8 @@ OUT = Path(__file__).resolve().parents[2] / "shared" / "api" / "openapi.generate
 
 def main() -> int:
     spec = create_app().openapi()
+    # the local-only test inbox is not part of the contract
+    spec["paths"] = {k: v for k, v in spec["paths"].items() if not k.startswith("/api/v1/dev/")}
     text = json.dumps(spec, indent=2, ensure_ascii=False, sort_keys=True) + "\n"
     if "--check" in sys.argv:
         if not OUT.exists() or OUT.read_text(encoding="utf-8") != text:
