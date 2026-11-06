@@ -1,6 +1,11 @@
-"""Sign in by phone code (technicians, managers) or email + password (owners, web), sessions, refresh."""
+"""Sign in by phone code (technicians, also owners/managers) or email + password (owners, managers).
+
+Rules from the API document: code valid 10 minutes, 3 wrong tries, 5 codes per hour per phone;
+email login locks for 15 minutes after 5 failures; refresh tokens rotate and last 30 days from last use.
+"""
 
 import hmac
+import re
 import uuid
 from datetime import timedelta
 
@@ -24,24 +29,37 @@ from app.core.security import (
     read_link_token,
     verify_password,
 )
-from app.models import AuthSession, Company, Membership, OtpChallenge, User
+from app.models import AuthSession, Company, LoginAttempt, Membership, OtpChallenge, User
 from app.providers.messaging import send_email, send_sms
 from app.schemas.identity import SessionOut
-from app.services import audit
+from app.services import audit, team
 from app.services.views import active_memberships, choices, me_out
 
-OTP_TTL = timedelta(minutes=5)
-OTP_MAX_ATTEMPTS = 5
+OTP_TTL = timedelta(minutes=10)
+OTP_MAX_ATTEMPTS = 3
 OTP_RESEND_AFTER_S = 45
 OTP_PER_PHONE_HOUR = 5
 OTP_PER_IP_HOUR = 20
-EMAIL_VERIFY_TTL = timedelta(days=3)
+LOGIN_MAX_FAILS = 5
+LOGIN_LOCK = timedelta(minutes=15)
+EMAIL_VERIFY_TTL = timedelta(hours=24)
 RESET_TTL = timedelta(minutes=30)
 EMAILS_PER_HOUR = 3
+PASSWORD_MIN = 8
+
+
+def check_password(pw: str) -> None:
+    if len(pw) < PASSWORD_MIN or not re.search(r"[A-Za-z]", pw) or not re.search(r"\d", pw):
+        raise AppError(
+            "password_weak",
+            "Use at least 8 characters with letters and numbers.",
+            {"min_length": PASSWORD_MIN},
+            fields={"password": "password_weak"},
+        )
 
 
 # ---- phone codes ----------------------------------------------------------------------
-async def request_otp(db: AsyncSession, raw_phone: str, purpose: str, ip: str | None) -> OtpChallenge:
+async def send_otp(db: AsyncSession, raw_phone: str, purpose: str, ip: str | None) -> OtpChallenge:
     phone = normalize_phone(raw_phone, get_settings().default_country)
     t = now()
     last = (
@@ -54,9 +72,7 @@ async def request_otp(db: AsyncSession, raw_phone: str, purpose: str, ip: str | 
     ).scalar_one_or_none()
     if last and (t - last.created_at).total_seconds() < OTP_RESEND_AFTER_S:
         wait = OTP_RESEND_AFTER_S - int((t - last.created_at).total_seconds())
-        raise RateLimited(
-            "otp_too_soon", "Please wait before asking for a new code.", {"retry_after_s": wait}
-        )
+        raise RateLimited("rate_limited", "Please wait before asking for a new code.", {"resend_after": wait})
     hour = t - timedelta(hours=1)
     per_phone = (
         await db.execute(
@@ -72,7 +88,7 @@ async def request_otp(db: AsyncSession, raw_phone: str, purpose: str, ip: str | 
         ).scalar_one()
     if per_phone >= OTP_PER_PHONE_HOUR or per_ip >= OTP_PER_IP_HOUR:
         raise RateLimited(
-            "otp_limit", "Too many codes asked for. Try again in an hour.", {"retry_after_s": 3600}
+            "otp_too_many", "Too many codes asked for. Try again in an hour.", {"resend_after": 3600}
         )
 
     code = otp_code()
@@ -88,18 +104,17 @@ async def verify_otp(
 ) -> tuple[SessionOut, bool]:
     """Returns the session and whether a new account was made."""
     ch = await db.get(OtpChallenge, challenge_id, with_for_update=True)
-    if not ch or ch.consumed_at:
-        raise AppError("otp_invalid", "This code is not valid. Ask for a new one.")
-    if ch.expires_at < now():
+    if not ch or ch.consumed_at or ch.expires_at < now():
         raise AppError("otp_expired", "This code has expired. Ask for a new one.")
     if ch.attempts >= OTP_MAX_ATTEMPTS:
-        raise AppError("otp_locked", "Too many wrong tries. Ask for a new code.")
+        raise AppError("otp_too_many", "Too many wrong tries. Ask for a new code.", {"attempts_left": 0})
     ch.attempts += 1
     if not hmac.compare_digest(ch.code_hash, digest(code)):
         left = OTP_MAX_ATTEMPTS - ch.attempts
-        # commit the failed attempt even though we answer with an error
-        await db.commit()
-        raise AppError("otp_wrong", "That code is not right.", {"attempts_left": left})
+        await db.commit()  # keep the failed try even though we answer with an error
+        if left == 0:
+            raise AppError("otp_too_many", "Too many wrong tries. Ask for a new code.", {"attempts_left": 0})
+        raise AppError("otp_invalid", "That code is not right.", {"attempts_left": left})
     ch.consumed_at = now()
 
     user = (await db.execute(select(User).where(User.phone == ch.phone))).scalar_one_or_none()
@@ -116,29 +131,85 @@ async def verify_otp(
 
 
 # ---- email + password -------------------------------------------------------------------
-async def login_email(db: AsyncSession, email: str, password: str) -> SessionOut:
-    user = (
-        await db.execute(select(User).where(func.lower(User.email) == email.lower()))
-    ).scalar_one_or_none()
-    # same answer for unknown email and wrong password
+async def _lock_state(db: AsyncSession, ident: str) -> tuple[int, object]:
+    """Failures since the last success inside the lock window, and when the lock ends."""
+    since = now() - LOGIN_LOCK
+    last_ok = (
+        await db.execute(
+            select(func.max(LoginAttempt.created_at)).where(
+                LoginAttempt.identifier == ident, LoginAttempt.success.is_(True)
+            )
+        )
+    ).scalar_one()
+    start = max(since, last_ok) if last_ok else since
+    fails = (
+        (
+            await db.execute(
+                select(LoginAttempt.created_at)
+                .where(
+                    LoginAttempt.identifier == ident,
+                    LoginAttempt.success.is_(False),
+                    LoginAttempt.created_at > start,
+                )
+                .order_by(LoginAttempt.created_at)
+            )
+        )
+        .scalars()
+        .all()
+    )
+    locked_until = fails[-1] + LOGIN_LOCK if len(fails) >= LOGIN_MAX_FAILS else None
+    return len(fails), locked_until
+
+
+async def login_email(db: AsyncSession, email: str, password: str, ip: str | None) -> SessionOut:
+    ident = email.lower()
+    fails, locked_until = await _lock_state(db, ident)
+    if locked_until:
+        raise Forbidden(
+            "account_locked",
+            "Too many wrong tries. Try again later.",
+            {"locked_until": locked_until.isoformat()},
+        )
+    user = (await db.execute(select(User).where(func.lower(User.email) == ident))).scalar_one_or_none()
+    # same answer for an unknown email and a wrong password
     if not user or not verify_password(password, user.password_hash):
-        raise Unauthorized("wrong_credentials", "Email or password is not right.")
+        db.add(LoginAttempt(identifier=ident, success=False, ip=ip))
+        await db.commit()
+        left = LOGIN_MAX_FAILS - fails - 1
+        if left <= 0:
+            until = now() + LOGIN_LOCK
+            raise Forbidden(
+                "account_locked",
+                "Too many wrong tries. Try again later.",
+                {"locked_until": until.isoformat()},
+            )
+        raise Unauthorized("login_invalid", "Email or password is not right.", {"attempts_left": left})
     if user.status == "disabled":
         raise Unauthorized("account_disabled", "This account is turned off.")
+    db.add(LoginAttempt(identifier=ident, success=True, ip=ip))
     return await start_session(db, user)
 
 
-async def signup_owner(
+async def register_owner(
     db: AsyncSession, *, name: str, email: str, password: str, phone: str | None
 ) -> SessionOut:
     email = email.lower()
+    check_password(password)
     if (await db.execute(select(User.id).where(func.lower(User.email) == email))).first():
-        raise Conflict("email_taken", "An account with this email already exists. Sign in instead.")
+        raise Conflict(
+            "email_taken",
+            "An account with this email already exists. Log in instead.",
+            fields={"email": "taken"},
+        )
     e164 = None
     if phone:
         e164 = normalize_phone(phone, get_settings().default_country)
         if (await db.execute(select(User.id).where(User.phone == e164))).first():
-            raise Conflict("phone_taken", "This phone number already has an account. Sign in with it.")
+            raise Conflict(
+                "phone_taken",
+                "This phone number already has an account. Log in with it.",
+                fields={"phone": "taken"},
+            )
     user = User(name=name, email=email, phone=e164, password_hash=hash_password(password), status="active")
     db.add(user)
     await db.flush()
@@ -148,18 +219,32 @@ async def signup_owner(
 
 async def _send_verification(db: AsyncSession, user: User) -> None:
     if await audit.count_recent(db, "email.verify_sent", user.id, timedelta(hours=1)) >= EMAILS_PER_HOUR:
-        raise RateLimited("email_limit", "We've sent a few emails already. Try again later.")
+        raise RateLimited("rate_limited", "We've sent a few emails already. Try again later.")
     token = create_link_token("email_verify", str(user.id), EMAIL_VERIFY_TTL, fingerprint=user.email or "")
     link = f"{get_settings().web_url}/verify-email?token={token}"
     await send_email(user.email, "verify_email", "Confirm your email", name=user.name or "", link=link)
     await audit.record(db, "email.verify_sent", actor_id=user.id, target_type="user", target_id=user.id)
 
 
-async def resend_verification(db: AsyncSession, user: User) -> None:
+async def send_verification(db: AsyncSession, user: User) -> None:
     if not user.email:
         raise AppError("no_email", "Add an email first.")
+    if not user.email_verified_at:
+        await _send_verification(db, user)
+
+
+async def change_email(db: AsyncSession, user: User, email: str) -> None:
+    """M09 "Wrong email? Change it": only before the email is confirmed."""
+    email = email.lower()
     if user.email_verified_at:
-        return
+        raise Forbidden("email_verified", "This email is already confirmed.")
+    taken = (
+        await db.execute(select(User.id).where(func.lower(User.email) == email, User.id != user.id))
+    ).first()
+    if taken:
+        raise Conflict("email_taken", "An account with this email already exists.", fields={"email": "taken"})
+    user.email = email
+    await db.flush()
     await _send_verification(db, user)
 
 
@@ -167,7 +252,7 @@ async def verify_email(db: AsyncSession, token: str) -> None:
     claims = read_link_token(token, "email_verify")
     user = await db.get(User, uuid.UUID(claims["sub"]))
     if not user or (user.email or "") != claims.get("fp"):
-        raise Gone("link_invalid", "This link is not valid.")
+        raise Gone("link_revoked", "This link is no longer valid.")
     if not user.email_verified_at:
         user.email_verified_at = now()
 
@@ -191,12 +276,12 @@ async def forgot_password(db: AsyncSession, email: str) -> None:
 
 async def reset_password(db: AsyncSession, token: str, password: str) -> None:
     claims = read_link_token(token, "password_reset")
+    check_password(password)
     user = await db.get(User, uuid.UUID(claims["sub"]))
     if not user or password_fingerprint(user.password_hash) != claims.get("fp"):
-        raise Gone("link_invalid", "This link was already used or is not valid.")
+        raise Gone("link_revoked", "This link was already used or is not valid.")
     user.password_hash = hash_password(password)
-    # sign out everywhere
-    await db.execute(
+    await db.execute(  # sign out everywhere
         update(AuthSession)
         .where(AuthSession.user_id == user.id, AuthSession.revoked_at.is_(None))
         .values(revoked_at=now())
@@ -205,10 +290,6 @@ async def reset_password(db: AsyncSession, token: str, password: str) -> None:
 
 
 # ---- sessions ------------------------------------------------------------------------------
-def _refresh_value(session_id: uuid.UUID, secret: str) -> str:
-    return f"{session_id}.{secret}"
-
-
 async def _pick_company(
     db: AsyncSession, user: User, rows: list[tuple[Membership, Company]]
 ) -> uuid.UUID | None:
@@ -225,15 +306,14 @@ async def _pick_company(
             .limit(1)
         )
     ).scalar_one_or_none()
-    ids = {c.id for _, c in rows}
-    return last if last in ids else None
+    return last if last in {c.id for _, c in rows} else None
 
 
 async def start_session(
     db: AsyncSession, user: User, *, device_id: str | None = None, company_id: uuid.UUID | None = None
 ) -> SessionOut:
     rows = await active_memberships(db, user.id)
-    active = company_id if company_id else await _pick_company(db, user, rows)
+    active = company_id or await _pick_company(db, user, rows)
     secret = random_token()
     sess = AuthSession(
         user_id=user.id,
@@ -246,12 +326,13 @@ async def start_session(
     db.add(sess)
     user.last_seen_at = now()
     await db.flush()
-    return _session_out(user, sess, rows, secret)
+    return await _session_out(db, user, sess, rows, secret)
 
 
-def _session_out(user: User, sess: AuthSession, rows, secret: str) -> SessionOut:
+async def _session_out(db: AsyncSession, user: User, sess: AuthSession, rows, secret: str) -> SessionOut:
     current = next(((m, c) for m, c in rows if c.id == sess.active_company_id), None)
     m, c = current if current else (None, None)
+    invites = await team.my_invites(db, user, include_expired=False)
     needs = []
     if not user.name:
         needs.append("profile")
@@ -265,11 +346,12 @@ def _session_out(user: User, sess: AuthSession, rows, secret: str) -> SessionOut
         access_token=create_access_token(
             user_id=user.id, session_id=sess.id, company_id=c.id if c else None, role=m.role if m else None
         ),
-        refresh_token=_refresh_value(sess.id, secret),
+        refresh_token=f"{sess.id}.{secret}",
         expires_in=int(ACCESS_TTL.total_seconds()),
         user=me_out(user, c, m),
         needs=needs,
         companies=choices(rows, sess.active_company_id),
+        invites=invites,
     )
 
 
@@ -282,9 +364,10 @@ async def _rotate(db: AsyncSession, user: User, sess: AuthSession) -> SessionOut
     secret = random_token()
     sess.refresh_token_hash = digest(secret)
     sess.last_used_at = now()
+    sess.expires_at = now() + REFRESH_TTL  # sliding: active users are never logged out
     user.last_seen_at = now()
     await db.flush()
-    return _session_out(user, sess, rows, secret)
+    return await _session_out(db, user, sess, rows, secret)
 
 
 async def refresh(db: AsyncSession, refresh_token: str) -> SessionOut:
@@ -292,10 +375,10 @@ async def refresh(db: AsyncSession, refresh_token: str) -> SessionOut:
         sid, secret = refresh_token.split(".", 1)
         session_id = uuid.UUID(sid)
     except ValueError as e:
-        raise Unauthorized("invalid_token", "Please sign in again.") from e
+        raise Unauthorized("invalid_token", "Please log in again.") from e
     sess = await db.get(AuthSession, session_id, with_for_update=True)
     if not sess or sess.revoked_at or sess.expires_at < now():
-        raise Unauthorized("session_ended", "Please sign in again.")
+        raise Unauthorized("session_ended", "Please log in again.")
     if not hmac.compare_digest(sess.refresh_token_hash, digest(secret)):
         # an old refresh token was replayed: someone may have copied it, so end this session
         sess.revoked_at = now()
@@ -303,7 +386,7 @@ async def refresh(db: AsyncSession, refresh_token: str) -> SessionOut:
             db, "session.reuse_detected", actor_id=sess.user_id, target_type="session", target_id=sess.id
         )
         await db.commit()
-        raise Unauthorized("session_ended", "Please sign in again.")
+        raise Unauthorized("session_ended", "Please log in again.")
     user = await db.get(User, sess.user_id)
     if not user or user.status == "disabled":
         raise Unauthorized("account_disabled", "This account is turned off.")

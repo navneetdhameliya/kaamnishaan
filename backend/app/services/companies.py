@@ -1,4 +1,4 @@
-"""Create a company (owner + 14-day Professional trial) and change its details."""
+"""Create a company (owner + 14-day Professional trial, no card) and change its details or settings."""
 
 from datetime import timedelta
 
@@ -8,25 +8,26 @@ from app.core.config import get_settings
 from app.core.errors import AppError
 from app.core.security import now
 from app.models import AuthSession, Company, Industry, Membership, User
-from app.schemas.identity import CompanyCreate, CompanySettings, CompanyUpdate
+from app.schemas.identity import CompanyCreate, CompanySettings, CompanySettingsUpdate, CompanyUpdate
 from app.services import audit
 
 CURRENCY_BY_COUNTRY = {"IN": "INR"}
 
 
-async def _check_industry(db: AsyncSession, slug: str) -> None:
-    if not await db.get(Industry, slug):
-        raise AppError("unknown_industry", "Pick an industry from the list.", {"field": "industry"})
+async def _check_trade(db: AsyncSession, slug: str) -> None:
+    ind = await db.get(Industry, slug)
+    if not ind or ind.status != "live":
+        raise AppError("validation_error", "Pick a trade from the list.", fields={"trade": "unknown"})
 
 
 async def create_company(
     db: AsyncSession, user: User, session_id, body: CompanyCreate, ip: str | None
 ) -> tuple[Company, Membership]:
-    await _check_industry(db, body.industry)
+    await _check_trade(db, body.trade)
     t = now()
     company = Company(
         name=body.name,
-        industry_slug=body.industry,
+        industry_slug=body.trade,
         country=body.country,
         timezone=body.timezone,
         currency=CURRENCY_BY_COUNTRY.get(body.country, "USD"),
@@ -43,9 +44,8 @@ async def create_company(
         company_id=company.id, user_id=user.id, role="owner", status="active", joined_at=t
     )
     db.add(membership)
-    # the new company becomes the one this session works in
     sess = await db.get(AuthSession, session_id)
-    if sess:
+    if sess:  # the new company becomes the one this session works in
         sess.active_company_id = company.id
     await audit.record(
         db, "company.created", company_id=company.id, actor_id=user.id, actor_role="owner",
@@ -58,28 +58,41 @@ async def create_company(
 async def update_company(
     db: AsyncSession, company: Company, body: CompanyUpdate, actor: User, role: str
 ) -> Company:
-    changed: dict = {}
-    if body.name is not None:
-        company.name = changed["name"] = body.name
-    if body.industry is not None:
-        await _check_industry(db, body.industry)
-        company.industry_slug = changed["industry"] = body.industry
-    if body.report_language is not None:
-        company.report_language = changed["report_language"] = body.report_language
-    if body.settings is not None:
-        allowed = CompanySettings.model_fields
-        unknown = set(body.settings) - set(allowed)
-        if unknown:
-            raise AppError("unknown_setting", "Some settings are not known.", {"fields": sorted(unknown)})
-        for k, v in body.settings.items():
-            if not isinstance(v, bool):
-                raise AppError("invalid_setting", "Settings must be on or off.", {"field": k})
-        company.settings = {**(company.settings or {}), **body.settings}
-        changed["settings"] = body.settings
-    if changed:
+    before, after = {}, {}
+    for field, col in (("name", "name"), ("trade", "industry_slug"), ("timezone", "timezone")):
+        value = getattr(body, field)
+        if value is None or value == getattr(company, col):
+            continue
+        if field == "trade":
+            await _check_trade(db, value)
+        before[field], after[field] = getattr(company, col), value
+        setattr(company, col, value)
+    if after:
         await audit.record(
             db, "company.updated", company_id=company.id, actor_id=actor.id, actor_role=role,
-            target_type="company", target_id=company.id, data=changed,
+            target_type="company", target_id=company.id, data={"before": before, "after": after},
+        )  # fmt: skip
+    await db.flush()
+    return company
+
+
+async def update_settings(
+    db: AsyncSession, company: Company, body: CompanySettingsUpdate, actor: User, role: str
+) -> Company:
+    changes = body.model_dump(exclude_none=True)
+    before = {}
+    if "report_language" in changes:
+        before["report_language"] = company.report_language
+        company.report_language = changes.pop("report_language")
+    if changes:
+        current = company.settings or {}
+        before.update({k: current.get(k) for k in changes})
+        company.settings = {**current, **changes}
+    if before:
+        await audit.record(
+            db, "company.settings_changed", company_id=company.id, actor_id=actor.id, actor_role=role,
+            target_type="company", target_id=company.id,
+            data={"before": before, "after": body.model_dump(exclude_none=True)},
         )  # fmt: skip
     await db.flush()
     return company

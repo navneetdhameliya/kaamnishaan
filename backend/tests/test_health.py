@@ -5,7 +5,7 @@ from app.main import create_app
 
 async def test_health_ok() -> None:
     async with AsyncClient(transport=ASGITransport(app=create_app()), base_url="http://t") as c:
-        r = await c.get("/v1/health")
+        r = await c.get("/api/v1/health")
     assert r.status_code == 200
     body = r.json()
     assert body["status"] == "ok"
@@ -16,6 +16,7 @@ async def test_docs_hidden_in_production(monkeypatch) -> None:
     from app.core import config
 
     monkeypatch.setenv("KN_ENV", "production")
+    monkeypatch.setenv("KN_SECRET_KEY", "x" * 40)
     config.get_settings.cache_clear()
     try:
         async with AsyncClient(transport=ASGITransport(app=create_app()), base_url="http://t") as c:

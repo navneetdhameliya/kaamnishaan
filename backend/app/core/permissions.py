@@ -1,16 +1,19 @@
-"""What each role may do. Screens hide buttons from this list; the API enforces it again."""
+"""What each role may do (API document, Roles and permissions; Figma A10).
 
-OWNER = {
-    "company.manage", "billing.manage", "team.invite_manager", "team.invite_technician", "team.manage",
-    "customers.manage", "jobs.create", "jobs.assign", "jobs.view_all", "reports.approve", "reports.share",
-    "reviews.manage", "reviews.request", "checklists.manage",
+Screens hide or disable buttons from this list; the API enforces it again on every call.
+"""
+
+_SHARED = {
+    "company.view", "customers.manage", "jobs.create", "jobs.assign", "jobs.view_all",
+    "evidence.capture", "reports.edit", "reports.approve", "reports.share",
+    "checklists.manage", "reviews.request", "reviews.view_all", "reviews.reply",
+    "reviews.settings", "ai.assistant", "team.view", "team.invite_technician",
 }  # fmt: skip
-MANAGER = {
-    "team.invite_technician", "team.manage", "customers.manage", "jobs.create", "jobs.assign",
-    "jobs.view_all", "reports.approve", "reports.share", "reviews.manage", "reviews.request",
-    "checklists.manage",
+OWNER = _SHARED | {
+    "company.manage", "billing.manage", "team.invite_manager", "team.manage_managers", "audit.view",
 }  # fmt: skip
-TECHNICIAN = {"jobs.create_quick", "jobs.view_own", "evidence.capture", "reports.submit"}
+MANAGER = set(_SHARED)
+TECHNICIAN = {"jobs.create_quick", "jobs.view_own", "evidence.capture", "reports.edit_own", "reports.submit"}
 
 
 def permissions_for(role: str | None, company_settings: dict | None = None) -> set[str]:
@@ -25,5 +28,7 @@ def permissions_for(role: str | None, company_settings: dict | None = None) -> s
             perms.add("reports.share")
         if s.get("technicians_can_request_reviews", True):
             perms.add("reviews.request")
+        if s.get("techs_see_reviews", True):
+            perms.add("reviews.view_own")
         return perms
     return set()

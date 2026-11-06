@@ -46,6 +46,9 @@ class User(IdMixin, TimestampMixin, Base):
     status: Mapped[str] = mapped_column(
         str_enum("invited", "active", "disabled", name="user_status"), default="active"
     )
+    theme: Mapped[str] = mapped_column(
+        str_enum("system", "light", "dark", name="theme"), default="system", server_default="system"
+    )
     is_super_admin: Mapped[bool] = mapped_column(Boolean, default=False, server_default=text("false"))
     last_seen_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
@@ -101,7 +104,11 @@ class Invitation(IdMixin, TimestampMixin, Base):
     role: Mapped[str] = mapped_column(str_enum(*ROLES, name="role"))
     token_hash: Mapped[str] = mapped_column(String(64), unique=True)
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
+    sms_language: Mapped[str] = mapped_column(
+        str_enum(*LOCALES, name="locale"), default="en", server_default="en"
+    )
     accepted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    declined_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     invited_by: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id"))
 
@@ -118,6 +125,17 @@ class OtpChallenge(IdMixin, TimestampMixin, Base):
     expires_at: Mapped[datetime] = mapped_column(DateTime(timezone=True))
     consumed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     ip: Mapped[str | None] = mapped_column(INET)
+
+
+class LoginAttempt(IdMixin, Base):
+    """Email/password tries, for the 5-fails-then-15-minutes lockout (M06, A01)."""
+
+    __tablename__ = "login_attempts"
+
+    identifier: Mapped[str] = mapped_column(String(254), index=True)  # lower-cased email
+    success: Mapped[bool] = mapped_column(Boolean)
+    ip: Mapped[str | None] = mapped_column(INET)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
 
 
 class AuthSession(IdMixin, TimestampMixin, Base):
@@ -142,7 +160,9 @@ class Device(IdMixin, TimestampMixin, Base):
 
     user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
     push_token: Mapped[str] = mapped_column(String(512))
-    platform: Mapped[str] = mapped_column(str_enum("android", "ios", "macos", "web", name="platform"))
+    platform: Mapped[str] = mapped_column(
+        str_enum("android", "ios", "ipados", "macos", "web", name="platform")
+    )
     app_version: Mapped[str | None] = mapped_column(String(32))
     last_seen_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 

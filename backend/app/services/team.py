@@ -1,24 +1,30 @@
-"""Invite people by phone, resend, change role or remove, and accept an invitation."""
+"""Team list, role changes, removal, and phone invites (M10, M40).
+
+Invite lifecycle: pending -> accepted / declined / expired (7 days) / revoked.
+An invited person gets a membership with status "invited" so seats are counted from the first SMS.
+"""
 
 import uuid
 from datetime import timedelta
 
-from sqlalchemy import func, or_, select, update
+from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
 from app.core.deps import Principal
-from app.core.errors import AppError, Conflict, Forbidden, Gone, NotFound, PlanLimit, RateLimited
+from app.core.errors import Conflict, Forbidden, Gone, NotFound, PlanLimit, RateLimited
 from app.core.security import digest, normalize_phone, now, random_token
 from app.models import AuthSession, Company, Invitation, Membership, Plan, User
-from app.providers.messaging import send_sms
+from app.providers.messaging import SMS_TEMPLATES, send_sms
 from app.schemas.identity import (
-    InvitationCreate,
-    InvitationPreview,
+    InviteCompany,
+    InviteCreate,
+    InviteOut,
+    InviterOut,
+    ListMeta,
+    MemberList,
     MemberOut,
-    MemberPatch,
-    PendingInvitation,
-    PersonRef,
+    MyInvite,
 )
 from app.services import audit
 
@@ -26,30 +32,156 @@ INVITE_TTL = timedelta(days=7)
 RESEND_AFTER = timedelta(seconds=60)
 
 
-def member_out(m: Membership, u: User, invited_name: str | None = None) -> MemberOut:
-    return MemberOut(id=m.id, name=u.name or invited_name or "", phone=u.phone, role=m.role, status=m.status)
+def _invite_status(inv: Invitation) -> str:
+    if inv.accepted_at:
+        return "accepted"
+    if inv.declined_at:
+        return "declined"
+    if inv.revoked_at:
+        return "revoked"
+    if inv.expires_at < now():
+        return "expired"
+    return "pending"
 
 
-async def list_members(db: AsyncSession, company_id: uuid.UUID, role: str | None) -> list[MemberOut]:
-    pending_name = (
-        select(Invitation.name)
-        .where(Invitation.membership_id == Membership.id, Invitation.accepted_at.is_(None))
-        .order_by(Invitation.created_at.desc())
-        .limit(1)
-        .scalar_subquery()
+def _open_invite_filter():
+    return (
+        Invitation.accepted_at.is_(None),
+        Invitation.declined_at.is_(None),
+        Invitation.revoked_at.is_(None),
     )
-    q = (
-        select(Membership, User, pending_name)
+
+
+# ---- team list -------------------------------------------------------------------------------
+async def list_members(
+    db: AsyncSession, company_id: uuid.UUID, role: str | None, q: str | None
+) -> MemberList:
+    inv = (
+        select(Invitation.id, Invitation.name, Invitation.membership_id)
+        .where(Invitation.company_id == company_id, *_open_invite_filter())
+        .distinct(Invitation.membership_id)
+        .order_by(Invitation.membership_id, Invitation.created_at.desc())
+        .subquery()
+    )
+    base = (
+        select(Membership, User, inv.c.id, inv.c.name)
         .join(User, User.id == Membership.user_id)
-        .where(Membership.company_id == company_id, Membership.status != "removed")
-        .order_by(Membership.role, func.coalesce(User.name, pending_name))
+        .outerjoin(inv, inv.c.membership_id == Membership.id)
+        .where(Membership.company_id == company_id, Membership.status.in_(("active", "invited")))
     )
-    if role:
-        q = q.where(Membership.role == role)
-    return [member_out(m, u, n) for m, u, n in (await db.execute(q)).all()]
+    rows = (await db.execute(base)).all()
+    counts = {"all": len(rows), "owner": 0, "manager": 0, "technician": 0, "invited": 0}
+    for m, *_ in rows:
+        counts[m.role] += 1
+        counts["invited"] += m.status == "invited"
+
+    def keep(m: Membership, u: User, inv_name: str | None) -> bool:
+        if role and m.role != role:
+            return False
+        if q:
+            needle = q.lower()
+            hay = " ".join(filter(None, [u.name, inv_name, u.phone])).lower()
+            return needle in hay
+        return True
+
+    order = {"owner": 0, "manager": 1, "technician": 2}
+    items = [
+        MemberOut(
+            id=u.id,
+            name=u.name or inv_name or "",
+            phone=u.phone,
+            role=m.role,
+            status=m.status,
+            invite_id=inv_id if m.status == "invited" else None,
+            joined_at=m.joined_at,
+        )
+        for m, u, inv_id, inv_name in sorted(
+            rows, key=lambda r: (order[r[0].role], (r[1].name or r[3] or ""))
+        )
+        if keep(m, u, inv_name)
+    ]
+    return MemberList(data=items, meta=ListMeta(counts=counts))
 
 
-async def _check_technician_limit(db: AsyncSession, company: Company) -> None:
+async def _member(db: AsyncSession, company_id: uuid.UUID, user_id: uuid.UUID) -> tuple[Membership, User]:
+    row = (
+        await db.execute(
+            select(Membership, User)
+            .join(User, User.id == Membership.user_id)
+            .where(
+                Membership.company_id == company_id,
+                Membership.user_id == user_id,
+                Membership.status.in_(("active", "invited")),
+            )
+        )
+    ).first()
+    if not row:
+        raise NotFound("member_not_found", "Team member not found.")
+    return row
+
+
+async def get_member(db: AsyncSession, p: Principal, user_id: uuid.UUID) -> MemberOut:
+    members = await list_members(db, p.company_id, None, None)
+    for m in members.data:
+        if m.id == user_id:
+            return m
+    raise NotFound("member_not_found", "Team member not found.")
+
+
+def _can_manage(p: Principal, m: Membership) -> None:
+    if m.user_id == p.user.id:
+        raise Forbidden("cannot_change_self", "You can't change your own role or remove yourself.")
+    if m.role == "owner":
+        raise Forbidden("cannot_change_owner", "The owner can't be changed here.")
+    if m.role == "manager" and "team.manage_managers" not in p.permissions:
+        raise Forbidden("owner_only", "Only the owner can manage managers.")
+
+
+async def change_role(db: AsyncSession, p: Principal, user_id: uuid.UUID, role: str) -> MemberOut:
+    m, u = await _member(db, p.company_id, user_id)
+    _can_manage(p, m)
+    if role == "manager":
+        p.require("team.manage_managers")
+    if role != m.role:
+        if role == "technician":
+            await _check_seats(db, p.company)
+        old, m.role = m.role, role
+        await db.execute(
+            update(Invitation)
+            .where(Invitation.membership_id == m.id, *_open_invite_filter())
+            .values(role=role)
+        )
+        await audit.record(
+            db, "team.role_changed", company_id=p.company_id, actor_id=p.user.id, actor_role=p.role,
+            target_type="user", target_id=u.id, data={"before": old, "after": role},
+        )  # fmt: skip
+        await db.flush()
+    return await get_member(db, p, user_id)
+
+
+async def remove(db: AsyncSession, p: Principal, user_id: uuid.UUID) -> None:
+    m, u = await _member(db, p.company_id, user_id)
+    _can_manage(p, m)
+    m.status = "removed"
+    await db.execute(
+        update(Invitation)
+        .where(Invitation.membership_id == m.id, *_open_invite_filter())
+        .values(revoked_at=now())
+    )
+    # their open sessions lose this company at once (every request re-checks membership too)
+    await db.execute(
+        update(AuthSession)
+        .where(AuthSession.user_id == m.user_id, AuthSession.active_company_id == p.company_id)
+        .values(active_company_id=None)
+    )
+    await audit.record(
+        db, "team.removed", company_id=p.company_id, actor_id=p.user.id, actor_role=p.role,
+        target_type="user", target_id=u.id, data={"role": m.role},
+    )  # fmt: skip
+
+
+# ---- invites (company side) --------------------------------------------------------------------
+async def _check_seats(db: AsyncSession, company: Company) -> None:
     plan = await db.get(Plan, company.plan_code)
     if not plan or plan.technician_limit is None:
         return
@@ -64,13 +196,19 @@ async def _check_technician_limit(db: AsyncSession, company: Company) -> None:
     ).scalar_one()
     if used >= plan.technician_limit:
         raise PlanLimit(
-            "technician_limit",
+            "seat_limit_reached",
             "Your plan has no free technician seats. Upgrade to add more.",
             {"limit": plan.technician_limit, "used": used, "plan": plan.code},
         )
 
 
-async def _issue(db: AsyncSession, p: Principal, m: Membership, phone: str, name: str) -> Invitation:
+def _sms_text(inviter: str, company: str, link: str) -> str:
+    return SMS_TEMPLATES["invite"].format(inviter=inviter, company=company, link=link)
+
+
+async def _issue(
+    db: AsyncSession, p: Principal, m: Membership, phone: str, name: str, lang: str
+) -> InviteOut:
     token = random_token(24)
     inv = Invitation(
         company_id=m.company_id,
@@ -78,6 +216,7 @@ async def _issue(db: AsyncSession, p: Principal, m: Membership, phone: str, name
         phone=phone,
         name=name,
         role=m.role,
+        sms_language=lang,
         token_hash=digest(token),
         expires_at=now() + INVITE_TTL,
         invited_by=p.user.id,
@@ -85,189 +224,142 @@ async def _issue(db: AsyncSession, p: Principal, m: Membership, phone: str, name
     db.add(inv)
     await db.flush()
     link = f"{get_settings().web_url}/join/{token}"
-    await send_sms(phone, "invite", inviter=p.user.name or "Your team", company=p.company.name, link=link)
-    return inv
+    inviter = p.user.name or "Your team"
+    await send_sms(phone, "invite", inviter=inviter, company=p.company.name, link=link)
+    return InviteOut(
+        id=inv.id, user_id=m.user_id, phone=phone, name=name, role=m.role, status="pending",
+        expires_at=inv.expires_at, sms_preview=_sms_text(inviter, p.company.name, link), link=link,
+    )  # fmt: skip
 
 
-async def invite(db: AsyncSession, p: Principal, body: InvitationCreate, ip: str | None) -> MemberOut:
+async def invite(db: AsyncSession, p: Principal, body: InviteCreate, ip: str | None) -> InviteOut:
     p.require("team.invite_manager" if body.role == "manager" else "team.invite_technician")
     phone = normalize_phone(body.phone, p.company.country or get_settings().default_country)
-    if body.role == "technician":
-        await _check_technician_limit(db, p.company)
-
     user = (await db.execute(select(User).where(User.phone == phone))).scalar_one_or_none()
+    m = None
+    if user:
+        m = (
+            await db.execute(
+                select(Membership).where(Membership.company_id == p.company_id, Membership.user_id == user.id)
+            )
+        ).scalar_one_or_none()
+        if m and m.status in ("active", "invited"):
+            raise Conflict(
+                "phone_in_team",
+                "This number is already on your team."
+                if m.status == "active"
+                else "This number is already invited.",
+                {"existing_member": {"user_id": str(user.id), "status": m.status, "role": m.role}},
+                fields={"phone": "phone_in_team"},
+            )
+    if body.role == "technician":
+        await _check_seats(db, p.company)
     if not user:
         user = User(phone=phone, status="invited")
         db.add(user)
         await db.flush()
-    m = (
-        await db.execute(
-            select(Membership).where(Membership.company_id == p.company.id, Membership.user_id == user.id)
-        )
-    ).scalar_one_or_none()
-    if m and m.status == "active":
-        raise Conflict("already_member", "This person is already on your team.")
-    if m and m.status == "invited":
-        raise Conflict("already_invited", "This person is already invited. Use resend instead.")
-    if m:  # was removed before: invite again
+    if m:  # removed earlier: bring back as invited
         m.role, m.status, m.invited_by, m.joined_at = body.role, "invited", p.user.id, None
     else:
         m = Membership(
-            company_id=p.company.id, user_id=user.id, role=body.role, status="invited", invited_by=p.user.id
+            company_id=p.company_id, user_id=user.id, role=body.role, status="invited", invited_by=p.user.id
         )
         db.add(m)
     await db.flush()
-    await _issue(db, p, m, phone, body.name)
+    out = await _issue(db, p, m, phone, body.name, body.sms_language or p.company.report_language)
     await audit.record(
-        db, "team.invited", company_id=p.company.id, actor_id=p.user.id, actor_role=p.role,
-        target_type="membership", target_id=m.id, data={"role": body.role}, ip=ip,
+        db, "team.invited", company_id=p.company_id, actor_id=p.user.id, actor_role=p.role,
+        target_type="invite", target_id=out.id, data={"role": body.role}, ip=ip,
     )  # fmt: skip
-    return member_out(m, user, body.name)
+    return out
 
 
-async def resend(db: AsyncSession, p: Principal, id_: uuid.UUID) -> None:
-    """`id_` may be the invitation id or the member id shown in the team list."""
+async def _company_invite(db: AsyncSession, p: Principal, invite_id: uuid.UUID) -> Invitation:
     inv = (
         await db.execute(
-            select(Invitation)
-            .where(
-                Invitation.company_id == p.company.id,
-                or_(Invitation.id == id_, Invitation.membership_id == id_),
-                Invitation.accepted_at.is_(None),
-                Invitation.revoked_at.is_(None),
-            )
-            .order_by(Invitation.created_at.desc())
-            .limit(1)
+            select(Invitation).where(Invitation.id == invite_id, Invitation.company_id == p.company_id)
         )
     ).scalar_one_or_none()
     if not inv:
-        raise NotFound("invitation_not_found", "No open invitation found.")
+        raise NotFound("invite_not_found", "Invite not found.")
     p.require("team.invite_manager" if inv.role == "manager" else "team.invite_technician")
+    return inv
+
+
+async def resend(db: AsyncSession, p: Principal, invite_id: uuid.UUID) -> InviteOut:
+    inv = await _company_invite(db, p, invite_id)
+    status = _invite_status(inv)
+    if status in ("accepted", "declined", "revoked"):
+        raise Gone(f"invite_{status}" if status != "revoked" else "invite_revoked", "This invite is closed.")
     if now() - inv.created_at < RESEND_AFTER:
-        raise RateLimited("resend_too_soon", "Please wait a minute before sending again.")
+        raise RateLimited("rate_limited", "Please wait a minute before sending again.", {"resend_after": 60})
     m = await db.get(Membership, inv.membership_id)
-    inv.revoked_at = now()  # the old link stops working
-    await _issue(db, p, m, inv.phone, inv.name)
+    inv.revoked_at = now()  # the old link stops working; a fresh 7-day invite replaces it
+    return await _issue(db, p, m, inv.phone, inv.name, inv.sms_language)
 
 
-async def patch_member(db: AsyncSession, p: Principal, member_id: uuid.UUID, body: MemberPatch) -> MemberOut:
-    p.require("team.manage")
-    row = (
-        await db.execute(
-            select(Membership, User)
-            .join(User, User.id == Membership.user_id)
-            .where(Membership.id == member_id, Membership.company_id == p.company.id)
-        )
-    ).first()
-    if not row:
-        raise NotFound("member_not_found", "Team member not found.")
-    m, u = row
-    if m.user_id == p.user.id:
-        raise Forbidden("cannot_change_self", "You can't change your own role or remove yourself.")
-    if m.role == "owner":
-        raise Forbidden("cannot_change_owner", "The owner can't be changed here.")
-    if body.role == "owner":
-        raise Forbidden("cannot_make_owner", "Ownership transfer is not available yet.")
-    if p.role != "owner" and (m.role == "manager" or body.role == "manager"):
-        raise Forbidden("owner_only", "Only the owner can manage managers.")
-    if body.role and body.role != m.role:
-        if body.role == "technician" and m.status != "removed":
-            await _check_technician_limit(db, p.company)
-        m.role = body.role
-        await db.execute(
-            update(Invitation)
-            .where(Invitation.membership_id == m.id, Invitation.accepted_at.is_(None))
-            .values(role=body.role)
-        )
-    if body.status == "removed" and m.status != "removed":
+async def revoke(db: AsyncSession, p: Principal, invite_id: uuid.UUID) -> None:
+    inv = await _company_invite(db, p, invite_id)
+    if _invite_status(inv) not in ("pending", "expired"):
+        return
+    inv.revoked_at = now()
+    m = await db.get(Membership, inv.membership_id)
+    if m and m.status == "invited":
         m.status = "removed"
-        await db.execute(
-            update(Invitation)
-            .where(
-                Invitation.membership_id == m.id,
-                Invitation.accepted_at.is_(None),
-                Invitation.revoked_at.is_(None),
-            )
-            .values(revoked_at=now())
-        )
-        await db.execute(
-            update(AuthSession)
-            .where(AuthSession.user_id == m.user_id, AuthSession.active_company_id == p.company.id)
-            .values(active_company_id=None)
-        )
-    elif body.status == "active" and m.status == "removed":
-        raise AppError("invite_again", "Invite this person again to bring them back.")
     await audit.record(
-        db, "team.member_changed", company_id=p.company.id, actor_id=p.user.id, actor_role=p.role,
-        target_type="membership", target_id=m.id, data=body.model_dump(exclude_none=True),
+        db, "team.invite_revoked", company_id=p.company_id, actor_id=p.user.id, actor_role=p.role,
+        target_type="invite", target_id=inv.id,
     )  # fmt: skip
-    await db.flush()
-    return member_out(m, u)
 
 
-# ---- the invited person's side ------------------------------------------------------------
-async def _open_invitation(db: AsyncSession, **where) -> tuple[Invitation, Company, User]:
-    q = (
-        select(Invitation, Company, User)
-        .join(Company, Company.id == Invitation.company_id)
-        .join(User, User.id == Invitation.invited_by)
-    )
-    for k, v in where.items():
-        q = q.where(getattr(Invitation, k) == v)
-    row = (await db.execute(q)).first()
-    if not row:
-        raise Gone("invitation_invalid", "This invitation is not valid.")
-    inv, c, by = row
-    if inv.accepted_at:
-        raise Gone("invitation_used", "This invitation was already accepted.")
-    if inv.revoked_at:
-        raise Gone("invitation_revoked", "This invitation was cancelled. Ask for a new one.")
-    if inv.expires_at < now():
-        raise Gone("invitation_expired", "This invitation has expired. Ask for a new one.")
-    return inv, c, by
-
-
-def _preview(inv: Invitation, c: Company, by: User) -> InvitationPreview:
-    return InvitationPreview(
-        company_name=c.name, invited_by=PersonRef(id=by.id, name=by.name or ""), role=inv.role
-    )
-
-
-async def preview(db: AsyncSession, token: str) -> InvitationPreview:
-    return _preview(*await _open_invitation(db, token_hash=digest(token)))
-
-
-async def pending_for(db: AsyncSession, user: User) -> list[PendingInvitation]:
+# ---- invites (invited person's side) ------------------------------------------------------------
+async def my_invites(db: AsyncSession, user: User, include_expired: bool = True) -> list[MyInvite]:
     if not user.phone:
         return []
-    rows = await db.execute(
-        select(Invitation, Company, User)
+    inviter = User.__table__.alias("inviter")
+    q = (
+        select(Invitation, Company, inviter.c.name, inviter.c.phone)
         .join(Company, Company.id == Invitation.company_id)
-        .join(User, User.id == Invitation.invited_by)
+        .join(inviter, inviter.c.id == Invitation.invited_by)
         .join(Membership, Membership.id == Invitation.membership_id)
-        .where(
-            Invitation.phone == user.phone,
-            Invitation.accepted_at.is_(None),
-            Invitation.revoked_at.is_(None),
-            Invitation.expires_at > now(),
-            Membership.status == "invited",
-        )
+        .where(Invitation.phone == user.phone, *_open_invite_filter(), Membership.status == "invited")
         .order_by(Invitation.created_at.desc())
     )
-    return [PendingInvitation(id=inv.id, **_preview(inv, c, by).model_dump()) for inv, c, by in rows.all()]
+    if not include_expired:
+        q = q.where(Invitation.expires_at > now())
+    out = []
+    for inv, c, by_name, by_phone in (await db.execute(q)).all():
+        out.append(
+            MyInvite(
+                id=inv.id,
+                company=InviteCompany(id=c.id, name=c.name, trade=c.industry_slug, country=c.country),
+                invited_by=InviterOut(name=by_name or "", phone=by_phone),
+                role=inv.role,
+                sent_at=inv.created_at,
+                expires_at=inv.expires_at,
+                status="expired" if inv.expires_at < now() else "pending",
+            )
+        )
+    return out
 
 
-async def accept(db: AsyncSession, user: User, session_id: uuid.UUID, *, token: str | None = None,
-                 invitation_id: uuid.UUID | None = None) -> tuple[Membership, Company]:  # fmt: skip
-    if token is not None:
-        inv, c, _ = await _open_invitation(db, token_hash=digest(token))
-    else:
-        inv, c, _ = await _open_invitation(db, id=invitation_id)
-    if inv.phone != user.phone:
-        raise Forbidden("invitation_wrong_phone", "This invitation is for a different phone number.")
+async def _my_open_invite(db: AsyncSession, user: User, invite_id: uuid.UUID) -> Invitation:
+    inv = await db.get(Invitation, invite_id, with_for_update=True)
+    if not inv or inv.phone != user.phone:
+        raise NotFound("invite_not_found", "Invite not found.")
+    status = _invite_status(inv)
+    if status == "expired":
+        raise Gone("invite_expired", "This invite has expired. Ask for a new one.")
+    if status != "pending":
+        raise Gone("invite_revoked", "This invite is no longer valid.")
+    return inv
+
+
+async def accept(db: AsyncSession, user: User, session_id: uuid.UUID, invite_id: uuid.UUID):
+    inv = await _my_open_invite(db, user, invite_id)
     m = await db.get(Membership, inv.membership_id)
-    if not m or m.status != "invited" or m.user_id != user.id:
-        raise Gone("invitation_invalid", "This invitation is not valid.")
+    if not m or m.user_id != user.id or m.status != "invited":
+        raise Gone("invite_revoked", "This invite is no longer valid.")
     t = now()
     inv.accepted_at = t
     m.status, m.joined_at = "active", t
@@ -277,10 +369,22 @@ async def accept(db: AsyncSession, user: User, session_id: uuid.UUID, *, token: 
         user.name = inv.name
     sess = await db.get(AuthSession, session_id)
     if sess:
-        sess.active_company_id = c.id
+        sess.active_company_id = m.company_id
     await audit.record(
-        db, "team.joined", company_id=c.id, actor_id=user.id, actor_role=m.role,
-        target_type="membership", target_id=m.id,
+        db, "team.joined", company_id=m.company_id, actor_id=user.id, actor_role=m.role,
+        target_type="user", target_id=user.id,
     )  # fmt: skip
     await db.flush()
-    return m, c
+    return m, await db.get(Company, m.company_id)
+
+
+async def decline(db: AsyncSession, user: User, invite_id: uuid.UUID) -> None:
+    inv = await _my_open_invite(db, user, invite_id)
+    inv.declined_at = now()
+    m = await db.get(Membership, inv.membership_id)
+    if m and m.status == "invited":
+        m.status = "removed"
+    await audit.record(
+        db, "team.invite_declined", company_id=inv.company_id, actor_id=user.id,
+        target_type="invite", target_id=inv.id,
+    )  # fmt: skip

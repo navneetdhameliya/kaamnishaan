@@ -16,7 +16,7 @@ from app.core.config import get_settings
 from app.core.errors import AppError, Gone, Unauthorized
 
 ACCESS_TTL = timedelta(minutes=15)
-REFRESH_TTL = timedelta(days=60)
+REFRESH_TTL = timedelta(days=30)  # extended on every refresh, so active users stay signed in
 _ph = PasswordHasher()
 _ALG = "HS256"
 
