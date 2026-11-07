@@ -25,6 +25,17 @@ uvicorn app.main:app --reload   # http://localhost:8000/docs
 6. Jobs: as the owner `POST /customers` (with `site` and `contact`) → `POST /jobs` with the customer and
    `assigned_to` → as the technician `GET /me/today` → `POST /jobs/{id}/start` → as the owner `GET /dashboard`.
 
+### Try a photo (Step 1c)
+With a started job (`POST /jobs/{id}/start` as the technician):
+1. `POST /api/v1/uploads` with `{"kind": "photo", "content_type": "image/jpeg"}` → copy `url` and `upload_id`.
+2. Send the file to that `url` from Terminal (Swagger can't send a raw file body):
+   `curl -X PUT -H "Content-Type: image/jpeg" --data-binary @photo.jpg "<url>"`
+3. `POST /api/v1/jobs/{id}/evidence` with `{"upload_id": "...", "stage": "before", "taken_at": "<now>"}`.
+   The answer has signed `url` and `thumb_url` links you can open in the browser (they expire in 15 minutes).
+4. `GET /api/v1/jobs/{id}/proof` shows the capture hub; add an "after" photo and `can_make_report` turns true.
+
+Files are saved in `backend/var/uploads` on your computer. The live server uses Cloudflare R2.
+
 ## Checks
 Tests use a real PostgreSQL database `kaamnishaan_test` (override with `KN_TEST_DATABASE_URL`);
 it is migrated once per run and emptied between tests.

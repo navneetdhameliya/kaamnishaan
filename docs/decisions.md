@@ -21,6 +21,10 @@
 | D-17 | Job numbers per company start at J-1001; each technician has a daily job capacity (default 6) shown on Assign technician; a full day is a hint, not a block | M15, M17 | 2026-11-06 |
 | D-18 | A technician's quick job can name a new customer (name, phone, address) on the spot; technicians read only customers of their own jobs | M16 quick job, Roles grid | 2026-11-06 |
 | D-19 | Sync feed: cursor is the newest `updated_at` sent, next call overlaps 2 s; the app keeps the highest `version` per job. Jobs moved to someone else are listed in `removed_job_ids` | Offline-first technicians | 2026-11-06 |
+| D-20 | Background work runs on ARQ + Render Redis (worker service in `render.yaml`); without Redis (your computer) tasks run inside the API | Light, async, one worker for thumbnails, SMS, AI, PDFs | 2026-11-07 (default taken; easy to change) |
+| D-21 | Photo upload limit 12 MB (phone compresses to 2,560 px); originals are never changed; a 480 px thumbnail without EXIF/GPS is made for lists; each photo gets a SHA-256 fingerprint | Conflict #4; evidence integrity | 2026-11-07 |
+| D-22 | Evidence lock is enforced twice: the API answers `409 evidence_locked`, and a database trigger refuses any change or delete of a locked photo (only processing results may still be written) | Proof must be trustworthy | 2026-11-07 |
+| D-23 | Files: `KN_STORAGE_PROVIDER=local` (a folder, for your computer and tests) or `r2` (required on staging and production). Every file link is signed and expires in 15 minutes | No public file URLs | 2026-11-07 |
 
 ## Still open
 - Credit pack INR prices (placeholders ₹799 / 500 and ₹2,799 / 2,000).
@@ -28,7 +32,6 @@
 - Voice-call and WhatsApp Business providers (needed in Step 4).
 - Where the manager's Capture button goes.
 - Domain name (purchase planned 16 Nov 2026).
-- Background workers: ARQ + Render Redis (recommended) or Celery — needed from Step 1c.
 - Admin staff accounts with authenticator code (separate `staff_users` table) — next foundation step.
 - Error messages translated by `Accept-Language` (codes are final; English text for now).
 - Live technician location in v1, testimonial source, where public reviews show.

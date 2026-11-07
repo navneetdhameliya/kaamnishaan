@@ -13,7 +13,12 @@ import pytest
 TEST_DB = os.environ.get(
     "KN_TEST_DATABASE_URL", "postgresql+asyncpg://kaamnishaan:kaamnishaan@localhost:5432/kaamnishaan_test"
 )
+import tempfile  # noqa: E402
+
 os.environ.update(
+    KN_STORAGE_PROVIDER="local",
+    KN_STORAGE_LOCAL_DIR=tempfile.mkdtemp(prefix="kn-test-files-"),
+    KN_API_URL="http://t",
     KN_ENV="test",
     KN_DATABASE_URL=TEST_DB,
     KN_SECRET_KEY="test-secret-key-for-automated-tests-only-0123456789",

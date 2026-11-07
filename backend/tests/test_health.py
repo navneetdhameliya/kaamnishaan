@@ -17,6 +17,10 @@ async def test_docs_hidden_in_production(monkeypatch) -> None:
 
     monkeypatch.setenv("KN_ENV", "production")
     monkeypatch.setenv("KN_SECRET_KEY", "x" * 40)
+    monkeypatch.setenv("KN_STORAGE_PROVIDER", "r2")
+    monkeypatch.setenv("KN_STORAGE_ENDPOINT", "https://example.r2.cloudflarestorage.com")
+    monkeypatch.setenv("KN_STORAGE_ACCESS_KEY", "test")
+    monkeypatch.setenv("KN_STORAGE_SECRET_KEY", "test")
     config.get_settings.cache_clear()
     try:
         async with AsyncClient(transport=ASGITransport(app=create_app()), base_url="http://t") as c:

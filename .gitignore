@@ -35,3 +35,6 @@ mobile/ios/Pods/
 mobile/android/.gradle/
 mobile/android/local.properties
 *.egg-info/
+
+# local file storage (KN_STORAGE_PROVIDER=local)
+backend/var/
