@@ -20,6 +20,9 @@ dependencies = [
   "argon2-cffi>=23.1",
   "phonenumbers>=8.13",
   "email-validator>=2.2",
+  "pillow>=11.0",
+  "boto3>=1.35",
+  "arq>=0.26",
 ]
 
 [project.optional-dependencies]

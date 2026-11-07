@@ -181,3 +181,7 @@ erDiagram
 1. **Several companies per user** — login shows "Choose company" when a user has more than one; the Me/Profile screen gets a company switcher. The access token carries the active company.
 2. **Prices in INR and USD** — ₹499 / ₹1,299 / ₹2,499 a month (Starter / Professional / Business); USD stays $9 / $25 / $49. The website shows ₹ for India.
 3. **Evidence kept 7 years** by default.
+
+
+## Evidence lock (built in Step 1c)
+`lock_job_evidence(job_id)` sets `locked_at` on every photo of the job when the report is submitted. The trigger `evidence_lock_guard` then refuses UPDATE or DELETE of a locked row, except processing results (thumbnail, pixel size, status, and the fingerprint the first time). Notes live in `evidence_notes` and can be added after lock.

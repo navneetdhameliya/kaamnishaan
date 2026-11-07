@@ -1,5 +1,6 @@
 from app.models.base import Base
 from app.models.catalog import CreditPack, Industry, Plan
+from app.models.evidence import Evidence, EvidenceNote, PhotoPair, Upload
 from app.models.identity import (
     AuditLog,
     AuthSession,
@@ -24,6 +25,8 @@ __all__ = [
     "Customer",
     "CustomerContact",
     "Equipment",
+    "Evidence",
+    "EvidenceNote",
     "Job",
     "JobEvent",
     "Site",
@@ -33,6 +36,8 @@ __all__ = [
     "LoginAttempt",
     "Membership",
     "OtpChallenge",
+    "PhotoPair",
     "Plan",
+    "Upload",
     "User",
 ]

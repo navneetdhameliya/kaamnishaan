@@ -1,7 +1,7 @@
 """Owner/manager dashboard (M13), technician Today (M12), profile counts (M37), and the sync feed
 the app's offline store reads (GET /sync/changes).
 
-Photos and reports arrive in later steps; their counts are 0 until then.
+Report counts arrive with reports (Step 1e); until then they are 0.
 """
 
 from datetime import datetime, timedelta
@@ -23,6 +23,7 @@ from app.schemas.work import (
     Today,
     TodayStats,
 )
+from app.services.evidence import photos_by
 from app.services.jobs import CLOSED, day_bounds, items, job_out, local_today, tz
 
 SYNC_PAGE = 200
@@ -155,7 +156,7 @@ async def today(db: AsyncSession, p: Principal) -> Today:
         stats=TodayStats(
             jobs=len([j for j in todays if j.status != "cancelled"]),
             done=len([j for j in todays if j.status in ("in_review", "completed")]),
-            photos=0,
+            photos=await photos_by(db, p.company_id, p.user.id, since=start),
         ),
         current_job=(await items(db, [current]))[0] if current else None,
         next_jobs=await items(db, upcoming),
@@ -197,7 +198,12 @@ async def stats(db: AsyncSession, p: Principal) -> MeStats:
             )
         ).scalar_one()
     return MeStats(
-        jobs_done=done, photos=0, reports_sent=0, team=team, customers=customers, to_review=to_review
+        jobs_done=done,
+        photos=await photos_by(db, p.company_id, p.user.id),
+        reports_sent=0,
+        team=team,
+        customers=customers,
+        to_review=to_review,
     )
 
 

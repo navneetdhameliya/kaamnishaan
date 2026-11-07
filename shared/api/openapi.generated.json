@@ -1440,6 +1440,441 @@
         "title": "EquipmentPatch",
         "type": "object"
       },
+      "EvidenceCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "client_uuid": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Made on the phone; a retry returns the same photo",
+            "title": "Client Uuid"
+          },
+          "lat": {
+            "anyOf": [
+              {
+                "maximum": 90.0,
+                "minimum": -90.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lat"
+          },
+          "lng": {
+            "anyOf": [
+              {
+                "maximum": 180.0,
+                "minimum": -180.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lng"
+          },
+          "shot_slot": {
+            "anyOf": [
+              {
+                "maxLength": 64,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shot Slot"
+          },
+          "stage": {
+            "enum": [
+              "before",
+              "during",
+              "after"
+            ],
+            "title": "Stage",
+            "type": "string"
+          },
+          "taken_at": {
+            "format": "date-time",
+            "title": "Taken At",
+            "type": "string"
+          },
+          "upload_id": {
+            "format": "uuid",
+            "title": "Upload Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "upload_id",
+          "stage",
+          "taken_at"
+        ],
+        "title": "EvidenceCreate",
+        "type": "object"
+      },
+      "EvidenceDetail": {
+        "properties": {
+          "can_delete": {
+            "title": "Can Delete",
+            "type": "boolean"
+          },
+          "height": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Height"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "lat": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lat"
+          },
+          "lng": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lng"
+          },
+          "locked": {
+            "title": "Locked",
+            "type": "boolean"
+          },
+          "locked_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Locked At"
+          },
+          "notes": {
+            "items": {
+              "$ref": "#/components/schemas/NoteOut"
+            },
+            "title": "Notes",
+            "type": "array"
+          },
+          "notes_count": {
+            "title": "Notes Count",
+            "type": "integer"
+          },
+          "processing": {
+            "enum": [
+              "pending",
+              "ready",
+              "failed"
+            ],
+            "title": "Processing",
+            "type": "string"
+          },
+          "shot_slot": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shot Slot"
+          },
+          "size": {
+            "title": "Size",
+            "type": "integer"
+          },
+          "stage": {
+            "enum": [
+              "before",
+              "during",
+              "after"
+            ],
+            "title": "Stage",
+            "type": "string"
+          },
+          "taken_at": {
+            "format": "date-time",
+            "title": "Taken At",
+            "type": "string"
+          },
+          "taken_by": {
+            "$ref": "#/components/schemas/PersonRef"
+          },
+          "thumb_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Thumb Url"
+          },
+          "url": {
+            "description": "Full photo, signed link valid about 15 minutes",
+            "title": "Url",
+            "type": "string"
+          },
+          "width": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Width"
+          }
+        },
+        "required": [
+          "id",
+          "job_id",
+          "stage",
+          "shot_slot",
+          "url",
+          "thumb_url",
+          "width",
+          "height",
+          "size",
+          "processing",
+          "taken_at",
+          "taken_by",
+          "lat",
+          "lng",
+          "locked",
+          "locked_at",
+          "notes_count",
+          "notes",
+          "can_delete"
+        ],
+        "title": "EvidenceDetail",
+        "type": "object"
+      },
+      "EvidenceList": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/EvidenceOut"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ListMeta"
+          },
+          "pairs": {
+            "items": {
+              "$ref": "#/components/schemas/PairOut"
+            },
+            "title": "Pairs",
+            "type": "array"
+          }
+        },
+        "required": [
+          "data",
+          "meta",
+          "pairs"
+        ],
+        "title": "EvidenceList",
+        "type": "object"
+      },
+      "EvidenceOut": {
+        "properties": {
+          "height": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Height"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "lat": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lat"
+          },
+          "lng": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lng"
+          },
+          "locked": {
+            "title": "Locked",
+            "type": "boolean"
+          },
+          "locked_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Locked At"
+          },
+          "notes_count": {
+            "title": "Notes Count",
+            "type": "integer"
+          },
+          "processing": {
+            "enum": [
+              "pending",
+              "ready",
+              "failed"
+            ],
+            "title": "Processing",
+            "type": "string"
+          },
+          "shot_slot": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shot Slot"
+          },
+          "size": {
+            "title": "Size",
+            "type": "integer"
+          },
+          "stage": {
+            "enum": [
+              "before",
+              "during",
+              "after"
+            ],
+            "title": "Stage",
+            "type": "string"
+          },
+          "taken_at": {
+            "format": "date-time",
+            "title": "Taken At",
+            "type": "string"
+          },
+          "taken_by": {
+            "$ref": "#/components/schemas/PersonRef"
+          },
+          "thumb_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Thumb Url"
+          },
+          "url": {
+            "description": "Full photo, signed link valid about 15 minutes",
+            "title": "Url",
+            "type": "string"
+          },
+          "width": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Width"
+          }
+        },
+        "required": [
+          "id",
+          "job_id",
+          "stage",
+          "shot_slot",
+          "url",
+          "thumb_url",
+          "width",
+          "height",
+          "size",
+          "processing",
+          "taken_at",
+          "taken_by",
+          "lat",
+          "lng",
+          "locked",
+          "locked_at",
+          "notes_count"
+        ],
+        "title": "EvidenceOut",
+        "type": "object"
+      },
       "HTTPValidationError": {
         "properties": {
           "detail": {
@@ -2746,6 +3181,51 @@
         "title": "MyInviteList",
         "type": "object"
       },
+      "NoteIn": {
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "NoteIn",
+        "type": "object"
+      },
+      "NoteOut": {
+        "properties": {
+          "author": {
+            "$ref": "#/components/schemas/PersonRef"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "author",
+          "text",
+          "created_at"
+        ],
+        "title": "NoteOut",
+        "type": "object"
+      },
       "Onboarding": {
         "properties": {
           "company_created": {
@@ -2856,6 +3336,83 @@
           "code"
         ],
         "title": "OtpVerify",
+        "type": "object"
+      },
+      "PairIn": {
+        "additionalProperties": false,
+        "properties": {
+          "after_id": {
+            "format": "uuid",
+            "title": "After Id",
+            "type": "string"
+          },
+          "before_id": {
+            "format": "uuid",
+            "title": "Before Id",
+            "type": "string"
+          },
+          "subject": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subject"
+          },
+          "use_in_report": {
+            "default": true,
+            "title": "Use In Report",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "before_id",
+          "after_id"
+        ],
+        "title": "PairIn",
+        "type": "object"
+      },
+      "PairOut": {
+        "properties": {
+          "after": {
+            "$ref": "#/components/schemas/EvidenceOut"
+          },
+          "before": {
+            "$ref": "#/components/schemas/EvidenceOut"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "subject": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subject"
+          },
+          "use_in_report": {
+            "title": "Use In Report",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "before",
+          "after",
+          "subject",
+          "use_in_report"
+        ],
+        "title": "PairOut",
         "type": "object"
       },
       "PasswordReset": {
@@ -3070,6 +3627,104 @@
           }
         },
         "title": "Preferences",
+        "type": "object"
+      },
+      "Proof": {
+        "properties": {
+          "blocked_by": {
+            "anyOf": [
+              {
+                "enum": [
+                  "job_not_started",
+                  "need_before_photo",
+                  "need_after_photo",
+                  "evidence_locked"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Blocked By"
+          },
+          "can_make_report": {
+            "title": "Can Make Report",
+            "type": "boolean"
+          },
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "locked": {
+            "title": "Locked",
+            "type": "boolean"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/ProofStep"
+            },
+            "title": "Steps",
+            "type": "array"
+          }
+        },
+        "required": [
+          "job_id",
+          "status",
+          "steps",
+          "can_make_report",
+          "blocked_by",
+          "locked"
+        ],
+        "title": "Proof",
+        "type": "object"
+      },
+      "ProofStep": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "done": {
+            "title": "Done",
+            "type": "boolean"
+          },
+          "key": {
+            "enum": [
+              "before",
+              "during",
+              "after",
+              "checklist",
+              "voice"
+            ],
+            "title": "Key",
+            "type": "string"
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean"
+          },
+          "thumbs": {
+            "description": "Up to 3 latest thumbnail links",
+            "items": {
+              "type": "string"
+            },
+            "title": "Thumbs",
+            "type": "array"
+          }
+        },
+        "required": [
+          "key",
+          "count",
+          "required",
+          "done"
+        ],
+        "title": "ProofStep",
         "type": "object"
       },
       "QuickCustomer": {
@@ -3956,6 +4611,92 @@
           "name"
         ],
         "title": "TradeOut",
+        "type": "object"
+      },
+      "UploadCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "content_type": {
+            "examples": [
+              "image/jpeg"
+            ],
+            "title": "Content Type",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "photo",
+              "audio",
+              "logo",
+              "avatar",
+              "signature"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Bytes, if known; checked again on confirm",
+            "title": "Size"
+          }
+        },
+        "required": [
+          "kind",
+          "content_type"
+        ],
+        "title": "UploadCreate",
+        "type": "object"
+      },
+      "UploadOut": {
+        "properties": {
+          "expires_at": {
+            "format": "date-time",
+            "title": "Expires At",
+            "type": "string"
+          },
+          "headers": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Headers",
+            "type": "object"
+          },
+          "max_bytes": {
+            "title": "Max Bytes",
+            "type": "integer"
+          },
+          "method": {
+            "const": "PUT",
+            "title": "Method",
+            "type": "string"
+          },
+          "upload_id": {
+            "format": "uuid",
+            "title": "Upload Id",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "upload_id",
+          "url",
+          "method",
+          "headers",
+          "max_bytes",
+          "expires_at"
+        ],
+        "title": "UploadOut",
         "type": "object"
       },
       "ValidationError": {
@@ -5504,6 +6245,151 @@
         ]
       }
     },
+    "/api/v1/evidence/{evidence_id}": {
+      "delete": {
+        "operationId": "delete_evidence_api_v1_evidence__evidence_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "evidence_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Evidence Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delete Evidence",
+        "tags": [
+          "evidence"
+        ]
+      },
+      "get": {
+        "operationId": "get_evidence_api_v1_evidence__evidence_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "evidence_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Evidence Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Evidence",
+        "tags": [
+          "evidence"
+        ]
+      }
+    },
+    "/api/v1/evidence/{evidence_id}/notes": {
+      "post": {
+        "operationId": "add_note_api_v1_evidence__evidence_id__notes_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "evidence_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Evidence Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoteIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoteOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Add Note",
+        "tags": [
+          "evidence"
+        ]
+      }
+    },
     "/api/v1/health": {
       "get": {
         "operationId": "health_api_v1_health_get",
@@ -6313,6 +7199,237 @@
         ]
       }
     },
+    "/api/v1/jobs/{job_id}/evidence": {
+      "get": {
+        "operationId": "list_evidence_api_v1_jobs__job_id__evidence_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "stage",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "before",
+                    "during",
+                    "after"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Stage"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Evidence",
+        "tags": [
+          "evidence"
+        ]
+      },
+      "post": {
+        "operationId": "add_evidence_api_v1_jobs__job_id__evidence_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvidenceCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EvidenceDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Add Evidence",
+        "tags": [
+          "evidence"
+        ]
+      }
+    },
+    "/api/v1/jobs/{job_id}/photo-pairs": {
+      "post": {
+        "operationId": "create_pair_api_v1_jobs__job_id__photo_pairs_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PairIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PairOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create Pair",
+        "tags": [
+          "evidence"
+        ]
+      }
+    },
+    "/api/v1/jobs/{job_id}/proof": {
+      "get": {
+        "operationId": "proof_api_v1_jobs__job_id__proof_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Proof"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Proof",
+        "tags": [
+          "evidence"
+        ]
+      }
+    },
     "/api/v1/jobs/{job_id}/start": {
       "post": {
         "operationId": "start_api_v1_jobs__job_id__start_post",
@@ -6617,6 +7734,47 @@
         "summary": "Today",
         "tags": [
           "home"
+        ]
+      }
+    },
+    "/api/v1/photo-pairs/{pair_id}": {
+      "delete": {
+        "operationId": "delete_pair_api_v1_photo_pairs__pair_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pair_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Pair Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delete Pair",
+        "tags": [
+          "evidence"
         ]
       }
     },
@@ -6953,6 +8111,53 @@
         "summary": "Patch Member",
         "tags": [
           "team"
+        ]
+      }
+    },
+    "/api/v1/uploads": {
+      "post": {
+        "description": "Step 1 of 3: get a signed URL. Step 2: PUT the file there with the given headers.\nStep 3: confirm with the call for what the file is (e.g. POST /jobs/{id}/evidence).",
+        "operationId": "create_upload_api_v1_uploads_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UploadCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UploadOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create Upload",
+        "tags": [
+          "files"
         ]
       }
     }
