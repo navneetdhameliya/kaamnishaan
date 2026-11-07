@@ -22,6 +22,8 @@ uvicorn app.main:app --reload   # http://localhost:8000/docs
 4. Click **Authorize** (top right), paste the token, and every other endpoint now works as that person.
 5. Owner flow: `POST /auth/register` → `POST /companies` → `POST /auth/refresh` (token now carries the company)
    → `POST /invites` → log in with the invited phone → `GET /invites/mine` → `POST /invites/{id}/accept`.
+6. Jobs: as the owner `POST /customers` (with `site` and `contact`) → `POST /jobs` with the customer and
+   `assigned_to` → as the technician `GET /me/today` → `POST /jobs/{id}/start` → as the owner `GET /dashboard`.
 
 ## Checks
 Tests use a real PostgreSQL database `kaamnishaan_test` (override with `KN_TEST_DATABASE_URL`);
