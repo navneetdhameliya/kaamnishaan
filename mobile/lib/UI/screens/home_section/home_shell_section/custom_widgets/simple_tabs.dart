@@ -47,16 +47,17 @@ class ComingSoonTab extends StatelessWidget {
 
 /// Me / Profile for now: photo, name, role and company, and Log out (M37 comes later).
 class ProfileTab extends StatelessWidget {
-  const ProfileTab({super.key, required this.title, required this.onLogout});
+  const ProfileTab({super.key, required this.title, required this.session, required this.onLogout});
 
   final String title;
+  final SessionService session;
   final VoidCallback onLogout;
 
   @override
   Widget build(BuildContext context) {
     final kn = context.kn;
     final text = context.knText;
-    final me = Get.find<SessionService>().me.value;
+    final me = session.me.value;
     final role = switch (me?.role) {
       'owner' => LangKeys.roleOwner.tr,
       'manager' => LangKeys.roleManager.tr,

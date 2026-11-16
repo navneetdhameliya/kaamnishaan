@@ -33,11 +33,11 @@ class HomeShellScreen extends GetView<HomeShellController> {
             const DashboardTab(),
             ComingSoonTab(title: LangKeys.navJobs.tr, icon: LucideIcons.briefcase),
             ComingSoonTab(title: LangKeys.navReports.tr, icon: LucideIcons.fileText),
-            ProfileTab(title: LangKeys.navProfile.tr, onLogout: controller.onLogoutTap),
+            ProfileTab(title: LangKeys.navProfile.tr, session: controller.session, onLogout: controller.onLogoutTap),
           ]
         : [
             const TodayTab(),
-            ProfileTab(title: LangKeys.navMe.tr, onLogout: controller.onLogoutTap),
+            ProfileTab(title: LangKeys.navMe.tr, session: controller.session, onLogout: controller.onLogoutTap),
           ];
     return Scaffold(
       backgroundColor: context.kn.bgCanvas,
