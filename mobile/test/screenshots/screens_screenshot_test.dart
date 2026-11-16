@@ -59,15 +59,37 @@ Future<void> _loadFonts() async {
   await load('Noto Sans Gujarati', ['assets/fonts/NotoSansGujarati-Regular.ttf', 'assets/fonts/NotoSansGujarati-SemiBold.ttf']);
   await load('Baloo 2', ['assets/fonts/Baloo2-Variable.ttf']);
   await load('DM Sans', ['assets/fonts/DMSans-Variable.ttf']);
-  // the Lucide icon font from the pub cache
-  final icon = LucideIcons.check;
-  final family = icon.fontPackage == null ? icon.fontFamily! : 'packages/${icon.fontPackage}/${icon.fontFamily}';
+  // the Lucide icon fonts (one per stroke weight) from the pub cache
   final cache = Directory('${Platform.environment['PUB_CACHE'] ?? '${Platform.environment['HOME']}/.pub-cache'}/hosted');
-  final ttf = cache
+  final ttfs = cache
       .listSync(recursive: true)
       .whereType<File>()
-      .firstWhere((f) => f.path.contains('lucide_icons_flutter') && f.path.endsWith('.ttf'));
-  await load(family, [ttf.path]);
+      .where((f) => f.path.contains('lucide_icons_flutter') && f.path.endsWith('.ttf'))
+      .toList();
+  final icons = [
+    LucideIcons.check,
+    LucideIcons.check100,
+    LucideIcons.check200,
+    LucideIcons.check300,
+    LucideIcons.check400,
+    LucideIcons.check500,
+    LucideIcons.check600,
+  ];
+  for (final icon in icons) {
+    final family = icon.fontPackage == null ? icon.fontFamily! : 'packages/${icon.fontPackage}/${icon.fontFamily}';
+    final digits = RegExp(r'\d+').firstMatch(icon.fontFamily!)?.group(0);
+    final file = ttfs.firstWhere(
+      (f) {
+        final name = f.uri.pathSegments.last;
+        final n = RegExp(r'\d+').firstMatch(name)?.group(0);
+        return digits == null ? n == null : n == digits;
+      },
+      orElse: () => ttfs.first,
+    );
+    // ignore: avoid_print
+    print('icon font ${icon.fontFamily} -> ${file.uri.pathSegments.last}');
+    await load(family, [file.path]);
+  }
 }
 
 void main() {
@@ -239,6 +261,42 @@ void main() {
       ),
     );
     await shot(t, 'm11_profile', const ProfileSetupScreen());
+  });
+
+  testWidgets('icon stroke weights', (t) async {
+    const rows = {
+      'base': [LucideIcons.check, LucideIcons.volume2, LucideIcons.camera],
+      '100': [LucideIcons.check100, LucideIcons.volume2100, LucideIcons.camera100],
+      '200': [LucideIcons.check200, LucideIcons.volume2200, LucideIcons.camera200],
+      '300': [LucideIcons.check300, LucideIcons.volume2300, LucideIcons.camera300],
+      '400': [LucideIcons.check400, LucideIcons.volume2400, LucideIcons.camera400],
+      '500': [LucideIcons.check500, LucideIcons.volume2500, LucideIcons.camera500],
+      '600': [LucideIcons.check600, LucideIcons.volume2600, LucideIcons.camera600],
+    };
+    await shot(
+      t,
+      'icon_weights',
+      Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              for (final e in rows.entries)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: Row(
+                    children: [
+                      SizedBox(width: 60, child: Text(e.key)),
+                      for (final i in e.value) Padding(padding: const EdgeInsets.only(right: 24), child: Icon(i, size: 24)),
+                    ],
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
   });
 
   testWidgets('M02 language in Hindi', (t) async {
