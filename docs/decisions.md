@@ -51,7 +51,6 @@
 | D-47 | Phone number and SMS code use a big on-screen keypad (no phone keyboard), as designed; "Hear it" and speaker buttons read texts aloud with the phone's voice (flutter_tts) | Low-literacy rules | 2026-11-16 |
 ## Still open
 - Mobile M11: "Your work" and the profile photo can't be saved yet (the API only takes the name) — small backend addition planned with Step 2b. SMS code auto-fill needs the SMS-retriever plugin and an app hash in the SMS text (later). "Choose company" has no Figma design yet. The invite card can't show the inviter's role (not in the API).
-- The Welcome card photo (welcome_invite.jpg) is still a 1× export; the 3 onboarding photos are 3×.
 - SMS with the report link: each language's text (and the link's domain) must be registered as a DLT template before MSG91 will send it — needs the domain (16 Nov) and the MSG91 account.
 - WhatsApp Business provider (report links show in the dev outbox until then); credits per SMS/WhatsApp and the "don't contact me" list start with reviews (Step 2).
 - Credit pack INR prices (placeholders ₹799 / 500 and ₹2,799 / 2,000).
