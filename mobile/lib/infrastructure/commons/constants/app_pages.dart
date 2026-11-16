@@ -48,6 +48,12 @@ import '../../../UI/screens/onboarding_section/splash_section/splash_binding.dar
 import '../../../UI/screens/onboarding_section/splash_section/splash_screen.dart';
 import '../../../UI/screens/onboarding_section/welcome_section/welcome_binding.dart';
 import '../../../UI/screens/onboarding_section/welcome_section/welcome_screen.dart';
+import '../../../UI/screens/me_section/language_settings_section/language_settings_binding.dart';
+import '../../../UI/screens/me_section/language_settings_section/language_settings_screen.dart';
+import '../../../UI/screens/me_section/my_reports_section/my_reports_binding.dart';
+import '../../../UI/screens/me_section/my_reports_section/my_reports_screen.dart';
+import '../../../UI/screens/me_section/waiting_to_send_section/waiting_to_send_binding.dart';
+import '../../../UI/screens/me_section/waiting_to_send_section/waiting_to_send_screen.dart';
 import '../../../UI/screens/report_section/report_draft_section/report_draft_binding.dart';
 import '../../../UI/screens/report_section/report_draft_section/report_draft_screen.dart';
 import '../../../UI/screens/report_section/report_editor_section/report_editor_binding.dart';
@@ -148,6 +154,17 @@ abstract final class AppPages {
     GetPage(name: RoutesConstants.reportDraftScreen, page: () => const ReportDraftScreen(), binding: ReportDraftBinding()),
     GetPage(name: RoutesConstants.reportEditorScreen, page: () => const ReportEditorScreen(), binding: ReportEditorBinding()),
     GetPage(name: RoutesConstants.reportSentScreen, page: () => const ReportSentScreen(), binding: ReportSentBinding()),
+    GetPage(
+      name: RoutesConstants.languageSettingsScreen,
+      page: () => const LanguageSettingsScreen(),
+      binding: LanguageSettingsBinding(),
+    ),
+    GetPage(name: RoutesConstants.myReportsScreen, page: () => const MyReportsScreen(), binding: MyReportsBinding()),
+    GetPage(
+      name: RoutesConstants.waitingToSendScreen,
+      page: () => const WaitingToSendScreen(),
+      binding: WaitingToSendBinding(),
+    ),
     GetPage(
       name: RoutesConstants.homeScreen,
       page: () => const HomeShellScreen(),

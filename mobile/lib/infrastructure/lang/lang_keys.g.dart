@@ -1052,4 +1052,120 @@ abstract final class LangKeys {
   static const hubFixReport = 'hub.fix_report';
   /// {n} answers
   static const reportCountAnswers = 'report.count_answers';
+  /// Jobs done
+  static const meJobsDone = 'me.jobs_done';
+  /// Photos
+  static const mePhotos = 'me.photos';
+  /// Reports
+  static const meReports = 'me.reports';
+  /// Team
+  static const meTeam = 'me.team';
+  /// Customers
+  static const meCustomers = 'me.customers';
+  /// My reports
+  static const meMyReports = 'me.my_reports';
+  /// My reviews
+  static const meMyReviews = 'me.my_reviews';
+  /// Waiting to send
+  static const meWaiting = 'me.waiting';
+  /// Language
+  static const meLanguage = 'me.language';
+  /// Messages
+  static const meMessages = 'me.messages';
+  /// Help
+  static const meHelp = 'me.help';
+  /// Edit profile
+  static const meEditProfile = 'me.edit_profile';
+  /// Log out?
+  static const meLogoutTitle = 'me.logout_title';
+  /// {n} items are not sent yet. If you log out now, they stay on this phone until you log in again.
+  static const meLogoutWaiting = 'me.logout_waiting';
+  /// Log out anyway
+  static const meLogoutAnyway = 'me.logout_anyway';
+  /// Send items first
+  static const meSendFirst = 'me.send_first';
+  /// Language
+  static const langTitle = 'lang.title';
+  /// App and reports
+  static const langSubtitle = 'lang.subtitle';
+  /// App language
+  static const langApp = 'lang.app';
+  /// Reports for customers
+  static const langReports = 'lang.reports';
+  /// Speak in any language. Customers get the report in this language.
+  static const langReportsNote = 'lang.reports_note';
+  /// Your company owner chooses it.
+  static const langReportsOwner = 'lang.reports_owner';
+  /// Language saved
+  static const langSaved = 'lang.saved';
+  /// This week · {n} reports
+  static const myreportsSubtitle = 'myreports.subtitle';
+  /// All {n}
+  static const myreportsAll = 'myreports.all';
+  /// Waiting
+  static const myreportsWaiting = 'myreports.waiting';
+  /// Changes
+  static const myreportsChanges = 'myreports.changes';
+  /// Approved
+  static const myreportsApproved = 'myreports.approved';
+  /// {title} · Report #{number}
+  static const myreportsMeta = 'myreports.meta';
+  /// Approved · sent to customer
+  static const myreportsApprovedSent = 'myreports.approved_sent';
+  /// Draft
+  static const myreportsDraft = 'myreports.draft';
+  /// Fix the report
+  static const myreportsFix = 'myreports.fix';
+  /// No reports this week
+  static const myreportsNone = 'myreports.none';
+  /// Finish a job and make its report. It shows here.
+  static const myreportsNoneBody = 'myreports.none_body';
+  /// Saved on this phone
+  static const pendingSubtitle = 'pending.subtitle';
+  /// {n} items
+  static const pendingSummary = 'pending.summary';
+  /// {n} items · {failed} not sent
+  static const pendingSummaryFailed = 'pending.summary_failed';
+  /// {stage} photo
+  static const pendingPhoto = 'pending.photo';
+  /// Voice note
+  static const pendingVoice = 'pending.voice';
+  /// Typed note
+  static const pendingTyped = 'pending.typed';
+  /// {n} checklist answers
+  static const pendingAnswers = 'pending.answers';
+  /// Waiting
+  static const pendingWaiting = 'pending.waiting';
+  /// Sending…
+  static const pendingSending = 'pending.sending';
+  /// Not sent
+  static const pendingNotSent = 'pending.not_sent';
+  /// Try again
+  static const pendingTryAgain = 'pending.try_again';
+  /// We send them by ourselves when internet comes back.
+  static const pendingAuto = 'pending.auto';
+  /// Send all now
+  static const pendingSendAll = 'pending.send_all';
+  /// Everything is sent
+  static const pendingAllSent = 'pending.all_sent';
+  /// Your manager has all your photos and notes.
+  static const pendingAllSentBody = 'pending.all_sent_body';
+  /// {n} items sent
+  static const pendingSentItems = 'pending.sent_items';
+  /// {photos} photos · {notes} notes
+  static const pendingSentDetail = 'pending.sent_detail';
+  /// Sent at {time}
+  static const pendingSentAt = 'pending.sent_at';
+  /// Back to Today
+  static const pendingBackToday = 'pending.back_today';
+  /// No internet. We will send them when it comes back.
+  static const pendingNoInternet = 'pending.no_internet';
+  /// Before
+  static const stageBefore = 'stage.before';
+  /// During
+  static const stageDuring = 'stage.during';
+  /// After
+  static const stageAfter = 'stage.after';
+  /// Profile saved
+  static const profileSaved = 'profile.saved';
 }

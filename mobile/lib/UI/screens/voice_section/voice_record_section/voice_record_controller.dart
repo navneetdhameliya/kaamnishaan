@@ -172,6 +172,7 @@ class VoiceRecordController extends GetxController with WidgetsBindingObserver {
       sourcePath: path,
       durationS: length.inMilliseconds / 1000,
       languageHint: language.value,
+      customer: args.customer,
     );
     KnToast.success(LangKeys.voiceSaved.tr);
     return true;
@@ -211,7 +212,7 @@ class VoiceRecordController extends GetxController with WidgetsBindingObserver {
     final text = typedController.text.trim();
     if (text.isEmpty) return false;
     savingTyped.value = true;
-    await queue.addTyped(jobId: args.jobId, text: text);
+    await queue.addTyped(jobId: args.jobId, text: text, customer: args.customer);
     savingTyped.value = false;
     typedController.clear();
     KnToast.success(LangKeys.voiceTypedSaved.tr);

@@ -1,0 +1,23 @@
+# TEMPORARY (removed before merge): renders the mobile screens and commits the PNGs for design review.
+name: mobile screenshots (temporary)
+on:
+  push:
+    branches: [step-2i/me]
+    paths: [.github/workflows/mobile-screenshots.yml, mobile/lib/**, mobile/test/screenshots/screens_screenshot_test.dart]
+permissions:
+  contents: write
+jobs:
+  shots:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: mobile } }
+    steps:
+      - uses: actions/checkout@v5
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, flutter-version: 3.47.9 }
+      - run: flutter pub get
+      - run: flutter test --tags screenshots --run-skipped --update-goldens test/screenshots
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f test/screenshots/out
+          git commit -m "screenshots for design review (temporary)" && git push

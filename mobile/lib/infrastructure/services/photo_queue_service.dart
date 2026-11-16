@@ -25,6 +25,7 @@ class PendingPhoto {
     this.lat,
     this.lng,
     this.shotSlot,
+    this.customer,
     this.state = PendingState.waiting,
     this.tries = 0,
     this.error,
@@ -39,6 +40,7 @@ class PendingPhoto {
         lat: (j['lat'] as num?)?.toDouble(),
         lng: (j['lng'] as num?)?.toDouble(),
         shotSlot: j['shot_slot'] as String?,
+        customer: j['customer'] as String?,
         state: PendingState.values.byName(j['state'] as String? ?? 'waiting'),
         tries: (j['tries'] as num?)?.toInt() ?? 0,
         error: j['error'] as String?,
@@ -53,6 +55,9 @@ class PendingPhoto {
   final double? lat;
   final double? lng;
   final String? shotSlot;
+
+  /// Shown on "Waiting to send" (M43).
+  final String? customer;
   PendingState state;
   int tries;
   String? error;
@@ -66,6 +71,7 @@ class PendingPhoto {
         'lat': lat,
         'lng': lng,
         'shot_slot': shotSlot,
+        'customer': customer,
         'state': state.name,
         'tries': tries,
         'error': error,
@@ -136,6 +142,7 @@ class PendingNote {
     this.durationS,
     this.languageHint,
     this.text,
+    this.customer,
     this.state = PendingState.waiting,
     this.tries = 0,
     this.error,
@@ -149,6 +156,7 @@ class PendingNote {
         durationS: (j['duration_s'] as num?)?.toDouble(),
         languageHint: j['language_hint'] as String?,
         text: j['text'] as String?,
+        customer: j['customer'] as String?,
         state: PendingState.values.byName(j['state'] as String? ?? 'waiting'),
         tries: (j['tries'] as num?)?.toInt() ?? 0,
         error: j['error'] as String?,
@@ -166,6 +174,7 @@ class PendingNote {
 
   /// A typed note's text.
   final String? text;
+  final String? customer;
   PendingState state;
   int tries;
   String? error;
@@ -180,6 +189,7 @@ class PendingNote {
         'duration_s': durationS,
         'language_hint': languageHint,
         'text': text,
+        'customer': customer,
         'state': state.name,
         'tries': tries,
         'error': error,
@@ -309,6 +319,7 @@ class PhotoQueueService extends GetxService {
     double? lat,
     double? lng,
     String? shotSlot,
+    String? customer,
   }) async {
     final id = const Uuid().v4();
     final target = '${(await dir).path}/$id.jpg';
@@ -328,6 +339,7 @@ class PhotoQueueService extends GetxService {
       lat: lat,
       lng: lng,
       shotSlot: shotSlot,
+      customer: customer,
     );
     items.add(photo);
     await _save();
@@ -388,6 +400,7 @@ class PhotoQueueService extends GetxService {
     required double durationS,
     DateTime? recordedAt,
     String? languageHint,
+    String? customer,
   }) async {
     final id = const Uuid().v4();
     final target = '${(await dir).path}/$id.m4a';
@@ -405,12 +418,14 @@ class PhotoQueueService extends GetxService {
       path: target,
       durationS: durationS,
       languageHint: languageHint,
+      customer: customer,
     ));
   }
 
   /// Keeps a typed note (microphone off) and starts sending.
-  Future<PendingNote> addTyped({required String jobId, required String text}) =>
-      _keep(PendingNote(id: const Uuid().v4(), jobId: jobId, recordedAt: DateTime.now(), text: text));
+  Future<PendingNote> addTyped({required String jobId, required String text, String? customer}) => _keep(
+        PendingNote(id: const Uuid().v4(), jobId: jobId, recordedAt: DateTime.now(), text: text, customer: customer),
+      );
 
   Future<PendingNote> _keep(PendingNote note) async {
     notes.add(note);
@@ -420,6 +435,41 @@ class PhotoQueueService extends GetxService {
   }
 
   List<PendingNote> notesFor(String jobId) => notes.where((n) => n.jobId == jobId).toList();
+
+  /// Everything still on the phone: photos, notes and checklist answers (M37 badge, log-out warning).
+  int get total => items.length + notes.length + answers.length;
+
+  int get failedCount =>
+      items.where((p) => p.state == PendingState.failed).length +
+      notes.where((n) => n.state == PendingState.failed).length +
+      answers.where((a) => a.state == PendingState.failed).length;
+
+  /// "Send all now" (M43): everything "Not sent" gets a fresh start, then sending begins.
+  Future<void> retryAll() async {
+    for (final p in items.where((p) => p.state == PendingState.failed)) {
+      p
+        ..state = PendingState.waiting
+        ..tries = 0
+        ..error = null;
+    }
+    for (final n in notes.where((n) => n.state == PendingState.failed)) {
+      n
+        ..state = PendingState.waiting
+        ..tries = 0
+        ..error = null;
+    }
+    for (final a in answers.where((a) => a.state == PendingState.failed)) {
+      a
+        ..state = PendingState.waiting
+        ..tries = 0
+        ..error = null;
+    }
+    items.refresh();
+    notes.refresh();
+    answers.refresh();
+    await _save();
+    await process();
+  }
 
   /// Tries a "Not sent" note again.
   Future<void> retryNote(String id) async {
