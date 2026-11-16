@@ -30,6 +30,7 @@
 | D-26 | A job with checklists needs them finished (every required question that is shown, with its photo or signature) before "Make report" unlocks | M19 unlock rule | 2026-11-16 (default; easy to change) |
 | D-27 | Typed notes (microphone off) are stored as voice notes with kind "typed", so M28 shows one list and the report reads one source | M27, M28 | 2026-11-16 |
 | D-28 | Without an OpenAI key, voice notes stay "uploaded" with `waiting_for: transcription_service` and checklist translations stay "missing"; adding the key switches both on with no code change | Build before the key exists | 2026-11-16 |
+| D-29 | Flutter is pinned to 3.47.9 in CI. Flutter 3.50 deprecates `package:flutter/material.dart` in favour of the `material_ui` package; we move when the mobile app build starts, not by accident | Reproducible builds | 2026-11-16 |
 
 ## Still open
 - Credit pack INR prices (placeholders ₹799 / 500 and ₹2,799 / 2,000).
