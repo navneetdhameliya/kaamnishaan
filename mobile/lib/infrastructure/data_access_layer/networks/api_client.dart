@@ -11,18 +11,14 @@ import '../../shared/app_logger.dart';
 /// refreshes the token once on 401 and repeats the call, and logs the user out if that fails.
 class ApiClient {
   ApiClient({
-    required ITokenStorage tokens,
-    required String Function() language,
-    required Future<String> Function() deviceId,
-    void Function()? onSessionExpired,
+    required this.tokens,
+    required this.language,
+    required this.deviceId,
+    this.onSessionExpired,
     String? baseUrl,
     Dio? dio,
     Dio? refreshDio,
-  })  : _tokens = tokens,
-        _language = language,
-        _deviceId = deviceId,
-        _onSessionExpired = onSessionExpired,
-        dio = dio ?? Dio(),
+  })  : dio = dio ?? Dio(),
         _refreshDio = refreshDio ?? Dio() {
     final options = BaseOptions(
       baseUrl: '${baseUrl ?? Env.apiUrl}${APIConstant.apiPrefix}',
@@ -39,10 +35,10 @@ class ApiClient {
 
   final Dio dio;
   final Dio _refreshDio;
-  final ITokenStorage _tokens;
-  final String Function() _language;
-  final Future<String> Function() _deviceId;
-  final void Function()? _onSessionExpired;
+  final ITokenStorage tokens;
+  final String Function() language;
+  final Future<String> Function() deviceId;
+  final void Function()? onSessionExpired;
   Future<bool>? _refreshing;
 
   static const _noAuth = 'kn_no_auth';
@@ -64,10 +60,10 @@ class ApiClient {
       (await dio.delete<dynamic>(path, options: options)).data;
 
   Future<void> _onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    options.headers['Accept-Language'] = _language();
-    options.headers['X-Device-Id'] = await _deviceId();
+    options.headers['Accept-Language'] = language();
+    options.headers['X-Device-Id'] = await deviceId();
     if (options.extra[_noAuth] != true) {
-      final token = await _tokens.readAccess();
+      final token = await tokens.readAccess();
       if (token != null) options.headers['Authorization'] = 'Bearer $token';
     }
     handler.next(options);
@@ -80,7 +76,7 @@ class ApiClient {
       return handler.next(err);
     }
     if (await refreshTokens()) {
-      final token = await _tokens.readAccess();
+      final token = await tokens.readAccess();
       options.headers['Authorization'] = 'Bearer $token';
       options.extra[_retried] = true;
       try {
@@ -89,7 +85,7 @@ class ApiClient {
         return handler.next(e);
       }
     }
-    _onSessionExpired?.call();
+    onSessionExpired?.call();
     handler.next(err);
   }
 
@@ -97,23 +93,23 @@ class ApiClient {
   Future<bool> refreshTokens() => _refreshing ??= _doRefresh().whenComplete(() => _refreshing = null);
 
   Future<bool> _doRefresh() async {
-    final refresh = await _tokens.readRefresh();
+    final refresh = await tokens.readRefresh();
     if (refresh == null) return false;
     try {
       final res = await _refreshDio.post<dynamic>(
         APIConstant.refreshTokenAPIEP,
         data: {'refresh_token': refresh},
-        options: Options(headers: {'Accept-Language': _language(), 'X-Device-Id': await _deviceId()}),
+        options: Options(headers: {'Accept-Language': language(), 'X-Device-Id': await deviceId()}),
       );
       final data = res.data;
       if (data is Map && data['access_token'] is String && data['refresh_token'] is String) {
-        await _tokens.save(data['access_token'] as String, data['refresh_token'] as String);
+        await tokens.save(data['access_token'] as String, data['refresh_token'] as String);
         lastRefreshed = Map<String, dynamic>.from(data);
         return true;
       }
     } on DioException catch (e) {
       AppLogger.error('Token refresh failed', error: e);
-      if (e.response?.statusCode == 401) await _tokens.clear();
+      if (e.response?.statusCode == 401) await tokens.clear();
     }
     return false;
   }

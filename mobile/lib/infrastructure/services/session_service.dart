@@ -8,12 +8,10 @@ import 'token_storage_service.dart';
 /// Who is signed in, and which screen comes next after login (M10 join, M11 profile,
 /// choose company, or home). The rules follow the backend's `needs` list.
 class SessionService extends GetxService {
-  SessionService({required ITokenStorage tokens, required IAuthApiRepository repository})
-      : _tokens = tokens,
-        _repository = repository;
+  SessionService({required this.tokens, required this.repository});
 
-  final ITokenStorage _tokens;
-  final IAuthApiRepository _repository;
+  final ITokenStorage tokens;
+  final IAuthApiRepository repository;
 
   final Rxn<MeOutModel> me = Rxn<MeOutModel>();
   final RxList<CompanyChoiceModel> companies = <CompanyChoiceModel>[].obs;
@@ -23,7 +21,7 @@ class SessionService extends GetxService {
   bool get isLoggedIn => me.value != null;
 
   Future<void> apply(SessionOutModel session) async {
-    await _tokens.save(session.accessToken, session.refreshToken);
+    await tokens.save(session.accessToken, session.refreshToken);
     me.value = session.user;
     companies.assignAll(session.companies);
     invites.assignAll(session.invites);
@@ -32,12 +30,12 @@ class SessionService extends GetxService {
 
   /// On app start: if a login is saved, renew it and return the next screen; else null.
   Future<String?> restore() async {
-    if (await _tokens.readRefresh() == null) return null;
-    final result = await _repository.refreshSession();
+    if (await tokens.readRefresh() == null) return null;
+    final result = await repository.refreshSession();
     final session = result.dataOrNull;
     if (session == null) {
       if (result.errorOrNull?.isNetwork ?? false) return RoutesConstants.homeScreen; // offline: keep going
-      await _tokens.clear();
+      await tokens.clear();
       return null;
     }
     await apply(session);
@@ -53,18 +51,18 @@ class SessionService extends GetxService {
 
   /// After joining a company or saving the profile: renew the session so the token carries the company.
   Future<String> refreshAndRoute() async {
-    final session = (await _repository.refreshSession()).dataOrNull;
+    final session = (await repository.refreshSession()).dataOrNull;
     if (session != null) await apply(session);
     return nextRoute();
   }
 
   Future<void> logout() async {
-    await _repository.logout();
+    await repository.logout();
     await clear();
   }
 
   Future<void> clear() async {
-    await _tokens.clear();
+    await tokens.clear();
     me.value = null;
     companies.clear();
     invites.clear();

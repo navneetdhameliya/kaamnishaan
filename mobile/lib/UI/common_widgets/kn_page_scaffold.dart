@@ -41,7 +41,7 @@ class KnPageScaffold extends StatelessWidget {
                   children: [
                     if (showBack) KnBackButton(onTap: onBack),
                     const Spacer(),
-                    if (topAction != null) topAction!,
+                    ?topAction,
                   ],
                 ),
               ),
@@ -53,7 +53,7 @@ class KnPageScaffold extends StatelessWidget {
                     )
                   : content,
             ),
-            if (footer != null) footer!,
+            ?footer,
           ],
         ),
       ),

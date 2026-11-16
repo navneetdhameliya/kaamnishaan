@@ -10,7 +10,7 @@ import '../../../../infrastructure/services/speech_service.dart';
 import '../../../common_widgets/kn_toast.dart';
 import '../otp_section/otp_controller.dart';
 
-/// M05 phone number: typed with the big keypad, sent as +<country><number>.
+/// M05 phone number: typed with the big keypad, sent as `+<country><number>`.
 class PhoneController extends GetxController {
   PhoneController({required this.repository, required this.config, required this.speech, required this.translation});
 

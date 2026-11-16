@@ -31,11 +31,11 @@ class SplashScreen extends GetView<SplashController> {
                   const Spacer(flex: 5),
                   const KnBrandMark(size: 96, onDark: true),
                   const SizedBox(height: KnSize.space12),
-                  Text(
+                  const Text(
                     'KaamNishaan',
                     style: TextStyle(
                       fontFamily: 'Baloo 2',
-                      fontVariations: const [FontVariation('wght', 700)],
+                      fontVariations: [FontVariation('wght', 700)],
                       fontSize: 44,
                       letterSpacing: -0.44,
                       height: 1.25,
@@ -44,11 +44,11 @@ class SplashScreen extends GetView<SplashController> {
                   ),
                   const SizedBox(height: KnSize.space12),
                   // brand tagline: always English, as in the logo lockup
-                  Text(
+                  const Text(
                     'Every Job. Every Photo. Every Proof.',
                     style: TextStyle(
                       fontFamily: 'DM Sans',
-                      fontVariations: const [FontVariation('wght', 600), FontVariation('opsz', 14)],
+                      fontVariations: [FontVariation('wght', 600), FontVariation('opsz', 14)],
                       fontSize: 16,
                       color: cream,
                     ),
