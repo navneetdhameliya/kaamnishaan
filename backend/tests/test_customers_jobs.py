@@ -211,9 +211,11 @@ async def test_assignable_technicians_show_load(client):
     t1 = await invite_and_join(client, owner, TECH)
     await invite_and_join(client, owner, TECH2)
     c = await new_customer(client, owner)
+    # all on the same day, whatever the time now (now + 1 h and now + 2 h can fall on two days late at night)
+    noon = (datetime.now(UTC) + timedelta(days=1)).replace(hour=6, minute=30, second=0, microsecond=0)
     for _ in range(2):
-        await new_job(client, owner, c, assigned_to=t1["user"]["id"], scheduled_at=at(1))
-    j = await new_job(client, owner, c, scheduled_at=at(2))
+        await new_job(client, owner, c, assigned_to=t1["user"]["id"], scheduled_at=noon.isoformat())
+    j = await new_job(client, owner, c, scheduled_at=(noon + timedelta(hours=1)).isoformat())
     lst = (await client.get(f"/api/v1/jobs/{j['id']}/assignable-technicians", headers=auth(owner))).json()
     assert [t["jobs_today"] for t in lst["data"]] == [0, 2]  # least busy first
     assert all(t["capacity"] == 6 and t["available"] for t in lst["data"])

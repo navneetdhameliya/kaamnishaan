@@ -920,4 +920,136 @@ abstract final class LangKeys {
   static const langEs = 'lang.es';
   /// French
   static const langFr = 'lang.fr';
+  /// Your report
+  static const reportYourReport = 'report.your_report';
+  /// Making your report…
+  static const reportMaking = 'report.making';
+  /// About 20 seconds
+  static const reportAboutSeconds = 'report.about_seconds';
+  /// Reading {n} photos
+  static const reportStepPhotos = 'report.step_photos';
+  /// Checking {n} checklists
+  static const reportStepChecklists = 'report.step_checklists';
+  /// Writing from {n} voice notes
+  static const reportStepNotes = 'report.step_notes';
+  /// Writing the report
+  static const reportStepWrite = 'report.step_write';
+  /// Looking for missing proof
+  static const reportStepMissing = 'report.step_missing';
+  /// You can leave. We will tell you when it is ready.
+  static const reportCanLeave = 'report.can_leave';
+  /// Could not make the report
+  static const reportFailedTitle = 'report.failed_title';
+  /// Your photos and notes are safe.
+  static const reportFailedBody = 'report.failed_body';
+  /// {n} photos
+  static const reportCountPhotos = 'report.count_photos';
+  /// {n} checklists
+  static const reportCountChecklists = 'report.count_checklists';
+  /// {n} voice notes
+  static const reportCountNotes = 'report.count_notes';
+  /// Saved
+  static const reportSaved = 'report.saved';
+  /// Try again
+  static const reportTryAgain = 'report.try_again';
+  /// Back to job
+  static const reportBackToJob = 'report.back_to_job';
+  /// Report draft
+  static const reportDraftTitle = 'report.draft_title';
+  /// Report
+  static const reportTitle = 'report.title';
+  /// {customer} · #{number}
+  static const reportSubtitle = 'report.subtitle';
+  /// Drafted by AI from {proof}. Check before sending.
+  static const reportDraftedAi = 'report.drafted_ai';
+  /// Drafted from {proof}. Check before sending.
+  static const reportDraftedPlain = 'report.drafted_plain';
+  /// and
+  static const reportAnd = 'report.and';
+  /// Missing: {what}
+  static const reportMissing = 'report.missing';
+  /// Take photo
+  static const reportTakePhoto = 'report.take_photo';
+  /// Summary
+  static const reportSummary = 'report.summary';
+  /// Work done
+  static const reportWorkDone = 'report.work_done';
+  /// Advice
+  static const reportAdvice = 'report.advice';
+  /// {n} checks passed
+  static const reportChecksPassed = 'report.checks_passed';
+  /// {n} to fix
+  static const reportToFix = 'report.to_fix';
+  /// Edit
+  static const reportEdit = 'report.edit';
+  /// Send to manager
+  static const reportSendManager = 'report.send_manager';
+  /// Waiting for manager
+  static const reportWaitingReview = 'report.waiting_review';
+  /// Approved
+  static const reportApproved = 'report.approved';
+  /// Changes asked
+  static const reportChangesAsked = 'report.changes_asked';
+  /// Sent for review. It cannot be changed now.
+  static const reportLocked = 'report.locked';
+  /// Fill in the work done before sending.
+  static const reportEmptySection = 'report.empty_section';
+  /// Photo added. Making the report again with it.
+  static const reportRedraftAfterPhoto = 'report.redraft_after_photo';
+  /// Edit report
+  static const editorTitle = 'editor.title';
+  /// {customer} · draft
+  static const editorSubtitle = 'editor.subtitle';
+  /// Say or type what you did
+  static const editorHint = 'editor.hint';
+  /// {part} can't be empty. Speak or type.
+  static const editorEmpty = 'editor.empty';
+  /// Photos and checklist answers cannot be changed.
+  static const editorLockedNote = 'editor.locked_note';
+  /// Save changes
+  static const editorSave = 'editor.save';
+  /// Report saved
+  static const editorSaved = 'editor.saved';
+  /// Tap 🎤 on your keyboard and speak.
+  static const editorSpeakHint = 'editor.speak_hint';
+  /// Write {part} again with AI?
+  static const editorAiTitle = 'editor.ai_title';
+  /// Your words in this part will be replaced.
+  static const editorAiBody = 'editor.ai_body';
+  /// Write again
+  static const editorAiYes = 'editor.ai_yes';
+  /// Written again
+  static const editorAiDone = 'editor.ai_done';
+  /// Leave without saving?
+  static const editorUnsavedTitle = 'editor.unsaved_title';
+  /// Your changes will be lost.
+  static const editorUnsavedBody = 'editor.unsaved_body';
+  /// Leave
+  static const editorLeave = 'editor.leave';
+  /// Report sent to manager
+  static const sentTitle = 'sent.title';
+  /// You will get a message when it is approved.
+  static const sentBody = 'sent.body';
+  /// Report #{number} · {n} photos
+  static const sentMeta = 'sent.meta';
+  /// Sent {time}
+  static const sentAt = 'sent.at';
+  /// Your manager will review it
+  static const sentReviewer = 'sent.reviewer';
+  /// Proof is locked while they check
+  static const sentReviewerMeta = 'sent.reviewer_meta';
+  /// Review
+  static const sentReview = 'sent.review';
+  /// Back to Today
+  static const sentBackToday = 'sent.back_today';
+  /// See report
+  static const sentSeeReport = 'sent.see_report';
+  /// Open report draft
+  static const hubOpenDraft = 'hub.open_draft';
+  /// See report
+  static const hubSeeReport = 'hub.see_report';
+  /// Fix the report
+  static const hubFixReport = 'hub.fix_report';
+  /// {n} answers
+  static const reportCountAnswers = 'report.count_answers';
 }

@@ -26,6 +26,7 @@ from app.schemas.evidence import (
     PairIn,
     PairOut,
     Proof,
+    ProofReport,
     ProofStep,
     ShotPrompt,
     UploadCreate,
@@ -436,7 +437,16 @@ async def proof(db: AsyncSession, p: Principal, job_id: uuid.UUID) -> Proof:
         can_make_report=blocked is None,
         blocked_by=blocked,
         locked=locked,
+        report=await _report_ref(db, j.id),
     )
+
+
+async def _report_ref(db: AsyncSession, job_id: uuid.UUID) -> ProofReport | None:
+    from app.models import Report
+    from app.services.reports import rlabel
+
+    rep = (await db.execute(select(Report).where(Report.job_id == job_id))).scalar_one_or_none()
+    return ProofReport(id=rep.id, number=rlabel(rep.number), status=rep.status) if rep else None
 
 
 async def lock_job_evidence(db: AsyncSession, job_id: uuid.UUID) -> int:

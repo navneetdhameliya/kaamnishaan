@@ -47,6 +47,13 @@ abstract final class APIConstant {
   static String voiceNoteAPIEP(String id) => '/voice-notes/$id';
   static String retranscribeAPIEP(String id) => '/voice-notes/$id/retranscribe';
 
+  // reports (M31–M32)
+  static String jobReportsAPIEP(String jobId) => '/jobs/$jobId/reports';
+  static String reportAPIEP(String id) => '/reports/$id';
+  static String reportSubmitAPIEP(String id) => '/reports/$id/submit';
+  static String reportRegenerateAPIEP(String id, String section) => '/reports/$id/sections/$section/regenerate';
+  static String taskAPIEP(String id) => '/tasks/$id';
+
   // company
   static const String companiesAPIEP = '/companies';
   static const String companyAPIEP = '/company';

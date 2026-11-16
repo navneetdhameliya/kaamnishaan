@@ -117,6 +117,14 @@ class ShotPrompt(BaseModel):
     done: bool
 
 
+class ProofReport(BaseModel):
+    """The job's report, when one was started: the app opens it instead of making a new one."""
+
+    id: uuid.UUID
+    number: str = Field(description='"R-1042"')
+    status: str
+
+
 class Proof(BaseModel):
     job_id: uuid.UUID
     status: str
@@ -132,3 +140,4 @@ class Proof(BaseModel):
         default_factory=list, description="Camera hints from the checklists (M20)"
     )
     locked: bool
+    report: ProofReport | None = None

@@ -48,6 +48,14 @@ import '../../../UI/screens/onboarding_section/splash_section/splash_binding.dar
 import '../../../UI/screens/onboarding_section/splash_section/splash_screen.dart';
 import '../../../UI/screens/onboarding_section/welcome_section/welcome_binding.dart';
 import '../../../UI/screens/onboarding_section/welcome_section/welcome_screen.dart';
+import '../../../UI/screens/report_section/report_draft_section/report_draft_binding.dart';
+import '../../../UI/screens/report_section/report_draft_section/report_draft_screen.dart';
+import '../../../UI/screens/report_section/report_editor_section/report_editor_binding.dart';
+import '../../../UI/screens/report_section/report_editor_section/report_editor_screen.dart';
+import '../../../UI/screens/report_section/report_making_section/report_making_binding.dart';
+import '../../../UI/screens/report_section/report_making_section/report_making_screen.dart';
+import '../../../UI/screens/report_section/report_sent_section/report_sent_binding.dart';
+import '../../../UI/screens/report_section/report_sent_section/report_sent_screen.dart';
 import '../../../UI/screens/voice_section/voice_note_section/voice_note_binding.dart';
 import '../../../UI/screens/voice_section/voice_note_section/voice_note_screen.dart';
 import '../../../UI/screens/voice_section/voice_notes_section/voice_notes_binding.dart';
@@ -136,6 +144,10 @@ abstract final class AppPages {
     GetPage(name: RoutesConstants.voiceRecordScreen, page: () => const VoiceRecordScreen(), binding: VoiceRecordBinding()),
     GetPage(name: RoutesConstants.voiceNotesScreen, page: () => const VoiceNotesScreen(), binding: VoiceNotesBinding()),
     GetPage(name: RoutesConstants.voiceNoteScreen, page: () => const VoiceNoteScreen(), binding: VoiceNoteBinding()),
+    GetPage(name: RoutesConstants.reportMakingScreen, page: () => const ReportMakingScreen(), binding: ReportMakingBinding()),
+    GetPage(name: RoutesConstants.reportDraftScreen, page: () => const ReportDraftScreen(), binding: ReportDraftBinding()),
+    GetPage(name: RoutesConstants.reportEditorScreen, page: () => const ReportEditorScreen(), binding: ReportEditorBinding()),
+    GetPage(name: RoutesConstants.reportSentScreen, page: () => const ReportSentScreen(), binding: ReportSentBinding()),
     GetPage(
       name: RoutesConstants.homeScreen,
       page: () => const HomeShellScreen(),

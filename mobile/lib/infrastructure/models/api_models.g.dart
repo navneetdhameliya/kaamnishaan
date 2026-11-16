@@ -3549,6 +3549,7 @@ class ProofModel {
   final bool canMakeReport;
   final String jobId;
   final bool locked;
+  final ProofReportModel? report;
   /// Camera hints from the checklists (M20)
   final List<ShotPromptModel>? shotPrompts;
   final String status;
@@ -3559,6 +3560,7 @@ class ProofModel {
     required this.canMakeReport,
     required this.jobId,
     required this.locked,
+    this.report,
     this.shotPrompts,
     required this.status,
     required this.steps,
@@ -3569,6 +3571,7 @@ class ProofModel {
         canMakeReport: json['can_make_report'] as bool,
         jobId: json['job_id'] as String,
         locked: json['locked'] as bool,
+        report: json['report'] == null ? null : ProofReportModel.fromJson(json['report'] as Map<String, dynamic>),
         shotPrompts: json['shot_prompts'] == null ? null : (json['shot_prompts'] as List).map((e) => ShotPromptModel.fromJson(e as Map<String, dynamic>)).toList(),
         status: json['status'] as String,
         steps: (json['steps'] as List).map((e) => ProofStepModel.fromJson(e as Map<String, dynamic>)).toList(),
@@ -3579,6 +3582,7 @@ class ProofModel {
         'can_make_report': canMakeReport,
         'job_id': jobId,
         'locked': locked,
+        'report': report?.toJson(),
         'shot_prompts': shotPrompts?.map((e) => e.toJson()).toList(),
         'status': status,
         'steps': steps.map((e) => e.toJson()).toList(),
@@ -3607,6 +3611,36 @@ class ProofCountModel {
   Map<String, dynamic> toJson() => {
         'done': done,
         'total': total,
+      };
+}
+
+/// The job's report, when one was started: the app opens it instead of making a new one.
+ProofReportModel proofReportModelFromJson(String str) => ProofReportModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String proofReportModelToJson(ProofReportModel data) => json.encode(data.toJson());
+
+class ProofReportModel {
+  final String id;
+  /// "R-1042"
+  final String number;
+  final String status;
+
+  const ProofReportModel({
+    required this.id,
+    required this.number,
+    required this.status,
+  });
+
+  factory ProofReportModel.fromJson(Map<String, dynamic> json) => ProofReportModel(
+        id: json['id'] as String,
+        number: json['number'] as String,
+        status: json['status'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'number': number,
+        'status': status,
       };
 }
 

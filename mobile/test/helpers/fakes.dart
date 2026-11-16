@@ -12,6 +12,7 @@ import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/conf
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/files_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/home_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/jobs_api_repository.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/reports_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/voice_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
 import 'package:kaamnishaan/infrastructure/services/audio_service.dart';
@@ -38,6 +39,8 @@ class MockJobsRepository extends Mock implements IJobsApiRepository {}
 class MockChecklistsRepository extends Mock implements IChecklistsApiRepository {}
 
 class MockVoiceRepository extends Mock implements IVoiceApiRepository {}
+
+class MockReportsRepository extends Mock implements IReportsApiRepository {}
 
 QuestionOutModel question(
   String id,
@@ -425,6 +428,62 @@ VoiceNoteOutModel noteOut(
       locked: locked,
       recordedAt: DateTime(2026, 10, 31, 11),
       recordedBy: const PersonRefModel(id: 'u1', name: 'Ramesh'),
+    );
+
+ReportOutModel reportOut({
+  String status = 'draft',
+  List<String> actions = const ['edit', 'regenerate', 'redraft', 'submit'],
+  String? summary = 'AC in room 2 was not cooling because the air filter was blocked with dust.',
+  String? workDone = 'Cleaned and refitted the air filter. Added refrigerant. Room now cools to 22°C.',
+  String? advice = 'Clean the filter every month.',
+  List<ReportFlagModel> flags = const [],
+  Map<String, dynamic> sources = const {'summary': 'ai', 'work_done': 'ai', 'advice': 'ai'},
+  String draftedBy = 'ai',
+}) =>
+    ReportOutModel(
+      id: 'r1',
+      number: 'R-1042',
+      status: status,
+      actions: actions,
+      summary: summary,
+      workDone: workDone,
+      advice: advice,
+      language: 'en',
+      draftedBy: draftedBy,
+      flags: flags,
+      links: const [],
+      changeRequests: const [],
+      sectionSources: sources,
+      version: 1,
+      updatedAt: DateTime(2026, 10, 31, 11, 50),
+      submittedAt: status == 'pending_review' ? DateTime(2026, 10, 31, 11, 58) : null,
+      evidence: const EvidenceSummaryModel(
+        photos: {'before': 3, 'during': 1, 'after': 2},
+        thumbs: [],
+        checksPassed: 11,
+        checksFailed: 1,
+        notes: 2,
+        pairs: 1,
+      ),
+      job: const JobBriefModel(
+        id: 'j1',
+        number: 'J-1042',
+        title: 'AC not cooling',
+        customer: 'Green Valley Clinic',
+        status: 'in_progress',
+        technician: PersonRefModel(id: 'u1', name: 'Ramesh Patel'),
+      ),
+    );
+
+TaskOutModel taskOut(String status, List<String> steps) => TaskOutModel(
+      id: 't1',
+      type: 'report_draft',
+      status: status,
+      createdAt: DateTime(2026, 10, 31, 11, 50),
+      steps: [
+        for (final (i, k) in const ['collect_evidence', 'write_report', 'check_evidence'].indexed)
+          TaskStepModel(key: k, status: steps[i]),
+      ],
     );
 
 /// Answers HTTP calls from a list of handlers, so the API client can be tested without a server.

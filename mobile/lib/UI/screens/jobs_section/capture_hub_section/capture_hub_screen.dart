@@ -262,9 +262,9 @@ class CaptureHubScreen extends GetView<CaptureHubController> {
           else
             KnCustomButton(
               key: const ValueKey('make-report'),
-              text: LangKeys.hubMakeReport.tr,
-              icon: LucideIcons.sparkles,
-              enabled: proof.canMakeReport,
+              text: controller.reportLabel,
+              icon: controller.report == null ? LucideIcons.sparkles : LucideIcons.fileText,
+              enabled: controller.reportEnabled,
               onTap: controller.onMakeReportTap,
             ),
           if (!controller.notStarted && hint != null) ...[
