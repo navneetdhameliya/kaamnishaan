@@ -132,8 +132,6 @@ abstract final class LangKeys {
   static const welcomeHaveAccount = 'welcome.have_account';
   /// Log in
   static const welcomeLogIn = 'welcome.log_in';
-  /// Business sign-up comes in the next update.
-  static const welcomeBusinessSoon = 'welcome.business_soon';
   /// Phone number
   static const authPhoneLabel = 'auth.phone_label';
   /// Only used to log in. We never share it.
@@ -240,10 +238,140 @@ abstract final class LangKeys {
   static const errorUnknown = 'error.unknown';
   /// Please log in again.
   static const errorSessionExpired = 'error.session_expired';
-  /// Adding a photo comes in the next update.
-  static const profilePhotoSoon = 'profile.photo_soon';
   /// Hello, {name}
   static const homeHello = 'home.hello';
   /// Log out
   static const commonLogOut = 'common.log_out';
+  /// Log in
+  static const loginTitle = 'login.title';
+  /// For managers and owners. Check and approve your team's reports.
+  static const loginSubtitle = 'login.subtitle';
+  /// Work email
+  static const loginEmailLabel = 'login.email_label';
+  /// Password
+  static const loginPasswordLabel = 'login.password_label';
+  /// Forgot password?
+  static const loginForgot = 'login.forgot';
+  /// Forgot password? Reset it
+  static const loginForgotReset = 'login.forgot_reset';
+  /// Log in
+  static const loginButton = 'login.button';
+  /// or
+  static const loginOr = 'login.or';
+  /// Log in with phone
+  static const loginWithPhone = 'login.with_phone';
+  /// New here? Create a company account
+  static const loginNewHere = 'login.new_here';
+  /// Enter a valid email, like name@company.com
+  static const loginEmailInvalid = 'login.email_invalid';
+  /// Enter your password
+  static const loginPasswordMissing = 'login.password_missing';
+  /// Email or password is wrong. {count} tries left.
+  static const loginWrong = 'login.wrong';
+  /// Locked for {minutes} minutes
+  static const loginLockedTitle = 'login.locked_title';
+  /// {count} wrong tries. Try again at {time}.
+  static const loginLockedBody = 'login.locked_body';
+  /// Reset password
+  static const loginResetPassword = 'login.reset_password';
+  /// Create your account
+  static const signupTitle = 'signup.title';
+  /// Step 1 of 2 · Your details
+  static const signupStep = 'signup.step';
+  /// You are the owner
+  static const signupOwnerTitle = 'signup.owner_title';
+  /// Add managers and technicians after this.
+  static const signupOwnerBody = 'signup.owner_body';
+  /// Full name
+  static const signupNameLabel = 'signup.name_label';
+  /// Add your name
+  static const signupNameMissing = 'signup.name_missing';
+  /// This email already has an account.
+  static const signupEmailTaken = 'signup.email_taken';
+  /// Log in instead
+  static const signupLogInInstead = 'signup.log_in_instead';
+  /// At least 8 characters
+  static const signupPasswordHint = 'signup.password_hint';
+  /// Weak
+  static const signupPasswordWeak = 'signup.password_weak';
+  /// Missing: {rule}
+  static const signupRuleMissing = 'signup.rule_missing';
+  /// Done: {rule}
+  static const signupRuleDone = 'signup.rule_done';
+  /// 8 or more characters
+  static const signupRuleLength = 'signup.rule_length';
+  /// A number
+  static const signupRuleNumber = 'signup.rule_number';
+  /// A letter
+  static const signupRuleLetter = 'signup.rule_letter';
+  /// I agree to the Terms and Privacy Policy
+  static const signupTerms = 'signup.terms';
+  /// Tick the box to agree to the Terms
+  static const signupTermsMissing = 'signup.terms_missing';
+  /// Set up your company
+  static const companySetupTitle = 'company.setup_title';
+  /// Step 2 of 2 · Company
+  static const companyStep = 'company.step';
+  /// Add company logo
+  static const companyLogoTitle = 'company.logo_title';
+  /// Shows on every report PDF.
+  static const companyLogoBody = 'company.logo_body';
+  /// Upload
+  static const companyUpload = 'company.upload';
+  /// Change
+  static const companyChangeLogo = 'company.change_logo';
+  /// Company name
+  static const companyNameLabel = 'company.name_label';
+  /// Your company name
+  static const companyNamePlaceholder = 'company.name_placeholder';
+  /// Enter your company name
+  static const companyNameMissing = 'company.name_missing';
+  /// Trade
+  static const companyTradeLabel = 'company.trade_label';
+  /// Choose your trade
+  static const companyTradePlaceholder = 'company.trade_placeholder';
+  /// Choose a trade
+  static const companyTradeMissing = 'company.trade_missing';
+  /// Country
+  static const companyCountryLabel = 'company.country_label';
+  /// {trade} · {country} · Owner {name}
+  static const companyPreviewMeta = 'company.preview_meta';
+  /// Create company
+  static const companyCreate = 'company.create';
+  /// Your company is ready, but the logo did not upload. Add it later in Settings.
+  static const companyLogoFailed = 'company.logo_failed';
+  /// Forgot password?
+  static const forgotTitle = 'forgot.title';
+  /// Enter your work email. We will send you a link to make a new password.
+  static const forgotBody = 'forgot.body';
+  /// For your safety, the link works only once and ends in 30 minutes.
+  static const forgotTip = 'forgot.tip';
+  /// Send link
+  static const forgotSend = 'forgot.send';
+  /// Back to log in
+  static const forgotBackToLogin = 'forgot.back_to_login';
+  /// Check your email
+  static const forgotCheckTitle = 'forgot.check_title';
+  /// We sent a link to {email}. Open it on this phone to make a new password.
+  static const forgotCheckBody = 'forgot.check_body';
+  /// KaamNishaan · Reset your password
+  static const forgotMailSubject = 'forgot.mail_subject';
+  /// From no-reply@kaamnishaan.app · now
+  static const forgotMailFrom = 'forgot.mail_from';
+  /// Did not get it? Check spam, or resend in {time}
+  static const forgotResendIn = 'forgot.resend_in';
+  /// Did not get it? Check spam, or
+  static const forgotResendNow = 'forgot.resend_now';
+  /// We sent a new link.
+  static const forgotSentAgain = 'forgot.sent_again';
+  /// Open email app
+  static const forgotOpenMail = 'forgot.open_mail';
+  /// No email app found on this phone.
+  static const forgotNoMailApp = 'forgot.no_mail_app';
+  /// Take a photo
+  static const profileTakePhoto = 'profile.take_photo';
+  /// Choose from gallery
+  static const profileChoosePhoto = 'profile.choose_photo';
+  /// The photo did not upload. Try again.
+  static const profilePhotoFailed = 'profile.photo_failed';
 }

@@ -3,12 +3,17 @@ import 'package:intl/date_symbol_data_local.dart';
 
 import '../commons/constants/app_routes.dart';
 import '../data_access_layer/api_providers/auth_api_provider.dart';
+import '../data_access_layer/api_providers/company_api_provider.dart';
 import '../data_access_layer/api_providers/config_api_provider.dart';
+import '../data_access_layer/api_providers/files_api_provider.dart';
 import '../data_access_layer/api_repository/auth_api_repository.dart';
+import '../data_access_layer/api_repository/company_api_repository.dart';
 import '../data_access_layer/api_repository/config_api_repository.dart';
+import '../data_access_layer/api_repository/files_api_repository.dart';
 import '../data_access_layer/networks/api_client.dart';
 import '../lang/translation_service.dart';
 import 'config_service.dart';
+import 'image_picker_service.dart';
 import 'preferences_service.dart';
 import 'session_service.dart';
 import 'speech_service.dart';
@@ -37,9 +42,12 @@ abstract final class AppServices {
     Get.put<TranslationService>(translation, permanent: true);
     Get.put<ApiClient>(client, permanent: true);
     Get.put<ISpeechService>(SpeechService(), permanent: true);
+    Get.put<IImagePickerService>(ImagePickerService(), permanent: true);
 
     final authRepository = AuthApiRepository(provider: AuthApiProvider(client), client: client);
     Get.put<IAuthApiRepository>(authRepository, permanent: true);
+    Get.put<ICompanyApiRepository>(CompanyApiRepository(provider: CompanyApiProvider(client)), permanent: true);
+    Get.put<IFilesApiRepository>(FilesApiRepository(provider: FilesApiProvider(client)), permanent: true);
     Get.put<IConfigApiRepository>(ConfigApiRepository(ConfigApiProvider(client)), permanent: true);
     Get.put<ConfigService>(ConfigService(Get.find<IConfigApiRepository>()), permanent: true);
     Get.put<SessionService>(SessionService(tokens: tokens, repository: authRepository), permanent: true);

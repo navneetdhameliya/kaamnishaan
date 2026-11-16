@@ -27,7 +27,13 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>tel</string>
+		<string>message</string>
+		<string>mailto</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>KaamNishaan uses the camera to take your profile photo and photos of your work.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>KaamNishaan lets you choose a profile photo or company logo from your photos.</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>UIApplicationSceneManifest</key>

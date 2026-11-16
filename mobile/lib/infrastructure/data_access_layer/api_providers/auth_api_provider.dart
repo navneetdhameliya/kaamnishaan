@@ -5,6 +5,9 @@ import '../networks/api_client.dart';
 abstract class IAuthApiProvider {
   Future<dynamic> postOtpSend(Map<String, dynamic> body);
   Future<dynamic> postOtpVerify(Map<String, dynamic> body);
+  Future<dynamic> postLogin(Map<String, dynamic> body);
+  Future<dynamic> postRegister(Map<String, dynamic> body);
+  Future<dynamic> postForgotPassword(Map<String, dynamic> body);
   Future<dynamic> postSwitchCompany(Map<String, dynamic> body);
   Future<dynamic> postLogout();
   Future<dynamic> getMe();
@@ -26,6 +29,18 @@ class AuthApiProvider implements IAuthApiProvider {
   @override
   Future<dynamic> postOtpVerify(Map<String, dynamic> body) =>
       _client.post(APIConstant.otpVerifyAPIEP, body: body, options: ApiClient.public);
+
+  @override
+  Future<dynamic> postLogin(Map<String, dynamic> body) =>
+      _client.post(APIConstant.loginAPIEP, body: body, options: ApiClient.public);
+
+  @override
+  Future<dynamic> postRegister(Map<String, dynamic> body) =>
+      _client.post(APIConstant.registerAPIEP, body: body, options: ApiClient.public);
+
+  @override
+  Future<dynamic> postForgotPassword(Map<String, dynamic> body) =>
+      _client.post(APIConstant.forgotPasswordAPIEP, body: body, options: ApiClient.public);
 
   @override
   Future<dynamic> postSwitchCompany(Map<String, dynamic> body) =>

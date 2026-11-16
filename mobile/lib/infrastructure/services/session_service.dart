@@ -43,7 +43,12 @@ class SessionService extends GetxService {
   }
 
   String nextRoute() {
-    if (needs.contains('create_or_join_company')) return RoutesConstants.joinCompanyScreen;
+    if (needs.contains('create_or_join_company')) {
+      // an owner who signed up with email (M07) sets up a company; a phone login looks for an invite
+      final user = me.value;
+      final emailOwner = user != null && user.email != null && user.phone == null && invites.isEmpty;
+      return emailOwner ? RoutesConstants.companySetupScreen : RoutesConstants.joinCompanyScreen;
+    }
     if (needs.contains('profile')) return RoutesConstants.profileSetupScreen;
     if (needs.contains('choose_company')) return RoutesConstants.chooseCompanyScreen;
     return RoutesConstants.homeScreen;

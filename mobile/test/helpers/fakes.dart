@@ -3,8 +3,11 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/auth_api_repository.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/company_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/config_api_repository.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/files_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
+import 'package:kaamnishaan/infrastructure/services/image_picker_service.dart';
 import 'package:kaamnishaan/infrastructure/services/speech_service.dart';
 import 'package:kaamnishaan/infrastructure/services/token_storage_service.dart';
 import 'package:mocktail/mocktail.dart';
@@ -12,6 +15,24 @@ import 'package:mocktail/mocktail.dart';
 class MockAuthRepository extends Mock implements IAuthApiRepository {}
 
 class MockConfigRepository extends Mock implements IConfigApiRepository {}
+
+class MockCompanyRepository extends Mock implements ICompanyApiRepository {}
+
+class MockFilesRepository extends Mock implements IFilesApiRepository {}
+
+/// Hands back [next] as if the person had taken or chosen it.
+class FakeImagePicker implements IImagePickerService {
+  PickedImage? next;
+  final sources = <PickSource>[];
+
+  @override
+  Future<PickedImage?> pick(PickSource source, {double maxSide = 1024}) async {
+    sources.add(source);
+    return next;
+  }
+}
+
+final tinyJpeg = PickedImage(bytes: Uint8List.fromList(const [0xFF, 0xD8, 0xFF, 0xD9]), contentType: 'image/jpeg');
 
 class MemoryTokenStorage implements ITokenStorage {
   MemoryTokenStorage({this.access, this.refresh});
@@ -73,11 +94,13 @@ ResponseBody jsonBody(Object? data, int status) => ResponseBody.fromString(
       },
     );
 
-MeOutModel me({String name = 'Ramesh Patel'}) => MeOutModel(
+MeOutModel me({String name = 'Ramesh Patel', String? phone = '+919825011111', String? email, String? trade}) =>
+    MeOutModel(
       id: 'u1',
       name: name,
-      phone: '+919825011111',
-      email: null,
+      phone: phone,
+      email: email,
+      trade: trade,
       emailVerified: false,
       appLanguage: 'en',
       theme: 'system',
@@ -86,11 +109,16 @@ MeOutModel me({String name = 'Ramesh Patel'}) => MeOutModel(
       permissions: const [],
     );
 
-SessionOutModel session({List<String> needs = const [], List<MyInviteModel> invites = const []}) => SessionOutModel(
+SessionOutModel session({
+  List<String> needs = const [],
+  List<MyInviteModel> invites = const [],
+  MeOutModel? user,
+}) =>
+    SessionOutModel(
       accessToken: 'access-1',
       refreshToken: 'refresh-1',
       expiresIn: 900,
-      user: me(),
+      user: user ?? me(),
       needs: needs,
       companies: const [],
       invites: invites,

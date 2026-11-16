@@ -10,10 +10,17 @@ import '../networks/api_result.dart';
 abstract class IAuthApiRepository {
   Future<ApiResult<OtpSentModel>> sendOtp({required String phone});
   Future<ApiResult<SessionOutModel>> verifyOtp({required String challengeId, required String code, String? deviceId});
+  Future<ApiResult<SessionOutModel>> loginWithEmail({required String email, required String password});
+  Future<ApiResult<SessionOutModel>> registerOwner({
+    required String name,
+    required String email,
+    required String password,
+  });
+  Future<ApiResult<void>> forgotPassword(String email);
   Future<ApiResult<SessionOutModel>> refreshSession();
   Future<ApiResult<SessionOutModel>> switchCompany(String companyId);
   Future<ApiResult<void>> logout();
-  Future<ApiResult<MeOutModel>> updateName(String name);
+  Future<ApiResult<MeOutModel>> updateProfile({String? name, String? trade, String? avatarUploadId});
   Future<ApiResult<MyInviteListModel>> myInvites();
   Future<ApiResult<MeOutModel>> acceptInvite(String inviteId);
   Future<ApiResult<void>> declineInvite(String inviteId);
@@ -40,6 +47,29 @@ class AuthApiRepository implements IAuthApiRepository {
           }))));
 
   @override
+  Future<ApiResult<SessionOutModel>> loginWithEmail({required String email, required String password}) =>
+      guard(() async => SessionOutModel.fromJson(
+          _map(await provider.postLogin({'email': email.trim(), 'password': password}))));
+
+  @override
+  Future<ApiResult<SessionOutModel>> registerOwner({
+    required String name,
+    required String email,
+    required String password,
+  }) =>
+      guard(() async => SessionOutModel.fromJson(_map(await provider.postRegister({
+            'name': name.trim(),
+            'email': email.trim(),
+            'password': password,
+            'accept_terms': true,
+          }))));
+
+  @override
+  Future<ApiResult<void>> forgotPassword(String email) => guard(() async {
+        await provider.postForgotPassword({'email': email.trim()});
+      });
+
+  @override
   Future<ApiResult<SessionOutModel>> refreshSession() => guard(() async {
         if (!await client.refreshTokens() || client.lastRefreshed == null) {
           throw ApiException(code: 'session_expired', message: LangKeys.errorSessionExpired.tr);
@@ -57,8 +87,12 @@ class AuthApiRepository implements IAuthApiRepository {
       });
 
   @override
-  Future<ApiResult<MeOutModel>> updateName(String name) =>
-      guard(() async => MeOutModel.fromJson(_map(await provider.patchMe({'name': name}))));
+  Future<ApiResult<MeOutModel>> updateProfile({String? name, String? trade, String? avatarUploadId}) =>
+      guard(() async => MeOutModel.fromJson(_map(await provider.patchMe({
+            'name': ?name,
+            'trade': ?trade,
+            'avatar_upload_id': ?avatarUploadId,
+          }))));
 
   @override
   Future<ApiResult<MyInviteListModel>> myInvites() =>

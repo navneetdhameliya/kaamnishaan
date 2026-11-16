@@ -4,6 +4,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../common_widgets/kn_bottom_sheet.dart';
+import '../../../common_widgets/kn_country_picker_sheet.dart';
 import '../../../common_widgets/kn_custom_button.dart';
 import '../../../common_widgets/kn_inline_error.dart';
 import '../../../common_widgets/kn_number_keypad.dart';
@@ -13,7 +14,6 @@ import '../../../common_widgets/kn_screen_footer.dart';
 import '../../../commons/text_widgets/base/custom_base_text_widget.dart';
 import '../../../theme/kn_app_theme.dart';
 import '../../../theme/kn_tokens.g.dart';
-import 'custom_widgets/country_picker_sheet.dart';
 import 'phone_controller.dart';
 
 /// M05 Phone number (Figma 16:768; invalid 71:2030; choose country 71:2129).
@@ -23,7 +23,7 @@ class PhoneScreen extends GetView<PhoneController> {
   void _openCountries() {
     showKnBottomSheet<void>(
       title: LangKeys.authChooseCountry.tr,
-      child: CountryPickerSheet(
+      child: KnCountryPickerSheet(
         countries: controller.config.countries,
         selected: controller.country.value,
         onSelected: controller.onCountrySelected,
