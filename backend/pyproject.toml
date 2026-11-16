@@ -23,6 +23,8 @@ dependencies = [
   "pillow>=11.0",
   "boto3>=1.35",
   "arq>=0.26",
+  "fpdf2>=2.8",
+  "uharfbuzz>=0.40",
 ]
 
 [project.optional-dependencies]
@@ -30,6 +32,9 @@ dev = ["pytest>=8.3", "pytest-asyncio>=0.24", "ruff>=0.6", "aiosqlite>=0.20"]
 
 [tool.setuptools.packages.find]
 include = ["app*"]
+
+[tool.setuptools.package-data]
+app = ["assets/fonts/*.ttf"]
 
 [tool.ruff]
 line-length = 110
@@ -41,7 +46,8 @@ ignore = ["S101"]
 
 [tool.ruff.lint.per-file-ignores]
 "alembic/versions/*" = ["E501"]
-"tests/*" = ["S105", "S106", "S107", "S608", "E501"]
+"tests/*" = ["S105", "S106", "S107", "S608", "E501", "F811"]  # F811: fixtures shared between test files
+"app/services/report_labels.py" = ["E501"]  # translated sentences are kept whole
 
 [tool.ruff.lint.flake8-bugbear]
 extend-immutable-calls = ["fastapi.Depends", "fastapi.Header", "fastapi.Query", "app.core.deps.requires"]

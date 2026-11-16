@@ -1,7 +1,7 @@
 """Owner/manager dashboard (M13), technician Today (M12), profile counts (M37), and the sync feed
 the app's offline store reads (GET /sync/changes).
 
-Reports sent to customers are counted from Step 1f (sharing).
+"Reports sent" counts reports that reached the customer (sent or link copied).
 """
 
 from datetime import datetime, timedelta
@@ -25,6 +25,7 @@ from app.schemas.work import (
 )
 from app.services.evidence import photos_by
 from app.services.jobs import CLOSED, day_bounds, items, job_out, local_today, tz
+from app.services.reports import reports_sent_by, shared_since
 
 SYNC_PAGE = 200
 SYNC_OVERLAP = timedelta(seconds=2)  # re-send a little; the app keeps the highest version per job
@@ -62,15 +63,19 @@ async def dashboard(db: AsyncSession, p: Principal) -> Dashboard:
         .scalars()
         .all()
     )
-    per_day = {}
+    per_day, sent_day = {}, {}
     for t in completed:
         d = t.astimezone(tz(p)).date()
         per_day[d] = per_day.get(d, 0) + 1
+    shared = await shared_since(db, p.company_id, week_start)
+    for t in shared:
+        d = t.astimezone(tz(p)).date()
+        sent_day[d] = sent_day.get(d, 0) + 1
     week = [
         DayCount(
             date=today - timedelta(days=i),
             completed=per_day.get(today - timedelta(days=i), 0),
-            reports_sent=0,
+            reports_sent=sent_day.get(today - timedelta(days=i), 0),
         )
         for i in range(6, -1, -1)
     ]
@@ -124,8 +129,19 @@ async def dashboard(db: AsyncSession, p: Principal) -> Dashboard:
         to_review=to_review,
         week=week,
         team_now=team_now,
-        onboarding=Onboarding(team_invited=invited, first_job_created=any_job, first_report_sent=False),
+        onboarding=Onboarding(
+            team_invited=invited,
+            first_job_created=any_job,
+            first_report_sent=bool(shared) or await _any_shared(db, p),
+        ),
     )
+
+
+async def _any_shared(db: AsyncSession, p: Principal) -> bool:
+    from app.models import Report
+
+    q = select(Report.id).where(Report.company_id == p.company_id, Report.shared_at.is_not(None)).limit(1)
+    return (await db.execute(q)).first() is not None
 
 
 async def today(db: AsyncSession, p: Principal) -> Today:
@@ -200,7 +216,7 @@ async def stats(db: AsyncSession, p: Principal) -> MeStats:
     return MeStats(
         jobs_done=done,
         photos=await photos_by(db, p.company_id, p.user.id),
-        reports_sent=0,
+        reports_sent=await reports_sent_by(db, p.company_id, p.user.id),
         team=team,
         customers=customers,
         to_review=to_review,

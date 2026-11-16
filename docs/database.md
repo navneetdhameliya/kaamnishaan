@@ -99,10 +99,12 @@ erDiagram
 
 | Table | Key columns | Notes |
 |---|---|---|
-| `reports` | `company_id`, `job_id` (unique), `number`, `status` (`generating`, `draft`, `pending_review`, `changes_requested`, `approved`, `failed`), `language`, `content` jsonb (summary, work_done, advice, checklist summary), `ai_checks` jsonb, `prompt_version`, `submitted_by`, `submitted_at`, `reviewed_by`, `reviewed_at`, `change_request` jsonb, `pdf_key`, `version` | One report per job; edits create `report_versions`. |
+| `reports` | (Step 1f adds `shared_at`, `pdf_status`/`pdf_key`/`pdf_pages`/`pdf_size`/`pdf_sha256`/`pdf_built_at`/`pdf_error`, `acknowledged_at`/`acknowledged_name`/`acknowledged_org`) `company_id`, `job_id` (unique), `number`, `status` (`generating`, `draft`, `pending_review`, `changes_requested`, `approved`, `failed`), `language`, `content` jsonb (summary, work_done, advice, checklist summary), `ai_checks` jsonb, `prompt_version`, `submitted_by`, `submitted_at`, `reviewed_by`, `reviewed_at`, `change_request` jsonb, `pdf_key`, `version` | One report per job; edits create `report_versions`. |
 | `report_versions` | `report_id`, `version`, `content` jsonb, `source` (`ai`, `technician`, `manager`), `created_by` | Full history; the PDF is built from the approved version. |
 | `report_evidence` | `report_id`, `evidence_id`, `position` | Which photos appear in the report and in what order. |
-| `share_links` | `company_id`, `report_id`, `token_hash`, `channel` (`whatsapp`, `sms`, `email`, `copy`), `recipient`, `expires_at` (default 30 days), `revoked_at`, `created_by`, `first_opened_at`, `open_count` | Only the hash of the token is stored. Expired → W29 "link expired" state. |
+| `share_links` | `company_id`, `report_id`, `token_hash` (unique), `channel` (`whatsapp`, `sms`, `email`, `copy`), `recipient_name`, `phone`, `email`, `expires_at` (30 days), `revoked_at`, `revoked_by`, `created_by`, `first_opened_at`, `last_opened_at`, `open_count`, `new_link_requested_at` | Only the hash of the token is stored; the token is rebuilt from the link id with an HMAC of the server secret, so M35 can show the link again. A trigger refuses a link for a report that is not approved. |
+| `messages` | `company_id`, `report_id`, `share_link_id`, `channel` (`sms`, `whatsapp`, `email`), `to`, `template`, `language`, `body`, `status` (`queued`, `sent`, `delivered`, `read`, `failed`, `bounced`), `provider_id`, `error`, `sent_by` | Every message to a customer (M35 "sent" list). Credits per SMS/WhatsApp are charged from Step 2. |
+| `report_issues` | `company_id`, `report_id`, `share_link_id`, `kind` (`problem`, `new_link`), `message`, `contact`, `status` (`open`, `resolved`) | W27 "Report a problem", and "send me a new link" for a copied link; owners and managers get an email. |
 
 ### Reviews and follow-ups
 

@@ -11,10 +11,25 @@ from app.api.v1.routes import (
     jobs,
     me,
     public,
+    public_reports,
     reports,
     voice,
 )
 
 router = APIRouter(prefix="/api/v1")
-for r in (health, public, auth, me, home, company, customers, jobs, evidence, checklists, voice, reports):
+for r in (
+    health,
+    public,
+    public_reports,
+    auth,
+    me,
+    home,
+    company,
+    customers,
+    jobs,
+    evidence,
+    checklists,
+    voice,
+    reports,
+):
     router.include_router(r.router)

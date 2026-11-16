@@ -132,7 +132,12 @@ class ReportOut(BaseModel):
     submitted_at: datetime | None
     approved_by: PersonRef | None
     approved_at: datetime | None
-    actions: list[str] = Field(description="edit, regenerate, redraft, submit, approve, request_changes")
+    shared_at: datetime | None
+    acknowledged_at: datetime | None
+    pdf_status: Literal["building", "ready", "failed"] | None
+    actions: list[str] = Field(
+        description="edit, regenerate, redraft, submit, approve, request_changes, share"
+    )
     updated_at: datetime
 
 

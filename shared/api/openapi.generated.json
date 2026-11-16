@@ -1,6 +1,65 @@
 {
   "components": {
     "schemas": {
+      "AcknowledgeIn": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "organisation": {
+            "anyOf": [
+              {
+                "maxLength": 160,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organisation"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "AcknowledgeIn",
+        "type": "object"
+      },
+      "Acknowledgement": {
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "organisation": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Organisation"
+          }
+        },
+        "required": [
+          "at",
+          "name",
+          "organisation"
+        ],
+        "title": "Acknowledgement",
+        "type": "object"
+      },
       "AnswerIn": {
         "additionalProperties": false,
         "properties": {
@@ -364,6 +423,57 @@
           "reasons"
         ],
         "title": "ChangesIn",
+        "type": "object"
+      },
+      "ChannelOut": {
+        "properties": {
+          "available": {
+            "title": "Available",
+            "type": "boolean"
+          },
+          "key": {
+            "enum": [
+              "sms",
+              "whatsapp",
+              "email"
+            ],
+            "title": "Key",
+            "type": "string"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "enum": [
+                  "no_phone",
+                  "no_email"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reason"
+          },
+          "to": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "To"
+          }
+        },
+        "required": [
+          "key",
+          "available",
+          "to",
+          "reason"
+        ],
+        "title": "ChannelOut",
         "type": "object"
       },
       "CompanyChoice": {
@@ -2401,6 +2511,54 @@
         "title": "InviterOut",
         "type": "object"
       },
+      "IssueIn": {
+        "additionalProperties": false,
+        "properties": {
+          "contact": {
+            "anyOf": [
+              {
+                "maxLength": 160,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact"
+          },
+          "message": {
+            "maxLength": 1000,
+            "minLength": 3,
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "title": "IssueIn",
+        "type": "object"
+      },
+      "IssueOut": {
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "received_at": {
+            "format": "date-time",
+            "title": "Received At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "received_at"
+        ],
+        "title": "IssueOut",
+        "type": "object"
+      },
       "JobBrief": {
         "properties": {
           "customer": {
@@ -3707,6 +3865,58 @@
         "title": "MemberPatch",
         "type": "object"
       },
+      "MessageOut": {
+        "properties": {
+          "channel": {
+            "enum": [
+              "sms",
+              "whatsapp",
+              "email"
+            ],
+            "title": "Channel",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "to": {
+            "title": "To",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "channel",
+          "to",
+          "status",
+          "error",
+          "created_at"
+        ],
+        "title": "MessageOut",
+        "type": "object"
+      },
       "Money": {
         "properties": {
           "amount": {
@@ -3821,6 +4031,49 @@
           "meta"
         ],
         "title": "MyInviteList",
+        "type": "object"
+      },
+      "NewLinkOut": {
+        "properties": {
+          "channel": {
+            "anyOf": [
+              {
+                "enum": [
+                  "sms",
+                  "whatsapp",
+                  "email"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Channel"
+          },
+          "company_notified": {
+            "title": "Company Notified",
+            "type": "boolean"
+          },
+          "sent_to": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Masked phone or email the new link went to",
+            "title": "Sent To"
+          }
+        },
+        "required": [
+          "sent_to",
+          "channel",
+          "company_notified"
+        ],
+        "title": "NewLinkOut",
         "type": "object"
       },
       "NoteIn": {
@@ -4124,6 +4377,104 @@
         "title": "PasswordReset",
         "type": "object"
       },
+      "PdfOut": {
+        "properties": {
+          "built_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Built At"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "filename": {
+            "title": "Filename",
+            "type": "string"
+          },
+          "pages": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pages"
+          },
+          "sha256": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Fingerprint of the file, to check a forwarded copy",
+            "title": "Sha256"
+          },
+          "size": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Size"
+          },
+          "status": {
+            "enum": [
+              "building",
+              "ready",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Signed download link, valid 15 minutes",
+            "title": "Url"
+          }
+        },
+        "required": [
+          "status",
+          "url",
+          "filename",
+          "pages",
+          "size",
+          "sha256",
+          "built_at",
+          "error"
+        ],
+        "title": "PdfOut",
+        "type": "object"
+      },
       "PersonRef": {
         "properties": {
           "id": {
@@ -4318,6 +4669,39 @@
         "title": "Preferences",
         "type": "object"
       },
+      "Preview": {
+        "properties": {
+          "email_body": {
+            "title": "Email Body",
+            "type": "string"
+          },
+          "email_subject": {
+            "title": "Email Subject",
+            "type": "string"
+          },
+          "language": {
+            "title": "Language",
+            "type": "string"
+          },
+          "sms": {
+            "title": "Sms",
+            "type": "string"
+          },
+          "whatsapp": {
+            "title": "Whatsapp",
+            "type": "string"
+          }
+        },
+        "required": [
+          "language",
+          "sms",
+          "whatsapp",
+          "email_subject",
+          "email_body"
+        ],
+        "title": "Preview",
+        "type": "object"
+      },
       "Proof": {
         "properties": {
           "blocked_by": {
@@ -4435,6 +4819,366 @@
           "done"
         ],
         "title": "ProofStep",
+        "type": "object"
+      },
+      "PublicChecklist": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PublicItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "items"
+        ],
+        "title": "PublicChecklist",
+        "type": "object"
+      },
+      "PublicCompany": {
+        "properties": {
+          "logo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Logo Url"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "logo_url"
+        ],
+        "title": "PublicCompany",
+        "type": "object"
+      },
+      "PublicItem": {
+        "properties": {
+          "answer": {
+            "title": "Answer",
+            "type": "string"
+          },
+          "passed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Passed"
+          },
+          "question": {
+            "title": "Question",
+            "type": "string"
+          }
+        },
+        "required": [
+          "question",
+          "answer",
+          "passed"
+        ],
+        "title": "PublicItem",
+        "type": "object"
+      },
+      "PublicPair": {
+        "properties": {
+          "after": {
+            "$ref": "#/components/schemas/PublicPhoto"
+          },
+          "before": {
+            "$ref": "#/components/schemas/PublicPhoto"
+          },
+          "subject": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subject"
+          }
+        },
+        "required": [
+          "subject",
+          "before",
+          "after"
+        ],
+        "title": "PublicPair",
+        "type": "object"
+      },
+      "PublicPhoto": {
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "stage": {
+            "title": "Stage",
+            "type": "string"
+          },
+          "taken_at": {
+            "format": "date-time",
+            "title": "Taken At",
+            "type": "string"
+          },
+          "thumb_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Thumb Url"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "stage",
+          "url",
+          "thumb_url",
+          "taken_at"
+        ],
+        "title": "PublicPhoto",
+        "type": "object"
+      },
+      "PublicReport": {
+        "properties": {
+          "acknowledged": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Acknowledgement"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "address": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address"
+          },
+          "advice": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Advice",
+            "type": "array"
+          },
+          "approved_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approved At"
+          },
+          "approved_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approved By"
+          },
+          "checklists": {
+            "items": {
+              "$ref": "#/components/schemas/PublicChecklist"
+            },
+            "title": "Checklists",
+            "type": "array"
+          },
+          "company": {
+            "$ref": "#/components/schemas/PublicCompany"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "customer": {
+            "title": "Customer",
+            "type": "string"
+          },
+          "fingerprint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "SHA-256 of the PDF",
+            "title": "Fingerprint"
+          },
+          "job_number": {
+            "title": "Job Number",
+            "type": "string"
+          },
+          "lang": {
+            "description": "Language used for checklist questions on this page",
+            "title": "Lang",
+            "type": "string"
+          },
+          "language": {
+            "description": "Language the report text was written in",
+            "title": "Language",
+            "type": "string"
+          },
+          "languages": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Languages",
+            "type": "array"
+          },
+          "link_expires_at": {
+            "format": "date-time",
+            "title": "Link Expires At",
+            "type": "string"
+          },
+          "number": {
+            "title": "Number",
+            "type": "string"
+          },
+          "pairs": {
+            "items": {
+              "$ref": "#/components/schemas/PublicPair"
+            },
+            "title": "Pairs",
+            "type": "array"
+          },
+          "pdf_ready": {
+            "title": "Pdf Ready",
+            "type": "boolean"
+          },
+          "photos": {
+            "items": {
+              "$ref": "#/components/schemas/PublicPhoto"
+            },
+            "title": "Photos",
+            "type": "array"
+          },
+          "photos_locked_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photos Locked At"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Summary"
+          },
+          "technician": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Technician"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "work_done": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Work Done",
+            "type": "array"
+          }
+        },
+        "required": [
+          "number",
+          "job_number",
+          "title",
+          "customer",
+          "address",
+          "technician",
+          "approved_by",
+          "approved_at",
+          "completed_at",
+          "company",
+          "language",
+          "lang",
+          "languages",
+          "summary",
+          "work_done",
+          "advice",
+          "pairs",
+          "photos",
+          "checklists",
+          "photos_locked_at",
+          "acknowledged",
+          "link_expires_at",
+          "pdf_ready",
+          "fingerprint"
+        ],
+        "title": "PublicReport",
         "type": "object"
       },
       "QuestionIn": {
@@ -4939,6 +5683,50 @@
         "title": "QuickCustomer",
         "type": "object"
       },
+      "Recipient": {
+        "properties": {
+          "email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          }
+        },
+        "required": [
+          "name",
+          "phone",
+          "email"
+        ],
+        "title": "Recipient",
+        "type": "object"
+      },
       "RefreshBody": {
         "additionalProperties": false,
         "properties": {
@@ -5170,8 +5958,20 @@
       },
       "ReportOut": {
         "properties": {
+          "acknowledged_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Acknowledged At"
+          },
           "actions": {
-            "description": "edit, regenerate, redraft, submit, approve, request_changes",
+            "description": "edit, regenerate, redraft, submit, approve, request_changes, share",
             "items": {
               "type": "string"
             },
@@ -5277,12 +6077,40 @@
             "title": "Number",
             "type": "string"
           },
+          "pdf_status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "building",
+                  "ready",
+                  "failed"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pdf Status"
+          },
           "section_sources": {
             "additionalProperties": {
               "type": "string"
             },
             "title": "Section Sources",
             "type": "object"
+          },
+          "shared_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shared At"
           },
           "status": {
             "enum": [
@@ -5386,6 +6214,9 @@
           "submitted_at",
           "approved_by",
           "approved_at",
+          "shared_at",
+          "acknowledged_at",
+          "pdf_status",
           "actions",
           "updated_at"
         ],
@@ -5495,6 +6326,67 @@
         "title": "RetranscribeIn",
         "type": "object"
       },
+      "SendIn": {
+        "additionalProperties": false,
+        "properties": {
+          "channels": {
+            "items": {
+              "enum": [
+                "sms",
+                "whatsapp",
+                "email"
+              ],
+              "type": "string"
+            },
+            "maxItems": 3,
+            "minItems": 1,
+            "title": "Channels",
+            "type": "array"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "format": "email",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 160,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Defaults to the customer's main contact",
+            "title": "Phone"
+          }
+        },
+        "required": [
+          "channels"
+        ],
+        "title": "SendIn",
+        "type": "object"
+      },
       "SentenceLink": {
         "properties": {
           "refs": {
@@ -5581,6 +6473,193 @@
           "invites"
         ],
         "title": "SessionOut",
+        "type": "object"
+      },
+      "ShareInfo": {
+        "properties": {
+          "blocked_by": {
+            "anyOf": [
+              {
+                "const": "not_approved",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Blocked By"
+          },
+          "can_share": {
+            "title": "Can Share",
+            "type": "boolean"
+          },
+          "channels": {
+            "items": {
+              "$ref": "#/components/schemas/ChannelOut"
+            },
+            "title": "Channels",
+            "type": "array"
+          },
+          "link": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ShareLinkOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "preview": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Preview"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "recipient": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Recipient"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "report_id": {
+            "format": "uuid",
+            "title": "Report Id",
+            "type": "string"
+          },
+          "report_status": {
+            "title": "Report Status",
+            "type": "string"
+          },
+          "sent": {
+            "items": {
+              "$ref": "#/components/schemas/MessageOut"
+            },
+            "title": "Sent",
+            "type": "array"
+          }
+        },
+        "required": [
+          "report_id",
+          "report_status",
+          "can_share",
+          "blocked_by",
+          "recipient",
+          "channels",
+          "link",
+          "preview",
+          "sent"
+        ],
+        "title": "ShareInfo",
+        "type": "object"
+      },
+      "ShareLinkIn": {
+        "additionalProperties": false,
+        "properties": {
+          "channel": {
+            "default": "copy",
+            "enum": [
+              "sms",
+              "whatsapp",
+              "email",
+              "copy"
+            ],
+            "title": "Channel",
+            "type": "string"
+          }
+        },
+        "title": "ShareLinkIn",
+        "type": "object"
+      },
+      "ShareLinkOut": {
+        "properties": {
+          "channel": {
+            "enum": [
+              "sms",
+              "whatsapp",
+              "email",
+              "copy"
+            ],
+            "title": "Channel",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "title": "Expires At",
+            "type": "string"
+          },
+          "first_opened_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "First Opened At"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "last_opened_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Opened At"
+          },
+          "open_count": {
+            "title": "Open Count",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "active",
+              "expired",
+              "revoked"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "url",
+          "channel",
+          "status",
+          "expires_at",
+          "open_count",
+          "first_opened_at",
+          "last_opened_at",
+          "created_at"
+        ],
+        "title": "ShareLinkOut",
         "type": "object"
       },
       "ShotPrompt": {
@@ -11931,6 +13010,264 @@
         ]
       }
     },
+    "/api/v1/public/reports/{token}": {
+      "get": {
+        "description": "Company, report, before/after photos, checklist, work done, advice, approver and link expiry.",
+        "operationId": "report_page_api_v1_public_reports__token__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "title": "Token",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "en",
+                    "hi",
+                    "gu",
+                    "es",
+                    "fr"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Lang"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicReport"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Report Page",
+        "tags": [
+          "customer report page"
+        ]
+      }
+    },
+    "/api/v1/public/reports/{token}/acknowledge": {
+      "post": {
+        "operationId": "acknowledge_api_v1_public_reports__token__acknowledge_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "title": "Token",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcknowledgeIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Acknowledgement"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Acknowledge",
+        "tags": [
+          "customer report page"
+        ]
+      }
+    },
+    "/api/v1/public/reports/{token}/issue": {
+      "post": {
+        "description": "\"Report a problem\": the company's owner and managers get an email.",
+        "operationId": "report_problem_api_v1_public_reports__token__issue_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "title": "Token",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IssueOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Report Problem",
+        "tags": [
+          "customer report page"
+        ]
+      }
+    },
+    "/api/v1/public/reports/{token}/pdf": {
+      "get": {
+        "description": "Redirects to a 15-minute signed download of the PDF.",
+        "operationId": "report_pdf_api_v1_public_reports__token__pdf_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "title": "Token",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "307": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "description": "pdf_not_ready"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Report Pdf",
+        "tags": [
+          "customer report page"
+        ]
+      }
+    },
+    "/api/v1/public/reports/{token}/request-link": {
+      "post": {
+        "description": "\"Send me a new link\" after expiry. It goes to the phone or email the report was sent to.",
+        "operationId": "request_link_api_v1_public_reports__token__request_link_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "title": "Token",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewLinkOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Request Link",
+        "tags": [
+          "customer report page"
+        ]
+      }
+    },
     "/api/v1/reports": {
       "get": {
         "description": "M30: technicians see their own; owners and managers see all (review queue: ?status=pending_review).",
@@ -12190,6 +13527,7 @@
     },
     "/api/v1/reports/{report_id}/approve": {
       "post": {
+        "description": "Approve: the job is completed and the customer PDF starts building (GET /reports/{id}/pdf).",
         "operationId": "approve_api_v1_reports__report_id__approve_post",
         "parameters": [
           {
@@ -12233,6 +13571,56 @@
         "summary": "Approve",
         "tags": [
           "reports"
+        ]
+      }
+    },
+    "/api/v1/reports/{report_id}/pdf": {
+      "get": {
+        "description": "PDF status and a 15-minute download link. Starts the build again if it failed.",
+        "operationId": "report_pdf_api_v1_reports__report_id__pdf_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "report_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Report Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PdfOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Report Pdf",
+        "tags": [
+          "reports",
+          "sharing"
         ]
       }
     },
@@ -12356,6 +13744,183 @@
         ]
       }
     },
+    "/api/v1/reports/{report_id}/send": {
+      "post": {
+        "description": "Send the report link by SMS, WhatsApp and/or email. Each message's result is in `sent`.",
+        "operationId": "send_report_api_v1_reports__report_id__send_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "report_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Report Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShareInfo"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Send Report",
+        "tags": [
+          "reports",
+          "sharing"
+        ]
+      }
+    },
+    "/api/v1/reports/{report_id}/share": {
+      "get": {
+        "description": "M35: the customer's contact, which channels can be used, the current link and the message text.",
+        "operationId": "share_screen_api_v1_reports__report_id__share_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "report_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Report Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShareInfo"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Share Screen",
+        "tags": [
+          "reports",
+          "sharing"
+        ]
+      }
+    },
+    "/api/v1/reports/{report_id}/share-links": {
+      "post": {
+        "description": "Create the 30-day link, or renew it for 30 more days. \"copy\" also marks the report shared.",
+        "operationId": "create_share_link_api_v1_reports__report_id__share_links_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "report_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Report Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/ShareLinkIn"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "title": "Body"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ShareLinkOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create Share Link",
+        "tags": [
+          "reports",
+          "sharing"
+        ]
+      }
+    },
     "/api/v1/reports/{report_id}/submit": {
       "post": {
         "description": "Send to the manager. Photos, checklist answers and voice notes lock.",
@@ -12450,6 +14015,49 @@
         "summary": "Versions",
         "tags": [
           "reports"
+        ]
+      }
+    },
+    "/api/v1/share-links/{link_id}": {
+      "delete": {
+        "description": "Turn the link off at once; the customer sees \"link turned off\". Owners and managers.",
+        "operationId": "revoke_share_link_api_v1_share_links__link_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "link_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Link Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Revoke Share Link",
+        "tags": [
+          "reports",
+          "sharing"
         ]
       }
     },

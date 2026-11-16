@@ -63,6 +63,19 @@ class Report(IdMixin, TimestampMixin, Base):
     submitted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     approved_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
     approved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    shared_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))  # first time sent
+    # the customer's PDF (M34): built in the background after approval
+    pdf_status: Mapped[str | None] = mapped_column(str_enum("building", "ready", "failed", name="pdf_status"))
+    pdf_key: Mapped[str | None] = mapped_column(String(255))
+    pdf_pages: Mapped[int | None] = mapped_column(Integer)
+    pdf_size: Mapped[int | None] = mapped_column(Integer)
+    pdf_sha256: Mapped[str | None] = mapped_column(String(64))
+    pdf_built_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    pdf_error: Mapped[str | None] = mapped_column(String(300))
+    # the customer pressed "Acknowledge" on the report page (W27)
+    acknowledged_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    acknowledged_name: Mapped[str | None] = mapped_column(String(120))
+    acknowledged_org: Mapped[str | None] = mapped_column(String(160))
 
 
 class ReportVersion(IdMixin, Base):

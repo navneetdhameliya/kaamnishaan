@@ -134,3 +134,44 @@ async def draft_report(ctx, report_id: str, task_id: str, section: str | None = 
             )
             await db.commit()
             return "failed"
+
+
+@task
+async def build_report_pdf(ctx, report_id: str) -> str:
+    """Build the customer PDF after approval (M34). Safe to run twice; failures can be retried."""
+    from app.models import Evidence
+    from app.providers.storage import get_storage, sha256
+    from app.services.report_pdf import build_pdf
+    from app.services.report_view import customer_view
+    from app.tasks.photos import ensure_web_copy
+
+    storage = get_storage()
+    async with SessionLocal() as db:
+        rep = await db.get(Report, uuid.UUID(report_id))
+        if not rep or rep.status not in ("approved", "shared", "acknowledged") or rep.pdf_status == "ready":
+            return "skipped"
+        rep.pdf_status, rep.pdf_error = "building", None
+        await db.commit()
+        try:
+            view = await customer_view(db, rep)
+            images = {}
+            for e in view.photos:
+                if e.thumb_key:
+                    images[e.id] = await storage.read(e.thumb_key)
+            # make the customer copies of older photos now, so the report page is ready when opened
+            for e in (await db.execute(select(Evidence).where(Evidence.job_id == rep.job_id))).scalars():
+                await ensure_web_copy(e)
+            logo = await storage.read(view.company.logo_key) if view.company.logo_key else None
+            data, pages = build_pdf(view, rep.language, images, logo)
+            key = f"{rep.company_id}/reports/{rep.id}/R-{rep.number}.pdf"
+            await storage.write(key, data, "application/pdf")
+            rep.pdf_key, rep.pdf_pages, rep.pdf_size, rep.pdf_sha256 = key, pages, len(data), sha256(data)
+            rep.pdf_status, rep.pdf_built_at = "ready", now()
+            await db.commit()
+            return "ready"
+        except Exception as e:  # noqa: BLE001 - the report stays approved; the PDF can be rebuilt
+            await db.rollback()
+            rep = await db.get(Report, uuid.UUID(report_id))
+            rep.pdf_status, rep.pdf_error = "failed", f"{type(e).__name__}: {e}"[:300]
+            await db.commit()
+            return "failed"

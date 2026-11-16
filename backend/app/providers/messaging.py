@@ -1,7 +1,7 @@
-"""SMS and email senders behind one small interface.
+"""SMS, WhatsApp and email senders behind one small interface.
 
 `console` providers (local/test) keep an in-memory outbox and log instead of sending.
-MSG91 (SMS, DLT templates) and the email provider are added when the accounts exist.
+MSG91 (SMS, DLT templates), WhatsApp Business and the email provider are added when the accounts exist.
 """
 
 import logging
@@ -16,10 +16,12 @@ log = logging.getLogger("kn.messaging")
 class Outbox:
     sms: list[dict] = field(default_factory=list)
     email: list[dict] = field(default_factory=list)
+    whatsapp: list[dict] = field(default_factory=list)
 
     def clear(self) -> None:
         self.sms.clear()
         self.email.clear()
+        self.whatsapp.clear()
 
 
 outbox = Outbox()
@@ -45,3 +47,28 @@ async def send_sms(to: str, template: str, **params: str) -> None:
 async def send_email(to: str, template: str, subject: str, **params: str) -> None:
     outbox.email.append({"to": to, "template": template, "subject": subject, "params": params})
     log.warning("Email (not really sent) to %s: %s %s", to, subject, params)
+
+
+async def send_sms_text(to: str, template: str, body: str) -> str | None:
+    """A message already written in the customer's language (report links). Returns the provider id."""
+    provider = get_settings().sms_provider
+    if provider == "console":
+        outbox.sms.append({"to": to, "template": template, "body": body, "params": {}})
+        log.warning("SMS (not really sent) to %s: %s", to, body)
+        return None
+    raise NotImplementedError(f"SMS provider {provider} is added in a later step")
+
+
+async def send_whatsapp_text(to: str, template: str, body: str) -> str | None:
+    provider = get_settings().whatsapp_provider
+    if provider == "console":
+        outbox.whatsapp.append({"to": to, "template": template, "body": body})
+        log.warning("WhatsApp (not really sent) to %s: %s", to, body)
+        return None
+    raise NotImplementedError(f"WhatsApp provider {provider} is added when the account exists")
+
+
+async def send_email_text(to: str, template: str, subject: str, body: str) -> str | None:
+    outbox.email.append({"to": to, "template": template, "subject": subject, "body": body, "params": {}})
+    log.warning("Email (not really sent) to %s: %s", to, subject)
+    return None
