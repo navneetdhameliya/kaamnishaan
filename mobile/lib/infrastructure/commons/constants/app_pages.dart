@@ -48,6 +48,12 @@ import '../../../UI/screens/onboarding_section/splash_section/splash_binding.dar
 import '../../../UI/screens/onboarding_section/splash_section/splash_screen.dart';
 import '../../../UI/screens/onboarding_section/welcome_section/welcome_binding.dart';
 import '../../../UI/screens/onboarding_section/welcome_section/welcome_screen.dart';
+import '../../../UI/screens/voice_section/voice_note_section/voice_note_binding.dart';
+import '../../../UI/screens/voice_section/voice_note_section/voice_note_screen.dart';
+import '../../../UI/screens/voice_section/voice_notes_section/voice_notes_binding.dart';
+import '../../../UI/screens/voice_section/voice_notes_section/voice_notes_screen.dart';
+import '../../../UI/screens/voice_section/voice_record_section/voice_record_binding.dart';
+import '../../../UI/screens/voice_section/voice_record_section/voice_record_screen.dart';
 import 'app_routes.dart';
 
 abstract final class AppPages {
@@ -127,6 +133,9 @@ abstract final class AppPages {
       page: () => const ChecklistQuestionScreen(),
       binding: ChecklistQuestionBinding(),
     ),
+    GetPage(name: RoutesConstants.voiceRecordScreen, page: () => const VoiceRecordScreen(), binding: VoiceRecordBinding()),
+    GetPage(name: RoutesConstants.voiceNotesScreen, page: () => const VoiceNotesScreen(), binding: VoiceNotesBinding()),
+    GetPage(name: RoutesConstants.voiceNoteScreen, page: () => const VoiceNoteScreen(), binding: VoiceNoteBinding()),
     GetPage(
       name: RoutesConstants.homeScreen,
       page: () => const HomeShellScreen(),

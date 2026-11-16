@@ -58,6 +58,12 @@ import 'package:kaamnishaan/UI/screens/onboarding_section/splash_section/splash_
 import 'package:kaamnishaan/UI/screens/onboarding_section/splash_section/splash_screen.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_controller.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_screen.dart';
+import 'package:kaamnishaan/UI/screens/voice_section/voice_note_section/voice_note_controller.dart';
+import 'package:kaamnishaan/UI/screens/voice_section/voice_note_section/voice_note_screen.dart';
+import 'package:kaamnishaan/UI/screens/voice_section/voice_notes_section/voice_notes_controller.dart';
+import 'package:kaamnishaan/UI/screens/voice_section/voice_notes_section/voice_notes_screen.dart';
+import 'package:kaamnishaan/UI/screens/voice_section/voice_record_section/voice_record_controller.dart';
+import 'package:kaamnishaan/UI/screens/voice_section/voice_record_section/voice_record_screen.dart';
 import 'package:kaamnishaan/UI/theme/kn_app_theme.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/files_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/jobs_api_repository.dart';
@@ -66,6 +72,7 @@ import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_result
 import 'package:kaamnishaan/infrastructure/lang/translation_service.dart';
 import 'package:kaamnishaan/infrastructure/lang/translations.g.dart';
 import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
+import 'package:kaamnishaan/infrastructure/services/audio_service.dart';
 import 'package:kaamnishaan/infrastructure/services/camera_service.dart';
 import 'package:kaamnishaan/infrastructure/services/config_service.dart';
 import 'package:kaamnishaan/infrastructure/services/photo_queue_service.dart';
@@ -809,6 +816,78 @@ void main() {
     final c = await questionSetup(t);
     await c.onChoose('no');
     await shot(t, 'm25_photo_required', const ChecklistQuestionScreen());
+  });
+
+  // ---- Step 2g: voice notes --------------------------------------------------------------------
+  const voiceArgs = VoiceArguments(jobId: 'j1', customer: 'Green Valley Clinic');
+
+  testWidgets('M27 voice recording', (t) async {
+    final (_, queue, tmp) = await photoSetup(t);
+    final c = Get.put(
+      VoiceRecordController(recorder: FakeRecorder(), queue: queue, args: voiceArgs, temp: () async => tmp),
+    );
+    await t.pump(); // lets the recorder start
+    c.elapsed.value = const Duration(seconds: 42);
+    c.levels.assignAll([
+      for (final v in [38, 40, 25, 19, 32, 29, 17, 11, 18, 31, 36, 24, 20, 37, 37, 24, 12, 11, 21, 29, 22, 20, 39, 42,
+        29, 12, 18, 12, 19, 18, 19, 37, 44, 32, 12, 24, 23, 13, 14, 17, 32, 41, 33, 12, 29, 33, 23, 12])
+        v / 44,
+    ]);
+    await shot(t, 'm27_voice_recording', const VoiceRecordScreen());
+  });
+
+  testWidgets('M27 microphone off', (t) async {
+    final (_, queue, tmp) = await photoSetup(t);
+    Get.put(
+      VoiceRecordController(
+        recorder: FakeRecorder(result: MicResult.denied),
+        queue: queue,
+        args: voiceArgs,
+        temp: () async => tmp,
+      ),
+    );
+    await shot(t, 'm27_voice_mic_off', const VoiceRecordScreen());
+  });
+
+  testWidgets('M28 voice notes', (t) async {
+    final (_, queue, _) = await photoSetup(t);
+    final voice = MockVoiceRepository();
+    when(() => voice.notes(any())).thenAnswer(
+      (_) async => ApiSuccess<VoiceNoteListModel>(
+        VoiceNoteListModel(
+          data: [
+            noteItem('v1', excerpt: 'Filter in room 2 was full of dust. I cleaned it and added gas...'),
+            noteItem('v2', status: 'transcribing', language: 'hi', duration: 18, minute: 5),
+          ],
+          meta: const ListMetaModel(),
+        ),
+      ),
+    );
+    Get.put(VoiceNotesController(voice: voice, queue: queue, player: FakePlayer(), args: voiceArgs));
+    await shot(t, 'm28_voice_notes', const VoiceNotesScreen());
+  });
+
+  Future<void> transcript(WidgetTester t, String name, VoiceNoteOutModel n) async {
+    final voice = MockVoiceRepository();
+    when(() => voice.note(any())).thenAnswer((_) async => ApiSuccess<VoiceNoteOutModel>(n));
+    Get.put(VoiceNoteController(voice: voice, player: FakePlayer(), args: voiceArgs.note(n.id, 1)));
+    await shot(t, name, const VoiceNoteScreen());
+  }
+
+  testWidgets('M29 transcript', (t) async {
+    await transcript(
+      t,
+      'm29_transcript',
+      noteOut(
+        'v1',
+        text: 'The filter in room 2 was full of dust. I took it out, washed it and dried it. Gas was low, so I added '
+            'refrigerant. After 15 minutes the room was cool, 22 degrees. The customer should clean the filter every month.',
+      ),
+    );
+  });
+
+  testWidgets('M29 not clear', (t) async {
+    await transcript(t, 'm29_transcript_unclear', noteOut('v1', status: 'unclear', translatedTo: null));
   });
 
   testWidgets('M13 dashboard', (t) async {

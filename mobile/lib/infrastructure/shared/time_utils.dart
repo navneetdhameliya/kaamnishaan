@@ -18,6 +18,12 @@ abstract final class TimeUtils {
   /// "11:30 AM" in the phone's time zone.
   static String clock(DateTime t, String locale) => DateFormat.jm(locale).format(t.toLocal());
 
+  /// "0:42", "12:05" for recordings.
+  static String minSec(Duration d) {
+    final s = d.inSeconds;
+    return '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}';
+  }
+
   /// "M", "T", "W"… for the week chart.
   static String dayLetter(DateTime d, String locale) => DateFormat('EEEEE', locale).format(d);
 

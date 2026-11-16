@@ -84,3 +84,28 @@ class PhotoDetailArguments {
   final int index;
   final int total;
 }
+
+/// Opens the voice recorder (M27), a job's notes (M28) or one note (M29).
+class VoiceArguments {
+  const VoiceArguments({
+    required this.jobId,
+    this.customer = '',
+    this.noteId,
+    this.index = 1,
+    this.openListAfter = false,
+  });
+
+  final String jobId;
+  final String customer;
+
+  /// M29: the note to show, and its number ("Voice note 2").
+  final String? noteId;
+  final int index;
+
+  /// M27 from the proof screen with no notes yet: after saving, show the notes list (M28).
+  final bool openListAfter;
+
+  VoiceArguments note(String id, int index) => VoiceArguments(jobId: jobId, customer: customer, noteId: id, index: index);
+
+  VoiceArguments get record => VoiceArguments(jobId: jobId, customer: customer);
+}

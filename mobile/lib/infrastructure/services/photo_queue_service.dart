@@ -8,6 +8,7 @@ import 'package:uuid/uuid.dart';
 import '../data_access_layer/api_repository/checklists_api_repository.dart';
 import '../data_access_layer/api_repository/files_api_repository.dart';
 import '../data_access_layer/api_repository/jobs_api_repository.dart';
+import '../data_access_layer/api_repository/voice_api_repository.dart';
 import '../data_access_layer/networks/api_exception.dart';
 import '../shared/app_logger.dart';
 
@@ -125,6 +126,66 @@ class PendingAnswer {
       };
 }
 
+/// A voice note (audio file) or typed note kept on the phone until the server has it (D-61).
+class PendingNote {
+  PendingNote({
+    required this.id,
+    required this.jobId,
+    required this.recordedAt,
+    this.path,
+    this.durationS,
+    this.languageHint,
+    this.text,
+    this.state = PendingState.waiting,
+    this.tries = 0,
+    this.error,
+  });
+
+  factory PendingNote.fromJson(Map<String, dynamic> j) => PendingNote(
+        id: j['id'] as String,
+        jobId: j['job_id'] as String,
+        recordedAt: DateTime.parse(j['recorded_at'] as String),
+        path: j['path'] as String?,
+        durationS: (j['duration_s'] as num?)?.toDouble(),
+        languageHint: j['language_hint'] as String?,
+        text: j['text'] as String?,
+        state: PendingState.values.byName(j['state'] as String? ?? 'waiting'),
+        tries: (j['tries'] as num?)?.toInt() ?? 0,
+        error: j['error'] as String?,
+      );
+
+  /// Also the client_uuid sent to the server.
+  final String id;
+  final String jobId;
+  final DateTime recordedAt;
+
+  /// The recording on the phone; null for a typed note.
+  final String? path;
+  final double? durationS;
+  final String? languageHint;
+
+  /// A typed note's text.
+  final String? text;
+  PendingState state;
+  int tries;
+  String? error;
+
+  bool get typed => path == null;
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'job_id': jobId,
+        'recorded_at': recordedAt.toIso8601String(),
+        'path': path,
+        'duration_s': durationS,
+        'language_hint': languageHint,
+        'text': text,
+        'state': state.name,
+        'tries': tries,
+        'error': error,
+      };
+}
+
 /// Offline-first photos (D-56): every photo is first saved in the app's own folder with a small list
 /// (queue.json), then sent one by one when there is internet. Nothing is lost if the app closes or the
 /// phone has no signal; the list is read again at start and sending resumes.
@@ -133,6 +194,7 @@ class PhotoQueueService extends GetxService {
     required this.files,
     required this.jobs,
     this.checklists,
+    this.voice,
     required this.folder,
     this.online,
     this.retryEvery = const Duration(minutes: 2),
@@ -144,6 +206,9 @@ class PhotoQueueService extends GetxService {
 
   /// Sends checklist answers (D-59); without it only photos are sent.
   final IChecklistsApiRepository? checklists;
+
+  /// Sends voice and typed notes (D-61); without it notes stay on the phone.
+  final IVoiceApiRepository? voice;
 
   /// Where waiting photos are kept (the app's own documents folder).
   final Future<Directory> Function() folder;
@@ -171,6 +236,12 @@ class PhotoQueueService extends GetxService {
 
   /// Goes up each time a photo reaches the server, so screens can reload.
   final RxInt sent = 0.obs;
+
+  /// Voice and typed notes waiting to be sent, oldest first.
+  final RxList<PendingNote> notes = <PendingNote>[].obs;
+
+  /// Goes up each time a note reaches the server.
+  final RxInt notesSent = 0.obs;
 
   Directory? _dir;
   StreamSubscription<bool>? _onlineSub;
@@ -205,6 +276,13 @@ class PhotoQueueService extends GetxService {
             if (a.state == PendingState.sending) a.state = PendingState.waiting;
           }
           _sentPhotos.addAll(Map<String, String>.from(raw['sent_photos'] as Map? ?? const {}));
+          notes.assignAll(
+            (raw['notes'] as List? ?? const []).map((e) => PendingNote.fromJson(Map<String, dynamic>.from(e as Map))),
+          );
+          for (final n in notes) {
+            if (n.state == PendingState.sending) n.state = PendingState.waiting;
+          }
+          notes.removeWhere((n) => n.path != null && !File(n.path!).existsSync());
         }
       }
     } catch (e) {
@@ -214,7 +292,7 @@ class PhotoQueueService extends GetxService {
       if (up) process();
     });
     _timer = Timer.periodic(retryEvery, (_) => process());
-    if (startDelay != null && (items.isNotEmpty || answers.isNotEmpty)) Timer(startDelay!, process);
+    if (startDelay != null && (items.isNotEmpty || answers.isNotEmpty || notes.isNotEmpty)) Timer(startDelay!, process);
     return this;
   }
 
@@ -303,6 +381,72 @@ class PhotoQueueService extends GetxService {
         for (final a in answers.where((a) => a.checklistId == checklistId)) a.questionId: a,
       };
 
+  /// Keeps a recording (moved into the app's folder) and starts sending. The server writes it out.
+  Future<PendingNote> addVoice({
+    required String jobId,
+    required String sourcePath,
+    required double durationS,
+    DateTime? recordedAt,
+    String? languageHint,
+  }) async {
+    final id = const Uuid().v4();
+    final target = '${(await dir).path}/$id.m4a';
+    final source = File(sourcePath);
+    try {
+      await source.rename(target);
+    } on FileSystemException {
+      await source.copy(target);
+      await source.delete();
+    }
+    return _keep(PendingNote(
+      id: id,
+      jobId: jobId,
+      recordedAt: recordedAt ?? DateTime.now(),
+      path: target,
+      durationS: durationS,
+      languageHint: languageHint,
+    ));
+  }
+
+  /// Keeps a typed note (microphone off) and starts sending.
+  Future<PendingNote> addTyped({required String jobId, required String text}) =>
+      _keep(PendingNote(id: const Uuid().v4(), jobId: jobId, recordedAt: DateTime.now(), text: text));
+
+  Future<PendingNote> _keep(PendingNote note) async {
+    notes.add(note);
+    await _save();
+    unawaited(process());
+    return note;
+  }
+
+  List<PendingNote> notesFor(String jobId) => notes.where((n) => n.jobId == jobId).toList();
+
+  /// Tries a "Not sent" note again.
+  Future<void> retryNote(String id) async {
+    final n = notes.firstWhereOrNull((n) => n.id == id);
+    if (n == null) return;
+    n
+      ..state = PendingState.waiting
+      ..tries = 0
+      ..error = null;
+    notes.refresh();
+    await _save();
+    await process();
+  }
+
+  /// Removes a note that was never sent (and its recording).
+  Future<void> removeNote(String id) async {
+    final n = notes.firstWhereOrNull((n) => n.id == id && n.state != PendingState.sending);
+    if (n == null) return;
+    notes.remove(n);
+    if (n.path != null) {
+      try {
+        await File(n.path!).delete();
+      } catch (_) {}
+    }
+    await _save();
+  }
+
   /// Sends waiting photos one at a time. Calls while sending wait for the same run.
   Future<void> process() => _running ??= _send().whenComplete(() => _running = null);
 
@@ -312,9 +456,11 @@ class PhotoQueueService extends GetxService {
     final tried = <String>{};
     bool fresh() =>
         items.any((p) => p.state == PendingState.waiting && !tried.contains(p.id)) ||
-        answers.any((a) => a.state == PendingState.waiting && !tried.contains(a.id));
+        answers.any((a) => a.state == PendingState.waiting && !tried.contains(a.id)) ||
+        notes.any((n) => n.state == PendingState.waiting && !tried.contains(n.id));
     while (fresh()) {
       if (!await _sendPhotos(tried)) return;
+      if (!await _sendNotes(tried)) return;
       if (!await _sendAnswers(tried)) return;
     }
   }
@@ -400,6 +546,63 @@ class PhotoQueueService extends GetxService {
     return true;
   }
 
+  /// false when sending stopped for lack of internet.
+  Future<bool> _sendNotes(Set<String> tried) async {
+    final api = voice;
+    if (api == null) {
+      tried.addAll(notes.map((n) => n.id));
+      return true;
+    }
+    for (final n in notes.where((n) => n.state == PendingState.waiting && tried.add(n.id)).toList()) {
+      if (!notes.contains(n)) continue;
+      n.state = PendingState.sending;
+      notes.refresh();
+      final error = await _sendNote(api, n);
+      if (error == null) {
+        notes.remove(n);
+        if (n.path != null) {
+          try {
+            await File(n.path!).delete();
+          } catch (_) {}
+        }
+        await _save();
+        notesSent.value++;
+        continue;
+      }
+      n.state = PendingState.waiting;
+      if (_waitForNetwork(error)) {
+        notes.refresh();
+        await _save();
+        return false;
+      }
+      n
+        ..tries += 1
+        ..error = error.message;
+      if (n.tries >= maxTries) n.state = PendingState.failed;
+      notes.refresh();
+      await _save();
+    }
+    return true;
+  }
+
+  Future<ApiException?> _sendNote(IVoiceApiRepository api, PendingNote n) async {
+    if (n.typed) return (await api.addTyped(jobId: n.jobId, text: n.text ?? '', clientUuid: n.id)).errorOrNull;
+    final file = File(n.path!);
+    if (!file.existsSync()) return const ApiException(code: 'file_missing', message: 'The recording is missing.');
+    final upload = await files.upload(kind: UploadKind.audio, bytes: await file.readAsBytes(), contentType: 'audio/mp4');
+    final uploadId = upload.dataOrNull;
+    if (uploadId == null) return upload.errorOrNull;
+    final added = await api.addVoice(
+      jobId: n.jobId,
+      uploadId: uploadId,
+      durationS: n.durationS ?? 0,
+      recordedAt: n.recordedAt,
+      clientUuid: n.id,
+      languageHint: n.languageHint,
+    );
+    return added.errorOrNull;
+  }
+
   bool _waitForNetwork(ApiException e) =>
       e.isNetwork || e.statusCode == 401 || e.code == 'session_expired' || (e.statusCode ?? 0) >= 500;
 
@@ -434,9 +637,10 @@ class PhotoQueueService extends GetxService {
       final tmp = File('${f.path}.tmp');
       await tmp.writeAsString(
         jsonEncode({
-          'version': 2,
+          'version': 3,
           'photos': items.map((p) => p.toJson()).toList(),
           'answers': answers.map((a) => a.toJson()).toList(),
+          'notes': notes.map((n) => n.toJson()).toList(),
           'sent_photos': _sentPhotos,
         }),
         flush: true,

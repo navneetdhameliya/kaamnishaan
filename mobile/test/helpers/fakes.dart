@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
@@ -11,12 +12,15 @@ import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/conf
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/files_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/home_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/jobs_api_repository.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/voice_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
+import 'package:kaamnishaan/infrastructure/services/audio_service.dart';
 import 'package:kaamnishaan/infrastructure/services/camera_service.dart';
 import 'package:kaamnishaan/infrastructure/services/image_picker_service.dart';
 import 'package:kaamnishaan/infrastructure/services/location_service.dart';
 import 'package:kaamnishaan/infrastructure/services/speech_service.dart';
 import 'package:kaamnishaan/infrastructure/services/token_storage_service.dart';
+import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockAuthRepository extends Mock implements IAuthApiRepository {}
@@ -32,6 +36,8 @@ class MockHomeRepository extends Mock implements IHomeApiRepository {}
 class MockJobsRepository extends Mock implements IJobsApiRepository {}
 
 class MockChecklistsRepository extends Mock implements IChecklistsApiRepository {}
+
+class MockVoiceRepository extends Mock implements IVoiceApiRepository {}
 
 QuestionOutModel question(
   String id,
@@ -290,6 +296,136 @@ class FakeSpeech implements ISpeechService {
   @override
   Future<void> stop() async {}
 }
+
+/// A microphone that writes a small file instead of recording.
+class FakeRecorder implements IVoiceRecorder {
+  FakeRecorder({this.result = MicResult.ready, this.startOk = true});
+
+  final MicResult result;
+  final bool startOk;
+  final levelsController = StreamController<double>.broadcast();
+  String? recording;
+  bool paused = false;
+  int starts = 0;
+
+  @override
+  Future<MicResult> askPermission() async => result;
+
+  @override
+  Future<bool> start(String path) async {
+    if (!startOk) return false;
+    starts++;
+    File(path).writeAsBytesSync([1, 2, 3]);
+    recording = path;
+    return true;
+  }
+
+  @override
+  Future<void> pause() async => paused = true;
+
+  @override
+  Future<void> resume() async => paused = false;
+
+  @override
+  Future<String?> stop() async {
+    final r = recording;
+    recording = null;
+    return r;
+  }
+
+  @override
+  Stream<double> levels() => levelsController.stream;
+
+  @override
+  Future<void> dispose() => levelsController.close();
+}
+
+class FakePlayer implements IVoicePlayer {
+  final played = <String>[];
+
+  @override
+  final RxnString current = RxnString();
+  @override
+  final RxBool playing = false.obs;
+  @override
+  final Rx<Duration> position = Duration.zero.obs;
+  @override
+  final Rx<Duration> duration = Duration.zero.obs;
+
+  @override
+  Future<void> toggle(String id, String source) async {
+    if (current.value == id) {
+      playing.value = !playing.value;
+      return;
+    }
+    played.add(source);
+    current.value = id;
+    playing.value = true;
+  }
+
+  @override
+  Future<void> seek(Duration to) async => position.value = to;
+
+  @override
+  Future<void> stop() async {
+    current.value = null;
+    playing.value = false;
+  }
+}
+
+VoiceNoteItemModel noteItem(
+  String id, {
+  String status = 'transcribed',
+  String kind = 'audio',
+  String? excerpt,
+  double? duration = 42,
+  String? language = 'gu',
+  int minute = 0,
+  bool locked = false,
+}) =>
+    VoiceNoteItemModel(
+      id: id,
+      jobId: 'j1',
+      kind: kind,
+      status: status,
+      audioUrl: kind == 'audio' ? 'https://x/$id.m4a' : null,
+      durationS: duration,
+      excerpt: excerpt,
+      language: language,
+      locked: locked,
+      recordedAt: DateTime(2026, 10, 31, 11, minute),
+      recordedBy: const PersonRefModel(id: 'u1', name: 'Ramesh'),
+    );
+
+VoiceNoteOutModel noteOut(
+  String id, {
+  String status = 'transcribed',
+  String kind = 'audio',
+  String? language = 'gu',
+  String? translatedTo = 'en',
+  String? text,
+  bool canEdit = true,
+  bool locked = false,
+}) =>
+    VoiceNoteOutModel(
+      id: id,
+      jobId: 'j1',
+      kind: kind,
+      status: status,
+      audioUrl: kind == 'audio' ? 'https://x/$id.m4a' : null,
+      durationS: kind == 'audio' ? 42 : null,
+      language: language,
+      translatedTo: translatedTo,
+      textForReport: text,
+      transcriptOriginal: text,
+      transcriptTranslated: text,
+      excerpt: text,
+      confidence: 0.9,
+      canEdit: canEdit,
+      locked: locked,
+      recordedAt: DateTime(2026, 10, 31, 11),
+      recordedBy: const PersonRefModel(id: 'u1', name: 'Ramesh'),
+    );
 
 /// Answers HTTP calls from a list of handlers, so the API client can be tested without a server.
 class FakeAdapter implements HttpClientAdapter {

@@ -30,6 +30,7 @@ class CaptureHubController extends GetxController {
   final ILocationService? location;
   final JobArguments args;
   Worker? _sentWorker;
+  Worker? _notesWorker;
 
   final Rxn<ProofModel> proof = Rxn<ProofModel>();
   final Rxn<JobOutModel> job = Rxn<JobOutModel>();
@@ -46,17 +47,22 @@ class CaptureHubController extends GetxController {
     super.onInit();
     load();
     final q = queue;
-    if (q != null) _sentWorker = ever(q.sent, (_) => load());
+    if (q != null) {
+      _sentWorker = ever(q.sent, (_) => load());
+      _notesWorker = ever(q.notesSent, (_) => load());
+    }
   }
 
   @override
   void onClose() {
     _sentWorker?.dispose();
+    _notesWorker?.dispose();
     super.onClose();
   }
 
-  /// Photos taken but still on the phone (no internet yet).
-  int pendingFor(String stage) => queue?.countFor(args.id, stage) ?? 0;
+  /// Photos taken (or notes recorded) but still on the phone (no internet yet).
+  int pendingFor(String stage) =>
+      stage == 'voice' ? queue?.notesFor(args.id).length ?? 0 : queue?.countFor(args.id, stage) ?? 0;
 
   int get pendingCount => photoStages.fold(0, (n, s) => n + pendingFor(s));
 
@@ -177,9 +183,19 @@ class CaptureHubController extends GetxController {
       openCamera(step.key);
     } else if (step.key == 'checklist') {
       openChecklists();
+    } else if (step.key == 'voice') {
+      openVoice(step.count);
     } else {
       KnToast.info(LangKeys.commonComingSoon.tr);
     }
+  }
+
+  /// No notes yet: straight to the recorder (then the list); otherwise the notes list.
+  Future<void> openVoice(int count) async {
+    if (notStarted) return KnToast.info(LangKeys.hubStartFirst.tr);
+    final voice = VoiceArguments(jobId: args.id, customer: customer, openListAfter: count == 0);
+    await Get.toNamed(count == 0 ? RoutesConstants.voiceRecordScreen : RoutesConstants.voiceNotesScreen, arguments: voice);
+    load();
   }
 
   Future<void> openChecklists() async {

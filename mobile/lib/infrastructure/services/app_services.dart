@@ -13,6 +13,7 @@ import '../data_access_layer/api_providers/config_api_provider.dart';
 import '../data_access_layer/api_providers/files_api_provider.dart';
 import '../data_access_layer/api_providers/home_api_provider.dart';
 import '../data_access_layer/api_providers/jobs_api_provider.dart';
+import '../data_access_layer/api_providers/voice_api_provider.dart';
 import '../data_access_layer/api_repository/auth_api_repository.dart';
 import '../data_access_layer/api_repository/checklists_api_repository.dart';
 import '../data_access_layer/api_repository/company_api_repository.dart';
@@ -20,8 +21,10 @@ import '../data_access_layer/api_repository/config_api_repository.dart';
 import '../data_access_layer/api_repository/files_api_repository.dart';
 import '../data_access_layer/api_repository/home_api_repository.dart';
 import '../data_access_layer/api_repository/jobs_api_repository.dart';
+import '../data_access_layer/api_repository/voice_api_repository.dart';
 import '../data_access_layer/networks/api_client.dart';
 import '../lang/translation_service.dart';
+import 'audio_service.dart';
 import 'camera_service.dart';
 import 'config_service.dart';
 import 'image_picker_service.dart';
@@ -58,6 +61,8 @@ abstract final class AppServices {
     Get.put<IImagePickerService>(ImagePickerService(), permanent: true);
     Get.put<ICameraService>(CameraService(), permanent: true);
     Get.put<ILocationService>(LocationService(), permanent: true);
+    Get.put<IVoiceRecorder>(VoiceRecorder(), permanent: true);
+    Get.put<IVoicePlayer>(VoicePlayer(), permanent: true);
 
     final authRepository = AuthApiRepository(provider: AuthApiProvider(client), client: client);
     Get.put<IAuthApiRepository>(authRepository, permanent: true);
@@ -67,6 +72,7 @@ abstract final class AppServices {
       permanent: true,
     );
     Get.put<IJobsApiRepository>(JobsApiRepository(provider: JobsApiProvider(client)), permanent: true);
+    Get.put<IVoiceApiRepository>(VoiceApiRepository(provider: VoiceApiProvider(client)), permanent: true);
     Get.put<IHomeApiRepository>(HomeApiRepository(provider: HomeApiProvider(client)), permanent: true);
     Get.put<IFilesApiRepository>(FilesApiRepository(provider: FilesApiProvider(client)), permanent: true);
     Get.put<IConfigApiRepository>(ConfigApiRepository(ConfigApiProvider(client)), permanent: true);
@@ -77,6 +83,7 @@ abstract final class AppServices {
       files: Get.find(),
       jobs: Get.find(),
       checklists: Get.find(),
+      voice: Get.find(),
       folder: () async => Directory('${(await getApplicationDocumentsDirectory()).path}/pending_photos'),
       online: Connectivity().onConnectivityChanged.map((r) => r.any((c) => c != ConnectivityResult.none)),
       startDelay: const Duration(seconds: 3),
