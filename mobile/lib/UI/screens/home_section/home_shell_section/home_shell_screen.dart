@@ -5,6 +5,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../common_widgets/kn_glass_tab_bar.dart';
 import '../../../theme/kn_app_theme.dart';
+import '../../jobs_section/job_list_section/job_list_screen.dart';
 import '../dashboard_section/dashboard_tab.dart';
 import '../today_section/today_tab.dart';
 import 'custom_widgets/simple_tabs.dart';
@@ -31,7 +32,7 @@ class HomeShellScreen extends GetView<HomeShellController> {
     final tabs = manager
         ? [
             const DashboardTab(),
-            ComingSoonTab(title: LangKeys.navJobs.tr, icon: LucideIcons.briefcase),
+            const JobListScreen(asTab: true),
             ComingSoonTab(title: LangKeys.navReports.tr, icon: LucideIcons.fileText),
             ProfileTab(title: LangKeys.navProfile.tr, session: controller.session, onLogout: controller.onLogoutTap),
           ]

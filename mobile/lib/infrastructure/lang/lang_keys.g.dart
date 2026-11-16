@@ -494,4 +494,124 @@ abstract final class LangKeys {
   static const timeHoursAgo = 'time.hours_ago';
   /// just now
   static const timeJustNow = 'time.just_now';
+  /// Jobs
+  static const jobsTitle = 'jobs.title';
+  /// Search customer or address
+  static const jobsSearch = 'jobs.search';
+  /// Today
+  static const jobsToday = 'jobs.today';
+  /// Tomorrow
+  static const jobsTomorrow = 'jobs.tomorrow';
+  /// Unassigned
+  static const jobsUnassigned = 'jobs.unassigned';
+  /// {date} · {count} jobs today
+  static const jobsCountToday = 'jobs.count_today';
+  /// {date} · {count} jobs
+  static const jobsCountDay = 'jobs.count_day';
+  /// This week · {count} found
+  static const jobsCountWeek = 'jobs.count_week';
+  /// No jobs for “{q}”
+  static const jobsNoResultsTitle = 'jobs.no_results_title';
+  /// Try another customer name or address, or clear the filters.
+  static const jobsNoResultsBody = 'jobs.no_results_body';
+  /// No jobs here
+  static const jobsNoneTitle = 'jobs.none_title';
+  /// New jobs will show here.
+  static const jobsNoneBody = 'jobs.none_body';
+  /// Clear filters
+  static const jobsClearFilters = 'jobs.clear_filters';
+  /// Filters
+  static const jobsFilters = 'jobs.filters';
+  /// New job
+  static const jobsNewJob = 'jobs.new_job';
+  /// Clear search
+  static const jobsClearSearch = 'jobs.clear_search';
+  /// Unassigned
+  static const statusUnassigned = 'status.unassigned';
+  /// Assigned
+  static const statusAssigned = 'status.assigned';
+  /// In progress
+  static const statusInProgress = 'status.in_progress';
+  /// Review
+  static const statusInReview = 'status.in_review';
+  /// Changes asked
+  static const statusChangesRequested = 'status.changes_requested';
+  /// Done
+  static const statusCompleted = 'status.completed';
+  /// Cancelled
+  static const statusCancelled = 'status.cancelled';
+  /// {day} · {time}
+  static const jobWhen = 'job.when';
+  /// Navigate
+  static const jobNavigate = 'job.navigate';
+  /// Call
+  static const jobCall = 'job.call';
+  /// Problem
+  static const jobProblem = 'job.problem';
+  /// Equipment
+  static const jobEquipment = 'job.equipment';
+  /// last service {date}
+  static const jobLastService = 'job.last_service';
+  /// Continue job
+  static const jobContinue = 'job.continue';
+  /// No maps app found on this phone.
+  static const jobNoMapApp = 'job.no_map_app';
+  /// Read aloud
+  static const jobReadAloud = 'job.read_aloud';
+  /// {customer}. {address}. Problem: {problem}.
+  static const jobSpeak = 'job.speak';
+  /// Your proof
+  static const hubYourProof = 'hub.your_proof';
+  /// {count} more steps, then make the report.
+  static const hubStepsLeft = 'hub.steps_left';
+  /// All done. Make the report.
+  static const hubReady = 'hub.ready';
+  /// Not started
+  static const hubNotStarted = 'hub.not_started';
+  /// Start the job to begin.
+  static const hubStartToBegin = 'hub.start_to_begin';
+  /// Start the job first to add proof.
+  static const hubStartFirst = 'hub.start_first';
+  /// Before photos
+  static const hubBefore = 'hub.before';
+  /// During photos
+  static const hubDuring = 'hub.during';
+  /// After photos
+  static const hubAfter = 'hub.after';
+  /// Checklist
+  static const hubChecklist = 'hub.checklist';
+  /// Voice note
+  static const hubVoice = 'hub.voice';
+  /// {count} photos added
+  static const hubPhotosAdded = 'hub.photos_added';
+  /// 1 photo added
+  static const hubPhotoAdded = 'hub.photo_added';
+  /// Take photos now
+  static const hubTakeNow = 'hub.take_now';
+  /// Not added yet
+  static const hubNotYet = 'hub.not_yet';
+  /// Optional
+  static const hubOptional = 'hub.optional';
+  /// Next
+  static const hubNext = 'hub.next';
+  /// {done} of {total}
+  static const hubOf = 'hub.of';
+  /// No checklist for this job
+  static const hubNoChecklist = 'hub.no_checklist';
+  /// Say what you did
+  static const hubSayWhat = 'hub.say_what';
+  /// {count} voice notes
+  static const hubNotesAdded = 'hub.notes_added';
+  /// Make report
+  static const hubMakeReport = 'hub.make_report';
+  /// Add before photos to unlock
+  static const hubUnlockBefore = 'hub.unlock_before';
+  /// Add after photos to unlock
+  static const hubUnlockAfter = 'hub.unlock_after';
+  /// Finish the checklist to unlock
+  static const hubUnlockChecklist = 'hub.unlock_checklist';
+  /// Report sent for review
+  static const hubSentForReview = 'hub.sent_for_review';
+  /// {done} of {total} steps done. {next}
+  static const hubSpeak = 'hub.speak';
 }

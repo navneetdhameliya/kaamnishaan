@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../infrastructure/commons/constants/app_routes.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/home_api_repository.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/lang/translation_service.dart';
@@ -10,6 +11,7 @@ import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/services/preferences_service.dart';
 import '../../../../infrastructure/services/session_service.dart';
 import '../../../../infrastructure/shared/app_logger.dart';
+import '../../../../infrastructure/shared/job_arguments.dart';
 import '../../../../infrastructure/shared/text_utils.dart';
 import '../../../../infrastructure/shared/time_utils.dart';
 import '../../../common_widgets/kn_toast.dart';
@@ -113,6 +115,17 @@ class TodayController extends GetxController {
     await _openUrl(Uri(scheme: 'tel', path: phone));
   }
 
-  /// Job screens (M15 onwards) come in the next step.
-  void onJobTap([JobListItemModel? job]) => KnToast.info(LangKeys.commonComingSoon.tr);
+  /// A job in progress opens its proof (M19); others open the job details (M15).
+  void onJobTap(JobListItemModel job) {
+    final working = job.status == 'in_progress' || job.status == 'changes_requested';
+    Get.toNamed(
+      working ? RoutesConstants.captureHubScreen : RoutesConstants.jobDetailsScreen,
+      arguments: JobArguments.of(job),
+    );
+  }
+
+  void onSeeAllTap() => Get.toNamed(RoutesConstants.jobListScreen);
+
+  /// Notifications come later.
+  void onBellTap() => KnToast.info(LangKeys.commonComingSoon.tr);
 }

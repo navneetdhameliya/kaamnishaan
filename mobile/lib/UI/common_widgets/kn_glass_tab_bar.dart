@@ -16,7 +16,7 @@ class KnTabItem {
 
 /// Figma "Tab bar": a floating rounded bar with the tabs, and a round camera button beside it.
 /// Two tabs (technician) fill the whole tab when selected; more tabs (manager) light up a pill
-/// behind the icon.
+/// behind the icon. [index] -1 selects no tab; [captureActive] fills the camera button (M19).
 class KnGlassTabBar extends StatelessWidget {
   const KnGlassTabBar({
     super.key,
@@ -25,6 +25,7 @@ class KnGlassTabBar extends StatelessWidget {
     required this.onTap,
     required this.onCapture,
     required this.captureLabel,
+    this.captureActive = false,
   });
 
   final List<KnTabItem> items;
@@ -32,6 +33,7 @@ class KnGlassTabBar extends StatelessWidget {
   final ValueChanged<int> onTap;
   final VoidCallback onCapture;
   final String captureLabel;
+  final bool captureActive;
 
   static const _shadow = [BoxShadow(color: Color(0x291F140D), offset: Offset(0, 8), blurRadius: 24)];
 
@@ -76,12 +78,16 @@ class KnGlassTabBar extends StatelessWidget {
                 width: capture,
                 height: capture,
                 decoration: BoxDecoration(
-                  color: kn.bgSurface,
+                  color: captureActive ? kn.actionPrimary : kn.bgSurface,
                   shape: BoxShape.circle,
-                  border: Border.all(color: kn.borderDefault),
+                  border: Border.all(color: captureActive ? kn.actionPrimary : kn.borderDefault),
                   boxShadow: _shadow,
                 ),
-                child: Icon(LucideIcons.camera, size: wide ? 26 : 24, color: kn.textPrimary),
+                child: Icon(
+                  LucideIcons.camera,
+                  size: wide ? 26 : 24,
+                  color: captureActive ? kn.textOnAction : kn.textPrimary,
+                ),
               ),
             ),
           ],

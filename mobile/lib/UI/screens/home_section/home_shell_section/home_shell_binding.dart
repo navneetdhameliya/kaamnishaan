@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../jobs_section/job_list_section/job_list_controller.dart';
 import '../dashboard_section/dashboard_controller.dart';
 import '../today_section/today_controller.dart';
 import 'home_shell_controller.dart';
@@ -17,6 +18,7 @@ class HomeShellBinding extends Bindings {
           onOpenTab: shell.onTabTap,
         ),
       );
+      Get.lazyPut(() => JobListController(repository: Get.find(), session: Get.find(), translation: Get.find()));
     } else {
       Get.lazyPut(
         () => TodayController(repository: Get.find(), session: Get.find(), prefs: Get.find(), translation: Get.find()),

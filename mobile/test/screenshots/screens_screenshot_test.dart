@@ -32,6 +32,12 @@ import 'package:kaamnishaan/UI/screens/home_section/dashboard_section/dashboard_
 import 'package:kaamnishaan/UI/screens/home_section/home_shell_section/home_shell_controller.dart';
 import 'package:kaamnishaan/UI/screens/home_section/home_shell_section/home_shell_screen.dart';
 import 'package:kaamnishaan/UI/screens/home_section/today_section/today_controller.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/capture_hub_section/capture_hub_controller.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/capture_hub_section/capture_hub_screen.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/job_details_section/job_details_controller.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/job_details_section/job_details_screen.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/job_list_section/job_list_controller.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/job_list_section/job_list_screen.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/intro_section/intro_controller.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/intro_section/intro_screen.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/language_section/language_controller.dart';
@@ -41,6 +47,7 @@ import 'package:kaamnishaan/UI/screens/onboarding_section/splash_section/splash_
 import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_controller.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_screen.dart';
 import 'package:kaamnishaan/UI/theme/kn_app_theme.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/jobs_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_exception.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_result.dart';
 import 'package:kaamnishaan/infrastructure/lang/translation_service.dart';
@@ -49,6 +56,7 @@ import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
 import 'package:kaamnishaan/infrastructure/services/config_service.dart';
 import 'package:kaamnishaan/infrastructure/services/preferences_service.dart';
 import 'package:kaamnishaan/infrastructure/services/session_service.dart';
+import 'package:kaamnishaan/infrastructure/shared/job_arguments.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -101,6 +109,7 @@ void main() {
   late ConfigService config;
 
   setUpAll(() async {
+    registerFallbackValue(const JobQuery());
     await initializeDateFormatting();
     await _loadFonts();
   });
@@ -376,6 +385,20 @@ void main() {
     await shot(t, 'm08_check_email', const CheckEmailScreen());
   });
 
+  JobListController jobList(List<JobListItemModel> found) {
+    final jobs = MockJobsRepository();
+    when(() => jobs.list(any())).thenAnswer(
+      (_) async => ApiSuccess<JobListModel>(JobListModel(data: found, meta: const ListMetaModel())),
+    );
+    return JobListController(
+      repository: jobs,
+      session: session,
+      translation: translation(),
+      clock: () => DateTime(2026, 10, 31, 9),
+      searchDelay: Duration.zero,
+    );
+  }
+
   // ---- Step 2c: home --------------------------------------------------------------------------
   Future<void> today(WidgetTester t, String name, ApiResult<TodayModel> answer, {TodayModel? saved, bool dark = false}) async {
     final home = MockHomeRepository();
@@ -452,6 +475,7 @@ void main() {
       permissions: [],
     );
     Get.put(HomeShellController(session: session));
+    Get.put(jobList(const []));
     Get.put(
       DashboardController(
         repository: home,
@@ -462,6 +486,70 @@ void main() {
     );
     await shot(t, name, const HomeShellScreen());
   }
+
+  testWidgets('M14 job list', (t) async {
+    session.me.value = const MeOutModel(
+      id: 'u9', name: 'Priya Mehta', emailVerified: true, appLanguage: 'en', theme: 'system', role: 'owner', permissions: [],
+    );
+    Get.put(
+      jobList([
+        job(status: 'in_progress', at: DateTime(2026, 10, 31, 11, 30)),
+        job(id: 'j2', customer: 'Lake View Apartments', title: 'Duct cleaning', status: 'in_review', at: DateTime(2026, 10, 31, 10)),
+        job(id: 'j3', customer: 'Mehta house', title: 'AC service', at: DateTime(2026, 10, 31, 14)),
+        job(id: 'j4', customer: 'Sharma residence', title: 'Filter change', status: 'completed', at: DateTime(2026, 10, 31, 9)),
+      ]),
+    );
+    await shot(t, 'm14_job_list', const JobListScreen());
+  });
+
+  testWidgets('M14 job list no results', (t) async {
+    session.me.value = const MeOutModel(
+      id: 'u9', name: 'Priya Mehta', emailVerified: true, appLanguage: 'en', theme: 'system', role: 'owner', permissions: [],
+    );
+    final c = Get.put(jobList(const []));
+    c.searchController.text = 'Riverside';
+    c.search.value = 'Riverside';
+    c.filter.value = JobFilter.unassigned;
+    await shot(t, 'm14_job_list_none', const JobListScreen());
+  });
+
+  testWidgets('M15 job details', (t) async {
+    final jobs = MockJobsRepository();
+    when(() => jobs.job(any())).thenAnswer((_) async => ApiSuccess<JobOutModel>(jobOut()));
+    session.me.value = me();
+    Get.put(
+      JobDetailsController(
+        repository: jobs,
+        session: session,
+        speech: FakeSpeech(),
+        translation: translation(),
+        args: const JobArguments(id: 'j1', customer: 'Green Valley Clinic'),
+        clock: () => DateTime(2026, 10, 31, 9),
+      ),
+    );
+    await shot(t, 'm15_job_details', const JobDetailsScreen());
+  });
+
+  Future<void> hub(WidgetTester t, String name, ProofModel proof) async {
+    final jobs = MockJobsRepository();
+    when(() => jobs.proof(any())).thenAnswer((_) async => ApiSuccess<ProofModel>(proof));
+    when(() => jobs.job(any())).thenAnswer((_) async => ApiSuccess<JobOutModel>(jobOut(status: proof.status)));
+    Get.put(
+      CaptureHubController(
+        repository: jobs,
+        speech: FakeSpeech(),
+        translation: translation(),
+        args: const JobArguments(id: 'j1', customer: 'Green Valley Clinic', title: 'AC not cooling'),
+      ),
+    );
+    await shot(t, name, const CaptureHubScreen());
+  }
+
+  testWidgets('M19 capture hub', (t) async => hub(t, 'm19_capture_hub', proofData()));
+
+  testWidgets('M19 capture hub not started', (t) async {
+    await hub(t, 'm19_capture_not_started', proofData(started: false, before: 0, during: 0));
+  });
 
   testWidgets('M13 dashboard', (t) async {
     await dashboard(t, 'm13_dashboard', dashboardData(), reviews: [reviewItem()]);
