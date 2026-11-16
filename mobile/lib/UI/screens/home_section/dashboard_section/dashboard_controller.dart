@@ -92,7 +92,7 @@ class DashboardController extends GetxController {
 
   /// "Ramesh · 10 min ago"
   String reviewMeta(ReportListItemModel r) {
-    final who = r.job.technician?.name ?? '';
+    final who = TextUtils.firstName(r.job.technician?.name ?? '');
     final when = r.submittedAt == null ? '' : TimeUtils.ago(r.submittedAt!, _clock());
     return [who, when].where((s) => s.isNotEmpty).join(' · ');
   }

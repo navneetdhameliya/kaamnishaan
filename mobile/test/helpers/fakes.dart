@@ -50,7 +50,7 @@ TodayModel todayData({JobListItemModel? current, List<JobListItemModel> next = c
       date: '2026-10-31',
       name: 'Ramesh Patel',
       company: 'BrightAir Services',
-      stats: TodayStatsModel(jobs: 1 + next.length, done: next.where((j) => j.status == 'completed').length, photos: 12),
+      stats: TodayStatsModel(jobs: (current == null ? 0 : 1) + next.length, done: next.where((j) => j.status == 'completed').length, photos: 12),
       currentJob: current,
       nextJobs: next,
       unread: 1,

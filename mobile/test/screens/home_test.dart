@@ -129,7 +129,7 @@ void main() {
       expect(c.trendText, '12% more than last week');
       expect(c.todayCount('in_progress'), 3);
       expect(c.reviews.single.job.customer, 'Green Valley Clinic');
-      expect(c.reviewMeta(c.reviews.single), 'Ramesh Patel · 10 min ago');
+      expect(c.reviewMeta(c.reviews.single), 'Ramesh · 10 min ago');
       expect(c.reviewEvidence(c.reviews.single), '6 photos · AI draft');
 
       answer(dashboardData(week: 30, lastWeek: 40));

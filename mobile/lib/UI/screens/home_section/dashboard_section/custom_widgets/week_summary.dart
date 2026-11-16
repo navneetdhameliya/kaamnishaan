@@ -29,16 +29,19 @@ class WeekSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final text = context.knText;
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    // the bars sit top-right; the trend pill may run under them, as in the design
+    return Stack(
       children: [
-        Expanded(
+        SizedBox(
+          width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomBaseTextWidget(LangKeys.dashThisWeek.tr, style: text.label, color: KnPrimitive.cream400),
               const SizedBox(height: KnSize.space4),
-              Row(
+              Padding(
+                padding: const EdgeInsets.only(right: 142),
+                child: Row(
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 textBaseline: TextBaseline.alphabetic,
                 children: [
@@ -53,6 +56,7 @@ class WeekSummary extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
               ),
               if (trend != WeekTrend.none) ...[
                 const SizedBox(height: KnSize.space4),
@@ -87,8 +91,7 @@ class WeekSummary extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(width: KnSize.space8),
-        Padding(padding: const EdgeInsets.only(top: 6), child: _bars(context)),
+        Positioned(right: 0, top: 6, child: _bars(context)),
       ],
     );
   }
