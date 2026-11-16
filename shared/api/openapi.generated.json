@@ -5512,6 +5512,19 @@
               }
             ]
           },
+          "condition": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "'Show if' rule {question_id, equals}, so the app can follow it offline",
+            "title": "Condition"
+          },
           "help": {
             "anyOf": [
               {

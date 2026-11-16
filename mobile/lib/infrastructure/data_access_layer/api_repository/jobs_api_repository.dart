@@ -30,11 +30,20 @@ abstract class IJobsApiRepository {
   Future<ApiResult<JobOutModel>> start(String id, {double? lat, double? lng});
   Future<ApiResult<ProofModel>> proof(String id);
 
+  /// One photo with its notes (M23).
+  Future<ApiResult<EvidenceDetailModel>> photo(String evidenceId);
+  Future<ApiResult<NoteOutModel>> addNote(String evidenceId, String text);
+  Future<ApiResult<void>> deletePhoto(String evidenceId);
+
+  /// M22 "Use in report": keep a before and an after photo side by side.
+  Future<ApiResult<PairOutModel>> addPair({required String jobId, required String beforeId, required String afterId, String? subject});
+
   /// All photos of a job (M21).
   Future<ApiResult<EvidenceListModel>> evidence(String jobId);
 
   /// Step 3 of a photo upload: say what the uploaded file is. [clientUuid] makes a retry safe.
-  Future<ApiResult<void>> addPhoto({
+  /// Returns the photo's id on the server.
+  Future<ApiResult<String>> addPhoto({
     required String jobId,
     required String uploadId,
     required String stage,
@@ -69,11 +78,38 @@ class JobsApiRepository implements IJobsApiRepository {
       guard(() async => ProofModel.fromJson(_map(await provider.getProof(id))));
 
   @override
+  Future<ApiResult<EvidenceDetailModel>> photo(String evidenceId) =>
+      guard(() async => EvidenceDetailModel.fromJson(_map(await provider.getEvidenceDetail(evidenceId))));
+
+  @override
+  Future<ApiResult<NoteOutModel>> addNote(String evidenceId, String text) =>
+      guard(() async => NoteOutModel.fromJson(_map(await provider.postNote(evidenceId, {'text': text.trim()}))));
+
+  @override
+  Future<ApiResult<void>> deletePhoto(String evidenceId) => guard(() async {
+        await provider.deleteEvidence(evidenceId);
+      });
+
+  @override
+  Future<ApiResult<PairOutModel>> addPair({
+    required String jobId,
+    required String beforeId,
+    required String afterId,
+    String? subject,
+  }) =>
+      guard(() async => PairOutModel.fromJson(_map(await provider.postPair(jobId, {
+            'before_id': beforeId,
+            'after_id': afterId,
+            'subject': ?subject,
+            'use_in_report': true,
+          }))));
+
+  @override
   Future<ApiResult<EvidenceListModel>> evidence(String jobId) =>
       guard(() async => EvidenceListModel.fromJson(_map(await provider.getEvidence(jobId))));
 
   @override
-  Future<ApiResult<void>> addPhoto({
+  Future<ApiResult<String>> addPhoto({
     required String jobId,
     required String uploadId,
     required String stage,
@@ -84,7 +120,7 @@ class JobsApiRepository implements IJobsApiRepository {
     String? shotSlot,
   }) =>
       guard(() async {
-        await provider.postEvidence(jobId, {
+        final json = await provider.postEvidence(jobId, {
           'upload_id': uploadId,
           'stage': stage,
           'taken_at': takenAt.toUtc().toIso8601String(),
@@ -93,5 +129,6 @@ class JobsApiRepository implements IJobsApiRepository {
           'lng': ?lng,
           'shot_slot': ?shotSlot,
         });
+        return (json as Map)['id'] as String;
       });
 }

@@ -28,6 +28,10 @@ import 'package:kaamnishaan/UI/screens/auth_section/phone_section/phone_controll
 import 'package:kaamnishaan/UI/screens/auth_section/phone_section/phone_screen.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/profile_setup_section/profile_setup_controller.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/profile_setup_section/profile_setup_screen.dart';
+import 'package:kaamnishaan/UI/screens/checklists_section/checklist_question_section/checklist_question_controller.dart';
+import 'package:kaamnishaan/UI/screens/checklists_section/checklist_question_section/checklist_question_screen.dart';
+import 'package:kaamnishaan/UI/screens/checklists_section/checklists_section/checklists_controller.dart';
+import 'package:kaamnishaan/UI/screens/checklists_section/checklists_section/checklists_screen.dart';
 import 'package:kaamnishaan/UI/screens/home_section/dashboard_section/dashboard_controller.dart';
 import 'package:kaamnishaan/UI/screens/home_section/home_shell_section/home_shell_controller.dart';
 import 'package:kaamnishaan/UI/screens/home_section/home_shell_section/home_shell_screen.dart';
@@ -40,8 +44,12 @@ import 'package:kaamnishaan/UI/screens/jobs_section/job_details_section/job_deta
 import 'package:kaamnishaan/UI/screens/jobs_section/job_details_section/job_details_screen.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/job_list_section/job_list_controller.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/job_list_section/job_list_screen.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/photo_details_section/photo_details_controller.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/photo_details_section/photo_details_screen.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_gallery_section/photo_gallery_controller.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_gallery_section/photo_gallery_screen.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/photo_pair_section/photo_pair_controller.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/photo_pair_section/photo_pair_screen.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/intro_section/intro_controller.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/intro_section/intro_screen.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/language_section/language_controller.dart';
@@ -561,10 +569,11 @@ void main() {
   });
 
   // ---- Step 2e: camera and photos ------------------------------------------------------------
-  EvidenceOutModel photo(String id, String stage, int h, int m) => EvidenceOutModel(
+  EvidenceOutModel photo(String id, String stage, int h, int m, {String? slot}) => EvidenceOutModel(
         id: id,
         jobId: 'j1',
         stage: stage,
+        shotSlot: slot,
         url: 'https://x/$id.jpg',
         size: 100,
         processing: 'ready',
@@ -659,6 +668,147 @@ void main() {
       ),
     );
     await shot(t, 'm21_photo_gallery', const PhotoGalleryScreen());
+  });
+
+  // ---- Step 2f: before/after, photo details, checklists ----------------------------------------
+  testWidgets('M22 before and after', (t) async {
+    final (jobs, _, _) = await photoSetup(t);
+    when(() => jobs.evidence(any())).thenAnswer(
+      (_) async => ApiSuccess<EvidenceListModel>(
+        EvidenceListModel(
+          data: [
+            photo('b1', 'before', 10, 52, slot: 'filter'),
+            photo('a1', 'after', 11, 41, slot: 'filter'),
+          ],
+          meta: const ListMetaModel(),
+          pairs: const [],
+        ),
+      ),
+    );
+    Get.put(
+      PhotoPairController(
+        jobs: jobs,
+        translation: translation(),
+        args: const PhotoDetailArguments(jobId: 'j1', customer: 'Green Valley Clinic', place: 'Room 2 · AC unit'),
+      ),
+    );
+    await shot(t, 'm22_before_after', const PhotoPairScreen());
+  });
+
+  testWidgets('M23 photo details locked', (t) async {
+    final jobs = MockJobsRepository();
+    when(() => jobs.photo(any())).thenAnswer(
+      (_) async => ApiSuccess<EvidenceDetailModel>(
+        EvidenceDetailModel(
+          id: 'b1',
+          jobId: 'j1',
+          stage: 'before',
+          url: 'https://x/b1.jpg',
+          size: 100,
+          processing: 'ready',
+          takenAt: DateTime(2026, 10, 31, 10, 52),
+          takenBy: const PersonRefModel(id: 'u1', name: 'Ramesh Patel'),
+          lat: 23.0225,
+          lng: 72.5714,
+          locked: true,
+          lockedAt: DateTime(2026, 10, 31, 12, 5),
+          notesCount: 1,
+          canDelete: false,
+          notes: [
+            NoteOutModel(
+              id: 'n1',
+              author: const PersonRefModel(id: 'u1', name: 'Ramesh'),
+              text: 'Filter blocked with dust. Cleaned and refitted.',
+              createdAt: DateTime(2026, 10, 31, 10, 53),
+            ),
+          ],
+        ),
+      ),
+    );
+    Get.put(
+      PhotoDetailsController(
+        jobs: jobs,
+        translation: translation(),
+        args: const PhotoDetailArguments(jobId: 'j1', evidenceId: 'b1', customer: 'Green Valley Clinic', place: 'Room 2 · AC unit', index: 1, total: 3),
+      ),
+    );
+    await shot(t, 'm23_photo_locked', const PhotoDetailsScreen());
+  });
+
+  testWidgets('M24 checklists', (t) async {
+    final (_, queue, _) = await photoSetup(t);
+    final checklists = MockChecklistsRepository();
+    when(() => checklists.forJob(any())).thenAnswer(
+      (_) async => ApiSuccess<JobChecklistListModel>(
+        JobChecklistListModel(
+          data: [
+            JobChecklistItemModel(
+              id: 'safe', templateId: 't1', name: 'Safety check', answered: 6, total: 6, status: 'done',
+              completedAt: DateTime(2026, 10, 31, 10, 45),
+            ),
+            const JobChecklistItemModel(
+              id: 'c1', templateId: 't2', name: 'HVAC service check', minutes: 5, answered: 0, total: 12, status: 'not_started',
+            ),
+          ],
+          meta: const ListMetaModel(),
+        ),
+      ),
+    );
+    Get.put(
+      ChecklistsController(
+        checklists: checklists,
+        queue: queue,
+        translation: translation(),
+        args: const ChecklistArguments(jobId: 'j1', customer: 'Green Valley Clinic', equipment: 'Split AC · Room 2'),
+      ),
+    );
+    await shot(t, 'm24_checklists', const ChecklistsScreen());
+  });
+
+  Future<ChecklistQuestionController> questionSetup(WidgetTester t) async {
+    final (_, queue, _) = await photoSetup(t);
+    final checklists = MockChecklistsRepository();
+    final qs = [
+      question('q1', 1, answer: 'yes'),
+      question('q2', 2, answer: 'pass', type: 'pass_fail'),
+      const QuestionOutModel(
+        id: 'q3', position: 3, type: 'yes_no', text: 'Is the air filter clean?', translationStatus: 'ready', options: [],
+        photoRule: 'if_no', requiredValue: true, visible: true, photoNeeded: false,
+        referenceImageUrl: 'https://x/filter.jpg',
+      ),
+      for (var i = 4; i <= 12; i++) question('q$i', i),
+    ];
+    when(() => checklists.submission(any())).thenAnswer(
+      (_) async => ApiSuccess<SubmissionOutModel>(
+        SubmissionOutModel(
+          id: 'c1', jobId: 'j1', name: 'HVAC service check', language: 'en', answered: 2, total: 12,
+          status: 'in_progress', locked: false, questions: qs,
+        ),
+      ),
+    );
+    final c = Get.put(
+      ChecklistQuestionController(
+        checklists: checklists,
+        files: MockFilesRepository(),
+        queue: queue,
+        speech: FakeSpeech(),
+        translation: translation(),
+        args: const ChecklistArguments(jobId: 'j1', checklistId: 'c1', customer: 'Green Valley Clinic'),
+      ),
+    );
+    await t.runAsync(c.load);
+    return c;
+  }
+
+  testWidgets('M25 checklist question', (t) async {
+    await questionSetup(t);
+    await shot(t, 'm25_question', const ChecklistQuestionScreen());
+  });
+
+  testWidgets('M25 photo required', (t) async {
+    final c = await questionSetup(t);
+    await c.onChoose('no');
+    await shot(t, 'm25_photo_required', const ChecklistQuestionScreen());
   });
 
   testWidgets('M13 dashboard', (t) async {

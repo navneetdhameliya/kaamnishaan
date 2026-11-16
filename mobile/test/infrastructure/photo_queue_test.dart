@@ -6,6 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/files_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_exception.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_result.dart';
+import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
 import 'package:kaamnishaan/infrastructure/services/photo_queue_service.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -17,6 +18,7 @@ void main() {
   late MockFilesRepository files;
   late MockJobsRepository jobs;
   late StreamController<bool> online;
+  late MockChecklistsRepository checklists;
 
   setUpAll(() {
     registerFallbackValue(UploadKind.photo);
@@ -30,6 +32,7 @@ void main() {
     files = MockFilesRepository();
     jobs = MockJobsRepository();
     online = StreamController<bool>.broadcast();
+    checklists = MockChecklistsRepository();
   });
 
   tearDown(() async {
@@ -40,6 +43,7 @@ void main() {
   PhotoQueueService queue() => PhotoQueueService(
         files: files,
         jobs: jobs,
+        checklists: checklists,
         folder: () async => folder,
         online: online.stream,
         retryEvery: const Duration(hours: 1),
@@ -54,7 +58,7 @@ void main() {
         () => files.upload(kind: any(named: 'kind'), bytes: any(named: 'bytes'), contentType: any(named: 'contentType')),
       ).thenAnswer((_) async => answer());
 
-  void addPhoto(ApiResult<void> Function() answer) => when(
+  void addPhoto(ApiResult<String> Function() answer) => when(
         () => jobs.addPhoto(
           jobId: any(named: 'jobId'),
           uploadId: any(named: 'uploadId'),
@@ -71,7 +75,7 @@ void main() {
 
   test('a photo is kept on the phone first, then sent and removed', () async {
     uploads(() => const ApiSuccess<String>('up-1'));
-    addPhoto(() => const ApiSuccess<void>(null));
+    addPhoto(() => const ApiSuccess<String>('ev-1'));
     final q = await queue().init();
     final source = shot();
     final p = await q.add(jobId: 'j1', stage: 'after', sourcePath: source, lat: 21.1, lng: 72.8, shotSlot: 'filter');
@@ -110,7 +114,7 @@ void main() {
     expect(again.items.single.id, p.id);
     expect(again.countFor('j1', 'before'), 1);
     uploads(() => const ApiSuccess<String>('up-2'));
-    addPhoto(() => const ApiSuccess<void>(null));
+    addPhoto(() => const ApiSuccess<String>('ev-1'));
     online.add(true);
     await Future<void>.delayed(const Duration(milliseconds: 50));
     expect(again.items, isEmpty);
@@ -126,7 +130,7 @@ void main() {
     final q = await queue().init();
     expect(q.items.single.state, PendingState.waiting);
     uploads(() => const ApiSuccess<String>('up-3'));
-    addPhoto(() => const ApiSuccess<void>(null));
+    addPhoto(() => const ApiSuccess<String>('ev-1'));
     await q.process();
     verify(
       () => jobs.addPhoto(
@@ -145,7 +149,7 @@ void main() {
 
   test('a refused photo is tried a few times, then shown as not sent; retry starts again', () async {
     uploads(() => const ApiSuccess<String>('up-4'));
-    addPhoto(() => const ApiFailure<void>(ApiException(code: 'evidence_locked', message: 'Locked', statusCode: 409)));
+    addPhoto(() => const ApiFailure<String>(ApiException(code: 'evidence_locked', message: 'Locked', statusCode: 409)));
     final q = await queue().init();
     await q.add(jobId: 'j1', stage: 'after', sourcePath: shot());
     for (var i = 0; i < PhotoQueueService.maxTries; i++) {
@@ -156,7 +160,7 @@ void main() {
     await q.process(); // failed photos are left alone
     verify(() => files.upload(kind: any(named: 'kind'), bytes: any(named: 'bytes'), contentType: any(named: 'contentType')))
         .called(PhotoQueueService.maxTries);
-    addPhoto(() => const ApiSuccess<void>(null));
+    addPhoto(() => const ApiSuccess<String>('ev-1'));
     await q.retry(q.items.single.id);
     expect(q.items, isEmpty);
     q.onClose();
@@ -178,7 +182,7 @@ void main() {
       ),
     ).thenAnswer((inv) async {
       order.add(inv.namedArguments[#stage] as String);
-      return const ApiSuccess<void>(null);
+      return const ApiSuccess<String>('ev-1');
     });
     final q = await queue().init();
     await q.add(jobId: 'j1', stage: 'before', sourcePath: shot('a.jpg'));
@@ -189,5 +193,89 @@ void main() {
     expect(order, ['before', 'during', 'after']);
     expect(q.items, isEmpty);
     q.onClose();
+  });
+
+  group('checklist answers (D-59)', () {
+    void answers(ApiResult<SubmissionOutModel> Function() result) => when(
+          () => checklists.answer(
+            checklistId: any(named: 'checklistId'),
+            questionId: any(named: 'questionId'),
+            clientUuid: any(named: 'clientUuid'),
+            value: any(named: 'value'),
+            photoId: any(named: 'photoId'),
+            signatureUploadId: any(named: 'signatureUploadId'),
+          ),
+        ).thenAnswer((_) async => result());
+
+    const sub = SubmissionOutModel(
+      id: 'c1', jobId: 'j1', name: 'HVAC', language: 'en', answered: 1, total: 2, status: 'in_progress',
+      locked: false, questions: [],
+    );
+
+    test('an answer waits without internet, survives a restart, and a newer answer replaces it', () async {
+      answers(() => const ApiFailure<SubmissionOutModel>(ApiException(code: 'no_internet', message: '')));
+      final q = await queue().init();
+      await q.addAnswer(jobId: 'j1', checklistId: 'c1', questionId: 'q1', value: 'yes');
+      await q.addAnswer(jobId: 'j1', checklistId: 'c1', questionId: 'q1', value: 'no');
+      expect(q.answersFor('c1')['q1']?.value, 'no');
+      expect(q.answers.length, 1);
+      q.onClose();
+
+      final again = await queue().init();
+      expect(again.answersFor('c1')['q1']?.value, 'no');
+      answers(() => const ApiSuccess<SubmissionOutModel>(sub));
+      await again.process();
+      expect(again.answers, isEmpty);
+      expect(again.answersSent.value, 1);
+      again.onClose();
+    });
+
+    test('an answer that needs a photo is sent after the photo, with its server id', () async {
+      uploads(() => noInternet);
+      answers(() => const ApiSuccess<SubmissionOutModel>(sub));
+      final q = await queue().init();
+      final photo = await q.add(jobId: 'j1', stage: 'during', sourcePath: shot());
+      await q.addAnswer(jobId: 'j1', checklistId: 'c1', questionId: 'q3', value: 'no', photoRef: photo.id);
+      await q.process();
+      expect(q.answers.single.state, PendingState.waiting); // the photo is not sent, so neither is the answer
+      verifyNever(
+        () => checklists.answer(
+          checklistId: any(named: 'checklistId'),
+          questionId: any(named: 'questionId'),
+          clientUuid: any(named: 'clientUuid'),
+          value: any(named: 'value'),
+          photoId: any(named: 'photoId'),
+          signatureUploadId: any(named: 'signatureUploadId'),
+        ),
+      );
+      uploads(() => const ApiSuccess<String>('up'));
+      addPhoto(() => const ApiSuccess<String>('ev-77'));
+      await q.process();
+      expect(q.items, isEmpty);
+      expect(q.answers, isEmpty);
+      verify(
+        () => checklists.answer(
+          checklistId: 'c1',
+          questionId: 'q3',
+          clientUuid: any(named: 'clientUuid'),
+          value: 'no',
+          photoId: 'ev-77',
+          signatureUploadId: any(named: 'signatureUploadId'),
+        ),
+      ).called(1);
+      q.onClose();
+    });
+
+    test('version 1 files (a plain list of photos) still load', () async {
+      folder.createSync(recursive: true);
+      final path = shot('old.jpg');
+      File('${folder.path}/queue.json').writeAsStringSync(jsonEncode([
+        {'id': 'old', 'job_id': 'j1', 'stage': 'before', 'taken_at': '2026-10-31T10:00:00.000', 'path': path},
+      ]));
+      final q = await queue().init();
+      expect(q.items.single.id, 'old');
+      expect(q.answers, isEmpty);
+      q.onClose();
+    });
   });
 }

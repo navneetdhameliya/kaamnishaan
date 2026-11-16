@@ -3981,6 +3981,8 @@ String questionOutModelToJson(QuestionOutModel data) => json.encode(data.toJson(
 
 class QuestionOutModel {
   final AnswerOutModel? answer;
+  /// 'Show if' rule {question_id, equals}, so the app can follow it offline
+  final Map<String, dynamic>? condition;
   final String? help;
   final String id;
   final double? maxValue;
@@ -4004,6 +4006,7 @@ class QuestionOutModel {
 
   const QuestionOutModel({
     this.answer,
+    this.condition,
     this.help,
     required this.id,
     this.maxValue,
@@ -4023,6 +4026,7 @@ class QuestionOutModel {
 
   factory QuestionOutModel.fromJson(Map<String, dynamic> json) => QuestionOutModel(
         answer: json['answer'] == null ? null : AnswerOutModel.fromJson(json['answer'] as Map<String, dynamic>),
+        condition: json['condition'] == null ? null : Map<String, dynamic>.from(json['condition'] as Map),
         help: json['help'] as String?,
         id: json['id'] as String,
         maxValue: json['max_value'] == null ? null : (json['max_value'] as num).toDouble(),
@@ -4042,6 +4046,7 @@ class QuestionOutModel {
 
   Map<String, dynamic> toJson() => {
         'answer': answer?.toJson(),
+        'condition': condition,
         'help': help,
         'id': id,
         'max_value': maxValue,

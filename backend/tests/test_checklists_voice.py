@@ -281,6 +281,7 @@ async def test_finishing_a_checklist_unlocks_the_report(client, setup):
 
     # "what was the problem?" only shows when the answer is "something else"
     assert qs[3]["visible"] is False
+    assert qs[3]["condition"]["equals"] is not None  # the app follows the rule offline
     assert (await answer(client, tech, cid, qs[3]["id"], value="x")).json()["error"][
         "code"
     ] == "question_hidden"

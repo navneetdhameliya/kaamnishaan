@@ -31,6 +31,16 @@ abstract final class APIConstant {
   static String jobProofAPIEP(String id) => '/jobs/$id/proof';
   static String jobEvidenceAPIEP(String id) => '/jobs/$id/evidence';
 
+  // checklists
+  static String jobChecklistsAPIEP(String jobId) => '/jobs/$jobId/checklists';
+  static String submissionAPIEP(String id) => '/checklist-submissions/$id';
+  static String answerAPIEP(String id, String questionId) => '/checklist-submissions/$id/answers/$questionId';
+
+  // evidence
+  static String evidenceAPIEP(String id) => '/evidence/$id';
+  static String evidenceNotesAPIEP(String id) => '/evidence/$id/notes';
+  static String photoPairsAPIEP(String jobId) => '/jobs/$jobId/photo-pairs';
+
   // company
   static const String companiesAPIEP = '/companies';
   static const String companyAPIEP = '/company';

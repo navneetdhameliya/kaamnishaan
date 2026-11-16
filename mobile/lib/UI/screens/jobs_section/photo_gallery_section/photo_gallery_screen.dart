@@ -89,6 +89,21 @@ class PhotoGalleryScreen extends GetView<PhotoGalleryController> {
               padding: const EdgeInsets.symmetric(horizontal: KnSize.space16),
               child: Obx(() => _tabs(context)),
             ),
+            Obx(
+              () => controller.canCompare
+                  ? Padding(
+                      padding: const EdgeInsets.fromLTRB(KnSize.space16, KnSize.space12, KnSize.space16, 0),
+                      child: KnCustomButton(
+                        key: const ValueKey('compare-photos'),
+                        text: LangKeys.pairCompare.tr,
+                        icon: LucideIcons.columns2,
+                        variant: KnButtonVariant.secondary,
+                        small: true,
+                        onTap: controller.onCompareTap,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
+            ),
             const SizedBox(height: KnSize.space16),
             Expanded(
               child: RefreshIndicator(
