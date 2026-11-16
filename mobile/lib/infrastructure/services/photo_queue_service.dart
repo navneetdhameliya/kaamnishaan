@@ -77,17 +77,19 @@ class PhotoQueueService extends GetxService {
   PhotoQueueService({
     required this.files,
     required this.jobs,
-    required Future<Directory> Function() folder,
-    Stream<bool>? online,
+    required this.folder,
+    this.online,
     this.retryEvery = const Duration(minutes: 2),
     this.startDelay,
-  })  : _folder = folder,
-        _online = online;
+  });
 
   final IFilesApiRepository files;
   final IJobsApiRepository jobs;
-  final Future<Directory> Function() _folder;
-  final Stream<bool>? _online;
+  /// Where waiting photos are kept (the app's own documents folder).
+  final Future<Directory> Function() folder;
+
+  /// true when the phone gets internet back.
+  final Stream<bool>? online;
   final Duration retryEvery;
 
   /// Sends what was left from last time, shortly after the app opens (after login is restored).
@@ -107,7 +109,7 @@ class PhotoQueueService extends GetxService {
   Future<void>? _running;
 
   Future<Directory> get dir async {
-    final d = _dir ??= await _folder();
+    final d = _dir ??= await folder();
     if (!d.existsSync()) d.createSync(recursive: true);
     return d;
   }
@@ -128,7 +130,7 @@ class PhotoQueueService extends GetxService {
     } catch (e) {
       AppLogger.error('Saved photo list could not be read', error: e);
     }
-    _onlineSub = _online?.listen((up) {
+    _onlineSub = online?.listen((up) {
       if (up) process();
     });
     _timer = Timer.periodic(retryEvery, (_) => process());

@@ -122,6 +122,8 @@ class PhotoGalleryScreen extends GetView<PhotoGalleryController> {
   Widget _tabs(BuildContext context) {
     final kn = context.kn;
     final text = context.knText;
+    final selected = controller.selected.value;
+    final counts = {for (final s in PhotoGalleryController.stages) s: controller.photosOf(s).length};
     return Container(
       padding: const EdgeInsets.all(KnSize.space4),
       decoration: BoxDecoration(color: kn.bgSubtle, borderRadius: BorderRadius.circular(KnSize.radiusFull)),
@@ -132,7 +134,7 @@ class PhotoGalleryScreen extends GetView<PhotoGalleryController> {
             Expanded(
               child: Builder(
                 builder: (context) {
-                  final on = controller.selected.value == s;
+                  final on = selected == s;
                   return CustomInkWell(
                     key: ValueKey('tab-$s'),
                     onTap: () => controller.onTabTap(s),
@@ -164,7 +166,7 @@ class PhotoGalleryScreen extends GetView<PhotoGalleryController> {
                               borderRadius: BorderRadius.circular(KnSize.radiusFull),
                             ),
                             child: CustomBaseTextWidget(
-                              '${controller.photosOf(s).length}',
+                              '${counts[s]}',
                               style: text.captionStrong,
                               color: on ? kn.textOnAction : kn.textSecondary,
                             ),
