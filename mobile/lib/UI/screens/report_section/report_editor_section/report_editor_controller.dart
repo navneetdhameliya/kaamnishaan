@@ -11,11 +11,14 @@ import '../../../common_widgets/kn_toast.dart';
 
 /// One part of the report the technician can change.
 class ReportPart {
-  ReportPart(this.key, this.title, {required this.required});
+  ReportPart(this.key, this.titleKey, {required this.required});
 
   /// "summary", "work_done", "advice" (as the server names them).
   final String key;
-  final String title;
+  final String titleKey;
+
+  /// Translated when shown, so it follows the app's language.
+  String get title => titleKey.tr;
   final bool required;
   final TextEditingController text = TextEditingController();
   final FocusNode focus = FocusNode();
@@ -49,9 +52,9 @@ class ReportEditorController extends GetxController {
   final Duration pollEvery;
 
   late final List<ReportPart> parts = [
-    ReportPart('summary', LangKeys.reportSummary.tr, required: true),
-    ReportPart('work_done', LangKeys.reportWorkDone.tr, required: true),
-    ReportPart('advice', LangKeys.reportAdvice.tr, required: false),
+    ReportPart('summary', LangKeys.reportSummary, required: true),
+    ReportPart('work_done', LangKeys.reportWorkDone, required: true),
+    ReportPart('advice', LangKeys.reportAdvice, required: false),
   ];
 
   final Rxn<ReportOutModel> report = Rxn<ReportOutModel>();
