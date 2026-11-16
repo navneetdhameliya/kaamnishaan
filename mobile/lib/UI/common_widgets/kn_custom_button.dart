@@ -20,6 +20,7 @@ class KnCustomButton extends StatelessWidget {
     this.enabled = true,
     this.onDisabledTap,
     this.small = false,
+    this.height,
   });
 
   final String text;
@@ -32,6 +33,9 @@ class KnCustomButton extends StatelessWidget {
 
   /// 40 px tall, for buttons inside a card row (M13 "Invite", "Create").
   final bool small;
+
+  /// Overrides the height (M15 "Navigate" and "Call" are 48).
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +54,9 @@ class KnCustomButton extends StatelessWidget {
       borderRadius: radius,
       semanticLabel: text,
       child: Ink(
-        height: small ? 40 : KnSize.tapTechnician,
+        height: height ?? (small ? 40 : KnSize.tapTechnician),
         decoration: BoxDecoration(color: bg, borderRadius: radius),
-        padding: EdgeInsets.symmetric(horizontal: small ? KnSize.space16 : KnSize.space24),
+        padding: EdgeInsets.symmetric(horizontal: small ? KnSize.space16 : (height != null ? KnSize.space20 : KnSize.space24)),
         child: Center(
           child: loading
               ? SizedBox.square(dimension: 24, child: CircularProgressIndicator(strokeWidth: 2.5, color: fg))

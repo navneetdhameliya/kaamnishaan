@@ -7,6 +7,7 @@ import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/comp
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/config_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/files_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/home_api_repository.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/jobs_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
 import 'package:kaamnishaan/infrastructure/services/image_picker_service.dart';
 import 'package:kaamnishaan/infrastructure/services/speech_service.dart';
@@ -22,6 +23,56 @@ class MockCompanyRepository extends Mock implements ICompanyApiRepository {}
 class MockFilesRepository extends Mock implements IFilesApiRepository {}
 
 class MockHomeRepository extends Mock implements IHomeApiRepository {}
+
+class MockJobsRepository extends Mock implements IJobsApiRepository {}
+
+JobOutModel jobOut({String status = 'assigned', List<String> actions = const ['start'], String assigneeId = 'u1'}) =>
+    JobOutModel(
+      id: 'j1',
+      number: 'J-1001',
+      title: 'AC not cooling',
+      status: status,
+      scheduledAt: DateTime(2026, 10, 31, 11, 30),
+      customer: const CustomerRefModel(id: 'c1', name: 'Green Valley Clinic'),
+      site: const SiteBriefModel(id: 's1', address: '4 Lake Road', city: 'Springfield', label: 'Room 2', lat: 21.17, lng: 72.83),
+      assignee: PersonRefModel(id: assigneeId, name: 'Ramesh Patel'),
+      isQuickJob: false,
+      version: 1,
+      updatedAt: DateTime(2026, 10, 31),
+      description: 'AC not cooling in room 2',
+      contact: const ContactOutModel(
+        id: 'k1',
+        name: 'Dr. Anita Rao',
+        title: 'Clinic owner',
+        phone: '+919811122233',
+        isPrimary: true,
+        reviewOptedOut: false,
+      ),
+      equipment: EquipmentOutModel(
+        id: 'e1',
+        type: 'Split AC',
+        capacity: '1.5 ton',
+        location: 'Room 2',
+        lastServiceAt: DateTime(2026, 8, 12),
+      ),
+      createdAt: DateTime(2026, 10, 30),
+      actions: actions,
+    );
+
+ProofModel proofData({bool started = true, int before = 3, int during = 1, int after = 0}) => ProofModel(
+      jobId: 'j1',
+      status: started ? 'in_progress' : 'assigned',
+      steps: [
+        ProofStepModel(key: 'before', count: before, requiredValue: true, done: before > 0),
+        ProofStepModel(key: 'during', count: during, requiredValue: false, done: during > 0),
+        ProofStepModel(key: 'after', count: after, requiredValue: true, done: after > 0),
+        const ProofStepModel(key: 'checklist', count: 0, total: 1, requiredValue: true, done: false),
+        const ProofStepModel(key: 'voice', count: 0, requiredValue: false, done: false),
+      ],
+      canMakeReport: false,
+      blockedBy: !started ? 'job_not_started' : (before == 0 ? 'need_before_photo' : (after == 0 ? 'need_after_photo' : 'need_checklist')),
+      locked: false,
+    );
 
 JobListItemModel job({
   String id = 'j1',

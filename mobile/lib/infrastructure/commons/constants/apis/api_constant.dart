@@ -24,6 +24,12 @@ abstract final class APIConstant {
   static const String dashboardAPIEP = '/dashboard';
   static const String reportsAPIEP = '/reports';
 
+  // jobs
+  static const String jobsAPIEP = '/jobs';
+  static String jobAPIEP(String id) => '/jobs/$id';
+  static String startJobAPIEP(String id) => '/jobs/$id/start';
+  static String jobProofAPIEP(String id) => '/jobs/$id/proof';
+
   // company
   static const String companiesAPIEP = '/companies';
   static const String companyAPIEP = '/company';

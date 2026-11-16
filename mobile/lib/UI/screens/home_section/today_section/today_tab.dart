@@ -49,7 +49,7 @@ class TodayTab extends GetView<TodayController> {
                     initials: controller.initials,
                     avatarUrl: controller.avatarUrl,
                     unread: (data?.unread ?? 0) > 0,
-                    onBell: controller.onJobTap,
+                    onBell: controller.onBellTap,
                     child: Padding(
                       padding: const EdgeInsets.only(top: KnSize.space16),
                       child: TodayStats(
@@ -132,7 +132,7 @@ class TodayTab extends GetView<TodayController> {
           Row(
             children: [
               Expanded(child: CustomBaseTextWidget(LangKeys.todayNextUp.tr, style: text.h3)),
-              KnTextLink(key: const ValueKey('see-all'), text: LangKeys.commonSeeAll.tr, large: true, onTap: controller.onJobTap),
+              KnTextLink(key: const ValueKey('see-all'), text: LangKeys.commonSeeAll.tr, large: true, onTap: controller.onSeeAllTap),
             ],
           ),
           const SizedBox(height: 10),
