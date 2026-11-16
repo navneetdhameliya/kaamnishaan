@@ -5,6 +5,7 @@ MSG91 (SMS, DLT templates), WhatsApp Business and the email provider are added w
 """
 
 import logging
+from collections import deque
 from dataclasses import dataclass, field
 
 from app.core.config import get_settings
@@ -12,11 +13,18 @@ from app.core.config import get_settings
 log = logging.getLogger("kn.messaging")
 
 
+OUTBOX_SIZE = 200  # a test server keeps only the latest messages in memory
+
+
+def _box() -> deque:
+    return deque(maxlen=OUTBOX_SIZE)
+
+
 @dataclass
 class Outbox:
-    sms: list[dict] = field(default_factory=list)
-    email: list[dict] = field(default_factory=list)
-    whatsapp: list[dict] = field(default_factory=list)
+    sms: deque = field(default_factory=_box)
+    email: deque = field(default_factory=_box)
+    whatsapp: deque = field(default_factory=_box)
 
     def clear(self) -> None:
         self.sms.clear()

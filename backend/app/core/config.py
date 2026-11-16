@@ -41,6 +41,9 @@ class Settings(BaseSettings):
     redis_url: str | None = None
     sms_provider: Literal["console", "msg91"] = "console"
     whatsapp_provider: Literal["console"] = "console"  # WhatsApp Business provider not chosen yet
+    # Test servers only: with this key set, GET /api/v1/dev/outbox shows the login codes, invites and
+    # emails that were "sent" (no SMS provider yet). Never allowed in production.
+    test_outbox_key: SecretStr | None = None
 
     # Where links in SMS and email point (customer page, invites, email verification)
     web_url: str = "http://localhost:5173"
@@ -67,6 +70,8 @@ class Settings(BaseSettings):
             raise ValueError(
                 "KN_SECRET_KEY must be a strong random value (32+ characters) outside local/test"
             )
+        if self.env == "production" and self.test_outbox_key:
+            raise ValueError("KN_TEST_OUTBOX_KEY must not be set in production")
         if self.env in ("staging", "production") and self.storage_provider != "r2":
             raise ValueError("KN_STORAGE_PROVIDER must be r2 outside local/test")
         if self.storage_provider == "r2" and not (
@@ -78,6 +83,10 @@ class Settings(BaseSettings):
     @property
     def is_production(self) -> bool:
         return self.env == "production"
+
+    @property
+    def outbox_enabled(self) -> bool:
+        return self.env in ("local", "test") or (self.env == "staging" and self.test_outbox_key is not None)
 
 
 @lru_cache

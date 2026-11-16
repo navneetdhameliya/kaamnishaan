@@ -71,6 +71,10 @@ Files are saved in `backend/var/uploads` on your computer. The live server uses 
    `{"name": "R. Sharma"}`.
 5. `DELETE /api/v1/share-links/{link_id}` turns the link off (the page then says so).
 
+## Live test server
+The free test server on Render: **https://kaamnishaan-api.onrender.com/docs**. How it was set up, and how to
+read login codes there: [docs/deploy.md](../docs/deploy.md).
+
 ## Checks
 Tests use a real PostgreSQL database `kaamnishaan_test` (override with `KN_TEST_DATABASE_URL`);
 it is migrated once per run and emptied between tests.

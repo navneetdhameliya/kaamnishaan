@@ -43,6 +43,7 @@
 | D-39 | "Copy link" counts as sharing (the report becomes "shared"); the dashboard and profile "reports sent" count reports that reached the customer | M13, M37 | 2026-11-16 (default; easy to change) |
 | D-40 | "Send me a new link" sends only to the phone or email the report went to before (never to whoever asks), at most once an hour; for a copied link the company's owner and managers get an email instead | W27, security | 2026-11-16 |
 | D-41 | The report text stays in the language it was approved in; `?lang=` on the customer page changes the checklist questions and the page words only. "Report a problem" is limited to 5 a day per link | W27 | 2026-11-16 |
+| D-42 | Live test server on Render's free plan (Singapore): API + free database, no worker or Redis (background tasks run inside the API). Login codes and emails are read from `/api/v1/dev/outbox`, protected by `KN_TEST_OUTBOX_KEY`; this is refused on production. Upgrade API ($7) and database ($6) before real customers — the free database is deleted after 30 days | Test the apps against a live API before buying | 2026-11-16 |
 ## Still open
 - SMS with the report link: each language's text (and the link's domain) must be registered as a DLT template before MSG91 will send it — needs the domain (16 Nov) and the MSG91 account.
 - WhatsApp Business provider (report links show in the dev outbox until then); credits per SMS/WhatsApp and the "don't contact me" list start with reviews (Step 2).
