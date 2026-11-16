@@ -32,7 +32,6 @@ class MeTab extends GetView<MeController> {
 
   @override
   Widget build(BuildContext context) {
-    final kn = context.kn;
     final text = context.knText;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
