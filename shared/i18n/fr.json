@@ -574,12 +574,15 @@
   "pending.all_sent": "Tout est envoyé",
   "pending.all_sent_body": "Votre responsable a toutes vos photos et notes.",
   "pending.sent_items": "{n} éléments envoyés",
-  "pending.sent_detail": "{photos} photos · {notes} notes",
   "pending.sent_at": "Envoyé à {time}",
   "pending.back_today": "Retour à Aujourd'hui",
   "pending.no_internet": "Pas d'internet. Nous les enverrons dès son retour.",
   "stage.before": "Avant",
   "stage.during": "Pendant",
   "stage.after": "Après",
-  "profile.saved": "Profil enregistré"
+  "profile.saved": "Profil enregistré",
+  "count.photo_one": "1 photo",
+  "count.photos": "{n} photos",
+  "count.note_one": "1 note",
+  "count.notes": "{n} notes"
 }

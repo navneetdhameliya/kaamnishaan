@@ -172,7 +172,7 @@ void main() {
       await Future<void>.delayed(Duration.zero);
       expect(c.allSent, isTrue);
       expect(c.sentCount, 2);
-      expect(c.sentDetail, '1 photos · 1 notes');
+      expect(c.sentDetail, '1 photo · 1 note');
       c.onClose();
     });
   });

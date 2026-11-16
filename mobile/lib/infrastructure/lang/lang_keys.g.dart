@@ -1152,8 +1152,6 @@ abstract final class LangKeys {
   static const pendingAllSentBody = 'pending.all_sent_body';
   /// {n} items sent
   static const pendingSentItems = 'pending.sent_items';
-  /// {photos} photos · {notes} notes
-  static const pendingSentDetail = 'pending.sent_detail';
   /// Sent at {time}
   static const pendingSentAt = 'pending.sent_at';
   /// Back to Today
@@ -1168,4 +1166,12 @@ abstract final class LangKeys {
   static const stageAfter = 'stage.after';
   /// Profile saved
   static const profileSaved = 'profile.saved';
+  /// 1 photo
+  static const countPhotoOne = 'count.photo_one';
+  /// {n} photos
+  static const countPhotos = 'count.photos';
+  /// 1 note
+  static const countNoteOne = 'count.note_one';
+  /// {n} notes
+  static const countNotes = 'count.notes';
 }

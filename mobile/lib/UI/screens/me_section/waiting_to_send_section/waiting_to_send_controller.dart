@@ -138,7 +138,14 @@ class WaitingToSendController extends GetxController {
     ];
   }
 
-  String get sentDetail => LangKeys.pendingSentDetail.trParams({'photos': '${sentPhotos.value}', 'notes': '${sentNotes.value}'});
+  /// "2 photos · 1 note"
+  String get sentDetail {
+    String count(int n, String one, String many) => n == 1 ? one.tr : many.trParams({'n': '$n'});
+    return [
+      if (sentPhotos.value > 0) count(sentPhotos.value, LangKeys.countPhotoOne, LangKeys.countPhotos),
+      if (sentNotes.value > 0) count(sentNotes.value, LangKeys.countNoteOne, LangKeys.countNotes),
+    ].join(' · ');
+  }
 
   String get sentAt => LangKeys.pendingSentAt.trParams({
         'time': TimeUtils.clock(lastSent.value ?? DateTime.now(), translation.currentCode),

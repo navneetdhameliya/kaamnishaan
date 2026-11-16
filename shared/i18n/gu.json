@@ -574,12 +574,15 @@
   "pending.all_sent": "બધું મોકલાઈ ગયું",
   "pending.all_sent_body": "તમારા મેનેજર પાસે તમારા બધા ફોટા અને નોટ્સ છે.",
   "pending.sent_items": "{n} વસ્તુઓ મોકલી",
-  "pending.sent_detail": "{photos} ફોટા · {notes} નોટ",
   "pending.sent_at": "{time} એ મોકલ્યું",
   "pending.back_today": "આજ પર પાછા",
   "pending.no_internet": "ઇન્ટરનેટ નથી. આવશે ત્યારે મોકલીશું.",
   "stage.before": "પહેલાં",
   "stage.during": "દરમિયાન",
   "stage.after": "પછી",
-  "profile.saved": "પ્રોફાઇલ સેવ થઈ"
+  "profile.saved": "પ્રોફાઇલ સેવ થઈ",
+  "count.photo_one": "1 ફોટો",
+  "count.photos": "{n} ફોટા",
+  "count.note_one": "1 નોટ",
+  "count.notes": "{n} નોટ"
 }

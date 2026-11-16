@@ -63,6 +63,7 @@ class MyReportsScreen extends GetView<MyReportsController> {
                             key: ValueKey('report-filter-${f.name}'),
                             label: controller.filterLabel(f),
                             selected: controller.filter.value == f,
+                            dense: true,
                             onTap: () => controller.onFilterTap(f),
                           ),
                         ],

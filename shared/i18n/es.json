@@ -574,12 +574,15 @@
   "pending.all_sent": "Todo está enviado",
   "pending.all_sent_body": "Tu encargado tiene todas tus fotos y notas.",
   "pending.sent_items": "{n} cosas enviadas",
-  "pending.sent_detail": "{photos} fotos · {notes} notas",
   "pending.sent_at": "Enviado a las {time}",
   "pending.back_today": "Volver a Hoy",
   "pending.no_internet": "Sin internet. Los enviaremos cuando vuelva.",
   "stage.before": "Antes",
   "stage.during": "Durante",
   "stage.after": "Después",
-  "profile.saved": "Perfil guardado"
+  "profile.saved": "Perfil guardado",
+  "count.photo_one": "1 foto",
+  "count.photos": "{n} fotos",
+  "count.note_one": "1 nota",
+  "count.notes": "{n} notas"
 }
