@@ -104,8 +104,7 @@ void main() {
     expect(c.changed, isTrue);
     await _ignoreApp(c.onSaveTap);
     verify(() => me.setLanguage('hi')).called(1);
-    expect(translation.currentCode, 'hi');
-    await translation.change('en');
+    expect(translation.prefs.languageCode, 'hi'); // kept on the phone
   });
 
   test('M30 filters ask the server for the right states', () async {

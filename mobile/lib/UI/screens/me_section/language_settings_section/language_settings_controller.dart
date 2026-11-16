@@ -32,14 +32,14 @@ class LanguageSettingsController extends GetxController {
 
   void onLanguageTap(String code) => selected.value = code;
 
-  /// Switches the app at once; the account is told too (a lost connection only skips that part).
+  /// Tells the account (a lost connection only skips that part), then switches the app.
   Future<void> onSaveTap() async {
     if (!changed) return Get.back<void>();
     saving.value = true;
-    await translation.change(selected.value);
     final result = await me.setLanguage(selected.value);
-    saving.value = false;
     if (result.dataOrNull != null) session.me.value = result.dataOrNull;
+    await translation.change(selected.value);
+    saving.value = false;
     KnToast.success(LangKeys.langSaved.tr);
     Get.back<bool>(result: true);
   }
