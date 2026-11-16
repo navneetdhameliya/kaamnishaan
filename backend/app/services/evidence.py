@@ -411,7 +411,8 @@ async def proof(db: AsyncSession, p: Principal, job_id: uuid.UUID) -> Proof:
     ]
     locked = any(e.locked_at for e in rows)
     blocked = None
-    if locked or j.status in ("in_review", "completed"):
+    # after "ask for changes" old photos stay locked, but new proof can be added and the report redone
+    if j.status in ("in_review", "completed"):
         blocked = "evidence_locked"
     elif j.status not in CAPTURE_STATUSES:
         blocked = "job_not_started"

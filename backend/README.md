@@ -46,6 +46,20 @@ Files are saved in `backend/var/uploads` on your computer. The live server uses 
    photos, then `POST /api/v1/jobs/{id}/voice-notes`. Without `KN_OPENAI_API_KEY` in `.env` it waits for transcription.
    `POST /api/v1/jobs/{id}/notes` with `{"text": "..."}` adds a typed note.
 
+### Try a report: draft, review, approve (Step 1e)
+1. As the technician, on a started job with a before and an after photo (and its checklists finished),
+   `POST /api/v1/jobs/{id}/reports` → `{task_id, report_id}`.
+2. `GET /api/v1/tasks/{task_id}` shows the 3 steps (collect evidence → write report → check against evidence).
+   With `KN_OPENAI_API_KEY` the AI writes it; without a key a plain draft is written from the answers and notes.
+3. `GET /api/v1/reports/{report_id}` shows the text, which photo or answer each sentence is based on, and flags.
+   Change a part with `PATCH /api/v1/reports/{id}` (send `If-Match: <version>`), or rewrite one part with
+   `POST /api/v1/reports/{id}/sections/advice/regenerate`.
+4. `POST /api/v1/reports/{id}/submit` sends it for review; the job's photos, answers and voice notes lock.
+5. As the owner, `GET /api/v1/reports?status=pending_review` is the review queue. Then
+   `POST /api/v1/reports/{id}/approve` (job → completed), or `POST /api/v1/reports/{id}/request-changes` with
+   `{"reasons": ["missing_photos"], "note": "Add the outdoor unit"}`; the technician adds proof, makes the report
+   again and resends it. `GET /api/v1/reports/{id}/versions` shows every version.
+
 ## Checks
 Tests use a real PostgreSQL database `kaamnishaan_test` (override with `KN_TEST_DATABASE_URL`);
 it is migrated once per run and emptied between tests.

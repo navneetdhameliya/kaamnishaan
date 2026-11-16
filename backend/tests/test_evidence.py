@@ -258,7 +258,8 @@ async def test_lock_blocks_changes_but_allows_notes(client, started):
     d = (await client.get(f"/api/v1/evidence/{e['id']}", headers=auth(tech))).json()
     assert [x["text"] for x in d["notes"]] == ["Gas pressure was low"] and d["notes_count"] == 1
     proof = (await client.get(f"/api/v1/jobs/{job['id']}/proof", headers=auth(tech))).json()
-    assert proof["locked"] and proof["blocked_by"] == "evidence_locked"
+    # locked photos alone don't block: a job sent back for changes can take new proof (Step 1e)
+    assert proof["locked"] and proof["blocked_by"] == "need_after_photo"
 
 
 async def test_database_refuses_to_change_locked_evidence(client, started):

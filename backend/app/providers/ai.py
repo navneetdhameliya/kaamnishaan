@@ -30,6 +30,23 @@ WHISPER_CODES = {
 
 
 @dataclass
+class Draft:
+    data: dict
+    model: str
+    tokens_in: int
+    tokens_out: int
+
+
+# USD per 1M tokens; used to record cost per report (A20). Update when prices or models change.
+PRICES = {"gpt-4o-mini": (0.15, 0.60), "gpt-4o": (2.50, 10.00)}
+
+
+def cost_usd(model: str, tokens_in: int, tokens_out: int) -> float:
+    pin, pout = PRICES.get(model, (0.0, 0.0))
+    return round((tokens_in * pin + tokens_out * pout) / 1_000_000, 6)
+
+
+@dataclass
 class Transcript:
     text: str
     language: str | None
@@ -42,6 +59,8 @@ class AIProvider:
     ) -> Transcript: ...
 
     async def translate(self, texts: list[str], target: str, source: str | None = None) -> list[str]: ...
+
+    async def draft_report(self, system_prompt: str, evidence: dict) -> Draft: ...
 
 
 class OpenAIProvider(AIProvider):
@@ -104,6 +123,32 @@ class OpenAIProvider(AIProvider):
         if len(items) != len(texts):
             raise ValueError("translation came back with a different number of items")
         return [str(x) for x in items]
+
+    async def draft_report(self, system_prompt, evidence):
+        s = get_settings()
+        async with httpx.AsyncClient(timeout=120) as c:
+            r = await c.post(
+                f"{self.base}/chat/completions",
+                headers=self.headers,
+                json={
+                    "model": s.openai_text_model,
+                    "temperature": 0.2,
+                    "response_format": {"type": "json_object"},
+                    "messages": [
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": json.dumps(evidence, ensure_ascii=False, default=str)},
+                    ],
+                },
+            )
+            r.raise_for_status()
+        body = r.json()
+        usage = body.get("usage") or {}
+        return Draft(
+            data=json.loads(body["choices"][0]["message"]["content"]),
+            model=body.get("model", s.openai_text_model),
+            tokens_in=usage.get("prompt_tokens", 0),
+            tokens_out=usage.get("completion_tokens", 0),
+        )
 
 
 _override: AIProvider | None = None
