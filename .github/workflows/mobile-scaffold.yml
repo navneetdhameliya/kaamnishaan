@@ -1,31 +1,28 @@
-# TEMPORARY (removed before merge): creates the native folders and resolves plugin versions.
+# TEMPORARY (removed before merge): creates the native folders and commits them to this branch.
 name: mobile scaffold (temporary)
 on:
   push:
     branches: [step-2a/mobile-foundation]
     paths: [.github/workflows/mobile-scaffold.yml]
+permissions:
+  contents: write
 jobs:
   scaffold:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v5
       - uses: subosito/flutter-action@v2
         with: { channel: stable, flutter-version: 3.47.9 }
-      - run: |
-          flutter create --org com.kaamnishaan --project-name kaamnishaan --platforms=android,ios,macos kaamnishaan
-          cd kaamnishaan
-          flutter pub add get dio flutter_secure_storage shared_preferences intl toastification shimmer flutter_svg \
-            connectivity_plus package_info_plus uuid lucide_icons_flutter
-          flutter pub add --dev mocktail
-          grep -E "^  [a-z_]+: \^" pubspec.yaml
-          grep -A3 "flutter_lints" pubspec.yaml
-      - uses: actions/upload-artifact@v4
-        with:
-          name: scaffold
-          path: |
-            kaamnishaan/android
-            kaamnishaan/ios
-            kaamnishaan/macos
-            kaamnishaan/pubspec.yaml
-            kaamnishaan/.gitignore
-            kaamnishaan/.metadata
-          include-hidden-files: true
+      - name: Create native folders
+        run: |
+          flutter create --org com.kaamnishaan --project-name kaamnishaan --platforms=android,ios,macos /tmp/kn
+          cp -r /tmp/kn/android /tmp/kn/ios /tmp/kn/macos /tmp/kn/.metadata mobile/
+          cp /tmp/kn/.gitignore mobile/.gitignore
+          cd /tmp/kn && flutter pub add flutter_tts && grep "flutter_tts" pubspec.yaml
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add mobile/android mobile/ios mobile/macos mobile/.metadata mobile/.gitignore
+          git commit -m "mobile: native folders from flutter create (Flutter 3.47.9)"
+          git push
