@@ -306,14 +306,22 @@ class PhotoQueueService extends GetxService {
   /// Sends waiting photos one at a time. Calls while sending wait for the same run.
   Future<void> process() => _running ??= _send().whenComplete(() => _running = null);
 
+  /// Goes again while photos or answers added during the run are still waiting,
+  /// so a photo taken while another one is sending is not left for the next retry.
   Future<void> _send() async {
-    if (!await _sendPhotos()) return;
-    await _sendAnswers();
+    final tried = <String>{};
+    bool fresh() =>
+        items.any((p) => p.state == PendingState.waiting && !tried.contains(p.id)) ||
+        answers.any((a) => a.state == PendingState.waiting && !tried.contains(a.id));
+    while (fresh()) {
+      if (!await _sendPhotos(tried)) return;
+      if (!await _sendAnswers(tried)) return;
+    }
   }
 
   /// false when sending stopped for lack of internet.
-  Future<bool> _sendPhotos() async {
-    for (final p in items.where((p) => p.state == PendingState.waiting).toList()) {
+  Future<bool> _sendPhotos(Set<String> tried) async {
+    for (final p in items.where((p) => p.state == PendingState.waiting && tried.add(p.id)).toList()) {
       if (!items.contains(p)) continue;
       p.state = PendingState.sending;
       items.refresh();
@@ -345,10 +353,14 @@ class PhotoQueueService extends GetxService {
     return true;
   }
 
-  Future<void> _sendAnswers() async {
+  /// false when sending stopped for lack of internet.
+  Future<bool> _sendAnswers(Set<String> tried) async {
     final api = checklists;
-    if (api == null) return;
-    for (final a in answers.where((a) => a.state == PendingState.waiting).toList()) {
+    if (api == null) {
+      tried.addAll(answers.map((a) => a.id));
+      return true;
+    }
+    for (final a in answers.where((a) => a.state == PendingState.waiting && tried.add(a.id)).toList()) {
       if (!answers.contains(a)) continue;
       String? photoId;
       if (a.photoRef != null) {
@@ -376,7 +388,7 @@ class PhotoQueueService extends GetxService {
       if (_waitForNetwork(error)) {
         answers.refresh();
         await _save();
-        return;
+        return false;
       }
       a
         ..tries += 1
@@ -385,6 +397,7 @@ class PhotoQueueService extends GetxService {
       answers.refresh();
       await _save();
     }
+    return true;
   }
 
   bool _waitForNetwork(ApiException e) =>
