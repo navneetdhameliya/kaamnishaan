@@ -6,6 +6,8 @@ from app.core.deps import Principal, get_db, get_principal
 from app.core.security import now
 from app.models import Device
 from app.schemas.identity import DeviceRegister, ListMeta, MeOut, MeUpdate, MyCompanies, Preferences
+from app.services.companies import check_trade
+from app.services.evidence import take_upload
 from app.services.views import active_memberships, choices, me_out
 
 router = APIRouter(tags=["me"])
@@ -22,6 +24,14 @@ async def patch_me(
 ) -> MeOut:
     if body.name is not None:
         p.user.name = body.name
+    if body.trade is not None:
+        await check_trade(db, body.trade)
+        p.user.trade = body.trade
+    if body.avatar_upload_id is not None:
+        up, _ = await take_upload(db, p, body.avatar_upload_id, "avatar")
+        p.user.avatar_key = up.key
+    elif body.remove_avatar:
+        p.user.avatar_key = None
     await db.flush()
     return me_out(p.user, p.company, p.membership)
 

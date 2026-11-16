@@ -7,6 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.permissions import permissions_for
 from app.models import Company, Membership, User
+from app.providers.storage import get_storage
 from app.schemas.identity import CompanyChoice, CompanyOut, CompanySettings, MeOut
 
 
@@ -20,6 +21,7 @@ def company_out(c: Company) -> CompanyOut:
         timezone=c.timezone,
         currency=c.currency,
         report_language=c.report_language,
+        logo_url=get_storage().presign_get(c.logo_key) if c.logo_key else None,
         plan=c.plan_code,
         status=c.status,
         trial_ends_at=c.trial_ends_at,
@@ -35,6 +37,8 @@ def me_out(user: User, company: Company | None = None, membership: Membership | 
         phone=user.phone,
         email=user.email,
         email_verified=user.email_verified_at is not None,
+        avatar_url=get_storage().presign_get(user.avatar_key) if user.avatar_key else None,
+        trade=user.trade,
         app_language=user.app_language,
         theme=user.theme,
         role=role,

@@ -42,6 +42,8 @@ class User(IdMixin, TimestampMixin, Base):
     password_hash: Mapped[str | None] = mapped_column(String(255))
     name: Mapped[str | None] = mapped_column(String(120))
     avatar_key: Mapped[str | None] = mapped_column(String(255))
+    # the person's own work ("Your work" on M11), separate from the company's trade
+    trade: Mapped[str | None] = mapped_column(ForeignKey("industries.slug"))
     app_language: Mapped[str] = mapped_column(str_enum(*LOCALES, name="locale"), default="en")
     status: Mapped[str] = mapped_column(
         str_enum("invited", "active", "disabled", name="user_status"), default="active"

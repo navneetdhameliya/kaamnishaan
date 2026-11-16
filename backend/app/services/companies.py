@@ -10,11 +10,12 @@ from app.core.security import now
 from app.models import AuthSession, Company, Industry, Membership, User
 from app.schemas.identity import CompanyCreate, CompanySettings, CompanySettingsUpdate, CompanyUpdate
 from app.services import audit
+from app.services.evidence import take_upload_for
 
 CURRENCY_BY_COUNTRY = {"IN": "INR"}
 
 
-async def _check_trade(db: AsyncSession, slug: str) -> None:
+async def check_trade(db: AsyncSession, slug: str) -> None:
     ind = await db.get(Industry, slug)
     if not ind or ind.status != "live":
         raise AppError("validation_error", "Pick a trade from the list.", fields={"trade": "unknown"})
@@ -23,7 +24,7 @@ async def _check_trade(db: AsyncSession, slug: str) -> None:
 async def create_company(
     db: AsyncSession, user: User, session_id, body: CompanyCreate, ip: str | None
 ) -> tuple[Company, Membership]:
-    await _check_trade(db, body.trade)
+    await check_trade(db, body.trade)
     t = now()
     company = Company(
         name=body.name,
@@ -64,9 +65,13 @@ async def update_company(
         if value is None or value == getattr(company, col):
             continue
         if field == "trade":
-            await _check_trade(db, value)
+            await check_trade(db, value)
         before[field], after[field] = getattr(company, col), value
         setattr(company, col, value)
+    if body.logo_upload_id is not None:
+        up, _ = await take_upload_for(db, actor.id, body.logo_upload_id, "logo")
+        before["logo"], after["logo"] = bool(company.logo_key), True
+        company.logo_key = up.key
     if after:
         await audit.record(
             db, "company.updated", company_id=company.id, actor_id=actor.id, actor_role=role,
