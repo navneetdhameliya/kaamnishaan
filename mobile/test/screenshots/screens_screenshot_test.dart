@@ -1,6 +1,7 @@
 @Tags(['screenshots'])
 library;
 
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -27,6 +28,10 @@ import 'package:kaamnishaan/UI/screens/auth_section/phone_section/phone_controll
 import 'package:kaamnishaan/UI/screens/auth_section/phone_section/phone_screen.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/profile_setup_section/profile_setup_controller.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/profile_setup_section/profile_setup_screen.dart';
+import 'package:kaamnishaan/UI/screens/home_section/dashboard_section/dashboard_controller.dart';
+import 'package:kaamnishaan/UI/screens/home_section/home_shell_section/home_shell_controller.dart';
+import 'package:kaamnishaan/UI/screens/home_section/home_shell_section/home_shell_screen.dart';
+import 'package:kaamnishaan/UI/screens/home_section/today_section/today_controller.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/intro_section/intro_controller.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/intro_section/intro_screen.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/language_section/language_controller.dart';
@@ -36,6 +41,8 @@ import 'package:kaamnishaan/UI/screens/onboarding_section/splash_section/splash_
 import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_controller.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_screen.dart';
 import 'package:kaamnishaan/UI/theme/kn_app_theme.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_exception.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_result.dart';
 import 'package:kaamnishaan/infrastructure/lang/translation_service.dart';
 import 'package:kaamnishaan/infrastructure/lang/translations.g.dart';
 import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
@@ -43,6 +50,7 @@ import 'package:kaamnishaan/infrastructure/services/config_service.dart';
 import 'package:kaamnishaan/infrastructure/services/preferences_service.dart';
 import 'package:kaamnishaan/infrastructure/services/session_service.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/fakes.dart';
@@ -120,7 +128,13 @@ void main() {
       );
   });
 
-  Future<void> shot(WidgetTester tester, String name, Widget screen, {Locale locale = const Locale('en', 'IN')}) async {
+  Future<void> shot(
+    WidgetTester tester,
+    String name,
+    Widget screen, {
+    Locale locale = const Locale('en', 'IN'),
+    bool dark = false,
+  }) async {
     tester.view.physicalSize = const Size(720, 1600);
     tester.view.devicePixelRatio = 2;
     addTearDown(tester.view.reset);
@@ -131,6 +145,8 @@ void main() {
         locale: locale,
         fallbackLocale: const Locale('en', 'IN'),
         theme: KnTheme.light(locale),
+        darkTheme: KnTheme.dark(locale),
+        themeMode: dark ? ThemeMode.dark : ThemeMode.light,
         home: screen,
       ),
     );
@@ -358,6 +374,101 @@ void main() {
   testWidgets('M08 check your email', (t) async {
     Get.put(CheckEmailController(repository: repo, email: 'priya@brightair.example')).secondsLeft.value = 45;
     await shot(t, 'm08_check_email', const CheckEmailScreen());
+  });
+
+  // ---- Step 2c: home --------------------------------------------------------------------------
+  Future<void> today(WidgetTester t, String name, ApiResult<TodayModel> answer, {TodayModel? saved, bool dark = false}) async {
+    final home = MockHomeRepository();
+    when(() => home.today()).thenAnswer((_) async => answer);
+    session.me.value = me(name: 'Ramesh Patel');
+    if (saved != null) await prefs.setCachedToday('u1', jsonEncode(saved.toJson()));
+    Get.put(HomeShellController(session: session));
+    Get.put(
+      TodayController(
+        repository: home,
+        session: session,
+        prefs: prefs,
+        translation: translation(),
+        clock: () => DateTime(2026, 10, 31, 9, 15),
+      ),
+    );
+    await shot(t, name, const HomeShellScreen(), dark: dark);
+  }
+
+  final busyDay = todayData(
+    current: job(status: 'in_progress', proof: const ProofCountModel(done: 2, total: 5)),
+    next: [
+      job(id: 'j2', customer: 'Mehta house', title: 'AC service', at: DateTime(2026, 10, 31, 14)),
+      job(id: 'j3', customer: 'Sharma residence', title: 'Filter change', status: 'completed', at: DateTime(2026, 10, 31, 9)),
+    ],
+  );
+
+  testWidgets('M12 today', (t) async => today(t, 'm12_today', ApiSuccess<TodayModel>(busyDay)));
+
+  testWidgets('M12 today dark', (t) async => today(t, 'm12_today_dark', ApiSuccess<TodayModel>(busyDay), dark: true));
+
+  testWidgets('M12 today empty', (t) async {
+    await today(
+      t,
+      'm12_today_empty',
+      ApiSuccess<TodayModel>(todayData(manager: const ContactRefModel(name: 'Priya', phone: '+919800000000'))),
+    );
+  });
+
+  testWidgets('M12 today offline', (t) async {
+    await today(
+      t,
+      'm12_today_offline',
+      const ApiFailure<TodayModel>(ApiException(code: 'no_internet', message: '')),
+      saved: busyDay,
+    );
+  });
+
+  Future<void> dashboard(WidgetTester t, String name, DashboardModel data, {List<ReportListItemModel> reviews = const []}) async {
+    final home = MockHomeRepository();
+    when(() => home.dashboard()).thenAnswer((_) async => ApiSuccess<DashboardModel>(data));
+    when(() => home.reviewQueue(limit: any(named: 'limit'))).thenAnswer(
+      (_) async => ApiSuccess<ReportListModel>(ReportListModel(data: reviews, meta: const ListMetaModel())),
+    );
+    session.me.value = MeOutModel(
+      id: 'u9',
+      name: 'Priya Mehta',
+      email: 'priya@brightair.example',
+      emailVerified: true,
+      appLanguage: 'en',
+      theme: 'system',
+      role: 'owner',
+      company: const CompanyOutModel(
+        id: 'c1',
+        name: 'BrightAir Services',
+        country: 'IN',
+        timezone: 'Asia/Kolkata',
+        currency: 'INR',
+        reportLanguage: 'en',
+        plan: 'professional',
+        status: 'trial',
+        settings: CompanySettingsModel(),
+      ),
+      permissions: const [],
+    );
+    Get.put(HomeShellController(session: session));
+    Get.put(
+      DashboardController(
+        repository: home,
+        session: session,
+        translation: translation(),
+        clock: () => DateTime(2026, 10, 31, 9, 30),
+      ),
+    );
+    await shot(t, name, const HomeShellScreen());
+  }
+
+  testWidgets('M13 dashboard', (t) async {
+    await dashboard(t, 'm13_dashboard', dashboardData(), reviews: [reviewItem()]);
+  });
+
+  testWidgets('M13 dashboard new company', (t) async {
+    await dashboard(t, 'm13_dashboard_new', dashboardData(teamInvited: false, firstJob: false, week: 0, lastWeek: 0));
   });
 
   testWidgets('M02 language in Hindi', (t) async {

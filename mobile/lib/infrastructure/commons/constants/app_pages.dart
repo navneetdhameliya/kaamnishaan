@@ -20,7 +20,8 @@ import '../../../UI/screens/auth_section/phone_section/phone_binding.dart';
 import '../../../UI/screens/auth_section/phone_section/phone_screen.dart';
 import '../../../UI/screens/auth_section/profile_setup_section/profile_setup_binding.dart';
 import '../../../UI/screens/auth_section/profile_setup_section/profile_setup_screen.dart';
-import '../../../UI/screens/home_section/home_screen.dart';
+import '../../../UI/screens/home_section/home_shell_section/home_shell_binding.dart';
+import '../../../UI/screens/home_section/home_shell_section/home_shell_screen.dart';
 import '../../../UI/screens/onboarding_section/intro_section/intro_binding.dart';
 import '../../../UI/screens/onboarding_section/intro_section/intro_screen.dart';
 import '../../../UI/screens/onboarding_section/language_section/language_binding.dart';
@@ -79,6 +80,10 @@ abstract final class AppPages {
       page: () => const CheckEmailScreen(),
       binding: CheckEmailBinding(),
     ),
-    GetPage(name: RoutesConstants.homeScreen, page: () => const HomeScreen()),
+    GetPage(
+      name: RoutesConstants.homeScreen,
+      page: () => const HomeShellScreen(),
+      binding: HomeShellBinding(),
+    ),
   ];
 }

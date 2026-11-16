@@ -17,6 +17,9 @@ class PreferencesService {
   bool get onboardingSeen => _prefs.getBool(StorageConstants.onboardingSeen) ?? false;
   Future<void> setOnboardingSeen() => _prefs.setBool(StorageConstants.onboardingSeen, true);
 
+  String? cachedToday(String userId) => _prefs.getString(StorageConstants.today(userId));
+  Future<void> setCachedToday(String userId, String json) => _prefs.setString(StorageConstants.today(userId), json);
+
   /// A random id for this install, sent as X-Device-Id (not the phone's hardware id).
   Future<String> deviceId() async {
     final saved = _prefs.getString(StorageConstants.deviceId);

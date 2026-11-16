@@ -19,6 +19,11 @@ abstract final class APIConstant {
   static String acceptInviteAPIEP(String id) => '/invites/$id/accept';
   static String declineInviteAPIEP(String id) => '/invites/$id/decline';
 
+  // home
+  static const String todayAPIEP = '/me/today';
+  static const String dashboardAPIEP = '/dashboard';
+  static const String reportsAPIEP = '/reports';
+
   // company
   static const String companiesAPIEP = '/companies';
   static const String companyAPIEP = '/company';
