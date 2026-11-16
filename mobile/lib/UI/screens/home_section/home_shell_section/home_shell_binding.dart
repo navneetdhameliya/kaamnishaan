@@ -23,6 +23,7 @@ class HomeShellBinding extends Bindings {
       Get.lazyPut(
         () => TodayController(repository: Get.find(), session: Get.find(), prefs: Get.find(), translation: Get.find()),
       );
+      shell.currentJob = () => Get.isRegistered<TodayController>() ? Get.find<TodayController>().data.value?.currentJob : null;
     }
   }
 }

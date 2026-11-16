@@ -614,4 +614,70 @@ abstract final class LangKeys {
   static const hubSentForReview = 'hub.sent_for_review';
   /// {done} of {total} steps done. {next}
   static const hubSpeak = 'hub.speak';
+  /// {stage} · photo {count}
+  static const cameraStagePhoto = 'camera.stage_photo';
+  /// BEFORE
+  static const cameraStageBefore = 'camera.stage_before';
+  /// DURING
+  static const cameraStageDuring = 'camera.stage_during';
+  /// AFTER
+  static const cameraStageAfter = 'camera.stage_after';
+  /// Close camera
+  static const cameraClose = 'camera.close';
+  /// Show or hide the photo guide
+  static const cameraHints = 'camera.hints';
+  /// Take photo
+  static const cameraShutter = 'camera.shutter';
+  /// Done
+  static const cameraDone = 'camera.done';
+  /// Photos of this job
+  static const cameraGallery = 'camera.gallery';
+  /// Saved on phone
+  static const cameraSaved = 'camera.saved';
+  /// The photo was not taken. Try again.
+  static const cameraFailed = 'camera.failed';
+  /// The camera can't be opened on this phone.
+  static const cameraUnavailable = 'camera.unavailable';
+  /// Camera is off
+  static const cameraOffTitle = 'camera.off_title';
+  /// KaamNishaan needs the camera to take proof photos of your work.
+  static const cameraOffBody = 'camera.off_body';
+  /// How to turn it on
+  static const cameraHowTitle = 'camera.how_title';
+  /// Open phone settings
+  static const cameraHow1 = 'camera.how_1';
+  /// Tap Apps, then KaamNishaan
+  static const cameraHow2 = 'camera.how_2';
+  /// Turn on Camera
+  static const cameraHow3 = 'camera.how_3';
+  /// Open phone settings
+  static const cameraOpenSettings = 'camera.open_settings';
+  /// Not now
+  static const cameraNotNow = 'camera.not_now';
+  /// Photos
+  static const galleryTitle = 'gallery.title';
+  /// {customer} · {count} photos
+  static const gallerySubtitle = 'gallery.subtitle';
+  /// Before
+  static const galleryBefore = 'gallery.before';
+  /// During
+  static const galleryDuring = 'gallery.during';
+  /// After
+  static const galleryAfter = 'gallery.after';
+  /// {stage} · {count}
+  static const gallerySection = 'gallery.section';
+  /// Add photo
+  static const galleryAddPhoto = 'gallery.add_photo';
+  /// Take photo
+  static const galleryTakePhoto = 'gallery.take_photo';
+  /// Waiting to send
+  static const galleryWaiting = 'gallery.waiting';
+  /// Sending…
+  static const gallerySending = 'gallery.sending';
+  /// Not sent
+  static const galleryNotSent = 'gallery.not_sent';
+  /// No photos yet
+  static const galleryEmpty = 'gallery.empty';
+  /// {count} saved on phone, sending when online
+  static const hubWaitingUpload = 'hub.waiting_upload';
 }

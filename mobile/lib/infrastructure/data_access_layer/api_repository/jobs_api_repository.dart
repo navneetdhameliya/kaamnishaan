@@ -29,6 +29,21 @@ abstract class IJobsApiRepository {
   Future<ApiResult<JobOutModel>> job(String id);
   Future<ApiResult<JobOutModel>> start(String id, {double? lat, double? lng});
   Future<ApiResult<ProofModel>> proof(String id);
+
+  /// All photos of a job (M21).
+  Future<ApiResult<EvidenceListModel>> evidence(String jobId);
+
+  /// Step 3 of a photo upload: say what the uploaded file is. [clientUuid] makes a retry safe.
+  Future<ApiResult<void>> addPhoto({
+    required String jobId,
+    required String uploadId,
+    required String stage,
+    required DateTime takenAt,
+    required String clientUuid,
+    double? lat,
+    double? lng,
+    String? shotSlot,
+  });
 }
 
 class JobsApiRepository implements IJobsApiRepository {
@@ -52,4 +67,31 @@ class JobsApiRepository implements IJobsApiRepository {
   @override
   Future<ApiResult<ProofModel>> proof(String id) =>
       guard(() async => ProofModel.fromJson(_map(await provider.getProof(id))));
+
+  @override
+  Future<ApiResult<EvidenceListModel>> evidence(String jobId) =>
+      guard(() async => EvidenceListModel.fromJson(_map(await provider.getEvidence(jobId))));
+
+  @override
+  Future<ApiResult<void>> addPhoto({
+    required String jobId,
+    required String uploadId,
+    required String stage,
+    required DateTime takenAt,
+    required String clientUuid,
+    double? lat,
+    double? lng,
+    String? shotSlot,
+  }) =>
+      guard(() async {
+        await provider.postEvidence(jobId, {
+          'upload_id': uploadId,
+          'stage': stage,
+          'taken_at': takenAt.toUtc().toIso8601String(),
+          'client_uuid': clientUuid,
+          'lat': ?lat,
+          'lng': ?lng,
+          'shot_slot': ?shotSlot,
+        });
+      });
 }

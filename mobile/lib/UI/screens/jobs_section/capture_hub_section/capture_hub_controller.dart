@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
 
+import '../../../../infrastructure/commons/constants/app_routes.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/jobs_api_repository.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
+import '../../../../infrastructure/services/location_service.dart';
+import '../../../../infrastructure/services/photo_queue_service.dart';
 import '../../../../infrastructure/services/speech_service.dart';
 import '../../../../infrastructure/shared/job_arguments.dart';
 import '../../../common_widgets/kn_toast.dart';
@@ -15,13 +18,18 @@ class CaptureHubController extends GetxController {
     required this.repository,
     required this.speech,
     required this.translation,
+    this.queue,
+    this.location,
     JobArguments? args,
   }) : args = args ?? Get.arguments as JobArguments;
 
   final IJobsApiRepository repository;
   final ISpeechService speech;
   final TranslationService translation;
+  final PhotoQueueService? queue;
+  final ILocationService? location;
   final JobArguments args;
+  Worker? _sentWorker;
 
   final Rxn<ProofModel> proof = Rxn<ProofModel>();
   final Rxn<JobOutModel> job = Rxn<JobOutModel>();
@@ -31,11 +39,26 @@ class CaptureHubController extends GetxController {
   /// The order the steps are shown in.
   static const order = ['before', 'during', 'after', 'checklist', 'voice'];
 
+  static const photoStages = {'before', 'during', 'after'};
+
   @override
   void onInit() {
     super.onInit();
     load();
+    final q = queue;
+    if (q != null) _sentWorker = ever(q.sent, (_) => load());
   }
+
+  @override
+  void onClose() {
+    _sentWorker?.dispose();
+    super.onClose();
+  }
+
+  /// Photos taken but still on the phone (no internet yet).
+  int pendingFor(String stage) => queue?.countFor(args.id, stage) ?? 0;
+
+  int get pendingCount => photoStages.fold(0, (n, s) => n + pendingFor(s));
 
   String get customer => job.value?.customer.name ?? args.customer ?? '';
 
@@ -47,9 +70,23 @@ class CaptureHubController extends GetxController {
 
   bool get notStarted => proof.value?.blockedBy == 'job_not_started';
 
+  /// The server's steps, with photos still on the phone counted in (they count as taken).
   List<ProofStepModel> get steps {
     final all = proof.value?.steps ?? const [];
-    return [for (final k in order) ...all.where((s) => s.key == k)];
+    return [
+      for (final k in order)
+        for (final s in all.where((s) => s.key == k))
+          pendingFor(k) == 0
+              ? s
+              : ProofStepModel(
+                  key: s.key,
+                  count: s.count + pendingFor(k),
+                  done: true,
+                  requiredValue: s.requiredValue,
+                  thumbs: s.thumbs,
+                  total: s.total,
+                ),
+    ];
   }
 
   /// Steps that count: the checklist only when the job has one.
@@ -78,13 +115,15 @@ class CaptureHubController extends GetxController {
   }
 
   /// Under "Make report": what still blocks it.
-  String? get unlockHint => switch (proof.value?.blockedBy) {
+  String? get unlockHint => pendingCount > 0
+      ? LangKeys.hubWaitingUpload.trParams({'count': '$pendingCount'})
+      : switch (proof.value?.blockedBy) {
         'need_before_photo' => LangKeys.hubUnlockBefore.tr,
         'need_after_photo' => LangKeys.hubUnlockAfter.tr,
         'need_checklist' => LangKeys.hubUnlockChecklist.tr,
         'evidence_locked' => LangKeys.hubSentForReview.tr,
-        _ => null,
-      };
+            _ => null,
+          };
 
   Future<void> load() async {
     loading.value = proof.value == null;
@@ -99,7 +138,8 @@ class CaptureHubController extends GetxController {
   Future<void> onStartTap() async {
     if (starting.value) return;
     starting.value = true;
-    final result = await repository.start(args.id);
+    final where = await location?.current();
+    final result = await repository.start(args.id, lat: where?.lat, lng: where?.lng);
     starting.value = false;
     if (!result.isSuccess) return KnToast.error(result.errorOrNull!.message);
     job.value = result.dataOrNull;
@@ -124,6 +164,34 @@ class CaptureHubController extends GetxController {
         _ => LangKeys.hubVoice.tr,
       };
 
-  /// Camera (M20), checklist (M24), voice (M27) and the report come in the next steps.
-  void onStepTap([ProofStepModel? step]) => KnToast.info(LangKeys.commonComingSoon.tr);
+  /// Photo steps open the camera (M20); checklist, voice notes and the report come in the next steps.
+  void onStepTap(ProofStepModel step) {
+    if (photoStages.contains(step.key)) {
+      openCamera(step.key);
+    } else {
+      KnToast.info(LangKeys.commonComingSoon.tr);
+    }
+  }
+
+  /// The camera button: the stage that is next, else "during".
+  void onCaptureTap() {
+    final next = nextKey;
+    openCamera(next != null && photoStages.contains(next) ? next : 'during');
+  }
+
+  Future<void> openCamera(String stage) async {
+    if (notStarted || proof.value == null) return KnToast.info(LangKeys.hubStartFirst.tr);
+    await Get.toNamed(
+      RoutesConstants.cameraScreen,
+      arguments: PhotoArguments(
+        jobId: args.id,
+        stage: stage,
+        customer: customer,
+        prompts: proof.value?.shotPrompts ?? const [],
+      ),
+    );
+    load();
+  }
+
+  void onMakeReportTap() => KnToast.info(LangKeys.commonComingSoon.tr);
 }

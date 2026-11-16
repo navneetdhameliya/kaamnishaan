@@ -32,12 +32,16 @@ import 'package:kaamnishaan/UI/screens/home_section/dashboard_section/dashboard_
 import 'package:kaamnishaan/UI/screens/home_section/home_shell_section/home_shell_controller.dart';
 import 'package:kaamnishaan/UI/screens/home_section/home_shell_section/home_shell_screen.dart';
 import 'package:kaamnishaan/UI/screens/home_section/today_section/today_controller.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/camera_section/camera_controller.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/camera_section/camera_screen.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/capture_hub_section/capture_hub_controller.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/capture_hub_section/capture_hub_screen.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/job_details_section/job_details_controller.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/job_details_section/job_details_screen.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/job_list_section/job_list_controller.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/job_list_section/job_list_screen.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/photo_gallery_section/photo_gallery_controller.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/photo_gallery_section/photo_gallery_screen.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/intro_section/intro_controller.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/intro_section/intro_screen.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/language_section/language_controller.dart';
@@ -47,13 +51,16 @@ import 'package:kaamnishaan/UI/screens/onboarding_section/splash_section/splash_
 import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_controller.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_screen.dart';
 import 'package:kaamnishaan/UI/theme/kn_app_theme.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/files_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/jobs_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_exception.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_result.dart';
 import 'package:kaamnishaan/infrastructure/lang/translation_service.dart';
 import 'package:kaamnishaan/infrastructure/lang/translations.g.dart';
 import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
+import 'package:kaamnishaan/infrastructure/services/camera_service.dart';
 import 'package:kaamnishaan/infrastructure/services/config_service.dart';
+import 'package:kaamnishaan/infrastructure/services/photo_queue_service.dart';
 import 'package:kaamnishaan/infrastructure/services/preferences_service.dart';
 import 'package:kaamnishaan/infrastructure/services/session_service.dart';
 import 'package:kaamnishaan/infrastructure/shared/job_arguments.dart';
@@ -110,6 +117,8 @@ void main() {
 
   setUpAll(() async {
     registerFallbackValue(const JobQuery());
+    registerFallbackValue(UploadKind.photo);
+    registerFallbackValue(<int>[]);
     await initializeDateFormatting();
     await _loadFonts();
   });
@@ -549,6 +558,107 @@ void main() {
 
   testWidgets('M19 capture hub not started', (t) async {
     await hub(t, 'm19_capture_not_started', proofData(started: false, before: 0, during: 0));
+  });
+
+  // ---- Step 2e: camera and photos ------------------------------------------------------------
+  EvidenceOutModel photo(String id, String stage, int h, int m) => EvidenceOutModel(
+        id: id,
+        jobId: 'j1',
+        stage: stage,
+        url: 'https://x/$id.jpg',
+        size: 100,
+        processing: 'ready',
+        takenAt: DateTime(2026, 10, 31, h, m),
+        takenBy: const PersonRefModel(id: 'u1', name: 'Ramesh'),
+        locked: false,
+        notesCount: 0,
+      );
+
+  Future<(MockJobsRepository, PhotoQueueService, Directory)> photoSetup(WidgetTester t) async {
+    final tmp = Directory.systemTemp.createTempSync('kn_shot_');
+    addTearDown(() => tmp.deleteSync(recursive: true));
+    final jobs = MockJobsRepository();
+    final files = MockFilesRepository();
+    when(() => files.upload(kind: any(named: 'kind'), bytes: any(named: 'bytes'), contentType: any(named: 'contentType')))
+        .thenAnswer((_) async => const ApiFailure<String>(ApiException(code: 'no_internet', message: '')));
+    when(() => jobs.evidence(any())).thenAnswer(
+      (_) async => ApiSuccess<EvidenceListModel>(
+        EvidenceListModel(
+          data: [
+            photo('e1', 'before', 10, 52),
+            photo('e2', 'before', 10, 53),
+            photo('e3', 'before', 10, 50),
+            photo('e4', 'during', 11, 20),
+            photo('e5', 'after', 11, 41),
+          ],
+          meta: const ListMetaModel(),
+          pairs: const [],
+        ),
+      ),
+    );
+    final queue = (await t.runAsync(
+      () => PhotoQueueService(
+        files: files,
+        jobs: jobs,
+        folder: () async => Directory('${tmp.path}/pending'),
+        retryEvery: const Duration(days: 1),
+      ).init(),
+    ))!;
+    addTearDown(queue.onClose);
+    return (jobs, queue, tmp);
+  }
+
+  testWidgets('M20 camera', (t) async {
+    final (jobs, queue, tmp) = await photoSetup(t);
+    await t.runAsync(() async {
+      final f = File('${tmp.path}/x.jpg');
+      File('assets/images/onboarding_photos.jpg').copySync(f.path);
+      await queue.add(jobId: 'j1', stage: 'after', sourcePath: f.path);
+    });
+    Get.put(
+      CameraScreenController(
+        camera: FakeCamera(folder: tmp, previewAsset: 'assets/images/welcome_invite.jpg'),
+        queue: queue,
+        jobs: jobs,
+        args: const PhotoArguments(
+          jobId: 'j1',
+          stage: 'after',
+          prompts: [ShotPromptModel(stage: 'after', key: 'filter', prompt: 'Show the clean filter up close', done: false)],
+        ),
+      ),
+    );
+    await shot(t, 'm20_camera', const CameraScreen());
+  });
+
+  testWidgets('M20 camera off', (t) async {
+    final (jobs, queue, tmp) = await photoSetup(t);
+    Get.put(
+      CameraScreenController(
+        camera: FakeCamera(folder: tmp, result: CameraOpenResult.denied),
+        queue: queue,
+        jobs: jobs,
+        args: const PhotoArguments(jobId: 'j1', stage: 'after'),
+      ),
+    );
+    await shot(t, 'm20_camera_off', const CameraScreen());
+  });
+
+  testWidgets('M21 photo gallery', (t) async {
+    final (jobs, queue, tmp) = await photoSetup(t);
+    await t.runAsync(() async {
+      final f = File('${tmp.path}/y.jpg');
+      File('assets/images/onboarding_photos.jpg').copySync(f.path);
+      await queue.add(jobId: 'j1', stage: 'after', sourcePath: f.path, takenAt: DateTime(2026, 10, 31, 11, 44));
+    });
+    Get.put(
+      PhotoGalleryController(
+        jobs: jobs,
+        queue: queue,
+        translation: translation(),
+        args: const PhotoArguments(jobId: 'j1', stage: 'before', customer: 'Green Valley Clinic'),
+      ),
+    );
+    await shot(t, 'm21_photo_gallery', const PhotoGalleryScreen());
   });
 
   testWidgets('M13 dashboard', (t) async {

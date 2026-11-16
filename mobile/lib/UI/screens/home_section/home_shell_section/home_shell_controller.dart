@@ -2,7 +2,9 @@ import 'package:get/get.dart';
 
 import '../../../../infrastructure/commons/constants/app_routes.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
+import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/services/session_service.dart';
+import '../../../../infrastructure/shared/job_arguments.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// The app after login: bottom tabs and the camera button.
@@ -18,8 +20,18 @@ class HomeShellController extends GetxController {
 
   void onTabTap(int i) => index.value = i;
 
-  /// The camera (M19 capture) comes with the job screens.
-  void onCaptureTap() => KnToast.info(LangKeys.commonComingSoon.tr);
+  /// The camera button: a technician goes to the proof of the job in progress (M19).
+  void onCaptureTap() {
+    final current = currentJob?.call();
+    if (current != null) {
+      Get.toNamed(RoutesConstants.captureHubScreen, arguments: JobArguments.of(current));
+    } else {
+      KnToast.info(LangKeys.commonComingSoon.tr);
+    }
+  }
+
+  /// Set by the shell binding: the technician's job in progress, from Today.
+  JobListItemModel? Function()? currentJob;
 
   Future<void> onLogoutTap() async {
     await session.logout();

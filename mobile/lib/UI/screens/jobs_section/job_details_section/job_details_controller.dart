@@ -7,6 +7,7 @@ import '../../../../infrastructure/data_access_layer/api_repository/jobs_api_rep
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
+import '../../../../infrastructure/services/location_service.dart';
 import '../../../../infrastructure/services/session_service.dart';
 import '../../../../infrastructure/services/speech_service.dart';
 import '../../../../infrastructure/shared/job_arguments.dart';
@@ -20,6 +21,7 @@ class JobDetailsController extends GetxController {
     required this.session,
     required this.speech,
     required this.translation,
+    this.location,
     JobArguments? args,
     DateTime Function()? clock,
     Future<bool> Function(Uri uri)? openUrl,
@@ -31,6 +33,7 @@ class JobDetailsController extends GetxController {
   final SessionService session;
   final ISpeechService speech;
   final TranslationService translation;
+  final ILocationService? location;
   final JobArguments args;
   final DateTime Function() _clock;
   final Future<bool> Function(Uri uri) _openUrl;
@@ -140,7 +143,8 @@ class JobDetailsController extends GetxController {
   Future<void> onStartTap() async {
     if (starting.value) return;
     starting.value = true;
-    final result = await repository.start(args.id);
+    final where = await location?.current(); // where the job started, as proof (D-57)
+    final result = await repository.start(args.id, lat: where?.lat, lng: where?.lng);
     starting.value = false;
     final started = result.dataOrNull;
     if (started == null) return KnToast.error(result.errorOrNull!.message);
