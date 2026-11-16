@@ -430,7 +430,7 @@ void main() {
     when(() => home.reviewQueue(limit: any(named: 'limit'))).thenAnswer(
       (_) async => ApiSuccess<ReportListModel>(ReportListModel(data: reviews, meta: const ListMetaModel())),
     );
-    session.me.value = MeOutModel(
+    session.me.value = const MeOutModel(
       id: 'u9',
       name: 'Priya Mehta',
       email: 'priya@brightair.example',
@@ -438,7 +438,7 @@ void main() {
       appLanguage: 'en',
       theme: 'system',
       role: 'owner',
-      company: const CompanyOutModel(
+      company: CompanyOutModel(
         id: 'c1',
         name: 'BrightAir Services',
         country: 'IN',
@@ -449,7 +449,7 @@ void main() {
         status: 'trial',
         settings: CompanySettingsModel(),
       ),
-      permissions: const [],
+      permissions: [],
     );
     Get.put(HomeShellController(session: session));
     Get.put(
