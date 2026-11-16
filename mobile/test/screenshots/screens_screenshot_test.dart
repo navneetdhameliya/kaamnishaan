@@ -922,14 +922,14 @@ void main() {
     await shot(t, 'm31_report_failed', const ReportMakingScreen());
   });
 
-  void reportSession() => session.me.value = MeOutModel(
+  void reportSession() => session.me.value = const MeOutModel(
         id: 'u1',
         name: 'Ramesh Patel',
         emailVerified: true,
         appLanguage: 'en',
         theme: 'system',
         role: 'technician',
-        company: const CompanyOutModel(
+        company: CompanyOutModel(
           id: 'c1',
           name: 'BrightAir Services',
           country: 'IN',
@@ -940,7 +940,7 @@ void main() {
           status: 'trial',
           settings: CompanySettingsModel(),
         ),
-        permissions: const [],
+        permissions: [],
       );
 
   testWidgets('M31 report draft', (t) async {
