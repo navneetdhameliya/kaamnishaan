@@ -50,7 +50,7 @@ class CaptureHubScreen extends GetView<CaptureHubController> {
                 ],
                 index: -1,
                 onTap: _openTab,
-                onCapture: controller.onStepTap,
+                onCapture: controller.onCaptureTap,
                 captureLabel: LangKeys.navCapture.tr,
                 captureActive: true,
               ),
@@ -265,7 +265,7 @@ class CaptureHubScreen extends GetView<CaptureHubController> {
               text: LangKeys.hubMakeReport.tr,
               icon: LucideIcons.sparkles,
               enabled: proof.canMakeReport,
-              onTap: controller.onStepTap,
+              onTap: controller.onMakeReportTap,
             ),
           if (!controller.notStarted && hint != null) ...[
             const SizedBox(height: KnSize.space8),

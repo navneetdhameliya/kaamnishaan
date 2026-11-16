@@ -7,6 +7,8 @@ abstract class IJobsApiProvider {
   Future<dynamic> getJob(String id);
   Future<dynamic> postStart(String id, Map<String, dynamic> body);
   Future<dynamic> getProof(String id);
+  Future<dynamic> getEvidence(String id);
+  Future<dynamic> postEvidence(String id, Map<String, dynamic> body);
 }
 
 class JobsApiProvider implements IJobsApiProvider {
@@ -26,4 +28,11 @@ class JobsApiProvider implements IJobsApiProvider {
 
   @override
   Future<dynamic> getProof(String id) => _client.get(APIConstant.jobProofAPIEP(id));
+
+  @override
+  Future<dynamic> getEvidence(String id) => _client.get(APIConstant.jobEvidenceAPIEP(id));
+
+  @override
+  Future<dynamic> postEvidence(String id, Map<String, dynamic> body) =>
+      _client.post(APIConstant.jobEvidenceAPIEP(id), body: body);
 }

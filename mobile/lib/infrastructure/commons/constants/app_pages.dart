@@ -22,12 +22,16 @@ import '../../../UI/screens/auth_section/profile_setup_section/profile_setup_bin
 import '../../../UI/screens/auth_section/profile_setup_section/profile_setup_screen.dart';
 import '../../../UI/screens/home_section/home_shell_section/home_shell_binding.dart';
 import '../../../UI/screens/home_section/home_shell_section/home_shell_screen.dart';
+import '../../../UI/screens/jobs_section/camera_section/camera_binding.dart';
+import '../../../UI/screens/jobs_section/camera_section/camera_screen.dart';
 import '../../../UI/screens/jobs_section/capture_hub_section/capture_hub_binding.dart';
 import '../../../UI/screens/jobs_section/capture_hub_section/capture_hub_screen.dart';
 import '../../../UI/screens/jobs_section/job_details_section/job_details_binding.dart';
 import '../../../UI/screens/jobs_section/job_details_section/job_details_screen.dart';
 import '../../../UI/screens/jobs_section/job_list_section/job_list_binding.dart';
 import '../../../UI/screens/jobs_section/job_list_section/job_list_screen.dart';
+import '../../../UI/screens/jobs_section/photo_gallery_section/photo_gallery_binding.dart';
+import '../../../UI/screens/jobs_section/photo_gallery_section/photo_gallery_screen.dart';
 import '../../../UI/screens/onboarding_section/intro_section/intro_binding.dart';
 import '../../../UI/screens/onboarding_section/intro_section/intro_screen.dart';
 import '../../../UI/screens/onboarding_section/language_section/language_binding.dart';
@@ -96,6 +100,12 @@ abstract final class AppPages {
       name: RoutesConstants.captureHubScreen,
       page: () => const CaptureHubScreen(),
       binding: CaptureHubBinding(),
+    ),
+    GetPage(name: RoutesConstants.cameraScreen, page: () => const CameraScreen(), binding: CameraBinding()),
+    GetPage(
+      name: RoutesConstants.photoGalleryScreen,
+      page: () => const PhotoGalleryScreen(),
+      binding: PhotoGalleryBinding(),
     ),
     GetPage(
       name: RoutesConstants.homeScreen,

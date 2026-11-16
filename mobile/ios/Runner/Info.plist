@@ -32,6 +32,10 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>KaamNishaan uses the camera to take your profile photo and photos of your work.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>KaamNishaan adds where a photo was taken and where a job started, as proof of the visit.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>KaamNishaan records voice notes about your work.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>KaamNishaan lets you choose a profile photo or company logo from your photos.</string>
 	<key>LSRequiresIPhoneOS</key>

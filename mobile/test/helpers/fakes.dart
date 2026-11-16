@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart' show Widget, Image, BoxFit, ColoredBox, Colors;
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/auth_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/company_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/config_api_repository.dart';
@@ -9,7 +11,9 @@ import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/file
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/home_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/jobs_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
+import 'package:kaamnishaan/infrastructure/services/camera_service.dart';
 import 'package:kaamnishaan/infrastructure/services/image_picker_service.dart';
+import 'package:kaamnishaan/infrastructure/services/location_service.dart';
 import 'package:kaamnishaan/infrastructure/services/speech_service.dart';
 import 'package:kaamnishaan/infrastructure/services/token_storage_service.dart';
 import 'package:mocktail/mocktail.dart';
@@ -25,6 +29,47 @@ class MockFilesRepository extends Mock implements IFilesApiRepository {}
 class MockHomeRepository extends Mock implements IHomeApiRepository {}
 
 class MockJobsRepository extends Mock implements IJobsApiRepository {}
+
+/// A camera that "takes" photos by writing small files into [folder].
+class FakeCamera implements ICameraService {
+  FakeCamera({required this.folder, this.result = CameraOpenResult.ready, this.previewAsset});
+
+  final Directory folder;
+  CameraOpenResult result;
+  final String? previewAsset;
+  int shots = 0;
+  bool closed = false;
+
+  @override
+  Future<CameraOpenResult> open() async {
+    closed = false;
+    return result;
+  }
+
+  @override
+  Widget preview() => previewAsset == null
+      ? const ColoredBox(color: Colors.black)
+      : Image.asset(previewAsset!, fit: BoxFit.cover);
+
+  @override
+  Future<String?> takePicture() async {
+    shots++;
+    final f = File('${folder.path}/shot_$shots.jpg')..writeAsBytesSync(const [0xFF, 0xD8, 0xFF, 0xD9]);
+    return f.path;
+  }
+
+  @override
+  Future<void> close() async => closed = true;
+}
+
+class FakeLocation implements ILocationService {
+  FakeLocation([this.where]);
+
+  final LatLng? where;
+
+  @override
+  Future<LatLng?> current() async => where;
+}
 
 JobOutModel jobOut({String status = 'assigned', List<String> actions = const ['start'], String assigneeId = 'u1'}) =>
     JobOutModel(

@@ -11,6 +11,7 @@ class JobDetailsBinding extends Bindings {
         session: Get.find(),
         speech: Get.find(),
         translation: Get.find(),
+        location: Get.find(),
       ),
     );
   }
