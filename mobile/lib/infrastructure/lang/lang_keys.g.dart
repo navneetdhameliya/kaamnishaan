@@ -784,4 +784,140 @@ abstract final class LangKeys {
   static const questionLocked = 'question.locked';
   /// Checklist done
   static const questionFinished = 'question.finished';
+  /// Voice note
+  static const voiceTitle = 'voice.title';
+  /// Tell us what you did
+  static const voicePromptTitle = 'voice.prompt_title';
+  /// What was wrong, what you fixed, any advice.
+  static const voicePromptBody = 'voice.prompt_body';
+  /// Recording {time}
+  static const voiceRecording = 'voice.recording';
+  /// Paused {time}
+  static const voicePaused = 'voice.paused';
+  /// Starting…
+  static const voiceStarting = 'voice.starting';
+  /// Speak in any language
+  static const voiceAnyLanguage = 'voice.any_language';
+  /// Pause
+  static const voicePause = 'voice.pause';
+  /// Go on
+  static const voiceResume = 'voice.resume';
+  /// Stop and save
+  static const voiceStopSave = 'voice.stop_save';
+  /// Too short. Speak a little longer.
+  static const voiceTooShort = 'voice.too_short';
+  /// The microphone did not start. Try again.
+  static const voiceMicFailed = 'voice.mic_failed';
+  /// Voice note saved
+  static const voiceSaved = 'voice.saved';
+  /// 10 minutes is the most for one note. It was saved.
+  static const voiceMaxReached = 'voice.max_reached';
+  /// Microphone is off
+  static const voiceOffTitle = 'voice.off_title';
+  /// Turn it on to record voice notes. You can also type your notes instead.
+  static const voiceOffBody = 'voice.off_body';
+  /// How to turn it on
+  static const voiceOffHow = 'voice.off_how';
+  /// Open phone settings
+  static const voiceOffStep1 = 'voice.off_step1';
+  /// Tap Apps, then KaamNishaan
+  static const voiceOffStep2 = 'voice.off_step2';
+  /// Turn on Microphone
+  static const voiceOffStep3 = 'voice.off_step3';
+  /// Open phone settings
+  static const voiceOpenSettings = 'voice.open_settings';
+  /// Type notes instead
+  static const voiceTypeInstead = 'voice.type_instead';
+  /// Type your note
+  static const voiceTypeTitle = 'voice.type_title';
+  /// Save note
+  static const voiceTypeSave = 'voice.type_save';
+  /// Note saved
+  static const voiceTypedSaved = 'voice.typed_saved';
+  /// Voice notes
+  static const notesTitle = 'notes.title';
+  /// {customer} · {count} notes
+  static const notesCount = 'notes.count';
+  /// Voice note {n}
+  static const notesItem = 'notes.item';
+  /// Typed note {n}
+  static const notesTypedItem = 'notes.typed_item';
+  /// Written
+  static const notesWritten = 'notes.written';
+  /// Writing…
+  static const notesWriting = 'notes.writing';
+  /// Not clear
+  static const notesUnclear = 'notes.unclear';
+  /// Could not write
+  static const notesFailed = 'notes.failed';
+  /// Saved on phone
+  static const notesOnPhone = 'notes.on_phone';
+  /// Not sent · tap to try again
+  static const notesNotSent = 'notes.not_sent';
+  /// Tip
+  static const notesTipTitle = 'notes.tip_title';
+  /// Say the parts you used and your advice for the customer.
+  static const notesTipBody = 'notes.tip_body';
+  /// Record new note
+  static const notesRecordNew = 'notes.record_new';
+  /// No voice notes yet
+  static const notesNone = 'notes.none';
+  /// Delete this note?
+  static const notesDeleteTitle = 'notes.delete_title';
+  /// It will not be used in the report.
+  static const notesDeleteBody = 'notes.delete_body';
+  /// Delete note
+  static const notesDelete = 'notes.delete';
+  /// Note deleted
+  static const notesDeleted = 'notes.deleted';
+  /// {customer} · {time}
+  static const noteSubtitle = 'note.subtitle';
+  /// {language}, written in {target}
+  static const noteWrittenIn = 'note.written_in';
+  /// {language} · not clear
+  static const noteNotClear = 'note.not_clear';
+  /// What you said
+  static const noteWhatYouSaid = 'note.what_you_said';
+  /// What you wrote
+  static const noteWhatYouWrote = 'note.what_you_wrote';
+  /// Your voice recording is always kept.
+  static const noteAlwaysKept = 'note.always_kept';
+  /// Speak to change
+  static const noteSpeakChange = 'note.speak_change';
+  /// Saved
+  static const noteSaved = 'note.saved';
+  /// We couldn't hear clearly.
+  static const noteUnclearTitle = 'note.unclear_title';
+  /// Speak again in a quiet place.
+  static const noteUnclearBody = 'note.unclear_body';
+  /// Hold the phone close to your mouth.
+  static const noteUnclearTip1 = 'note.unclear_tip1';
+  /// Stop the AC or fan while you speak.
+  static const noteUnclearTip2 = 'note.unclear_tip2';
+  /// Hear it
+  static const noteHearIt = 'note.hear_it';
+  /// Type instead
+  static const noteTypeInstead = 'note.type_instead';
+  /// Speak again
+  static const noteSpeakAgain = 'note.speak_again';
+  /// We are writing it down. This takes a few seconds.
+  static const noteWriting = 'note.writing';
+  /// We could not write this note.
+  static const noteFailed = 'note.failed';
+  /// Try again
+  static const noteTryAgain = 'note.try_again';
+  /// Report already sent. Notes cannot be changed.
+  static const noteLocked = 'note.locked';
+  /// This note is still on the phone. It will be written down once it is sent.
+  static const noteOnPhone = 'note.on_phone';
+  /// English
+  static const langEn = 'lang.en';
+  /// Hindi
+  static const langHi = 'lang.hi';
+  /// Gujarati
+  static const langGu = 'lang.gu';
+  /// Spanish
+  static const langEs = 'lang.es';
+  /// French
+  static const langFr = 'lang.fr';
 }

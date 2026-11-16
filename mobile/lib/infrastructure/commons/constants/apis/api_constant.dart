@@ -41,6 +41,12 @@ abstract final class APIConstant {
   static String evidenceNotesAPIEP(String id) => '/evidence/$id/notes';
   static String photoPairsAPIEP(String jobId) => '/jobs/$jobId/photo-pairs';
 
+  // voice notes (M27–M29)
+  static String jobVoiceNotesAPIEP(String jobId) => '/jobs/$jobId/voice-notes';
+  static String jobTypedNotesAPIEP(String jobId) => '/jobs/$jobId/notes';
+  static String voiceNoteAPIEP(String id) => '/voice-notes/$id';
+  static String retranscribeAPIEP(String id) => '/voice-notes/$id/retranscribe';
+
   // company
   static const String companiesAPIEP = '/companies';
   static const String companyAPIEP = '/company';

@@ -33,6 +33,8 @@ dependencies:
   path_provider: ^2.1.6
   connectivity_plus: ^7.3.2
   geolocator: ^14.0.1
+  record: ^7.2.0
+  just_audio: ^0.10.6
 
 dev_dependencies:
   flutter_test:

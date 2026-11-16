@@ -19,6 +19,7 @@ void main() {
   late MockJobsRepository jobs;
   late StreamController<bool> online;
   late MockChecklistsRepository checklists;
+  late MockVoiceRepository voice;
 
   setUpAll(() {
     registerFallbackValue(UploadKind.photo);
@@ -33,6 +34,7 @@ void main() {
     jobs = MockJobsRepository();
     online = StreamController<bool>.broadcast();
     checklists = MockChecklistsRepository();
+    voice = MockVoiceRepository();
   });
 
   tearDown(() async {
@@ -44,6 +46,7 @@ void main() {
         files: files,
         jobs: jobs,
         checklists: checklists,
+        voice: voice,
         folder: () async => folder,
         online: online.stream,
         retryEvery: const Duration(hours: 1),
@@ -275,6 +278,81 @@ void main() {
       final q = await queue().init();
       expect(q.items.single.id, 'old');
       expect(q.answers, isEmpty);
+      q.onClose();
+    });
+  });
+
+  group('voice and typed notes (D-61)', () {
+    void addVoice(ApiResult<VoiceNoteOutModel> Function() result) => when(
+          () => voice.addVoice(
+            jobId: any(named: 'jobId'),
+            uploadId: any(named: 'uploadId'),
+            durationS: any(named: 'durationS'),
+            recordedAt: any(named: 'recordedAt'),
+            clientUuid: any(named: 'clientUuid'),
+            languageHint: any(named: 'languageHint'),
+          ),
+        ).thenAnswer((_) async => result());
+
+    void addTyped(ApiResult<VoiceNoteOutModel> Function() result) => when(
+          () => voice.addTyped(jobId: any(named: 'jobId'), text: any(named: 'text'), clientUuid: any(named: 'clientUuid')),
+        ).thenAnswer((_) async => result());
+
+    String recording() => (File('${tmp.path}/rec.m4a')..writeAsBytesSync(const [1, 2, 3])).path;
+
+    test('a recording waits on the phone without internet and survives a restart', () async {
+      uploads(() => const ApiFailure<String>(ApiException(code: 'no_internet', message: '')));
+      final q = await queue().init();
+      final n = await q.addVoice(jobId: 'j1', sourcePath: recording(), durationS: 42, languageHint: 'gu');
+      await q.process();
+      expect(q.notes.single.state, PendingState.waiting);
+      expect(q.notes.single.tries, 0); // no internet is not a try
+      expect(File(n.path!).existsSync(), isTrue);
+      q.onClose();
+
+      final again = await queue().init();
+      expect(again.notesFor('j1').single.languageHint, 'gu');
+      expect(again.notesFor('j1').single.durationS, 42);
+      again.onClose();
+    });
+
+    test('with internet the recording is uploaded as audio, then confirmed once with its id', () async {
+      uploads(() => const ApiSuccess<String>('up-1'));
+      addVoice(() => ApiSuccess<VoiceNoteOutModel>(noteOut('v1', status: 'transcribing')));
+      final q = await queue().init();
+      final n = await q.addVoice(jobId: 'j1', sourcePath: recording(), durationS: 12.5);
+      await q.process();
+      expect(q.notes, isEmpty);
+      expect(q.notesSent.value, 1);
+      expect(File(n.path!).existsSync(), isFalse);
+      verify(() => files.upload(kind: UploadKind.audio, bytes: any(named: 'bytes'), contentType: 'audio/mp4')).called(1);
+      verify(
+        () => voice.addVoice(
+          jobId: 'j1',
+          uploadId: 'up-1',
+          durationS: 12.5,
+          recordedAt: any(named: 'recordedAt'),
+          clientUuid: n.id,
+          languageHint: null,
+        ),
+      ).called(1);
+      q.onClose();
+    });
+
+    test('a typed note is sent as text; a note never sent can be removed', () async {
+      addTyped(() => ApiSuccess<VoiceNoteOutModel>(noteOut('t1', kind: 'typed', text: 'Cleaned the filter')));
+      final q = await queue().init();
+      await q.addTyped(jobId: 'j1', text: 'Cleaned the filter');
+      await q.process();
+      expect(q.notes, isEmpty);
+      verify(() => voice.addTyped(jobId: 'j1', text: 'Cleaned the filter', clientUuid: any(named: 'clientUuid'))).called(1);
+
+      uploads(() => const ApiFailure<String>(ApiException(code: 'no_internet', message: '')));
+      final n = await q.addVoice(jobId: 'j1', sourcePath: recording(), durationS: 3);
+      await q.process();
+      await q.removeNote(n.id);
+      expect(q.notes, isEmpty);
+      expect(File(n.path!).existsSync(), isFalse);
       q.onClose();
     });
   });
