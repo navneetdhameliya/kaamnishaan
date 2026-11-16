@@ -66,30 +66,13 @@ Future<void> _loadFonts() async {
       .whereType<File>()
       .where((f) => f.path.contains('lucide_icons_flutter') && f.path.endsWith('.ttf'))
       .toList();
-  final icons = [
-    LucideIcons.check,
-    LucideIcons.check100,
-    LucideIcons.check200,
-    LucideIcons.check300,
-    LucideIcons.check400,
-    LucideIcons.check500,
-    LucideIcons.check600,
-  ];
-  for (final icon in icons) {
-    final family = icon.fontPackage == null ? icon.fontFamily! : 'packages/${icon.fontPackage}/${icon.fontFamily}';
-    final digits = RegExp(r'\d+').firstMatch(icon.fontFamily!)?.group(0);
-    final file = ttfs.firstWhere(
-      (f) {
-        final name = f.uri.pathSegments.last;
-        final n = RegExp(r'\d+').firstMatch(name)?.group(0);
-        return digits == null ? n == null : n == digits;
-      },
-      orElse: () => ttfs.first,
-    );
-    // ignore: avoid_print
-    print('icon font ${icon.fontFamily} -> ${file.uri.pathSegments.last}');
-    await load(family, [file.path]);
-  }
+  // ignore: avoid_print
+  print('lucide fonts: ${ttfs.map((f) => f.uri.pathSegments.last).join(', ')}');
+  final icon = LucideIcons.check;
+  final family = icon.fontPackage == null ? icon.fontFamily! : 'packages/${icon.fontPackage}/${icon.fontFamily}';
+  // ignore: avoid_print
+  print('lucide family: $family');
+  await load(family, [ttfs.first.path]);
 }
 
 void main() {
@@ -264,15 +247,8 @@ void main() {
   });
 
   testWidgets('icon stroke weights', (t) async {
-    const rows = {
-      'base': [LucideIcons.check, LucideIcons.volume2, LucideIcons.camera],
-      '100': [LucideIcons.check100, LucideIcons.volume2100, LucideIcons.camera100],
-      '200': [LucideIcons.check200, LucideIcons.volume2200, LucideIcons.camera200],
-      '300': [LucideIcons.check300, LucideIcons.volume2300, LucideIcons.camera300],
-      '400': [LucideIcons.check400, LucideIcons.volume2400, LucideIcons.camera400],
-      '500': [LucideIcons.check500, LucideIcons.volume2500, LucideIcons.camera500],
-      '600': [LucideIcons.check600, LucideIcons.volume2600, LucideIcons.camera600],
-    };
+    const icons = [LucideIcons.check, LucideIcons.volume2, LucideIcons.camera];
+    const weights = [null, 100.0, 200.0, 300.0, 400.0, 500.0, 600.0, 700.0];
     await shot(
       t,
       'icon_weights',
@@ -282,13 +258,14 @@ void main() {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              for (final e in rows.entries)
+              for (final w in weights)
                 Padding(
                   padding: const EdgeInsets.only(bottom: 16),
                   child: Row(
                     children: [
-                      SizedBox(width: 60, child: Text(e.key)),
-                      for (final i in e.value) Padding(padding: const EdgeInsets.only(right: 24), child: Icon(i, size: 24)),
+                      SizedBox(width: 60, child: Text('${w ?? 'none'}')),
+                      for (final i in icons)
+                        Padding(padding: const EdgeInsets.only(right: 24), child: Icon(i, size: 24, weight: w)),
                     ],
                   ),
                 ),
