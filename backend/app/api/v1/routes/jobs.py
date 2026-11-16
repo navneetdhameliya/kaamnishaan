@@ -56,7 +56,12 @@ async def create_job(
     body: JobCreate, response: Response, p: Principal = Depends(member), db: AsyncSession = Depends(get_db)
 ) -> JobOut:
     j, created = await svc.create_job(db, p, body)
-    if not created:
+    if created:
+        from app.services import checklists
+
+        for template_id in dict.fromkeys(body.checklist_template_ids):
+            await checklists.attach(db, p, j, template_id)
+    else:
         response.status_code = status.HTTP_200_OK
     return await svc.job_out(db, p, j)
 

@@ -1,0 +1,91 @@
+{
+  "note": "Global HVAC checklist templates seeded by migration 20261116. English is the source; other languages need review in A23.",
+  "templates": [
+    {
+      "key": "hvac_split_ac_service",
+      "minutes": 15,
+      "name": {"en": "Split AC service", "hi": "स्प्लिट एसी सर्विस", "gu": "સ્પ્લિટ એસી સર્વિસ", "es": "Servicio de aire acondicionado split", "fr": "Entretien de climatiseur split"},
+      "questions": [
+        {"key": "q1", "type": "yes_no", "text": {"en": "Was the AC turning on before the service?", "hi": "क्या सर्विस से पहले एसी चालू हो रहा था?", "gu": "શું સર્વિસ પહેલાં એસી ચાલુ થતું હતું?", "es": "¿El aire encendía antes del servicio?", "fr": "Le climatiseur s'allumait-il avant l'entretien ?"}},
+        {"key": "q2", "type": "photo", "text": {"en": "Photo of the indoor unit before cleaning", "hi": "सफाई से पहले इनडोर यूनिट की फोटो", "gu": "સફાઈ પહેલાં ઇન્ડોર યુનિટનો ફોટો", "es": "Foto de la unidad interior antes de limpiar", "fr": "Photo de l'unité intérieure avant nettoyage"}},
+        {"key": "q3", "type": "pass_fail", "photo_rule": "always", "text": {"en": "Air filters cleaned and put back", "hi": "एयर फिल्टर साफ करके वापस लगाए", "gu": "એર ફિલ્ટર સાફ કરીને પાછા લગાવ્યા", "es": "Filtros de aire limpios y colocados", "fr": "Filtres à air nettoyés et remis en place"}},
+        {"key": "q4", "type": "pass_fail", "text": {"en": "Indoor coil cleaned", "hi": "इनडोर कॉइल साफ की", "gu": "ઇન્ડોર કોઇલ સાફ કરી", "es": "Serpentín interior limpio", "fr": "Batterie intérieure nettoyée"}},
+        {"key": "q5", "type": "pass_fail", "photo_rule": "if_fail", "text": {"en": "Drain pipe clear, no water leak", "hi": "ड्रेन पाइप साफ, पानी का रिसाव नहीं", "gu": "ડ્રેન પાઇપ સાફ, પાણી લીક નથી", "es": "Desagüe libre, sin fugas de agua", "fr": "Évacuation dégagée, pas de fuite d'eau"}},
+        {"key": "q6", "type": "number", "unit": "psi", "min": 0, "max": 600, "text": {"en": "Gas pressure", "hi": "गैस प्रेशर", "gu": "ગેસ પ્રેશર", "es": "Presión del gas", "fr": "Pression du gaz"}},
+        {"key": "q7", "type": "number", "unit": "°C", "min": -10, "max": 60, "text": {"en": "Air temperature from the indoor unit", "hi": "इनडोर यूनिट से निकलती हवा का तापमान", "gu": "ઇન્ડોર યુનિટમાંથી નીકળતી હવાનું તાપમાન", "es": "Temperatura del aire de la unidad interior", "fr": "Température de l'air soufflé par l'unité intérieure"}},
+        {"key": "q8", "type": "yes_no", "text": {"en": "Showed the working AC to the customer?", "hi": "ग्राहक को चालू एसी दिखाया?", "gu": "ગ્રાહકને ચાલુ એસી બતાવ્યું?", "es": "¿Mostró al cliente el aire funcionando?", "fr": "Climatiseur en marche montré au client ?"}},
+        {"key": "q9", "type": "signature", "required": false, "text": {"en": "Customer signature", "hi": "ग्राहक के हस्ताक्षर", "gu": "ગ્રાહકની સહી", "es": "Firma del cliente", "fr": "Signature du client"}}
+      ],
+      "shots": [
+        {"stage": "before", "key": "indoor_unit", "prompt": {"en": "Show the whole indoor unit", "hi": "पूरी इनडोर यूनिट दिखाएं", "gu": "આખું ઇન્ડોર યુનિટ બતાવો", "es": "Muestre toda la unidad interior", "fr": "Montrez toute l'unité intérieure"}},
+        {"stage": "before", "key": "dirty_filter", "prompt": {"en": "Show the dirty filter up close", "hi": "गंदे फिल्टर को पास से दिखाएं", "gu": "ગંદા ફિલ્ટરને નજીકથી બતાવો", "es": "Muestre el filtro sucio de cerca", "fr": "Montrez le filtre sale de près"}},
+        {"stage": "after", "key": "clean_filter", "prompt": {"en": "Show the clean filter up close", "hi": "साफ फिल्टर को पास से दिखाएं", "gu": "સાફ ફિલ્ટરને નજીકથી બતાવો", "es": "Muestre el filtro limpio de cerca", "fr": "Montrez le filtre propre de près"}},
+        {"stage": "after", "key": "outdoor_unit", "prompt": {"en": "Show the outdoor unit running", "hi": "चलती हुई आउटडोर यूनिट दिखाएं", "gu": "ચાલતું આઉટડોર યુનિટ બતાવો", "es": "Muestre la unidad exterior funcionando", "fr": "Montrez l'unité extérieure en marche"}}
+      ]
+    },
+    {
+      "key": "hvac_ac_repair",
+      "minutes": 10,
+      "name": {"en": "AC not cooling – repair", "hi": "एसी ठंडा नहीं कर रहा – रिपेयर", "gu": "એસી ઠંડક નથી આપતું – રિપેર", "es": "Aire que no enfría – reparación", "fr": "Climatiseur qui ne refroidit pas – réparation"},
+      "questions": [
+        {"key": "q1", "type": "text", "text": {"en": "What did the customer say is wrong?", "hi": "ग्राहक ने क्या समस्या बताई?", "gu": "ગ્રાહકે શું સમસ્યા કહી?", "es": "¿Qué dijo el cliente que falla?", "fr": "Qu'a dit le client sur la panne ?"}},
+        {"key": "q2", "type": "choice", "text": {"en": "Main problem found", "hi": "मुख्य समस्या क्या मिली", "gu": "મુખ્ય સમસ્યા શું મળી", "es": "Problema principal encontrado", "fr": "Problème principal trouvé"},
+         "options": [
+           {"key": "gas_leak", "label": {"en": "Gas leak", "hi": "गैस लीक", "gu": "ગેસ લીક", "es": "Fuga de gas", "fr": "Fuite de gaz"}},
+           {"key": "compressor", "label": {"en": "Compressor", "hi": "कंप्रेसर", "gu": "કોમ્પ્રેસર", "es": "Compresor", "fr": "Compresseur"}},
+           {"key": "capacitor", "label": {"en": "Capacitor", "hi": "कैपेसिटर", "gu": "કેપેસિટર", "es": "Condensador eléctrico", "fr": "Condensateur"}},
+           {"key": "pcb", "label": {"en": "Control board (PCB)", "hi": "कंट्रोल बोर्ड (PCB)", "gu": "કંટ્રોલ બોર્ડ (PCB)", "es": "Placa de control (PCB)", "fr": "Carte électronique (PCB)"}},
+           {"key": "fan_motor", "label": {"en": "Fan motor", "hi": "फैन मोटर", "gu": "ફેન મોટર", "es": "Motor del ventilador", "fr": "Moteur du ventilateur"}},
+           {"key": "dirty_coil", "label": {"en": "Very dirty coil", "hi": "बहुत गंदी कॉइल", "gu": "ખૂબ ગંદી કોઇલ", "es": "Serpentín muy sucio", "fr": "Batterie très encrassée"}},
+           {"key": "other", "label": {"en": "Something else", "hi": "कुछ और", "gu": "બીજું કંઈક", "es": "Otra cosa", "fr": "Autre chose"}}
+         ]},
+        {"key": "q3", "type": "text", "condition": {"question": "q2", "equals": "other"}, "text": {"en": "What was the problem?", "hi": "समस्या क्या थी?", "gu": "સમસ્યા શું હતી?", "es": "¿Cuál era el problema?", "fr": "Quel était le problème ?"}},
+        {"key": "q4", "type": "photo", "text": {"en": "Photo of the faulty part", "hi": "खराब पार्ट की फोटो", "gu": "ખરાબ પાર્ટનો ફોટો", "es": "Foto de la pieza dañada", "fr": "Photo de la pièce défectueuse"}},
+        {"key": "q5", "type": "yes_no", "text": {"en": "Was a part replaced?", "hi": "क्या कोई पार्ट बदला?", "gu": "શું કોઈ પાર્ટ બદલ્યો?", "es": "¿Se cambió alguna pieza?", "fr": "Une pièce a-t-elle été remplacée ?"}},
+        {"key": "q6", "type": "text", "condition": {"question": "q5", "equals": "yes"}, "text": {"en": "Part name and model", "hi": "पार्ट का नाम और मॉडल", "gu": "પાર્ટનું નામ અને મોડલ", "es": "Nombre y modelo de la pieza", "fr": "Nom et modèle de la pièce"}},
+        {"key": "q7", "type": "pass_fail", "photo_rule": "if_fail", "text": {"en": "AC cooling after the repair", "hi": "रिपेयर के बाद एसी ठंडा कर रहा है", "gu": "રિપેર પછી એસી ઠંડક આપે છે", "es": "El aire enfría después de la reparación", "fr": "Le climatiseur refroidit après la réparation"}},
+        {"key": "q8", "type": "number", "unit": "°C", "min": -10, "max": 60, "text": {"en": "Air temperature after the repair", "hi": "रिपेयर के बाद हवा का तापमान", "gu": "રિપેર પછી હવાનું તાપમાન", "es": "Temperatura del aire después de reparar", "fr": "Température de l'air après réparation"}}
+      ],
+      "shots": []
+    },
+    {
+      "key": "hvac_ac_installation",
+      "minutes": 12,
+      "name": {"en": "AC installation", "hi": "एसी इंस्टॉलेशन", "gu": "એસી ઇન્સ્ટોલેશન", "es": "Instalación de aire acondicionado", "fr": "Installation de climatiseur"},
+      "questions": [
+        {"key": "q1", "type": "pass_fail", "photo_rule": "always", "text": {"en": "Indoor unit level and firmly fixed", "hi": "इनडोर यूनिट सीधी और मजबूती से लगी", "gu": "ઇન્ડોર યુનિટ સીધું અને મજબૂત રીતે લગાવ્યું", "es": "Unidad interior nivelada y bien fijada", "fr": "Unité intérieure de niveau et bien fixée"}},
+        {"key": "q2", "type": "pass_fail", "photo_rule": "always", "text": {"en": "Outdoor unit on a stand with free airflow", "hi": "आउटडोर यूनिट स्टैंड पर, हवा का रास्ता खुला", "gu": "આઉટડોર યુનિટ સ્ટેન્ડ પર, હવાનો રસ્તો ખુલ્લો", "es": "Unidad exterior en soporte con aire libre", "fr": "Unité extérieure sur support, air bien dégagé"}},
+        {"key": "q3", "type": "number", "unit": "m", "min": 0, "max": 50, "text": {"en": "Pipe length used", "hi": "कितना पाइप लगा", "gu": "કેટલો પાઇપ વપરાયો", "es": "Longitud de tubería usada", "fr": "Longueur de tuyau utilisée"}},
+        {"key": "q4", "type": "pass_fail", "text": {"en": "Vacuum done before opening the gas valves", "hi": "गैस वाल्व खोलने से पहले वैक्यूम किया", "gu": "ગેસ વાલ્વ ખોલતા પહેલાં વેક્યુમ કર્યું", "es": "Vacío hecho antes de abrir las válvulas", "fr": "Tirage au vide fait avant d'ouvrir les vannes"}},
+        {"key": "q5", "type": "yes_no", "text": {"en": "Was extra gas added?", "hi": "क्या अतिरिक्त गैस डाली?", "gu": "શું વધારાનો ગેસ ભર્યો?", "es": "¿Se añadió gas extra?", "fr": "Du gaz supplémentaire a-t-il été ajouté ?"}},
+        {"key": "q6", "type": "number", "unit": "g", "min": 0, "max": 5000, "condition": {"question": "q5", "equals": "yes"}, "text": {"en": "How much gas was added?", "hi": "कितनी गैस डाली?", "gu": "કેટલો ગેસ ભર્યો?", "es": "¿Cuánto gas se añadió?", "fr": "Quelle quantité de gaz ajoutée ?"}},
+        {"key": "q7", "type": "pass_fail", "photo_rule": "if_fail", "text": {"en": "No leaks at the joints (soap test)", "hi": "जोड़ों पर कोई लीक नहीं (साबुन टेस्ट)", "gu": "જોડાણો પર કોઈ લીક નથી (સાબુ ટેસ્ટ)", "es": "Sin fugas en las uniones (prueba de jabón)", "fr": "Aucune fuite aux raccords (test au savon)"}},
+        {"key": "q8", "type": "pass_fail", "text": {"en": "Drain slope correct, water flows out", "hi": "ड्रेन का ढलान सही, पानी बाहर निकलता है", "gu": "ડ્રેનનો ઢાળ સાચો, પાણી બહાર નીકળે છે", "es": "Pendiente del desagüe correcta, el agua sale", "fr": "Pente d'évacuation correcte, l'eau s'écoule"}},
+        {"key": "q9", "type": "signature", "required": false, "text": {"en": "Customer signature", "hi": "ग्राहक के हस्ताक्षर", "gu": "ગ્રાહકની સહી", "es": "Firma del cliente", "fr": "Signature du client"}}
+      ],
+      "shots": [
+        {"stage": "after", "key": "indoor_installed", "prompt": {"en": "Show the installed indoor unit", "hi": "लगी हुई इनडोर यूनिट दिखाएं", "gu": "લગાવેલું ઇન્ડોર યુનિટ બતાવો", "es": "Muestre la unidad interior instalada", "fr": "Montrez l'unité intérieure installée"}},
+        {"stage": "after", "key": "outdoor_installed", "prompt": {"en": "Show the outdoor unit on its stand", "hi": "स्टैंड पर आउटडोर यूनिट दिखाएं", "gu": "સ્ટેન્ડ પર આઉટડોર યુનિટ બતાવો", "es": "Muestre la unidad exterior en su soporte", "fr": "Montrez l'unité extérieure sur son support"}}
+      ]
+    },
+    {
+      "key": "hvac_pm_commercial",
+      "minutes": 20,
+      "name": {"en": "Preventive maintenance – commercial unit", "hi": "प्रिवेंटिव मेंटेनेंस – कमर्शियल यूनिट", "gu": "પ્રિવેન્ટિવ મેઇન્ટેનન્સ – કોમર્શિયલ યુનિટ", "es": "Mantenimiento preventivo – equipo comercial", "fr": "Maintenance préventive – unité commerciale"},
+      "questions": [
+        {"key": "q1", "type": "number", "unit": "°C", "min": -10, "max": 60, "text": {"en": "Supply air temperature", "hi": "सप्लाई हवा का तापमान", "gu": "સપ્લાય હવાનું તાપમાન", "es": "Temperatura del aire de impulsión", "fr": "Température de soufflage"}},
+        {"key": "q2", "type": "number", "unit": "°C", "min": -10, "max": 60, "text": {"en": "Return air temperature", "hi": "रिटर्न हवा का तापमान", "gu": "રિટર્ન હવાનું તાપમાન", "es": "Temperatura del aire de retorno", "fr": "Température de reprise"}},
+        {"key": "q3", "type": "number", "unit": "A", "min": 0, "max": 200, "text": {"en": "Compressor current", "hi": "कंप्रेसर करंट", "gu": "કોમ્પ્રેસર કરંટ", "es": "Corriente del compresor", "fr": "Intensité du compresseur"}},
+        {"key": "q4", "type": "pass_fail", "photo_rule": "if_fail", "text": {"en": "Belts and bearings OK", "hi": "बेल्ट और बेयरिंग ठीक", "gu": "બેલ્ટ અને બેરિંગ બરાબર", "es": "Correas y rodamientos bien", "fr": "Courroies et roulements en bon état"}},
+        {"key": "q5", "type": "pass_fail", "photo_rule": "always", "text": {"en": "Condenser coil clean", "hi": "कंडेंसर कॉइल साफ", "gu": "કન્ડેન્સર કોઇલ સાફ", "es": "Serpentín del condensador limpio", "fr": "Batterie du condenseur propre"}},
+        {"key": "q6", "type": "pass_fail", "text": {"en": "Electrical connections tight", "hi": "बिजली के कनेक्शन कसे हुए", "gu": "વીજળીના કનેક્શન કડક", "es": "Conexiones eléctricas apretadas", "fr": "Connexions électriques serrées"}},
+        {"key": "q7", "type": "yes_no", "text": {"en": "Does any part need replacing soon?", "hi": "क्या जल्द कोई पार्ट बदलना होगा?", "gu": "શું જલ્દી કોઈ પાર્ટ બદલવો પડશે?", "es": "¿Alguna pieza necesita cambio pronto?", "fr": "Une pièce doit-elle bientôt être remplacée ?"}},
+        {"key": "q8", "type": "text", "condition": {"question": "q7", "equals": "yes"}, "text": {"en": "Which part, and why?", "hi": "कौन सा पार्ट, और क्यों?", "gu": "કયો પાર્ટ, અને કેમ?", "es": "¿Qué pieza y por qué?", "fr": "Quelle pièce, et pourquoi ?"}},
+        {"key": "q9", "type": "signature", "required": false, "text": {"en": "Site supervisor signature", "hi": "साइट सुपरवाइज़र के हस्ताक्षर", "gu": "સાઇટ સુપરવાઇઝરની સહી", "es": "Firma del supervisor del sitio", "fr": "Signature du responsable du site"}}
+      ],
+      "shots": [
+        {"stage": "before", "key": "nameplate", "prompt": {"en": "Show the unit's nameplate", "hi": "यूनिट की नेमप्लेट दिखाएं", "gu": "યુનિટની નેમપ્લેટ બતાવો", "es": "Muestre la placa de datos del equipo", "fr": "Montrez la plaque signalétique"}}
+      ]
+    }
+  ]
+}

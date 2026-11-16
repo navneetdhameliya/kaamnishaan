@@ -38,12 +38,22 @@ from app.main import create_app  # noqa: E402
 from app.providers.messaging import outbox  # noqa: E402
 
 KEEP = {"alembic_version", "plans", "industries", "credit_packs"}  # seeded by migrations
+# Seeded global checklists live in tables that also hold company rows, so they are copied aside once
+# and put back after each wipe.
+_seed_copied = False
+SEEDED = (
+    ("checklist_templates", "company_id IS NULL"),
+    ("checklist_questions", "template_id IN (SELECT id FROM checklist_templates WHERE company_id IS NULL)"),
+    ("shot_slots", "template_id IN (SELECT id FROM checklist_templates WHERE company_id IS NULL)"),
+)
 
 
 @pytest.fixture(scope="session", autouse=True)
 def _migrate() -> None:
     backend = Path(__file__).resolve().parents[1]
     env = {**os.environ}
+    # rebuild from empty every run, so seeded rows (plans, checklists) are always fresh
+    subprocess.run([sys.executable, "-m", "alembic", "downgrade", "base"], cwd=backend, env=env, check=True)
     subprocess.run([sys.executable, "-m", "alembic", "upgrade", "head"], cwd=backend, env=env, check=True)
 
 
@@ -53,9 +63,21 @@ async def _clean_db():
         names = (
             await conn.execute(text("select tablename from pg_tables where schemaname = 'public'"))
         ).scalars()
+        names = list(names)
+        global _seed_copied
+        for table, where in SEEDED:
+            if not _seed_copied:  # fresh copy on every test run, in case the seed changed
+                await conn.execute(text("CREATE SCHEMA IF NOT EXISTS test_seed"))
+                await conn.execute(text(f"DROP TABLE IF EXISTS test_seed.{table}"))
+                await conn.execute(
+                    text(f"CREATE TABLE test_seed.{table} AS SELECT * FROM {table} WHERE {where}")
+                )
+        _seed_copied = True
         wipe = [n for n in names if n not in KEEP]
         if wipe:
             await conn.execute(text(f"TRUNCATE {', '.join(wipe)} RESTART IDENTITY CASCADE"))
+        for table, _ in SEEDED:
+            await conn.execute(text(f"INSERT INTO {table} SELECT * FROM test_seed.{table}"))
     outbox.clear()
     yield
 

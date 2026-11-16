@@ -104,9 +104,17 @@ class EvidenceList(BaseModel):
 class ProofStep(BaseModel):
     key: Literal["before", "during", "after", "checklist", "voice"]
     count: int
+    total: int | None = Field(default=None, description="Checklists: how many are on the job")
     required: bool
     done: bool
     thumbs: list[str] = Field(default_factory=list, description="Up to 3 latest thumbnail links")
+
+
+class ShotPrompt(BaseModel):
+    stage: Stage
+    key: str
+    prompt: str
+    done: bool
 
 
 class Proof(BaseModel):
@@ -114,5 +122,13 @@ class Proof(BaseModel):
     status: str
     steps: list[ProofStep]
     can_make_report: bool
-    blocked_by: Literal["job_not_started", "need_before_photo", "need_after_photo", "evidence_locked"] | None
+    blocked_by: (
+        Literal[
+            "job_not_started", "need_before_photo", "need_after_photo", "need_checklist", "evidence_locked"
+        ]
+        | None
+    )
+    shot_prompts: list[ShotPrompt] = Field(
+        default_factory=list, description="Camera hints from the checklists (M20)"
+    )
     locked: bool
