@@ -680,4 +680,108 @@ abstract final class LangKeys {
   static const galleryEmpty = 'gallery.empty';
   /// {count} saved on phone, sending when online
   static const hubWaitingUpload = 'hub.waiting_upload';
+  /// Before and after
+  static const pairTitle = 'pair.title';
+  /// Drag the line to compare
+  static const pairDrag = 'pair.drag';
+  /// Retake
+  static const pairRetake = 'pair.retake';
+  /// Use in report
+  static const pairUse = 'pair.use';
+  /// Added to the report.
+  static const pairUsed = 'pair.used';
+  /// In the report
+  static const pairInReport = 'pair.in_report';
+  /// Take a before and an after photo first.
+  static const pairNeedBoth = 'pair.need_both';
+  /// The photos are still being sent. Try again when they are on the server.
+  static const pairWaitUpload = 'pair.wait_upload';
+  /// Compare before and after
+  static const pairCompare = 'pair.compare';
+  /// {stage} · photo {n} of {total}
+  static const photoStageOf = 'photo.stage_of';
+  /// Locked. Report already sent.
+  static const photoLockedTitle = 'photo.locked_title';
+  /// Proof photos cannot be changed.
+  static const photoLockedBody = 'photo.locked_body';
+  /// Stage
+  static const photoStage = 'photo.stage';
+  /// Taken
+  static const photoTaken = 'photo.taken';
+  /// By
+  static const photoBy = 'photo.by';
+  /// Place
+  static const photoPlace = 'photo.place';
+  /// Note
+  static const photoNote = 'photo.note';
+  /// Add a note
+  static const photoAddNote = 'photo.add_note';
+  /// What does this photo show?
+  static const photoNoteHint = 'photo.note_hint';
+  /// Save note
+  static const photoSaveNote = 'photo.save_note';
+  /// Delete photo
+  static const photoDelete = 'photo.delete';
+  /// Photo deleted.
+  static const photoDeleted = 'photo.deleted';
+  /// Share
+  static const photoShare = 'photo.share';
+  /// Checklists
+  static const checklistTitle = 'checklist.title';
+  /// {customer} · {count} lists
+  static const checklistCount = 'checklist.count';
+  /// {count} questions · about {minutes} min
+  static const checklistMeta = 'checklist.meta';
+  /// {count} questions
+  static const checklistMetaShort = 'checklist.meta_short';
+  /// {done} of {total} · done at {time}
+  static const checklistDoneAt = 'checklist.done_at';
+  /// Every question can be read out loud.
+  static const checklistReadAloud = 'checklist.read_aloud';
+  /// Start {name}
+  static const checklistStart = 'checklist.start';
+  /// Continue {name}
+  static const checklistContinue = 'checklist.continue';
+  /// No checklists for this job
+  static const checklistNone = 'checklist.none';
+  /// Question {n} of {total}
+  static const questionOf = 'question.of';
+  /// Look for this
+  static const questionLook = 'question.look';
+  /// Yes
+  static const questionYes = 'question.yes';
+  /// No
+  static const questionNo = 'question.no';
+  /// Pass
+  static const questionPass = 'question.pass';
+  /// Fail
+  static const questionFail = 'question.fail';
+  /// Not sure? Take a photo and ask your manager.
+  static const questionNotSure = 'question.not_sure';
+  /// This question needs a photo. Take one to go on.
+  static const questionNeedsPhoto = 'question.needs_photo';
+  /// Photo added
+  static const questionPhotoAdded = 'question.photo_added';
+  /// Next
+  static const questionNext = 'question.next';
+  /// Skip
+  static const questionSkip = 'question.skip';
+  /// Type a number
+  static const questionNumberHint = 'question.number_hint';
+  /// Between {min} and {max}
+  static const questionRange = 'question.range';
+  /// Type or speak your answer
+  static const questionTextHint = 'question.text_hint';
+  /// Sign here
+  static const questionSignHere = 'question.sign_here';
+  /// Clear
+  static const questionClear = 'question.clear';
+  /// Save signature
+  static const questionSaveSignature = 'question.save_signature';
+  /// Signatures need internet. Try again when online.
+  static const questionSignatureOnline = 'question.signature_online';
+  /// Answers are locked: the report was sent.
+  static const questionLocked = 'question.locked';
+  /// Checklist done
+  static const questionFinished = 'question.finished';
 }

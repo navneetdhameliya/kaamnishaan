@@ -19,5 +19,9 @@ abstract final class RoutesConstants {
   static const String captureHubScreen = '/capture';
   static const String cameraScreen = '/camera';
   static const String photoGalleryScreen = '/photos';
+  static const String photoDetailsScreen = '/photo';
+  static const String photoPairScreen = '/before-after';
+  static const String checklistsScreen = '/checklists';
+  static const String checklistQuestionScreen = '/checklist';
   static const String homeScreen = '/home';
 }

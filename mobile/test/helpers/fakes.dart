@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' show Widget, Image, BoxFit, ColoredBox, Colors;
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/auth_api_repository.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/checklists_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/company_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/config_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/files_api_repository.dart';
@@ -29,6 +30,56 @@ class MockFilesRepository extends Mock implements IFilesApiRepository {}
 class MockHomeRepository extends Mock implements IHomeApiRepository {}
 
 class MockJobsRepository extends Mock implements IJobsApiRepository {}
+
+class MockChecklistsRepository extends Mock implements IChecklistsApiRepository {}
+
+QuestionOutModel question(
+  String id,
+  int position, {
+  String type = 'yes_no',
+  String photoRule = 'none',
+  Map<String, dynamic>? condition,
+  bool visible = true,
+  Object? answer,
+  bool answerHasPhoto = false,
+  String text = 'Is the air filter clean?',
+  List<OptionOutModel> options = const [],
+}) =>
+    QuestionOutModel(
+      id: id,
+      position: position,
+      type: type,
+      text: text,
+      translationStatus: 'ready',
+      options: options,
+      photoRule: photoRule,
+      requiredValue: true,
+      condition: condition,
+      visible: visible,
+      photoNeeded: false,
+      answer: answer == null
+          ? null
+          : AnswerOutModel(
+              value: answer,
+              answeredAt: DateTime(2026, 10, 31, 10),
+              answeredBy: const PersonRefModel(id: 'u1', name: 'Ramesh'),
+              locked: false,
+              photo: answerHasPhoto
+                  ? EvidenceOutModel(
+                      id: 'ph-$id',
+                      jobId: 'j1',
+                      stage: 'during',
+                      url: 'https://x/p.jpg',
+                      size: 1,
+                      processing: 'ready',
+                      takenAt: DateTime(2026, 10, 31, 10),
+                      takenBy: const PersonRefModel(id: 'u1', name: 'Ramesh'),
+                      locked: false,
+                      notesCount: 0,
+                    )
+                  : null,
+            ),
+    );
 
 /// A camera that "takes" photos by writing small files into [folder].
 class FakeCamera implements ICameraService {

@@ -172,6 +172,9 @@ class QuestionOut(BaseModel):
     max_value: float | None
     photo_rule: PhotoRule
     required: bool
+    condition: dict | None = Field(
+        default=None, description="'Show if' rule {question_id, equals}, so the app can follow it offline"
+    )
     visible: bool = Field(description="False when its 'show if' condition is not met")
     photo_needed: bool = Field(description="The photo rule applies and no photo is attached yet")
     reference_image_url: str | None

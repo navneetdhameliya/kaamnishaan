@@ -164,13 +164,38 @@ class CaptureHubController extends GetxController {
         _ => LangKeys.hubVoice.tr,
       };
 
-  /// Photo steps open the camera (M20); checklist, voice notes and the report come in the next steps.
+  /// "4 Lake Road · Room 2"
+  String get place {
+    final s = job.value?.site;
+    return [s?.address, s?.label].where((p) => p != null && p.isNotEmpty).join(' · ');
+  }
+
+  /// Photo steps open the camera (M20), the checklist step the checklists (M24); voice notes and
+  /// the report come in the next steps.
   void onStepTap(ProofStepModel step) {
     if (photoStages.contains(step.key)) {
       openCamera(step.key);
+    } else if (step.key == 'checklist') {
+      openChecklists();
     } else {
       KnToast.info(LangKeys.commonComingSoon.tr);
     }
+  }
+
+  Future<void> openChecklists() async {
+    if (notStarted) return KnToast.info(LangKeys.hubStartFirst.tr);
+    final e = job.value?.equipment;
+    final equipment = [e?.type, job.value?.site?.label].where((p) => p != null && p.isNotEmpty).join(' · ');
+    await Get.toNamed(
+      RoutesConstants.checklistsScreen,
+      arguments: ChecklistArguments(
+        jobId: args.id,
+        customer: customer,
+        coverUrl: job.value?.coverUrl,
+        equipment: equipment.isEmpty ? null : equipment,
+      ),
+    );
+    load();
   }
 
   /// The camera button: the stage that is next, else "during".
@@ -188,6 +213,7 @@ class CaptureHubController extends GetxController {
         stage: stage,
         customer: customer,
         prompts: proof.value?.shotPrompts ?? const [],
+        place: place,
       ),
     );
     load();

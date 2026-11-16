@@ -95,13 +95,38 @@ class PhotoGalleryController extends GetxController {
     load();
   }
 
-  void onPhotoTap(GalleryPhoto photo) {
+  Future<void> onPhotoTap(GalleryPhoto photo) async {
     final p = photo.pending;
-    if (p != null && p.state == PendingState.failed) {
-      queue.retry(p.id);
-      return;
+    if (p != null) {
+      if (p.state == PendingState.failed) queue.retry(p.id);
+      return; // still on the phone: details once it is sent
     }
-    KnToast.info(LangKeys.commonComingSoon.tr); // M23 photo details come next
+    final e = photo.server!;
+    final same = photosOf(e.stage).where((x) => x.server != null).toList();
+    final changed = await Get.toNamed(
+      RoutesConstants.photoDetailsScreen,
+      arguments: PhotoDetailArguments(
+        jobId: args.jobId,
+        evidenceId: e.id,
+        customer: args.customer,
+        place: args.place,
+        index: same.indexWhere((x) => x.server?.id == e.id) + 1,
+        total: same.length,
+      ),
+    );
+    if (changed == true) load();
+  }
+
+  /// "Compare before and after" shows once both are on the server.
+  bool get canCompare =>
+      serverPhotos.any((e) => e.stage == 'before') && serverPhotos.any((e) => e.stage == 'after');
+
+  Future<void> onCompareTap() async {
+    await Get.toNamed(
+      RoutesConstants.photoPairScreen,
+      arguments: PhotoDetailArguments(jobId: args.jobId, customer: args.customer, place: args.place),
+    );
+    load();
   }
 
   @override

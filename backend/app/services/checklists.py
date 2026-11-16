@@ -735,6 +735,7 @@ async def submission(
                 max_value=q.get("max_value"),
                 photo_rule=q.get("photo_rule", "none"),
                 required=q.get("required", True),
+                condition=q.get("condition"),
                 visible=visible,
                 photo_needed=visible
                 and a is not None

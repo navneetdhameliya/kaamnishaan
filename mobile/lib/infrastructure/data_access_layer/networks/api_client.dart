@@ -56,6 +56,9 @@ class ApiClient {
   Future<dynamic> post(String path, {Object? body, Options? options}) async =>
       (await dio.post<dynamic>(path, data: body, options: options)).data;
 
+  Future<dynamic> put(String path, {Object? body, Options? options}) async =>
+      (await dio.put<dynamic>(path, data: body, options: options)).data;
+
   Future<dynamic> patch(String path, {Object? body, Options? options}) async =>
       (await dio.patch<dynamic>(path, data: body, options: options)).data;
 

@@ -20,6 +20,10 @@ import '../../../UI/screens/auth_section/phone_section/phone_binding.dart';
 import '../../../UI/screens/auth_section/phone_section/phone_screen.dart';
 import '../../../UI/screens/auth_section/profile_setup_section/profile_setup_binding.dart';
 import '../../../UI/screens/auth_section/profile_setup_section/profile_setup_screen.dart';
+import '../../../UI/screens/checklists_section/checklist_question_section/checklist_question_binding.dart';
+import '../../../UI/screens/checklists_section/checklist_question_section/checklist_question_screen.dart';
+import '../../../UI/screens/checklists_section/checklists_section/checklists_binding.dart';
+import '../../../UI/screens/checklists_section/checklists_section/checklists_screen.dart';
 import '../../../UI/screens/home_section/home_shell_section/home_shell_binding.dart';
 import '../../../UI/screens/home_section/home_shell_section/home_shell_screen.dart';
 import '../../../UI/screens/jobs_section/camera_section/camera_binding.dart';
@@ -30,8 +34,12 @@ import '../../../UI/screens/jobs_section/job_details_section/job_details_binding
 import '../../../UI/screens/jobs_section/job_details_section/job_details_screen.dart';
 import '../../../UI/screens/jobs_section/job_list_section/job_list_binding.dart';
 import '../../../UI/screens/jobs_section/job_list_section/job_list_screen.dart';
+import '../../../UI/screens/jobs_section/photo_details_section/photo_details_binding.dart';
+import '../../../UI/screens/jobs_section/photo_details_section/photo_details_screen.dart';
 import '../../../UI/screens/jobs_section/photo_gallery_section/photo_gallery_binding.dart';
 import '../../../UI/screens/jobs_section/photo_gallery_section/photo_gallery_screen.dart';
+import '../../../UI/screens/jobs_section/photo_pair_section/photo_pair_binding.dart';
+import '../../../UI/screens/jobs_section/photo_pair_section/photo_pair_screen.dart';
 import '../../../UI/screens/onboarding_section/intro_section/intro_binding.dart';
 import '../../../UI/screens/onboarding_section/intro_section/intro_screen.dart';
 import '../../../UI/screens/onboarding_section/language_section/language_binding.dart';
@@ -106,6 +114,18 @@ abstract final class AppPages {
       name: RoutesConstants.photoGalleryScreen,
       page: () => const PhotoGalleryScreen(),
       binding: PhotoGalleryBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.photoDetailsScreen,
+      page: () => const PhotoDetailsScreen(),
+      binding: PhotoDetailsBinding(),
+    ),
+    GetPage(name: RoutesConstants.photoPairScreen, page: () => const PhotoPairScreen(), binding: PhotoPairBinding()),
+    GetPage(name: RoutesConstants.checklistsScreen, page: () => const ChecklistsScreen(), binding: ChecklistsBinding()),
+    GetPage(
+      name: RoutesConstants.checklistQuestionScreen,
+      page: () => const ChecklistQuestionScreen(),
+      binding: ChecklistQuestionBinding(),
     ),
     GetPage(
       name: RoutesConstants.homeScreen,

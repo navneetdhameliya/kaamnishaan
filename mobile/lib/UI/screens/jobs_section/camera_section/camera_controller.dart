@@ -123,9 +123,9 @@ class CameraScreenController extends GetxController with WidgetsBindingObserver 
       busy.value = false;
       return KnToast.error(LangKeys.cameraFailed.tr);
     }
-    final slot = prompt?.key;
+    final slot = args.single ? null : prompt?.key;
     try {
-      await queue.add(
+      final saved = await queue.add(
         jobId: args.jobId,
         stage: stage.value,
         sourcePath: path,
@@ -135,6 +135,11 @@ class CameraScreenController extends GetxController with WidgetsBindingObserver 
         shotSlot: slot,
       );
       if (slot != null) takenSlots.add(slot);
+      if (args.single) {
+        busy.value = false;
+        Get.back<String>(result: saved.id);
+        return;
+      }
     } catch (e) {
       AppLogger.error('Saving the photo failed', error: e);
       KnToast.error(LangKeys.cameraFailed.tr);
