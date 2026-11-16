@@ -23,6 +23,19 @@ class _In(BaseModel):
 class PersonRef(BaseModel):
     id: uuid.UUID
     name: str
+    avatar_url: str | None = None
+
+
+class ProofCount(BaseModel):
+    """M12 "Proof 2 of 5 steps": before, during, after photos, checklists (if any), voice note."""
+
+    done: int
+    total: int
+
+
+class ContactRef(BaseModel):
+    name: str
+    phone: str | None
 
 
 # ---- customers ---------------------------------------------------------------------------
@@ -237,6 +250,10 @@ class JobListItem(BaseModel):
     is_quick_job: bool
     version: int
     updated_at: datetime
+    cover_url: str | None = Field(
+        default=None, description="Latest photo of this job, else of the same site from an earlier visit"
+    )
+    proof: ProofCount | None = Field(default=None, description="Only on Today's current job")
 
 
 class JobList(BaseModel):
@@ -299,11 +316,12 @@ class DayCount(BaseModel):
 
 
 class TeamNow(BaseModel):
-    id: uuid.UUID
+    id: uuid.UUID = Field(description="User id, or the invite id when status is invited")
     name: str
     role: str
-    status: Literal["on_job", "idle"]
+    status: Literal["on_job", "idle", "invited"]
     current_job: str | None = None
+    avatar_url: str | None = None
 
 
 class Onboarding(BaseModel):
@@ -318,6 +336,8 @@ class Dashboard(BaseModel):
     today: dict[str, int]
     to_review: int
     week: list[DayCount]
+    reports_week: int = Field(description="Reports sent in the last 7 days (today included)")
+    reports_last_week: int = Field(description="Reports sent in the 7 days before that")
     team_now: list[TeamNow]
     onboarding: Onboarding
 
@@ -334,8 +354,11 @@ class Today(BaseModel):
     company: str | None
     stats: TodayStats
     current_job: JobListItem | None
-    next_jobs: list[JobListItem]
+    next_jobs: list[JobListItem] = Field(
+        description="Today's other jobs: coming ones by time, then done ones"
+    )
     unread: int
+    manager: ContactRef | None = Field(default=None, description='Empty Today: "Call Priya, your manager"')
 
 
 class MeStats(BaseModel):

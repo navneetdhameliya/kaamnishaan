@@ -121,6 +121,8 @@ async def test_photo_flow_with_thumbnail_and_signed_links(client, started):
     assert lst["meta"]["counts"] == {"before": 1, "during": 0, "after": 0, "all": 1}
     today = (await client.get("/api/v1/me/today", headers=auth(tech))).json()
     assert today["stats"]["photos"] == 1
+    current = today["current_job"]
+    assert current["cover_url"] and current["proof"]["done"] == 1  # the before photo
 
 
 async def test_upload_can_only_be_used_once_and_retry_is_safe(client, started):

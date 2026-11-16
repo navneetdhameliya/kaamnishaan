@@ -88,6 +88,11 @@ async def items(db: AsyncSession, jobs: list[Job]) -> list[JobListItem]:
         if user_ids
         else {}
     )
+    from app.providers.storage import get_storage
+    from app.services.evidence import covers
+
+    cover_urls = await covers(db, jobs)
+    storage = get_storage()
     out = []
     for j in jobs:
         s = sites.get(j.site_id)
@@ -101,8 +106,12 @@ async def items(db: AsyncSession, jobs: list[Job]) -> list[JobListItem]:
                     id=s.id, label=s.label, city=s.city, lat=s.lat, lng=s.lng,
                     address=", ".join(filter(None, [s.address_line1, s.address_line2])),
                 ) if s else None,
-                assignee=PersonRef(id=u.id, name=u.name or "") if u else None,
+                assignee=PersonRef(
+                    id=u.id, name=u.name or "",
+                    avatar_url=storage.presign_get(u.avatar_key) if u.avatar_key else None,
+                ) if u else None,
                 is_quick_job=j.is_quick_job, version=j.version, updated_at=j.updated_at,
+                cover_url=cover_urls.get(j.id),
             )
         )  # fmt: skip
     return out

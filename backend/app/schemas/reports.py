@@ -59,6 +59,8 @@ class JobBrief(BaseModel):
     status: str
     customer: str
     technician: PersonRef | None
+    photos: int = 0
+    cover_url: str | None = None
 
 
 class ReportListItem(BaseModel):

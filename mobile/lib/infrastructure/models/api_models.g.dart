@@ -802,6 +802,30 @@ class ContactPatchModel {
       };
 }
 
+ContactRefModel contactRefModelFromJson(String str) => ContactRefModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String contactRefModelToJson(ContactRefModel data) => json.encode(data.toJson());
+
+class ContactRefModel {
+  final String name;
+  final String? phone;
+
+  const ContactRefModel({
+    required this.name,
+    this.phone,
+  });
+
+  factory ContactRefModel.fromJson(Map<String, dynamic> json) => ContactRefModel(
+        name: json['name'] as String,
+        phone: json['phone'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'phone': phone,
+      };
+}
+
 CountryOutModel countryOutModelFromJson(String str) => CountryOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String countryOutModelToJson(CountryOutModel data) => json.encode(data.toJson());
@@ -1102,6 +1126,10 @@ String dashboardModelToJson(DashboardModel data) => json.encode(data.toJson());
 class DashboardModel {
   final String date;
   final OnboardingModel onboarding;
+  /// Reports sent in the 7 days before that
+  final int reportsLastWeek;
+  /// Reports sent in the last 7 days (today included)
+  final int reportsWeek;
   final List<TeamNowModel> teamNow;
   final int toReview;
   final Map<String, dynamic> today;
@@ -1110,6 +1138,8 @@ class DashboardModel {
   const DashboardModel({
     required this.date,
     required this.onboarding,
+    required this.reportsLastWeek,
+    required this.reportsWeek,
     required this.teamNow,
     required this.toReview,
     required this.today,
@@ -1119,6 +1149,8 @@ class DashboardModel {
   factory DashboardModel.fromJson(Map<String, dynamic> json) => DashboardModel(
         date: json['date'] as String,
         onboarding: OnboardingModel.fromJson(json['onboarding'] as Map<String, dynamic>),
+        reportsLastWeek: (json['reports_last_week'] as num).toInt(),
+        reportsWeek: (json['reports_week'] as num).toInt(),
         teamNow: (json['team_now'] as List).map((e) => TeamNowModel.fromJson(e as Map<String, dynamic>)).toList(),
         toReview: (json['to_review'] as num).toInt(),
         today: Map<String, dynamic>.from(json['today'] as Map),
@@ -1128,6 +1160,8 @@ class DashboardModel {
   Map<String, dynamic> toJson() => {
         'date': date,
         'onboarding': onboarding.toJson(),
+        'reports_last_week': reportsLastWeek,
+        'reports_week': reportsWeek,
         'team_now': teamNow.map((e) => e.toJson()).toList(),
         'to_review': toReview,
         'today': today,
@@ -1905,35 +1939,43 @@ JobBriefModel jobBriefModelFromJson(String str) => JobBriefModel.fromJson(json.d
 String jobBriefModelToJson(JobBriefModel data) => json.encode(data.toJson());
 
 class JobBriefModel {
+  final String? coverUrl;
   final String customer;
   final String id;
   final String number;
+  final int? photos;
   final String status;
   final PersonRefModel? technician;
   final String title;
 
   const JobBriefModel({
+    this.coverUrl,
     required this.customer,
     required this.id,
     required this.number,
+    this.photos,
     required this.status,
     this.technician,
     required this.title,
   });
 
   factory JobBriefModel.fromJson(Map<String, dynamic> json) => JobBriefModel(
+        coverUrl: json['cover_url'] as String?,
         customer: json['customer'] as String,
         id: json['id'] as String,
         number: json['number'] as String,
+        photos: json['photos'] == null ? null : (json['photos'] as num).toInt(),
         status: json['status'] as String,
         technician: json['technician'] == null ? null : PersonRefModel.fromJson(json['technician'] as Map<String, dynamic>),
         title: json['title'] as String,
       );
 
   Map<String, dynamic> toJson() => {
+        'cover_url': coverUrl,
         'customer': customer,
         'id': id,
         'number': number,
+        'photos': photos,
         'status': status,
         'technician': technician?.toJson(),
         'title': title,
@@ -2107,11 +2149,15 @@ String jobListItemModelToJson(JobListItemModel data) => json.encode(data.toJson(
 
 class JobListItemModel {
   final PersonRefModel? assignee;
+  /// Latest photo of this job, else of the same site from an earlier visit
+  final String? coverUrl;
   final CustomerRefModel customer;
   final int? durationMin;
   final String id;
   final bool isQuickJob;
   final String number;
+  /// Only on Today's current job
+  final ProofCountModel? proof;
   final DateTime? scheduledAt;
   final SiteBriefModel? site;
   /// One of: unassigned, assigned, in_progress, in_review, changes_requested, completed, cancelled
@@ -2122,11 +2168,13 @@ class JobListItemModel {
 
   const JobListItemModel({
     this.assignee,
+    this.coverUrl,
     required this.customer,
     this.durationMin,
     required this.id,
     required this.isQuickJob,
     required this.number,
+    this.proof,
     this.scheduledAt,
     this.site,
     required this.status,
@@ -2137,11 +2185,13 @@ class JobListItemModel {
 
   factory JobListItemModel.fromJson(Map<String, dynamic> json) => JobListItemModel(
         assignee: json['assignee'] == null ? null : PersonRefModel.fromJson(json['assignee'] as Map<String, dynamic>),
+        coverUrl: json['cover_url'] as String?,
         customer: CustomerRefModel.fromJson(json['customer'] as Map<String, dynamic>),
         durationMin: json['duration_min'] == null ? null : (json['duration_min'] as num).toInt(),
         id: json['id'] as String,
         isQuickJob: json['is_quick_job'] as bool,
         number: json['number'] as String,
+        proof: json['proof'] == null ? null : ProofCountModel.fromJson(json['proof'] as Map<String, dynamic>),
         scheduledAt: json['scheduled_at'] == null ? null : DateTime.parse(json['scheduled_at'] as String),
         site: json['site'] == null ? null : SiteBriefModel.fromJson(json['site'] as Map<String, dynamic>),
         status: json['status'] as String,
@@ -2152,11 +2202,13 @@ class JobListItemModel {
 
   Map<String, dynamic> toJson() => {
         'assignee': assignee?.toJson(),
+        'cover_url': coverUrl,
         'customer': customer.toJson(),
         'duration_min': durationMin,
         'id': id,
         'is_quick_job': isQuickJob,
         'number': number,
+        'proof': proof?.toJson(),
         'scheduled_at': scheduledAt?.toIso8601String(),
         'site': site?.toJson(),
         'status': status,
@@ -2178,6 +2230,8 @@ class JobOutModel {
   final DateTime? cancelledAt;
   final DateTime? completedAt;
   final ContactOutModel? contact;
+  /// Latest photo of this job, else of the same site from an earlier visit
+  final String? coverUrl;
   final DateTime createdAt;
   final PersonRefModel? createdBy;
   final CustomerRefModel customer;
@@ -2187,6 +2241,8 @@ class JobOutModel {
   final String id;
   final bool isQuickJob;
   final String number;
+  /// Only on Today's current job
+  final ProofCountModel? proof;
   final DateTime? scheduledAt;
   final SiteBriefModel? site;
   final DateTime? startedAt;
@@ -2203,6 +2259,7 @@ class JobOutModel {
     this.cancelledAt,
     this.completedAt,
     this.contact,
+    this.coverUrl,
     required this.createdAt,
     this.createdBy,
     required this.customer,
@@ -2212,6 +2269,7 @@ class JobOutModel {
     required this.id,
     required this.isQuickJob,
     required this.number,
+    this.proof,
     this.scheduledAt,
     this.site,
     this.startedAt,
@@ -2228,6 +2286,7 @@ class JobOutModel {
         cancelledAt: json['cancelled_at'] == null ? null : DateTime.parse(json['cancelled_at'] as String),
         completedAt: json['completed_at'] == null ? null : DateTime.parse(json['completed_at'] as String),
         contact: json['contact'] == null ? null : ContactOutModel.fromJson(json['contact'] as Map<String, dynamic>),
+        coverUrl: json['cover_url'] as String?,
         createdAt: DateTime.parse(json['created_at'] as String),
         createdBy: json['created_by'] == null ? null : PersonRefModel.fromJson(json['created_by'] as Map<String, dynamic>),
         customer: CustomerRefModel.fromJson(json['customer'] as Map<String, dynamic>),
@@ -2237,6 +2296,7 @@ class JobOutModel {
         id: json['id'] as String,
         isQuickJob: json['is_quick_job'] as bool,
         number: json['number'] as String,
+        proof: json['proof'] == null ? null : ProofCountModel.fromJson(json['proof'] as Map<String, dynamic>),
         scheduledAt: json['scheduled_at'] == null ? null : DateTime.parse(json['scheduled_at'] as String),
         site: json['site'] == null ? null : SiteBriefModel.fromJson(json['site'] as Map<String, dynamic>),
         startedAt: json['started_at'] == null ? null : DateTime.parse(json['started_at'] as String),
@@ -2253,6 +2313,7 @@ class JobOutModel {
         'cancelled_at': cancelledAt?.toIso8601String(),
         'completed_at': completedAt?.toIso8601String(),
         'contact': contact?.toJson(),
+        'cover_url': coverUrl,
         'created_at': createdAt.toIso8601String(),
         'created_by': createdBy?.toJson(),
         'customer': customer.toJson(),
@@ -2262,6 +2323,7 @@ class JobOutModel {
         'id': id,
         'is_quick_job': isQuickJob,
         'number': number,
+        'proof': proof?.toJson(),
         'scheduled_at': scheduledAt?.toIso8601String(),
         'site': site?.toJson(),
         'started_at': startedAt?.toIso8601String(),
@@ -3301,20 +3363,24 @@ PersonRefModel personRefModelFromJson(String str) => PersonRefModel.fromJson(jso
 String personRefModelToJson(PersonRefModel data) => json.encode(data.toJson());
 
 class PersonRefModel {
+  final String? avatarUrl;
   final String id;
   final String name;
 
   const PersonRefModel({
+    this.avatarUrl,
     required this.id,
     required this.name,
   });
 
   factory PersonRefModel.fromJson(Map<String, dynamic> json) => PersonRefModel(
+        avatarUrl: json['avatar_url'] as String?,
         id: json['id'] as String,
         name: json['name'] as String,
       );
 
   Map<String, dynamic> toJson() => {
+        'avatar_url': avatarUrl,
         'id': id,
         'name': name,
       };
@@ -3516,6 +3582,31 @@ class ProofModel {
         'shot_prompts': shotPrompts?.map((e) => e.toJson()).toList(),
         'status': status,
         'steps': steps.map((e) => e.toJson()).toList(),
+      };
+}
+
+/// M12 "Proof 2 of 5 steps": before, during, after photos, checklists (if any), voice note.
+ProofCountModel proofCountModelFromJson(String str) => ProofCountModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String proofCountModelToJson(ProofCountModel data) => json.encode(data.toJson());
+
+class ProofCountModel {
+  final int done;
+  final int total;
+
+  const ProofCountModel({
+    required this.done,
+    required this.total,
+  });
+
+  factory ProofCountModel.fromJson(Map<String, dynamic> json) => ProofCountModel(
+        done: (json['done'] as num).toInt(),
+        total: (json['total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'done': done,
+        'total': total,
       };
 }
 
@@ -5148,14 +5239,17 @@ TeamNowModel teamNowModelFromJson(String str) => TeamNowModel.fromJson(json.deco
 String teamNowModelToJson(TeamNowModel data) => json.encode(data.toJson());
 
 class TeamNowModel {
+  final String? avatarUrl;
   final String? currentJob;
+  /// User id, or the invite id when status is invited
   final String id;
   final String name;
   final String role;
-  /// One of: on_job, idle
+  /// One of: on_job, idle, invited
   final String status;
 
   const TeamNowModel({
+    this.avatarUrl,
     this.currentJob,
     required this.id,
     required this.name,
@@ -5164,6 +5258,7 @@ class TeamNowModel {
   });
 
   factory TeamNowModel.fromJson(Map<String, dynamic> json) => TeamNowModel(
+        avatarUrl: json['avatar_url'] as String?,
         currentJob: json['current_job'] as String?,
         id: json['id'] as String,
         name: json['name'] as String,
@@ -5172,6 +5267,7 @@ class TeamNowModel {
       );
 
   Map<String, dynamic> toJson() => {
+        'avatar_url': avatarUrl,
         'current_job': currentJob,
         'id': id,
         'name': name,
@@ -5551,7 +5647,10 @@ class TodayModel {
   final String? company;
   final JobListItemModel? currentJob;
   final String date;
+  /// Empty Today: "Call Priya, your manager"
+  final ContactRefModel? manager;
   final String name;
+  /// Today's other jobs: coming ones by time, then done ones
   final List<JobListItemModel> nextJobs;
   final TodayStatsModel stats;
   final int unread;
@@ -5560,6 +5659,7 @@ class TodayModel {
     this.company,
     this.currentJob,
     required this.date,
+    this.manager,
     required this.name,
     required this.nextJobs,
     required this.stats,
@@ -5570,6 +5670,7 @@ class TodayModel {
         company: json['company'] as String?,
         currentJob: json['current_job'] == null ? null : JobListItemModel.fromJson(json['current_job'] as Map<String, dynamic>),
         date: json['date'] as String,
+        manager: json['manager'] == null ? null : ContactRefModel.fromJson(json['manager'] as Map<String, dynamic>),
         name: json['name'] as String,
         nextJobs: (json['next_jobs'] as List).map((e) => JobListItemModel.fromJson(e as Map<String, dynamic>)).toList(),
         stats: TodayStatsModel.fromJson(json['stats'] as Map<String, dynamic>),
@@ -5580,6 +5681,7 @@ class TodayModel {
         'company': company,
         'current_job': currentJob?.toJson(),
         'date': date,
+        'manager': manager?.toJson(),
         'name': name,
         'next_jobs': nextJobs.map((e) => e.toJson()).toList(),
         'stats': stats.toJson(),

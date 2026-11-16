@@ -351,12 +351,29 @@ async def test_dashboard_today_and_stats(client):
     assert [(t["name"], t["status"], t["current_job"]) for t in d["team_now"]] == [
         ("Ravi Kumar", "on_job", first["number"])
     ]
+    assert (d["reports_week"], d["reports_last_week"]) == (0, 0)
     assert (await client.get("/api/v1/dashboard", headers=auth(tech))).status_code == 403
+
+    # a pending invite shows in "Team right now"
+    r = await client.post(
+        "/api/v1/invites",
+        json={"phone": "+919898989898", "name": "Arjun", "role": "technician"},
+        headers=auth(owner),
+    )
+    assert r.status_code == 201, r.text
+    d = (await client.get("/api/v1/dashboard", headers=auth(owner))).json()
+    assert [(t["name"], t["status"]) for t in d["team_now"]] == [
+        ("Ravi Kumar", "on_job"),
+        ("Arjun", "invited"),
+    ]
 
     t = (await client.get("/api/v1/me/today", headers=auth(tech))).json()
     assert t["name"] == "Ravi Kumar" and t["company"] == "BrightAir"
     assert t["stats"] == {"jobs": 2, "done": 0, "photos": 0}
     assert t["current_job"]["title"] == "First" and [j["title"] for j in t["next_jobs"]] == ["Second"]
+    assert t["current_job"]["proof"] == {"done": 0, "total": 4}  # no checklist on this job
+    assert t["current_job"]["cover_url"] is None
+    assert t["manager"]["name"] == owner["user"]["name"]  # the owner invited Ravi
 
     s_owner = (await client.get("/api/v1/me/stats", headers=auth(owner))).json()
     assert (s_owner["team"], s_owner["customers"], s_owner["to_review"]) == (2, 1, 0)

@@ -1085,6 +1085,31 @@
         "title": "ContactPatch",
         "type": "object"
       },
+      "ContactRef": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          }
+        },
+        "required": [
+          "name",
+          "phone"
+        ],
+        "title": "ContactRef",
+        "type": "object"
+      },
       "CountryOut": {
         "properties": {
           "code": {
@@ -1433,6 +1458,16 @@
           "onboarding": {
             "$ref": "#/components/schemas/Onboarding"
           },
+          "reports_last_week": {
+            "description": "Reports sent in the 7 days before that",
+            "title": "Reports Last Week",
+            "type": "integer"
+          },
+          "reports_week": {
+            "description": "Reports sent in the last 7 days (today included)",
+            "title": "Reports Week",
+            "type": "integer"
+          },
           "team_now": {
             "items": {
               "$ref": "#/components/schemas/TeamNow"
@@ -1464,6 +1499,8 @@
           "today",
           "to_review",
           "week",
+          "reports_week",
+          "reports_last_week",
           "team_now",
           "onboarding"
         ],
@@ -2574,6 +2611,17 @@
       },
       "JobBrief": {
         "properties": {
+          "cover_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cover Url"
+          },
           "customer": {
             "title": "Customer",
             "type": "string"
@@ -2586,6 +2634,11 @@
           "number": {
             "title": "Number",
             "type": "string"
+          },
+          "photos": {
+            "default": 0,
+            "title": "Photos",
+            "type": "integer"
           },
           "status": {
             "title": "Status",
@@ -2883,6 +2936,18 @@
               }
             ]
           },
+          "cover_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Latest photo of this job, else of the same site from an earlier visit",
+            "title": "Cover Url"
+          },
           "customer": {
             "$ref": "#/components/schemas/CustomerRef"
           },
@@ -2912,6 +2977,17 @@
             ],
             "title": "Number",
             "type": "string"
+          },
+          "proof": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProofCount"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Only on Today's current job"
           },
           "scheduled_at": {
             "anyOf": [
@@ -3044,6 +3120,18 @@
               }
             ]
           },
+          "cover_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Latest photo of this job, else of the same site from an earlier visit",
+            "title": "Cover Url"
+          },
           "created_at": {
             "format": "date-time",
             "title": "Created At",
@@ -3109,6 +3197,17 @@
             ],
             "title": "Number",
             "type": "string"
+          },
+          "proof": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProofCount"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Only on Today's current job"
           },
           "scheduled_at": {
             "anyOf": [
@@ -4532,6 +4631,17 @@
       },
       "PersonRef": {
         "properties": {
+          "avatar_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avatar Url"
+          },
           "id": {
             "format": "uuid",
             "title": "Id",
@@ -4819,6 +4929,25 @@
           "locked"
         ],
         "title": "Proof",
+        "type": "object"
+      },
+      "ProofCount": {
+        "description": "M12 \"Proof 2 of 5 steps\": before, during, after photos, checklists (if any), voice note.",
+        "properties": {
+          "done": {
+            "title": "Done",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "done",
+          "total"
+        ],
+        "title": "ProofCount",
         "type": "object"
       },
       "ProofStep": {
@@ -7419,6 +7548,17 @@
       },
       "TeamNow": {
         "properties": {
+          "avatar_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avatar Url"
+          },
           "current_job": {
             "anyOf": [
               {
@@ -7431,6 +7571,7 @@
             "title": "Current Job"
           },
           "id": {
+            "description": "User id, or the invite id when status is invited",
             "format": "uuid",
             "title": "Id",
             "type": "string"
@@ -7446,7 +7587,8 @@
           "status": {
             "enum": [
               "on_job",
-              "idle"
+              "idle",
+              "invited"
             ],
             "title": "Status",
             "type": "string"
@@ -8042,11 +8184,23 @@
             "title": "Date",
             "type": "string"
           },
+          "manager": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ContactRef"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Empty Today: \"Call Priya, your manager\""
+          },
           "name": {
             "title": "Name",
             "type": "string"
           },
           "next_jobs": {
+            "description": "Today's other jobs: coming ones by time, then done ones",
             "items": {
               "$ref": "#/components/schemas/JobListItem"
             },
