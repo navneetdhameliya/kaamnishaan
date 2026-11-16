@@ -326,12 +326,11 @@ class VoiceNoteScreen extends GetView<VoiceNoteController> {
   Widget _footer() {
     final n = controller.note.value;
     if (n == null || n.locked) return const SizedBox.shrink();
-    // the first button fits its words; the second takes the rest
     Widget pair(Widget a, Widget b) => KnScreenFooter(
           children: [
             Row(
               children: [
-                a,
+                Expanded(child: a),
                 const SizedBox(width: KnSize.space12),
                 Expanded(child: b),
               ],
@@ -355,6 +354,7 @@ class VoiceNoteScreen extends GetView<VoiceNoteController> {
       return pair(
         KnCustomButton(
           key: const ValueKey('note-type-instead'),
+          dense: true,
           text: LangKeys.noteTypeInstead.tr,
           icon: LucideIcons.pencil,
           variant: KnButtonVariant.secondary,
@@ -362,6 +362,7 @@ class VoiceNoteScreen extends GetView<VoiceNoteController> {
         ),
         KnCustomButton(
           key: const ValueKey('note-speak-again'),
+          dense: true,
           text: LangKeys.noteSpeakAgain.tr,
           icon: LucideIcons.mic,
           onTap: controller.onSpeakTap,
@@ -370,6 +371,7 @@ class VoiceNoteScreen extends GetView<VoiceNoteController> {
     }
     final save = KnCustomButton(
       key: const ValueKey('note-save'),
+      dense: true,
       text: LangKeys.commonSave.tr,
       icon: LucideIcons.check,
       loading: controller.saving.value,
@@ -383,6 +385,7 @@ class VoiceNoteScreen extends GetView<VoiceNoteController> {
             Expanded(
               child: KnCustomButton(
                 key: const ValueKey('note-speak-change'),
+                dense: true,
                 text: LangKeys.noteSpeakChange.tr,
                 icon: LucideIcons.mic,
                 variant: KnButtonVariant.secondary,
