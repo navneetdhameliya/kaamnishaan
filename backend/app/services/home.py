@@ -12,8 +12,10 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import Principal
 from app.core.errors import AppError
 from app.core.security import now
-from app.models import Customer, Job, JobEvent, Membership, User
+from app.models import Customer, Invitation, Job, JobEvent, Membership, User
+from app.providers.storage import get_storage
 from app.schemas.work import (
+    ContactRef,
     Dashboard,
     DayCount,
     MeStats,
@@ -23,7 +25,7 @@ from app.schemas.work import (
     Today,
     TodayStats,
 )
-from app.services.evidence import photos_by
+from app.services.evidence import photos_by, proof_progress
 from app.services.jobs import CLOSED, day_bounds, items, job_out, local_today, tz
 from app.services.reports import reports_sent_by, shared_since
 
@@ -54,6 +56,7 @@ async def dashboard(db: AsyncSession, p: Principal) -> Dashboard:
     ).scalar_one()
 
     week_start, _ = day_bounds(p, today - timedelta(days=6))
+    last_week_start, _ = day_bounds(p, today - timedelta(days=13))
     completed = (
         (
             await db.execute(
@@ -67,7 +70,8 @@ async def dashboard(db: AsyncSession, p: Principal) -> Dashboard:
     for t in completed:
         d = t.astimezone(tz(p)).date()
         per_day[d] = per_day.get(d, 0) + 1
-    shared = await shared_since(db, p.company_id, week_start)
+    shared_two_weeks = await shared_since(db, p.company_id, last_week_start)
+    shared = [t for t in shared_two_weeks if t >= week_start]
     for t in shared:
         d = t.astimezone(tz(p)).date()
         sent_day[d] = sent_day.get(d, 0) + 1
@@ -93,6 +97,7 @@ async def dashboard(db: AsyncSession, p: Principal) -> Dashboard:
             await db.execute(base.where(Job.status == "in_progress").order_by(Job.started_at))
         ).scalars()
     }
+    storage = get_storage()
     team_now = [
         TeamNow(
             id=u.id,
@@ -100,11 +105,25 @@ async def dashboard(db: AsyncSession, p: Principal) -> Dashboard:
             role=m.role,
             status="on_job" if u.id in running else "idle",
             current_job=f"J-{running[u.id].number}" if u.id in running else None,
+            avatar_url=storage.presign_get(u.avatar_key) if u.avatar_key else None,
         )  # fmt: skip
         for m, u in members
         if m.role != "owner" or u.id in running
     ]
-    team_now.sort(key=lambda t: (t.status != "on_job", t.name.lower()))
+    pending = (
+        await db.execute(
+            select(Invitation).where(
+                Invitation.company_id == p.company_id,
+                Invitation.accepted_at.is_(None),
+                Invitation.declined_at.is_(None),
+                Invitation.revoked_at.is_(None),
+                Invitation.expires_at > now(),
+            )
+        )
+    ).scalars()
+    team_now += [TeamNow(id=i.id, name=i.name, role=i.role, status="invited") for i in pending]
+    order = {"on_job": 0, "idle": 1, "invited": 2}
+    team_now.sort(key=lambda t: (order[t.status], t.name.lower()))
 
     invited = (
         len(members) > 1
@@ -128,6 +147,8 @@ async def dashboard(db: AsyncSession, p: Principal) -> Dashboard:
         },
         to_review=to_review,
         week=week,
+        reports_week=len(shared),
+        reports_last_week=len(shared_two_weeks) - len(shared),
         team_now=team_now,
         onboarding=Onboarding(
             team_invited=invited,
@@ -164,7 +185,13 @@ async def today(db: AsyncSession, p: Principal) -> Today:
     current = (
         await db.execute(mine.where(Job.status == "in_progress").order_by(Job.started_at.desc()).limit(1))
     ).scalar_one_or_none()
-    upcoming = [j for j in todays if j.status == "assigned" and (not current or j.id != current.id)]
+    others = [j for j in todays if j.status != "cancelled" and (not current or j.id != current.id)]
+    coming = [j for j in others if j.status in ("assigned", "in_progress", "changes_requested")]
+    finished = [j for j in others if j.status in ("in_review", "completed")]
+    current_item = None
+    if current:
+        current_item = (await items(db, [current]))[0]
+        current_item.proof = await proof_progress(db, current)
     return Today(
         date=d,
         name=p.user.name or "",
@@ -174,10 +201,34 @@ async def today(db: AsyncSession, p: Principal) -> Today:
             done=len([j for j in todays if j.status in ("in_review", "completed")]),
             photos=await photos_by(db, p.company_id, p.user.id, since=start),
         ),
-        current_job=(await items(db, [current]))[0] if current else None,
-        next_jobs=await items(db, upcoming),
+        current_job=current_item,
+        next_jobs=await items(db, coming + finished),
         unread=0,
+        manager=await _my_manager(db, p),
     )
+
+
+async def _my_manager(db: AsyncSession, p: Principal) -> ContactRef | None:
+    """Who a technician calls about work: the person who invited them, else a manager, else the owner."""
+    if p.role in ("owner", "manager"):
+        return None
+    rows = (
+        await db.execute(
+            select(Membership, User)
+            .join(User, User.id == Membership.user_id)
+            .where(
+                Membership.company_id == p.company_id,
+                Membership.status == "active",
+                Membership.role.in_(("owner", "manager")),
+            )
+        )
+    ).all()
+    if not rows:
+        return None
+    inviter = p.membership.invited_by if p.membership else None
+    rank = {"manager": 0, "owner": 1}
+    m, u = min(rows, key=lambda r: (r[1].id != inviter, rank[r[0].role], (r[1].name or "").lower()))
+    return ContactRef(name=u.name or "", phone=u.phone)
 
 
 async def stats(db: AsyncSession, p: Principal) -> MeStats:

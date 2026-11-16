@@ -374,4 +374,124 @@ abstract final class LangKeys {
   static const profileChoosePhoto = 'profile.choose_photo';
   /// The photo did not upload. Try again.
   static const profilePhotoFailed = 'profile.photo_failed';
+  /// Good morning
+  static const homeGoodMorning = 'home.good_morning';
+  /// Good afternoon
+  static const homeGoodAfternoon = 'home.good_afternoon';
+  /// Good evening
+  static const homeGoodEvening = 'home.good_evening';
+  /// Welcome,
+  static const homeWelcome = 'home.welcome';
+  /// See all
+  static const commonSeeAll = 'common.see_all';
+  /// Refresh
+  static const commonRefresh = 'common.refresh';
+  /// This part comes in the next update.
+  static const commonComingSoon = 'common.coming_soon';
+  /// Notifications
+  static const commonNotifications = 'common.notifications';
+  /// Jobs today
+  static const todayJobs = 'today.jobs';
+  /// Done
+  static const todayDone = 'today.done';
+  /// Photos
+  static const todayPhotos = 'today.photos';
+  /// NOW · In progress
+  static const todayNow = 'today.now';
+  /// Proof
+  static const todayProof = 'today.proof';
+  /// {done} of {total} steps
+  static const todayProofSteps = 'today.proof_steps';
+  /// Continue job
+  static const todayContinueJob = 'today.continue_job';
+  /// Next up
+  static const todayNextUp = 'today.next_up';
+  /// {title} · done
+  static const todayJobDone = 'today.job_done';
+  /// No jobs today
+  static const todayEmptyTitle = 'today.empty_title';
+  /// New jobs from your manager will show here.
+  static const todayEmptyBody = 'today.empty_body';
+  /// Expecting a job?
+  static const todayExpecting = 'today.expecting';
+  /// Call {name}, your manager.
+  static const todayCallManager = 'today.call_manager';
+  /// Saved on phone
+  static const todaySavedOnPhone = 'today.saved_on_phone';
+  /// Loading your jobs…
+  static const todayLoading = 'today.loading';
+  /// This week
+  static const dashThisWeek = 'dash.this_week';
+  /// reports sent
+  static const dashReportsSent = 'dash.reports_sent';
+  /// {pct}% more than last week
+  static const dashMore = 'dash.more';
+  /// {pct}% less than last week
+  static const dashLess = 'dash.less';
+  /// Same as last week
+  static const dashSame = 'dash.same';
+  /// Your first reports this week
+  static const dashFirst = 'dash.first';
+  /// To review
+  static const dashToReview = 'dash.to_review';
+  /// In progress
+  static const dashInProgress = 'dash.in_progress';
+  /// Done today
+  static const dashDoneToday = 'dash.done_today';
+  /// Waiting for your review
+  static const dashWaiting = 'dash.waiting';
+  /// {count} photos
+  static const dashPhotos = 'dash.photos';
+  /// AI draft
+  static const dashAiDraft = 'dash.ai_draft';
+  /// Team right now
+  static const dashTeamNow = 'dash.team_now';
+  /// On a job
+  static const dashOnJob = 'dash.on_job';
+  /// Free
+  static const dashFree = 'dash.free';
+  /// Invite sent
+  static const dashInviteSent = 'dash.invite_sent';
+  /// Set up your team
+  static const dashSetUpTeam = 'dash.set_up_team';
+  /// Get started
+  static const dashGetStarted = 'dash.get_started';
+  /// {done} of {total} done
+  static const dashStepsDone = 'dash.steps_done';
+  /// Create company
+  static const dashStepCompany = 'dash.step_company';
+  /// Done · {company}
+  static const dashStepCompanyDone = 'dash.step_company_done';
+  /// Invite your team
+  static const dashStepTeam = 'dash.step_team';
+  /// They join by SMS
+  static const dashStepTeamBody = 'dash.step_team_body';
+  /// Invite
+  static const dashInvite = 'dash.invite';
+  /// Create first job
+  static const dashStepJob = 'dash.step_job';
+  /// Add one, assign it
+  static const dashStepJobBody = 'dash.step_job_body';
+  /// Create
+  static const dashCreate = 'dash.create';
+  /// How KaamNishaan works
+  static const dashHowTitle = 'dash.how_title';
+  /// Technicians take photos
+  static const dashHow1 = 'dash.how_1';
+  /// AI writes the report
+  static const dashHow2 = 'dash.how_2';
+  /// You approve and send
+  static const dashHow3 = 'dash.how_3';
+  /// No reports to review yet
+  static const dashNoReports = 'dash.no_reports';
+  /// Reports from your team will show here.
+  static const dashNoReportsBody = 'dash.no_reports_body';
+  /// {role} · {company}
+  static const dashRoleCompany = 'dash.role_company';
+  /// {count} min ago
+  static const timeMinutesAgo = 'time.minutes_ago';
+  /// {count} h ago
+  static const timeHoursAgo = 'time.hours_ago';
+  /// just now
+  static const timeJustNow = 'time.just_now';
 }

@@ -46,7 +46,7 @@ from app.schemas.reports import (
 )
 from app.schemas.work import PersonRef
 from app.services import audit
-from app.services.evidence import lock_job_evidence, proof
+from app.services.evidence import covers, lock_job_evidence, photo_counts, proof
 from app.services.jobs import get_job, label
 
 SECTIONS = ("summary", "work_done", "advice")
@@ -205,9 +205,36 @@ async def _people(db: AsyncSession, ids: set) -> dict:
     return {u.id: u.name or "" for u in (await db.execute(select(User).where(User.id.in_(ids)))).scalars()}
 
 
-async def _brief(db: AsyncSession, job: Job, names: dict) -> JobBrief:
+async def _avatars(db: AsyncSession, ids: set) -> dict:
+    ids = {i for i in ids if i}
+    if not ids:
+        return {}
+    storage = get_storage()
+    rows = await db.execute(
+        select(User.id, User.avatar_key).where(User.id.in_(ids), User.avatar_key.is_not(None))
+    )
+    return {uid: storage.presign_get(key) for uid, key in rows.all()}
+
+
+async def _brief(
+    db: AsyncSession,
+    job: Job,
+    names: dict,
+    *,
+    avatars: dict | None = None,
+    photos: dict | None = None,
+    cover_urls: dict | None = None,
+) -> JobBrief:
     customer = await db.get(Customer, job.customer_id)
-    tech = PersonRef(id=job.assigned_to, name=names.get(job.assigned_to, "")) if job.assigned_to else None
+    tech = (
+        PersonRef(
+            id=job.assigned_to,
+            name=names.get(job.assigned_to, ""),
+            avatar_url=(avatars or {}).get(job.assigned_to),
+        )
+        if job.assigned_to
+        else None
+    )
     return JobBrief(
         id=job.id,
         number=label(job.number),
@@ -215,6 +242,8 @@ async def _brief(db: AsyncSession, job: Job, names: dict) -> JobBrief:
         status=job.status,
         customer=customer.name,
         technician=tech,
+        photos=(photos or {}).get(job.id, 0),
+        cover_url=(cover_urls or {}).get(job.id),
     )
 
 
@@ -330,6 +359,10 @@ async def list_reports(
     rows = (await db.execute(base.order_by(*order, Report.number).offset(offset).limit(limit + 1))).all()
     page = rows[:limit]
     names = await _people(db, {j.assigned_to for _, j in page})
+    avatars = await _avatars(db, {j.assigned_to for _, j in page})
+    page_jobs = [j for _, j in page]
+    photos = await photo_counts(db, [j.id for j in page_jobs])
+    cover_urls = await covers(db, page_jobs)
     notes = {}
     ids = [r.id for r, _ in page]
     if ids:
@@ -349,7 +382,7 @@ async def list_reports(
                 id=r.id,
                 number=rlabel(r.number),
                 status=r.status,
-                job=await _brief(db, j, names),
+                job=await _brief(db, j, names, avatars=avatars, photos=photos, cover_urls=cover_urls),
                 drafted_by=r.drafted_by,
                 flags=len(r.flags or []),
                 submitted_at=r.submitted_at,

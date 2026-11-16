@@ -8,7 +8,7 @@ the report is submitted (`lock_job_evidence`); after that only notes can be adde
 import uuid
 from datetime import datetime, timedelta
 
-from sqlalchemy import func, select, update
+from sqlalchemy import func, or_, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import Principal
@@ -32,7 +32,7 @@ from app.schemas.evidence import (
     UploadOut,
 )
 from app.schemas.identity import ListMeta
-from app.schemas.work import PersonRef
+from app.schemas.work import PersonRef, ProofCount
 from app.services import audit
 from app.services.jobs import get_job
 
@@ -453,6 +453,78 @@ async def lock_job_evidence(db: AsyncSession, job_id: uuid.UUID) -> int:
     await lock_answers(db, job_id)
     await lock_notes(db, job_id)
     return r.rowcount or 0
+
+
+async def covers(db: AsyncSession, jobs: list[Job]) -> dict[uuid.UUID, str]:
+    """A picture for each job card: its latest photo, else the latest photo of the same site."""
+    if not jobs:
+        return {}
+    job_ids = [j.id for j in jobs]
+    site_ids = [j.site_id for j in jobs if j.site_id]
+    where = Evidence.job_id.in_(job_ids)
+    if site_ids:
+        where = or_(where, Job.site_id.in_(site_ids))
+    rows = (
+        await db.execute(
+            select(Evidence.job_id, Job.site_id, Evidence.thumb_key)
+            .join(Job, Job.id == Evidence.job_id)
+            .where(
+                Evidence.company_id == jobs[0].company_id,
+                Evidence.deleted_at.is_(None),
+                Evidence.thumb_key.is_not(None),
+                where,
+            )
+            .order_by(Evidence.taken_at.desc())
+            .limit(500)
+        )
+    ).all()
+    by_job: dict = {}
+    by_site: dict = {}
+    for job_id, site_id, key in rows:
+        by_job.setdefault(job_id, key)
+        if site_id:
+            by_site.setdefault(site_id, key)
+    storage = get_storage()
+    out = {}
+    for j in jobs:
+        key = by_job.get(j.id) or by_site.get(j.site_id)
+        if key:
+            out[j.id] = storage.presign_get(key)
+    return out
+
+
+async def photo_counts(db: AsyncSession, job_ids: list[uuid.UUID]) -> dict[uuid.UUID, int]:
+    if not job_ids:
+        return {}
+    rows = await db.execute(
+        select(Evidence.job_id, func.count())
+        .where(Evidence.job_id.in_(job_ids), Evidence.deleted_at.is_(None))
+        .group_by(Evidence.job_id)
+    )
+    return dict(rows.all())
+
+
+async def proof_progress(db: AsyncSession, job: Job) -> ProofCount:
+    """The same steps as GET /jobs/{id}/proof, counted: before, during, after, checklists (if any), voice."""
+    from app.services.checklists import checklist_progress
+    from app.services.voice import count_for_job
+
+    stages = set(
+        (
+            await db.execute(
+                select(Evidence.stage)
+                .where(Evidence.job_id == job.id, Evidence.deleted_at.is_(None))
+                .distinct()
+            )
+        ).scalars()
+    )
+    done_lists, all_lists = await checklist_progress(db, job.id)
+    notes = await count_for_job(db, job.id)
+    steps = [s in stages for s in ("before", "during", "after")]
+    if all_lists:
+        steps.append(done_lists == all_lists)
+    steps.append(notes > 0)
+    return ProofCount(done=sum(steps), total=len(steps))
 
 
 async def photos_by(
