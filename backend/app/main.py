@@ -28,7 +28,7 @@ def create_app() -> FastAPI:
     app.include_router(v1)
     if s.storage_provider == "local":
         app.include_router(files.router, prefix="/api/v1")
-    if s.env in ("local", "test"):
+    if s.outbox_enabled:  # local, tests, and a test server with KN_TEST_OUTBOX_KEY
         app.include_router(dev.router, prefix="/api/v1")
         logging.getLogger("kn").setLevel(logging.INFO)
     return app

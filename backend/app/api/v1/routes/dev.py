@@ -1,13 +1,28 @@
-"""Local testing only: read the SMS, WhatsApp messages and emails the console providers "sent".
+"""Testing only: read the SMS, WhatsApp messages and emails the console providers "sent".
 
-Mounted only when KN_ENV is local or test, never on staging or production.
+Mounted when KN_ENV is local or test, and on a test server (staging) only when KN_TEST_OUTBOX_KEY is
+set; there the key must be sent as the X-Outbox-Key header or ?key=. Never on production.
 """
 
-from fastapi import APIRouter
+import hmac
 
+from fastapi import APIRouter, Depends, Header, Query
+
+from app.core.config import get_settings
+from app.core.errors import Forbidden
 from app.providers.messaging import outbox
 
-router = APIRouter(prefix="/dev", tags=["dev (local only)"])
+
+def _key(x_outbox_key: str | None = Header(default=None), key: str | None = Query(default=None)) -> None:
+    s = get_settings()
+    if s.env in ("local", "test"):
+        return
+    given = x_outbox_key or key or ""
+    if not s.test_outbox_key or not hmac.compare_digest(given, s.test_outbox_key.get_secret_value()):
+        raise Forbidden("forbidden", "The test outbox key is missing or wrong.")
+
+
+router = APIRouter(prefix="/dev", tags=["dev (test servers only)"], dependencies=[Depends(_key)])
 
 
 @router.get("/outbox")

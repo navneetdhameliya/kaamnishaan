@@ -1,7 +1,17 @@
-# Render Blueprint — India-first: everything in the Singapore region.
-# Secrets (OpenAI, R2, MSG91) are added in the Render dashboard, never here.
+# Render Blueprint — the live TEST server (free plan), Singapore region (closest to India).
+#
+# Free plan limits: the API sleeps after 15 minutes without use (the next call takes about a minute),
+# and the free database is deleted 30 days after it is created (14 more days to upgrade).
+# Before real customers: switch the API and the database to paid plans in the Render dashboard.
+#
+# No worker and no Redis on the free plan: photos, AI drafts and PDFs run inside the API process
+# (the code does this when KN_REDIS_URL is not set). To add them later (paid), see docs/deploy.md.
+#
+# Secrets marked `sync: false` are asked for once, when the Blueprint is first created.
+# Never put their values in this file.
 databases:
   - name: kaamnishaan-db
+    plan: free
     region: singapore
     databaseName: kaamnishaan
     user: kaamnishaan
@@ -10,12 +20,13 @@ databases:
 services:
   - type: web
     name: kaamnishaan-api
+    plan: free
     runtime: docker
     region: singapore
     rootDir: backend
     dockerfilePath: ./Dockerfile
     healthCheckPath: /api/v1/health
-    autoDeploy: true
+    autoDeploy: true  # every merge to main goes live
     envVars:
       - key: KN_ENV
         value: staging
@@ -23,53 +34,25 @@ services:
         fromDatabase: { name: kaamnishaan-db, property: connectionString }
       - key: KN_SECRET_KEY
         generateValue: true
-      - key: KN_CORS_ORIGINS
-        value: '["https://kaamnishaan-web.vercel.app","https://kaamnishaan-admin.vercel.app"]'
+      - key: KN_TEST_OUTBOX_KEY  # opens GET /api/v1/dev/outbox (login codes, emails) on this test server
+        generateValue: true
       - key: KN_API_URL
         value: https://kaamnishaan-api.onrender.com
-      - key: KN_REDIS_URL
-        fromService: { type: keyvalue, name: kaamnishaan-redis, property: connectionString }
-      - fromGroup: kaamnishaan-secrets
-
-  # Background worker: thumbnails now; SMS, AI drafts and PDFs in later steps.
-  - type: worker
-    name: kaamnishaan-worker
-    runtime: docker
-    region: singapore
-    rootDir: backend
-    dockerfilePath: ./Dockerfile
-    dockerCommand: arq app.worker.WorkerSettings
-    autoDeploy: true
-    envVars:
-      - key: KN_ENV
-        value: staging
-      - key: KN_DATABASE_URL
-        fromDatabase: { name: kaamnishaan-db, property: connectionString }
-      - key: KN_SECRET_KEY
-        fromService: { type: web, name: kaamnishaan-api, envVarKey: KN_SECRET_KEY }
-      - key: KN_REDIS_URL
-        fromService: { type: keyvalue, name: kaamnishaan-redis, property: connectionString }
-      - fromGroup: kaamnishaan-secrets
-
-  - type: keyvalue
-    name: kaamnishaan-redis
-    region: singapore
-    plan: free
-    ipAllowList: []  # only Render services can reach it
-
-envVarGroups:
-  # Values are typed into the Render dashboard, never committed.
-  - name: kaamnishaan-secrets
-    envVars:
+      - key: KN_WEB_URL  # customer report links and invites point here (website comes later)
+        value: https://kaamnishaan-web.vercel.app
+      - key: KN_CORS_ORIGINS
+        value: '["https://kaamnishaan-web.vercel.app","https://kaamnishaan-admin.vercel.app","http://localhost:5173","http://localhost:5174"]'
+      # Files: Cloudflare R2 (photos, voice notes, PDFs)
       - key: KN_STORAGE_PROVIDER
         value: r2
       - key: KN_STORAGE_BUCKET
         value: kaamnishaan-staging
-      - key: KN_STORAGE_ENDPOINT
+      - key: KN_STORAGE_ENDPOINT  # https://<account id>.r2.cloudflarestorage.com
         sync: false
       - key: KN_STORAGE_ACCESS_KEY
         sync: false
       - key: KN_STORAGE_SECRET_KEY
         sync: false
+      # Optional: without it, reports use the plain draft and voice notes wait for transcription
       - key: KN_OPENAI_API_KEY
         sync: false
