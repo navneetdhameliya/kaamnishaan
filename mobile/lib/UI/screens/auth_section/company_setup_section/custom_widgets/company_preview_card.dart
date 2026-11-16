@@ -44,7 +44,7 @@ class CompanyPreviewCard extends StatelessWidget {
                   maxLines: 1,
                 ),
                 const SizedBox(height: KnSize.space2),
-                CustomBaseTextWidget(meta, style: text.caption, color: kn.textSecondary, maxLines: 1),
+                CustomBaseTextWidget(meta, style: text.caption, color: kn.textSecondary, maxLines: 2),
               ],
             ),
           ),

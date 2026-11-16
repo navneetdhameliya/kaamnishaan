@@ -135,6 +135,7 @@ class EmailLoginScreen extends GetView<EmailLoginController> {
                   alignment: AlignmentDirectional.centerEnd,
                   child: KnTextLink(
                     key: const ValueKey('forgot-password'),
+                    large: true,
                     text: controller.attemptsLeft.value != null ? LangKeys.loginForgotReset.tr : LangKeys.loginForgot.tr,
                     onTap: controller.onForgotTap,
                   ),
