@@ -18,6 +18,7 @@ void main() {
   late MockFilesRepository files;
   late MockJobsRepository jobs;
   late StreamController<bool> online;
+  late MockChecklistsRepository checklists;
 
   setUpAll(() {
     registerFallbackValue(UploadKind.photo);
@@ -38,8 +39,6 @@ void main() {
     await online.close();
     tmp.deleteSync(recursive: true);
   });
-
-  late MockChecklistsRepository checklists;
 
   PhotoQueueService queue() => PhotoQueueService(
         files: files,

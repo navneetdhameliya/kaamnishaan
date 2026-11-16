@@ -771,8 +771,8 @@ void main() {
     final qs = [
       question('q1', 1, answer: 'yes'),
       question('q2', 2, answer: 'pass', type: 'pass_fail'),
-      QuestionOutModel(
-        id: 'q3', position: 3, type: 'yes_no', text: 'Is the air filter clean?', translationStatus: 'ready', options: const [],
+      const QuestionOutModel(
+        id: 'q3', position: 3, type: 'yes_no', text: 'Is the air filter clean?', translationStatus: 'ready', options: [],
         photoRule: 'if_no', requiredValue: true, visible: true, photoNeeded: false,
         referenceImageUrl: 'https://x/filter.jpg',
       ),

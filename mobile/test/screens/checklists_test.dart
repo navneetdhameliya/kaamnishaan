@@ -158,8 +158,8 @@ void main() {
     test('numbers are checked against the allowed range', () async {
       final c = open([
         question('q1', 1, answer: 'yes'),
-        QuestionOutModel(
-          id: 'q3', position: 2, type: 'number', text: 'Gas pressure?', translationStatus: 'ready', options: const [],
+        const QuestionOutModel(
+          id: 'q3', position: 2, type: 'number', text: 'Gas pressure?', translationStatus: 'ready', options: [],
           photoRule: 'none', requiredValue: true, visible: true, photoNeeded: false, minValue: 50, maxValue: 150, unit: 'psi',
         ),
         question('q4', 3),
