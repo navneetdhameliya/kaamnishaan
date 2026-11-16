@@ -183,6 +183,7 @@ class JobCreate(_In):
     scheduled_at: datetime | None = None
     duration_min: int | None = Field(default=None, ge=5, le=24 * 60)
     assigned_to: uuid.UUID | None = None
+    checklist_template_ids: list[uuid.UUID] = Field(default_factory=list, max_length=10)
     client_uuid: uuid.UUID | None = None
 
 

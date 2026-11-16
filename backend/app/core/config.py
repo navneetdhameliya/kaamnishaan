@@ -26,7 +26,9 @@ class Settings(BaseSettings):
     supported_locales: list[str] = Field(default_factory=lambda: ["en", "hi", "gu", "es", "fr"])
 
     # Providers (filled in later steps; optional so the app boots without them)
-    openai_api_key: SecretStr | None = None
+    openai_api_key: SecretStr | None = None  # without it, transcription and auto-translate wait
+    openai_transcribe_model: str = "whisper-1"
+    openai_text_model: str = "gpt-4o-mini"
     # Files: "local" keeps them in a folder (your computer, tests); "r2" uses Cloudflare R2.
     storage_provider: Literal["local", "r2"] = "local"
     storage_local_dir: str = "var/uploads"

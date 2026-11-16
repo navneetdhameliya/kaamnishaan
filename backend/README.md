@@ -36,6 +36,16 @@ With a started job (`POST /jobs/{id}/start` as the technician):
 
 Files are saved in `backend/var/uploads` on your computer. The live server uses Cloudflare R2.
 
+### Try a checklist and a voice note (Step 1d)
+1. As the owner, `GET /api/v1/checklist-templates?trade=hvac` lists the 4 ready-made HVAC checklists.
+2. `POST /api/v1/jobs` with `"checklist_template_ids": ["<id>"]` (and `assigned_to`), then start the job as the technician.
+3. `GET /api/v1/jobs/{id}/checklists` → `GET /api/v1/checklist-submissions/{checklist_id}?lang=hi` shows the questions in Hindi.
+4. `PUT /api/v1/checklist-submissions/{checklist_id}/answers/{question_id}` with `{"value": "pass"}`.
+   Questions with a photo rule answer `photo_required` until you add `"photo_id"` (a photo from Step 1c).
+5. Voice: `POST /api/v1/uploads` with `{"kind": "audio", "content_type": "audio/mp4"}`, send the file with curl as for
+   photos, then `POST /api/v1/jobs/{id}/voice-notes`. Without `KN_OPENAI_API_KEY` in `.env` it waits for transcription.
+   `POST /api/v1/jobs/{id}/notes` with `{"text": "..."}` adds a typed note.
+
 ## Checks
 Tests use a real PostgreSQL database `kaamnishaan_test` (override with `KN_TEST_DATABASE_URL`);
 it is migrated once per run and emptied between tests.

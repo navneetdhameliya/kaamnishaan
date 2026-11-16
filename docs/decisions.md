@@ -25,6 +25,11 @@
 | D-21 | Photo upload limit 12 MB (phone compresses to 2,560 px); originals are never changed; a 480 px thumbnail without EXIF/GPS is made for lists; each photo gets a SHA-256 fingerprint | Conflict #4; evidence integrity | 2026-11-07 |
 | D-22 | Evidence lock is enforced twice: the API answers `409 evidence_locked`, and a database trigger refuses any change or delete of a locked photo (only processing results may still be written) | Proof must be trustworthy | 2026-11-07 |
 | D-23 | Files: `KN_STORAGE_PROVIDER=local` (a folder, for your computer and tests) or `r2` (required on staging and production). Every file link is signed and expires in 15 minutes | No public file URLs | 2026-11-07 |
+| D-24 | Checklist texts are stored per language in one JSON field with a status per language (ready, needs review, missing); the app shows the job's language and falls back to the source language | Simpler than a separate translations table; same behaviour | 2026-11-16 |
+| D-25 | Attaching a checklist to a job copies its questions (snapshot), so editing a template never changes a running job; global templates are read-only for companies, who copy them to change them | M26, A23 | 2026-11-16 |
+| D-26 | A job with checklists needs them finished (every required question that is shown, with its photo or signature) before "Make report" unlocks | M19 unlock rule | 2026-11-16 (default; easy to change) |
+| D-27 | Typed notes (microphone off) are stored as voice notes with kind "typed", so M28 shows one list and the report reads one source | M27, M28 | 2026-11-16 |
+| D-28 | Without an OpenAI key, voice notes stay "uploaded" with `waiting_for: transcription_service` and checklist translations stay "missing"; adding the key switches both on with no code change | Build before the key exists | 2026-11-16 |
 
 ## Still open
 - Credit pack INR prices (placeholders ₹799 / 500 and ₹2,799 / 2,000).
@@ -35,3 +40,4 @@
 - Admin staff accounts with authenticator code (separate `staff_users` table) — next foundation step.
 - Error messages translated by `Accept-Language` (codes are final; English text for now).
 - Live technician location in v1, testimonial source, where public reviews show.
+- Native-speaker review of the Hindi, Gujarati, Spanish and French texts of the 4 seeded HVAC checklists (marked needs_review).

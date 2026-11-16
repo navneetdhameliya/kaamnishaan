@@ -27,6 +27,7 @@ from app.schemas.evidence import (
     PairOut,
     Proof,
     ProofStep,
+    ShotPrompt,
     UploadCreate,
     UploadOut,
 )
@@ -385,11 +386,28 @@ async def proof(db: AsyncSession, p: Principal, job_id: uuid.UUID) -> Proof:
             thumbs=[storage.presign_get(e.thumb_key) for e in mine if e.thumb_key][:3],
         )  # fmt: skip
 
+    from app.services.checklists import checklist_progress, pick, shot_prompts
+    from app.services.voice import count_for_job
+
     steps = [step("before", True), step("during", False), step("after", True)]
-    # checklists and voice notes arrive in Step 1d
+    done_lists, all_lists = await checklist_progress(db, j.id)
+    notes = await count_for_job(db, j.id)
     steps += [
-        ProofStep(key="checklist", count=0, required=False, done=False),
-        ProofStep(key="voice", count=0, required=False, done=False),
+        # a job with checklists needs them finished before the report
+        ProofStep(
+            key="checklist",
+            count=done_lists,
+            total=all_lists,
+            required=all_lists > 0,
+            done=all_lists > 0 and done_lists == all_lists,
+        ),  # fmt: skip
+        ProofStep(key="voice", count=notes, required=False, done=notes > 0),
+    ]
+    lang = p.user.app_language or "en"
+    taken = {e.shot_slot for e in rows if e.shot_slot}
+    prompts = [
+        ShotPrompt(stage=stage, key=key, prompt=pick(text, lang), done=key in taken)
+        for stage, key, text in await shot_prompts(db, j.id)
     ]
     locked = any(e.locked_at for e in rows)
     blocked = None
@@ -401,10 +419,13 @@ async def proof(db: AsyncSession, p: Principal, job_id: uuid.UUID) -> Proof:
         blocked = "need_before_photo"
     elif not steps[2].done:
         blocked = "need_after_photo"
+    elif steps[3].required and not steps[3].done:
+        blocked = "need_checklist"
     return Proof(
         job_id=j.id,
         status=j.status,
         steps=steps,
+        shot_prompts=prompts,
         can_make_report=blocked is None,
         blocked_by=blocked,
         locked=locked,
@@ -412,12 +433,18 @@ async def proof(db: AsyncSession, p: Principal, job_id: uuid.UUID) -> Proof:
 
 
 async def lock_job_evidence(db: AsyncSession, job_id: uuid.UUID) -> int:
-    """Called when the report is submitted (Step 1e). Returns how many photos were locked."""
+    """Called when the report is submitted (Step 1e). Locks the job's photos, checklist answers and
+    voice notes together. Returns how many photos were locked."""
+    from app.services.checklists import lock_answers
+    from app.services.voice import lock_notes
+
     r = await db.execute(
         update(Evidence)
         .where(Evidence.job_id == job_id, Evidence.locked_at.is_(None), Evidence.deleted_at.is_(None))
         .values(locked_at=now())
     )
+    await lock_answers(db, job_id)
+    await lock_notes(db, job_id)
     return r.rowcount or 0
 
 

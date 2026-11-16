@@ -53,4 +53,4 @@ async def enqueue(name: str, **kwargs) -> None:
 
 
 # register task modules
-from app.tasks import photos  # noqa: E402,F401
+from app.tasks import ai, photos  # noqa: E402,F401
