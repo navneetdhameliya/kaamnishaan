@@ -731,6 +731,19 @@
       "CompanyUpdate": {
         "additionalProperties": false,
         "properties": {
+          "logo_upload_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "An upload of kind logo (POST /uploads, then PUT the file)",
+            "title": "Logo Upload Id"
+          },
           "name": {
             "anyOf": [
               {
@@ -3623,6 +3636,18 @@
             ],
             "title": "Theme",
             "type": "string"
+          },
+          "trade": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The person's own work (industry slug)",
+            "title": "Trade"
           }
         },
         "required": [
@@ -3702,6 +3727,19 @@
       "MeUpdate": {
         "additionalProperties": false,
         "properties": {
+          "avatar_upload_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "An upload of kind avatar (POST /uploads, then PUT the file)",
+            "title": "Avatar Upload Id"
+          },
           "name": {
             "anyOf": [
               {
@@ -3714,6 +3752,23 @@
               }
             ],
             "title": "Name"
+          },
+          "remove_avatar": {
+            "default": false,
+            "title": "Remove Avatar",
+            "type": "boolean"
+          },
+          "trade": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Industry slug from GET /config trades",
+            "title": "Trade"
           }
         },
         "title": "MeUpdate",

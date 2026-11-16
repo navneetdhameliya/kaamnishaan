@@ -8,6 +8,7 @@ import '../../../common_widgets/kn_bottom_sheet.dart';
 import '../../../common_widgets/kn_custom_button.dart';
 import '../../../common_widgets/kn_custom_text_form_field.dart';
 import '../../../common_widgets/kn_dropdown_field.dart';
+import '../../../common_widgets/kn_initials_avatar.dart';
 import '../../../common_widgets/kn_page_scaffold.dart';
 import '../../../common_widgets/kn_screen_footer.dart';
 import '../../../common_widgets/kn_select_card.dart';
@@ -78,17 +79,19 @@ class ProfileSetupScreen extends GetView<ProfileSetupController> {
                   height: 116,
                   child: Stack(
                     children: [
-                      Container(
-                        width: 112,
-                        height: 112,
-                        decoration: BoxDecoration(
-                          color: kn.bgSubtle,
-                          shape: BoxShape.circle,
-                          border: Border.all(color: KnPrimitive.mocha300, width: 3),
-                        ),
-                        alignment: Alignment.center,
-                        child: Obx(() => CustomBaseTextWidget(controller.initials, style: text.h1)),
-                      ),
+                      Obx(() {
+                        final picked = controller.photo.value;
+                        final saved = controller.savedPhotoUrl;
+                        final ImageProvider? image =
+                            picked != null ? MemoryImage(picked.bytes) : (saved != null ? NetworkImage(saved) : null);
+                        return KnInitialsAvatar(
+                          key: const ValueKey('profile-avatar'),
+                          size: 112,
+                          borderWidth: 3,
+                          initials: controller.initials,
+                          image: image,
+                        );
+                      }),
                       Positioned(
                         right: 0,
                         bottom: 0,

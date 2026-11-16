@@ -1,11 +1,21 @@
 import 'package:get/get.dart';
 
 import '../../../UI/screens/auth_section/choose_company_section/choose_company_binding.dart';
+import '../../../UI/screens/auth_section/check_email_section/check_email_binding.dart';
+import '../../../UI/screens/auth_section/check_email_section/check_email_screen.dart';
 import '../../../UI/screens/auth_section/choose_company_section/choose_company_screen.dart';
+import '../../../UI/screens/auth_section/company_setup_section/company_setup_binding.dart';
+import '../../../UI/screens/auth_section/company_setup_section/company_setup_screen.dart';
+import '../../../UI/screens/auth_section/email_login_section/email_login_binding.dart';
+import '../../../UI/screens/auth_section/email_login_section/email_login_screen.dart';
+import '../../../UI/screens/auth_section/forgot_password_section/forgot_password_binding.dart';
+import '../../../UI/screens/auth_section/forgot_password_section/forgot_password_screen.dart';
 import '../../../UI/screens/auth_section/join_company_section/join_company_binding.dart';
 import '../../../UI/screens/auth_section/join_company_section/join_company_screen.dart';
 import '../../../UI/screens/auth_section/otp_section/otp_binding.dart';
 import '../../../UI/screens/auth_section/otp_section/otp_screen.dart';
+import '../../../UI/screens/auth_section/owner_signup_section/owner_signup_binding.dart';
+import '../../../UI/screens/auth_section/owner_signup_section/owner_signup_screen.dart';
 import '../../../UI/screens/auth_section/phone_section/phone_binding.dart';
 import '../../../UI/screens/auth_section/phone_section/phone_screen.dart';
 import '../../../UI/screens/auth_section/profile_setup_section/profile_setup_binding.dart';
@@ -43,6 +53,31 @@ abstract final class AppPages {
       name: RoutesConstants.chooseCompanyScreen,
       page: () => const ChooseCompanyScreen(),
       binding: ChooseCompanyBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.emailLoginScreen,
+      page: () => const EmailLoginScreen(),
+      binding: EmailLoginBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.ownerSignupScreen,
+      page: () => const OwnerSignupScreen(),
+      binding: OwnerSignupBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.companySetupScreen,
+      page: () => const CompanySetupScreen(),
+      binding: CompanySetupBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.forgotPasswordScreen,
+      page: () => const ForgotPasswordScreen(),
+      binding: ForgotPasswordBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.checkEmailScreen,
+      page: () => const CheckEmailScreen(),
+      binding: CheckEmailBinding(),
     ),
     GetPage(name: RoutesConstants.homeScreen, page: () => const HomeScreen()),
   ];

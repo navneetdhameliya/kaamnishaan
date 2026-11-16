@@ -98,8 +98,14 @@ async def create_upload(db: AsyncSession, p: Principal, body: UploadCreate) -> U
 
 async def take_upload(db: AsyncSession, p: Principal, upload_id: uuid.UUID, kind: str) -> tuple[Upload, int]:
     """Check an upload belongs to this person, is unused, and the file really arrived within the limit."""
+    return await take_upload_for(db, p.user.id, upload_id, kind)
+
+
+async def take_upload_for(
+    db: AsyncSession, user_id: uuid.UUID, upload_id: uuid.UUID, kind: str
+) -> tuple[Upload, int]:
     up = await db.get(Upload, upload_id, with_for_update=True)
-    if not up or up.user_id != p.user.id or up.kind != kind:
+    if not up or up.user_id != user_id or up.kind != kind:
         raise NotFound("upload_not_found", "Upload not found.")
     if up.used_at:
         raise Conflict("upload_used", "This upload was already used.")

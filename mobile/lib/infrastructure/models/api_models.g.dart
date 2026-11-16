@@ -562,23 +562,28 @@ CompanyUpdateModel companyUpdateModelFromJson(String str) => CompanyUpdateModel.
 String companyUpdateModelToJson(CompanyUpdateModel data) => json.encode(data.toJson());
 
 class CompanyUpdateModel {
+  /// An upload of kind logo (POST /uploads, then PUT the file)
+  final String? logoUploadId;
   final String? name;
   final String? timezone;
   final String? trade;
 
   const CompanyUpdateModel({
+    this.logoUploadId,
     this.name,
     this.timezone,
     this.trade,
   });
 
   factory CompanyUpdateModel.fromJson(Map<String, dynamic> json) => CompanyUpdateModel(
+        logoUploadId: json['logo_upload_id'] as String?,
         name: json['name'] as String?,
         timezone: json['timezone'] as String?,
         trade: json['trade'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
+        'logo_upload_id': logoUploadId,
         'name': name,
         'timezone': timezone,
         'trade': trade,
@@ -2515,6 +2520,8 @@ class MeOutModel {
   final String? role;
   /// One of: system, light, dark
   final String theme;
+  /// The person's own work (industry slug)
+  final String? trade;
 
   const MeOutModel({
     required this.appLanguage,
@@ -2528,6 +2535,7 @@ class MeOutModel {
     this.phone,
     this.role,
     required this.theme,
+    this.trade,
   });
 
   factory MeOutModel.fromJson(Map<String, dynamic> json) => MeOutModel(
@@ -2542,6 +2550,7 @@ class MeOutModel {
         phone: json['phone'] as String?,
         role: json['role'] as String?,
         theme: json['theme'] as String,
+        trade: json['trade'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
@@ -2556,6 +2565,7 @@ class MeOutModel {
         'phone': phone,
         'role': role,
         'theme': theme,
+        'trade': trade,
       };
 }
 
@@ -2604,18 +2614,32 @@ MeUpdateModel meUpdateModelFromJson(String str) => MeUpdateModel.fromJson(json.d
 String meUpdateModelToJson(MeUpdateModel data) => json.encode(data.toJson());
 
 class MeUpdateModel {
+  /// An upload of kind avatar (POST /uploads, then PUT the file)
+  final String? avatarUploadId;
   final String? name;
+  final bool? removeAvatar;
+  /// Industry slug from GET /config trades
+  final String? trade;
 
   const MeUpdateModel({
+    this.avatarUploadId,
     this.name,
+    this.removeAvatar,
+    this.trade,
   });
 
   factory MeUpdateModel.fromJson(Map<String, dynamic> json) => MeUpdateModel(
+        avatarUploadId: json['avatar_upload_id'] as String?,
         name: json['name'] as String?,
+        removeAvatar: json['remove_avatar'] as bool?,
+        trade: json['trade'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
+        'avatar_upload_id': avatarUploadId,
         'name': name,
+        'remove_avatar': removeAvatar,
+        'trade': trade,
       };
 }
 

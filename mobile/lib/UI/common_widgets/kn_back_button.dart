@@ -7,11 +7,12 @@ import '../theme/kn_app_theme.dart';
 import '../theme/kn_tokens.g.dart';
 import 'custom_inkwell.dart';
 
-/// Round back button at the top-left of a screen.
+/// Round back button at the top-left of a screen. [icon] swaps the arrow (an X on M08 "Check your email").
 class KnBackButton extends StatelessWidget {
-  const KnBackButton({super.key, this.onTap});
+  const KnBackButton({super.key, this.onTap, this.icon = LucideIcons.chevronLeft});
 
   final VoidCallback? onTap;
+  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +29,7 @@ class KnBackButton extends StatelessWidget {
           shape: BoxShape.circle,
           border: Border.all(color: kn.borderDefault),
         ),
-        child: Icon(LucideIcons.chevronLeft, size: 22, color: kn.textPrimary),
+        child: Icon(icon, size: 22, color: kn.textPrimary),
       ),
     );
   }

@@ -37,6 +37,12 @@ void main() {
     expect(service.nextRoute(), RoutesConstants.homeScreen);
   });
 
+  test('an owner who signed up with email sets up a company instead of looking for an invite', () async {
+    final owner = me(name: 'Suresh Shah', phone: null, email: 'suresh@brightair.example');
+    await service.apply(session(needs: ['create_or_join_company'], user: owner));
+    expect(service.nextRoute(), RoutesConstants.companySetupScreen);
+  });
+
   test('restore: nothing saved means a fresh start', () async {
     expect(await service.restore(), isNull);
     verifyNever(() => repo.refreshSession());

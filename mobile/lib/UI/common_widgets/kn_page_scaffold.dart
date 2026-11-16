@@ -6,6 +6,7 @@ import '../theme/kn_tokens.g.dart';
 import 'kn_back_button.dart';
 
 /// Standard screen frame: canvas background, optional back button, scrolling body and a fixed footer.
+/// [header] replaces the back-button row with a fixed top bar (M07 step header).
 class KnPageScaffold extends StatelessWidget {
   const KnPageScaffold({
     super.key,
@@ -15,6 +16,8 @@ class KnPageScaffold extends StatelessWidget {
     this.onBack,
     this.scroll = true,
     this.topAction,
+    this.header,
+    this.backIcon,
   });
 
   final Widget body;
@@ -23,6 +26,8 @@ class KnPageScaffold extends StatelessWidget {
   final VoidCallback? onBack;
   final bool scroll;
   final Widget? topAction;
+  final Widget? header;
+  final IconData? backIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +39,14 @@ class KnPageScaffold extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (showBack || topAction != null)
+            if (header != null)
+              Padding(padding: const EdgeInsets.fromLTRB(KnSize.space16, 40, KnSize.space16, KnSize.space16), child: header)
+            else if (showBack || topAction != null)
               Padding(
                 padding: const EdgeInsets.fromLTRB(KnSize.space16, 40, KnSize.space16, 0),
                 child: Row(
                   children: [
-                    if (showBack) KnBackButton(onTap: onBack),
+                    if (showBack) backIcon == null ? KnBackButton(onTap: onBack) : KnBackButton(onTap: onBack, icon: backIcon!),
                     const Spacer(),
                     ?topAction,
                   ],

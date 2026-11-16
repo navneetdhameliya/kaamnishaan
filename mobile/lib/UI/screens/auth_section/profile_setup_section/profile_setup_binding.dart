@@ -8,6 +8,8 @@ class ProfileSetupBinding extends Bindings {
     Get.lazyPut(
       () => ProfileSetupController(
         repository: Get.find(),
+        files: Get.find(),
+        picker: Get.find(),
         session: Get.find(),
         config: Get.find(),
         speech: Get.find(),

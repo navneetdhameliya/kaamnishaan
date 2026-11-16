@@ -134,6 +134,7 @@ class MeOut(BaseModel):
     email: str | None
     email_verified: bool
     avatar_url: str | None = None
+    trade: str | None = Field(default=None, description="The person's own work (industry slug)")
     app_language: Locale
     theme: Theme
     role: Role | None
@@ -184,6 +185,11 @@ class SessionOut(BaseModel):
 
 class MeUpdate(_In):
     name: str | None = Field(default=None, min_length=1, max_length=120)
+    trade: str | None = Field(default=None, description="Industry slug from GET /config trades")
+    avatar_upload_id: uuid.UUID | None = Field(
+        default=None, description="An upload of kind avatar (POST /uploads, then PUT the file)"
+    )
+    remove_avatar: bool = False
 
 
 class Preferences(_In):
@@ -212,6 +218,9 @@ class CompanyUpdate(_In):
     name: str | None = Field(default=None, min_length=1, max_length=120)
     trade: str | None = None
     timezone: str | None = None
+    logo_upload_id: uuid.UUID | None = Field(
+        default=None, description="An upload of kind logo (POST /uploads, then PUT the file)"
+    )
 
 
 class CompanySettingsUpdate(_In):

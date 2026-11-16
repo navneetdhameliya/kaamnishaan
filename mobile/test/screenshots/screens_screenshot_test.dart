@@ -9,10 +9,20 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kaamnishaan/UI/common_widgets/kn_otp_boxes.dart';
+import 'package:kaamnishaan/UI/screens/auth_section/check_email_section/check_email_controller.dart';
+import 'package:kaamnishaan/UI/screens/auth_section/check_email_section/check_email_screen.dart';
+import 'package:kaamnishaan/UI/screens/auth_section/company_setup_section/company_setup_controller.dart';
+import 'package:kaamnishaan/UI/screens/auth_section/company_setup_section/company_setup_screen.dart';
+import 'package:kaamnishaan/UI/screens/auth_section/email_login_section/email_login_controller.dart';
+import 'package:kaamnishaan/UI/screens/auth_section/email_login_section/email_login_screen.dart';
+import 'package:kaamnishaan/UI/screens/auth_section/forgot_password_section/forgot_password_controller.dart';
+import 'package:kaamnishaan/UI/screens/auth_section/forgot_password_section/forgot_password_screen.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/join_company_section/join_company_controller.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/join_company_section/join_company_screen.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/otp_section/otp_controller.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/otp_section/otp_screen.dart';
+import 'package:kaamnishaan/UI/screens/auth_section/owner_signup_section/owner_signup_controller.dart';
+import 'package:kaamnishaan/UI/screens/auth_section/owner_signup_section/owner_signup_screen.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/phone_section/phone_controller.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/phone_section/phone_screen.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/profile_setup_section/profile_setup_controller.dart';
@@ -238,6 +248,8 @@ void main() {
     Get.put(
       ProfileSetupController(
         repository: repo,
+        files: MockFilesRepository(),
+        picker: FakeImagePicker(),
         session: session,
         config: config,
         speech: FakeSpeech(),
@@ -245,6 +257,107 @@ void main() {
       ),
     );
     await shot(t, 'm11_profile', const ProfileSetupScreen());
+  });
+
+  EmailLoginController login({String email = 'priya@brightair.example', String password = 'secret1234'}) {
+    final c = EmailLoginController(
+      repository: repo,
+      session: session,
+      speech: FakeSpeech(),
+      translation: translation(),
+      clock: () => DateTime(2026, 11, 16, 10, 27),
+    );
+    c.emailController.text = email;
+    c.passwordController.text = password;
+    c.onEmailChanged(email);
+    c.onPasswordChanged(password);
+    return Get.put(c);
+  }
+
+  testWidgets('M06 login', (t) async {
+    login();
+    await shot(t, 'm06_login', const EmailLoginScreen());
+  });
+
+  testWidgets('M06 login wrong password', (t) async {
+    login().attemptsLeft.value = 3;
+    await shot(t, 'm06_login_wrong', const EmailLoginScreen());
+  });
+
+  testWidgets('M06 login invalid email', (t) async {
+    login(email: 'priya@brightair').onDisabledLoginTap();
+    await shot(t, 'm06_login_invalid', const EmailLoginScreen());
+  });
+
+  testWidgets('M06 login locked', (t) async {
+    login().lock(DateTime(2026, 11, 16, 10, 42));
+    await shot(t, 'm06_login_locked', const EmailLoginScreen());
+  });
+
+  OwnerSignupController signup({required String name, required String email, required String password}) {
+    final c = OwnerSignupController(repository: repo, session: session, speech: FakeSpeech(), translation: translation());
+    c.nameController.text = name;
+    c.emailController.text = email;
+    c.passwordController.text = password;
+    c.onNameChanged(name);
+    c.onEmailChanged(email);
+    c.onPasswordChanged(password);
+    c.onAgreeChanged(true);
+    return Get.put(c);
+  }
+
+  testWidgets('M07 sign-up', (t) async {
+    signup(name: 'Suresh Shah', email: 'suresh@brightair.example', password: 'abcd1234');
+    await shot(t, 'm07_signup', const OwnerSignupScreen());
+  });
+
+  testWidgets('M07 sign-up email used and weak password', (t) async {
+    final c = signup(name: 'Suresh Shah', email: 'suresh@brightair.example', password: 'abc12');
+    c.emailTaken.value = true;
+    c.onPasswordDone();
+    await shot(t, 'm07_signup_weak', const OwnerSignupScreen());
+  });
+
+  CompanySetupController company({String name = ''}) {
+    session.me.value = me(name: 'Suresh Shah', phone: null, email: 'suresh@brightair.example');
+    final c = CompanySetupController(
+      companies: MockCompanyRepository(),
+      files: MockFilesRepository(),
+      session: session,
+      config: config,
+      picker: FakeImagePicker(),
+      speech: FakeSpeech(),
+      translation: translation(),
+    );
+    c.nameController.text = name;
+    c.onNameChanged(name);
+    c.country.value = config.countries[1];
+    return Get.put(c);
+  }
+
+  testWidgets('M07 company setup', (t) async {
+    company(name: 'BrightAir Services');
+    await shot(t, 'm07_company', const CompanySetupScreen());
+  });
+
+  testWidgets('M07 company setup missing details', (t) async {
+    final c = company();
+    c.trade.value = null;
+    c.onDisabledCreateTap();
+    await shot(t, 'm07_company_missing', const CompanySetupScreen());
+  });
+
+  testWidgets('M08 forgot password', (t) async {
+    final c = ForgotPasswordController(repository: repo, speech: FakeSpeech(), translation: translation());
+    c.emailController.text = 'priya@brightair.example';
+    c.onEmailChanged('priya@brightair.example');
+    Get.put(c);
+    await shot(t, 'm08_forgot', const ForgotPasswordScreen());
+  });
+
+  testWidgets('M08 check your email', (t) async {
+    Get.put(CheckEmailController(repository: repo, email: 'priya@brightair.example')).secondsLeft.value = 45;
+    await shot(t, 'm08_check_email', const CheckEmailScreen());
   });
 
   testWidgets('M02 language in Hindi', (t) async {

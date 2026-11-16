@@ -18,8 +18,10 @@ class ApiClient {
     String? baseUrl,
     Dio? dio,
     Dio? refreshDio,
+    Dio? uploadDio,
   })  : dio = dio ?? Dio(),
-        _refreshDio = refreshDio ?? Dio() {
+        _refreshDio = refreshDio ?? Dio(),
+        _uploadDio = uploadDio ?? Dio(BaseOptions(sendTimeout: const Duration(minutes: 2))) {
     final options = BaseOptions(
       baseUrl: '${baseUrl ?? Env.apiUrl}${APIConstant.apiPrefix}',
       // the free test server can take about a minute to wake up
@@ -35,6 +37,7 @@ class ApiClient {
 
   final Dio dio;
   final Dio _refreshDio;
+  final Dio _uploadDio;
   final ITokenStorage tokens;
   final String Function() language;
   final Future<String> Function() deviceId;
@@ -58,6 +61,15 @@ class ApiClient {
 
   Future<dynamic> delete(String path, {Options? options}) async =>
       (await dio.delete<dynamic>(path, options: options)).data;
+
+  /// Step 2 of an upload: PUT the bytes to the signed storage URL (no login token; the URL is the permission).
+  Future<void> putBytes(String url, List<int> bytes, Map<String, String> headers) async {
+    await _uploadDio.put<dynamic>(
+      url,
+      data: Stream.fromIterable([bytes]),
+      options: Options(headers: {...headers, Headers.contentLengthHeader: bytes.length}),
+    );
+  }
 
   Future<void> _onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     options.headers['Accept-Language'] = language();
