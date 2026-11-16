@@ -166,7 +166,7 @@ class JoinCompanyScreen extends GetView<JoinCompanyController> {
                       child: Icon(LucideIcons.user, size: 18, color: kn.textPrimary),
                     ),
                     const SizedBox(width: KnSize.space12),
-                    Expanded(child: CustomBaseTextWidget(LangKeys.joinAskManager.tr, style: text.h3)),
+                    Expanded(child: CustomBaseTextWidget(LangKeys.joinAskManager.tr, style: text.label)),
                   ],
                 ),
                 const SizedBox(height: KnSize.space8),

@@ -72,7 +72,8 @@ Future<void> _loadFonts() async {
   final family = icon.fontPackage == null ? icon.fontFamily! : 'packages/${icon.fontPackage}/${icon.fontFamily}';
   // ignore: avoid_print
   print('lucide family: $family');
-  await load(family, [ttfs.first.path]);
+  // the app's icons use the standard font (2 px stroke), not the variable weight files
+  await load(family, [ttfs.firstWhere((f) => f.uri.pathSegments.last == 'lucide.ttf').path]);
 }
 
 void main() {
@@ -244,36 +245,6 @@ void main() {
       ),
     );
     await shot(t, 'm11_profile', const ProfileSetupScreen());
-  });
-
-  testWidgets('icon stroke weights', (t) async {
-    const icons = [LucideIcons.check, LucideIcons.volume2, LucideIcons.camera];
-    const weights = [null, 100.0, 200.0, 300.0, 400.0, 500.0, 600.0, 700.0];
-    await shot(
-      t,
-      'icon_weights',
-      Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              for (final w in weights)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: Row(
-                    children: [
-                      SizedBox(width: 60, child: Text('${w ?? 'none'}')),
-                      for (final i in icons)
-                        Padding(padding: const EdgeInsets.only(right: 24), child: Icon(i, size: 24, weight: w)),
-                    ],
-                  ),
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
   });
 
   testWidgets('M02 language in Hindi', (t) async {

@@ -85,7 +85,8 @@ class OtpScreen extends GetView<OtpController> {
                 text: LangKeys.authCodeValidFor.trParams({'time': controller.sentAtText}),
               )
             else ...[
-              if (controller.secondsLeft.value > 0)
+              // after a wrong code Figma offers "Send again" straight away
+              if (controller.secondsLeft.value > 0 && state == KnOtpState.normal)
                 Row(
                   children: [
                     Icon(LucideIcons.clock, size: 18, color: kn.textSecondary),
@@ -116,7 +117,7 @@ class OtpScreen extends GetView<OtpController> {
             const Spacer(),
             if (!expired) ...[
               KnNumberKeypad(onDigit: controller.onDigit, onBackspace: controller.onBackspace),
-              const SizedBox(height: KnSize.space12),
+              const SizedBox(height: KnSize.space32),
             ],
           ],
         ),
