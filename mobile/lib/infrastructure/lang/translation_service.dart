@@ -15,9 +15,9 @@ class AppLanguage {
 
 /// The 5 app languages, in the order of the M02 design, and switching between them.
 class TranslationService {
-  TranslationService(this._prefs);
+  TranslationService(this.prefs);
 
-  final PreferencesService _prefs;
+  final PreferencesService prefs;
 
   static const languages = [
     AppLanguage('en', Locale('en', 'IN'), 'English', 'English'),
@@ -34,18 +34,18 @@ class TranslationService {
 
   /// The saved language, else the phone's language if we support it, else English.
   Locale get startLocale {
-    final saved = _prefs.languageCode;
+    final saved = prefs.languageCode;
     if (saved != null) return byCode(saved).locale;
     final phone = WidgetsBinding.instance.platformDispatcher.locale.languageCode;
     return byCode(phone).locale;
   }
 
-  bool get hasChosen => _prefs.languageCode != null;
+  bool get hasChosen => prefs.languageCode != null;
 
   String get currentCode => Get.locale?.languageCode ?? startLocale.languageCode;
 
   Future<void> change(String code) async {
-    await _prefs.setLanguageCode(code);
+    await prefs.setLanguageCode(code);
     await Get.updateLocale(byCode(code).locale);
   }
 }
