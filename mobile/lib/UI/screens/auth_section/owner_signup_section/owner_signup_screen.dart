@@ -26,7 +26,6 @@ class OwnerSignupScreen extends GetView<OwnerSignupController> {
   @override
   Widget build(BuildContext context) {
     final kn = context.kn;
-    final text = context.knText;
     return KnPageScaffold(
       header: KnStepHeader(
         title: LangKeys.signupTitle.tr,
