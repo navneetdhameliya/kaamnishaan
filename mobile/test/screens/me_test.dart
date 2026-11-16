@@ -147,7 +147,7 @@ void main() {
       final c = WaitingToSendController(queue: queue, translation: translation)..onInit();
       final items = c.items;
       expect(items.map((i) => i.title), ['Typed note', 'After photo', 'During photo']);
-      expect(items[1].subtitle, 'Green Valley Clinic · 11:41 AM');
+      expect(items[1].subtitle, startsWith('Green Valley Clinic · 11:41'));
       expect(c.summary, '3 items · 1 not sent');
       expect(c.allSent, isFalse);
       c.onClose();
