@@ -99,7 +99,7 @@ function dart() {
 const outputs = {
   'shared/design-tokens/dist/tokens.css': css(),
   'shared/design-tokens/dist/tailwind-preset.cjs': tailwind(),
-  'mobile/lib/core/theme/kn_tokens.g.dart': dart(),
+  'mobile/lib/UI/theme/kn_tokens.g.dart': dart(),
 };
 const check = process.argv.includes('--check');
 let stale = [];

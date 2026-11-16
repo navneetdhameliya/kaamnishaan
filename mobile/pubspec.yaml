@@ -4,25 +4,50 @@ publish_to: none
 version: 0.1.0+1
 
 environment:
-  sdk: ">=3.5.0 <4.0.0"
-  flutter: ">=3.24.0"
+  sdk: ^3.13.7
+  flutter: ">=3.47.9"
 
+# Plugins: latest versions that work with Flutter 3.47.9 (see STANDARDS.md §12).
+# A plugin is added in the step that first needs it.
 dependencies:
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  get: ^4.6.6
+  get: ^4.7.3
+  dio: ^5.11.1
+  flutter_secure_storage: ^11.2.0
+  shared_preferences: ^2.5.6
+  intl: ^0.20.3
+  uuid: ^4.6.0
+  package_info_plus: ^10.2.2
+  flutter_svg: ^2.4.0
+  lucide_icons_flutter: ^4.0.3
+  toastification: ^3.2.2
+  shimmer: ^4.0.0
+  flutter_tts: ^4.2.5
+  url_launcher: ^6.3.3
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^6.0.0
+  mocktail: ^1.0.5
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/svgs/
+    - assets/images/
   # Fonts: Noto Sans family (SIL Open Font License). See assets/fonts/README.md.
   fonts:
+    # brand only: the wordmark (Baloo 2) and the tagline (DM Sans), as in Figma Brand/Lockup
+    - family: Baloo 2
+      fonts:
+        - asset: assets/fonts/Baloo2-Variable.ttf
+    - family: DM Sans
+      fonts:
+        - asset: assets/fonts/DMSans-Variable.ttf
     - family: Noto Sans
       fonts:
         - asset: assets/fonts/NotoSans-Regular.ttf

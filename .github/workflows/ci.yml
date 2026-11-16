@@ -18,6 +18,7 @@ jobs:
         with: { node-version: 22 }
       - run: node shared/design-tokens/build.mjs --check
       - run: node shared/i18n/build.mjs --check
+      - run: python3 mobile/tool/generate_models.py --check
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
       - run: pip install pyyaml openapi-spec-validator && python shared/api/validate.py
