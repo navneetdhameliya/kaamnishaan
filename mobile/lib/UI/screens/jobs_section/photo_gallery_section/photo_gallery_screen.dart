@@ -205,7 +205,8 @@ class PhotoGalleryScreen extends GetView<PhotoGalleryController> {
           children: [
             for (final p in photos)
               GalleryPhotoTile(photo: p, time: controller.timeOf(p.takenAt), onTap: () => controller.onPhotoTap(p)),
-            GalleryAddTile(key: ValueKey('add-$stage'), onTap: () => controller.onTakePhotoTap(stage)),
+            if (stage == controller.selected.value || photos.isEmpty)
+              GalleryAddTile(key: ValueKey('add-$stage'), onTap: () => controller.onTakePhotoTap(stage)),
           ],
         ),
       ],

@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../infrastructure/commons/constants/app_routes.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/jobs_api_repository.dart';
@@ -8,7 +9,6 @@ import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/services/photo_queue_service.dart';
 import '../../../../infrastructure/shared/job_arguments.dart';
-import '../../../../infrastructure/shared/time_utils.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// One tile in the gallery: a photo on the server, or one still on the phone.
@@ -75,7 +75,8 @@ class PhotoGalleryController extends GetxController {
         _ => LangKeys.galleryAfter.tr,
       };
 
-  String timeOf(DateTime t) => TimeUtils.clock(t, translation.currentCode);
+  /// "10:52" — short, to fit on a photo.
+  String timeOf(DateTime t) => DateFormat('h:mm', translation.currentCode).format(t.toLocal());
 
   void onTabTap(String stage) {
     selected.value = stage;
