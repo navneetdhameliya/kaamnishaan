@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import '../commons/constants/app_routes.dart';
 import '../data_access_layer/api_providers/auth_api_provider.dart';
@@ -16,6 +17,7 @@ import 'token_storage_service.dart';
 /// Registers the app-wide services once, before runApp. Screens get them with Get.find.
 abstract final class AppServices {
   static Future<void> init() async {
+    await initializeDateFormatting(); // dates and times in all 5 languages
     final prefs = await PreferencesService.create();
     final tokens = SecureTokenStorage();
     final translation = TranslationService(prefs);

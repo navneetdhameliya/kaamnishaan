@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:kaamnishaan/UI/common_widgets/kn_otp_boxes.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/join_company_section/join_company_controller.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/join_company_section/join_company_screen.dart';
@@ -75,7 +76,10 @@ void main() {
   late SessionService session;
   late ConfigService config;
 
-  setUpAll(_loadFonts);
+  setUpAll(() async {
+    await initializeDateFormatting();
+    await _loadFonts();
+  });
 
   setUp(() async {
     Get.reset();
@@ -121,6 +125,7 @@ void main() {
     await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 200)));
     await tester.pump();
     await expectLater(find.byType(GetMaterialApp), matchesGoldenFile('out/$name.png'));
+    Get.deleteAll(force: true); // stops screen timers (the code countdown)
   }
 
   TranslationService translation() => TranslationService(prefs);
