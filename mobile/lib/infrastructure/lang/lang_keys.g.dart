@@ -72,4 +72,178 @@ abstract final class LangKeys {
   static const billingCreditsLeft = 'billing.credits_left';
   /// Plan limit reached
   static const billingPlanLimit = 'billing.plan_limit';
+  /// Next
+  static const commonNext = 'common.next';
+  /// Skip
+  static const commonSkip = 'common.skip';
+  /// Hear it
+  static const commonHearIt = 'common.hear_it';
+  /// Close
+  static const commonClose = 'common.close';
+  /// v{version}
+  static const commonVersion = 'common.version';
+  /// Proof of work for field technicians
+  static const splashSubtitle = 'splash.subtitle';
+  /// Choose your language
+  static const languageTitle = 'language.title';
+  /// Tap the speaker to hear it
+  static const languageHint = 'language.hint';
+  /// Get started
+  static const introGetStarted = 'intro.get_started';
+  /// Take photos of your work
+  static const introPhotosTitle = 'intro.photos_title';
+  /// Before, during and after. Your photos show the customer a job done right.
+  static const introPhotosBody = 'intro.photos_body';
+  /// BEFORE · photo 1
+  static const introPhotosBadge = 'intro.photos_badge';
+  /// Saved as proof
+  static const introPhotosSaved = 'intro.photos_saved';
+  /// Speak, don't type
+  static const introVoiceTitle = 'intro.voice_title';
+  /// Say what you did in your own language. We write it down for you.
+  static const introVoiceBody = 'intro.voice_body';
+  /// Recording 0:12
+  static const introVoiceBadge = 'intro.voice_badge';
+  /// Gujarati → written for you
+  static const introVoiceWritten = 'intro.voice_written';
+  /// Send proof in one tap
+  static const introReportTitle = 'intro.report_title';
+  /// Your manager checks the report and the customer gets it with all the photos.
+  static const introReportBody = 'intro.report_body';
+  /// Report approved
+  static const introReportBadge = 'intro.report_badge';
+  /// Sent with {count} photos
+  static const introReportSent = 'intro.report_sent';
+  /// Welcome
+  static const welcomeTitle = 'welcome.title';
+  /// How do you want to start?
+  static const welcomeSubtitle = 'welcome.subtitle';
+  /// Most technicians
+  static const welcomeInviteTag = 'welcome.invite_tag';
+  /// I have an invite
+  static const welcomeInviteTitle = 'welcome.invite_title';
+  /// Your company sent you an SMS or an invite card.
+  static const welcomeInviteBody = 'welcome.invite_body';
+  /// Start my business
+  static const welcomeBusinessTitle = 'welcome.business_title';
+  /// Set up your company and invite your team.
+  static const welcomeBusinessBody = 'welcome.business_body';
+  /// Already have an account?
+  static const welcomeHaveAccount = 'welcome.have_account';
+  /// Log in
+  static const welcomeLogIn = 'welcome.log_in';
+  /// Business sign-up comes in the next update.
+  static const welcomeBusinessSoon = 'welcome.business_soon';
+  /// Phone number
+  static const authPhoneLabel = 'auth.phone_label';
+  /// Only used to log in. We never share it.
+  static const authPhonePrivacy = 'auth.phone_privacy';
+  /// Enter a {digits}-digit phone number
+  static const authPhoneInvalid = 'auth.phone_invalid';
+  /// Choose country
+  static const authChooseCountry = 'auth.choose_country';
+  /// Search country
+  static const authSearchCountry = 'auth.search_country';
+  /// Enter the code
+  static const authCodeTitle = 'auth.code_title';
+  /// Sent to {phone}
+  static const authSentTo = 'auth.sent_to';
+  /// Change
+  static const authChange = 'auth.change';
+  /// Send a new code in {time}
+  static const authResendIn = 'auth.resend_in';
+  /// We fill the code for you when the SMS comes.
+  static const authAutofillHint = 'auth.autofill_hint';
+  /// Wrong code. {count} tries left.
+  static const authCodeWrong = 'auth.code_wrong';
+  /// Send again
+  static const authSendAgain = 'auth.send_again';
+  /// This code expired. Get a new one.
+  static const authCodeExpired = 'auth.code_expired';
+  /// Too many wrong codes. Get a new one.
+  static const authCodeTooMany = 'auth.code_too_many';
+  /// A code works for 10 minutes. We sent it at {time}.
+  static const authCodeValidFor = 'auth.code_valid_for';
+  /// Send new code
+  static const authSendNewCode = 'auth.send_new_code';
+  /// Change number
+  static const authChangeNumber = 'auth.change_number';
+  /// Wait {seconds} seconds, then try again.
+  static const authWaitResend = 'auth.wait_resend';
+  /// Join {company}?
+  static const joinTitle = 'join.title';
+  /// {name} invited you
+  static const joinInvitedYou = 'join.invited_you';
+  /// When you join
+  static const joinWhenYouJoin = 'join.when_you_join';
+  /// You see jobs from {company}
+  static const joinBenefitJobs = 'join.benefit_jobs';
+  /// Your photos and notes go with each job
+  static const joinBenefitPhotos = 'join.benefit_photos';
+  /// Your reports go to your manager
+  static const joinBenefitReports = 'join.benefit_reports';
+  /// Join company
+  static const joinJoinButton = 'join.join_button';
+  /// Not my company
+  static const joinNotMine = 'join.not_mine';
+  /// This invite has expired
+  static const joinExpiredTitle = 'join.expired_title';
+  /// Invites work for 7 days. This one ended on {date}, or was cancelled.
+  static const joinExpiredBody = 'join.expired_body';
+  /// Ask your manager to send a new invite
+  static const joinAskManager = 'join.ask_manager';
+  /// {name} can send it again from the Team screen. It comes by SMS.
+  static const joinAskManagerBody = 'join.ask_manager_body';
+  /// Call manager
+  static const joinCallManager = 'join.call_manager';
+  /// No invite for this number
+  static const joinNoInviteTitle = 'join.no_invite_title';
+  /// Ask your manager to invite this phone number from the Team screen.
+  static const joinNoInviteBody = 'join.no_invite_body';
+  /// today
+  static const timeToday = 'time.today';
+  /// {count} days ago
+  static const timeDaysAgo = 'time.days_ago';
+  /// Technician
+  static const roleTechnician = 'role.technician';
+  /// Manager
+  static const roleManager = 'role.manager';
+  /// Owner
+  static const roleOwner = 'role.owner';
+  /// About you
+  static const profileTitle = 'profile.title';
+  /// Your manager and customers will see this.
+  static const profileSubtitle = 'profile.subtitle';
+  /// Change photo
+  static const profileChangePhoto = 'profile.change_photo';
+  /// Your name
+  static const profileNameLabel = 'profile.name_label';
+  /// Your work
+  static const profileWorkLabel = 'profile.work_label';
+  /// Phone
+  static const profilePhoneLabel = 'profile.phone_label';
+  /// Add your name so your manager knows it's you
+  static const profileNameMissing = 'profile.name_missing';
+  /// Save and start
+  static const profileSaveStart = 'profile.save_start';
+  /// Choose company
+  static const companyChooseTitle = 'company.choose_title';
+  /// You work for more than one company.
+  static const companyChooseSubtitle = 'company.choose_subtitle';
+  /// Your jobs for today will show here.
+  static const homeComingSoon = 'home.coming_soon';
+  /// No internet. Check your connection and try again.
+  static const errorNoInternet = 'error.no_internet';
+  /// The server is slow. Try again.
+  static const errorTimeout = 'error.timeout';
+  /// Something went wrong. Try again.
+  static const errorUnknown = 'error.unknown';
+  /// Please log in again.
+  static const errorSessionExpired = 'error.session_expired';
+  /// Adding a photo comes in the next update.
+  static const profilePhotoSoon = 'profile.photo_soon';
+  /// Hello, {name}
+  static const homeHello = 'home.hello';
+  /// Log out
+  static const commonLogOut = 'common.log_out';
 }

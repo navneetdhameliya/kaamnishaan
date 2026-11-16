@@ -1,0 +1,49 @@
+import 'package:get/get.dart';
+
+import '../../../UI/screens/auth_section/choose_company_section/choose_company_binding.dart';
+import '../../../UI/screens/auth_section/choose_company_section/choose_company_screen.dart';
+import '../../../UI/screens/auth_section/join_company_section/join_company_binding.dart';
+import '../../../UI/screens/auth_section/join_company_section/join_company_screen.dart';
+import '../../../UI/screens/auth_section/otp_section/otp_binding.dart';
+import '../../../UI/screens/auth_section/otp_section/otp_screen.dart';
+import '../../../UI/screens/auth_section/phone_section/phone_binding.dart';
+import '../../../UI/screens/auth_section/phone_section/phone_screen.dart';
+import '../../../UI/screens/auth_section/profile_setup_section/profile_setup_binding.dart';
+import '../../../UI/screens/auth_section/profile_setup_section/profile_setup_screen.dart';
+import '../../../UI/screens/home_section/home_screen.dart';
+import '../../../UI/screens/onboarding_section/intro_section/intro_binding.dart';
+import '../../../UI/screens/onboarding_section/intro_section/intro_screen.dart';
+import '../../../UI/screens/onboarding_section/language_section/language_binding.dart';
+import '../../../UI/screens/onboarding_section/language_section/language_screen.dart';
+import '../../../UI/screens/onboarding_section/splash_section/splash_binding.dart';
+import '../../../UI/screens/onboarding_section/splash_section/splash_screen.dart';
+import '../../../UI/screens/onboarding_section/welcome_section/welcome_binding.dart';
+import '../../../UI/screens/onboarding_section/welcome_section/welcome_screen.dart';
+import 'app_routes.dart';
+
+abstract final class AppPages {
+  static final pages = <GetPage<dynamic>>[
+    GetPage(name: RoutesConstants.splashScreen, page: () => const SplashScreen(), binding: SplashBinding()),
+    GetPage(name: RoutesConstants.languageScreen, page: () => const LanguageScreen(), binding: LanguageBinding()),
+    GetPage(name: RoutesConstants.introScreen, page: () => const IntroScreen(), binding: IntroBinding()),
+    GetPage(name: RoutesConstants.welcomeScreen, page: () => const WelcomeScreen(), binding: WelcomeBinding()),
+    GetPage(name: RoutesConstants.phoneScreen, page: () => const PhoneScreen(), binding: PhoneBinding()),
+    GetPage(name: RoutesConstants.otpScreen, page: () => const OtpScreen(), binding: OtpBinding()),
+    GetPage(
+      name: RoutesConstants.joinCompanyScreen,
+      page: () => const JoinCompanyScreen(),
+      binding: JoinCompanyBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.profileSetupScreen,
+      page: () => const ProfileSetupScreen(),
+      binding: ProfileSetupBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.chooseCompanyScreen,
+      page: () => const ChooseCompanyScreen(),
+      binding: ChooseCompanyBinding(),
+    ),
+    GetPage(name: RoutesConstants.homeScreen, page: () => const HomeScreen()),
+  ];
+}

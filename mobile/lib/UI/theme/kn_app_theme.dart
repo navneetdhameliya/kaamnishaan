@@ -65,3 +65,8 @@ class KnThemeExt extends ThemeExtension<KnThemeExt> {
 extension KnContext on BuildContext {
   KnColors get kn => Theme.of(this).extension<KnThemeExt>()!.colors;
 }
+
+extension KnTextContext on BuildContext {
+  /// Text styles for the current language (Latin, Devanagari or Gujarati, with the right line heights).
+  KnTextSet get knText => KnText.forLocale(Localizations.maybeLocaleOf(this) ?? const Locale('en'));
+}
