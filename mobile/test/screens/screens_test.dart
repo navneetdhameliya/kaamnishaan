@@ -70,7 +70,8 @@ void main() {
   testWidgets('M02: picking Hindi switches the screen to Hindi', (tester) async {
     await _pumpApp(tester, GetPage(name: '/language', page: () => const LanguageScreen(), binding: LanguageBinding()));
     expect(find.text('Choose your language'), findsOneWidget);
-    for (final name in ['English', 'Español', 'हिन्दी', 'ગુજરાતી', 'Français']) {
+    expect(find.text('English'), findsNWidgets(2)); // name and the English line under it
+    for (final name in ['Español', 'हिन्दी', 'ગુજરાતી', 'Français']) {
       expect(find.text(name), findsOneWidget);
     }
     await tester.tap(find.byKey(const ValueKey('lang-hi')));
