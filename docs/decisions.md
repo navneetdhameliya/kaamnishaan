@@ -31,6 +31,12 @@
 | D-27 | Typed notes (microphone off) are stored as voice notes with kind "typed", so M28 shows one list and the report reads one source | M27, M28 | 2026-11-16 |
 | D-28 | Without an OpenAI key, voice notes stay "uploaded" with `waiting_for: transcription_service` and checklist translations stay "missing"; adding the key switches both on with no code change | Build before the key exists | 2026-11-16 |
 | D-29 | Flutter is pinned to 3.47.9 in CI. Flutter 3.50 deprecates `package:flutter/material.dart` in favour of the `material_ui` package; we move when the mobile app build starts, not by accident | Reproducible builds | 2026-11-16 |
+| D-30 | Report drafts run in the background with 3 visible steps; the app polls `GET /tasks/{id}`. Without an OpenAI key a plain draft is written from the checklist answers and notes, so the flow works before the key exists | M31, build before the key | 2026-11-16 |
+| D-31 | The AI must link every sentence to a photo, answer or note id; made-up ids are dropped and sentences without evidence are flagged "unsupported claim" for the manager. Failed checks are always flagged by the server, not left to the AI | Trust in reports | 2026-11-16 |
+| D-32 | The report prompt is stored in `prompt_versions` (one live version per task) and each report records the prompt version, tokens and cost (`ai_usage`) | Admin prompt management, AI cost tracking | 2026-11-16 |
+| D-33 | Every draft, edit and regenerated part saves a full copy in `report_versions`; only owners and managers see the history | A15 | 2026-11-16 (default; easy to change) |
+| D-34 | "Ask for changes" needs at least one reason; "other" needs a note. Old photos stay locked, but the technician can add new proof, remake the report and resend it; the report stays marked "changes requested" until resent | M33 | 2026-11-16 |
+| D-35 | Approving a report completes the job. Sharing with the customer (PDF, link, WhatsApp) comes in Step 1f | Build order | 2026-11-16 |
 
 ## Still open
 - Credit pack INR prices (placeholders ₹799 / 500 and ₹2,799 / 2,000).

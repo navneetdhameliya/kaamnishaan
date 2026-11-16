@@ -1,7 +1,7 @@
 """Owner/manager dashboard (M13), technician Today (M12), profile counts (M37), and the sync feed
 the app's offline store reads (GET /sync/changes).
 
-Report counts arrive with reports (Step 1e); until then they are 0.
+Reports sent to customers are counted from Step 1f (sharing).
 """
 
 from datetime import datetime, timedelta

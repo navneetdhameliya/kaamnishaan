@@ -22,9 +22,23 @@ from app.models.identity import (
     OtpChallenge,
     User,
 )
+from app.models.reports import (
+    AIUsage,
+    BackgroundTask,
+    ChangeRequest,
+    PromptVersion,
+    Report,
+    ReportVersion,
+)
 from app.models.work import Customer, CustomerContact, Equipment, Job, JobEvent, Site
 
 __all__ = [
+    "AIUsage",
+    "BackgroundTask",
+    "ChangeRequest",
+    "PromptVersion",
+    "Report",
+    "ReportVersion",
     "ChecklistAnswer",
     "ChecklistQuestion",
     "ChecklistTemplate",
