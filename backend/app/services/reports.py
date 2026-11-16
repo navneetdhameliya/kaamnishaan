@@ -75,6 +75,8 @@ def actions(p: Principal, rep: Report, job: Job) -> list[str]:
         a.append("submit")
     if rep.status == "pending_review" and manager:
         a += ["approve", "request_changes"]
+    if rep.status in DONE and "reports.share" in p.permissions:
+        a.append("share")
     return list(dict.fromkeys(a))
 
 
@@ -282,6 +284,9 @@ async def report_out(db: AsyncSession, p: Principal, rep: Report, job: Job) -> R
         submitted_at=rep.submitted_at,
         approved_by=person(rep.approved_by),
         approved_at=rep.approved_at,
+        shared_at=rep.shared_at,
+        acknowledged_at=rep.acknowledged_at,
+        pdf_status=rep.pdf_status,
         actions=actions(p, rep, job),
         updated_at=rep.updated_at,
     )
@@ -551,12 +556,24 @@ async def versions(db: AsyncSession, p: Principal, report_id: uuid.UUID) -> Vers
 
 
 async def reports_sent_by(db: AsyncSession, company_id: uuid.UUID, user_id: uuid.UUID) -> int:
+    """Reports this person wrote that reached the customer (M37 "reports sent")."""
     return (
         await db.execute(
             select(func.count()).where(
                 Report.company_id == company_id,
                 Report.submitted_by == user_id,
-                Report.submitted_at.is_not(None),
+                Report.shared_at.is_not(None),
             )
         )
     ).scalar_one()
+
+
+async def shared_since(db: AsyncSession, company_id: uuid.UUID, since) -> list:
+    """When each report first reached its customer, for the dashboard's week chart."""
+    return list(
+        (
+            await db.execute(
+                select(Report.shared_at).where(Report.company_id == company_id, Report.shared_at >= since)
+            )
+        ).scalars()
+    )

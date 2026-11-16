@@ -37,8 +37,15 @@
 | D-33 | Every draft, edit and regenerated part saves a full copy in `report_versions`; only owners and managers see the history | A15 | 2026-11-16 (default; easy to change) |
 | D-34 | "Ask for changes" needs at least one reason; "other" needs a note. Old photos stay locked, but the technician can add new proof, remake the report and resend it; the report stays marked "changes requested" until resent | M33 | 2026-11-16 |
 | D-35 | Approving a report completes the job. Sharing with the customer (PDF, link, WhatsApp) comes in Step 1f | Build order | 2026-11-16 |
-
+| D-36 | The customer PDF is built in the background right after approval with fpdf2 + HarfBuzz and Noto fonts (Hindi and Gujarati letters join correctly; no system libraries needed on Render). Its SHA-256 is stored and shown, so a forwarded copy can be checked | M34 | 2026-11-16 |
+| D-37 | One current link per report, valid 30 days; every share or send renews it for 30 days. The token is never stored (only its hash); it is rebuilt from the link id with an HMAC of `KN_SECRET_KEY`, so M35 can show it again. Changing the secret turns every link off | M35, W27 | 2026-11-16 |
+| D-38 | Customers see EXIF-free copies of photos (1,600 px web copy, 480 px thumbnail); the original with GPS stays evidence only | W27 "photos (GPS removed)" | 2026-11-16 |
+| D-39 | "Copy link" counts as sharing (the report becomes "shared"); the dashboard and profile "reports sent" count reports that reached the customer | M13, M37 | 2026-11-16 (default; easy to change) |
+| D-40 | "Send me a new link" sends only to the phone or email the report went to before (never to whoever asks), at most once an hour; for a copied link the company's owner and managers get an email instead | W27, security | 2026-11-16 |
+| D-41 | The report text stays in the language it was approved in; `?lang=` on the customer page changes the checklist questions and the page words only. "Report a problem" is limited to 5 a day per link | W27 | 2026-11-16 |
 ## Still open
+- SMS with the report link: each language's text (and the link's domain) must be registered as a DLT template before MSG91 will send it — needs the domain (16 Nov) and the MSG91 account.
+- WhatsApp Business provider (report links show in the dev outbox until then); credits per SMS/WhatsApp and the "don't contact me" list start with reviews (Step 2).
 - Credit pack INR prices (placeholders ₹799 / 500 and ₹2,799 / 2,000).
 - Figma: "Choose company" screen + company switcher; ₹ prices on pricing and billing screens (design first, before those screens are coded).
 - Voice-call and WhatsApp Business providers (needed in Step 4).

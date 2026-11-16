@@ -40,6 +40,7 @@ class Settings(BaseSettings):
     # Background work (thumbnails now; SMS, AI and PDFs later). Without Redis, tasks run in the API process.
     redis_url: str | None = None
     sms_provider: Literal["console", "msg91"] = "console"
+    whatsapp_provider: Literal["console"] = "console"  # WhatsApp Business provider not chosen yet
 
     # Where links in SMS and email point (customer page, invites, email verification)
     web_url: str = "http://localhost:5173"

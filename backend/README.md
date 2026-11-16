@@ -60,6 +60,17 @@ Files are saved in `backend/var/uploads` on your computer. The live server uses 
    `{"reasons": ["missing_photos"], "note": "Add the outdoor unit"}`; the technician adds proof, makes the report
    again and resends it. `GET /api/v1/reports/{id}/versions` shows every version.
 
+### Try sending a report to the customer (Step 1f)
+1. Approve a report (Step 1e). The PDF builds right away: `GET /api/v1/reports/{id}/pdf` gives its status
+   and a 15-minute download link.
+2. `GET /api/v1/reports/{id}/share` shows the customer's contact, which channels can be used and the message text.
+3. `POST /api/v1/reports/{id}/send` with `{"channels": ["sms", "whatsapp", "email"]}`. Nothing is really sent yet:
+   open `GET /api/v1/dev/outbox` to read the messages and copy the link (`.../r/<token>`).
+4. Open the customer page as the customer would: `GET /api/v1/public/reports/<token>` (no login), the PDF at
+   `GET /api/v1/public/reports/<token>/pdf`, and `POST /api/v1/public/reports/<token>/acknowledge` with
+   `{"name": "R. Sharma"}`.
+5. `DELETE /api/v1/share-links/{link_id}` turns the link off (the page then says so).
+
 ## Checks
 Tests use a real PostgreSQL database `kaamnishaan_test` (override with `KN_TEST_DATABASE_URL`);
 it is migrated once per run and emptied between tests.

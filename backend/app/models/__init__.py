@@ -30,6 +30,7 @@ from app.models.reports import (
     Report,
     ReportVersion,
 )
+from app.models.sharing import Message, ReportIssue, ShareLink
 from app.models.work import Customer, CustomerContact, Equipment, Job, JobEvent, Site
 
 __all__ = [
@@ -65,8 +66,11 @@ __all__ = [
     "Invitation",
     "LoginAttempt",
     "Membership",
+    "Message",
     "OtpChallenge",
     "PhotoPair",
+    "ReportIssue",
+    "ShareLink",
     "Plan",
     "Upload",
     "User",

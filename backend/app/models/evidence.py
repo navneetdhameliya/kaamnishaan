@@ -57,6 +57,7 @@ class Evidence(IdMixin, TimestampMixin, Base):
     shot_slot: Mapped[str | None] = mapped_column(String(64))  # e.g. "outdoor_unit" from the shot prompts
     file_key: Mapped[str] = mapped_column(String(255))
     thumb_key: Mapped[str | None] = mapped_column(String(255))
+    web_key: Mapped[str | None] = mapped_column(String(255))  # 1,600 px copy without EXIF/GPS, for customers
     content_type: Mapped[str] = mapped_column(String(80))
     size: Mapped[int] = mapped_column(BigInteger)
     sha256: Mapped[str | None] = mapped_column(String(64))  # fingerprint: proves the photo never changed

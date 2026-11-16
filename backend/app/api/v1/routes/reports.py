@@ -1,7 +1,7 @@
 import uuid
 from typing import Literal
 
-from fastapi import APIRouter, Depends, Header, Query
+from fastapi import APIRouter, Depends, Header, Query, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.v1.routes.jobs import member
@@ -17,7 +17,9 @@ from app.schemas.reports import (
     TaskOut,
     VersionList,
 )
+from app.schemas.sharing import PdfOut, SendIn, ShareInfo, ShareLinkIn, ShareLinkOut
 from app.services import reports as svc
+from app.services import sharing
 from app.tasks import enqueue
 
 router = APIRouter(tags=["reports"])
@@ -112,7 +114,13 @@ async def submit(
 async def approve(
     report_id: uuid.UUID, p: Principal = Depends(member), db: AsyncSession = Depends(get_db)
 ) -> ReportOut:
-    return await _moved(db, p, await svc.approve(db, p, report_id))
+    """Approve: the job is completed and the customer PDF starts building (GET /reports/{id}/pdf)."""
+    rep = await svc.approve(db, p, report_id)
+    sharing.needs_pdf(rep)
+    await db.commit()
+    await enqueue("build_report_pdf", report_id=str(rep.id))
+    await db.refresh(rep)
+    return await _moved(db, p, rep)
 
 
 @router.post("/reports/{report_id}/request-changes", response_model=ReportOut)
@@ -127,3 +135,55 @@ async def versions(
     report_id: uuid.UUID, p: Principal = Depends(member), db: AsyncSession = Depends(get_db)
 ) -> VersionList:
     return await svc.versions(db, p, report_id)
+
+
+# ---- PDF and sharing (M34, M35) ------------------------------------------------------------------
+@router.get("/reports/{report_id}/pdf", response_model=PdfOut, tags=["sharing"])
+async def report_pdf(
+    report_id: uuid.UUID, p: Principal = Depends(member), db: AsyncSession = Depends(get_db)
+) -> PdfOut:
+    """PDF status and a 15-minute download link. Starts the build again if it failed."""
+    rep, start = await sharing.get_pdf(db, p, report_id)
+    if start:
+        await db.commit()
+        await enqueue("build_report_pdf", report_id=str(rep.id))
+        await db.refresh(rep)
+    return sharing.pdf_out(rep)
+
+
+@router.get("/reports/{report_id}/share", response_model=ShareInfo, tags=["sharing"])
+async def share_screen(
+    report_id: uuid.UUID, p: Principal = Depends(member), db: AsyncSession = Depends(get_db)
+) -> ShareInfo:
+    """M35: the customer's contact, which channels can be used, the current link and the message text."""
+    return await sharing.share_info(db, p, report_id)
+
+
+@router.post(
+    "/reports/{report_id}/share-links", response_model=ShareLinkOut, status_code=201, tags=["sharing"]
+)
+async def create_share_link(
+    report_id: uuid.UUID,
+    body: ShareLinkIn | None = None,
+    p: Principal = Depends(member),
+    db: AsyncSession = Depends(get_db),
+) -> ShareLinkOut:
+    """Create the 30-day link, or renew it for 30 more days. "copy" also marks the report shared."""
+    return await sharing.create_link(db, p, report_id, (body or ShareLinkIn()).channel)
+
+
+@router.delete("/share-links/{link_id}", status_code=204, tags=["sharing"])
+async def revoke_share_link(
+    link_id: uuid.UUID, p: Principal = Depends(member), db: AsyncSession = Depends(get_db)
+) -> Response:
+    """Turn the link off at once; the customer sees "link turned off". Owners and managers."""
+    await sharing.revoke_link(db, p, link_id)
+    return Response(status_code=204)
+
+
+@router.post("/reports/{report_id}/send", response_model=ShareInfo, tags=["sharing"])
+async def send_report(
+    report_id: uuid.UUID, body: SendIn, p: Principal = Depends(member), db: AsyncSession = Depends(get_db)
+) -> ShareInfo:
+    """Send the report link by SMS, WhatsApp and/or email. Each message's result is in `sent`."""
+    return await sharing.send(db, p, report_id, body)
