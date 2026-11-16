@@ -326,11 +326,12 @@ class VoiceNoteScreen extends GetView<VoiceNoteController> {
   Widget _footer() {
     final n = controller.note.value;
     if (n == null || n.locked) return const SizedBox.shrink();
+    // the first button fits its words; the second takes the rest
     Widget pair(Widget a, Widget b) => KnScreenFooter(
           children: [
             Row(
               children: [
-                Expanded(child: a),
+                a,
                 const SizedBox(width: KnSize.space12),
                 Expanded(child: b),
               ],
@@ -380,7 +381,6 @@ class VoiceNoteScreen extends GetView<VoiceNoteController> {
         Row(
           children: [
             Expanded(
-              flex: 3,
               child: KnCustomButton(
                 key: const ValueKey('note-speak-change'),
                 text: LangKeys.noteSpeakChange.tr,
@@ -390,7 +390,7 @@ class VoiceNoteScreen extends GetView<VoiceNoteController> {
               ),
             ),
             const SizedBox(width: KnSize.space12),
-            Expanded(flex: 2, child: save),
+            save,
           ],
         ),
       ],

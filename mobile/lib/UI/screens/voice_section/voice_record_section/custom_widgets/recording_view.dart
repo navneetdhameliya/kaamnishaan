@@ -166,7 +166,8 @@ class RecordingView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: KnSize.space12, vertical: KnSize.space4),
             child: CustomBaseTextWidget(
               name,
-              style: context.knText.labelSm,
+              // each name in its own script's font (as on the language screen)
+              style: KnText.forLocale(Locale(code)).labelSm,
               color: selected ? KnPrimitive.mocha900 : KnPrimitive.cream50,
             ),
           ),
