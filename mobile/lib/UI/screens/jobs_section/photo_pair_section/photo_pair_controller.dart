@@ -7,6 +7,7 @@ import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/shared/job_arguments.dart';
+import '../../../../infrastructure/shared/photo_pairs.dart';
 import '../../../../infrastructure/shared/time_utils.dart';
 import '../../../common_widgets/kn_toast.dart';
 
@@ -39,27 +40,11 @@ class PhotoPairController extends GetxController {
     loaded.value = true;
     final list = result.dataOrNull;
     if (list == null) return KnToast.error(result.errorOrNull!.message);
-    final pair = list.pairs.firstOrNull;
-    if (pair != null) {
-      before.value = pair.before;
-      after.value = pair.after;
-      pairId.value = pair.id;
-      subject.value = pair.subject ?? '';
-      return;
-    }
-    final befores = list.data.where((e) => e.stage == 'before').toList()..sort((a, b) => b.takenAt.compareTo(a.takenAt));
-    final afters = list.data.where((e) => e.stage == 'after').toList()..sort((a, b) => b.takenAt.compareTo(a.takenAt));
-    // the same checklist shot on both sides makes the best pair
-    for (final a in afters) {
-      final match = befores.firstWhereOrNull((b) => a.shotSlot != null && b.shotSlot == a.shotSlot);
-      if (match != null) {
-        before.value = match;
-        after.value = a;
-        return;
-      }
-    }
-    before.value = befores.firstOrNull;
-    after.value = afters.firstOrNull;
+    final chosen = ChosenPair.pick(list);
+    before.value = chosen.before;
+    after.value = chosen.after;
+    pairId.value = chosen.saved?.id;
+    subject.value = chosen.saved?.subject ?? '';
   }
 
   bool get ready => before.value != null && after.value != null;

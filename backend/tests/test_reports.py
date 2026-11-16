@@ -92,7 +92,12 @@ async def test_ai_draft_links_sentences_to_evidence(client, ready, fake_ai):
 
 
 async def test_without_ai_a_plain_draft_is_written(client, ready):
+    proof_url = f"/api/v1/jobs/{ready['job']['id']}/proof"
+    assert (await client.get(proof_url, headers=auth(ready["tech"]))).json()["report"] is None
     _, _, rep = await make_report(client, ready["tech"], ready["job"]["id"])
+    # the proof screen now knows the report, so the app opens it instead of making a new one
+    ref = (await client.get(proof_url, headers=auth(ready["tech"]))).json()["report"]
+    assert ref == {"id": rep["id"], "number": "R-1001", "status": "draft"}
     assert rep["status"] == "draft" and rep["drafted_by"] == "template"
     assert rep["summary"].startswith(ready["job"]["title"])
     assert "2 photos were taken" in rep["work_done"]

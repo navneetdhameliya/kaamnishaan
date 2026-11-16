@@ -109,3 +109,57 @@ class VoiceArguments {
 
   VoiceArguments get record => VoiceArguments(jobId: jobId, customer: customer);
 }
+
+/// The job report screens (M31 making / draft / sent, M32 editor).
+class ReportArguments {
+  const ReportArguments({
+    required this.jobId,
+    this.customer = '',
+    this.reportId,
+    this.coverUrl,
+    this.photos = 0,
+    this.checklists = 0,
+    this.notes = 0,
+    this.thumbs = const [],
+    this.redraft = false,
+  });
+
+  final String jobId;
+  final String customer;
+
+  /// Set once the report exists.
+  final String? reportId;
+  final String? coverUrl;
+
+  /// What the report is made from, for "Reading 6 photos…".
+  final int photos;
+  final int checklists;
+  final int notes;
+  final List<String> thumbs;
+
+  /// M31 making: write a new draft even when one is already there.
+  final bool redraft;
+
+  ReportArguments withReport(String id) => ReportArguments(
+        jobId: jobId,
+        customer: customer,
+        reportId: id,
+        coverUrl: coverUrl,
+        photos: photos,
+        checklists: checklists,
+        notes: notes,
+        thumbs: thumbs,
+      );
+
+  ReportArguments get remake => ReportArguments(
+        jobId: jobId,
+        customer: customer,
+        reportId: reportId,
+        coverUrl: coverUrl,
+        photos: photos,
+        checklists: checklists,
+        notes: notes,
+        thumbs: thumbs,
+        redraft: true,
+      );
+}

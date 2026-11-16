@@ -235,5 +235,45 @@ class CaptureHubController extends GetxController {
     load();
   }
 
-  void onMakeReportTap() => KnToast.info(LangKeys.commonComingSoon.tr);
+  // ---- the report -------------------------------------------------------------------------
+
+  ProofReportModel? get report => proof.value?.report;
+
+  /// "Make report", or the report already there: its draft, the fix asked for, or the sent report.
+  String get reportLabel => switch (report?.status) {
+        null => LangKeys.hubMakeReport.tr,
+        'generating' || 'generation_failed' || 'draft' => LangKeys.hubOpenDraft.tr,
+        'changes_requested' => LangKeys.hubFixReport.tr,
+        _ => LangKeys.hubSeeReport.tr,
+      };
+
+  bool get reportEnabled => report != null || (proof.value?.canMakeReport ?? false);
+
+  ReportArguments get reportArguments {
+    final steps = proof.value?.steps ?? const <ProofStepModel>[];
+    int count(String key) => steps.firstWhereOrNull((s) => s.key == key)?.count ?? 0;
+    return ReportArguments(
+      jobId: args.id,
+      customer: customer,
+      reportId: report?.id,
+      coverUrl: job.value?.coverUrl,
+      photos: photoStages.fold(0, (n, s) => n + count(s)),
+      checklists: count('checklist'),
+      notes: count('voice'),
+      thumbs: [for (final s in steps.where((s) => photoStages.contains(s.key))) ...?s.thumbs],
+    );
+  }
+
+  /// No report yet (or it is still being written, or writing failed): "Making your report…".
+  /// Otherwise the report opens.
+  Future<void> onMakeReportTap() async {
+    if (proof.value == null) return;
+    final status = report?.status;
+    final making = status == null || status == 'generating' || status == 'generation_failed';
+    await Get.toNamed(
+      making ? RoutesConstants.reportMakingScreen : RoutesConstants.reportDraftScreen,
+      arguments: reportArguments,
+    );
+    load();
+  }
 }

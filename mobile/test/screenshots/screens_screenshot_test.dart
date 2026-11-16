@@ -58,6 +58,14 @@ import 'package:kaamnishaan/UI/screens/onboarding_section/splash_section/splash_
 import 'package:kaamnishaan/UI/screens/onboarding_section/splash_section/splash_screen.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_controller.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_screen.dart';
+import 'package:kaamnishaan/UI/screens/report_section/report_draft_section/report_draft_controller.dart';
+import 'package:kaamnishaan/UI/screens/report_section/report_draft_section/report_draft_screen.dart';
+import 'package:kaamnishaan/UI/screens/report_section/report_editor_section/report_editor_controller.dart';
+import 'package:kaamnishaan/UI/screens/report_section/report_editor_section/report_editor_screen.dart';
+import 'package:kaamnishaan/UI/screens/report_section/report_making_section/report_making_controller.dart';
+import 'package:kaamnishaan/UI/screens/report_section/report_making_section/report_making_screen.dart';
+import 'package:kaamnishaan/UI/screens/report_section/report_sent_section/report_sent_controller.dart';
+import 'package:kaamnishaan/UI/screens/report_section/report_sent_section/report_sent_screen.dart';
 import 'package:kaamnishaan/UI/screens/voice_section/voice_note_section/voice_note_controller.dart';
 import 'package:kaamnishaan/UI/screens/voice_section/voice_note_section/voice_note_screen.dart';
 import 'package:kaamnishaan/UI/screens/voice_section/voice_notes_section/voice_notes_controller.dart';
@@ -888,6 +896,119 @@ void main() {
 
   testWidgets('M29 not clear', (t) async {
     await transcript(t, 'm29_transcript_unclear', noteOut('v1', status: 'unclear', translatedTo: null));
+  });
+
+  // ---- Step 2h: the report --------------------------------------------------------------------
+  const reportArgs = ReportArguments(
+    jobId: 'j1',
+    customer: 'Green Valley Clinic',
+    reportId: 'r1',
+    photos: 6,
+    checklists: 2,
+    notes: 2,
+    thumbs: ['https://x/1.jpg', 'https://x/2.jpg', 'https://x/3.jpg', 'https://x/4.jpg'],
+  );
+
+  testWidgets('M31 making the report', (t) async {
+    final reports = MockReportsRepository();
+    final c = Get.put(ReportMakingController(reports: reports, args: reportArgs, autoStart: false));
+    c.steps.assignAll({'collect_evidence': 'done', 'write_report': 'running', 'check_evidence': 'waiting'});
+    await shot(t, 'm31_report_making', const ReportMakingScreen());
+  });
+
+  testWidgets('M31 could not make the report', (t) async {
+    final reports = MockReportsRepository();
+    Get.put(ReportMakingController(reports: reports, args: reportArgs, autoStart: false)).phase.value = MakePhase.failed;
+    await shot(t, 'm31_report_failed', const ReportMakingScreen());
+  });
+
+  void reportSession() => session.me.value = MeOutModel(
+        id: 'u1',
+        name: 'Ramesh Patel',
+        emailVerified: true,
+        appLanguage: 'en',
+        theme: 'system',
+        role: 'technician',
+        company: const CompanyOutModel(
+          id: 'c1',
+          name: 'BrightAir Services',
+          country: 'IN',
+          timezone: 'Asia/Kolkata',
+          currency: 'INR',
+          reportLanguage: 'en',
+          plan: 'professional',
+          status: 'trial',
+          settings: CompanySettingsModel(),
+        ),
+        permissions: const [],
+      );
+
+  testWidgets('M31 report draft', (t) async {
+    reportSession();
+    final reports = MockReportsRepository();
+    final jobs = MockJobsRepository();
+    when(() => reports.report(any())).thenAnswer(
+      (_) async => ApiSuccess<ReportOutModel>(
+        reportOut(
+          summary: null,
+          advice: null,
+          workDone: 'Air filter in room 2 was blocked with dust. Cleaned and refitted it, refilled refrigerant and '
+              'tested cooling for 15 minutes. Room now cools to 22°C.',
+          flags: const [ReportFlagModel(kind: 'missing_evidence', text: 'after photo of outdoor unit')],
+        ),
+      ),
+    );
+    when(() => jobs.evidence(any())).thenAnswer(
+      (_) async => ApiSuccess<EvidenceListModel>(
+        EvidenceListModel(
+          data: [photo('b1', 'before', 10, 52), photo('a1', 'after', 11, 41)],
+          meta: const ListMetaModel(),
+          pairs: const [],
+        ),
+      ),
+    );
+    Get.put(
+      ReportDraftController(
+        reports: reports,
+        jobs: jobs,
+        session: session,
+        speech: FakeSpeech(),
+        translation: translation(),
+        args: reportArgs,
+      ),
+    );
+    await shot(t, 'm31_report_draft', const ReportDraftScreen());
+  });
+
+  Future<void> editorShot(WidgetTester t, String name, {bool empty = false}) async {
+    final reports = MockReportsRepository();
+    when(() => reports.report(any())).thenAnswer(
+      (_) async => ApiSuccess<ReportOutModel>(
+        reportOut(
+          workDone: 'Cleaned and refitted the air filter. Added refrigerant. Tested cooling for 15 minutes. Room now cools to 22°C.',
+          advice: 'Clean the filter every month. Book the next service in 6 months.',
+        ),
+      ),
+    );
+    final c = Get.put(
+      ReportEditorController(reports: reports, speech: FakeSpeech(), translation: translation(), args: reportArgs),
+    );
+    await t.pump();
+    if (empty) c.parts[1].text.text = '';
+    await shot(t, name, const ReportEditorScreen());
+  }
+
+  testWidgets('M32 report editor', (t) async => editorShot(t, 'm32_report_editor'));
+
+  testWidgets('M32 report editor, part empty', (t) async => editorShot(t, 'm32_report_editor_empty', empty: true));
+
+  testWidgets('M31 report sent', (t) async {
+    final reports = MockReportsRepository();
+    when(() => reports.report(any())).thenAnswer(
+      (_) async => ApiSuccess<ReportOutModel>(reportOut(status: 'pending_review', actions: const [])),
+    );
+    Get.put(ReportSentController(reports: reports, translation: translation(), args: reportArgs));
+    await shot(t, 'm31_report_sent', const ReportSentScreen());
   });
 
   testWidgets('M13 dashboard', (t) async {

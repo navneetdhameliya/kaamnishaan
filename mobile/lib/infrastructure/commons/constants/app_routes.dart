@@ -26,5 +26,9 @@ abstract final class RoutesConstants {
   static const String voiceRecordScreen = '/voice';
   static const String voiceNotesScreen = '/voice-notes';
   static const String voiceNoteScreen = '/voice-note';
+  static const String reportMakingScreen = '/report/making';
+  static const String reportDraftScreen = '/report';
+  static const String reportEditorScreen = '/report/edit';
+  static const String reportSentScreen = '/report/sent';
   static const String homeScreen = '/home';
 }

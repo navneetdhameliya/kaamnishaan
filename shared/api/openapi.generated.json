@@ -4900,6 +4900,16 @@
             "title": "Locked",
             "type": "boolean"
           },
+          "report": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ProofReport"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "shot_prompts": {
             "description": "Camera hints from the checklists (M20)",
             "items": {
@@ -4948,6 +4958,32 @@
           "total"
         ],
         "title": "ProofCount",
+        "type": "object"
+      },
+      "ProofReport": {
+        "description": "The job's report, when one was started: the app opens it instead of making a new one.",
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "number": {
+            "description": "\"R-1042\"",
+            "title": "Number",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "status"
+        ],
+        "title": "ProofReport",
         "type": "object"
       },
       "ProofStep": {
