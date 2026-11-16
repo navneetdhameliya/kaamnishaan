@@ -38,7 +38,7 @@ class KnCustomButton extends StatelessWidget {
   /// Overrides the height (M15 "Navigate" and "Call" are 48).
   final double? height;
 
-  /// Tighter sides (16 px) for two buttons side by side with long words.
+  /// Tighter sides (12 px) for two buttons side by side with long words.
   final bool dense;
 
   @override
@@ -61,7 +61,7 @@ class KnCustomButton extends StatelessWidget {
         height: height ?? (small ? 40 : KnSize.tapTechnician),
         decoration: BoxDecoration(color: bg, borderRadius: radius),
         padding: EdgeInsets.symmetric(
-          horizontal: small || dense ? KnSize.space16 : (height != null ? KnSize.space20 : KnSize.space24),
+          horizontal: dense ? KnSize.space12 : (small ? KnSize.space16 : (height != null ? KnSize.space20 : KnSize.space24)),
         ),
         child: Center(
           child: loading
