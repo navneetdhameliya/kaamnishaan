@@ -1,0 +1,31 @@
+# TEMPORARY (removed before merge): creates the native folders and resolves plugin versions.
+name: mobile scaffold (temporary)
+on:
+  push:
+    branches: [step-2a/mobile-foundation]
+    paths: [.github/workflows/mobile-scaffold.yml]
+jobs:
+  scaffold:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, flutter-version: 3.47.9 }
+      - run: |
+          flutter create --org com.kaamnishaan --project-name kaamnishaan --platforms=android,ios,macos kaamnishaan
+          cd kaamnishaan
+          flutter pub add get dio flutter_secure_storage shared_preferences intl toastification shimmer flutter_svg \
+            connectivity_plus package_info_plus uuid lucide_icons_flutter
+          flutter pub add --dev mocktail
+          grep -E "^  [a-z_]+: \^" pubspec.yaml
+          grep -A3 "flutter_lints" pubspec.yaml
+      - uses: actions/upload-artifact@v4
+        with:
+          name: scaffold
+          path: |
+            kaamnishaan/android
+            kaamnishaan/ios
+            kaamnishaan/macos
+            kaamnishaan/pubspec.yaml
+            kaamnishaan/.gitignore
+            kaamnishaan/.metadata
+          include-hidden-files: true
