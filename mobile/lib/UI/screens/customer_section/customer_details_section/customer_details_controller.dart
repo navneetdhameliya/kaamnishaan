@@ -107,7 +107,7 @@ class CustomerDetailsController extends GetxController {
   String? get email => contact?.email;
 
   /// The newest job photo shows at the top.
-  String? get cover => jobs.map((j) => j.coverUrl).firstWhereOrNull((u) => u != null);
+  String? get cover => jobs.map((j) => j.coverUrl).whereType<String>().firstOrNull;
 
   List<JobListItemModel> get shownJobs => showAll.value ? jobs : jobs.take(firstJobs).toList();
 
