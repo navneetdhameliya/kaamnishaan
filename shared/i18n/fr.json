@@ -1225,5 +1225,8 @@
   "web.auth.link_expired": "Ce lien a expiré",
   "web.auth.link_expired_body": "Demandez-en un nouveau dans l’app KaamNishaan.",
   "web.auth.link_bad": "Ce lien ne fonctionne pas",
-  "web.auth.link_bad_body": "Il a déjà servi ou il est incomplet. Demandez-en un nouveau dans l’app KaamNishaan."
+  "web.auth.link_bad_body": "Il a déjà servi ou il est incomplet. Demandez-en un nouveau dans l’app KaamNishaan.",
+  "startup.title": "KaamNishaan n’a pas pu démarrer",
+  "startup.body": "Vérifiez votre connexion et réessayez. Vos photos et notes enregistrées sont en sécurité.",
+  "startup.retry": "Réessayer"
 }

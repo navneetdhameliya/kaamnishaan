@@ -51,7 +51,11 @@ import 'token_storage_service.dart';
 
 /// Registers the app-wide services once, before runApp. Screens get them with Get.find.
 abstract final class AppServices {
+  /// True once every service is registered (so "Try again" after a failure doesn't register twice).
+  static bool ready = false;
+
   static Future<void> init() async {
+    Get.reset(); // a retry after a failed start begins clean
     await initializeDateFormatting(); // dates and times in all 5 languages
     final prefs = await PreferencesService.create();
     final tokens = SecureTokenStorage();
@@ -113,5 +117,6 @@ abstract final class AppServices {
       startDelay: const Duration(seconds: 3),
     );
     Get.put<PhotoQueueService>(await photos.init(), permanent: true);
+    ready = true;
   }
 }

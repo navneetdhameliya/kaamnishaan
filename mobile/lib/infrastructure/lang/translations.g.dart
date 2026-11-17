@@ -1233,6 +1233,9 @@ class KnTranslations extends Translations {
           'web.auth.link_expired_body': 'Ask for a new one in the KaamNishaan app.',
           'web.auth.link_bad': 'This link doesn\'t work',
           'web.auth.link_bad_body': 'It was already used, or part of it is missing. Ask for a new one in the KaamNishaan app.',
+          'startup.title': 'KaamNishaan couldn\'t start',
+          'startup.body': 'Check your internet and try again. Your saved photos and notes are safe.',
+          'startup.retry': 'Try again',
         },
         'hi_IN': {
           'app.name': 'KaamNishaan',
@@ -2462,6 +2465,9 @@ class KnTranslations extends Translations {
           'web.auth.link_expired_body': 'KaamNishaan ऐप से नया लिंक माँगें।',
           'web.auth.link_bad': 'यह लिंक काम नहीं करता',
           'web.auth.link_bad_body': 'यह पहले इस्तेमाल हो चुका है, या इसका कुछ हिस्सा गायब है। KaamNishaan ऐप से नया लिंक माँगें।',
+          'startup.title': 'KaamNishaan शुरू नहीं हो सका',
+          'startup.body': 'इंटरनेट देखें और फिर कोशिश करें। आपकी सेव फ़ोटो और नोट सुरक्षित हैं।',
+          'startup.retry': 'फिर कोशिश करें',
         },
         'gu_IN': {
           'app.name': 'KaamNishaan',
@@ -3691,6 +3697,9 @@ class KnTranslations extends Translations {
           'web.auth.link_expired_body': 'KaamNishaan ઍપમાંથી નવી લિંક માંગો.',
           'web.auth.link_bad': 'આ લિંક કામ નથી કરતી',
           'web.auth.link_bad_body': 'તે પહેલાં વપરાઈ ગઈ છે, અથવા તેનો ભાગ ખૂટે છે. KaamNishaan ઍપમાંથી નવી લિંક માંગો.',
+          'startup.title': 'KaamNishaan શરૂ ન થઈ શકી',
+          'startup.body': 'ઇન્ટરનેટ તપાસો અને ફરી પ્રયાસ કરો. તમારા સેવ ફોટો અને નોંધ સુરક્ષિત છે.',
+          'startup.retry': 'ફરી પ્રયાસ કરો',
         },
         'es_ES': {
           'app.name': 'KaamNishaan',
@@ -4920,6 +4929,9 @@ class KnTranslations extends Translations {
           'web.auth.link_expired_body': 'Pida uno nuevo en la app KaamNishaan.',
           'web.auth.link_bad': 'Este enlace no funciona',
           'web.auth.link_bad_body': 'Ya se usó o le falta una parte. Pida uno nuevo en la app KaamNishaan.',
+          'startup.title': 'KaamNishaan no pudo iniciarse',
+          'startup.body': 'Revise su conexión e inténtelo de nuevo. Sus fotos y notas guardadas están a salvo.',
+          'startup.retry': 'Reintentar',
         },
         'fr_FR': {
           'app.name': 'KaamNishaan',
@@ -6149,6 +6161,9 @@ class KnTranslations extends Translations {
           'web.auth.link_expired_body': 'Demandez-en un nouveau dans l’app KaamNishaan.',
           'web.auth.link_bad': 'Ce lien ne fonctionne pas',
           'web.auth.link_bad_body': 'Il a déjà servi ou il est incomplet. Demandez-en un nouveau dans l’app KaamNishaan.',
+          'startup.title': 'KaamNishaan n’a pas pu démarrer',
+          'startup.body': 'Vérifiez votre connexion et réessayez. Vos photos et notes enregistrées sont en sécurité.',
+          'startup.retry': 'Réessayer',
         },
       };
 }

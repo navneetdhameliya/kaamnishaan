@@ -1225,5 +1225,8 @@
   "web.auth.link_expired": "આ લિંકની મુદત પૂરી થઈ",
   "web.auth.link_expired_body": "KaamNishaan ઍપમાંથી નવી લિંક માંગો.",
   "web.auth.link_bad": "આ લિંક કામ નથી કરતી",
-  "web.auth.link_bad_body": "તે પહેલાં વપરાઈ ગઈ છે, અથવા તેનો ભાગ ખૂટે છે. KaamNishaan ઍપમાંથી નવી લિંક માંગો."
+  "web.auth.link_bad_body": "તે પહેલાં વપરાઈ ગઈ છે, અથવા તેનો ભાગ ખૂટે છે. KaamNishaan ઍપમાંથી નવી લિંક માંગો.",
+  "startup.title": "KaamNishaan શરૂ ન થઈ શકી",
+  "startup.body": "ઇન્ટરનેટ તપાસો અને ફરી પ્રયાસ કરો. તમારા સેવ ફોટો અને નોંધ સુરક્ષિત છે.",
+  "startup.retry": "ફરી પ્રયાસ કરો"
 }
