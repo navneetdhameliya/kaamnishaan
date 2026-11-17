@@ -141,6 +141,8 @@ def _currency(company: Company) -> str:
 
 async def billing(db: AsyncSession, p: Principal) -> BillingOut:
     """M41 Plan and billing (owner only)."""
+    from app.services.assistant import questions_used
+
     if p.role != "owner":
         raise Forbidden("owner_only", "Only the owner can see the plan and billing.")
     company = p.company
@@ -173,8 +175,11 @@ async def billing(db: AsyncSession, p: Principal) -> BillingOut:
         usage=[
             UsageTile(key="technicians", used=techs or 0, limit=plan.technician_limit),
             UsageTile(key="reports", used=reports or 0, limit=plan.report_limit_monthly),
-            # the AI assistant (M36) isn't built yet, so nothing has been used
-            UsageTile(key="ai_questions", used=0, limit=plan.ai_questions_monthly),
+            UsageTile(
+                key="ai_questions",
+                used=await questions_used(db, company.id, start),
+                limit=plan.ai_questions_monthly,
+            ),
             UsageTile(key="credits", used=w.plan_used, limit=None if unlimited(plan) else w.plan_credits),
         ],
         upgrade=plan_out(nxt, cur, lang) if nxt and cur in (nxt.prices or {}) else None,

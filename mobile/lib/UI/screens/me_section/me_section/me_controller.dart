@@ -150,6 +150,11 @@ class MeController extends GetxController {
     load();
   }
 
+  /// M36 Ask KaamNishaan AI (owners and managers).
+  Future<void> onAssistantTap() async {
+    await Get.toNamed<void>(RoutesConstants.assistantScreen);
+  }
+
   /// Checklists and the builder (M26), for owners and managers.
   Future<void> onChecklistsTap() async {
     await Get.toNamed<void>(RoutesConstants.checklistLibraryScreen);

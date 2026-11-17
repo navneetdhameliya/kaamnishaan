@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' show Widget, Image, BoxFit, ColoredBox, Colors;
+import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/assistant_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/auth_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/billing_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/checklists_api_repository.dart';
@@ -28,6 +29,8 @@ import 'package:kaamnishaan/infrastructure/services/speech_service.dart';
 import 'package:kaamnishaan/infrastructure/services/token_storage_service.dart';
 import 'package:get/get.dart';
 import 'package:mocktail/mocktail.dart';
+
+class MockAssistantRepository extends Mock implements IAssistantApiRepository {}
 
 class MockAuthRepository extends Mock implements IAuthApiRepository {}
 

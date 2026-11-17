@@ -171,6 +171,60 @@
         "title": "AnswerOut",
         "type": "object"
       },
+      "AskIn": {
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "AskIn",
+        "type": "object"
+      },
+      "AskOut": {
+        "properties": {
+          "answer": {
+            "$ref": "#/components/schemas/AssistantMessageOut"
+          },
+          "limit": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Limit"
+          },
+          "paused": {
+            "title": "Paused",
+            "type": "boolean"
+          },
+          "question": {
+            "$ref": "#/components/schemas/AssistantMessageOut"
+          },
+          "used": {
+            "title": "Used",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "question",
+          "answer",
+          "used",
+          "limit",
+          "paused"
+        ],
+        "title": "AskOut",
+        "type": "object"
+      },
       "AssignBody": {
         "additionalProperties": false,
         "properties": {
@@ -301,6 +355,115 @@
           "available"
         ],
         "title": "AssignableTechnician",
+        "type": "object"
+      },
+      "AssistantMessageOut": {
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "jobs": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/SourceJob"
+            },
+            "title": "Jobs",
+            "type": "array"
+          },
+          "photo_count": {
+            "default": 0,
+            "description": "Photos on the jobs the answer used",
+            "title": "Photo Count",
+            "type": "integer"
+          },
+          "reports": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/SourceReport"
+            },
+            "title": "Reports",
+            "type": "array"
+          },
+          "role": {
+            "enum": [
+              "user",
+              "assistant"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "role",
+          "text",
+          "at"
+        ],
+        "title": "AssistantMessageOut",
+        "type": "object"
+      },
+      "AssistantOut": {
+        "properties": {
+          "available": {
+            "description": "false while the AI service isn't set up",
+            "title": "Available",
+            "type": "boolean"
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/AssistantMessageOut"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "limit": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "null = no limit",
+            "title": "Limit"
+          },
+          "paused": {
+            "description": "This month's questions are used up",
+            "title": "Paused",
+            "type": "boolean"
+          },
+          "renews_at": {
+            "format": "date-time",
+            "title": "Renews At",
+            "type": "string"
+          },
+          "used": {
+            "description": "Questions asked by the company this month",
+            "title": "Used",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "data",
+          "used",
+          "limit",
+          "paused",
+          "renews_at",
+          "available"
+        ],
+        "title": "AssistantOut",
         "type": "object"
       },
       "AttachChecklist": {
@@ -9278,6 +9441,113 @@
         "title": "SitePatch",
         "type": "object"
       },
+      "SourceJob": {
+        "properties": {
+          "customer": {
+            "title": "Customer",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "missing": {
+            "description": "Proof steps not done yet (open jobs only)",
+            "items": {
+              "enum": [
+                "before",
+                "during",
+                "after",
+                "checklists",
+                "voice"
+              ],
+              "type": "string"
+            },
+            "title": "Missing",
+            "type": "array"
+          },
+          "photos": {
+            "description": "Up to 3 thumbnails",
+            "items": {
+              "type": "string"
+            },
+            "title": "Photos",
+            "type": "array"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "title",
+          "customer",
+          "status",
+          "photos",
+          "missing"
+        ],
+        "title": "SourceJob",
+        "type": "object"
+      },
+      "SourceReport": {
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "cover_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cover Url"
+          },
+          "customer": {
+            "title": "Customer",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "number": {
+            "title": "Number",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "job_id",
+          "customer",
+          "status",
+          "at",
+          "cover_url"
+        ],
+        "title": "SourceReport",
+        "type": "object"
+      },
       "StartBody": {
         "additionalProperties": false,
         "properties": {
@@ -11020,6 +11290,80 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/v1/assistant": {
+      "get": {
+        "description": "My recent questions and answers, and how many of this month's questions are used.",
+        "operationId": "chat_api_v1_assistant_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssistantOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Chat",
+        "tags": [
+          "assistant"
+        ]
+      }
+    },
+    "/api/v1/assistant/ask": {
+      "post": {
+        "description": "Ask about the company's jobs. 402 ai_limit_reached when this month's questions are used up.",
+        "operationId": "ask_api_v1_assistant_ask_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AskIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AskOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ask",
+        "tags": [
+          "assistant"
+        ]
+      }
+    },
     "/api/v1/auth/email": {
       "patch": {
         "operationId": "email_change_api_v1_auth_email_patch",

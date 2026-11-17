@@ -193,6 +193,12 @@ class MeTab extends GetView<MeController> {
                               onTap: controller.onTeamTap,
                             ),
                             MeRow(
+                              key: const ValueKey('me-assistant'),
+                              icon: LucideIcons.sparkles,
+                              label: LangKeys.aiTitle.tr,
+                              onTap: controller.onAssistantTap,
+                            ),
+                            MeRow(
                               key: const ValueKey('me-customer-reviews'),
                               icon: LucideIcons.star,
                               label: LangKeys.crevTitle.tr,

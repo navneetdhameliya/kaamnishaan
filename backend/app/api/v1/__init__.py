@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from app.api.v1.routes import (
+    assistant,
     auth,
     billing,
     checklists,
@@ -36,6 +37,7 @@ for r in (
     reports,
     reviews,
     billing,
+    assistant,
     notifications,
 ):
     router.include_router(r.router)
