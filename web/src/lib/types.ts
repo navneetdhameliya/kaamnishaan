@@ -108,6 +108,40 @@ export interface ConfigOut {
   password_min_length: number;
   features: Record<string, boolean>;
   app_links: { android: string | null; ios: string | null };
+  support: SupportOut | null;
+}
+
+export interface SupportOut {
+  email: string | null;
+  whatsapp: string | null;
+  help_url: string | null;
+  office: string;
+  open: string;
+  close: string;
+  days: number[];
+  timezone: string;
+  regions: { country: string; languages: string[] }[];
+  topics: string[];
+  demo_minutes: number;
+}
+
+export interface DemoSlotsOut {
+  timezone: string;
+  minutes: number;
+  days: { date: string; slots: string[] }[];
+  team_sizes: string[];
+}
+
+export interface DemoOut {
+  ticket: string;
+  starts_at: string;
+  ends_at: string;
+  timezone: string;
+}
+
+export interface ContactOut {
+  ticket: string;
+  topic: string;
 }
 
 export interface CompanyOut {

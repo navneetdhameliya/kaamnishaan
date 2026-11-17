@@ -963,6 +963,7 @@ class ConfigOutModel {
   final bool maintenance;
   final String minAppVersion;
   final int passwordMinLength;
+  final SupportOutModel? support;
   final List<TradeOutModel> trades;
 
   const ConfigOutModel({
@@ -974,6 +975,7 @@ class ConfigOutModel {
     required this.maintenance,
     required this.minAppVersion,
     required this.passwordMinLength,
+    this.support,
     required this.trades,
   });
 
@@ -986,6 +988,7 @@ class ConfigOutModel {
         maintenance: json['maintenance'] as bool,
         minAppVersion: json['min_app_version'] as String,
         passwordMinLength: (json['password_min_length'] as num).toInt(),
+        support: json['support'] == null ? null : SupportOutModel.fromJson(json['support'] as Map<String, dynamic>),
         trades: (json['trades'] as List).map((e) => TradeOutModel.fromJson(e as Map<String, dynamic>)).toList(),
       );
 
@@ -998,6 +1001,7 @@ class ConfigOutModel {
         'maintenance': maintenance,
         'min_app_version': minAppVersion,
         'password_min_length': passwordMinLength,
+        'support': support?.toJson(),
         'trades': trades.map((e) => e.toJson()).toList(),
       };
 }
@@ -1059,6 +1063,69 @@ class ContactInModel {
         'name': name,
         'phone': phone,
         'title': title,
+      };
+}
+
+ContactMessageInModel contactMessageInModelFromJson(String str) => ContactMessageInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String contactMessageInModelToJson(ContactMessageInModel data) => json.encode(data.toJson());
+
+class ContactMessageInModel {
+  final String email;
+  /// One of: en, hi, gu, es, fr
+  final String? lang;
+  final String message;
+  final String name;
+  /// One of: sales, support, billing, partnership, other
+  final String topic;
+
+  const ContactMessageInModel({
+    required this.email,
+    this.lang,
+    required this.message,
+    required this.name,
+    required this.topic,
+  });
+
+  factory ContactMessageInModel.fromJson(Map<String, dynamic> json) => ContactMessageInModel(
+        email: json['email'] as String,
+        lang: json['lang'] as String?,
+        message: json['message'] as String,
+        name: json['name'] as String,
+        topic: json['topic'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'lang': lang,
+        'message': message,
+        'name': name,
+        'topic': topic,
+      };
+}
+
+ContactMessageOutModel contactMessageOutModelFromJson(String str) => ContactMessageOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String contactMessageOutModelToJson(ContactMessageOutModel data) => json.encode(data.toJson());
+
+class ContactMessageOutModel {
+  final String ticket;
+  /// One of: sales, support, billing, partnership, other
+  final String topic;
+
+  const ContactMessageOutModel({
+    required this.ticket,
+    required this.topic,
+  });
+
+  factory ContactMessageOutModel.fromJson(Map<String, dynamic> json) => ContactMessageOutModel(
+        ticket: json['ticket'] as String,
+        topic: json['topic'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ticket': ticket,
+        'topic': topic,
       };
 }
 
@@ -1630,6 +1697,145 @@ class DayCountModel {
         'completed': completed,
         'date': date,
         'reports_sent': reportsSent,
+      };
+}
+
+DemoBookedOutModel demoBookedOutModelFromJson(String str) => DemoBookedOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String demoBookedOutModelToJson(DemoBookedOutModel data) => json.encode(data.toJson());
+
+class DemoBookedOutModel {
+  final DateTime endsAt;
+  final DateTime startsAt;
+  final String ticket;
+  final String timezone;
+
+  const DemoBookedOutModel({
+    required this.endsAt,
+    required this.startsAt,
+    required this.ticket,
+    required this.timezone,
+  });
+
+  factory DemoBookedOutModel.fromJson(Map<String, dynamic> json) => DemoBookedOutModel(
+        endsAt: DateTime.parse(json['ends_at'] as String),
+        startsAt: DateTime.parse(json['starts_at'] as String),
+        ticket: json['ticket'] as String,
+        timezone: json['timezone'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ends_at': endsAt.toIso8601String(),
+        'starts_at': startsAt.toIso8601String(),
+        'ticket': ticket,
+        'timezone': timezone,
+      };
+}
+
+DemoDayModel demoDayModelFromJson(String str) => DemoDayModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String demoDayModelToJson(DemoDayModel data) => json.encode(data.toJson());
+
+class DemoDayModel {
+  final String date;
+  /// free start times, in the demo time zone
+  final List<DateTime> slots;
+
+  const DemoDayModel({
+    required this.date,
+    required this.slots,
+  });
+
+  factory DemoDayModel.fromJson(Map<String, dynamic> json) => DemoDayModel(
+        date: json['date'] as String,
+        slots: (json['slots'] as List).map((e) => DateTime.parse(e as String)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'date': date,
+        'slots': slots.map((e) => e.toIso8601String()).toList(),
+      };
+}
+
+DemoRequestInModel demoRequestInModelFromJson(String str) => DemoRequestInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String demoRequestInModelToJson(DemoRequestInModel data) => json.encode(data.toJson());
+
+class DemoRequestInModel {
+  final String company;
+  final String email;
+  /// One of: en, hi, gu, es, fr
+  final String? lang;
+  final String name;
+  final String phone;
+  final DateTime startsAt;
+  /// One of: 1-5, 6-15, 16-50, 51+
+  final String teamSize;
+  final String trade;
+
+  const DemoRequestInModel({
+    required this.company,
+    required this.email,
+    this.lang,
+    required this.name,
+    required this.phone,
+    required this.startsAt,
+    required this.teamSize,
+    required this.trade,
+  });
+
+  factory DemoRequestInModel.fromJson(Map<String, dynamic> json) => DemoRequestInModel(
+        company: json['company'] as String,
+        email: json['email'] as String,
+        lang: json['lang'] as String?,
+        name: json['name'] as String,
+        phone: json['phone'] as String,
+        startsAt: DateTime.parse(json['starts_at'] as String),
+        teamSize: json['team_size'] as String,
+        trade: json['trade'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'company': company,
+        'email': email,
+        'lang': lang,
+        'name': name,
+        'phone': phone,
+        'starts_at': startsAt.toIso8601String(),
+        'team_size': teamSize,
+        'trade': trade,
+      };
+}
+
+DemoSlotsOutModel demoSlotsOutModelFromJson(String str) => DemoSlotsOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String demoSlotsOutModelToJson(DemoSlotsOutModel data) => json.encode(data.toJson());
+
+class DemoSlotsOutModel {
+  final List<DemoDayModel> days;
+  final int minutes;
+  final List<String> teamSizes;
+  final String timezone;
+
+  const DemoSlotsOutModel({
+    required this.days,
+    required this.minutes,
+    required this.teamSizes,
+    required this.timezone,
+  });
+
+  factory DemoSlotsOutModel.fromJson(Map<String, dynamic> json) => DemoSlotsOutModel(
+        days: (json['days'] as List).map((e) => DemoDayModel.fromJson(e as Map<String, dynamic>)).toList(),
+        minutes: (json['minutes'] as num).toInt(),
+        teamSizes: (json['team_sizes'] as List).map((e) => e as String).toList(),
+        timezone: json['timezone'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'days': days.map((e) => e.toJson()).toList(),
+        'minutes': minutes,
+        'team_sizes': teamSizes,
+        'timezone': timezone,
       };
 }
 
@@ -6742,6 +6948,93 @@ class SuggestionOutModel {
 
   Map<String, dynamic> toJson() => {
         'text': text,
+      };
+}
+
+SupportOutModel supportOutModelFromJson(String str) => SupportOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String supportOutModelToJson(SupportOutModel data) => json.encode(data.toJson());
+
+class SupportOutModel {
+  final String close;
+  /// ISO weekdays, Monday = 1
+  final List<int> days;
+  final int demoMinutes;
+  final String? email;
+  final String? helpUrl;
+  final String office;
+  /// HH:MM in timezone
+  final String open;
+  final List<SupportRegionModel> regions;
+  final String timezone;
+  final List<String> topics;
+  /// digits with country code, for https://wa.me/<digits>
+  final String? whatsapp;
+
+  const SupportOutModel({
+    required this.close,
+    required this.days,
+    required this.demoMinutes,
+    this.email,
+    this.helpUrl,
+    required this.office,
+    required this.open,
+    required this.regions,
+    required this.timezone,
+    required this.topics,
+    this.whatsapp,
+  });
+
+  factory SupportOutModel.fromJson(Map<String, dynamic> json) => SupportOutModel(
+        close: json['close'] as String,
+        days: (json['days'] as List).map((e) => (e as num).toInt()).toList(),
+        demoMinutes: (json['demo_minutes'] as num).toInt(),
+        email: json['email'] as String?,
+        helpUrl: json['help_url'] as String?,
+        office: json['office'] as String,
+        open: json['open'] as String,
+        regions: (json['regions'] as List).map((e) => SupportRegionModel.fromJson(e as Map<String, dynamic>)).toList(),
+        timezone: json['timezone'] as String,
+        topics: (json['topics'] as List).map((e) => e as String).toList(),
+        whatsapp: json['whatsapp'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'close': close,
+        'days': days,
+        'demo_minutes': demoMinutes,
+        'email': email,
+        'help_url': helpUrl,
+        'office': office,
+        'open': open,
+        'regions': regions.map((e) => e.toJson()).toList(),
+        'timezone': timezone,
+        'topics': topics,
+        'whatsapp': whatsapp,
+      };
+}
+
+SupportRegionModel supportRegionModelFromJson(String str) => SupportRegionModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String supportRegionModelToJson(SupportRegionModel data) => json.encode(data.toJson());
+
+class SupportRegionModel {
+  final String country;
+  final List<String> languages;
+
+  const SupportRegionModel({
+    required this.country,
+    required this.languages,
+  });
+
+  factory SupportRegionModel.fromJson(Map<String, dynamic> json) => SupportRegionModel(
+        country: json['country'] as String,
+        languages: (json['languages'] as List).map((e) => e as String).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'country': country,
+        'languages': languages,
       };
 }
 

@@ -63,6 +63,16 @@ have to confirm their email, and reports and review requests go by SMS, WhatsApp
 (the Google Play page) and `KN_IOS_APP_URL` (the App Store page) on Render. Until then the website says
 "The app is coming soon to Google Play and the App Store." Each button appears on its own as soon as its link is set.
 
+**Contact page (website /contact):** each card shows once its value is set on Render —
+`KN_SUPPORT_EMAIL` (e.g. support@yourdomain), `KN_SUPPORT_WHATSAPP` (digits with country code, e.g. 919876543210)
+and `KN_HELP_URL`. The office line is `KN_OFFICE` (default "Ahmedabad, Gujarat, India"); support hours are
+`KN_SUPPORT_OPEN` / `KN_SUPPORT_CLOSE` (default 09:00–19:00, Monday–Saturday, India time).
+
+**Book a demo (website /book-demo):** 30-minute calls on weekdays at `KN_DEMO_TIMES` (default
+["10:00","11:30","14:00","16:30"], India time), up to `KN_DEMO_DAYS_AHEAD` days ahead (default 14). A booked time
+disappears for the next person. Demo bookings and contact messages are saved in the `leads` table (ticket KN-…);
+nobody is notified yet, so check it until the admin panel shows them.
+
 Keep this key private: anyone with it can read login codes on the test server. It can never be turned on
 for the real (production) server.
 

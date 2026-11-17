@@ -1323,6 +1323,16 @@
             "title": "Password Min Length",
             "type": "integer"
           },
+          "support": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SupportOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
           "trades": {
             "items": {
               "$ref": "#/components/schemas/TradeOut"
@@ -1423,6 +1433,84 @@
           "name"
         ],
         "title": "ContactIn",
+        "type": "object"
+      },
+      "ContactMessageIn": {
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "format": "email",
+            "title": "Email",
+            "type": "string"
+          },
+          "lang": {
+            "default": "en",
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Lang",
+            "type": "string"
+          },
+          "message": {
+            "maxLength": 1000,
+            "minLength": 20,
+            "title": "Message",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "topic": {
+            "enum": [
+              "sales",
+              "support",
+              "billing",
+              "partnership",
+              "other"
+            ],
+            "title": "Topic",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "topic",
+          "message"
+        ],
+        "title": "ContactMessageIn",
+        "type": "object"
+      },
+      "ContactMessageOut": {
+        "properties": {
+          "ticket": {
+            "title": "Ticket",
+            "type": "string"
+          },
+          "topic": {
+            "enum": [
+              "sales",
+              "support",
+              "billing",
+              "partnership",
+              "other"
+            ],
+            "title": "Topic",
+            "type": "string"
+          }
+        },
+        "required": [
+          "ticket",
+          "topic"
+        ],
+        "title": "ContactMessageOut",
         "type": "object"
       },
       "ContactOut": {
@@ -2124,6 +2212,170 @@
           "reports_sent"
         ],
         "title": "DayCount",
+        "type": "object"
+      },
+      "DemoBookedOut": {
+        "properties": {
+          "ends_at": {
+            "format": "date-time",
+            "title": "Ends At",
+            "type": "string"
+          },
+          "starts_at": {
+            "format": "date-time",
+            "title": "Starts At",
+            "type": "string"
+          },
+          "ticket": {
+            "title": "Ticket",
+            "type": "string"
+          },
+          "timezone": {
+            "title": "Timezone",
+            "type": "string"
+          }
+        },
+        "required": [
+          "ticket",
+          "starts_at",
+          "ends_at",
+          "timezone"
+        ],
+        "title": "DemoBookedOut",
+        "type": "object"
+      },
+      "DemoDay": {
+        "properties": {
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "slots": {
+            "description": "free start times, in the demo time zone",
+            "items": {
+              "format": "date-time",
+              "type": "string"
+            },
+            "title": "Slots",
+            "type": "array"
+          }
+        },
+        "required": [
+          "date",
+          "slots"
+        ],
+        "title": "DemoDay",
+        "type": "object"
+      },
+      "DemoRequestIn": {
+        "additionalProperties": false,
+        "properties": {
+          "company": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Company",
+            "type": "string"
+          },
+          "email": {
+            "format": "email",
+            "title": "Email",
+            "type": "string"
+          },
+          "lang": {
+            "default": "en",
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Lang",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "phone": {
+            "maxLength": 20,
+            "minLength": 6,
+            "title": "Phone",
+            "type": "string"
+          },
+          "starts_at": {
+            "format": "date-time",
+            "title": "Starts At",
+            "type": "string"
+          },
+          "team_size": {
+            "enum": [
+              "1-5",
+              "6-15",
+              "16-50",
+              "51+"
+            ],
+            "title": "Team Size",
+            "type": "string"
+          },
+          "trade": {
+            "title": "Trade",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "phone",
+          "company",
+          "team_size",
+          "trade",
+          "starts_at"
+        ],
+        "title": "DemoRequestIn",
+        "type": "object"
+      },
+      "DemoSlotsOut": {
+        "properties": {
+          "days": {
+            "items": {
+              "$ref": "#/components/schemas/DemoDay"
+            },
+            "title": "Days",
+            "type": "array"
+          },
+          "minutes": {
+            "title": "Minutes",
+            "type": "integer"
+          },
+          "team_sizes": {
+            "items": {
+              "enum": [
+                "1-5",
+                "6-15",
+                "16-50",
+                "51+"
+              ],
+              "type": "string"
+            },
+            "title": "Team Sizes",
+            "type": "array"
+          },
+          "timezone": {
+            "title": "Timezone",
+            "type": "string"
+          }
+        },
+        "required": [
+          "timezone",
+          "minutes",
+          "days",
+          "team_sizes"
+        ],
+        "title": "DemoSlotsOut",
         "type": "object"
       },
       "DeviceRegister": {
@@ -9760,6 +10012,137 @@
         "title": "SuggestionOut",
         "type": "object"
       },
+      "SupportOut": {
+        "properties": {
+          "close": {
+            "title": "Close",
+            "type": "string"
+          },
+          "days": {
+            "description": "ISO weekdays, Monday = 1",
+            "items": {
+              "type": "integer"
+            },
+            "title": "Days",
+            "type": "array"
+          },
+          "demo_minutes": {
+            "title": "Demo Minutes",
+            "type": "integer"
+          },
+          "email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "help_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Help Url"
+          },
+          "office": {
+            "title": "Office",
+            "type": "string"
+          },
+          "open": {
+            "description": "HH:MM in timezone",
+            "title": "Open",
+            "type": "string"
+          },
+          "regions": {
+            "items": {
+              "$ref": "#/components/schemas/SupportRegion"
+            },
+            "title": "Regions",
+            "type": "array"
+          },
+          "timezone": {
+            "title": "Timezone",
+            "type": "string"
+          },
+          "topics": {
+            "items": {
+              "enum": [
+                "sales",
+                "support",
+                "billing",
+                "partnership",
+                "other"
+              ],
+              "type": "string"
+            },
+            "title": "Topics",
+            "type": "array"
+          },
+          "whatsapp": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "digits with country code, for https://wa.me/<digits>",
+            "title": "Whatsapp"
+          }
+        },
+        "required": [
+          "email",
+          "whatsapp",
+          "help_url",
+          "office",
+          "open",
+          "close",
+          "days",
+          "timezone",
+          "regions",
+          "topics",
+          "demo_minutes"
+        ],
+        "title": "SupportOut",
+        "type": "object"
+      },
+      "SupportRegion": {
+        "properties": {
+          "country": {
+            "title": "Country",
+            "type": "string"
+          },
+          "languages": {
+            "items": {
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "type": "string"
+            },
+            "title": "Languages",
+            "type": "array"
+          }
+        },
+        "required": [
+          "country",
+          "languages"
+        ],
+        "title": "SupportRegion",
+        "type": "object"
+      },
       "SwitchCompany": {
         "additionalProperties": false,
         "properties": {
@@ -16153,6 +16536,109 @@
         "summary": "Plans",
         "tags": [
           "config"
+        ]
+      }
+    },
+    "/api/v1/public/contact": {
+      "post": {
+        "operationId": "contact_api_v1_public_contact_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ContactMessageIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactMessageOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Contact",
+        "tags": [
+          "website"
+        ]
+      }
+    },
+    "/api/v1/public/demo-requests": {
+      "post": {
+        "operationId": "book_demo_api_v1_public_demo_requests_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DemoRequestIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DemoBookedOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Book Demo",
+        "tags": [
+          "website"
+        ]
+      }
+    },
+    "/api/v1/public/demo-slots": {
+      "get": {
+        "operationId": "demo_slots_api_v1_public_demo_slots_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DemoSlotsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Demo Slots",
+        "tags": [
+          "website"
         ]
       }
     },

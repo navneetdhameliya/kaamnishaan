@@ -58,6 +58,7 @@ class ConfigOut(BaseModel):
     maintenance: bool
     features: dict[str, bool]
     app_links: AppLinks = Field(default_factory=AppLinks)
+    support: "SupportOut | None" = None
 
 
 # ---- auth -----------------------------------------------------------------------
@@ -338,3 +339,8 @@ class PlansOut(BaseModel):
 class Ok(BaseModel):
     ok: bool = True
     details: dict[str, Any] = Field(default_factory=dict)
+
+
+from app.schemas.leads import SupportOut  # noqa: E402
+
+ConfigOut.model_rebuild()
