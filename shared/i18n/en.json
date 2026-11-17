@@ -1225,5 +1225,8 @@
   "web.auth.link_expired": "This link has expired",
   "web.auth.link_expired_body": "Ask for a new one in the KaamNishaan app.",
   "web.auth.link_bad": "This link doesn't work",
-  "web.auth.link_bad_body": "It was already used, or part of it is missing. Ask for a new one in the KaamNishaan app."
+  "web.auth.link_bad_body": "It was already used, or part of it is missing. Ask for a new one in the KaamNishaan app.",
+  "startup.title": "KaamNishaan couldn't start",
+  "startup.body": "Check your internet and try again. Your saved photos and notes are safe.",
+  "startup.retry": "Try again"
 }

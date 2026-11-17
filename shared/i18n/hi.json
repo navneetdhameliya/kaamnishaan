@@ -1225,5 +1225,8 @@
   "web.auth.link_expired": "यह लिंक खत्म हो गया",
   "web.auth.link_expired_body": "KaamNishaan ऐप से नया लिंक माँगें।",
   "web.auth.link_bad": "यह लिंक काम नहीं करता",
-  "web.auth.link_bad_body": "यह पहले इस्तेमाल हो चुका है, या इसका कुछ हिस्सा गायब है। KaamNishaan ऐप से नया लिंक माँगें।"
+  "web.auth.link_bad_body": "यह पहले इस्तेमाल हो चुका है, या इसका कुछ हिस्सा गायब है। KaamNishaan ऐप से नया लिंक माँगें।",
+  "startup.title": "KaamNishaan शुरू नहीं हो सका",
+  "startup.body": "इंटरनेट देखें और फिर कोशिश करें। आपकी सेव फ़ोटो और नोट सुरक्षित हैं।",
+  "startup.retry": "फिर कोशिश करें"
 }

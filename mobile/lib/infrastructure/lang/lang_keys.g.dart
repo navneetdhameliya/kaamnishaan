@@ -2456,4 +2456,10 @@ abstract final class LangKeys {
   static const webAuthLinkBad = 'web.auth.link_bad';
   /// It was already used, or part of it is missing. Ask for a new one in the KaamNishaan app.
   static const webAuthLinkBadBody = 'web.auth.link_bad_body';
+  /// KaamNishaan couldn't start
+  static const startupTitle = 'startup.title';
+  /// Check your internet and try again. Your saved photos and notes are safe.
+  static const startupBody = 'startup.body';
+  /// Try again
+  static const startupRetry = 'startup.retry';
 }
