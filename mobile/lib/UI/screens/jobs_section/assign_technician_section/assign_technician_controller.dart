@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../infrastructure/commons/constants/app_routes.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/jobs_api_repository.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/lang/translation_service.dart';
@@ -145,8 +146,11 @@ class AssignTechnicianController extends GetxController {
     Get.back<bool>(result: true);
   }
 
-  /// Inviting technicians (M40) comes with the team screens.
-  void onInviteTap() => KnToast.info(LangKeys.commonComingSoon.tr);
+  /// M40 Invite person (as a technician); the list loads again after an invite.
+  Future<void> onInviteTap() async {
+    final sent = await Get.toNamed(RoutesConstants.inviteScreen, arguments: 'technician');
+    if (sent == true) await load();
+  }
 
   void onSaveWithoutTap() => Get.back<String>(result: saveWithoutTechnician);
 }

@@ -218,7 +218,7 @@ class DashboardTab extends GetView<DashboardController> {
         ],
         if (d.teamNow.isNotEmpty) ...[
           const SizedBox(height: KnSize.space24),
-          _section(context, LangKeys.dashTeamNow.tr),
+          _section(context, LangKeys.dashTeamNow.tr, onSeeAll: controller.onTeamTap),
           SizedBox(
             height: 100,
             child: ListView.separated(
@@ -226,7 +226,7 @@ class DashboardTab extends GetView<DashboardController> {
               clipBehavior: Clip.none,
               itemCount: d.teamNow.length,
               separatorBuilder: (_, _) => const SizedBox(width: KnSize.space8),
-              itemBuilder: (_, i) => TeamMemberCard(member: d.teamNow[i], onTap: controller.onComingSoonTap),
+              itemBuilder: (_, i) => TeamMemberCard(member: d.teamNow[i], onTap: controller.onTeamTap),
             ),
           ),
         ],
@@ -243,7 +243,7 @@ class DashboardTab extends GetView<DashboardController> {
           company: controller.companyName,
           teamInvited: o.teamInvited,
           jobCreated: o.firstJobCreated,
-          onInvite: controller.onComingSoonTap,
+          onInvite: controller.onInviteTap,
           onCreateJob: controller.onNewJobTap,
         ),
         const SizedBox(height: KnSize.space16),

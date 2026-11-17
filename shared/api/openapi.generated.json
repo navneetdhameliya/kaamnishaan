@@ -2564,6 +2564,20 @@
         "title": "InviteOut",
         "type": "object"
       },
+      "InvitePreview": {
+        "properties": {
+          "text": {
+            "description": "The SMS the person will get; the real link is made when it is sent",
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "InvitePreview",
+        "type": "object"
+      },
       "InviterOut": {
         "properties": {
           "name": {
@@ -3964,6 +3978,19 @@
               }
             ],
             "title": "Invite Id"
+          },
+          "invited_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "When the open invite SMS was sent",
+            "title": "Invited At"
           },
           "jobs_today": {
             "default": 0,
@@ -11553,6 +11580,33 @@
           }
         ],
         "summary": "My Invites",
+        "tags": [
+          "invites"
+        ]
+      }
+    },
+    "/api/v1/invites/preview": {
+      "get": {
+        "description": "The SMS text M40 shows while the form is filled.",
+        "operationId": "invite_preview_api_v1_invites_preview_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitePreview"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Invite Preview",
         "tags": [
           "invites"
         ]

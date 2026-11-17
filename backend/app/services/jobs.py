@@ -57,6 +57,16 @@ def tz(p: Principal) -> ZoneInfo:
         return ZoneInfo("Asia/Kolkata")
 
 
+def day_bounds_for(company) -> tuple[datetime, datetime]:
+    """Today in a company's time zone, for lists that only have the company (M40 team)."""
+    try:
+        zone = ZoneInfo(company.timezone)
+    except Exception:  # noqa: BLE001 - bad stored zone falls back to India
+        zone = ZoneInfo("Asia/Kolkata")
+    start = datetime.combine(now().astimezone(zone).date(), time.min, tzinfo=zone)
+    return start, start + timedelta(days=1)
+
+
 def local_today(p: Principal) -> date:
     return now().astimezone(tz(p)).date()
 

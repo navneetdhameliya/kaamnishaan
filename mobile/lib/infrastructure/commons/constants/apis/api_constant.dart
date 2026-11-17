@@ -20,6 +20,10 @@ abstract final class APIConstant {
   static const String notificationsReadAPIEP = '/notifications/read';
   static const String myCompaniesAPIEP = '/me/companies';
   static const String myInvitesAPIEP = '/invites/mine';
+  static const String invitesAPIEP = '/invites';
+  static const String invitePreviewAPIEP = '/invites/preview';
+  static String resendInviteAPIEP(String id) => '/invites/$id/resend';
+  static const String teamAPIEP = '/team';
   static String acceptInviteAPIEP(String id) => '/invites/$id/accept';
   static String declineInviteAPIEP(String id) => '/invites/$id/decline';
 
