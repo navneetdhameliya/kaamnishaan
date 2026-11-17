@@ -67,6 +67,10 @@ abstract final class APIConstant {
 
   // checklists
   static const String checklistTemplatesAPIEP = '/checklist-templates';
+  static String checklistTemplateAPIEP(String id) => '/checklist-templates/$id';
+  static String copyTemplateAPIEP(String id) => '/checklist-templates/$id/copy';
+  static String templateQuestionsAPIEP(String id) => '/checklist-templates/$id/questions';
+  static String templateQuestionAPIEP(String id, String questionId) => '/checklist-templates/$id/questions/$questionId';
   static String jobChecklistsAPIEP(String jobId) => '/jobs/$jobId/checklists';
   static String submissionAPIEP(String id) => '/checklist-submissions/$id';
   static String answerAPIEP(String id, String questionId) => '/checklist-submissions/$id/answers/$questionId';

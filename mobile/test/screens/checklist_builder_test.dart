@@ -1,0 +1,159 @@
+import 'package:flutter/widgets.dart' show Locale;
+import 'package:flutter_test/flutter_test.dart';
+import 'package:get/get.dart';
+import 'package:kaamnishaan/UI/screens/checklists_section/checklist_builder_section/checklist_builder_controller.dart';
+import 'package:kaamnishaan/UI/screens/checklists_section/checklist_library_section/checklist_library_controller.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_result.dart';
+import 'package:kaamnishaan/infrastructure/lang/translations.g.dart';
+import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
+import 'package:mocktail/mocktail.dart';
+
+import '../helpers/fakes.dart';
+
+Future<void> _ignoreApp(Future<void> Function() run) async {
+  try {
+    await run();
+  } on Object catch (_) {}
+}
+
+const ready = {'en': 'ready', 'hi': 'ready', 'gu': 'ready', 'es': 'ready', 'fr': 'ready'};
+
+TemplateQuestionOutModel question(String id, int position, String type, String text, {String photo = 'none'}) =>
+    TemplateQuestionOutModel(
+      id: id,
+      position: position,
+      type: type,
+      text: text,
+      textAll: {'en': text},
+      textStatus: position == 3 ? {...ready, 'gu': 'needs_review'} : ready,
+      options: const [],
+      photoRule: photo,
+      requiredValue: true,
+    );
+
+TemplateOutModel template({String scope = 'company', String status = 'draft', List<TemplateQuestionOutModel>? qs}) {
+  final questions = qs ??
+      [
+        question('q1', 1, 'yes_no', 'Is the air filter clean?'),
+        question('q2', 2, 'number', 'Refrigerant pressure'),
+        question('q3', 3, 'pass_fail', 'Drain pipe condition', photo: 'if_fail'),
+      ];
+  return TemplateOutModel(
+    id: 't1',
+    name: 'HVAC service check',
+    scope: scope,
+    status: status,
+    version: 1,
+    questionCount: questions.length,
+    usageCount: 21,
+    needsTranslation: 0,
+    language: 'en',
+    questions: questions,
+    editable: scope == 'company',
+  );
+}
+
+void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
+  late MockChecklistsRepository checklists;
+
+  setUpAll(() {
+    registerFallbackValue(const QuestionInModel(type: 'yes_no', text: ''));
+    registerFallbackValue(const QuestionPatchModel());
+  });
+
+  setUp(() {
+    Get.reset();
+    Get.testMode = true;
+    Get.addTranslations(KnTranslations().keys);
+    Get.locale = const Locale('en', 'IN');
+    checklists = MockChecklistsRepository();
+  });
+
+  test('M26 shows the questions, their types and the languages ready', () async {
+    when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    final c = ChecklistBuilderController(checklists: checklists, templateId: 't1');
+    await c.load();
+    expect((c.name, c.subtitle), ('HVAC service check', '3 questions · used in 21 jobs'));
+    expect(c.translations, 'Translations: 4 of 5 languages ready');
+    expect([for (final q in c.questions) c.chip(q)], ['Yes / No', 'Number', 'Pass / Fail · photo']);
+    expect((c.editable, c.draft), (true, true));
+  });
+
+  test('M26 add a Pass / Fail question with a photo when it fails', () async {
+    when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    when(() => checklists.addQuestion(any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    final c = ChecklistBuilderController(checklists: checklists, templateId: 't1');
+    await c.load();
+    c.startAdd();
+    c.text.text = 'Is the condensate drain clear?';
+    c.onType('pass_fail');
+    expect(c.photoLabel, 'Photo needed if Fail');
+    c.photo.value = true;
+    expect(await c.onSaveQuestion(), isTrue);
+    final sent = verify(() => checklists.addQuestion('t1', captureAny())).captured.single as QuestionInModel;
+    expect((sent.type, sent.text, sent.photoRule, sent.unit), ('pass_fail', 'Is the condensate drain clear?', 'if_fail', null));
+  });
+
+  test('M26 edit keeps the type; numbers can have a unit', () async {
+    when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    when(() => checklists.updateQuestion(any(), any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    final c = ChecklistBuilderController(checklists: checklists, templateId: 't1');
+    await c.load();
+    c.startEdit(c.questions[1]);
+    c.onType('yes_no');
+    expect(c.type.value, 'number'); // locked
+    c.unit.text = 'psi';
+    c.photo.value = true;
+    await c.onSaveQuestion();
+    final sent = verify(() => checklists.updateQuestion('t1', 'q2', captureAny())).captured.single as QuestionPatchModel;
+    expect((sent.text, sent.unit, sent.photoRule), ('Refrigerant pressure', 'psi', 'always'));
+  });
+
+  test('M26 drag to move saves the new place', () async {
+    when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    when(() => checklists.updateQuestion(any(), any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    final c = ChecklistBuilderController(checklists: checklists, templateId: 't1');
+    await c.load();
+    final moving = c.onReorder(2, 0);
+    expect([for (final q in c.questions) q.id], ['q3', 'q1', 'q2']); // shown at once
+    await moving;
+    final sent = verify(() => checklists.updateQuestion('t1', 'q3', captureAny())).captured.single as QuestionPatchModel;
+    expect(sent.position, 1);
+  });
+
+  test('M26 save publishes; a KaamNishaan checklist is copied first', () async {
+    when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template(scope: 'global')));
+    when(() => checklists.copy(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    when(() => checklists.update(any(), status: any(named: 'status'), name: any(named: 'name'))).thenAnswer(
+      (_) async => ApiSuccess<TemplateOutModel>(template(status: 'published')),
+    );
+    final c = ChecklistBuilderController(checklists: checklists, templateId: 'g1');
+    await c.load();
+    expect(c.editable, isFalse);
+    await _ignoreApp(c.onCopy);
+    expect((c.editable, c.templateId.value), (true, 't1'));
+    await _ignoreApp(c.onSave);
+    verify(() => checklists.update('t1', status: 'published')).called(1);
+    expect(c.draft, isFalse);
+  });
+
+  test('Checklists: the company’s own first, with a badge for drafts and KaamNishaan’s', () async {
+    when(() => checklists.templates()).thenAnswer(
+      (_) async => const ApiSuccess<TemplateListModel>(
+        TemplateListModel(
+          data: [
+            TemplateListItemModel(id: 'g1', name: 'AC service', scope: 'global', status: 'published', version: 1, questionCount: 12, usageCount: 0, needsTranslation: 0),
+            TemplateListItemModel(id: 't1', name: 'Our check', scope: 'company', status: 'draft', version: 1, questionCount: 3, usageCount: 2, needsTranslation: 0),
+          ],
+          meta: ListMetaModel(),
+        ),
+      ),
+    );
+    final c = ChecklistLibraryController(checklists: checklists);
+    await c.load();
+    expect([for (final t in c.items) t.id], ['t1', 'g1']);
+    expect([for (final t in c.items) c.badge(t)], ['Draft', 'By KaamNishaan']);
+    expect(c.meta(c.items.first), '3 questions · used in 2 jobs');
+  });
+}

@@ -150,6 +150,11 @@ class MeController extends GetxController {
     load();
   }
 
+  /// Checklists and the builder (M26), for owners and managers.
+  Future<void> onChecklistsTap() async {
+    await Get.toNamed<void>(RoutesConstants.checklistLibraryScreen);
+  }
+
   /// M45 Customer reviews (owners and managers).
   Future<void> onCustomerReviewsTap() async {
     await Get.toNamed<void>(RoutesConstants.companyReviewsScreen);

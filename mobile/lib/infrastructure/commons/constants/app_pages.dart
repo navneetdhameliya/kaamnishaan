@@ -20,6 +20,10 @@ import '../../../UI/screens/auth_section/phone_section/phone_binding.dart';
 import '../../../UI/screens/auth_section/phone_section/phone_screen.dart';
 import '../../../UI/screens/auth_section/profile_setup_section/profile_setup_binding.dart';
 import '../../../UI/screens/auth_section/profile_setup_section/profile_setup_screen.dart';
+import '../../../UI/screens/checklists_section/checklist_builder_section/checklist_builder_binding.dart';
+import '../../../UI/screens/checklists_section/checklist_builder_section/checklist_builder_screen.dart';
+import '../../../UI/screens/checklists_section/checklist_library_section/checklist_library_binding.dart';
+import '../../../UI/screens/checklists_section/checklist_library_section/checklist_library_screen.dart';
 import '../../../UI/screens/checklists_section/checklist_question_section/checklist_question_binding.dart';
 import '../../../UI/screens/checklists_section/checklist_question_section/checklist_question_screen.dart';
 import '../../../UI/screens/checklists_section/checklists_section/checklists_binding.dart';
@@ -248,6 +252,16 @@ abstract final class AppPages {
     ),
     GetPage(name: RoutesConstants.billingScreen, page: () => const BillingScreen(), binding: BillingBinding()),
     GetPage(name: RoutesConstants.creditsScreen, page: () => const CreditsScreen(), binding: CreditsBinding()),
+    GetPage(
+      name: RoutesConstants.checklistLibraryScreen,
+      page: () => const ChecklistLibraryScreen(),
+      binding: ChecklistLibraryBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.checklistBuilderScreen,
+      page: () => const ChecklistBuilderScreen(),
+      binding: ChecklistBuilderBinding(),
+    ),
     GetPage(name: RoutesConstants.teamScreen, page: () => const TeamScreen(), binding: TeamBinding()),
     GetPage(name: RoutesConstants.inviteScreen, page: () => const InviteScreen(), binding: InviteBinding()),
     GetPage(name: RoutesConstants.messagesScreen, page: () => const MessagesScreen(), binding: MessagesBinding()),

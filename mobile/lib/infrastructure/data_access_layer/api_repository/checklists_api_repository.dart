@@ -18,6 +18,24 @@ abstract class IChecklistsApiRepository {
 
   /// The company's checklists to add to a new job (M16).
   Future<ApiResult<TemplateListModel>> templates();
+
+  /// M26: one checklist with its questions (and every language of each).
+  Future<ApiResult<TemplateOutModel>> template(String id);
+
+  /// M26 "New checklist": starts as a draft.
+  Future<ApiResult<TemplateOutModel>> create(String name);
+
+  /// Rename, or [status] published / archived.
+  Future<ApiResult<TemplateOutModel>> update(String id, {String? name, String? status});
+
+  /// A KaamNishaan checklist copied so the company can change it.
+  Future<ApiResult<TemplateOutModel>> copy(String id);
+
+  Future<ApiResult<TemplateOutModel>> addQuestion(String id, QuestionInModel body);
+
+  Future<ApiResult<TemplateOutModel>> updateQuestion(String id, String questionId, QuestionPatchModel body);
+
+  Future<ApiResult<void>> deleteQuestion(String id, String questionId);
 }
 
 class ChecklistsApiRepository implements IChecklistsApiRepository {
@@ -54,4 +72,41 @@ class ChecklistsApiRepository implements IChecklistsApiRepository {
   @override
   Future<ApiResult<TemplateListModel>> templates() =>
       guard(() async => TemplateListModel.fromJson(_map(await provider.getTemplates())));
+
+  Map<String, dynamic> _clean(Map<String, dynamic> m) => m..removeWhere((_, v) => v == null || v == false);
+
+  @override
+  Future<ApiResult<TemplateOutModel>> template(String id) =>
+      guard(() async => TemplateOutModel.fromJson(_map(await provider.getTemplate(id))));
+
+  @override
+  Future<ApiResult<TemplateOutModel>> create(String name) =>
+      guard(() async => TemplateOutModel.fromJson(_map(await provider.postTemplate({'name': name}))));
+
+  @override
+  Future<ApiResult<TemplateOutModel>> update(String id, {String? name, String? status}) => guard(
+        () async => TemplateOutModel.fromJson(_map(await provider.patchTemplate(id, {'name': ?name, 'status': ?status}))),
+      );
+
+  @override
+  Future<ApiResult<TemplateOutModel>> copy(String id) =>
+      guard(() async => TemplateOutModel.fromJson(_map(await provider.postCopy(id))));
+
+  @override
+  Future<ApiResult<TemplateOutModel>> addQuestion(String id, QuestionInModel body) => guard(
+        () async => TemplateOutModel.fromJson(_map(await provider.postQuestion(id, _keep(body.toJson())))),
+      );
+
+  @override
+  Future<ApiResult<TemplateOutModel>> updateQuestion(String id, String questionId, QuestionPatchModel body) => guard(
+        () async => TemplateOutModel.fromJson(_map(await provider.patchQuestion(id, questionId, _clean(body.toJson())))),
+      );
+
+  @override
+  Future<ApiResult<void>> deleteQuestion(String id, String questionId) => guard(() async {
+        await provider.deleteQuestion(id, questionId);
+      });
+
+  /// Leave out what isn't set (keeps `required: false`).
+  Map<String, dynamic> _keep(Map<String, dynamic> m) => m..removeWhere((_, v) => v == null);
 }
