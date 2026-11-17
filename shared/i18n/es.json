@@ -693,9 +693,9 @@
   "share.no_link": "Aún no hay enlace",
   "share.send": "Enviar al cliente",
   "share.sent": "Enviado a {name}",
-  "share.no_contact": "Este cliente no tiene teléfono ni email",
-  "share.no_contact_body": "Añade uno para enviar el informe. Igual puedes copiar el enlace.",
-  "share.add_contact": "Añadir teléfono o email",
+  "share.no_contact": "No hay teléfono ni correo guardado",
+  "share.no_contact_body": "Añade un teléfono o correo para enviar este informe",
+  "share.add_contact": "Teléfono o correo del cliente",
   "share.contact_title": "Quién recibe el informe",
   "share.name": "Nombre",
   "share.phone": "Teléfono",
@@ -703,5 +703,7 @@
   "share.use": "Usar",
   "share.pick_channel": "Elige cómo enviarlo.",
   "share.already_sent": "Enviado {n} veces",
-  "queue.days": "{n} días"
+  "queue.days": "{n} días",
+  "share.pdf_meta_plain": "PDF · {size}",
+  "share.edit": "Editar"
 }

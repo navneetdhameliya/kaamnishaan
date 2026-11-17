@@ -693,9 +693,9 @@
   "share.no_link": "No link yet",
   "share.send": "Send to customer",
   "share.sent": "Sent to {name}",
-  "share.no_contact": "No phone or email for this customer",
-  "share.no_contact_body": "Add one to send the report. You can still copy the link.",
-  "share.add_contact": "Add phone or email",
+  "share.no_contact": "No phone or email saved",
+  "share.no_contact_body": "Add a phone or email to send this report",
+  "share.add_contact": "Customer phone or email",
   "share.contact_title": "Who gets the report",
   "share.name": "Name",
   "share.phone": "Phone",
@@ -703,5 +703,7 @@
   "share.use": "Use this",
   "share.pick_channel": "Choose how to send it.",
   "share.already_sent": "Sent {n} times",
-  "queue.days": "{n} days"
+  "queue.days": "{n} days",
+  "share.pdf_meta_plain": "PDF · {size}",
+  "share.edit": "Edit"
 }

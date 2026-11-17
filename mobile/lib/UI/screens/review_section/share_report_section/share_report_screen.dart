@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../infrastructure/lang/lang_keys.g.dart';
-import '../../../../infrastructure/shared/text_utils.dart';
 import '../../../common_widgets/common_shimmer.dart';
 import '../../../common_widgets/custom_inkwell.dart';
 import '../../../common_widgets/kn_cover_image.dart';
@@ -113,7 +112,7 @@ class ShareReportScreen extends GetView<ShareReportController> {
                   CustomBaseTextWidget(LangKeys.shareSendTo.tr, style: text.label),
                   const SizedBox(height: KnSize.space8),
                   RecipientCard(
-                    initials: TextUtils.initials(controller.name),
+                    initials: controller.initials,
                     name: controller.name,
                     contact: controller.contactLine,
                     error: controller.contactError.value != null,

@@ -68,7 +68,11 @@ class RecipientCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(KnSize.radiusSm),
             child: Padding(
               padding: const EdgeInsets.all(6),
-              child: CustomBaseTextWidget(LangKeys.shareChange.tr, style: text.label, color: kn.textLink),
+              child: CustomBaseTextWidget(
+                contact.isEmpty ? LangKeys.shareEdit.tr : LangKeys.shareChange.tr,
+                style: text.label,
+                color: kn.textLink,
+              ),
             ),
           ),
         ],
@@ -120,7 +124,7 @@ class ChannelTile extends StatelessWidget {
                 child: Icon(icon, size: 18, color: selected ? kn.textOnAction : kn.textPrimary),
               ),
               const SizedBox(height: 6),
-              CustomBaseTextWidget(label, style: context.knText.labelSm, maxLines: 1),
+              CustomBaseTextWidget(label, style: context.knText.captionStrong, maxLines: 1),
             ],
           ),
         ),

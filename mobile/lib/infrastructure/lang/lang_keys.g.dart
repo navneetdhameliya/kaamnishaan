@@ -1390,11 +1390,11 @@ abstract final class LangKeys {
   static const shareSend = 'share.send';
   /// Sent to {name}
   static const shareSent = 'share.sent';
-  /// No phone or email for this customer
+  /// No phone or email saved
   static const shareNoContact = 'share.no_contact';
-  /// Add one to send the report. You can still copy the link.
+  /// Add a phone or email to send this report
   static const shareNoContactBody = 'share.no_contact_body';
-  /// Add phone or email
+  /// Customer phone or email
   static const shareAddContact = 'share.add_contact';
   /// Who gets the report
   static const shareContactTitle = 'share.contact_title';
@@ -1412,4 +1412,8 @@ abstract final class LangKeys {
   static const shareAlreadySent = 'share.already_sent';
   /// {n} days
   static const queueDays = 'queue.days';
+  /// PDF · {size}
+  static const sharePdfMetaPlain = 'share.pdf_meta_plain';
+  /// Edit
+  static const shareEdit = 'share.edit';
 }

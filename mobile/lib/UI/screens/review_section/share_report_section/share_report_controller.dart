@@ -126,10 +126,19 @@ class ShareReportController extends GetxController {
   String get subtitle => '${args.customer} · #${report.value?.number ?? ''}';
 
   /// "PDF · 2.4 MB · approved by Priya"
-  String get pdfMeta => LangKeys.sharePdfMeta.trParams({
-        'size': size,
-        'name': (report.value?.approvedBy?.name ?? '').split(' ').first,
-      }).replaceAll(' ·  ·', ' ·');
+  String get pdfMeta {
+    final by = (report.value?.approvedBy?.name ?? '').split(' ').first;
+    return by.isEmpty
+        ? LangKeys.sharePdfMetaPlain.trParams({'size': size})
+        : LangKeys.sharePdfMeta.trParams({'size': size, 'name': by});
+  }
+
+  /// "AR" for "Dr. Anita Rao": titles like "Dr." are skipped.
+  String get initials {
+    final words = name.split(' ').where((w) => w.isNotEmpty && !w.endsWith('.')).toList();
+    if (words.isEmpty) return '';
+    return (words.first[0] + (words.length > 1 ? words.last[0] : '')).toUpperCase();
+  }
 
   /// "2.4 MB"
   String get size {

@@ -237,6 +237,7 @@ void main() {
       expect(c.picked, {'sms'});
       expect((c.name, c.contactLine, c.size, c.pages), ('Dr. Anita Rao', '+15550100444', '2.3 MB', 3));
       expect(c.available('whatsapp'), isFalse);
+      expect((c.initials, c.pdfMeta), ('AR', 'PDF · 2.3 MB'));
       when(() => reports.send(any(), channels: any(named: 'channels'), name: any(named: 'name'), phone: any(named: 'phone'), email: any(named: 'email')))
           .thenAnswer((_) async => ApiSuccess<ShareInfoModel>(info()));
       await _ignoreApp(c.onSendTap);

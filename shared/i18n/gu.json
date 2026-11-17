@@ -693,9 +693,9 @@
   "share.no_link": "હજી લિંક નથી",
   "share.send": "ગ્રાહકને મોકલો",
   "share.sent": "{name} ને મોકલ્યું",
-  "share.no_contact": "આ ગ્રાહકનો ફોન કે ઈમેલ નથી",
-  "share.no_contact_body": "રિપોર્ટ મોકલવા ઉમેરો. લિંક તો પણ કૉપિ કરી શકો.",
-  "share.add_contact": "ફોન અથવા ઈમેલ ઉમેરો",
+  "share.no_contact": "કોઈ ફોન કે ઈમેલ સેવ નથી",
+  "share.no_contact_body": "આ રિપોર્ટ મોકલવા ફોન કે ઈમેલ ઉમેરો",
+  "share.add_contact": "ગ્રાહકનો ફોન કે ઈમેલ",
   "share.contact_title": "રિપોર્ટ કોને મળશે",
   "share.name": "નામ",
   "share.phone": "ફોન",
@@ -703,5 +703,7 @@
   "share.use": "આ રાખો",
   "share.pick_channel": "કેવી રીતે મોકલવું તે પસંદ કરો.",
   "share.already_sent": "{n} વાર મોકલ્યું",
-  "queue.days": "{n} દિવસ"
+  "queue.days": "{n} દિવસ",
+  "share.pdf_meta_plain": "PDF · {size}",
+  "share.edit": "બદલો"
 }
