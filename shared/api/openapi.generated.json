@@ -171,6 +171,36 @@
         "title": "AnswerOut",
         "type": "object"
       },
+      "AppLinks": {
+        "properties": {
+          "android": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Google Play page; null until published",
+            "title": "Android"
+          },
+          "ios": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "App Store page; null until published",
+            "title": "Ios"
+          }
+        },
+        "title": "AppLinks",
+        "type": "object"
+      },
       "AskIn": {
         "additionalProperties": false,
         "properties": {
@@ -1253,6 +1283,9 @@
       },
       "ConfigOut": {
         "properties": {
+          "app_links": {
+            "$ref": "#/components/schemas/AppLinks"
+          },
           "countries": {
             "items": {
               "$ref": "#/components/schemas/CountryOut"

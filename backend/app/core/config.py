@@ -48,6 +48,9 @@ class Settings(BaseSettings):
     # reports and reviews go by SMS / WhatsApp / link only, and email shows as "off" in the app. The
     # password-reset email still goes to the test outbox (/api/v1/dev/outbox). Turn on with the provider.
     email_enabled: bool = False
+    # store pages for "Get the app" on the website; empty until the apps are published
+    android_app_url: str | None = None
+    ios_app_url: str | None = None
     # Any scheduler (e.g. a GitHub Actions schedule) calls POST /api/v1/cron/review-followups with this key
     # as X-Cron-Key so Day 2 review reminders go out on time. Without it the endpoint is closed.
     cron_key: SecretStr | None = None

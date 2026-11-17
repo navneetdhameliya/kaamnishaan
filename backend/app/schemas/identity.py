@@ -43,6 +43,11 @@ class TradeOut(BaseModel):
     checklists: int = Field(default=0, description="ready checklist templates for this trade (website W01)")
 
 
+class AppLinks(BaseModel):
+    android: str | None = Field(default=None, description="Google Play page; null until published")
+    ios: str | None = Field(default=None, description="App Store page; null until published")
+
+
 class ConfigOut(BaseModel):
     languages: list[LanguageOut]
     countries: list[CountryOut]
@@ -52,6 +57,7 @@ class ConfigOut(BaseModel):
     min_app_version: str
     maintenance: bool
     features: dict[str, bool]
+    app_links: AppLinks = Field(default_factory=AppLinks)
 
 
 # ---- auth -----------------------------------------------------------------------

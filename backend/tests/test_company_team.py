@@ -309,3 +309,16 @@ async def test_config_counts_ready_checklists_per_trade(client):
     trades = {t["key"]: t for t in (await client.get("/api/v1/config")).json()["trades"]}
     assert trades["hvac"]["checklists"] > 0  # the seeded HVAC templates
     assert trades["roofing"]["checklists"] == 0
+
+
+async def test_config_app_links(client, monkeypatch):
+    from app.core.config import get_settings
+
+    assert (await client.get("/api/v1/config")).json()["app_links"] == {"android": None, "ios": None}
+    monkeypatch.setenv("KN_ANDROID_APP_URL", "https://play.google.com/store/apps/details?id=app.kaamnishaan")
+    get_settings.cache_clear()
+    try:
+        links = (await client.get("/api/v1/config")).json()["app_links"]
+        assert links["android"].startswith("https://play.google.com") and links["ios"] is None
+    finally:
+        get_settings.cache_clear()
