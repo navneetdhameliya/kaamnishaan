@@ -85,6 +85,11 @@ def parse_token(token: str) -> uuid.UUID | None:
     return link_id if hmac.compare_digest(raw[16:], _mac(link_id)) else None
 
 
+def email_on() -> bool:
+    """False until an email service is chosen (D-96)."""
+    return get_settings().email_enabled
+
+
 def link_url(link: ShareLink) -> str:
     return f"{get_settings().web_url.rstrip('/')}/r/{make_token(link.id)}"
 
@@ -205,7 +210,12 @@ async def share_info(db: AsyncSession, p: Principal, report_id: uuid.UUID) -> Sh
     channels = [
         ChannelOut(key="sms", available=bool(phone), to=phone, reason=None if phone else "no_phone"),
         ChannelOut(key="whatsapp", available=bool(phone), to=phone, reason=None if phone else "no_phone"),
-        ChannelOut(key="email", available=bool(email), to=email, reason=None if email else "no_email"),
+        ChannelOut(
+            key="email",
+            available=bool(email) and email_on(),
+            to=email,
+            reason="email_off" if not email_on() else (None if email else "no_email"),
+        ),
     ]
     approved = rep.status in DONE
     preview = None
@@ -402,6 +412,8 @@ async def send(db: AsyncSession, p: Principal, report_id: uuid.UUID, body: SendI
     )
     email = str(body.email) if body.email else (contact.email if contact else None)
     channels = list(dict.fromkeys(body.channels))
+    if "email" in channels and not email_on():
+        raise AppError("email_off", "Email isn't switched on yet. Send by SMS or WhatsApp, or copy the link.")
     missing = {}
     if {"sms", "whatsapp"} & set(channels) and not phone:
         missing["phone"] = "missing"
@@ -584,6 +596,8 @@ async def _tell_team(db: AsyncSession, company_id: uuid.UUID, subject: str, body
             )
         )
     ).scalars()
+    if not email_on():
+        return
     for e in emails:
         await messaging.send_email_text(e, "team_notice", subject, body)
 

@@ -55,7 +55,12 @@ async def config(response: Response, locale: Locale = "en", db: AsyncSession = D
         password_min_length=PASSWORD_MIN,
         min_app_version="1.0.0",
         maintenance=False,
-        features={"signups": True, "ai_drafting": True, "ai_assistant": get_ai() is not None},
+        features={
+            "signups": True,
+            "ai_drafting": True,
+            "ai_assistant": get_ai() is not None,
+            "email": get_settings().email_enabled,
+        },
     )
 
 
