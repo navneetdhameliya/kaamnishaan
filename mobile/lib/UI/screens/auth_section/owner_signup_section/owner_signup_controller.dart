@@ -154,7 +154,10 @@ class OwnerSignupController extends GetxController {
     if (data != null) {
       await session.apply(data);
       registeredEmail = cleanEmail;
-      Get.toNamed(RoutesConstants.companySetupScreen);
+      // M09: confirm the email first (it can be done later)
+      Get.toNamed(
+        session.me.value?.emailVerified ?? false ? RoutesConstants.companySetupScreen : RoutesConstants.verifyEmailScreen,
+      );
       return;
     }
     final error = result.errorOrNull!;

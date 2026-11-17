@@ -12,6 +12,7 @@ abstract final class RoutesConstants {
   static const String emailLoginScreen = '/login';
   static const String ownerSignupScreen = '/sign-up';
   static const String companySetupScreen = '/company-setup';
+  static const String verifyEmailScreen = '/verify-email';
   static const String forgotPasswordScreen = '/forgot-password';
   static const String checkEmailScreen = '/check-email';
   static const String jobListScreen = '/jobs';
@@ -51,6 +52,7 @@ abstract final class RoutesConstants {
   static const String billingScreen = '/settings/billing';
   static const String assistantScreen = '/assistant';
   static const String creditsScreen = '/settings/credits';
+  static const String planLimitScreen = '/plan-limit';
   static const String inviteScreen = '/team/invite';
   static const String reportReviewScreen = '/review';
   static const String reportPdfScreen = '/review/pdf';

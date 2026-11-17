@@ -11,6 +11,8 @@ abstract class IAuthApiProvider {
   Future<dynamic> postSwitchCompany(Map<String, dynamic> body);
   Future<dynamic> postLogout();
   Future<dynamic> getMe();
+  Future<dynamic> postSendVerification();
+  Future<dynamic> patchEmail(String email);
   Future<dynamic> patchMe(Map<String, dynamic> body);
   Future<dynamic> getMyInvites();
   Future<dynamic> postAcceptInvite(String inviteId);
@@ -51,6 +53,12 @@ class AuthApiProvider implements IAuthApiProvider {
 
   @override
   Future<dynamic> getMe() => _client.get(APIConstant.meAPIEP);
+
+  @override
+  Future<dynamic> postSendVerification() => _client.post(APIConstant.sendVerificationAPIEP);
+
+  @override
+  Future<dynamic> patchEmail(String email) => _client.patch(APIConstant.changeEmailAPIEP, body: {'email': email});
 
   @override
   Future<dynamic> patchMe(Map<String, dynamic> body) => _client.patch(APIConstant.meAPIEP, body: body);

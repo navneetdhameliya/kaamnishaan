@@ -8,6 +8,9 @@ abstract class IBillingApiRepository {
 
   /// M41 Follow-up credits (owners and managers): what's left, what used it, the top-up packs.
   Future<ApiResult<CreditsOutModel>> credits();
+
+  /// M41 Plan limit reached (anyone): reports and technicians against the plan, and the next plan.
+  Future<ApiResult<PlanStatusModel>> plan();
 }
 
 class BillingApiRepository implements IBillingApiRepository {
@@ -24,4 +27,8 @@ class BillingApiRepository implements IBillingApiRepository {
   @override
   Future<ApiResult<CreditsOutModel>> credits() =>
       guard(() async => CreditsOutModel.fromJson(_map(await provider.getCredits())));
+
+  @override
+  Future<ApiResult<PlanStatusModel>> plan() =>
+      guard(() async => PlanStatusModel.fromJson(_map(await provider.getPlan())));
 }

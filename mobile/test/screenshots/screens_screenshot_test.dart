@@ -28,6 +28,8 @@ import 'package:kaamnishaan/UI/screens/auth_section/phone_section/phone_controll
 import 'package:kaamnishaan/UI/screens/auth_section/phone_section/phone_screen.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/profile_setup_section/profile_setup_controller.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/profile_setup_section/profile_setup_screen.dart';
+import 'package:kaamnishaan/UI/screens/auth_section/verify_email_section/verify_email_controller.dart';
+import 'package:kaamnishaan/UI/screens/auth_section/verify_email_section/verify_email_screen.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_builder_section/checklist_builder_controller.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_builder_section/checklist_builder_screen.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_library_section/checklist_library_controller.dart';
@@ -80,6 +82,8 @@ import 'package:kaamnishaan/UI/screens/me_section/my_reviews_section/my_reviews_
 import 'package:kaamnishaan/UI/screens/me_section/my_reviews_section/my_reviews_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/review_details_section/review_details_controller.dart';
 import 'package:kaamnishaan/UI/screens/me_section/review_details_section/review_details_screen.dart';
+import 'package:kaamnishaan/UI/screens/me_section/plan_limit_section/plan_limit_controller.dart';
+import 'package:kaamnishaan/UI/screens/me_section/plan_limit_section/plan_limit_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/waiting_to_send_section/waiting_to_send_controller.dart';
 import 'package:kaamnishaan/UI/screens/me_section/waiting_to_send_section/waiting_to_send_screen.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/intro_section/intro_controller.dart';
@@ -2228,6 +2232,31 @@ void main() {
 
   testWidgets('M36 AI assistant', (t) async => assistantShot(t, 'm36_assistant'));
   testWidgets('M36 AI assistant, limit reached', (t) async => assistantShot(t, 'm36_assistant_paused', paused: true));
+
+  // ---- Step 2t: verify email, plan limit -------------------------------------------------------------
+  testWidgets('M09 verify email', (t) async {
+    session.me.value = me(name: 'Suresh Rao', email: 'suresh@brightair.example');
+    Get.put(VerifyEmailController(repository: MockAuthRepository(), session: session, checkEvery: const Duration(hours: 1)));
+    await shot(t, 'm09_verify_email', const VerifyEmailScreen());
+  });
+
+  testWidgets('M41 plan limit reached', (t) async {
+    final billing = MockBillingRepository();
+    when(() => billing.plan()).thenAnswer(
+      (_) async => ApiSuccess<PlanStatusModel>(
+        PlanStatusModel(
+          plan: billPlan('starter', 'Starter', 49900, 3, 60),
+          upgrade: billPlan('professional', 'Professional', 129900, 10, 300, popular: true),
+          renewsAt: DateTime(2026, 11, 22),
+          reports: const UsageTileModel(key: 'reports', used: 60, limit: 60),
+          technicians: const UsageTileModel(key: 'technicians', used: 3, limit: 3),
+          canUpgrade: true,
+        ),
+      ),
+    );
+    Get.put(PlanLimitController(billing: billing, translation: translation()));
+    await shot(t, 'm41_plan_limit', const PlanLimitScreen());
+  });
 
   testWidgets('M13 dashboard', (t) async {
     await dashboard(t, 'm13_dashboard', dashboardData(), reviews: [reviewItem()]);
