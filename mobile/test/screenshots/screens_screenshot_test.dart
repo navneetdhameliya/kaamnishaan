@@ -28,6 +28,10 @@ import 'package:kaamnishaan/UI/screens/auth_section/phone_section/phone_controll
 import 'package:kaamnishaan/UI/screens/auth_section/phone_section/phone_screen.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/profile_setup_section/profile_setup_controller.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/profile_setup_section/profile_setup_screen.dart';
+import 'package:kaamnishaan/UI/screens/checklists_section/checklist_builder_section/checklist_builder_controller.dart';
+import 'package:kaamnishaan/UI/screens/checklists_section/checklist_builder_section/checklist_builder_screen.dart';
+import 'package:kaamnishaan/UI/screens/checklists_section/checklist_library_section/checklist_library_controller.dart';
+import 'package:kaamnishaan/UI/screens/checklists_section/checklist_library_section/checklist_library_screen.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_question_section/checklist_question_controller.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_question_section/checklist_question_screen.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklists_section/checklists_controller.dart';
@@ -2089,6 +2093,83 @@ void main() {
     );
     Get.put(CreditsController(billing: billing, translation: translation()));
     await shot(t, 'm41_credits', const CreditsScreen());
+  });
+
+  // ---- Step 2r: checklist builder -------------------------------------------------------------------
+  TemplateQuestionOutModel cbQ(String id, int position, String type, String text, {String photo = 'none'}) =>
+      TemplateQuestionOutModel(
+        id: id,
+        position: position,
+        type: type,
+        text: text,
+        textAll: {'en': text},
+        textStatus: const {'en': 'ready', 'hi': 'ready', 'gu': 'ready', 'es': 'ready', 'fr': 'ready'},
+        options: const [],
+        photoRule: photo,
+        requiredValue: true,
+      );
+
+  Future<void> builderShot(WidgetTester t, String name, {Future<void> Function()? act}) async {
+    final checklists = MockChecklistsRepository();
+    final qs = [
+      cbQ('q1', 1, 'yes_no', 'Is the air filter clean?'),
+      cbQ('q2', 2, 'number', 'Refrigerant pressure'),
+      cbQ('q3', 3, 'pass_fail', 'Drain pipe condition', photo: 'if_fail'),
+      cbQ('q4', 4, 'photo', 'Photo of the outdoor unit'),
+    ];
+    when(() => checklists.template(any())).thenAnswer(
+      (_) async => ApiSuccess<TemplateOutModel>(
+        TemplateOutModel(
+          id: 't1',
+          name: 'HVAC service check',
+          scope: 'company',
+          status: 'published',
+          version: 2,
+          questionCount: qs.length,
+          usageCount: 21,
+          needsTranslation: 0,
+          language: 'en',
+          questions: qs,
+          editable: true,
+        ),
+      ),
+    );
+    Get.put(ChecklistBuilderController(checklists: checklists, templateId: 't1'));
+    await shot(t, name, const ChecklistBuilderScreen(), act: act);
+  }
+
+  testWidgets('M26 checklist builder', (t) async => builderShot(t, 'm26_builder'));
+  testWidgets('M26 add question', (t) async => builderShot(
+        t,
+        'm26_add_question',
+        act: () async {
+          await t.ensureVisible(find.byKey(const ValueKey('question-add')));
+          await t.pump();
+          await t.tap(find.byKey(const ValueKey('question-add')));
+          await t.pump(const Duration(milliseconds: 600));
+          await t.enterText(find.byKey(const ValueKey('question-text')), 'Is the condensate drain clear?');
+          await t.tap(find.byKey(const ValueKey('type-pass_fail')));
+          await t.tap(find.byKey(const ValueKey('question-photo')));
+          await t.pump(const Duration(milliseconds: 600));
+        },
+      ));
+
+  testWidgets('Checklists', (t) async {
+    final checklists = MockChecklistsRepository();
+    when(() => checklists.templates()).thenAnswer(
+      (_) async => const ApiSuccess<TemplateListModel>(
+        TemplateListModel(
+          data: [
+            TemplateListItemModel(id: 't1', name: 'HVAC service check', scope: 'company', status: 'published', version: 2, questionCount: 12, usageCount: 21, needsTranslation: 0),
+            TemplateListItemModel(id: 't2', name: 'Duct cleaning', scope: 'company', status: 'draft', version: 1, questionCount: 3, usageCount: 0, needsTranslation: 0),
+            TemplateListItemModel(id: 'g1', name: 'AC installation', scope: 'global', status: 'published', version: 1, questionCount: 10, usageCount: 4, needsTranslation: 0),
+          ],
+          meta: ListMetaModel(),
+        ),
+      ),
+    );
+    Get.put(ChecklistLibraryController(checklists: checklists));
+    await shot(t, 'checklists_library', const ChecklistLibraryScreen());
   });
 
   testWidgets('M13 dashboard', (t) async {

@@ -199,6 +199,12 @@ class MeTab extends GetView<MeController> {
                               onTap: controller.onCustomerReviewsTap,
                             ),
                             MeRow(
+                              key: const ValueKey('me-checklists'),
+                              icon: LucideIcons.listChecks,
+                              label: LangKeys.cbTitle.tr,
+                              onTap: controller.onChecklistsTap,
+                            ),
+                            MeRow(
                               key: const ValueKey('me-company-settings'),
                               icon: LucideIcons.building,
                               label: LangKeys.meCompanySettings.tr,

@@ -25,6 +25,8 @@ abstract final class RoutesConstants {
   static const String photoPairScreen = '/before-after';
   static const String checklistsScreen = '/checklists';
   static const String checklistQuestionScreen = '/checklist';
+  static const String checklistLibraryScreen = '/checklists/library';
+  static const String checklistBuilderScreen = '/checklists/builder';
   static const String voiceRecordScreen = '/voice';
   static const String voiceNotesScreen = '/voice-notes';
   static const String voiceNoteScreen = '/voice-note';

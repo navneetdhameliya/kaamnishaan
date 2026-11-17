@@ -2036,4 +2036,96 @@ abstract final class LangKeys {
   static const reviewPaused = 'review.paused';
   /// Top up credits to send the reminder
   static const rreqPausedLine = 'rreq.paused_line';
+  /// Checklists
+  static const cbTitle = 'cb.title';
+  /// New checklist
+  static const cbNew = 'cb.new';
+  /// Checklist name
+  static const cbName = 'cb.name';
+  /// e.g. AC service check
+  static const cbNameHint = 'cb.name_hint';
+  /// Create
+  static const cbCreate = 'cb.create';
+  /// {n} questions · used in {m} jobs
+  static const cbMeta = 'cb.meta';
+  /// By KaamNishaan
+  static const cbByKn = 'cb.by_kn';
+  /// Draft
+  static const cbDraft = 'cb.draft';
+  /// Not in new jobs
+  static const cbArchived = 'cb.archived';
+  /// Translations: {n} of 5 languages ready
+  static const cbTrReady = 'cb.tr_ready';
+  /// Add question
+  static const cbAdd = 'cb.add';
+  /// Edit question
+  static const cbEdit = 'cb.edit';
+  /// Question
+  static const cbQuestion = 'cb.question';
+  /// Ask one thing
+  static const cbQuestionHint = 'cb.question_hint';
+  /// Answer type
+  static const cbAnswerType = 'cb.answer_type';
+  /// Yes / No
+  static const cbTYesNo = 'cb.t_yes_no';
+  /// Pass / Fail
+  static const cbTPassFail = 'cb.t_pass_fail';
+  /// Number
+  static const cbTNumber = 'cb.t_number';
+  /// Words
+  static const cbTText = 'cb.t_text';
+  /// Photo
+  static const cbTPhoto = 'cb.t_photo';
+  /// Choice
+  static const cbTChoice = 'cb.t_choice';
+  /// Signature
+  static const cbTSignature = 'cb.t_signature';
+  /// Unit (optional)
+  static const cbUnit = 'cb.unit';
+  /// e.g. psi, °C
+  static const cbUnitHint = 'cb.unit_hint';
+  /// Photo needed if No
+  static const cbPhotoIfNo = 'cb.photo_if_no';
+  /// Photo needed if Fail
+  static const cbPhotoIfFail = 'cb.photo_if_fail';
+  /// Photo needed every time
+  static const cbPhotoAlways = 'cb.photo_always';
+  /// Technician must take a photo to go on.
+  static const cbPhotoSub = 'cb.photo_sub';
+  /// We translate it to 5 languages. You can check them later.
+  static const cbTranslateNote = 'cb.translate_note';
+  /// Save question
+  static const cbSaveQ = 'cb.save_q';
+  /// Delete question
+  static const cbDeleteQ = 'cb.delete_q';
+  /// Question deleted
+  static const cbDeleted = 'cb.deleted';
+  /// Save checklist
+  static const cbSave = 'cb.save';
+  /// Saved. Technicians can use it on new jobs.
+  static const cbSaved = 'cb.saved';
+  /// Copy to change it
+  static const cbCopy = 'cb.copy';
+  /// Copied. Now you can change it.
+  static const cbCopied = 'cb.copied';
+  /// This checklist is by KaamNishaan. Copy it to make changes.
+  static const cbReadOnly = 'cb.read_only';
+  /// Rename
+  static const cbRename = 'cb.rename';
+  /// Don't offer on new jobs
+  static const cbArchive = 'cb.archive';
+  /// Offer on new jobs again
+  static const cbUnarchive = 'cb.unarchive';
+  /// It won't be offered on new jobs.
+  static const cbArchivedToast = 'cb.archived_toast';
+  /// Checklist options
+  static const cbMenu = 'cb.menu';
+  /// {type} · photo
+  static const cbWithPhoto = 'cb.with_photo';
+  /// No questions yet
+  static const cbEmpty = 'cb.empty';
+  /// Add the first thing the technician should check.
+  static const cbEmptyBody = 'cb.empty_body';
+  /// Draft · tap Save checklist so technicians can use it.
+  static const cbDraftNote = 'cb.draft_note';
 }

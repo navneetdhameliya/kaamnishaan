@@ -7,11 +7,11 @@ import '../../../../../infrastructure/models/api_models.g.dart';
 import '../../../../common_widgets/custom_inkwell.dart';
 import '../../../../common_widgets/kn_custom_button.dart';
 import '../../../../common_widgets/kn_stars.dart';
+import '../../../../common_widgets/kn_text_box.dart';
 import '../../../../commons/text_widgets/base/custom_base_text_widget.dart';
 import '../../../../theme/kn_app_theme.dart';
 import '../../../../theme/kn_tokens.g.dart';
 import '../company_reviews_controller.dart';
-import 'review_office_parts.dart';
 
 /// M45 Reply to review (Figma 265:4461): the review, "Suggest a reply", the reply, who sees it, Send.
 class ReplySheet extends StatelessWidget {
@@ -69,7 +69,7 @@ class ReplySheet extends StatelessWidget {
             ),
           ),
           const SizedBox(height: KnSize.space12),
-          OfficeTextBox(
+          KnTextBox(
             fieldKey: const ValueKey('reply-text'),
             controller: controller.replyText,
             hint: LangKeys.crevReplyHint.tr,

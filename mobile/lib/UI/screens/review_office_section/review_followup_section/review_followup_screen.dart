@@ -9,6 +9,7 @@ import '../../../common_widgets/kn_custom_button.dart';
 import '../../../common_widgets/kn_initials_avatar.dart';
 import '../../../common_widgets/kn_screen_footer.dart';
 import '../../../common_widgets/kn_stars.dart';
+import '../../../common_widgets/kn_text_box.dart';
 import '../../../commons/behaviour/behaviour.dart';
 import '../../../commons/text_widgets/base/custom_base_text_widget.dart';
 import '../../../theme/kn_app_theme.dart';
@@ -254,7 +255,7 @@ class ReviewFollowupScreen extends GetView<ReviewFollowupController> {
                           children: [
                             CustomBaseTextWidget(LangKeys.crevNote.tr, style: text.label),
                             const SizedBox(height: KnSize.space8),
-                            OfficeTextBox(
+                            KnTextBox(
                               fieldKey: const ValueKey('followup-note'),
                               controller: controller.note,
                               hint: LangKeys.crevNoteHint.tr,
