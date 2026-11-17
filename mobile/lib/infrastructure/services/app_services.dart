@@ -110,8 +110,8 @@ abstract final class AppServices {
     final photos = PhotoQueueService(
       files: Get.find(),
       jobs: Get.find(),
-      checklists: Get.find(),
-      voice: Get.find(),
+      checklists: Get.find<IChecklistsApiRepository>(),
+      voice: Get.find<IVoiceApiRepository>(),
       folder: () async => Directory('${(await getApplicationDocumentsDirectory()).path}/pending_photos'),
       online: Connectivity().onConnectivityChanged.map((r) => r.any((c) => c != ConnectivityResult.none)),
       startDelay: const Duration(seconds: 3),

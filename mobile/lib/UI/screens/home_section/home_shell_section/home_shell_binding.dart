@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../../../infrastructure/data_access_layer/api_repository/notifications_api_repository.dart';
 import '../../../../infrastructure/services/photo_queue_service.dart';
 import '../../jobs_section/job_list_section/job_list_controller.dart';
 import '../../me_section/me_section/me_controller.dart';
@@ -18,7 +19,7 @@ class HomeShellBinding extends Bindings {
         session: Get.find(),
         translation: Get.find(),
         queue: Get.isRegistered<PhotoQueueService>() ? Get.find<PhotoQueueService>() : null,
-        notifications: Get.find(),
+        notifications: Get.find<INotificationsApiRepository>(),
       ),
     );
     if (shell.isManager) {
