@@ -534,6 +534,10 @@ void main() {
     Get.put(HomeShellController(session: session));
     putMe();
     Get.put(jobList(const []));
+    final queue = MockReportsRepository();
+    when(() => queue.list(statuses: any(named: 'statuses'), period: any(named: 'period'), q: any(named: 'q'), cursor: any(named: 'cursor')))
+        .thenAnswer((_) async => const ApiSuccess<ReportListModel>(ReportListModel(data: [], meta: ListMetaModel())));
+    Get.put(ReviewQueueController(reports: queue));
     Get.put(
       DashboardController(
         repository: home,
