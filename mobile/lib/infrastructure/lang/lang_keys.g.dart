@@ -1960,4 +1960,80 @@ abstract final class LangKeys {
   static const msgLowTitle = 'msg.low_title';
   /// {customer} gave {n}★. Follow up soon.
   static const msgLowBody = 'msg.low_body';
+  /// Plan and billing
+  static const billTitle = 'bill.title';
+  /// Owner only
+  static const billOwnerOnly = 'bill.owner_only';
+  /// Renews {date}
+  static const billRenews = 'bill.renews';
+  /// Trial ends {date}
+  static const billTrialEnds = 'bill.trial_ends';
+  /// {price} / month
+  static const billPerMonth = 'bill.per_month';
+  /// Custom price
+  static const billContact = 'bill.contact';
+  /// This month
+  static const billThisMonth = 'bill.this_month';
+  /// Technicians
+  static const billTechnicians = 'bill.technicians';
+  /// Reports
+  static const billReports = 'bill.reports';
+  /// AI questions
+  static const billAiQuestions = 'bill.ai_questions';
+  /// Follow-up credits
+  static const billCredits = 'bill.credits';
+  /// {a} of {b}
+  static const billOf = 'bill.of';
+  /// {a} · no limit
+  static const billNoLimit = 'bill.no_limit';
+  /// Most popular
+  static const billMostPopular = 'bill.most_popular';
+  /// {price}/mo · {techs} techs · {reports} reports
+  static const billPlanLine = 'bill.plan_line';
+  /// {price}/mo · {techs} techs · fair-use reports
+  static const billPlanLineFair = 'bill.plan_line_fair';
+  /// Upgrade to {name}
+  static const billUpgrade = 'bill.upgrade';
+  /// Online payment isn't switched on yet. Write to us to change your plan.
+  static const billPaymentsSoon = 'bill.payments_soon';
+  /// Invoices and card payment come when online payment is switched on.
+  static const billPaymentsNote = 'bill.payments_note';
+  /// Only the owner can see the plan and billing.
+  static const billOwnerOnlyToast = 'bill.owner_only_toast';
+  /// {plan} · resets on {date}
+  static const credSub = 'cred.sub';
+  /// credits left of {n}
+  static const credLeftOf = 'cred.left_of';
+  /// credits left
+  static const credLeft = 'cred.left';
+  /// No limit on your plan
+  static const credNoLimit = 'cred.no_limit';
+  /// Reminders (WhatsApp, SMS)
+  static const credReminders = 'cred.reminders';
+  /// AI review calls · {n} calls
+  static const credAiCalls = 'cred.ai_calls';
+  /// Emails
+  static const credEmails = 'cred.emails';
+  /// free
+  static const credFree = 'cred.free';
+  /// {n} credits
+  static const credN = 'cred.n';
+  /// Includes {n} bought credits
+  static const credBoughtLeft = 'cred.bought_left';
+  /// At 0 credits, reminders by SMS and WhatsApp pause and AI calls stop. Rating links in emails keep working.
+  static const credWarning = 'cred.warning';
+  /// Top up
+  static const credTopUp = 'cred.top_up';
+  /// ≈ {calls} AI calls or {msgs} messages
+  static const credPackHint = 'cred.pack_hint';
+  /// Save {n}%
+  static const credSave = 'cred.save';
+  /// Buy {n} credits · {price}
+  static const credBuy = 'cred.buy';
+  /// Buying credits starts when online payment is switched on.
+  static const credBuySoon = 'cred.buy_soon';
+  /// Paused · no credits
+  static const reviewPaused = 'review.paused';
+  /// Top up credits to send the reminder
+  static const rreqPausedLine = 'rreq.paused_line';
 }

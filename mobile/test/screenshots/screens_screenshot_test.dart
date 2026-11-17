@@ -56,8 +56,12 @@ import 'package:kaamnishaan/UI/screens/jobs_section/photo_gallery_section/photo_
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_gallery_section/photo_gallery_screen.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_pair_section/photo_pair_controller.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_pair_section/photo_pair_screen.dart';
+import 'package:kaamnishaan/UI/screens/me_section/billing_section/billing_controller.dart';
+import 'package:kaamnishaan/UI/screens/me_section/billing_section/billing_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/company_settings_section/company_settings_controller.dart';
 import 'package:kaamnishaan/UI/screens/me_section/company_settings_section/company_settings_screen.dart';
+import 'package:kaamnishaan/UI/screens/me_section/credits_section/credits_controller.dart';
+import 'package:kaamnishaan/UI/screens/me_section/credits_section/credits_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/language_settings_section/language_settings_controller.dart';
 import 'package:kaamnishaan/UI/screens/me_section/language_settings_section/language_settings_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/me_section/me_controller.dart';
@@ -2019,6 +2023,73 @@ void main() {
 
   testWidgets('M46 review settings', (t) async => reviewSettingsShot(t, 'm46_settings', const ReviewSettingsScreen()));
   testWidgets('M46 review follow-ups', (t) async => reviewSettingsShot(t, 'm46_followups', const ReviewFollowupsScreen()));
+
+  // ---- Step 2q: credits, plan and billing -----------------------------------------------------------
+  PlanOutModel billPlan(String code, String name, int price, int techs, int reports, {bool popular = false}) => PlanOutModel(
+        code: code,
+        name: name,
+        price: MoneyModel(amount: price, currency: 'INR'),
+        technicianLimit: techs,
+        reportLimitMonthly: reports,
+        aiQuestionsMonthly: 200,
+        monthlyCredits: 300,
+        mostPopular: popular,
+        features: const [],
+      );
+
+  testWidgets('M41 plan and billing', (t) async {
+    final billing = MockBillingRepository();
+    when(() => billing.billing()).thenAnswer(
+      (_) async => ApiSuccess<BillingOutModel>(
+        BillingOutModel(
+          plan: billPlan('starter', 'Starter', 49900, 3, 60),
+          status: 'active',
+          periodStart: DateTime(2026, 10, 22),
+          renewsAt: DateTime(2026, 11, 22),
+          company: 'BrightAir Services',
+          usage: const [
+            UsageTileModel(key: 'technicians', used: 3, limit: 3),
+            UsageTileModel(key: 'reports', used: 52, limit: 60),
+            UsageTileModel(key: 'ai_questions', used: 0, limit: 200),
+            UsageTileModel(key: 'credits', used: 210, limit: 300),
+          ],
+          upgrade: billPlan('professional', 'Professional', 129900, 10, 300, popular: true),
+          paymentsReady: false,
+        ),
+      ),
+    );
+    Get.put(BillingController(billing: billing, translation: translation()));
+    await shot(t, 'm41_billing', const BillingScreen());
+  });
+
+  testWidgets('M41 follow-up credits', (t) async {
+    final billing = MockBillingRepository();
+    when(() => billing.credits()).thenAnswer(
+      (_) async => ApiSuccess<CreditsOutModel>(
+        CreditsOutModel(
+          balance: 90,
+          planCredits: 300,
+          planUsed: 210,
+          topupCredits: 0,
+          plan: 'Starter',
+          renewsAt: DateTime(2026, 11, 22),
+          uses: const [
+            CreditUseModel(kind: 'reminders', credits: 130, count: 130),
+            CreditUseModel(kind: 'ai_calls', credits: 80, count: 8),
+            CreditUseModel(kind: 'emails', credits: 0, count: 40),
+          ],
+          packs: const [
+            CreditPackOutModel(id: 'p1', credits: 500, price: MoneyModel(amount: 79900, currency: 'INR')),
+            CreditPackOutModel(id: 'p2', credits: 2000, price: MoneyModel(amount: 279900, currency: 'INR')),
+          ],
+          rules: const CreditRulesModel(sms: 1, whatsapp: 1, aiCall: 10, email: 0),
+          paymentsReady: false,
+        ),
+      ),
+    );
+    Get.put(CreditsController(billing: billing, translation: translation()));
+    await shot(t, 'm41_credits', const CreditsScreen());
+  });
 
   testWidgets('M13 dashboard', (t) async {
     await dashboard(t, 'm13_dashboard', dashboardData(), reviews: [reviewItem()]);

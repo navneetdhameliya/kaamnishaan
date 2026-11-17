@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../infrastructure/commons/constants/app_routes.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/company_api_repository.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/files_api_repository.dart';
 import '../../../../infrastructure/data_access_layer/networks/api_result.dart';
@@ -10,6 +11,7 @@ import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/services/config_service.dart';
 import '../../../../infrastructure/services/image_picker_service.dart';
 import '../../../../infrastructure/services/session_service.dart';
+import '../../../../infrastructure/shared/money_text.dart';
 import '../../../common_widgets/kn_photo_source_sheet.dart';
 import '../../../common_widgets/kn_toast.dart';
 
@@ -79,11 +81,7 @@ class CompanySettingsController extends GetxController {
     final name = p?.name ?? (code.isEmpty ? '' : code[0].toUpperCase() + code.substring(1));
     final price = p?.price;
     if (price == null) return name;
-    final money = NumberFormat.simpleCurrency(
-      locale: price.currency == 'INR' ? 'en_IN' : 'en_US',
-      name: price.currency,
-      decimalDigits: price.amount % 100 == 0 ? 0 : 2,
-    ).format(price.amount / 100);
+    final money = MoneyText.format(price);
     // keep "₹1,299/mo" together when the line wraps
     return LangKeys.settingsPlanPrice.trParams({'name': name, 'price': money}).replaceAll('/', '\u2060/\u2060');
   }
@@ -134,8 +132,11 @@ class CompanySettingsController extends GetxController {
     savingLogo.value = false;
   }
 
-  /// Plans and billing (M41) come with their own step.
-  void onPlanTap() => KnToast.info(LangKeys.commonComingSoon.tr);
+  /// M41 Plan and billing (the owner only).
+  Future<void> onPlanTap() async {
+    if (!isOwner) return KnToast.info(LangKeys.billOwnerOnlyToast.tr);
+    await Get.toNamed<void>(RoutesConstants.billingScreen);
+  }
 
   Future<void> onShareChanged(bool on) async {
     if (!_ownerOnly()) return;

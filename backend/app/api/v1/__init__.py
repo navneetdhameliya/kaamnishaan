@@ -2,6 +2,7 @@ from fastapi import APIRouter
 
 from app.api.v1.routes import (
     auth,
+    billing,
     checklists,
     company,
     customers,
@@ -34,6 +35,7 @@ for r in (
     voice,
     reports,
     reviews,
+    billing,
     notifications,
 ):
     router.include_router(r.router)

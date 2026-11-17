@@ -46,7 +46,7 @@ from app.schemas.reviews import (
     SuggestionOut,
 )
 from app.schemas.work import PersonRef
-from app.services import audit, sharing
+from app.services import audit, credits, sharing
 from app.services.report_labels import label
 from app.services.reports import rlabel
 from app.services.reviews import STARTED, _items, settings_for
@@ -325,7 +325,7 @@ async def send_due(db: AsyncSession, company_id: uuid.UUID | None = None, at: da
     """Send every reminder that is due (one company, or all). Returns how many went out."""
     t = at or now()
     q = select(ReviewRequest).where(
-        ReviewRequest.status == "link_sent",
+        ReviewRequest.status.in_(("link_sent", "paused_no_credits")),
         ReviewRequest.reminder_at.is_not(None),
         ReviewRequest.reminder_at <= t,
     )
@@ -358,17 +358,25 @@ async def _remind(db: AsyncSession, s: ReviewSettings, req: ReviewRequest, t: da
     texts = sharing._texts(company.name, rep, job, url, contact.name, link.expires_at.astimezone(UTC))
     texts.sms = texts.whatsapp = text
     texts.email_body = f"{text}\n"
-    done = []
+    done, broke = [], False
     for ch in s.reminder_channels or ["sms", "email"]:
         to = contact.email if ch == "email" else contact.phone
         if not to:
             continue
+        if not await credits.can_spend(db, company, ch):
+            broke = True  # SMS and WhatsApp need credits; email is free
+            db.add(ReviewRequestEvent(request_id=req.id, step="reminder", channel=ch, status="no_credits"))
+            continue
         msg = await sharing._deliver(db, rep, link, ch, to, texts, None, template="review_reminder")
         db.add(ReviewRequestEvent(request_id=req.id, step="reminder", channel=ch, status=msg.status))
         if msg.status == "sent":
+            await credits.spend(db, company, ch, "reminder", req.id)
             done.append(ch)
-    req.status = "reminded" if done else req.status
-    if not done:
+    if done:
+        req.status = "reminded"
+    elif broke:
+        req.status = "paused_no_credits"  # stays due: it goes when credits are back
+    else:
         req.reminder_at = None  # nothing could go; don't try every time
     return 1 if done else 0
 

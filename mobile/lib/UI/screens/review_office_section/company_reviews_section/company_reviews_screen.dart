@@ -53,6 +53,15 @@ class CompanyReviewsScreen extends GetView<CompanyReviewsController> {
               controller.onFollowupsTap();
             },
           ),
+          MeRow(
+            key: const ValueKey('reviews-credits'),
+            icon: LucideIcons.coins,
+            label: LangKeys.billCredits.tr,
+            onTap: () {
+              Get.back<void>();
+              controller.onCreditsTap();
+            },
+          ),
         ],
       ),
     );
