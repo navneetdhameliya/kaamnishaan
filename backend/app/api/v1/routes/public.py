@@ -16,11 +16,11 @@ from app.schemas.identity import (
     CreditRules,
     LanguageOut,
     Money,
-    PlanOut,
     PlansOut,
     TradeOut,
 )
 from app.services.auth import PASSWORD_MIN
+from app.services.credits import plan_out
 
 router = APIRouter(tags=["config"])
 Locale = Literal["en", "hi", "gu", "es", "fr"]
@@ -72,20 +72,7 @@ async def plans(
     response.headers["Cache-Control"] = "public, max-age=300"
     return PlansOut(
         currency=currency,
-        plans=[
-            PlanOut(
-                code=p.code,
-                name=_t(p.name, locale),
-                price=Money(amount=p.prices[currency], currency=currency) if currency in p.prices else None,
-                technician_limit=p.technician_limit,
-                report_limit_monthly=p.report_limit_monthly,
-                ai_questions_monthly=p.ai_questions_monthly,
-                monthly_credits=p.monthly_credits,
-                most_popular=p.most_popular,
-                features=sorted(k for k, v in (p.features or {}).items() if v),
-            )
-            for p in rows
-        ],
+        plans=[plan_out(p, currency, locale) for p in rows],
         credit_packs=[
             CreditPackOut(
                 id=c.id, credits=c.credits, price=Money(amount=c.prices[currency], currency=currency)

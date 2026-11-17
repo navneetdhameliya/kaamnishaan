@@ -248,6 +248,62 @@ class AttachChecklistModel {
       };
 }
 
+BillingOutModel billingOutModelFromJson(String str) => BillingOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String billingOutModelToJson(BillingOutModel data) => json.encode(data.toJson());
+
+class BillingOutModel {
+  final String company;
+  /// false until online payment is switched on
+  final bool paymentsReady;
+  final DateTime periodStart;
+  final PlanOutModel plan;
+  /// When this month's limits and credits start again
+  final DateTime renewsAt;
+  /// trial, active, past_due, suspended, cancelled
+  final String status;
+  final DateTime? trialEndsAt;
+  /// The next plan up, if any
+  final PlanOutModel? upgrade;
+  final List<UsageTileModel> usage;
+
+  const BillingOutModel({
+    required this.company,
+    required this.paymentsReady,
+    required this.periodStart,
+    required this.plan,
+    required this.renewsAt,
+    required this.status,
+    this.trialEndsAt,
+    this.upgrade,
+    required this.usage,
+  });
+
+  factory BillingOutModel.fromJson(Map<String, dynamic> json) => BillingOutModel(
+        company: json['company'] as String,
+        paymentsReady: json['payments_ready'] as bool,
+        periodStart: DateTime.parse(json['period_start'] as String),
+        plan: PlanOutModel.fromJson(json['plan'] as Map<String, dynamic>),
+        renewsAt: DateTime.parse(json['renews_at'] as String),
+        status: json['status'] as String,
+        trialEndsAt: json['trial_ends_at'] == null ? null : DateTime.parse(json['trial_ends_at'] as String),
+        upgrade: json['upgrade'] == null ? null : PlanOutModel.fromJson(json['upgrade'] as Map<String, dynamic>),
+        usage: (json['usage'] as List).map((e) => UsageTileModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'company': company,
+        'payments_ready': paymentsReady,
+        'period_start': periodStart.toIso8601String(),
+        'plan': plan.toJson(),
+        'renews_at': renewsAt.toIso8601String(),
+        'status': status,
+        'trial_ends_at': trialEndsAt?.toIso8601String(),
+        'upgrade': upgrade?.toJson(),
+        'usage': usage.map((e) => e.toJson()).toList(),
+      };
+}
+
 CancelBodyModel cancelBodyModelFromJson(String str) => CancelBodyModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String cancelBodyModelToJson(CancelBodyModel data) => json.encode(data.toJson());
@@ -1022,6 +1078,92 @@ class CreditRulesModel {
         'email': email,
         'sms': sms,
         'whatsapp': whatsapp,
+      };
+}
+
+CreditUseModel creditUseModelFromJson(String str) => CreditUseModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String creditUseModelToJson(CreditUseModel data) => json.encode(data.toJson());
+
+class CreditUseModel {
+  final int count;
+  final int credits;
+  /// One of: reminders, ai_calls, emails
+  final String kind;
+
+  const CreditUseModel({
+    required this.count,
+    required this.credits,
+    required this.kind,
+  });
+
+  factory CreditUseModel.fromJson(Map<String, dynamic> json) => CreditUseModel(
+        count: (json['count'] as num).toInt(),
+        credits: (json['credits'] as num).toInt(),
+        kind: json['kind'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'count': count,
+        'credits': credits,
+        'kind': kind,
+      };
+}
+
+CreditsOutModel creditsOutModelFromJson(String str) => CreditsOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String creditsOutModelToJson(CreditsOutModel data) => json.encode(data.toJson());
+
+class CreditsOutModel {
+  /// Credits left (this month's + top-ups); null = no limit
+  final int? balance;
+  final List<CreditPackOutModel> packs;
+  final bool paymentsReady;
+  final String plan;
+  final int? planCredits;
+  final int planUsed;
+  final DateTime renewsAt;
+  final CreditRulesModel rules;
+  final int topupCredits;
+  final List<CreditUseModel> uses;
+
+  const CreditsOutModel({
+    this.balance,
+    required this.packs,
+    required this.paymentsReady,
+    required this.plan,
+    this.planCredits,
+    required this.planUsed,
+    required this.renewsAt,
+    required this.rules,
+    required this.topupCredits,
+    required this.uses,
+  });
+
+  factory CreditsOutModel.fromJson(Map<String, dynamic> json) => CreditsOutModel(
+        balance: json['balance'] == null ? null : (json['balance'] as num).toInt(),
+        packs: (json['packs'] as List).map((e) => CreditPackOutModel.fromJson(e as Map<String, dynamic>)).toList(),
+        paymentsReady: json['payments_ready'] as bool,
+        plan: json['plan'] as String,
+        planCredits: json['plan_credits'] == null ? null : (json['plan_credits'] as num).toInt(),
+        planUsed: (json['plan_used'] as num).toInt(),
+        renewsAt: DateTime.parse(json['renews_at'] as String),
+        rules: CreditRulesModel.fromJson(json['rules'] as Map<String, dynamic>),
+        topupCredits: (json['topup_credits'] as num).toInt(),
+        uses: (json['uses'] as List).map((e) => CreditUseModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'balance': balance,
+        'packs': packs.map((e) => e.toJson()).toList(),
+        'payments_ready': paymentsReady,
+        'plan': plan,
+        'plan_credits': planCredits,
+        'plan_used': planUsed,
+        'renews_at': renewsAt.toIso8601String(),
+        'rules': rules.toJson(),
+        'topup_credits': topupCredits,
+        'uses': uses.map((e) => e.toJson()).toList(),
       };
 }
 
@@ -7079,6 +7221,36 @@ class UploadOutModel {
         'method': method,
         'upload_id': uploadId,
         'url': url,
+      };
+}
+
+UsageTileModel usageTileModelFromJson(String str) => UsageTileModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String usageTileModelToJson(UsageTileModel data) => json.encode(data.toJson());
+
+class UsageTileModel {
+  /// One of: technicians, reports, ai_questions, credits
+  final String key;
+  /// null = no limit
+  final int? limit;
+  final int used;
+
+  const UsageTileModel({
+    required this.key,
+    this.limit,
+    required this.used,
+  });
+
+  factory UsageTileModel.fromJson(Map<String, dynamic> json) => UsageTileModel(
+        key: json['key'] as String,
+        limit: json['limit'] == null ? null : (json['limit'] as num).toInt(),
+        used: (json['used'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'key': key,
+        'limit': limit,
+        'used': used,
       };
 }
 

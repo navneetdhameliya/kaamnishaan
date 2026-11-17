@@ -318,6 +318,81 @@
         "title": "AttachChecklist",
         "type": "object"
       },
+      "BillingOut": {
+        "properties": {
+          "company": {
+            "title": "Company",
+            "type": "string"
+          },
+          "payments_ready": {
+            "description": "false until online payment is switched on",
+            "title": "Payments Ready",
+            "type": "boolean"
+          },
+          "period_start": {
+            "format": "date-time",
+            "title": "Period Start",
+            "type": "string"
+          },
+          "plan": {
+            "$ref": "#/components/schemas/PlanOut"
+          },
+          "renews_at": {
+            "description": "When this month's limits and credits start again",
+            "format": "date-time",
+            "title": "Renews At",
+            "type": "string"
+          },
+          "status": {
+            "description": "trial, active, past_due, suspended, cancelled",
+            "title": "Status",
+            "type": "string"
+          },
+          "trial_ends_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trial Ends At"
+          },
+          "upgrade": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PlanOut"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The next plan up, if any"
+          },
+          "usage": {
+            "items": {
+              "$ref": "#/components/schemas/UsageTile"
+            },
+            "title": "Usage",
+            "type": "array"
+          }
+        },
+        "required": [
+          "plan",
+          "status",
+          "trial_ends_at",
+          "period_start",
+          "renews_at",
+          "company",
+          "usage",
+          "upgrade",
+          "payments_ready"
+        ],
+        "title": "BillingOut",
+        "type": "object"
+      },
       "CancelBody": {
         "additionalProperties": false,
         "properties": {
@@ -1383,6 +1458,113 @@
           }
         },
         "title": "CreditRules",
+        "type": "object"
+      },
+      "CreditUse": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "credits": {
+            "title": "Credits",
+            "type": "integer"
+          },
+          "kind": {
+            "enum": [
+              "reminders",
+              "ai_calls",
+              "emails"
+            ],
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "credits",
+          "count"
+        ],
+        "title": "CreditUse",
+        "type": "object"
+      },
+      "CreditsOut": {
+        "properties": {
+          "balance": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Credits left (this month's + top-ups); null = no limit",
+            "title": "Balance"
+          },
+          "packs": {
+            "items": {
+              "$ref": "#/components/schemas/CreditPackOut"
+            },
+            "title": "Packs",
+            "type": "array"
+          },
+          "payments_ready": {
+            "title": "Payments Ready",
+            "type": "boolean"
+          },
+          "plan": {
+            "title": "Plan",
+            "type": "string"
+          },
+          "plan_credits": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Plan Credits"
+          },
+          "plan_used": {
+            "title": "Plan Used",
+            "type": "integer"
+          },
+          "renews_at": {
+            "format": "date-time",
+            "title": "Renews At",
+            "type": "string"
+          },
+          "rules": {
+            "$ref": "#/components/schemas/CreditRules"
+          },
+          "topup_credits": {
+            "title": "Topup Credits",
+            "type": "integer"
+          },
+          "uses": {
+            "items": {
+              "$ref": "#/components/schemas/CreditUse"
+            },
+            "title": "Uses",
+            "type": "array"
+          }
+        },
+        "required": [
+          "balance",
+          "plan_credits",
+          "plan_used",
+          "topup_credits",
+          "plan",
+          "renews_at",
+          "uses",
+          "packs",
+          "rules",
+          "payments_ready"
+        ],
+        "title": "CreditsOut",
         "type": "object"
       },
       "CustomerCreate": {
@@ -10254,6 +10436,43 @@
         "title": "UploadOut",
         "type": "object"
       },
+      "UsageTile": {
+        "properties": {
+          "key": {
+            "enum": [
+              "technicians",
+              "reports",
+              "ai_questions",
+              "credits"
+            ],
+            "title": "Key",
+            "type": "string"
+          },
+          "limit": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "null = no limit",
+            "title": "Limit"
+          },
+          "used": {
+            "title": "Used",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "key",
+          "used",
+          "limit"
+        ],
+        "title": "UsageTile",
+        "type": "object"
+      },
       "ValidationError": {
         "properties": {
           "ctx": {
@@ -11246,6 +11465,33 @@
         ]
       }
     },
+    "/api/v1/billing": {
+      "get": {
+        "description": "The plan, when this month ends, and how much of each limit is used.",
+        "operationId": "billing_api_v1_billing_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BillingOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Billing",
+        "tags": [
+          "billing"
+        ]
+      }
+    },
     "/api/v1/checklist-submissions/{checklist_id}": {
       "get": {
         "description": "Questions in the job's language (or ?lang=), with reference photos, rules, answers and progress.",
@@ -12090,6 +12336,33 @@
         "summary": "Config",
         "tags": [
           "config"
+        ]
+      }
+    },
+    "/api/v1/credits": {
+      "get": {
+        "description": "Credits left this month, what used them, and the top-up packs.",
+        "operationId": "follow_up_credits_api_v1_credits_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreditsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Follow Up Credits",
+        "tags": [
+          "billing"
         ]
       }
     },

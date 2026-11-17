@@ -9,6 +9,7 @@ from app.models.checklists import (
     ShotSlot,
     VoiceNote,
 )
+from app.models.credits import CreditEntry, CreditWallet
 from app.models.evidence import Evidence, EvidenceNote, PhotoPair, Upload
 from app.models.identity import (
     AuditLog,
@@ -67,7 +68,9 @@ __all__ = [
     "Base",
     "Company",
     "CompanyCounter",
+    "CreditEntry",
     "CreditPack",
+    "CreditWallet",
     "Customer",
     "CustomerContact",
     "Equipment",
