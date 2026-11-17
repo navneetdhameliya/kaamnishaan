@@ -50,6 +50,8 @@ import '../../../UI/screens/onboarding_section/welcome_section/welcome_binding.d
 import '../../../UI/screens/onboarding_section/welcome_section/welcome_screen.dart';
 import '../../../UI/screens/me_section/language_settings_section/language_settings_binding.dart';
 import '../../../UI/screens/me_section/language_settings_section/language_settings_screen.dart';
+import '../../../UI/screens/me_section/messages_section/messages_binding.dart';
+import '../../../UI/screens/me_section/messages_section/messages_screen.dart';
 import '../../../UI/screens/me_section/my_reports_section/my_reports_binding.dart';
 import '../../../UI/screens/me_section/my_reports_section/my_reports_screen.dart';
 import '../../../UI/screens/me_section/waiting_to_send_section/waiting_to_send_binding.dart';
@@ -159,6 +161,7 @@ abstract final class AppPages {
       page: () => const LanguageSettingsScreen(),
       binding: LanguageSettingsBinding(),
     ),
+    GetPage(name: RoutesConstants.messagesScreen, page: () => const MessagesScreen(), binding: MessagesBinding()),
     GetPage(name: RoutesConstants.myReportsScreen, page: () => const MyReportsScreen(), binding: MyReportsBinding()),
     GetPage(
       name: RoutesConstants.waitingToSendScreen,

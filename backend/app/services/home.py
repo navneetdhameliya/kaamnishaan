@@ -27,6 +27,7 @@ from app.schemas.work import (
 )
 from app.services.evidence import photos_by, proof_progress
 from app.services.jobs import CLOSED, day_bounds, items, job_out, local_today, tz
+from app.services.notifications import unread_count
 from app.services.reports import reports_sent_by, shared_since
 
 SYNC_PAGE = 200
@@ -155,6 +156,7 @@ async def dashboard(db: AsyncSession, p: Principal) -> Dashboard:
             first_job_created=any_job,
             first_report_sent=bool(shared) or await _any_shared(db, p),
         ),
+        unread=await unread_count(db, p),
     )
 
 
@@ -203,7 +205,7 @@ async def today(db: AsyncSession, p: Principal) -> Today:
         ),
         current_job=current_item,
         next_jobs=await items(db, coming + finished),
-        unread=0,
+        unread=await unread_count(db, p),
         manager=await _my_manager(db, p),
     )
 

@@ -17,6 +17,7 @@ class HomeShellBinding extends Bindings {
         session: Get.find(),
         translation: Get.find(),
         queue: Get.isRegistered<PhotoQueueService>() ? Get.find<PhotoQueueService>() : null,
+        notifications: Get.find(),
       ),
     );
     if (shell.isManager) {

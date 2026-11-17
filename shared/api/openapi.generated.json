@@ -1486,6 +1486,12 @@
             "title": "Today",
             "type": "object"
           },
+          "unread": {
+            "default": 0,
+            "description": "Messages not read yet (the bell's dot)",
+            "title": "Unread",
+            "type": "integer"
+          },
           "week": {
             "items": {
               "$ref": "#/components/schemas/DayCount"
@@ -4273,6 +4279,146 @@
           "created_at"
         ],
         "title": "NoteOut",
+        "type": "object"
+      },
+      "NotificationList": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/NotificationOut"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "meta": {
+            "$ref": "#/components/schemas/ListMeta",
+            "description": "counts: {\"unread\": n}"
+          }
+        },
+        "required": [
+          "data",
+          "meta"
+        ],
+        "title": "NotificationList",
+        "type": "object"
+      },
+      "NotificationOut": {
+        "properties": {
+          "actor": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PersonRef"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Who did it (the manager, the technician)"
+          },
+          "cover_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The job's picture",
+            "title": "Cover Url"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "kind": {
+            "enum": [
+              "job_assigned",
+              "report_submitted",
+              "changes_requested",
+              "report_approved",
+              "report_shared"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "params": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Names for the sentence the app writes in its own language: customer, job, report, note, scheduled_at (ISO), technician",
+            "title": "Params",
+            "type": "object"
+          },
+          "read": {
+            "title": "Read",
+            "type": "boolean"
+          },
+          "report_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Report Id"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "params",
+          "job_id",
+          "report_id",
+          "read",
+          "created_at"
+        ],
+        "title": "NotificationOut",
+        "type": "object"
+      },
+      "NotificationsRead": {
+        "additionalProperties": false,
+        "properties": {
+          "ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "maxItems": 200,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Leave out to mark all as read",
+            "title": "Ids"
+          }
+        },
+        "title": "NotificationsRead",
         "type": "object"
       },
       "Onboarding": {
@@ -8357,6 +8503,19 @@
           "text"
         ],
         "title": "TypedNoteCreate",
+        "type": "object"
+      },
+      "UnreadCount": {
+        "properties": {
+          "unread": {
+            "title": "Unread",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "unread"
+        ],
+        "title": "UnreadCount",
         "type": "object"
       },
       "UploadCreate": {
@@ -13160,6 +13319,120 @@
         "summary": "Today",
         "tags": [
           "home"
+        ]
+      }
+    },
+    "/api/v1/notifications": {
+      "get": {
+        "description": "M42 Messages, newest first; meta.counts.unread for the red dot.",
+        "operationId": "list_notifications_api_v1_notifications_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 30,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Notifications",
+        "tags": [
+          "notifications"
+        ]
+      }
+    },
+    "/api/v1/notifications/read": {
+      "post": {
+        "description": "Marks the given messages (or all) as read.",
+        "operationId": "read_notifications_api_v1_notifications_read_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationsRead"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnreadCount"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Read Notifications",
+        "tags": [
+          "notifications"
         ]
       }
     },

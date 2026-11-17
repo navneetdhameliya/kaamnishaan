@@ -22,6 +22,7 @@ from app.models.identity import (
     OtpChallenge,
     User,
 )
+from app.models.notifications import Notification
 from app.models.reports import (
     AIUsage,
     BackgroundTask,
@@ -66,6 +67,7 @@ __all__ = [
     "Invitation",
     "LoginAttempt",
     "Membership",
+    "Notification",
     "Message",
     "OtpChallenge",
     "PhotoPair",

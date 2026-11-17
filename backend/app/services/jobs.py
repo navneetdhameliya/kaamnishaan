@@ -38,7 +38,7 @@ from app.schemas.work import (
     Timeline,
     TimelineEvent,
 )
-from app.services import audit
+from app.services import audit, notifications
 from app.services.customers import can_read, contact_out, equipment_out, get_site
 
 OPEN = ("unassigned", "assigned", "in_progress", "in_review", "changes_requested")
@@ -383,6 +383,10 @@ async def create_job(db: AsyncSession, p: Principal, body: JobCreate) -> tuple[J
     db.add(_event(p, j, "created", None, {"quick_job": j.is_quick_job}))
     if assignee:
         db.add(_event(p, j, "assigned", "unassigned", {"technician_id": str(assignee)}))
+        await notifications.notify(
+            db, company_id=p.company_id, to=[assignee], kind="job_assigned", actor_id=p.user.id,
+            job=j, params=await notifications.job_params(db, j),
+        )  # fmt: skip
     await audit.record(
         db, "job.created", company_id=p.company_id, actor_id=p.user.id, actor_role=p.role,
         target_type="job", target_id=j.id, data={"number": label(j.number)},
@@ -439,6 +443,11 @@ async def assign(db: AsyncSession, p: Principal, job_id: uuid.UUID, technician_i
         "previous": str(previous) if previous else None,
     }
     db.add(_event(p, j, "assigned" if technician_id else "unassigned", before, data))
+    if technician_id:
+        await notifications.notify(
+            db, company_id=p.company_id, to=[technician_id], kind="job_assigned", actor_id=p.user.id,
+            job=j, params=await notifications.job_params(db, j),
+        )  # fmt: skip
     await audit.record(
         db, "job.assigned", company_id=p.company_id, actor_id=p.user.id, actor_role=p.role,
         target_type="job", target_id=j.id, data=data,

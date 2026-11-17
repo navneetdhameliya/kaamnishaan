@@ -10,6 +10,7 @@ from app.api.v1.routes import (
     home,
     jobs,
     me,
+    notifications,
     public,
     public_reports,
     reports,
@@ -31,5 +32,6 @@ for r in (
     checklists,
     voice,
     reports,
+    notifications,
 ):
     router.include_router(r.router)

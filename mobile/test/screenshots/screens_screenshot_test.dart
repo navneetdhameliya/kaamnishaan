@@ -61,6 +61,8 @@ import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcom
 import 'package:kaamnishaan/UI/screens/me_section/language_settings_section/language_settings_controller.dart';
 import 'package:kaamnishaan/UI/screens/me_section/language_settings_section/language_settings_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/me_section/me_controller.dart';
+import 'package:kaamnishaan/UI/screens/me_section/messages_section/messages_controller.dart';
+import 'package:kaamnishaan/UI/screens/me_section/messages_section/messages_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/my_reports_section/my_reports_controller.dart';
 import 'package:kaamnishaan/UI/screens/me_section/my_reports_section/my_reports_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/waiting_to_send_section/waiting_to_send_controller.dart';
@@ -1148,6 +1150,44 @@ void main() {
     c.sentNotes.value = 1;
     c.lastSent.value = DateTime(2026, 10, 31, 12, 4);
     await shot(t, 'm43_everything_sent', const WaitingToSendScreen());
+  });
+
+  // ---- Step 2j: messages ------------------------------------------------------------------------
+  testWidgets('M42 messages', (t) async {
+    final repo = MockNotificationsRepository();
+    final at = DateTime(2026, 10, 31, 12, 10);
+    NotificationOutModel m(String id, String kind, DateTime when, Map<String, dynamic> params,
+            {bool read = false, String? actor}) =>
+        NotificationOutModel(
+          id: id,
+          kind: kind,
+          params: params,
+          actor: actor == null ? null : PersonRefModel(id: 'm1', name: actor),
+          jobId: 'j$id',
+          reportId: 'r$id',
+          coverUrl: 'https://x/$id.jpg',
+          read: read,
+          createdAt: when,
+        );
+    when(() => repo.list(cursor: any(named: 'cursor'), limit: any(named: 'limit'))).thenAnswer(
+      (_) async => ApiSuccess<NotificationListModel>(
+        NotificationListModel(
+          data: [
+            m('1', 'changes_requested', at.subtract(const Duration(minutes: 10)),
+                {'customer': 'Mehta house', 'note': 'Please add an after photo.'}, actor: 'Priya Shah'),
+            m('2', 'report_shared', at.subtract(const Duration(hours: 1)), {'customer': 'Sharma residence'}),
+            m('3', 'job_assigned', DateTime(2026, 10, 31, 8, 5),
+                {'customer': 'Green Valley Clinic', 'job': 'AC not cooling', 'scheduled_at': '2026-10-31T11:30:00'},
+                read: true),
+            m('4', 'report_approved', DateTime(2026, 10, 30, 17, 20), {'customer': 'Patel clinic'}, read: true),
+          ],
+          meta: const ListMetaModel(counts: {'unread': 2}),
+        ),
+      ),
+    );
+    when(() => repo.read(ids: any(named: 'ids'))).thenAnswer((_) async => const ApiSuccess<int>(0));
+    Get.put(MessagesController(repository: repo, translation: translation(), clock: () => at));
+    await shot(t, 'm42_messages', const MessagesScreen());
   });
 
   testWidgets('M13 dashboard', (t) async {

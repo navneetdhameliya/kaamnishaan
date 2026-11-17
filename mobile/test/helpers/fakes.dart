@@ -13,6 +13,7 @@ import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/file
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/home_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/jobs_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/me_api_repository.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/notifications_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/reports_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/voice_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
@@ -44,6 +45,8 @@ class MockVoiceRepository extends Mock implements IVoiceApiRepository {}
 class MockReportsRepository extends Mock implements IReportsApiRepository {}
 
 class MockMeRepository extends Mock implements IMeApiRepository {}
+
+class MockNotificationsRepository extends Mock implements INotificationsApiRepository {}
 
 QuestionOutModel question(
   String id,

@@ -52,7 +52,8 @@ class DashboardTab extends GetView<DashboardController> {
                     avatarUrl: controller.avatarUrl,
                     ringLeft: 210,
                     ringTop: -122,
-                    onBell: controller.onComingSoonTap,
+                    unread: (data?.unread ?? 0) > 0,
+                    onBell: controller.onBellTap,
                     child: data == null ? null : (fresh ? _intro(context) : _week(context)),
                   ),
                   Padding(
