@@ -1,7 +1,8 @@
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Hammer } from 'lucide-react';
 
 import type { T } from '../lib/i18n';
 import { LinkButton } from './Layout';
+import { rv } from './motion';
 import { Container } from './parts';
 import { ROUTES } from './site';
 
@@ -10,9 +11,18 @@ export default function ComingSoon({ t }: { t: T }) {
   return (
     <section className="bg-bg-canvas py-[96px]">
       <Container className="flex max-w-[640px] flex-col items-center gap-16 text-center">
-        <h1 className="text-web-m-h2 md:text-web-h2">{t('site.soon.title')}</h1>
-        <p className="text-latin-body-lg text-text-secondary">{t('site.soon.body')}</p>
-        <div className="mt-16 flex flex-wrap justify-center gap-16">
+        <span {...rv('zoom')} className="mb-8 inline-flex">
+          <span className="kn-float inline-flex h-[72px] w-[72px] items-center justify-center rounded-full bg-cream-200 text-mocha-700">
+            <Hammer width={32} height={32} className="kn-swing" aria-hidden />
+          </span>
+        </span>
+        <h1 {...rv('up', 1)} className="text-web-m-h2 md:text-web-h2">
+          {t('site.soon.title')}
+        </h1>
+        <p {...rv('up', 2)} className="text-latin-body-lg text-text-secondary">
+          {t('site.soon.body')}
+        </p>
+        <div {...rv('up', 3)} className="mt-16 flex flex-wrap justify-center gap-16">
           <LinkButton href={ROUTES.home} variant="primary" size="md">
             {t('site.soon.home')}
           </LinkButton>

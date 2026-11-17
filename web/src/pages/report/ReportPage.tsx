@@ -8,6 +8,7 @@ import type { PublicReport } from '../../lib/types';
 import { Acknowledge, LinkProblem } from './actions';
 import { AllPhotos, BeforeAfter, Checklist, Footer, PdfButton, TechnicianCard, TitleBlock, TopBar, WorkAndAdvice, type PageCtx } from './parts';
 import { RatingCard } from './RatingCard';
+import { useRevealOnScroll } from '../../site/motion';
 
 type State =
   | { kind: 'loading' }
@@ -23,6 +24,7 @@ export default function ReportPage({ token }: { token: string }) {
   const [state, setState] = useState<State>({ kind: 'loading' });
   const rate = new URLSearchParams(window.location.search).get('rate') === '1';
   const t = translator(lang);
+  useRevealOnScroll();
 
   const load = useCallback(
     async (l: Lang) => {
@@ -61,8 +63,9 @@ export default function ReportPage({ token }: { token: string }) {
   if (state.kind === 'loading') {
     return (
       <main className="mx-auto max-w-[1000px] px-16 py-48 md:px-32" aria-busy>
-        <div className="h-[32px] w-2/3 animate-pulse rounded-lg bg-bg-subtle" />
-        <div className="mt-24 h-[240px] animate-pulse rounded-xl bg-bg-subtle" />
+        <div className="kn-shimmer h-[32px] w-2/3 rounded-lg" />
+        <div className="kn-shimmer mt-24 h-[240px] rounded-xl" />
+        <div className="kn-shimmer mt-16 h-[120px] rounded-xl" />
         <p className="sr-only">{t('web.r.loading')}</p>
       </main>
     );

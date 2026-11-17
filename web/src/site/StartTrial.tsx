@@ -7,6 +7,7 @@ import { day, type Lang, type T } from '../lib/i18n';
 import type { CompanyOut, ConfigOut, PlansOut, SessionOut } from '../lib/types';
 import { Container } from './parts';
 import { EMAIL_RE, ErrorSummary, Field, PasswordInput, Rule, SelectInput, StoreBadges, TextInput, TrialAside } from './form';
+import { rv, Spinner } from './motion';
 import { ROUTES } from './site';
 
 type Errors = Partial<Record<'name' | 'email' | 'password' | 'company' | 'trade', string>>;
@@ -90,9 +91,9 @@ function Ready({
     [t('site.ready.s_job'), t('site.ready.s_job_b')],
   ];
   return (
-    <div className="flex flex-col gap-24">
+    <div className="kn-drawer flex flex-col gap-24">
       <div className="flex flex-col items-start gap-12">
-        <span className="inline-flex items-center gap-8 rounded-full bg-cream-200 px-12 py-[6px] text-web-eyebrow uppercase text-mocha-700">
+        <span className="kn-pop inline-flex items-center gap-8 rounded-full bg-cream-200 px-12 py-[6px] text-web-eyebrow uppercase text-mocha-700">
           <Check width={14} height={14} aria-hidden />
           {t('site.ready.eyebrow')}
         </span>
@@ -123,7 +124,7 @@ function Ready({
           <p className="mb-12 text-latin-label-sm font-semibold">{t('site.ready.next')}</p>
           <ol className="flex flex-col gap-16">
             {steps.map(([title, body], i) => (
-              <li key={title} className="flex gap-12">
+              <li key={title} className="kn-drawer flex gap-12" style={{ animationDelay: `${200 + i * 120}ms` }}>
                 <span
                   className={cx(
                     'inline-flex h-[24px] w-[24px] shrink-0 items-center justify-center rounded-full text-latin-caption-strong',
@@ -254,15 +255,19 @@ export default function StartTrial({ t, lang, plans, config }: { t: T; lang: Lan
           <div className="flex flex-col gap-24">
             <div className="flex flex-col items-start gap-12">
               {plans && (
-                <span className="inline-flex items-center gap-8 rounded-full bg-cream-200 px-12 py-[6px] text-web-eyebrow uppercase text-mocha-700">
+                <span {...rv('down')} className="inline-flex items-center gap-8 rounded-full bg-cream-200 px-12 py-[6px] text-web-eyebrow uppercase text-mocha-700">
                   <Sparkles width={14} height={14} aria-hidden />
                   {t('site.trial.eyebrow', { n: plans.trial_days })}
                 </span>
               )}
-              <h1 className="text-web-m-display md:text-web-display">{t('site.trial.title')}</h1>
-              <p className="text-latin-body-lg text-text-secondary">{t('site.trial.body')}</p>
+              <h1 {...rv('up', 1)} className="text-web-m-display md:text-web-display">
+                {t('site.trial.title')}
+              </h1>
+              <p {...rv('up', 2)} className="text-latin-body-lg text-text-secondary">
+                {t('site.trial.body')}
+              </p>
             </div>
-            <form noValidate onSubmit={(e) => void submit(e)} className="flex flex-col gap-20 rounded-xl border border-border-default bg-bg-surface p-24 md:p-32">
+            <form noValidate onSubmit={(e) => void submit(e)} {...rv('up', 3)} className="flex flex-col gap-20 rounded-xl border border-border-default bg-bg-surface p-24 md:p-32">
               {count > 0 && (
                 <ErrorSummary>{count === 1 ? t('site.trial.fix_one') : t('site.trial.fix_many', { n: count })}</ErrorSummary>
               )}
@@ -349,8 +354,9 @@ export default function StartTrial({ t, lang, plans, config }: { t: T; lang: Lan
               <button
                 type="submit"
                 disabled={busy || !config}
-                className="inline-flex h-[56px] items-center justify-center rounded-lg bg-action-primary text-latin-label font-semibold text-text-on-action hover:bg-action-primary-pressed disabled:opacity-60"
+                className="inline-flex h-[56px] items-center justify-center rounded-lg kn-btn inline-flex items-center justify-center gap-8 bg-action-primary text-latin-label font-semibold text-text-on-action hover:bg-action-primary-pressed disabled:opacity-60"
               >
+                {busy && <Spinner />}
                 {t('site.trial.submit')}
               </button>
               <p className="text-center text-latin-caption text-text-secondary">

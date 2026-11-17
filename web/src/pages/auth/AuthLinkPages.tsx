@@ -4,6 +4,7 @@ import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
 import { Button, Card, LanguageSelect } from '../../components/ui';
 import { api, ApiError } from '../../lib/api';
 import { rememberLang, startLang, translator, type Lang, type T } from '../../lib/i18n';
+import { useRevealOnScroll } from '../../site/motion';
 
 /** The token in ?token=… from the email link. */
 const linkToken = () => new URLSearchParams(window.location.search).get('token') ?? '';
@@ -29,6 +30,7 @@ function Shell({ t, lang, onLang, children }: { t: T; lang: Lang; onLang: (l: La
 
 function useLang(): [Lang, (l: Lang) => void, T] {
   const [lang, setLang] = useState<Lang>(startLang);
+  useRevealOnScroll();
   useEffect(() => {
     document.documentElement.lang = lang;
   }, [lang]);
@@ -48,8 +50,8 @@ function Notice({ icon, tone, title, body }: { icon: ReactNode; tone: 'success' 
       <span
         className={
           tone === 'success'
-            ? 'mx-auto inline-flex h-[72px] w-[72px] items-center justify-center rounded-full bg-status-success-bg text-status-success'
-            : 'mx-auto inline-flex h-[72px] w-[72px] items-center justify-center rounded-full bg-status-warning-bg text-status-warning'
+            ? 'kn-pop mx-auto inline-flex h-[72px] w-[72px] items-center justify-center rounded-full bg-status-success-bg text-status-success'
+            : 'kn-pop mx-auto inline-flex h-[72px] w-[72px] items-center justify-center rounded-full bg-status-warning-bg text-status-warning'
         }
       >
         {icon}

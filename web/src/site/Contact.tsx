@@ -6,6 +6,7 @@ import type { Lang, T } from '../lib/i18n';
 import type { ConfigOut, ContactOut, SupportOut } from '../lib/types';
 import { withLinks } from './BookDemo';
 import { LinkButton } from './Layout';
+import { rv, Spinner } from './motion';
 import { Container } from './parts';
 import { EMAIL_RE, ErrorSummary, Field, SelectInput, TextInput, inputClass } from './form';
 import { ROUTES } from './site';
@@ -20,14 +21,16 @@ function hours(s: SupportOut, lang: Lang, t: T) {
 
 function Way({ icon, title, lines, cta }: { icon: ReactNode; title: string; lines: string[]; cta: { href: string; label: string } }) {
   return (
-    <div className="flex flex-col items-start gap-8 rounded-xl border border-border-default bg-bg-surface p-24">
-      <span className="mb-8 inline-flex h-[40px] w-[40px] items-center justify-center rounded-full bg-sage-100 text-sage-700">{icon}</span>
+    <div className="kn-lift group flex h-full flex-col items-start gap-8 rounded-xl border border-border-default bg-bg-surface p-24 hover:border-mocha-300">
+      <span className="mb-8 inline-flex h-[40px] w-[40px] items-center justify-center rounded-full bg-sage-100 text-sage-700 transition-transform duration-500 ease-[cubic-bezier(.34,1.56,.64,1)] group-hover:-rotate-12 group-hover:scale-110">
+        {icon}
+      </span>
       <h2 className="text-latin-h3 md:text-web-h3">{title}</h2>
       <p className="break-all text-latin-body text-text-primary">{lines[0]}</p>
       {lines[1] && <p className="text-latin-caption text-text-secondary">{lines[1]}</p>}
-      <a href={cta.href} target={cta.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className="mt-8 inline-flex items-center gap-4 text-latin-label-sm font-semibold text-mocha-700 hover:underline">
-        {cta.label}
-        <ChevronRight width={14} height={14} aria-hidden />
+      <a href={cta.href} target={cta.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" className="mt-8 inline-flex items-center gap-4 text-latin-label-sm font-semibold text-mocha-700">
+        <span className="kn-link">{cta.label}</span>
+        <ChevronRight width={14} height={14} className="kn-nudge" aria-hidden />
       </a>
     </div>
   );
@@ -81,30 +84,34 @@ export default function Contact({ t, lang, config }: { t: T; lang: Lang; config:
   return (
     <>
       <section className="relative overflow-hidden bg-espresso-950 py-48 md:py-64">
-        <div aria-hidden className="pointer-events-none absolute -right-[160px] -top-[200px] hidden h-[560px] w-[560px] rounded-full border-[56px] border-mocha-950 md:block" />
+        <div aria-hidden className="pointer-events-none absolute -right-[160px] -top-[200px] hidden h-[560px] w-[560px] animate-[spin_70s_linear_infinite] rounded-full border-[56px] border-mocha-950 border-b-transparent md:block" />
         <Container className="relative flex flex-col items-center gap-16 text-center">
-          <span className="inline-flex items-center gap-8 rounded-full border border-cream-100/[0.14] bg-cream-100/[0.06] px-12 py-[6px] text-web-eyebrow uppercase text-cream-200">
+          <span {...rv('down')} className="inline-flex items-center gap-8 rounded-full border border-cream-100/[0.14] bg-cream-100/[0.06] px-12 py-[6px] text-web-eyebrow uppercase text-cream-200">
             <Phone width={14} height={14} aria-hidden />
             {t('site.ct.eyebrow')}
           </span>
-          <h1 className="text-web-m-display text-cream-50 md:text-web-display">{t('site.ct.title')}</h1>
-          <p className="max-w-[640px] text-latin-body-lg text-cream-400 md:text-web-body-lg">{t('site.ct.body')}</p>
+          <h1 {...rv('up', 1)} className="text-web-m-display text-cream-50 md:text-web-display">
+            {t('site.ct.title')}
+          </h1>
+          <p {...rv('up', 2)} className="max-w-[640px] text-latin-body-lg text-cream-400 md:text-web-body-lg">{t('site.ct.body')}</p>
         </Container>
       </section>
       <section className="bg-bg-canvas py-40 md:py-64">
         <Container>
           {ways.length > 0 && (
             <div className={`mb-24 grid gap-16 md:mb-32 md:gap-24 ${ways.length === 3 ? 'md:grid-cols-3' : ways.length === 2 ? 'md:grid-cols-2' : ''}`}>
-              {ways.map((w) => (
-                <Way key={w.title} {...w} />
+              {ways.map((w, i) => (
+                <div key={w.title} {...rv('up', i)}>
+                  <Way {...w} />
+                </div>
               ))}
             </div>
           )}
           <div className="grid grid-cols-1 items-start gap-24 lg:grid-cols-[minmax(0,1fr)_438px]">
-            <div className="rounded-xl border border-border-default bg-bg-surface p-24 shadow-lg md:p-32">
+            <div {...rv('left')} className="rounded-xl border border-border-default bg-bg-surface p-24 shadow-lg md:p-32">
               {sent ? (
-                <div className="flex flex-col gap-24">
-                  <span className="inline-flex h-[48px] w-[48px] items-center justify-center rounded-full bg-status-success-bg text-status-success">
+                <div className="kn-drawer flex flex-col gap-24">
+                  <span className="kn-pop inline-flex h-[48px] w-[48px] items-center justify-center rounded-full bg-status-success-bg text-status-success">
                     <Check width={24} height={24} aria-hidden />
                   </span>
                   <div>
@@ -195,9 +202,10 @@ export default function Contact({ t, lang, config }: { t: T; lang: Lang; config:
                     <button
                       type="submit"
                       disabled={busy}
-                      className="inline-flex h-[52px] items-center justify-center rounded-lg bg-action-primary px-24 text-latin-label font-semibold text-text-on-action hover:bg-action-primary-pressed disabled:opacity-60"
+                      className="inline-flex h-[52px] items-center justify-center rounded-lg kn-btn gap-8 bg-action-primary px-24 text-latin-label font-semibold text-text-on-action hover:bg-action-primary-pressed disabled:opacity-60"
                     >
-                      {t('site.ct.submit')}
+                      {busy && <Spinner />}
+                {t('site.ct.submit')}
                     </button>
                     <p className="inline-flex items-center gap-8 text-latin-caption text-text-secondary">
                       <Lock width={14} height={14} className="shrink-0" aria-hidden />
@@ -208,8 +216,10 @@ export default function Contact({ t, lang, config }: { t: T; lang: Lang; config:
               )}
             </div>
             {s && (
-              <aside className="overflow-hidden rounded-xl border border-border-default bg-bg-surface">
-                <img src="/img/office-map.webp" alt={t('site.ct.map_alt')} width={438} height={180} loading="lazy" className="h-[180px] w-full object-cover" />
+              <aside {...rv('right', 1)} className="group overflow-hidden rounded-xl border border-border-default bg-bg-surface">
+                <div className="overflow-hidden">
+                  <img src="/img/office-map.webp" alt={t('site.ct.map_alt')} width={438} height={180} loading="lazy" className="kn-zoom h-[180px] w-full object-cover" />
+                </div>
                 <div className="flex flex-col gap-20 p-24">
                   <div>
                     <p className="text-web-eyebrow uppercase text-mocha-700">{t('site.ct.office')}</p>
@@ -222,7 +232,7 @@ export default function Contact({ t, lang, config }: { t: T; lang: Lang; config:
                       {s.regions.map((r) => {
                         const c = countries.get(r.country);
                         return (
-                          <li key={r.country} className="flex items-center justify-between gap-12 text-latin-label-sm">
+                          <li key={r.country} className="kn-row -mx-8 flex items-center justify-between gap-12 rounded-md px-8 py-2 text-latin-label-sm">
                             <span className="inline-flex items-center gap-8 font-semibold">
                               <span aria-hidden>{c?.flag}</span>
                               {c?.name ?? r.country}
@@ -233,13 +243,13 @@ export default function Contact({ t, lang, config }: { t: T; lang: Lang; config:
                       })}
                     </ul>
                   </div>
-                  <a href={ROUTES.demo} className="flex items-center gap-12 rounded-lg bg-cream-200 p-16 hover:brightness-95">
-                    <Play width={20} height={20} className="shrink-0" aria-hidden />
+                  <a href={ROUTES.demo} className="kn-lift group/s flex items-center gap-12 rounded-lg bg-cream-200 p-16">
+                    <Play width={20} height={20} className="shrink-0 transition-transform duration-300 group-hover/s:scale-125" aria-hidden />
                     <span className="flex flex-1 flex-col">
                       <span className="text-latin-label-sm font-semibold">{t('site.ct.sales')}</span>
                       <span className="text-latin-caption text-text-secondary">{t('site.ct.sales_b', { n: s.demo_minutes })}</span>
                     </span>
-                    <ChevronRight width={18} height={18} aria-hidden />
+                    <ChevronRight width={18} height={18} className="transition-transform duration-300 group-hover/s:translate-x-4" aria-hidden />
                   </a>
                 </div>
               </aside>

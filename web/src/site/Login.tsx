@@ -6,11 +6,16 @@ import { clock, type Lang, type T } from '../lib/i18n';
 import type { ConfigOut, SessionOut } from '../lib/types';
 import { Logo } from './Layout';
 import { EMAIL_RE, ErrorSummary, Field, PasswordInput, StoreBadges, TextInput } from './form';
+import { rv, Spinner } from './motion';
 import { ROUTES } from './site';
 
 function Card({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full max-w-[520px] rounded-xl border border-border-default bg-bg-surface p-24 shadow-sm md:p-32">{children}</div>
+    <div {...rv('up')} className="w-full max-w-[520px]">
+      <div className="kn-drawer rounded-xl border border-border-default bg-bg-surface p-24 shadow-sm transition-shadow duration-500 hover:shadow-lg md:p-32">
+        {children}
+      </div>
+    </div>
   );
 }
 
@@ -59,8 +64,9 @@ function Forgot({ t, config, back, start }: { t: T; config: ConfigOut | null; ba
           <Field label={t('site.trial.email')} error={error}>
             {(id, bad) => <TextInput id={id} invalid={bad} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@company.com" autoComplete="email" />}
           </Field>
-          <button type="submit" disabled={busy} className="h-[52px] rounded-lg bg-action-primary text-latin-label font-semibold text-text-on-action hover:bg-action-primary-pressed disabled:opacity-60">
-            {t('site.forgot.submit')}
+          <button type="submit" disabled={busy} className="h-[52px] rounded-lg kn-btn inline-flex items-center justify-center gap-8 kn-btn inline-flex items-center justify-center gap-8 bg-action-primary text-latin-label font-semibold text-text-on-action hover:bg-action-primary-pressed disabled:opacity-60">
+            {busy && <Spinner />}
+                {t('site.forgot.submit')}
           </button>
         </form>
       )}
@@ -118,14 +124,32 @@ export default function Login({ t, lang, config }: { t: T; lang: Lang; config: C
   return (
     <section className="grid bg-bg-canvas lg:min-h-[908px] lg:grid-cols-[640px_1fr]">
       <div className="relative hidden overflow-hidden bg-espresso-950 px-[80px] pt-[80px] lg:block">
-        <div aria-hidden className="pointer-events-none absolute left-[380px] top-[-140px] h-[480px] w-[480px] rounded-full border-[56px] border-mocha-950" />
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-[380px] top-[-140px] h-[480px] w-[480px] animate-[spin_70s_linear_infinite] rounded-full border-[56px] border-mocha-950 border-l-transparent"
+        />
         <div className="relative">
-          <Logo />
-          <h2 className="mt-32 text-web-display text-cream-50">{t('site.login.welcome')}</h2>
-          <p className="mt-8 text-web-body-lg text-cream-400">{t('site.login.tagline')}</p>
-          <div className="relative mt-48 h-[560px] w-[480px]">
-            <img src="/img/login-phone.webp" alt="" width={243} height={516} className="absolute left-[150px] top-[20px] w-[243px] drop-shadow-[0_12px_32px_rgba(59,41,33,0.3)]" />
-            <div className="absolute left-0 top-[400px] flex items-center gap-12 rounded-full bg-cream-50 py-[10px] pl-12 pr-20 shadow-md">
+          <div {...rv('down')}>
+            <Logo />
+          </div>
+          <h2 {...rv('up', 1)} className="mt-32 text-web-display text-cream-50">
+            {t('site.login.welcome')}
+          </h2>
+          <p {...rv('up', 2)} className="mt-8 text-web-body-lg text-cream-400">
+            {t('site.login.tagline')}
+          </p>
+          <div {...rv('up', 3)} className="relative mt-48 h-[560px] w-[480px]">
+            <img
+              src="/img/login-phone.webp"
+              alt=""
+              width={243}
+              height={516}
+              className="kn-float absolute left-[150px] top-[20px] w-[243px] drop-shadow-[0_12px_32px_rgba(59,41,33,0.3)]"
+            />
+            <div
+              style={{ '--f': '-3s' } as React.CSSProperties}
+              className="kn-float absolute left-0 top-[400px] flex items-center gap-12 rounded-full bg-cream-50 py-[10px] pl-12 pr-20 shadow-md"
+            >
               <span className="inline-flex h-[36px] w-[36px] items-center justify-center rounded-full bg-status-success-bg text-status-success">
                 <Check width={18} height={18} aria-hidden />
               </span>
@@ -142,7 +166,7 @@ export default function Login({ t, lang, config }: { t: T; lang: Lang; config: C
           <Forgot t={t} config={config} back={() => setView('login')} start={email} />
         ) : done ? (
           <Card>
-            <span className="inline-flex h-[48px] w-[48px] items-center justify-center rounded-full bg-status-success-bg text-status-success">
+            <span className="kn-pop inline-flex h-[48px] w-[48px] items-center justify-center rounded-full bg-status-success-bg text-status-success">
               <Check width={24} height={24} aria-hidden />
             </span>
             <h1 className="mt-16 text-latin-display">{t('site.login.ok_title', { name: done.name })}</h1>
@@ -179,7 +203,8 @@ export default function Login({ t, lang, config }: { t: T; lang: Lang; config: C
               >
                 {(id, bad) => <PasswordInput id={id} invalid={bad} t={t} icon value={password} onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" />}
               </Field>
-              <button type="submit" disabled={busy} className="h-[52px] rounded-lg bg-action-primary text-latin-label font-semibold text-text-on-action hover:bg-action-primary-pressed disabled:opacity-60">
+              <button type="submit" disabled={busy} className="h-[52px] rounded-lg kn-btn inline-flex items-center justify-center gap-8 kn-btn inline-flex items-center justify-center gap-8 bg-action-primary text-latin-label font-semibold text-text-on-action hover:bg-action-primary-pressed disabled:opacity-60">
+                {busy && <Spinner />}
                 {t('site.login.submit')}
               </button>
             </form>
@@ -192,13 +217,13 @@ export default function Login({ t, lang, config }: { t: T; lang: Lang; config: C
               type="button"
               aria-expanded={phoneNote}
               onClick={() => setPhoneNote((v) => !v)}
-              className="inline-flex h-[52px] w-full items-center justify-center gap-8 rounded-lg bg-action-secondary text-latin-label font-semibold text-text-primary hover:brightness-95"
+              className="kn-btn inline-flex h-[52px] w-full items-center justify-center gap-8 rounded-lg bg-action-secondary text-latin-label font-semibold text-text-primary hover:brightness-95"
             >
               <Phone width={18} height={18} aria-hidden />
               {t('site.login.phone')}
             </button>
             {phoneNote && (
-              <div className="mt-12 flex flex-col gap-12 rounded-md bg-bg-canvas p-12">
+              <div className="kn-drawer mt-12 flex flex-col gap-12 rounded-md bg-bg-canvas p-12">
                 <p className="text-latin-body text-text-secondary">{t('site.login.phone_note')}</p>
                 <StoreBadges config={config} t={t} />
               </div>

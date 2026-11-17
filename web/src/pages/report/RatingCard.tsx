@@ -91,7 +91,7 @@ export function RatingCard({ ctx, review }: { ctx: PageCtx; review: PublicReview
     return shell(
       'border-text-primary',
       <>
-        <span className="inline-flex h-[48px] w-[48px] items-center justify-center rounded-full bg-status-success-bg text-status-success">
+        <span className="kn-pop inline-flex h-[48px] w-[48px] items-center justify-center rounded-full bg-status-success-bg text-status-success">
           <Check width={24} height={24} />
         </span>
         <h2 className="mt-16 text-web-h3">{t('web.rate.thanks_plain')}</h2>
