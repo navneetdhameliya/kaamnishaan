@@ -139,3 +139,122 @@ class ReviewIn(BaseModel):
 class RatedOut(BaseModel):
     review_id: uuid.UUID
     google_review_url: str | None = Field(description="Shown after 4-5 stars, when the company set one")
+
+
+# ---- the office: customer reviews (M45) ------------------------------------------------------------
+class FollowupOut(BaseModel):
+    status: Literal["open", "contacted", "resolved"]
+    private_note: str | None
+    resolved_at: datetime | None
+
+
+class CompanyReviewItem(ReviewListItem):
+    tags: list[str]
+    technician: PersonRef | None
+    wants_call_back: bool
+    low: bool = Field(description="At or under the company's low-rating line (2 stars by default)")
+    needs_reply: bool
+    followup: FollowupOut | None
+
+
+class ReviewCounts(BaseModel):
+    all: int
+    needs_reply: int
+    low: int
+
+
+class ReviewsPage(BaseModel):
+    average: float | None
+    count: int
+    breakdown: list[int] = Field(description="How many 1, 2, 3, 4 and 5 star reviews (index 0 is 1 star)")
+    counts: ReviewCounts
+    data: list[CompanyReviewItem]
+
+
+class ReplyIn(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    text: str = Field(min_length=1, max_length=1000)
+
+
+class SuggestionOut(BaseModel):
+    text: str
+
+
+class FollowupIn(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    status: Literal["open", "contacted", "resolved"] | None = None
+    private_note: str | None = Field(default=None, max_length=2000)
+
+
+# ---- review requests (M45) ----------------------------------------------------------------------
+class RequestItem(BaseModel):
+    id: uuid.UUID
+    job_id: uuid.UUID
+    customer: str
+    cover_url: str | None
+    technician: PersonRef | None
+    status: RequestStatus
+    sent_at: datetime | None
+    next_step: Literal["reminder", "ai_call"] | None = Field(
+        description="What happens next, if nothing changes"
+    )
+    next_at: datetime | None
+    rating: int | None
+    source: Literal["link", "reply", "ai_call"] | None
+
+
+class RequestCounts(BaseModel):
+    waiting: int
+    rated: int
+    opted_out: int
+
+
+class RequestsPage(BaseModel):
+    counts: RequestCounts
+    data: list[RequestItem]
+
+
+# ---- settings (M46) -----------------------------------------------------------------------------------
+Channel = Literal["sms", "whatsapp", "email"]
+
+
+class ReviewSettingsOut(BaseModel):
+    ask_on_share: bool
+    reminder_enabled: bool
+    reminder_day: int
+    reminder_channels: list[Channel]
+    ai_call_enabled: bool
+    ai_call_day: int
+    call_window: str = Field(description="When AI calls may happen, local time")
+    low_rating_alert: bool
+    low_rating_threshold: int
+    techs_can_request: bool
+    techs_see_reviews: bool
+    show_public_reviews: bool
+    google_review_url: str | None
+    can_edit: bool
+
+
+class ReviewSettingsIn(BaseModel):
+    model_config = ConfigDict(extra="forbid", str_strip_whitespace=True)
+
+    ask_on_share: bool | None = None
+    reminder_enabled: bool | None = None
+    reminder_channels: list[Channel] | None = Field(default=None, min_length=1)
+    ai_call_enabled: bool | None = None
+    low_rating_alert: bool | None = None
+    techs_can_request: bool | None = None
+    techs_see_reviews: bool | None = None
+    show_public_reviews: bool | None = None
+    google_review_url: str | None = Field(default=None, max_length=500)
+
+    @field_validator("google_review_url")
+    @classmethod
+    def _url(cls, v: str | None) -> str | None:
+        if v is None or v == "":
+            return v
+        if " " in v or "." not in v:
+            raise ValueError("not a web address")
+        return v if v.startswith(("http://", "https://")) else f"https://{v}"

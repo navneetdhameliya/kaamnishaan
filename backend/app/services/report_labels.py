@@ -17,6 +17,7 @@ LABELS: dict[str, dict[str, str]] = {
         "stop": "Reply STOP to opt out.",
         "review_sms": "{company}: your service report {number} is ready. Please rate the job here: {link}",
         "review_email": "How did we do? Rate the job in one tap on the report page.",
+        "review_reminder": "{company}: how did we do on {job}? It takes one tap: {link}",
         "email_subject": "Your service report {number} from {company}",
         "email_body": "Hello {name},\n\n{company} has finished the work: {job}.\nYour report with photos is here: {link}\n"
         "The link works until {expires}.",
@@ -34,6 +35,7 @@ LABELS: dict[str, dict[str, str]] = {
         "stop": "बंद करने के लिए STOP भेजें।",
         "review_sms": "{company}: आपकी सर्विस रिपोर्ट {number} तैयार है। कृपया काम को यहां रेट करें: {link}",
         "review_email": "हमारा काम कैसा रहा? रिपोर्ट पेज पर एक टैप में रेट करें।",
+        "review_reminder": "{company}: {job} का काम कैसा रहा? एक टैप में बताएं: {link}",
         "email_subject": "{company} से आपकी सर्विस रिपोर्ट {number}",
         "email_body": "नमस्ते {name},\n\n{company} ने काम पूरा कर लिया है: {job}.\nफोटो के साथ आपकी रिपोर्ट यहां है: {link}\n"
         "यह लिंक {expires} तक चलेगा।",
@@ -49,6 +51,7 @@ LABELS: dict[str, dict[str, str]] = {
         "stop": "બંધ કરવા STOP મોકલો.",
         "review_sms": "{company}: તમારો સર્વિસ રિપોર્ટ {number} તૈયાર છે. કૃપા કરી કામને અહીં રેટ કરો: {link}",
         "review_email": "અમારું કામ કેવું રહ્યું? રિપોર્ટ પેજ પર એક ટેપમાં રેટ કરો.",
+        "review_reminder": "{company}: {job} નું કામ કેવું રહ્યું? એક ટેપમાં કહો: {link}",
         "email_subject": "{company} તરફથી તમારો સર્વિસ રિપોર્ટ {number}",
         "email_body": "નમસ્તે {name},\n\n{company} એ કામ પૂરું કર્યું છે: {job}.\nફોટા સાથે તમારો રિપોર્ટ અહીં છે: {link}\n"
         "આ લિંક {expires} સુધી ચાલશે.",
@@ -65,6 +68,7 @@ LABELS: dict[str, dict[str, str]] = {
         "stop": "Responda STOP para no recibir más mensajes.",
         "review_sms": "{company}: su informe de servicio {number} está listo. Valore el trabajo aquí: {link}",
         "review_email": "¿Qué tal lo hicimos? Valore el trabajo con un toque en la página del informe.",
+        "review_reminder": "{company}: ¿qué tal fue {job}? Solo un toque: {link}",
         "email_subject": "Su informe de servicio {number} de {company}",
         "email_body": "Hola {name}:\n\n{company} ha terminado el trabajo: {job}.\nSu informe con fotos está aquí: {link}\n"
         "El enlace funciona hasta el {expires}.",
@@ -82,6 +86,7 @@ LABELS: dict[str, dict[str, str]] = {
         "stop": "Répondez STOP pour ne plus recevoir de messages.",
         "review_sms": "{company} : votre rapport d’intervention {number} est prêt. Notez le travail ici : {link}",
         "review_email": "Comment s’est passée l’intervention ? Notez-la en un geste sur la page du rapport.",
+        "review_reminder": "{company} : comment s’est passé {job} ? Un seul geste : {link}",
         "email_subject": "Votre rapport d'intervention {number} de {company}",
         "email_body": "Bonjour {name},\n\n{company} a terminé l'intervention : {job}.\n"
         "Votre rapport avec photos est ici : {link}\nLe lien fonctionne jusqu'au {expires}.",

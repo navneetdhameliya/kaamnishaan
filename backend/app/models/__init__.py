@@ -31,7 +31,14 @@ from app.models.reports import (
     Report,
     ReportVersion,
 )
-from app.models.reviews import Review, ReviewReply, ReviewRequest, ReviewRequestEvent, ReviewSettings
+from app.models.reviews import (
+    Review,
+    ReviewFollowup,
+    ReviewReply,
+    ReviewRequest,
+    ReviewRequestEvent,
+    ReviewSettings,
+)
 from app.models.sharing import Message, ReportIssue, ShareLink
 from app.models.work import Customer, CustomerContact, Equipment, Job, JobEvent, Site
 
@@ -42,6 +49,7 @@ __all__ = [
     "PromptVersion",
     "Report",
     "Review",
+    "ReviewFollowup",
     "ReviewReply",
     "ReviewRequest",
     "ReviewRequestEvent",

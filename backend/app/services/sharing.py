@@ -218,6 +218,9 @@ async def share_info(db: AsyncSession, p: Principal, report_id: uuid.UUID) -> Sh
             select(Message).where(Message.report_id == rep.id).order_by(Message.created_at.desc())
         )
     ).scalars()
+    from app.services import reviews
+
+    review_ask = await reviews.share_default(db, job)
     return ShareInfo(
         report_id=rep.id,
         report_status=rep.status,
@@ -233,6 +236,7 @@ async def share_info(db: AsyncSession, p: Principal, report_id: uuid.UUID) -> Sh
             )
             for m in sent
         ],
+        review_ask=review_ask,
     )
 
 
@@ -413,8 +417,12 @@ async def send(db: AsyncSession, p: Principal, report_id: uuid.UUID, body: SendI
         await _deliver(db, rep, link, ch, email if ch == "email" else phone, texts, p.user.id)
         for ch in channels
     ]
-    if any(m.status == "sent" for m in msgs):
+    ok = [m.channel for m in msgs if m.status == "sent"]
+    if ok:
         await _mark_shared(db, p, rep, job, channels)
+        from app.services import reviews
+
+        await reviews.with_share(db, p, rep, job, contact, link, ok, body.ask_for_review)
     await audit.record(
         db,
         "report.sent",

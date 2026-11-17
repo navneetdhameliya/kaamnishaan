@@ -660,6 +660,156 @@
         "title": "CompanyOut",
         "type": "object"
       },
+      "CompanyReviewItem": {
+        "properties": {
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          },
+          "cover_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cover Url"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "customer": {
+            "title": "Customer",
+            "type": "string"
+          },
+          "followup": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FollowupOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job_title": {
+            "title": "Job Title",
+            "type": "string"
+          },
+          "low": {
+            "description": "At or under the company's low-rating line (2 stars by default)",
+            "title": "Low",
+            "type": "boolean"
+          },
+          "needs_reply": {
+            "title": "Needs Reply",
+            "type": "boolean"
+          },
+          "rating": {
+            "title": "Rating",
+            "type": "integer"
+          },
+          "reply": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReplyOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reviewer_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewer Name"
+          },
+          "source": {
+            "enum": [
+              "link",
+              "reply",
+              "ai_call"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "technician": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PersonRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "technician_rating": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Technician Rating"
+          },
+          "wants_call_back": {
+            "title": "Wants Call Back",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "rating",
+          "technician_rating",
+          "comment",
+          "reviewer_name",
+          "source",
+          "customer",
+          "job_title",
+          "cover_url",
+          "created_at",
+          "reply",
+          "tags",
+          "technician",
+          "wants_call_back",
+          "low",
+          "needs_reply",
+          "followup"
+        ],
+        "title": "CompanyReviewItem",
+        "type": "object"
+      },
       "CompanySettings": {
         "properties": {
           "technicians_can_request_reviews": {
@@ -2363,6 +2513,84 @@
           "thumbs"
         ],
         "title": "EvidenceSummary",
+        "type": "object"
+      },
+      "FollowupIn": {
+        "additionalProperties": false,
+        "properties": {
+          "private_note": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Private Note"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "open",
+                  "contacted",
+                  "resolved"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          }
+        },
+        "title": "FollowupIn",
+        "type": "object"
+      },
+      "FollowupOut": {
+        "properties": {
+          "private_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Private Note"
+          },
+          "resolved_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolved At"
+          },
+          "status": {
+            "enum": [
+              "open",
+              "contacted",
+              "resolved"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "private_note",
+          "resolved_at"
+        ],
+        "title": "FollowupOut",
         "type": "object"
       },
       "HTTPValidationError": {
@@ -4665,7 +4893,9 @@
               "report_submitted",
               "changes_requested",
               "report_approved",
-              "report_shared"
+              "report_shared",
+              "review_received",
+              "low_rating"
             ],
             "title": "Kind",
             "type": "string"
@@ -6568,6 +6798,22 @@
         "title": "Register",
         "type": "object"
       },
+      "ReplyIn": {
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "maxLength": 1000,
+            "minLength": 1,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "ReplyIn",
+        "type": "object"
+      },
       "ReplyOut": {
         "properties": {
           "author": {
@@ -7121,6 +7367,186 @@
         "title": "ReportStarted",
         "type": "object"
       },
+      "RequestCounts": {
+        "properties": {
+          "opted_out": {
+            "title": "Opted Out",
+            "type": "integer"
+          },
+          "rated": {
+            "title": "Rated",
+            "type": "integer"
+          },
+          "waiting": {
+            "title": "Waiting",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "waiting",
+          "rated",
+          "opted_out"
+        ],
+        "title": "RequestCounts",
+        "type": "object"
+      },
+      "RequestItem": {
+        "properties": {
+          "cover_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cover Url"
+          },
+          "customer": {
+            "title": "Customer",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "next_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next At"
+          },
+          "next_step": {
+            "anyOf": [
+              {
+                "enum": [
+                  "reminder",
+                  "ai_call"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "What happens next, if nothing changes",
+            "title": "Next Step"
+          },
+          "rating": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rating"
+          },
+          "sent_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sent At"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "enum": [
+                  "link",
+                  "reply",
+                  "ai_call"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source"
+          },
+          "status": {
+            "enum": [
+              "not_requested",
+              "queued",
+              "link_sent",
+              "reminded",
+              "ai_call_scheduled",
+              "ai_call_done",
+              "rated",
+              "opted_out",
+              "stopped",
+              "paused_no_credits"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "technician": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PersonRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "job_id",
+          "customer",
+          "cover_url",
+          "technician",
+          "status",
+          "sent_at",
+          "next_step",
+          "next_at",
+          "rating",
+          "source"
+        ],
+        "title": "RequestItem",
+        "type": "object"
+      },
+      "RequestsPage": {
+        "properties": {
+          "counts": {
+            "$ref": "#/components/schemas/RequestCounts"
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/RequestItem"
+            },
+            "title": "Data",
+            "type": "array"
+          }
+        },
+        "required": [
+          "counts",
+          "data"
+        ],
+        "title": "RequestsPage",
+        "type": "object"
+      },
       "RetranscribeIn": {
         "additionalProperties": false,
         "properties": {
@@ -7205,6 +7631,29 @@
           "created_at"
         ],
         "title": "ReviewBrief",
+        "type": "object"
+      },
+      "ReviewCounts": {
+        "properties": {
+          "all": {
+            "title": "All",
+            "type": "integer"
+          },
+          "low": {
+            "title": "Low",
+            "type": "integer"
+          },
+          "needs_reply": {
+            "title": "Needs Reply",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "all",
+          "needs_reply",
+          "low"
+        ],
+        "title": "ReviewCounts",
         "type": "object"
       },
       "ReviewIn": {
@@ -7559,9 +8008,277 @@
         "title": "ReviewOut",
         "type": "object"
       },
+      "ReviewSettingsIn": {
+        "additionalProperties": false,
+        "properties": {
+          "ai_call_enabled": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ai Call Enabled"
+          },
+          "ask_on_share": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ask On Share"
+          },
+          "google_review_url": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Google Review Url"
+          },
+          "low_rating_alert": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Low Rating Alert"
+          },
+          "reminder_channels": {
+            "anyOf": [
+              {
+                "items": {
+                  "enum": [
+                    "sms",
+                    "whatsapp",
+                    "email"
+                  ],
+                  "type": "string"
+                },
+                "minItems": 1,
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reminder Channels"
+          },
+          "reminder_enabled": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reminder Enabled"
+          },
+          "show_public_reviews": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Show Public Reviews"
+          },
+          "techs_can_request": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Techs Can Request"
+          },
+          "techs_see_reviews": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Techs See Reviews"
+          }
+        },
+        "title": "ReviewSettingsIn",
+        "type": "object"
+      },
+      "ReviewSettingsOut": {
+        "properties": {
+          "ai_call_day": {
+            "title": "Ai Call Day",
+            "type": "integer"
+          },
+          "ai_call_enabled": {
+            "title": "Ai Call Enabled",
+            "type": "boolean"
+          },
+          "ask_on_share": {
+            "title": "Ask On Share",
+            "type": "boolean"
+          },
+          "call_window": {
+            "description": "When AI calls may happen, local time",
+            "title": "Call Window",
+            "type": "string"
+          },
+          "can_edit": {
+            "title": "Can Edit",
+            "type": "boolean"
+          },
+          "google_review_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Google Review Url"
+          },
+          "low_rating_alert": {
+            "title": "Low Rating Alert",
+            "type": "boolean"
+          },
+          "low_rating_threshold": {
+            "title": "Low Rating Threshold",
+            "type": "integer"
+          },
+          "reminder_channels": {
+            "items": {
+              "enum": [
+                "sms",
+                "whatsapp",
+                "email"
+              ],
+              "type": "string"
+            },
+            "title": "Reminder Channels",
+            "type": "array"
+          },
+          "reminder_day": {
+            "title": "Reminder Day",
+            "type": "integer"
+          },
+          "reminder_enabled": {
+            "title": "Reminder Enabled",
+            "type": "boolean"
+          },
+          "show_public_reviews": {
+            "title": "Show Public Reviews",
+            "type": "boolean"
+          },
+          "techs_can_request": {
+            "title": "Techs Can Request",
+            "type": "boolean"
+          },
+          "techs_see_reviews": {
+            "title": "Techs See Reviews",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "ask_on_share",
+          "reminder_enabled",
+          "reminder_day",
+          "reminder_channels",
+          "ai_call_enabled",
+          "ai_call_day",
+          "call_window",
+          "low_rating_alert",
+          "low_rating_threshold",
+          "techs_can_request",
+          "techs_see_reviews",
+          "show_public_reviews",
+          "google_review_url",
+          "can_edit"
+        ],
+        "title": "ReviewSettingsOut",
+        "type": "object"
+      },
+      "ReviewsPage": {
+        "properties": {
+          "average": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Average"
+          },
+          "breakdown": {
+            "description": "How many 1, 2, 3, 4 and 5 star reviews (index 0 is 1 star)",
+            "items": {
+              "type": "integer"
+            },
+            "title": "Breakdown",
+            "type": "array"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "counts": {
+            "$ref": "#/components/schemas/ReviewCounts"
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/CompanyReviewItem"
+            },
+            "title": "Data",
+            "type": "array"
+          }
+        },
+        "required": [
+          "average",
+          "count",
+          "breakdown",
+          "counts",
+          "data"
+        ],
+        "title": "ReviewsPage",
+        "type": "object"
+      },
       "SendIn": {
         "additionalProperties": false,
         "properties": {
+          "ask_for_review": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Also ask for a rating with this send; empty = the company setting",
+            "title": "Ask For Review"
+          },
           "channels": {
             "items": {
               "enum": [
@@ -7770,6 +8487,17 @@
           },
           "report_status": {
             "title": "Report Status",
+            "type": "string"
+          },
+          "review_ask": {
+            "default": "off",
+            "description": "M35 'Ask for a review' switch: its default (company setting), or already asked",
+            "enum": [
+              "on",
+              "off",
+              "asked"
+            ],
+            "title": "Review Ask",
             "type": "string"
           },
           "sent": {
@@ -8425,6 +9153,19 @@
           "questions"
         ],
         "title": "SubmissionOut",
+        "type": "object"
+      },
+      "SuggestionOut": {
+        "properties": {
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "SuggestionOut",
         "type": "object"
       },
       "SwitchCompany": {
@@ -11312,6 +12053,58 @@
         "summary": "Config",
         "tags": [
           "config"
+        ]
+      }
+    },
+    "/api/v1/cron/review-followups": {
+      "post": {
+        "description": "Send every Day 2 review reminder that is due (all companies). For a scheduler, with X-Cron-Key.",
+        "operationId": "run_followups_api_v1_cron_review_followups_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-cron-key",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Cron-Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Run Followups Api V1 Cron Review Followups Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Run Followups",
+        "tags": [
+          "reviews"
         ]
       }
     },
@@ -15673,6 +16466,60 @@
         ]
       }
     },
+    "/api/v1/review-requests": {
+      "get": {
+        "description": "M45 Review requests: where each ask stands and what happens next.",
+        "operationId": "requests_api_v1_review_requests_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "default": "waiting",
+              "enum": [
+                "waiting",
+                "rated",
+                "opted_out"
+              ],
+              "title": "Status",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RequestsPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Requests",
+        "tags": [
+          "reviews"
+        ]
+      }
+    },
     "/api/v1/review-requests/{request_id}": {
       "delete": {
         "description": "Cancel a request that is still waiting for approval.",
@@ -15710,6 +16557,131 @@
           }
         ],
         "summary": "Cancel",
+        "tags": [
+          "reviews"
+        ]
+      }
+    },
+    "/api/v1/review-settings": {
+      "get": {
+        "operationId": "get_settings__api_v1_review_settings_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewSettingsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Settings ",
+        "tags": [
+          "reviews"
+        ]
+      },
+      "patch": {
+        "description": "M46 Review settings and follow-ups. Send only what changed.",
+        "operationId": "patch_settings_api_v1_review_settings_patch",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewSettingsIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewSettingsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Patch Settings",
+        "tags": [
+          "reviews"
+        ]
+      }
+    },
+    "/api/v1/reviews": {
+      "get": {
+        "description": "M45 Reviews: the average, the star breakdown, the counts for each chip and the reviews.",
+        "operationId": "company_reviews_api_v1_reviews_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filter",
+            "required": false,
+            "schema": {
+              "default": "all",
+              "enum": [
+                "all",
+                "needs_reply",
+                "low"
+              ],
+              "title": "Filter",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewsPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Company Reviews",
         "tags": [
           "reviews"
         ]
@@ -15758,6 +16730,173 @@
           }
         ],
         "summary": "One",
+        "tags": [
+          "reviews"
+        ]
+      }
+    },
+    "/api/v1/reviews/{review_id}/follow-up": {
+      "patch": {
+        "description": "M45 Low rating: the private note and \"Mark as resolved\".",
+        "operationId": "follow_up_api_v1_reviews__review_id__follow_up_patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "review_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Review Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FollowupIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FollowupOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Follow Up",
+        "tags": [
+          "reviews"
+        ]
+      }
+    },
+    "/api/v1/reviews/{review_id}/reply": {
+      "post": {
+        "description": "M45 Send reply: shown on the customer's report page and to the technician. Sending again edits it.",
+        "operationId": "reply_api_v1_reviews__review_id__reply_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "review_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Review Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReplyIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReplyOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reply",
+        "tags": [
+          "reviews"
+        ]
+      }
+    },
+    "/api/v1/reviews/{review_id}/reply-suggestion": {
+      "post": {
+        "description": "M45 \"Suggest a reply\": a short reply to start from, in the app language.",
+        "operationId": "suggestion_api_v1_reviews__review_id__reply_suggestion_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "review_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Review Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuggestionOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Suggestion",
         "tags": [
           "reviews"
         ]

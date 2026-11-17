@@ -26,6 +26,7 @@ from app.models import (
     ReviewRequest,
     ReviewRequestEvent,
     ReviewSettings,
+    ShareLink,
     User,
 )
 from app.models.reviews import POSITIVE_TAGS
@@ -57,8 +58,9 @@ async def settings_for(db: AsyncSession, company_id: uuid.UUID) -> ReviewSetting
     if s:
         return s
     return ReviewSettings(
-        company_id=company_id, ask_on_share=True, reminder_day=2, ai_call_enabled=True, ai_call_day=5,
-        techs_can_request=True, techs_see_reviews=True, low_rating_threshold=2,
+        company_id=company_id, ask_on_share=True, reminder_enabled=True, reminder_channels=["sms", "email"],
+        reminder_day=2, ai_call_enabled=True, ai_call_day=5, low_rating_alert=True, low_rating_threshold=2,
+        techs_can_request=True, techs_see_reviews=True, show_public_reviews=False,
     )  # fmt: skip
 
 
@@ -135,12 +137,12 @@ async def job_review(db: AsyncSession, p: Principal, job: Job) -> JobReview | No
         contact_phone=contact.phone if contact else None,
         sent_at=req.sent_at,
         channels=list(req.channels or []),
-        reminder_at=req.reminder_at,
+        reminder_at=req.reminder_at if s.reminder_enabled else None,
         ai_call_at=req.ai_call_at if s.ai_call_enabled else None,
         ai_call_enabled=s.ai_call_enabled,
         opted_out_at=req.opted_out_at,
         opt_out_source=req.opt_out_source,
-        review=_brief(review) if review else None,
+        review=_brief(review) if review and (s.techs_see_reviews or _manager(p)) else None,
     )
 
 
@@ -196,6 +198,40 @@ async def cancel(db: AsyncSession, p: Principal, request_id: uuid.UUID) -> None:
     await db.flush()
 
 
+async def share_default(db: AsyncSession, job: Job) -> str:
+    """M35: is "Ask for a review" on by default, or was a review already asked for this job?"""
+    if await _request(db, job.id):
+        return "asked"
+    return "on" if (await settings_for(db, job.company_id)).ask_on_share else "off"
+
+
+async def with_share(
+    db: AsyncSession, p: Principal, rep: Report, job: Job, contact: CustomerContact | None,
+    link: ShareLink, channels: list[str], ask: bool | None,
+) -> None:  # fmt: skip
+    """M35 Send with "Ask for a review": the report link already opens the rating, so this is Day 0."""
+    s = await settings_for(db, job.company_id)
+    if not (s.ask_on_share if ask is None else ask) or contact is None:
+        return
+    if not _manager(p) and not (s.techs_can_request and job.assigned_to == p.user.id):
+        return
+    if await _request(db, job.id, lock=True):
+        return
+    company = await db.get(Company, job.company_id)
+    t = now()
+    req = ReviewRequest(
+        company_id=job.company_id, job_id=job.id, report_id=rep.id, contact_id=contact.id,
+        requested_by=p.user.id, status="link_sent", sent_at=t, channels=channels, share_link_id=link.id,
+        reminder_at=_plan(company, t, s.reminder_day) if s.reminder_enabled else None,
+        ai_call_at=_plan(company, t, s.ai_call_day) if s.ai_call_enabled else None,
+    )  # fmt: skip
+    db.add(req)
+    await db.flush()
+    db.add(ReviewRequestEvent(request_id=req.id, step="requested"))
+    for ch in channels:
+        db.add(ReviewRequestEvent(request_id=req.id, step="link_sent", channel=ch, status="sent"))
+
+
 async def on_report_approved(db: AsyncSession, p: Principal, rep: Report, job: Job) -> None:
     """A request that waited for approval goes out now, with the report (Day 0)."""
     req = await _request(db, job.id, lock=True)
@@ -240,7 +276,7 @@ async def _send(
     await sharing._mark_shared(db, p, rep, job, sent)
     t = now()
     req.status, req.sent_at, req.channels, req.share_link_id = "link_sent", t, sent, link.id
-    req.reminder_at = _plan(company, t, s.reminder_day)
+    req.reminder_at = _plan(company, t, s.reminder_day) if s.reminder_enabled else None
     req.ai_call_at = _plan(company, t, s.ai_call_day) if s.ai_call_enabled else None
 
 
@@ -293,7 +329,30 @@ async def rate(db: AsyncSession, token: str, body: ReviewIn) -> RatedOut:
     db.add(ReviewRequestEvent(request_id=req.id, step="rated", channel="link"))
     await db.flush()
     s = await settings_for(db, job.company_id)
+    await _tell(db, s, review, job)
     return RatedOut(review_id=review.id, google_review_url=s.google_review_url if body.rating >= 4 else None)
+
+
+async def _tell(db: AsyncSession, s: ReviewSettings, review: Review, job: Job) -> None:
+    """A new review: the technician sees it (when allowed); a low one alerts the office and opens a
+    follow-up."""
+    from app.models import ReviewFollowup
+    from app.services import notifications
+
+    stars = review.technician_rating or review.rating
+    params = {**await notifications.job_params(db, job), "rating": str(review.rating)}
+    if s.techs_see_reviews and job.assigned_to:
+        await notifications.notify(
+            db, company_id=job.company_id, to=[job.assigned_to], kind="review_received", actor_id=None,
+            job=job, params={**params, "rating": str(stars)},
+        )  # fmt: skip
+    if review.rating <= s.low_rating_threshold:
+        db.add(ReviewFollowup(review_id=review.id, company_id=job.company_id, status="open"))
+        if s.low_rating_alert:
+            await notifications.notify(
+                db, company_id=job.company_id, to=await notifications.reviewers(db, job.company_id),
+                kind="low_rating", actor_id=None, job=job, params=params,
+            )  # fmt: skip
 
 
 async def opt_out(db: AsyncSession, token: str) -> None:

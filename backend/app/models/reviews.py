@@ -45,6 +45,12 @@ class ReviewSettings(TimestampMixin, Base):
         ForeignKey("companies.id", ondelete="CASCADE"), primary_key=True
     )
     ask_on_share: Mapped[bool] = mapped_column(Boolean, default=True, server_default=sql("true"))
+    reminder_enabled: Mapped[bool] = mapped_column(Boolean, default=True, server_default=sql("true"))
+    reminder_channels: Mapped[list] = mapped_column(
+        JSONB, default=lambda: ["sms", "email"], server_default=sql('\'["sms", "email"]\'::jsonb')
+    )
+    low_rating_alert: Mapped[bool] = mapped_column(Boolean, default=True, server_default=sql("true"))
+    show_public_reviews: Mapped[bool] = mapped_column(Boolean, default=False, server_default=sql("false"))
     reminder_day: Mapped[int] = mapped_column(SmallInteger, default=2, server_default=sql("2"))
     ai_call_enabled: Mapped[bool] = mapped_column(Boolean, default=True, server_default=sql("true"))
     ai_call_day: Mapped[int] = mapped_column(SmallInteger, default=5, server_default=sql("5"))
@@ -115,3 +121,18 @@ class ReviewReply(IdMixin, TimestampMixin, Base):
     author_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
     text: Mapped[str] = mapped_column(Text)
     ai_suggested: Mapped[bool] = mapped_column(Boolean, default=False, server_default=sql("false"))
+
+
+class ReviewFollowup(TimestampMixin, Base):
+    """Low-rating follow-up (M45): open -> contacted -> resolved, with a private note for the team."""
+
+    __tablename__ = "review_followups"
+
+    review_id: Mapped[uuid.UUID] = mapped_column(
+        ForeignKey("reviews.id", ondelete="CASCADE"), primary_key=True
+    )
+    company_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("companies.id", ondelete="CASCADE"), index=True)
+    status: Mapped[str] = mapped_column(String(16), default="open")
+    private_note: Mapped[str | None] = mapped_column(Text)
+    resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    resolved_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))

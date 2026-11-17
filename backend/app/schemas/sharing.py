@@ -76,6 +76,9 @@ class ShareInfo(BaseModel):
     link: ShareLinkOut | None
     preview: Preview | None
     sent: list[MessageOut]
+    review_ask: Literal["on", "off", "asked"] = Field(
+        "off", description="M35 'Ask for a review' switch: its default (company setting), or already asked"
+    )
 
 
 class ShareLinkIn(_In):
@@ -89,6 +92,9 @@ class SendIn(_In):
         default=None, max_length=20, description="Defaults to the customer's main contact"
     )
     email: EmailStr | None = None
+    ask_for_review: bool | None = Field(
+        default=None, description="Also ask for a rating with this send; empty = the company setting"
+    )
 
 
 # ---- customer report page (no login; the token in the link is the key) --------------------------

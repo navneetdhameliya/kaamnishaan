@@ -8,7 +8,13 @@ from app.schemas.identity import ListMeta, _In
 from app.schemas.work import PersonRef
 
 NotificationKind = Literal[
-    "job_assigned", "report_submitted", "changes_requested", "report_approved", "report_shared"
+    "job_assigned",
+    "report_submitted",
+    "changes_requested",
+    "report_approved",
+    "report_shared",
+    "review_received",
+    "low_rating",
 ]
 
 
