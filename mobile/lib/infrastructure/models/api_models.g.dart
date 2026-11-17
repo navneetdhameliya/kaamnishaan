@@ -126,6 +126,32 @@ class AnswerOutModel {
       };
 }
 
+AppLinksModel appLinksModelFromJson(String str) => AppLinksModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String appLinksModelToJson(AppLinksModel data) => json.encode(data.toJson());
+
+class AppLinksModel {
+  /// Google Play page; null until published
+  final String? android;
+  /// App Store page; null until published
+  final String? ios;
+
+  const AppLinksModel({
+    this.android,
+    this.ios,
+  });
+
+  factory AppLinksModel.fromJson(Map<String, dynamic> json) => AppLinksModel(
+        android: json['android'] as String?,
+        ios: json['ios'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'android': android,
+        'ios': ios,
+      };
+}
+
 AskInModel askInModelFromJson(String str) => AskInModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String askInModelToJson(AskInModel data) => json.encode(data.toJson());
@@ -929,6 +955,7 @@ ConfigOutModel configOutModelFromJson(String str) => ConfigOutModel.fromJson(jso
 String configOutModelToJson(ConfigOutModel data) => json.encode(data.toJson());
 
 class ConfigOutModel {
+  final AppLinksModel? appLinks;
   final List<CountryOutModel> countries;
   final String defaultCountry;
   final Map<String, dynamic> features;
@@ -939,6 +966,7 @@ class ConfigOutModel {
   final List<TradeOutModel> trades;
 
   const ConfigOutModel({
+    this.appLinks,
     required this.countries,
     required this.defaultCountry,
     required this.features,
@@ -950,6 +978,7 @@ class ConfigOutModel {
   });
 
   factory ConfigOutModel.fromJson(Map<String, dynamic> json) => ConfigOutModel(
+        appLinks: json['app_links'] == null ? null : AppLinksModel.fromJson(json['app_links'] as Map<String, dynamic>),
         countries: (json['countries'] as List).map((e) => CountryOutModel.fromJson(e as Map<String, dynamic>)).toList(),
         defaultCountry: json['default_country'] as String,
         features: Map<String, dynamic>.from(json['features'] as Map),
@@ -961,6 +990,7 @@ class ConfigOutModel {
       );
 
   Map<String, dynamic> toJson() => {
+        'app_links': appLinks?.toJson(),
         'countries': countries.map((e) => e.toJson()).toList(),
         'default_country': defaultCountry,
         'features': features,

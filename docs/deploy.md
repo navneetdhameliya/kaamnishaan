@@ -59,6 +59,10 @@ The newest email "Reset your password" has a link to `https://kaamnishaan-web.ve
 Email is switched off until an email service is chosen (`KN_EMAIL_ENABLED` is not set): new owners don't
 have to confirm their email, and reports and review requests go by SMS, WhatsApp or link.
 
+**App store links (website "Get the app"):** once the apps are published, add `KN_ANDROID_APP_URL`
+(the Google Play page) and `KN_IOS_APP_URL` (the App Store page) on Render. Until then the website says
+"The app is coming soon to Google Play and the App Store." Each button appears on its own as soon as its link is set.
+
 Keep this key private: anyone with it can read login codes on the test server. It can never be turned on
 for the real (production) server.
 

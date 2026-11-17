@@ -102,4 +102,24 @@ export interface TradeOut {
 
 export interface ConfigOut {
   trades: TradeOut[];
+  languages: { code: string; native_name: string }[];
+  countries: { code: string; name: string; dial_code: string; flag: string }[];
+  default_country: string;
+  password_min_length: number;
+  features: Record<string, boolean>;
+  app_links: { android: string | null; ios: string | null };
+}
+
+export interface CompanyOut {
+  id: string;
+  name: string;
+  plan: string;
+  status: string;
+  trial_ends_at: string | null;
+}
+
+export interface SessionOut {
+  access_token: string;
+  user: { id: string; name: string; email: string | null; email_verified: boolean };
+  companies: { company_id: string; name: string; active: boolean }[];
 }

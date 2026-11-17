@@ -7,17 +7,21 @@ export class ApiError extends Error {
     public code: string,
     message: string,
     public details: Record<string, unknown> = {},
+    public fields: Record<string, string> = {},
   ) {
     super(message);
   }
 }
 
-export async function api<T>(path: string, init: { method?: string; body?: unknown } = {}): Promise<T> {
+export async function api<T>(path: string, init: { method?: string; body?: unknown; token?: string } = {}): Promise<T> {
   let res: Response;
+  const headers: Record<string, string> = {};
+  if (init.body !== undefined) headers['Content-Type'] = 'application/json';
+  if (init.token) headers.Authorization = `Bearer ${init.token}`;
   try {
     res = await fetch(`${API_URL}/api/v1${path}`, {
       method: init.method ?? 'GET',
-      headers: init.body === undefined ? undefined : { 'Content-Type': 'application/json' },
+      headers,
       body: init.body === undefined ? undefined : JSON.stringify(init.body),
     });
   } catch {
@@ -26,8 +30,10 @@ export async function api<T>(path: string, init: { method?: string; body?: unkno
   if (res.status === 204) return undefined as T;
   const json = await res.json().catch(() => ({}));
   if (!res.ok) {
-    const e = (json as { error?: { code?: string; message?: string; details?: Record<string, unknown> } }).error ?? {};
-    throw new ApiError(res.status, e.code ?? 'unknown', e.message ?? 'Something went wrong', e.details ?? {});
+    const e =
+      (json as { error?: { code?: string; message?: string; details?: Record<string, unknown>; fields?: Record<string, string> } })
+        .error ?? {};
+    throw new ApiError(res.status, e.code ?? 'unknown', e.message ?? 'Something went wrong', e.details ?? {}, e.fields ?? {});
   }
   return json as T;
 }

@@ -11,6 +11,7 @@ from app.core.deps import get_db
 from app.models import ChecklistTemplate, CreditPack, Industry, Plan
 from app.providers.ai import get_ai
 from app.schemas.identity import (
+    AppLinks,
     ConfigOut,
     CountryOut,
     CreditPackOut,
@@ -72,6 +73,7 @@ async def config(response: Response, locale: Locale = "en", db: AsyncSession = D
             "ai_assistant": get_ai() is not None,
             "email": get_settings().email_enabled,
         },
+        app_links=AppLinks(android=s.android_app_url, ios=s.ios_app_url),
     )
 
 

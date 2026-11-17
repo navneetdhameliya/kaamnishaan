@@ -317,17 +317,19 @@ export function SiteLayout({
   lang,
   setLang,
   trades,
+  announcement = true,
   children,
 }: {
   t: T;
   lang: Lang;
   setLang: (l: Lang) => void;
   trades: TradeOut[];
+  announcement?: boolean;
   children: ReactNode;
 }) {
   return (
     <div className="min-h-screen bg-bg-canvas">
-      <AnnouncementBar t={t} />
+      {announcement && <AnnouncementBar t={t} />}
       <Nav t={t} lang={lang} setLang={setLang} trades={trades} />
       <main>{children}</main>
       <Footer t={t} lang={lang} setLang={setLang} trades={trades} />
