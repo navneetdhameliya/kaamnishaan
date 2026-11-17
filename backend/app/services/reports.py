@@ -13,7 +13,7 @@ from sqlalchemy import func, or_, select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import Principal
-from app.core.errors import AppError, Conflict, Forbidden, NotFound
+from app.core.errors import AppError, Conflict, Forbidden, NotFound, PlanLimit
 from app.core.paging import check_version, decode_cursor, next_cursor
 from app.core.security import now
 from app.models import (
@@ -140,6 +140,32 @@ async def _new_task(db: AsyncSession, p: Principal, type_: str, rep: Report) -> 
 
 
 # ---- start / redraft ----------------------------------------------------------------------------
+async def _check_report_limit(db: AsyncSession, company) -> None:
+    """M41 "You used 60 of 60 reports": no new report past the plan's monthly number. Photos, checklists
+    and notes are kept; the report can be made next month or after an upgrade."""
+    from app.models import Plan
+    from app.services.credits import cycle
+
+    plan = await db.get(Plan, company.plan_code)
+    if plan is None or plan.report_limit_monthly is None:
+        return
+    start, end = cycle(company)
+    used = await db.scalar(
+        select(func.count()).where(Report.company_id == company.id, Report.created_at >= start)
+    )
+    if (used or 0) >= plan.report_limit_monthly:
+        raise PlanLimit(
+            "report_limit_reached",
+            "This month's reports are used up. Nothing you captured is lost.",
+            {
+                "used": used,
+                "limit": plan.report_limit_monthly,
+                "plan": plan.code,
+                "renews_at": end.isoformat(),
+            },
+        )
+
+
 async def start(db: AsyncSession, p: Principal, job_id: uuid.UUID) -> tuple[Report, BackgroundTask, bool]:
     """Returns (report, task, new_task). A report that is already being written returns its task."""
     job = await get_job(db, p, job_id, lock=True)
@@ -159,6 +185,7 @@ async def start(db: AsyncSession, p: Principal, job_id: uuid.UUID) -> tuple[Repo
         raise Conflict("report_not_ready", "Some proof is still missing.", {"blocked_by": ready.blocked_by})
     company = p.company
     if not rep:
+        await _check_report_limit(db, company)
         number = (
             await db.execute(
                 text(

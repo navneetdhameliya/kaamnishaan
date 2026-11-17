@@ -5,6 +5,7 @@ import '../networks/api_client.dart';
 abstract class IBillingApiProvider {
   Future<dynamic> getBilling();
   Future<dynamic> getCredits();
+  Future<dynamic> getPlan();
 }
 
 class BillingApiProvider implements IBillingApiProvider {
@@ -17,4 +18,7 @@ class BillingApiProvider implements IBillingApiProvider {
 
   @override
   Future<dynamic> getCredits() => _client.get(APIConstant.creditsAPIEP);
+
+  @override
+  Future<dynamic> getPlan() => _client.get(APIConstant.planAPIEP);
 }

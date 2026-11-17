@@ -11,6 +11,8 @@ abstract final class APIConstant {
   static const String refreshTokenAPIEP = '/auth/refresh';
   static const String logoutAPIEP = '/auth/logout';
   static const String switchCompanyAPIEP = '/auth/switch-company';
+  static const String sendVerificationAPIEP = '/auth/email/send-verification';
+  static const String changeEmailAPIEP = '/auth/email';
 
   // me
   static const String meAPIEP = '/me';
@@ -63,6 +65,7 @@ abstract final class APIConstant {
   // billing
   static const String billingAPIEP = '/billing';
   static const String creditsAPIEP = '/credits';
+  static const String planAPIEP = '/plan';
 
   // customers
   static const String customersAPIEP = '/customers';

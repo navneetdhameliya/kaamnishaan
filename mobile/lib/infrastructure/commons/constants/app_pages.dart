@@ -20,6 +20,8 @@ import '../../../UI/screens/auth_section/phone_section/phone_binding.dart';
 import '../../../UI/screens/auth_section/phone_section/phone_screen.dart';
 import '../../../UI/screens/auth_section/profile_setup_section/profile_setup_binding.dart';
 import '../../../UI/screens/auth_section/profile_setup_section/profile_setup_screen.dart';
+import '../../../UI/screens/auth_section/verify_email_section/verify_email_binding.dart';
+import '../../../UI/screens/auth_section/verify_email_section/verify_email_screen.dart';
 import '../../../UI/screens/checklists_section/checklist_builder_section/checklist_builder_binding.dart';
 import '../../../UI/screens/checklists_section/checklist_builder_section/checklist_builder_screen.dart';
 import '../../../UI/screens/checklists_section/checklist_library_section/checklist_library_binding.dart';
@@ -66,6 +68,8 @@ import '../../../UI/screens/me_section/my_reports_section/my_reports_binding.dar
 import '../../../UI/screens/me_section/my_reports_section/my_reports_screen.dart';
 import '../../../UI/screens/me_section/my_reviews_section/my_reviews_binding.dart';
 import '../../../UI/screens/me_section/my_reviews_section/my_reviews_screen.dart';
+import '../../../UI/screens/me_section/plan_limit_section/plan_limit_binding.dart';
+import '../../../UI/screens/me_section/plan_limit_section/plan_limit_screen.dart';
 import '../../../UI/screens/me_section/review_details_section/review_details_binding.dart';
 import '../../../UI/screens/me_section/review_details_section/review_details_screen.dart';
 import '../../../UI/screens/me_section/waiting_to_send_section/waiting_to_send_binding.dart';
@@ -265,6 +269,8 @@ abstract final class AppPages {
       binding: ChecklistBuilderBinding(),
     ),
     GetPage(name: RoutesConstants.assistantScreen, page: () => const AssistantScreen(), binding: AssistantBinding()),
+    GetPage(name: RoutesConstants.planLimitScreen, page: () => const PlanLimitScreen(), binding: PlanLimitBinding()),
+    GetPage(name: RoutesConstants.verifyEmailScreen, page: () => const VerifyEmailScreen(), binding: VerifyEmailBinding()),
     GetPage(name: RoutesConstants.teamScreen, page: () => const TeamScreen(), binding: TeamBinding()),
     GetPage(name: RoutesConstants.inviteScreen, page: () => const InviteScreen(), binding: InviteBinding()),
     GetPage(name: RoutesConstants.messagesScreen, page: () => const MessagesScreen(), binding: MessagesBinding()),

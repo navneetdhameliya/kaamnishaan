@@ -27,7 +27,7 @@ from app.models import (
     ReviewRequest,
     ReviewRequestEvent,
 )
-from app.schemas.billing import BillingOut, CreditsOut, CreditUse, UsageTile
+from app.schemas.billing import BillingOut, CreditsOut, CreditUse, PlanStatus, UsageTile
 from app.schemas.identity import CreditPackOut, CreditRules, Money, PlanOut
 
 RULES = CreditRules()
@@ -147,8 +147,33 @@ async def billing(db: AsyncSession, p: Principal) -> BillingOut:
         raise Forbidden("owner_only", "Only the owner can see the plan and billing.")
     company = p.company
     w, plan = await wallet(db, company)
+    start, _ = cycle(company)
+    b = await _usage(db, company, p.user.app_language)
+    return BillingOut(
+        plan=b["plan"],
+        status=company.status,
+        trial_ends_at=company.trial_ends_at,
+        period_start=start,
+        renews_at=b["end"],
+        company=company.name,
+        usage=[
+            b["technicians"],
+            b["reports"],
+            UsageTile(
+                key="ai_questions",
+                used=await questions_used(db, company.id, start),
+                limit=plan.ai_questions_monthly,
+            ),
+            UsageTile(key="credits", used=w.plan_used, limit=None if unlimited(plan) else w.plan_credits),
+        ],
+        upgrade=b["upgrade"],
+        payments_ready=False,
+    )
+
+
+async def _usage(db: AsyncSession, company: Company, lang: str) -> dict:
+    plan = await db.get(Plan, company.plan_code)
     start, end = cycle(company)
-    lang = p.user.app_language
     techs = await db.scalar(
         select(func.count()).where(
             Membership.company_id == company.id,
@@ -165,26 +190,13 @@ async def billing(db: AsyncSession, p: Principal) -> BillingOut:
         )
     ).scalar_one_or_none()
     cur = _currency(company)
-    return BillingOut(
-        plan=plan_out(plan, cur, lang),
-        status=company.status,
-        trial_ends_at=company.trial_ends_at,
-        period_start=start,
-        renews_at=end,
-        company=company.name,
-        usage=[
-            UsageTile(key="technicians", used=techs or 0, limit=plan.technician_limit),
-            UsageTile(key="reports", used=reports or 0, limit=plan.report_limit_monthly),
-            UsageTile(
-                key="ai_questions",
-                used=await questions_used(db, company.id, start),
-                limit=plan.ai_questions_monthly,
-            ),
-            UsageTile(key="credits", used=w.plan_used, limit=None if unlimited(plan) else w.plan_credits),
-        ],
-        upgrade=plan_out(nxt, cur, lang) if nxt and cur in (nxt.prices or {}) else None,
-        payments_ready=False,
-    )
+    return {
+        "plan": plan_out(plan, cur, lang),
+        "upgrade": plan_out(nxt, cur, lang) if nxt and cur in (nxt.prices or {}) else None,
+        "end": end,
+        "technicians": UsageTile(key="technicians", used=techs or 0, limit=plan.technician_limit),
+        "reports": UsageTile(key="reports", used=reports or 0, limit=plan.report_limit_monthly),
+    }
 
 
 async def credits(db: AsyncSession, p: Principal) -> CreditsOut:
@@ -252,4 +264,18 @@ async def credits(db: AsyncSession, p: Principal) -> CreditsOut:
         ],
         rules=RULES,
         payments_ready=False,
+    )
+
+
+async def plan_status(db: AsyncSession, p: Principal) -> PlanStatus:
+    """M41 Plan limit reached: anyone in the company may see it (technicians see it when a report can't
+    be made); only the owner is offered the upgrade."""
+    b = await _usage(db, p.company, p.user.app_language)
+    return PlanStatus(
+        plan=b["plan"],
+        upgrade=b["upgrade"],
+        renews_at=b["end"],
+        reports=b["reports"],
+        technicians=b["technicians"],
+        can_upgrade=p.role == "owner",
     )

@@ -66,6 +66,12 @@ class ReportMakingController extends GetxController {
       final e = result.errorOrNull!;
       // already sent for review: show it
       if (e.code == 'report_already_submitted' && reportId.value != null) return _openDraft();
+      // M41: this month's reports are used up; nothing captured is lost
+      if (e.code == 'report_limit_reached') {
+        phase.value = MakePhase.failed;
+        await Get.offNamed<void>(RoutesConstants.planLimitScreen);
+        return;
+      }
       phase.value = MakePhase.failed;
       if (!e.isNetwork) KnToast.error(e.message);
       return;

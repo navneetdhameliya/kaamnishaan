@@ -22,6 +22,15 @@ abstract class IAuthApiRepository {
   Future<ApiResult<void>> logout();
   Future<ApiResult<MeOutModel>> updateProfile({String? name, String? trade, String? avatarUploadId});
   Future<ApiResult<MyInviteListModel>> myInvites();
+
+  /// GET /me: who I am now (M09 checks whether the email is confirmed).
+  Future<ApiResult<MeOutModel>> me();
+
+  /// M09 "Resend link".
+  Future<ApiResult<void>> sendVerification();
+
+  /// M09 "Wrong email? Change it": only before it is confirmed; a new link goes to the new email.
+  Future<ApiResult<void>> changeEmail(String email);
   Future<ApiResult<MeOutModel>> acceptInvite(String inviteId);
   Future<ApiResult<void>> declineInvite(String inviteId);
 }
@@ -105,5 +114,18 @@ class AuthApiRepository implements IAuthApiRepository {
   @override
   Future<ApiResult<void>> declineInvite(String inviteId) => guard(() async {
         await provider.postDeclineInvite(inviteId);
+      });
+
+  @override
+  Future<ApiResult<MeOutModel>> me() => guard(() async => MeOutModel.fromJson(_map(await provider.getMe())));
+
+  @override
+  Future<ApiResult<void>> sendVerification() => guard(() async {
+        await provider.postSendVerification();
+      });
+
+  @override
+  Future<ApiResult<void>> changeEmail(String email) => guard(() async {
+        await provider.patchEmail(email.trim().toLowerCase());
       });
 }

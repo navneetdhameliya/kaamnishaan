@@ -4168,6 +4168,48 @@ class PlanOutModel {
       };
 }
 
+/// M41 "Plan limit reached": what the plan allows, what is used, and the next plan (any member).
+PlanStatusModel planStatusModelFromJson(String str) => PlanStatusModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String planStatusModelToJson(PlanStatusModel data) => json.encode(data.toJson());
+
+class PlanStatusModel {
+  /// The owner may change the plan
+  final bool canUpgrade;
+  final PlanOutModel plan;
+  final DateTime renewsAt;
+  final UsageTileModel reports;
+  final UsageTileModel technicians;
+  final PlanOutModel? upgrade;
+
+  const PlanStatusModel({
+    required this.canUpgrade,
+    required this.plan,
+    required this.renewsAt,
+    required this.reports,
+    required this.technicians,
+    this.upgrade,
+  });
+
+  factory PlanStatusModel.fromJson(Map<String, dynamic> json) => PlanStatusModel(
+        canUpgrade: json['can_upgrade'] as bool,
+        plan: PlanOutModel.fromJson(json['plan'] as Map<String, dynamic>),
+        renewsAt: DateTime.parse(json['renews_at'] as String),
+        reports: UsageTileModel.fromJson(json['reports'] as Map<String, dynamic>),
+        technicians: UsageTileModel.fromJson(json['technicians'] as Map<String, dynamic>),
+        upgrade: json['upgrade'] == null ? null : PlanOutModel.fromJson(json['upgrade'] as Map<String, dynamic>),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_upgrade': canUpgrade,
+        'plan': plan.toJson(),
+        'renews_at': renewsAt.toIso8601String(),
+        'reports': reports.toJson(),
+        'technicians': technicians.toJson(),
+        'upgrade': upgrade?.toJson(),
+      };
+}
+
 PlansOutModel plansOutModelFromJson(String str) => PlansOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String plansOutModelToJson(PlansOutModel data) => json.encode(data.toJson());

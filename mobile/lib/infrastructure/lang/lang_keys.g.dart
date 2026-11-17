@@ -2196,4 +2196,66 @@ abstract final class LangKeys {
   static const aiAllDone = 'ai.all_done';
   /// Send
   static const aiSend = 'ai.send';
+  /// Verify email
+  static const veTitle = 've.title';
+  /// Step 1 of 2
+  static const veStep = 've.step';
+  /// Check your inbox
+  static const veHead = 've.head';
+  /// We sent a link to {email}. Tap it to confirm your email.
+  static const veBody = 've.body';
+  /// KaamNishaan
+  static const veMailFrom = 've.mail_from';
+  /// Just now
+  static const veMailWhen = 've.mail_when';
+  /// Verify your email
+  static const veMailSubject = 've.mail_subject';
+  /// Tap the button to confirm this email for KaamNishaan.
+  static const veMailBody = 've.mail_body';
+  /// Resend in {time}
+  static const veResendIn = 've.resend_in';
+  /// Wrong email?
+  static const veWrong = 've.wrong';
+  /// Change it
+  static const veChange = 've.change';
+  /// Open email app
+  static const veOpenMail = 've.open_mail';
+  /// Resend link
+  static const veResend = 've.resend';
+  /// A new link is on its way.
+  static const veResent = 've.resent';
+  /// Do it later
+  static const veLater = 've.later';
+  /// Change email
+  static const veChangeTitle = 've.change_title';
+  /// Work email
+  static const veChangeLabel = 've.change_label';
+  /// Send link
+  static const veChangeSend = 've.change_send';
+  /// Email confirmed
+  static const veVerified = 've.verified';
+  /// You used {a} of {b} reports
+  static const plTitle = 'pl.title';
+  /// Upgrade to keep sending reports this month. Nothing you captured is lost — photos and notes stay saved.
+  static const plBodyOwner = 'pl.body_owner';
+  /// Your company used this month's reports. Ask the owner to upgrade. Nothing you captured is lost — photos and notes stay saved.
+  static const plBodyTeam = 'pl.body_team';
+  /// {plan} · resets on {date}
+  static const plResets = 'pl.resets';
+  /// {price} / mo
+  static const plPerMonth = 'pl.per_month';
+  /// {reports} reports · {techs} techs
+  static const plLimits = 'pl.limits';
+  /// Fair-use reports · {techs} techs
+  static const plFairUse = 'pl.fair_use';
+  /// Current
+  static const plCurrent = 'pl.current';
+  /// Recommended
+  static const plRecommended = 'pl.recommended';
+  /// Upgrade to {name} · {price}
+  static const plUpgrade = 'pl.upgrade';
+  /// Remind me later
+  static const plLater = 'pl.later';
+  /// OK
+  static const plOk = 'pl.ok';
 }
