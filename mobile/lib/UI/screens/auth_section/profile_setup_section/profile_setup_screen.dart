@@ -53,7 +53,7 @@ class ProfileSetupScreen extends GetView<ProfileSetupController> {
           Obx(
             () => KnCustomButton(
               key: const ValueKey('save-profile'),
-              text: LangKeys.profileSaveStart.tr,
+              text: controller.saveLabel,
               icon: LucideIcons.check,
               enabled: controller.isValid,
               loading: controller.apiCallLoader.value,

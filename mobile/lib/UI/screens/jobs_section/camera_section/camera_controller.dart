@@ -133,6 +133,7 @@ class CameraScreenController extends GetxController with WidgetsBindingObserver 
         lat: _where?.lat,
         lng: _where?.lng,
         shotSlot: slot,
+        customer: args.customer,
       );
       if (slot != null) takenSlots.add(slot);
       if (args.single) {

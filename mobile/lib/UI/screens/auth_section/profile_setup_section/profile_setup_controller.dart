@@ -25,7 +25,12 @@ class ProfileSetupController extends GetxController {
     required this.config,
     required this.speech,
     required this.translation,
-  });
+    bool? editing,
+  }) : editing = editing ?? Get.arguments == editMode;
+
+  /// Opened from Me (M37) to change the profile: saving goes back instead of on to the app.
+  static const editMode = 'edit';
+  final bool editing;
 
   final IAuthApiRepository repository;
   final IFilesApiRepository files;
@@ -56,6 +61,8 @@ class ProfileSetupController extends GetxController {
   }
 
   bool get isValid => name.value.trim().isNotEmpty;
+
+  String get saveLabel => editing ? LangKeys.commonSave.tr : LangKeys.profileSaveStart.tr;
 
   String get initials => TextUtils.initials(name.value);
 
@@ -113,6 +120,12 @@ class ProfileSetupController extends GetxController {
       return KnToast.error(result.errorOrNull!.message);
     }
     session.me.value = result.dataOrNull;
+    if (editing) {
+      apiCallLoader.value = false;
+      KnToast.success(LangKeys.profileSaved.tr);
+      Get.back<bool>(result: true);
+      return;
+    }
     final route = await session.refreshAndRoute();
     apiCallLoader.value = false;
     Get.offAllNamed(route);

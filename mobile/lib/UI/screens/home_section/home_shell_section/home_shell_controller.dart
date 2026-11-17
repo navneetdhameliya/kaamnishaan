@@ -32,9 +32,4 @@ class HomeShellController extends GetxController {
 
   /// Set by the shell binding: the technician's job in progress, from Today.
   JobListItemModel? Function()? currentJob;
-
-  Future<void> onLogoutTap() async {
-    await session.logout();
-    Get.offAllNamed(RoutesConstants.welcomeScreen);
-  }
 }

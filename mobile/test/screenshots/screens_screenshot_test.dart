@@ -58,6 +58,13 @@ import 'package:kaamnishaan/UI/screens/onboarding_section/splash_section/splash_
 import 'package:kaamnishaan/UI/screens/onboarding_section/splash_section/splash_screen.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_controller.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_screen.dart';
+import 'package:kaamnishaan/UI/screens/me_section/language_settings_section/language_settings_controller.dart';
+import 'package:kaamnishaan/UI/screens/me_section/language_settings_section/language_settings_screen.dart';
+import 'package:kaamnishaan/UI/screens/me_section/me_section/me_controller.dart';
+import 'package:kaamnishaan/UI/screens/me_section/my_reports_section/my_reports_controller.dart';
+import 'package:kaamnishaan/UI/screens/me_section/my_reports_section/my_reports_screen.dart';
+import 'package:kaamnishaan/UI/screens/me_section/waiting_to_send_section/waiting_to_send_controller.dart';
+import 'package:kaamnishaan/UI/screens/me_section/waiting_to_send_section/waiting_to_send_screen.dart';
 import 'package:kaamnishaan/UI/screens/report_section/report_draft_section/report_draft_controller.dart';
 import 'package:kaamnishaan/UI/screens/report_section/report_draft_section/report_draft_screen.dart';
 import 'package:kaamnishaan/UI/screens/report_section/report_editor_section/report_editor_controller.dart';
@@ -432,12 +439,20 @@ void main() {
   }
 
   // ---- Step 2c: home --------------------------------------------------------------------------
+  /// The Me tab is in the shell for everyone (M37).
+  MeController putMe({MeStatsModel stats = const MeStatsModel(jobsDone: 14, photos: 96, reportsSent: 12), PhotoQueueService? queue}) {
+    final me = MockMeRepository();
+    when(me.stats).thenAnswer((_) async => ApiSuccess<MeStatsModel>(stats));
+    return Get.put(MeController(me: me, session: session, translation: translation(), queue: queue));
+  }
+
   Future<void> today(WidgetTester t, String name, ApiResult<TodayModel> answer, {TodayModel? saved, bool dark = false}) async {
     final home = MockHomeRepository();
     when(() => home.today()).thenAnswer((_) async => answer);
     session.me.value = me(name: 'Ramesh Patel');
     if (saved != null) await prefs.setCachedToday('u1', jsonEncode(saved.toJson()));
     Get.put(HomeShellController(session: session));
+    putMe();
     Get.put(
       TodayController(
         repository: home,
@@ -507,6 +522,7 @@ void main() {
       permissions: [],
     );
     Get.put(HomeShellController(session: session));
+    putMe();
     Get.put(jobList(const []));
     Get.put(
       DashboardController(
@@ -1009,6 +1025,129 @@ void main() {
     );
     Get.put(ReportSentController(reports: reports, translation: translation(), args: reportArgs));
     await shot(t, 'm31_report_sent', const ReportSentScreen());
+  });
+
+  // ---- Step 2i: Me ------------------------------------------------------------------------------
+  void technicianWithCompany() => session.me.value = const MeOutModel(
+        id: 'u1',
+        name: 'Ramesh Patel',
+        emailVerified: true,
+        appLanguage: 'en',
+        theme: 'system',
+        role: 'technician',
+        company: CompanyOutModel(
+          id: 'c1',
+          name: 'BrightAir Services',
+          country: 'IN',
+          timezone: 'Asia/Kolkata',
+          currency: 'INR',
+          reportLanguage: 'en',
+          plan: 'professional',
+          status: 'trial',
+          settings: CompanySettingsModel(),
+        ),
+        permissions: [],
+      );
+
+  Future<void> waitingItems(WidgetTester t, PhotoQueueService queue, Directory tmp) => t.runAsync(() async {
+        String file(String n) => (File('${tmp.path}/$n.jpg')..writeAsBytesSync(const [1, 2, 3])).path;
+        await queue.add(
+          jobId: 'j1',
+          stage: 'after',
+          sourcePath: file('a'),
+          takenAt: DateTime(2026, 10, 31, 11, 41),
+          customer: 'Green Valley Clinic',
+        );
+        await queue.addVoice(
+          jobId: 'j1',
+          sourcePath: (File('${tmp.path}/v.m4a')..writeAsBytesSync(const [1])).path,
+          durationS: 18,
+          recordedAt: DateTime(2026, 10, 31, 11, 45),
+          customer: 'Green Valley Clinic',
+        );
+        final drain = await queue.add(
+          jobId: 'j2',
+          stage: 'during',
+          sourcePath: file('d'),
+          takenAt: DateTime(2026, 10, 30, 15, 2),
+          customer: 'Mehta house',
+        );
+        drain.state = PendingState.failed;
+        queue.items.refresh();
+      });
+
+  testWidgets('M37 Me', (t) async {
+    final (_, queue, tmp) = await photoSetup(t);
+    await waitingItems(t, queue, tmp);
+    technicianWithCompany();
+    final home = MockHomeRepository();
+    when(() => home.today()).thenAnswer((_) async => ApiSuccess<TodayModel>(busyDay));
+    Get.put(HomeShellController(session: session)).index.value = 1;
+    Get.put(
+      TodayController(
+        repository: home,
+        session: session,
+        prefs: prefs,
+        translation: translation(),
+        clock: () => DateTime(2026, 10, 31, 9, 15),
+      ),
+    );
+    putMe(queue: queue);
+    await shot(t, 'm37_me', const HomeShellScreen());
+  });
+
+  testWidgets('M38 language settings', (t) async {
+    technicianWithCompany();
+    Get.put(LanguageSettingsController(me: MockMeRepository(), session: session, translation: translation()));
+    await shot(t, 'm38_language', const LanguageSettingsScreen());
+  });
+
+  testWidgets('M30 my reports', (t) async {
+    final me = MockMeRepository();
+    ReportListItemModel item(String id, String customer, String title, String number, String status, int day, int h, int m,
+            {String? note}) =>
+        ReportListItemModel(
+          id: id,
+          number: number,
+          status: status,
+          changeNote: note,
+          flags: 0,
+          updatedAt: DateTime(2026, 10, day, h, m),
+          submittedAt: DateTime(2026, 10, day, h, m),
+          job: JobBriefModel(id: 'j$id', number: 'J-$id', title: title, customer: customer, status: 'in_review'),
+        );
+    when(() => me.myReports(statuses: any(named: 'statuses'), period: any(named: 'period'), cursor: any(named: 'cursor')))
+        .thenAnswer(
+      (_) async => ApiSuccess<ReportListModel>(
+        ReportListModel(
+          data: [
+            item('1', 'Mehta house', 'AC service', 'R-1039', 'changes_requested', 30, 15, 10,
+                note: 'Please add an after photo.'),
+            item('2', 'Green Valley Clinic', 'AC not cooling', 'R-1042', 'pending_review', 31, 11, 58),
+            item('3', 'Sharma residence', 'Filter change', 'R-1036', 'shared', 29, 9, 40),
+          ],
+          meta: const ListMetaModel(counts: {'all': 3, 'pending_review': 1, 'changes_requested': 1, 'shared': 1}),
+        ),
+      ),
+    );
+    Get.put(MyReportsController(me: me, translation: translation()));
+    await shot(t, 'm30_my_reports', const MyReportsScreen());
+  });
+
+  testWidgets('M43 waiting to send', (t) async {
+    final (_, queue, tmp) = await photoSetup(t);
+    await waitingItems(t, queue, tmp);
+    Get.put(WaitingToSendController(queue: queue, translation: translation()));
+    await shot(t, 'm43_waiting_to_send', const WaitingToSendScreen());
+  });
+
+  testWidgets('M43 everything sent', (t) async {
+    final (_, queue, _) = await photoSetup(t);
+    final c = Get.put(WaitingToSendController(queue: queue, translation: translation()));
+    c.sentPhotos.value = 2;
+    c.sentNotes.value = 1;
+    c.lastSent.value = DateTime(2026, 10, 31, 12, 4);
+    await shot(t, 'm43_everything_sent', const WaitingToSendScreen());
   });
 
   testWidgets('M13 dashboard', (t) async {

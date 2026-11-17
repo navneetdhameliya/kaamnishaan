@@ -14,6 +14,8 @@ abstract final class APIConstant {
 
   // me
   static const String meAPIEP = '/me';
+  static const String meStatsAPIEP = '/me/stats';
+  static const String mePreferencesAPIEP = '/me/preferences';
   static const String myCompaniesAPIEP = '/me/companies';
   static const String myInvitesAPIEP = '/invites/mine';
   static String acceptInviteAPIEP(String id) => '/invites/$id/accept';

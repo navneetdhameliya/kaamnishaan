@@ -65,11 +65,20 @@ class JobSearchField extends StatelessWidget {
 
 /// M14 filter chip ("Today 6", "Tomorrow", "Unassigned").
 class JobFilterChip extends StatelessWidget {
-  const JobFilterChip({super.key, required this.label, required this.selected, required this.onTap});
+  const JobFilterChip({
+    super.key,
+    required this.label,
+    required this.selected,
+    required this.onTap,
+    this.dense = false,
+  });
 
   final String label;
   final bool selected;
   final VoidCallback onTap;
+
+  /// Smaller words and sides, so four chips fit on a phone (M30).
+  final bool dense;
 
   @override
   Widget build(BuildContext context) {
@@ -80,13 +89,17 @@ class JobFilterChip extends StatelessWidget {
       borderRadius: radius,
       semanticLabel: label,
       child: Ink(
-        padding: const EdgeInsets.symmetric(horizontal: KnSize.space12, vertical: KnSize.space8),
+        padding: EdgeInsets.symmetric(horizontal: dense ? 10 : KnSize.space12, vertical: KnSize.space8),
         decoration: BoxDecoration(
           color: selected ? kn.actionPrimary : kn.bgSurface,
           borderRadius: radius,
           border: Border.all(color: selected ? kn.actionPrimary : kn.borderDefault),
         ),
-        child: CustomBaseTextWidget(label, style: context.knText.label, color: selected ? kn.textOnAction : kn.textPrimary),
+        child: CustomBaseTextWidget(
+          label,
+          style: dense ? context.knText.labelSm : context.knText.label,
+          color: selected ? kn.textOnAction : kn.textPrimary,
+        ),
       ),
     );
   }

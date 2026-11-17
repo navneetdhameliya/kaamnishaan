@@ -6,6 +6,7 @@ import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../common_widgets/kn_glass_tab_bar.dart';
 import '../../../theme/kn_app_theme.dart';
 import '../../jobs_section/job_list_section/job_list_screen.dart';
+import '../../me_section/me_section/me_tab.dart';
 import '../dashboard_section/dashboard_tab.dart';
 import '../today_section/today_tab.dart';
 import 'custom_widgets/simple_tabs.dart';
@@ -34,11 +35,11 @@ class HomeShellScreen extends GetView<HomeShellController> {
             const DashboardTab(),
             const JobListScreen(asTab: true),
             ComingSoonTab(title: LangKeys.navReports.tr, icon: LucideIcons.fileText),
-            ProfileTab(title: LangKeys.navProfile.tr, session: controller.session, onLogout: controller.onLogoutTap),
+            const MeTab(),
           ]
         : [
             const TodayTab(),
-            ProfileTab(title: LangKeys.navMe.tr, session: controller.session, onLogout: controller.onLogoutTap),
+            const MeTab(),
           ];
     return Scaffold(
       backgroundColor: context.kn.bgCanvas,
