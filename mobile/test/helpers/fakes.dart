@@ -9,6 +9,7 @@ import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/auth
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/checklists_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/company_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/config_api_repository.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/customers_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/files_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/home_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/jobs_api_repository.dart';
@@ -37,6 +38,8 @@ class MockFilesRepository extends Mock implements IFilesApiRepository {}
 class MockHomeRepository extends Mock implements IHomeApiRepository {}
 
 class MockJobsRepository extends Mock implements IJobsApiRepository {}
+
+class MockCustomersRepository extends Mock implements ICustomersApiRepository {}
 
 class MockChecklistsRepository extends Mock implements IChecklistsApiRepository {}
 

@@ -155,6 +155,7 @@ class CustomerListItem(BaseModel):
     name: str
     primary_contact: ContactBrief | None
     city: str | None
+    site: "SiteBrief | None" = Field(default=None, description="First address, for a new job")
     job_count: int
     last_job_at: datetime | None
 
@@ -191,6 +192,7 @@ class JobCreate(_In):
     customer_id: uuid.UUID | None = None
     customer: QuickCustomer | None = None
     site_id: uuid.UUID | None = None
+    address: str | None = Field(default=None, max_length=200, description="Typed address; a new site if new")
     contact_id: uuid.UUID | None = None
     equipment_id: uuid.UUID | None = None
     scheduled_at: datetime | None = None
@@ -301,6 +303,7 @@ class AssignableTechnician(BaseModel):
     available: bool
     distance_km: float | None = None
     disabled_reason: Literal["invite_pending"] | None = None
+    avatar_url: str | None = None
 
 
 class AssignableList(BaseModel):
@@ -376,3 +379,6 @@ class SyncChanges(BaseModel):
     removed_job_ids: list[uuid.UUID]
     cursor: str
     has_more: bool
+
+
+CustomerListItem.model_rebuild()

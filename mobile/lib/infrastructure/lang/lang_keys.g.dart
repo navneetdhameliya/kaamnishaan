@@ -1416,4 +1416,102 @@ abstract final class LangKeys {
   static const sharePdfMetaPlain = 'share.pdf_meta_plain';
   /// Edit
   static const shareEdit = 'share.edit';
+  /// New job
+  static const newjobTitle = 'newjob.title';
+  /// Customer
+  static const newjobCustomer = 'newjob.customer';
+  /// Search customer
+  static const newjobCustomerHint = 'newjob.customer_hint';
+  /// Choose a customer
+  static const newjobCustomerMissing = 'newjob.customer_missing';
+  /// Address
+  static const newjobAddress = 'newjob.address';
+  /// Street, area, city
+  static const newjobAddressHint = 'newjob.address_hint';
+  /// Date
+  static const newjobDate = 'newjob.date';
+  /// Time
+  static const newjobTime = 'newjob.time';
+  /// Pick a time
+  static const newjobTimeHint = 'newjob.time_hint';
+  /// Choose a time
+  static const newjobTimeMissing = 'newjob.time_missing';
+  /// Work to do
+  static const newjobWork = 'newjob.work';
+  /// AC not cooling in room 2
+  static const newjobWorkHint = 'newjob.work_hint';
+  /// Say what work to do
+  static const newjobWorkMissing = 'newjob.work_missing';
+  /// Checklist
+  static const newjobChecklist = 'newjob.checklist';
+  /// No checklist
+  static const newjobChecklistNone = 'newjob.checklist_none';
+  /// Technician
+  static const newjobTechnician = 'newjob.technician';
+  /// Not assigned yet
+  static const newjobNotAssigned = 'newjob.not_assigned';
+  /// Tap to choose a technician
+  static const newjobTapToChoose = 'newjob.tap_to_choose';
+  /// Assign
+  static const newjobAssign = 'newjob.assign';
+  /// Change
+  static const newjobChange = 'newjob.change';
+  /// Create job
+  static const newjobCreate = 'newjob.create';
+  /// Job created
+  static const newjobCreated = 'newjob.created';
+  /// Job given to {name}
+  static const newjobCreatedFor = 'newjob.created_for';
+  /// 1 thing is missing. Please fill it in.
+  static const newjobMissingOne = 'newjob.missing_one';
+  /// {n} things are missing. Please fill them in.
+  static const newjobMissingMany = 'newjob.missing_many';
+  /// Find a customer
+  static const newjobSearchCustomers = 'newjob.search_customers';
+  /// Add “{name}” as new customer
+  static const newjobAddCustomer = 'newjob.add_customer';
+  /// New customer
+  static const newjobNewCustomer = 'newjob.new_customer';
+  /// No customers yet. Type a name to add one.
+  static const newjobNoCustomers = 'newjob.no_customers';
+  /// {n} jobs
+  static const newjobJobsCount = 'newjob.jobs_count';
+  /// Assign technician
+  static const assignTitle = 'assign.title';
+  /// Pick who will do this job
+  static const assignSubtitle = 'assign.subtitle';
+  /// Available today
+  static const assignAvailableToday = 'assign.available_today';
+  /// Available on {day}
+  static const assignAvailableOn = 'assign.available_on';
+  /// {n} jobs today
+  static const assignJobsToday = 'assign.jobs_today';
+  /// {n} jobs that day
+  static const assignJobsThatDay = 'assign.jobs_that_day';
+  /// {km} km away
+  static const assignKmAway = 'assign.km_away';
+  /// {n} of {max} jobs
+  static const assignLoad = 'assign.load';
+  /// Full day
+  static const assignFull = 'assign.full';
+  /// Technician · invite sent
+  static const assignInviteSent = 'assign.invite_sent';
+  /// Can assign after joining
+  static const assignAfterJoining = 'assign.after_joining';
+  /// {name} has not joined yet. You can give jobs after they join.
+  static const assignAfterJoiningToast = 'assign.after_joining_toast';
+  /// Assign {name}
+  static const assignButton = 'assign.button';
+  /// Pick a technician
+  static const assignPick = 'assign.pick';
+  /// No technicians yet
+  static const assignEmptyTitle = 'assign.empty_title';
+  /// Invite a technician first. They can take jobs as soon as they join.
+  static const assignEmptyBody = 'assign.empty_body';
+  /// Invite technician
+  static const assignInvite = 'assign.invite';
+  /// Save job without technician
+  static const assignSaveWithout = 'assign.save_without';
+  /// Job given to {name}
+  static const assignDone = 'assign.done';
 }

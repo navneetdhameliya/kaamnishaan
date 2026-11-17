@@ -28,6 +28,7 @@ from app.schemas.work import (
     EquipmentIn,
     EquipmentOut,
     EquipmentPatch,
+    SiteBrief,
     SiteIn,
     SiteOut,
     SitePatch,
@@ -178,15 +179,13 @@ async def list_customers(
         )
     ).scalars():
         contacts.setdefault(x.customer_id, x)
-    cities: dict = {}
-    for cid, city in (
+    sites: dict = {}
+    for s in (
         await db.execute(
-            select(Site.customer_id, Site.city)
-            .where(Site.customer_id.in_(ids), Site.deleted_at.is_(None))
-            .order_by(Site.created_at)
+            select(Site).where(Site.customer_id.in_(ids), Site.deleted_at.is_(None)).order_by(Site.created_at)
         )
-    ).all():
-        cities.setdefault(cid, city)
+    ).scalars():
+        sites.setdefault(s.customer_id, s)
     jobs = {
         cid: (n, last)
         for cid, n, last in (
@@ -206,7 +205,8 @@ async def list_customers(
                 id=c.id,
                 name=c.name,
                 primary_contact=ContactBrief(name=pc.name, phone=pc.phone) if pc else None,
-                city=cities.get(c.id),
+                city=sites[c.id].city if c.id in sites else None,
+                site=_site_brief(sites.get(c.id)),
                 job_count=n,
                 last_job_at=last,
             )  # fmt: skip
@@ -214,6 +214,15 @@ async def list_customers(
     return CustomerList(
         data=items, meta=ListMeta(counts={"all": total}, next_cursor=next_cursor(offset, limit, len(rows)))
     )
+
+
+def _site_brief(s: Site | None) -> SiteBrief | None:
+    if s is None:
+        return None
+    return SiteBrief(
+        id=s.id, label=s.label, city=s.city, lat=s.lat, lng=s.lng,
+        address=", ".join(filter(None, [s.address_line1, s.address_line2])),
+    )  # fmt: skip
 
 
 # ---- writing ------------------------------------------------------------------------------

@@ -16,6 +16,8 @@ abstract final class RoutesConstants {
   static const String checkEmailScreen = '/check-email';
   static const String jobListScreen = '/jobs';
   static const String jobDetailsScreen = '/job';
+  static const String newJobScreen = '/jobs/new';
+  static const String assignTechnicianScreen = '/jobs/assign';
   static const String captureHubScreen = '/capture';
   static const String cameraScreen = '/camera';
   static const String photoGalleryScreen = '/photos';

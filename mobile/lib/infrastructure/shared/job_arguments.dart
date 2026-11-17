@@ -12,6 +12,18 @@ class JobArguments {
   final String? title;
 }
 
+/// Opens Assign technician (M17). With [jobId] the pick is saved at once; without it (from New job, M16)
+/// the screen returns the picked technician. [at] gives the day whose jobs are counted.
+class AssignArguments {
+  const AssignArguments({required this.customer, required this.title, this.jobId, this.at, this.selectedId});
+
+  final String customer;
+  final String title;
+  final String? jobId;
+  final DateTime? at;
+  final String? selectedId;
+}
+
 /// Opens the camera (M20) or the photos (M21) of a job, for one stage (before, during, after).
 class PhotoArguments {
   const PhotoArguments({

@@ -18,6 +18,7 @@ class KnDropdownField extends StatelessWidget {
     this.placeholder,
     this.errorText,
     this.onHearError,
+    this.showChevron = true,
   });
 
   final String label;
@@ -26,6 +27,9 @@ class KnDropdownField extends StatelessWidget {
   final String? placeholder;
   final String? errorText;
   final VoidCallback? onHearError;
+
+  /// A search field (New job's customer) looks like a text field: no arrow.
+  final bool showChevron;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +68,7 @@ class KnDropdownField extends StatelessWidget {
                     maxLines: 1,
                   ),
                 ),
-                Icon(LucideIcons.chevronDown, size: 22, color: kn.textPrimary),
+                if (showChevron) Icon(LucideIcons.chevronDown, size: 22, color: kn.textPrimary),
               ],
             ),
           ),
