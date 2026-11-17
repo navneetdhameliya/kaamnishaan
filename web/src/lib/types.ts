@@ -64,3 +64,42 @@ export interface NewLinkOut {
   channel: string | null;
   company_notified: boolean;
 }
+
+// ---- website (W01, W02): GET /config and GET /plans ----------------------------------------
+
+export interface Money {
+  amount: number; // minor units (paise, cents)
+  currency: 'INR' | 'USD';
+}
+
+export interface PlanOut {
+  code: string;
+  name: string;
+  price: Money | null; // null = contact us
+  annual_price: Money | null;
+  technician_limit: number | null;
+  report_limit_monthly: number | null; // null = fair use
+  ai_questions_monthly: number | null;
+  monthly_credits: number | null;
+  most_popular: boolean;
+  features: string[];
+  support: string | null;
+}
+
+export interface PlansOut {
+  currency: 'INR' | 'USD';
+  plans: PlanOut[];
+  credit_packs: { id: string; credits: number; price: Money }[];
+  credit_rules: { sms: number; whatsapp: number; ai_call: number; email: number };
+  trial_days: number;
+}
+
+export interface TradeOut {
+  key: string;
+  name: string;
+  checklists: number;
+}
+
+export interface ConfigOut {
+  trades: TradeOut[];
+}

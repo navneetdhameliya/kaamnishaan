@@ -121,17 +121,25 @@ def _t(names: dict, locale: str) -> str:
     return names.get(locale) or names.get("en") or next(iter(names.values()), "")
 
 
+# a year costs 10 months: "2 months free"
+ANNUAL_MONTHS = 10
+
+
 def plan_out(p: Plan, currency: str, locale: str) -> PlanOut:
+    monthly = (p.prices or {}).get(currency)
+    features = p.features or {}
     return PlanOut(
         code=p.code,
         name=_t(p.name, locale),
-        price=Money(amount=p.prices[currency], currency=currency) if currency in (p.prices or {}) else None,
+        price=Money(amount=monthly, currency=currency) if monthly is not None else None,
+        annual_price=Money(amount=monthly * ANNUAL_MONTHS, currency=currency) if monthly else None,
+        support=features.get("support") if isinstance(features.get("support"), str) else None,
         technician_limit=p.technician_limit,
         report_limit_monthly=p.report_limit_monthly,
         ai_questions_monthly=p.ai_questions_monthly,
         monthly_credits=p.monthly_credits,
         most_popular=p.most_popular,
-        features=sorted(k for k, v in (p.features or {}).items() if v),
+        features=sorted(k for k, v in features.items() if v and not isinstance(v, str)),
     )
 
 

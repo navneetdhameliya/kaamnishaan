@@ -5742,11 +5742,23 @@
             ],
             "title": "Ai Questions Monthly"
           },
+          "annual_price": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "a year = 10 months' price"
+          },
           "code": {
             "title": "Code",
             "type": "string"
           },
           "features": {
+            "description": "what the plan includes, e.g. branded_pdf, manager_approvals",
             "items": {
               "type": "string"
             },
@@ -5794,6 +5806,18 @@
             ],
             "description": "null = fair use",
             "title": "Report Limit Monthly"
+          },
+          "support": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "email | email_chat | priority | dedicated",
+            "title": "Support"
           },
           "technician_limit": {
             "anyOf": [
@@ -10609,6 +10633,12 @@
       },
       "TradeOut": {
         "properties": {
+          "checklists": {
+            "default": 0,
+            "description": "ready checklist templates for this trade (website W01)",
+            "title": "Checklists",
+            "type": "integer"
+          },
           "key": {
             "title": "Key",
             "type": "string"

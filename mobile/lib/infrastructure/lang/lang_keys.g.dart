@@ -2462,4 +2462,476 @@ abstract final class LangKeys {
   static const startupBody = 'startup.body';
   /// Try again
   static const startupRetry = 'startup.retry';
+  /// New: AI reports in Hindi, Gujarati, Spanish and French
+  static const siteAnnText = 'site.ann.text';
+  /// See how it works
+  static const siteAnnLink = 'site.ann.link';
+  /// Product
+  static const siteNavProduct = 'site.nav.product';
+  /// Industries
+  static const siteNavIndustries = 'site.nav.industries';
+  /// Pricing
+  static const siteNavPricing = 'site.nav.pricing';
+  /// Book a demo
+  static const siteNavDemo = 'site.nav.demo';
+  /// Log in
+  static const siteNavLogin = 'site.nav.login';
+  /// Start free trial
+  static const siteNavTrial = 'site.nav.trial';
+  /// Menu
+  static const siteNavMenu = 'site.nav.menu';
+  /// Close menu
+  static const siteNavClose = 'site.nav.close';
+  /// KaamNishaan home
+  static const siteNavHome = 'site.nav.home';
+  /// How it works
+  static const siteMenuHow = 'site.menu.how';
+  /// All features
+  static const siteMenuFeatures = 'site.menu.features';
+  /// AI reports
+  static const siteMenuReports = 'site.menu.reports';
+  /// Before and after
+  static const siteMenuCompare = 'site.menu.compare';
+  /// AI assistant
+  static const siteMenuAssistant = 'site.menu.assistant';
+  /// Built for HVAC, roofing and solar teams
+  static const siteHeroPill = 'site.hero.pill';
+  /// Every Job Deserves Proof.
+  static const siteHeroTitle = 'site.hero.title';
+  /// Capture photos, checklists and voice notes on site. AI turns them into a professional report your manager approves and your customer trusts.
+  static const siteHeroBody = 'site.hero.body';
+  /// Start Free Trial
+  static const siteCtaTrial = 'site.cta.trial';
+  /// Book a Demo
+  static const siteCtaDemo = 'site.cta.demo';
+  /// {n}-day free trial
+  static const siteHeroTrialDays = 'site.hero.trial_days';
+  /// No card needed
+  static const siteHeroNoCard = 'site.hero.no_card';
+  /// Works offline
+  static const siteHeroOffline = 'site.hero.offline';
+  /// Report approved
+  static const siteHeroChipApproved = 'site.hero.chip_approved';
+  /// Sent to customer · 4:12 pm
+  static const siteHeroChipApprovedSub = 'site.hero.chip_approved_sub';
+  /// 6 photos · timestamped
+  static const siteHeroChipPhotos = 'site.hero.chip_photos';
+  /// Before, during, after
+  static const siteHeroChipPhotosSub = 'site.hero.chip_photos_sub';
+  /// Hindi · Gujarati · Spanish
+  static const siteHeroChipLangs = 'site.hero.chip_langs';
+  /// A technician on a rooftop, with the KaamNishaan app showing today's jobs and an AI report draft
+  static const siteHeroAlt = 'site.hero.alt';
+  /// Photos in WhatsApp are not proof
+  static const siteProblemTitle = 'site.problem.title';
+  /// Scattered photos and missing reports cost you disputes, warranty claims and late payments.
+  static const siteProblemBody = 'site.problem.body';
+  /// Before KaamNishaan
+  static const siteProblemBeforeTitle = 'site.problem.before_title';
+  /// Photos lost in chats, reports written late or never, and customers who doubt the work.
+  static const siteProblemBeforeBody = 'site.problem.before_body';
+  /// With KaamNishaan
+  static const siteProblemAfterTitle = 'site.problem.after_title';
+  /// Every photo, checklist and note lives in one job, and turns into a report in minutes.
+  static const siteProblemAfterBody = 'site.problem.after_body';
+  /// Chat messages asking for site photos, a photo that did not download and a late report
+  static const siteProblemBeforeAlt = 'site.problem.before_alt';
+  /// One approved job with before, during and after photos, checks passed and a PDF sent
+  static const siteProblemAfterAlt = 'site.problem.after_alt';
+  /// Three steps. No typing.
+  static const siteHowTitle = 'site.how.title';
+  /// Your technicians already take photos. KaamNishaan turns them into proof your customer can read.
+  static const siteHowBody = 'site.how.body';
+  /// Take photos
+  static const siteHowS1Title = 'site.how.s1_title';
+  /// Before, during and after. Each photo is timestamped and filed to the right job.
+  static const siteHowS1Body = 'site.how.s1_body';
+  /// Speak your notes
+  static const siteHowS2Title = 'site.how.s2_title';
+  /// Talk in your own language. KaamNishaan transcribes it word for word.
+  static const siteHowS2Body = 'site.how.s2_body';
+  /// Send the report
+  static const siteHowS3Title = 'site.how.s3_title';
+  /// AI writes the report from your evidence. Your manager approves and sends it.
+  static const siteHowS3Body = 'site.how.s3_body';
+  /// Everything you need to prove the work
+  static const siteFeatTitle = 'site.feat.title';
+  /// One app for the technician on the roof and the manager in the office.
+  static const siteFeatBody = 'site.feat.body';
+  /// AI reports
+  static const siteFeatReportsTitle = 'site.feat.reports_title';
+  /// A clean, customer-ready report drafted from your photos, checklist and voice notes. It only describes work you recorded. Nothing is invented.
+  static const siteFeatReportsBody = 'site.feat.reports_body';
+  /// Never invents work
+  static const siteFeatReportsTag1 = 'site.feat.reports_tag1';
+  /// Manager approves
+  static const siteFeatReportsTag2 = 'site.feat.reports_tag2';
+  /// A technician showing a customer the report on his phone
+  static const siteFeatReportsAlt = 'site.feat.reports_alt';
+  /// Evidence capture
+  static const siteFeatCaptureTitle = 'site.feat.capture_title';
+  /// Timestamped photos sorted by before, during and after, filed to the right job automatically.
+  static const siteFeatCaptureBody = 'site.feat.capture_body';
+  /// A technician photographing an indoor AC unit with his phone
+  static const siteFeatCaptureAlt = 'site.feat.capture_alt';
+  /// Voice notes
+  static const siteFeatVoiceTitle = 'site.feat.voice_title';
+  /// Speak in Hindi, Gujarati, Spanish or English. AI writes it up.
+  static const siteFeatVoiceBody = 'site.feat.voice_body';
+  /// Checklists
+  static const siteFeatChecklistsTitle = 'site.feat.checklists_title';
+  /// Ready HVAC templates your team can follow on every visit.
+  static const siteFeatChecklistsBody = 'site.feat.checklists_body';
+  /// PDF reports
+  static const siteFeatPdfTitle = 'site.feat.pdf_title';
+  /// Branded PDF or share link, in your customer’s language.
+  static const siteFeatPdfBody = 'site.feat.pdf_body';
+  /// Offline first
+  static const siteFeatOfflineTitle = 'site.feat.offline_title';
+  /// Works on rooftops and in basements. Syncs when signal returns.
+  static const siteFeatOfflineBody = 'site.feat.offline_body';
+  /// Built for your trade
+  static const siteIndTitle = 'site.ind.title';
+  /// Ready checklists and report templates for the work your team does every day.
+  static const siteIndBody = 'site.ind.body';
+  /// {n} checklists
+  static const siteIndCount = 'site.ind.count';
+  /// 1 checklist
+  static const siteIndCountOne = 'site.ind.count_one';
+  /// Learn more
+  static const siteIndLearn = 'site.ind.learn';
+  /// Service checks, repairs and installs with before and after proof.
+  static const siteIndHvac = 'site.ind.hvac';
+  /// Inspections, repairs and warranty proof for every roof.
+  static const siteIndRoofing = 'site.ind.roofing';
+  /// Installs, panel cleaning and inverter checks.
+  static const siteIndSolar = 'site.ind.solar';
+  /// Work orders, move-in and move-out reports.
+  static const siteIndMaintenance = 'site.ind.maintenance';
+  /// Treatment records and follow-up visits.
+  static const siteIndPestControl = 'site.ind.pest_control';
+  /// Shift checklists with photo proof.
+  static const siteIndCleaning = 'site.ind.cleaning';
+  /// See the difference
+  static const siteCompareTitle = 'site.compare.title';
+  /// Drag the line to compare. Every report shows your customer exactly what changed.
+  static const siteCompareBody = 'site.compare.body';
+  /// Before
+  static const siteCompareBefore = 'site.compare.before';
+  /// After
+  static const siteCompareAfter = 'site.compare.after';
+  /// Drag to compare before and after
+  static const siteCompareHandle = 'site.compare.handle';
+  /// A dusty AC filter before cleaning
+  static const siteCompareBeforeAlt = 'site.compare.before_alt';
+  /// The same AC filter after cleaning
+  static const siteCompareAfterAlt = 'site.compare.after_alt';
+  /// Green Valley Clinic, room 2
+  static const siteCompareWhere = 'site.compare.where';
+  /// Before 10:41 · After 11:42, 31 Oct
+  static const siteCompareWhen = 'site.compare.when';
+  /// Ramesh Patel, technician
+  static const siteCompareWho = 'site.compare.who';
+  /// From voice note to report in seconds
+  static const siteDemoTitle = 'site.demo.title';
+  /// Ramesh speaks in Gujarati on site. The customer receives a clear report in English.
+  static const siteDemoBody = 'site.demo.body';
+  /// Ask about any job
+  static const siteAskTitle = 'site.ask.title';
+  /// Search every photo, note and report in plain language. Every answer links back to the evidence.
+  static const siteAskBody = 'site.ask.body';
+  /// When did we last service this site?
+  static const siteAskQ1 = 'site.ask.q1';
+  /// Which jobs are waiting for approval?
+  static const siteAskQ2 = 'site.ask.q2';
+  /// Show me every photo of the outdoor unit.
+  static const siteAskQ3 = 'site.ask.q3';
+  /// The KaamNishaan AI answering when a site was last serviced, with links to the report and photos
+  static const siteAskAlt = 'site.ask.alt';
+  /// Why teams switch
+  static const siteWhyTitle = 'site.why.title';
+  /// Proof on every job pays for itself the first time a customer questions the work.
+  static const siteWhyBody = 'site.why.body';
+  /// 15 min
+  static const siteWhyS1 = 'site.why.s1';
+  /// to set up your team
+  static const siteWhyS1L = 'site.why.s1_l';
+  /// 5 languages
+  static const siteWhyS2 = 'site.why.s2';
+  /// for voice notes and reports
+  static const siteWhyS2L = 'site.why.s2_l';
+  /// 0 typing
+  static const siteWhyS3 = 'site.why.s3';
+  /// for technicians on site
+  static const siteWhyS3L = 'site.why.s3_l';
+  /// 1 tap
+  static const siteWhyS4 = 'site.why.s4';
+  /// to send an approved report
+  static const siteWhyS4L = 'site.why.s4_l';
+  /// Win disputes
+  static const siteWhyB1 = 'site.why.b1';
+  /// Timestamped proof for every job, ready when a customer questions the work.
+  static const siteWhyB1Body = 'site.why.b1_body';
+  /// Get paid faster
+  static const siteWhyB2 = 'site.why.b2';
+  /// Customers see the finished work, so invoices are approved sooner.
+  static const siteWhyB2Body = 'site.why.b2_body';
+  /// Save office time
+  static const siteWhyB3 = 'site.why.b3';
+  /// No more chasing technicians for photos and notes at the end of the day.
+  static const siteWhyB3Body = 'site.why.b3_body';
+  /// Look professional
+  static const siteWhyB4 = 'site.why.b4';
+  /// Branded reports in your customer’s language, sent the same day.
+  static const siteWhyB4Body = 'site.why.b4_body';
+  /// Simple monthly pricing
+  static const sitePriceTitle = 'site.price.title';
+  /// Prices in {currency}. AI reports and follow-up credits on every plan. Try {plan} free for {n} days.
+  static const sitePriceBody = 'site.price.body';
+  /// /month
+  static const sitePriceMonth = 'site.price.month';
+  /// /year
+  static const sitePriceYear = 'site.price.year';
+  /// forever
+  static const sitePriceForever = 'site.price.forever';
+  /// {n} technicians
+  static const sitePriceTechs = 'site.price.techs';
+  /// 1 technician
+  static const sitePriceTechOne = 'site.price.tech_one';
+  /// {n} reports
+  static const sitePriceReports = 'site.price.reports';
+  /// {n} AI reports/month
+  static const sitePriceAiReports = 'site.price.ai_reports';
+  /// fair use
+  static const sitePriceFair = 'site.price.fair';
+  /// {n} follow-up credits / month
+  static const sitePriceCredits = 'site.price.credits';
+  /// Most popular
+  static const sitePricePopular = 'site.price.popular';
+  /// Custom
+  static const sitePriceCustom = 'site.price.custom';
+  /// For large teams
+  static const sitePriceLarge = 'site.price.large';
+  /// Annual contract
+  static const sitePriceAnnualContract = 'site.price.annual_contract';
+  /// Contact sales
+  static const sitePriceContact = 'site.price.contact';
+  /// Start free
+  static const sitePriceStartFree = 'site.price.start_free';
+  /// or {price}/year — 2 months free
+  static const sitePriceOrYear = 'site.price.or_year';
+  /// billed {price} a year
+  static const sitePriceBilledYear = 'site.price.billed_year';
+  /// No card needed
+  static const sitePriceNoCard = 'site.price.no_card';
+  /// Free forever for 1 technician
+  static const sitePriceFreeTitle = 'site.price.free_title';
+  /// {n} AI reports a month. No card needed. Upgrade any time.
+  static const sitePriceFreeBody = 'site.price.free_body';
+  /// Everything in {plan}
+  static const sitePriceEverything = 'site.price.everything';
+  /// Loading prices…
+  static const sitePriceLoading = 'site.price.loading';
+  /// Prices could not load. Check your connection and try again.
+  static const sitePriceError = 'site.price.error';
+  /// Try again
+  static const sitePriceRetry = 'site.price.retry';
+  /// Compare every plan
+  static const sitePriceSeeAll = 'site.price.see_all';
+  /// Pricing
+  static const sitePpEyebrow = 'site.pp.eyebrow';
+  /// Simple pricing that grows with your team
+  static const sitePpTitle = 'site.pp.title';
+  /// Prices in {currency}. AI reports and follow-up credits on every plan. Try {plan} free for {n} days — no card needed.
+  static const sitePpBody = 'site.pp.body';
+  /// Monthly
+  static const sitePpMonthly = 'site.pp.monthly';
+  /// Annual
+  static const sitePpAnnual = 'site.pp.annual';
+  /// 2 months free
+  static const sitePpTwoFree = 'site.pp.two_free';
+  /// Prices in {currency}
+  static const sitePpN1 = 'site.pp.n1';
+  /// AI reports and follow-up credits on every plan.
+  static const sitePpN2 = 'site.pp.n2';
+  /// {n}-day free trial of {plan}
+  static const sitePpN3 = 'site.pp.n3';
+  /// Cancel any time
+  static const sitePpN4 = 'site.pp.n4';
+  /// Follow-up credits
+  static const siteCrTitle = 'site.cr.title';
+  /// Used for review reminders and AI review calls. Unused credits reset each month. Top up any time.
+  static const siteCrBody = 'site.cr.body';
+  /// 1 credit
+  static const siteCrOne = 'site.cr.one';
+  /// {n} credits
+  static const siteCrMany = 'site.cr.many';
+  /// Free
+  static const siteCrFree = 'site.cr.free';
+  /// SMS or WhatsApp message
+  static const siteCrSms = 'site.cr.sms';
+  /// AI review call
+  static const siteCrCall = 'site.cr.call';
+  /// Email
+  static const siteCrEmail = 'site.cr.email';
+  /// for {n} extra credits
+  static const siteCrPack = 'site.cr.pack';
+  /// Compare every feature
+  static const siteCmpTitle = 'site.cmp.title';
+  /// Every plan includes AI reports, offline capture and customer report links.
+  static const siteCmpBody = 'site.cmp.body';
+  /// {price}/mo
+  static const siteCmpPerMo = 'site.cmp.per_mo';
+  /// Feature
+  static const siteCmpFeature = 'site.cmp.feature';
+  /// Included
+  static const siteCmpYes = 'site.cmp.yes';
+  /// Not included
+  static const siteCmpNo = 'site.cmp.no';
+  /// Team and usage
+  static const siteCmpGTeam = 'site.cmp.g_team';
+  /// Capture and reports
+  static const siteCmpGCapture = 'site.cmp.g_capture';
+  /// Team and approvals
+  static const siteCmpGApprovals = 'site.cmp.g_approvals';
+  /// Security and support
+  static const siteCmpGSecurity = 'site.cmp.g_security';
+  /// Technicians
+  static const siteCmpTechnicians = 'site.cmp.technicians';
+  /// AI reports per month
+  static const siteCmpReports = 'site.cmp.reports';
+  /// Fair use
+  static const siteCmpFair = 'site.cmp.fair';
+  /// Support
+  static const siteCmpSupport = 'site.cmp.support';
+  /// Photos, checklists and voice notes
+  static const siteFCapture = 'site.f.capture';
+  /// Works offline
+  static const siteFOffline = 'site.f.offline';
+  /// AI reports in 5 languages
+  static const siteFAiReports = 'site.f.ai_reports';
+  /// Customer report links
+  static const siteFReportLinks = 'site.f.report_links';
+  /// Branded PDF reports
+  static const siteFBrandedPdf = 'site.f.branded_pdf';
+  /// Manager approvals
+  static const siteFManagerApprovals = 'site.f.manager_approvals';
+  /// AI assistant search
+  static const siteFAiAssistant = 'site.f.ai_assistant';
+  /// Custom checklists
+  static const siteFCustomChecklists = 'site.f.custom_checklists';
+  /// SSO and audit logs
+  static const siteFSsoAudit = 'site.f.sso_audit';
+  /// Custom integrations
+  static const siteFCustomIntegrations = 'site.f.custom_integrations';
+  /// Email
+  static const siteSupportEmail = 'site.support.email';
+  /// Email and chat
+  static const siteSupportEmailChat = 'site.support.email_chat';
+  /// Priority
+  static const siteSupportPriority = 'site.support.priority';
+  /// Dedicated
+  static const siteSupportDedicated = 'site.support.dedicated';
+  /// Email and chat support
+  static const siteSupportLineEmailChat = 'site.support_line.email_chat';
+  /// Priority support
+  static const siteSupportLinePriority = 'site.support_line.priority';
+  /// Dedicated onboarding and support
+  static const siteSupportLineDedicated = 'site.support_line.dedicated';
+  /// Questions
+  static const siteFaqTitle = 'site.faq.title';
+  /// Can’t find what you need? Our team answers within one working day.
+  static const siteFaqBody = 'site.faq.body';
+  /// Talk to us
+  static const siteFaqTalk = 'site.faq.talk';
+  /// Does it work without internet?
+  static const siteFaqQ1 = 'site.faq.q1';
+  /// Yes. Photos, checklists and voice notes save on the phone and sync automatically when the signal returns, so rooftops and basements are no problem.
+  static const siteFaqA1 = 'site.faq.a1';
+  /// Which languages are supported?
+  static const siteFaqQ2 = 'site.faq.q2';
+  /// English, Hindi, Gujarati, Spanish and French — for the app, voice notes and reports. A technician can speak in one language and the customer can read the report in another.
+  static const siteFaqA2 = 'site.faq.a2';
+  /// Can AI invent work that was not done?
+  static const siteFaqQ3 = 'site.faq.q3';
+  /// No. The report is drafted only from the photos, checklist answers and voice notes recorded on the job. A manager checks and approves every report before the customer sees it.
+  static const siteFaqA3 = 'site.faq.a3';
+  /// How does the free trial work?
+  static const siteFaqQ4 = 'site.faq.q4';
+  /// You get {plan} free for {n} days, with no card needed. At the end, pick a plan or stay on Free — your jobs and reports stay safe either way.
+  static const siteFaqA4 = 'site.faq.a4';
+  /// Can customers see reports without an app?
+  static const siteFaqQ5 = 'site.faq.q5';
+  /// Yes. Customers get a secure link by SMS or WhatsApp that opens in any browser, with photos, the checklist and a PDF to download.
+  static const siteFaqA5 = 'site.faq.a5';
+  /// Pricing questions
+  static const sitePfaqTitle = 'site.pfaq.title';
+  /// Still deciding? Our team answers within one working day.
+  static const sitePfaqBody = 'site.pfaq.body';
+  /// What happens after the {n}-day trial?
+  static const sitePfaqQ1 = 'site.pfaq.q1';
+  /// Pick a plan or move to Free. Your jobs, photos and reports stay safe either way — we never charge without asking.
+  static const sitePfaqA1 = 'site.pfaq.a1';
+  /// Can I change plans later?
+  static const sitePfaqQ2 = 'site.pfaq.q2';
+  /// Yes. Move up or down at any time from Plan and billing in the app. Your data moves with you.
+  static const sitePfaqA2 = 'site.pfaq.a2';
+  /// What counts as an AI report?
+  static const sitePfaqQ3 = 'site.pfaq.q3';
+  /// Each job report that AI drafts counts once, however many times you edit it before sending.
+  static const sitePfaqA3 = 'site.pfaq.a3';
+  /// How does annual billing work?
+  static const sitePfaqQ4 = 'site.pfaq.q4';
+  /// Pay for 10 months and get 12 — that is 2 months free. Your monthly reports and credits stay the same.
+  static const sitePfaqA4 = 'site.pfaq.a4';
+  /// Which payment methods do you accept?
+  static const sitePfaqQ5 = 'site.pfaq.q5';
+  /// Cards everywhere, and UPI in India. Enterprise plans can pay by invoice.
+  static const sitePfaqA5 = 'site.pfaq.a5';
+  /// Start proving your work today
+  static const siteFinalTitle = 'site.final.title';
+  /// {n}-day free trial. Set up your team in 15 minutes. No card needed.
+  static const siteFinalBody = 'site.final.body';
+  /// The manager home screen with reports waiting for review
+  static const siteFinalAlt = 'site.final.alt';
+  /// Every Job. Every Photo. Every Proof.
+  static const siteFootTagline = 'site.foot.tagline';
+  /// Product
+  static const siteFootProduct = 'site.foot.product';
+  /// Industries
+  static const siteFootIndustries = 'site.foot.industries';
+  /// Company
+  static const siteFootCompany = 'site.foot.company';
+  /// Legal
+  static const siteFootLegal = 'site.foot.legal';
+  /// Features
+  static const siteFootFeatures = 'site.foot.features';
+  /// Offline mode
+  static const siteFootOffline = 'site.foot.offline';
+  /// About
+  static const siteFootAbout = 'site.foot.about';
+  /// Contact
+  static const siteFootContact = 'site.foot.contact';
+  /// Blog
+  static const siteFootBlog = 'site.foot.blog';
+  /// Privacy
+  static const siteFootPrivacy = 'site.foot.privacy';
+  /// Terms
+  static const siteFootTerms = 'site.foot.terms';
+  /// © {year} KaamNishaan. All rights reserved.
+  static const siteFootRights = 'site.foot.rights';
+  /// Made for field teams who do the work.
+  static const siteFootMade = 'site.foot.made';
+  /// This page is coming soon
+  static const siteSoonTitle = 'site.soon.title';
+  /// We are still building it. In the meantime, see how KaamNishaan works or check our prices.
+  static const siteSoonBody = 'site.soon.body';
+  /// Go to home
+  static const siteSoonHome = 'site.soon.home';
+  /// AI drafts the report
+  static const siteDemoStep = 'site.demo.step';
+  /// A voice note in Gujarati with 6 photos
+  static const siteDemoVoiceAlt = 'site.demo.voice_alt';
+  /// The approved service report in English
+  static const siteDemoReportAlt = 'site.demo.report_alt';
 }

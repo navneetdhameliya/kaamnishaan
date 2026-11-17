@@ -3,12 +3,12 @@
 from typing import Literal
 
 from fastapi import APIRouter, Depends, Response
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
 from app.core.deps import get_db
-from app.models import CreditPack, Industry, Plan
+from app.models import ChecklistTemplate, CreditPack, Industry, Plan
 from app.providers.ai import get_ai
 from app.schemas.identity import (
     ConfigOut,
@@ -45,12 +45,23 @@ async def config(response: Response, locale: Locale = "en", db: AsyncSession = D
     trades = (
         await db.execute(select(Industry).where(Industry.status == "live").order_by(Industry.sort))
     ).scalars()
+    ready = dict(
+        (
+            await db.execute(
+                select(ChecklistTemplate.trade, func.count())
+                .where(ChecklistTemplate.company_id.is_(None), ChecklistTemplate.status == "published")
+                .group_by(ChecklistTemplate.trade)
+            )
+        ).all()
+    )
     response.headers["Cache-Control"] = "public, max-age=300"
     s = get_settings()
     return ConfigOut(
         languages=[LanguageOut(code=c, native_name=n) for c, n in LANGUAGES],
         countries=[CountryOut(code=c, name=n, dial_code=d, flag=f) for c, n, d, f in COUNTRIES],
-        trades=[TradeOut(key=i.slug, name=_t(i.name, locale)) for i in trades],
+        trades=[
+            TradeOut(key=i.slug, name=_t(i.name, locale), checklists=ready.get(i.slug, 0)) for i in trades
+        ],
         default_country=s.default_country,
         password_min_length=PASSWORD_MIN,
         min_app_version="1.0.0",
