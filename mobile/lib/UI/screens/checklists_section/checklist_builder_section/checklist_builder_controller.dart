@@ -191,12 +191,12 @@ class ChecklistBuilderController extends GetxController {
     return true;
   }
 
-  /// Drag to move: shown at once, then saved.
+  /// Drag to move: shown at once, then saved. [to] is the question's new place in the list.
   Future<void> onReorder(int from, int to) async {
     final t = template.value;
     if (t == null || !editable) return;
     final list = [...t.questions];
-    final target = to > from ? to - 1 : to;
+    final target = to;
     final moved = list.removeAt(from);
     list.insert(target, moved);
     template.value = TemplateOutModel.fromJson({

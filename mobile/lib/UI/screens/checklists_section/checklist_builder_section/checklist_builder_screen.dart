@@ -214,7 +214,7 @@ class ChecklistBuilderScreen extends GetView<ChecklistBuilderController> {
               header: header,
               footer: footer,
               itemCount: qs.length,
-              onReorder: controller.onReorder,
+              onReorderItem: controller.onReorder,
               proxyDecorator: (child, _, _) => Material(color: Colors.transparent, child: child),
               itemBuilder: (context, i) {
                 final q = qs[i];
