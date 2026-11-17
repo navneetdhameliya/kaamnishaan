@@ -2258,4 +2258,164 @@ abstract final class LangKeys {
   static const plLater = 'pl.later';
   /// OK
   static const plOk = 'pl.ok';
+  /// Service report · secured by KaamNishaan
+  static const webRSubtitle = 'web.r.subtitle';
+  /// Download PDF
+  static const webRDownload = 'web.r.download';
+  /// PDF is being made…
+  static const webRPdfMaking = 'web.r.pdf_making';
+  /// Secure link · works until {date}
+  static const webRSecure = 'web.r.secure';
+  /// Approved by {name}
+  static const webRApprovedBy = 'web.r.approved_by';
+  /// Acknowledged by you
+  static const webRAcknowledgedBadge = 'web.r.acknowledged_badge';
+  /// Report #{n}
+  static const webRReportN = 'web.r.report_n';
+  /// Service report for {customer}
+  static const webRTitle = 'web.r.title';
+  /// {name}, technician
+  static const webRTechnician = 'web.r.technician';
+  /// Technician · {company}
+  static const webRTechLine = 'web.r.tech_line';
+  /// Notes translated from {language}
+  static const webRTranslated = 'web.r.translated';
+  /// Before and after
+  static const webRBeforeAfter = 'web.r.before_after';
+  /// Before
+  static const webRBefore = 'web.r.before';
+  /// After
+  static const webRAfter = 'web.r.after';
+  /// All photos
+  static const webRAllPhotos = 'web.r.all_photos';
+  /// {n} photos
+  static const webRNPhotos = 'web.r.n_photos';
+  /// Checklist results
+  static const webRChecklist = 'web.r.checklist';
+  /// {n} passed
+  static const webRPassed = 'web.r.passed';
+  /// {n} notes
+  static const webRNotes = 'web.r.notes';
+  /// 1 note
+  static const webROneNote = 'web.r.one_note';
+  /// Show all {n} checks
+  static const webRShowAll = 'web.r.show_all';
+  /// Work done
+  static const webRWorkDone = 'web.r.work_done';
+  /// Our advice
+  static const webRAdvice = 'web.r.advice';
+  /// Happy with the work?
+  static const webRHappy = 'web.r.happy';
+  /// Acknowledge this report so {company} knows you have seen it. No account or app needed.
+  static const webRHappyBody = 'web.r.happy_body';
+  /// Acknowledge report
+  static const webRAcknowledge = 'web.r.acknowledge';
+  /// Your name
+  static const webRYourName = 'web.r.your_name';
+  /// Organisation (optional)
+  static const webRYourOrg = 'web.r.your_org';
+  /// Confirm
+  static const webRConfirm = 'web.r.confirm';
+  /// Thank you — report acknowledged
+  static const webRThanksAck = 'web.r.thanks_ack';
+  /// Acknowledged by {name} · {date}. {company} has been notified.
+  static const webRAckLine = 'web.r.ack_line';
+  /// Powered by KaamNishaan
+  static const webRPowered = 'web.r.powered';
+  /// Privacy
+  static const webRPrivacy = 'web.r.privacy';
+  /// This link has expired
+  static const webRExpiredTitle = 'web.r.expired_title';
+  /// Report links work for 30 days to keep your information safe. You can still get your report and rate the job.
+  static const webRExpiredBody = 'web.r.expired_body';
+  /// Send me a new link
+  static const webRNewLink = 'web.r.new_link';
+  /// A new link was sent to {to}.
+  static const webRNewLinkSent = 'web.r.new_link_sent';
+  /// {company} has been told and will send you a new link.
+  static const webRNewLinkTold = 'web.r.new_link_told';
+  /// Link looks broken? Open it from the original message, or check that the whole link was copied.
+  static const webRBroken = 'web.r.broken';
+  /// This link was turned off
+  static const webRRevokedTitle = 'web.r.revoked_title';
+  /// {company} turned this link off. Ask them for a new one.
+  static const webRRevokedBody = 'web.r.revoked_body';
+  /// We can't find this report
+  static const webRNotFoundTitle = 'web.r.not_found_title';
+  /// Something went wrong. Please try again.
+  static const webRError = 'web.r.error';
+  /// Try again
+  static const webRTryAgain = 'web.r.try_again';
+  /// Loading your report…
+  static const webRLoading = 'web.r.loading';
+  /// Checklist {a} of {b}
+  static const webRChecklistN = 'web.r.checklist_n';
+  /// {n} photos · time-stamped
+  static const webRPhotosStamped = 'web.r.photos_stamped';
+  /// Rate this job
+  static const webRateTitle = 'web.rate.title';
+  /// Your feedback goes to {company}. It takes 30 seconds.
+  static const webRateIntro = 'web.rate.intro';
+  /// How was the service?
+  static const webRateService = 'web.rate.service';
+  /// Rate {name}
+  static const webRateTech = 'web.rate.tech';
+  /// Very poor
+  static const webRateS1 = 'web.rate.s1';
+  /// Poor
+  static const webRateS2 = 'web.rate.s2';
+  /// OK
+  static const webRateS3 = 'web.rate.s3';
+  /// Very good
+  static const webRateS4 = 'web.rate.s4';
+  /// Excellent
+  static const webRateS5 = 'web.rate.s5';
+  /// What went well?
+  static const webRateWentWell = 'web.rate.went_well';
+  /// What went wrong?
+  static const webRateWentWrong = 'web.rate.went_wrong';
+  /// Tell us more (optional)
+  static const webRateMore = 'web.rate.more';
+  /// {company} can show my review on their website (first name only).
+  static const webRatePublic = 'web.rate.public';
+  /// Ask the manager to call me
+  static const webRateCallMe = 'web.rate.call_me';
+  /// The manager is told right away and calls you within 1 working day.
+  static const webRateCallMeSub = 'web.rate.call_me_sub';
+  /// Send review
+  static const webRateSend = 'web.rate.send';
+  /// Send feedback
+  static const webRateSendFeedback = 'web.rate.send_feedback';
+  /// Only {company} sees your review unless you allow it.
+  static const webRatePrivate = 'web.rate.private';
+  /// Pick a star rating first.
+  static const webRateMissing = 'web.rate.missing';
+  /// Thanks, {name}!
+  static const webRateThanks = 'web.rate.thanks';
+  /// Thank you!
+  static const webRateThanksPlain = 'web.rate.thanks_plain';
+  /// Your review was sent to {company}.
+  static const webRateSentBody = 'web.rate.sent_body';
+  /// Happy with the service?
+  static const webRateGoogleTitle = 'web.rate.google_title';
+  /// Help {company} by posting your review on Google too.
+  static const webRateGoogleBody = 'web.rate.google_body';
+  /// Post on Google
+  static const webRateGoogle = 'web.rate.google';
+  /// This job was already rated. Thank you!
+  static const webRateAlready = 'web.rate.already';
+  /// Don't ask me again
+  static const webRateStop = 'web.rate.stop';
+  /// Okay — we won't ask you again.
+  static const webRateStopped = 'web.rate.stopped';
+  /// English
+  static const webLangEn = 'web.lang.en';
+  /// हिन्दी
+  static const webLangHi = 'web.lang.hi';
+  /// ગુજરાતી
+  static const webLangGu = 'web.lang.gu';
+  /// Español
+  static const webLangEs = 'web.lang.es';
+  /// Français
+  static const webLangFr = 'web.lang.fr';
 }

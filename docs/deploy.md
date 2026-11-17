@@ -55,6 +55,20 @@ Login codes, invites and emails are not really sent yet. On this test server you
 Keep this key private: anyone with it can read login codes on the test server. It can never be turned on
 for the real (production) server.
 
+## 4. Vercel — the website (customer report links)
+
+The links in report SMS and emails open the website at `/r/<code>`. About 5 minutes.
+
+1. Sign in at https://vercel.com with **GitHub** (allow access to the `kaamnishaan` repository).
+2. **Add New… → Project** → import `navneetdhameliya/kaamnishaan`.
+3. **Root Directory**: `web`. Framework: **Vite** (found by itself).
+4. **Environment Variables**: `VITE_API_URL` = `https://kaamnishaan-api.onrender.com`
+5. **Project name**: `kaamnishaan-web`, so the address is **https://kaamnishaan-web.vercel.app** (the API
+   already sends links there and allows it). → **Deploy**.
+
+If Vercel gives a different address, set it in Render → `kaamnishaan-api` → **Environment**:
+`KN_WEB_URL` = that address, and add it to `KN_CORS_ORIGINS`. Every merge to `main` deploys again.
+
 ## After it is live
 
 - Every merge to `main` deploys automatically (about 5 minutes).
