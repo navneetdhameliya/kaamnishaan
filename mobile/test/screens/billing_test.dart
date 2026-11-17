@@ -100,7 +100,7 @@ void main() {
     expect(c.packHint(c.packs.last), 'Save 12%');
     expect(c.buyLabel, 'Buy 500 credits · ₹799');
     c.onPick('p2');
-    expect(c.buyLabel, 'Buy 2000 credits · ₹2,799');
+    expect(c.buyLabel, 'Buy 2,000 credits · ₹2,799');
     expect(c.paymentsReady, isFalse);
   });
 }

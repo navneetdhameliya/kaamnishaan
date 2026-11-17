@@ -116,7 +116,7 @@ class CreditsScreen extends GetView<CreditsController> {
                       for (final p in controller.packs) ...[
                         _PackCard(
                           key: ValueKey('pack-${p.credits}'),
-                          title: LangKeys.credN.trParams({'n': '${p.credits}'}),
+                          title: controller.packTitle(p),
                           hint: controller.packHint(p),
                           price: controller.price(p),
                           selected: controller.picked.value == p.id,

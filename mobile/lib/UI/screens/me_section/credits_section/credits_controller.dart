@@ -98,6 +98,12 @@ class CreditsController extends GetxController {
     });
   }
 
+  /// "2,000"
+  String count(int n) => NumberFormat.decimalPattern(translation.currentCode).format(n);
+
+  /// "2,000 credits"
+  String packTitle(CreditPackOutModel p) => LangKeys.credN.trParams({'n': count(p.credits)});
+
   void onPick(String id) => picked.value = id;
 
   CreditPackOutModel? get pickedPack => packs.firstWhereOrNull((p) => p.id == picked.value);
@@ -105,7 +111,7 @@ class CreditsController extends GetxController {
   /// "Buy 500 credits · ₹799"
   String get buyLabel {
     final p = pickedPack;
-    return p == null ? LangKeys.credTopUp.tr : LangKeys.credBuy.trParams({'n': '${p.credits}', 'price': price(p)});
+    return p == null ? LangKeys.credTopUp.tr : LangKeys.credBuy.trParams({'n': count(p.credits), 'price': price(p)});
   }
 
   bool get paymentsReady => data.value?.paymentsReady ?? false;
