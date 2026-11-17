@@ -263,28 +263,27 @@ class _Row extends StatelessWidget {
               child: Icon(icon, size: 18, color: kn.textPrimary),
             ),
             const SizedBox(width: KnSize.space12),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomBaseTextWidget(label, style: text.label),
+                if (small != null) CustomBaseTextWidget(small, style: text.caption, color: kn.textSecondary),
+              ],
+            ),
+            const SizedBox(width: KnSize.space12),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomBaseTextWidget(label, style: text.label),
-                  if (small != null) CustomBaseTextWidget(small, style: text.caption, color: kn.textSecondary),
-                ],
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: trailing ??
+                    CustomBaseTextWidget(
+                      shown ?? '',
+                      style: text.body,
+                      color: kn.textSecondary,
+                      maxLines: 2,
+                      textAlign: TextAlign.end,
+                    ),
               ),
             ),
-            const SizedBox(width: KnSize.space8),
-            if (trailing != null)
-              trailing!
-            else if (shown != null && shown.isNotEmpty)
-              Flexible(
-                child: CustomBaseTextWidget(
-                  shown,
-                  style: text.body,
-                  color: kn.textSecondary,
-                  maxLines: 2,
-                  textAlign: TextAlign.end,
-                ),
-              ),
             if (chevron) ...[
               const SizedBox(width: KnSize.space8),
               Icon(LucideIcons.chevronRight, size: 20, color: kn.textSecondary),
