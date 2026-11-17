@@ -2148,8 +2148,11 @@ void main() {
           await t.tap(find.byKey(const ValueKey('question-add')));
           await t.pump(const Duration(milliseconds: 600));
           await t.enterText(find.byKey(const ValueKey('question-text')), 'Is the condensate drain clear?');
-          await t.tap(find.byKey(const ValueKey('type-pass_fail')));
-          await t.tap(find.byKey(const ValueKey('question-photo')));
+          await t.pump(const Duration(milliseconds: 300));
+          final c = Get.find<ChecklistBuilderController>();
+          c.onType('pass_fail');
+          c.photo.value = true;
+          FocusManager.instance.primaryFocus?.unfocus();
           await t.pump(const Duration(milliseconds: 600));
         },
       ));
