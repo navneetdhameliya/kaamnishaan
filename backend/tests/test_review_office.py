@@ -78,6 +78,7 @@ async def test_low_rating_alerts_and_follow_up(client, ready):
     assert page["counts"]["low"] == 1
     item = page["data"][0]
     assert item["low"] and item["wants_call_back"] and item["followup"]["status"] == "open"
+    assert item["contact_phone"] == "+919825011111" and item["report_number"] == "R-1001"
     tip = (await client.post(f"/api/v1/reviews/{item['id']}/reply-suggestion", headers=auth(owner))).json()
     assert "sorry" in tip["text"]
     url = f"/api/v1/reviews/{item['id']}/follow-up"

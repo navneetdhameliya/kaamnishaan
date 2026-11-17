@@ -8,6 +8,7 @@ import '../../../common_widgets/custom_inkwell.dart';
 import '../../../common_widgets/kn_cover_image.dart';
 import '../../../common_widgets/kn_custom_button.dart';
 import '../../../common_widgets/kn_screen_footer.dart';
+import '../../../common_widgets/kn_switch_row.dart';
 import '../../../commons/behaviour/behaviour.dart';
 import '../../../commons/text_widgets/base/custom_base_text_widget.dart';
 import '../../../theme/kn_app_theme.dart';
@@ -189,6 +190,25 @@ class ShareReportScreen extends GetView<ShareReportController> {
                         ),
                       ),
                     ],
+                  ),
+                  const SizedBox(height: KnSize.space12),
+                  DecoratedBox(
+                    decoration: BoxDecoration(
+                      color: kn.bgSurface,
+                      borderRadius: BorderRadius.circular(KnSize.radiusLg),
+                      border: Border.all(color: kn.borderDefault),
+                    ),
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: KnSwitchRow(
+                        key: const ValueKey('share-ask-review'),
+                        title: LangKeys.shareAskReview.tr,
+                        subtitle: controller.reviewAsked ? LangKeys.shareReviewAsked.tr : LangKeys.shareAskReviewSub.tr,
+                        value: controller.askReview.value,
+                        enabled: !controller.reviewAsked,
+                        onChanged: controller.onAskReviewChanged,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: KnSize.space16),
                   LinkCard(

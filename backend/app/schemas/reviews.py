@@ -149,6 +149,10 @@ class FollowupOut(BaseModel):
 
 
 class CompanyReviewItem(ReviewListItem):
+    job_id: uuid.UUID
+    customer_id: uuid.UUID
+    report_number: str | None
+    contact_phone: str | None = Field(description="For M45 'Call now'")
     tags: list[str]
     technician: PersonRef | None
     wants_call_back: bool

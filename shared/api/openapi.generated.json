@@ -673,6 +673,18 @@
             ],
             "title": "Comment"
           },
+          "contact_phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For M45 'Call now'",
+            "title": "Contact Phone"
+          },
           "cover_url": {
             "anyOf": [
               {
@@ -693,6 +705,11 @@
             "title": "Customer",
             "type": "string"
           },
+          "customer_id": {
+            "format": "uuid",
+            "title": "Customer Id",
+            "type": "string"
+          },
           "followup": {
             "anyOf": [
               {
@@ -706,6 +723,11 @@
           "id": {
             "format": "uuid",
             "title": "Id",
+            "type": "string"
+          },
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
             "type": "string"
           },
           "job_title": {
@@ -734,6 +756,17 @@
                 "type": "null"
               }
             ]
+          },
+          "report_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Report Number"
           },
           "reviewer_name": {
             "anyOf": [
@@ -800,6 +833,10 @@
           "cover_url",
           "created_at",
           "reply",
+          "job_id",
+          "customer_id",
+          "report_number",
+          "contact_phone",
           "tags",
           "technician",
           "wants_call_back",

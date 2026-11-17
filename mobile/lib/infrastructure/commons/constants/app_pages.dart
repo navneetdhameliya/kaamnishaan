@@ -76,6 +76,15 @@ import '../../../UI/screens/report_section/report_making_section/report_making_b
 import '../../../UI/screens/report_section/report_making_section/report_making_screen.dart';
 import '../../../UI/screens/report_section/report_sent_section/report_sent_binding.dart';
 import '../../../UI/screens/report_section/report_sent_section/report_sent_screen.dart';
+import '../../../UI/screens/review_office_section/company_reviews_section/company_reviews_binding.dart';
+import '../../../UI/screens/review_office_section/company_reviews_section/company_reviews_screen.dart';
+import '../../../UI/screens/review_office_section/review_followup_section/review_followup_binding.dart';
+import '../../../UI/screens/review_office_section/review_followup_section/review_followup_screen.dart';
+import '../../../UI/screens/review_office_section/review_requests_section/review_requests_binding.dart';
+import '../../../UI/screens/review_office_section/review_requests_section/review_requests_screen.dart';
+import '../../../UI/screens/review_office_section/review_settings_section/review_followups_screen.dart';
+import '../../../UI/screens/review_office_section/review_settings_section/review_settings_binding.dart';
+import '../../../UI/screens/review_office_section/review_settings_section/review_settings_screen.dart';
 import '../../../UI/screens/review_section/report_pdf_section/report_pdf_binding.dart';
 import '../../../UI/screens/review_section/report_pdf_section/report_pdf_screen.dart';
 import '../../../UI/screens/review_section/report_review_section/report_review_binding.dart';
@@ -207,6 +216,31 @@ abstract final class AppPages {
       name: RoutesConstants.reviewDetailsScreen,
       page: () => const ReviewDetailsScreen(),
       binding: ReviewDetailsBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.companyReviewsScreen,
+      page: () => const CompanyReviewsScreen(),
+      binding: CompanyReviewsBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.reviewFollowupScreen,
+      page: () => const ReviewFollowupScreen(),
+      binding: ReviewFollowupBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.reviewRequestsScreen,
+      page: () => const ReviewRequestsScreen(),
+      binding: ReviewRequestsBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.reviewSettingsScreen,
+      page: () => const ReviewSettingsScreen(),
+      binding: ReviewSettingsBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.reviewFollowupsScreen,
+      page: () => const ReviewFollowupsScreen(),
+      binding: ReviewSettingsBinding(),
     ),
     GetPage(name: RoutesConstants.teamScreen, page: () => const TeamScreen(), binding: TeamBinding()),
     GetPage(name: RoutesConstants.inviteScreen, page: () => const InviteScreen(), binding: InviteBinding()),

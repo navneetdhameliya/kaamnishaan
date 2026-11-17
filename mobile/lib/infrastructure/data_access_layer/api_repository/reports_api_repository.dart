@@ -49,6 +49,7 @@ abstract class IReportsApiRepository {
     String? name,
     String? phone,
     String? email,
+    bool? askForReview,
   });
 }
 
@@ -138,6 +139,7 @@ class ReportsApiRepository implements IReportsApiRepository {
     String? name,
     String? phone,
     String? email,
+    bool? askForReview,
   }) =>
       guard(
         () async => ShareInfoModel.fromJson(
@@ -147,6 +149,7 @@ class ReportsApiRepository implements IReportsApiRepository {
               'name': ?name,
               'phone': ?phone,
               'email': ?email,
+              'ask_for_review': ?askForReview,
             }),
           ),
         ),

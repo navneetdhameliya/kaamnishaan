@@ -506,17 +506,22 @@ String companyReviewItemModelToJson(CompanyReviewItemModel data) => json.encode(
 
 class CompanyReviewItemModel {
   final String? comment;
+  /// For M45 'Call now'
+  final String? contactPhone;
   final String? coverUrl;
   final DateTime createdAt;
   final String customer;
+  final String customerId;
   final FollowupOutModel? followup;
   final String id;
+  final String jobId;
   final String jobTitle;
   /// At or under the company's low-rating line (2 stars by default)
   final bool low;
   final bool needsReply;
   final int rating;
   final ReplyOutModel? reply;
+  final String? reportNumber;
   final String? reviewerName;
   /// One of: link, reply, ai_call
   final String source;
@@ -527,16 +532,20 @@ class CompanyReviewItemModel {
 
   const CompanyReviewItemModel({
     this.comment,
+    this.contactPhone,
     this.coverUrl,
     required this.createdAt,
     required this.customer,
+    required this.customerId,
     this.followup,
     required this.id,
+    required this.jobId,
     required this.jobTitle,
     required this.low,
     required this.needsReply,
     required this.rating,
     this.reply,
+    this.reportNumber,
     this.reviewerName,
     required this.source,
     required this.tags,
@@ -547,16 +556,20 @@ class CompanyReviewItemModel {
 
   factory CompanyReviewItemModel.fromJson(Map<String, dynamic> json) => CompanyReviewItemModel(
         comment: json['comment'] as String?,
+        contactPhone: json['contact_phone'] as String?,
         coverUrl: json['cover_url'] as String?,
         createdAt: DateTime.parse(json['created_at'] as String),
         customer: json['customer'] as String,
+        customerId: json['customer_id'] as String,
         followup: json['followup'] == null ? null : FollowupOutModel.fromJson(json['followup'] as Map<String, dynamic>),
         id: json['id'] as String,
+        jobId: json['job_id'] as String,
         jobTitle: json['job_title'] as String,
         low: json['low'] as bool,
         needsReply: json['needs_reply'] as bool,
         rating: (json['rating'] as num).toInt(),
         reply: json['reply'] == null ? null : ReplyOutModel.fromJson(json['reply'] as Map<String, dynamic>),
+        reportNumber: json['report_number'] as String?,
         reviewerName: json['reviewer_name'] as String?,
         source: json['source'] as String,
         tags: (json['tags'] as List).map((e) => e as String).toList(),
@@ -567,16 +580,20 @@ class CompanyReviewItemModel {
 
   Map<String, dynamic> toJson() => {
         'comment': comment,
+        'contact_phone': contactPhone,
         'cover_url': coverUrl,
         'created_at': createdAt.toIso8601String(),
         'customer': customer,
+        'customer_id': customerId,
         'followup': followup?.toJson(),
         'id': id,
+        'job_id': jobId,
         'job_title': jobTitle,
         'low': low,
         'needs_reply': needsReply,
         'rating': rating,
         'reply': reply?.toJson(),
+        'report_number': reportNumber,
         'reviewer_name': reviewerName,
         'source': source,
         'tags': tags,

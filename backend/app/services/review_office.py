@@ -48,6 +48,7 @@ from app.schemas.reviews import (
 from app.schemas.work import PersonRef
 from app.services import audit, sharing
 from app.services.report_labels import label
+from app.services.reports import rlabel
 from app.services.reviews import STARTED, _items, settings_for
 
 WAITING = ("queued", *STARTED, "paused_no_credits")
@@ -113,12 +114,28 @@ async def reviews_page(db: AsyncSession, p: Principal, filter_: str) -> ReviewsP
             )
         ).scalars()
     }
+    links = {
+        req_id: (number, phone)
+        for req_id, number, phone in (
+            await db.execute(
+                select(ReviewRequest.id, Report.number, CustomerContact.phone)
+                .join(Report, Report.id == ReviewRequest.report_id)
+                .outerjoin(CustomerContact, CustomerContact.id == ReviewRequest.contact_id)
+                .where(ReviewRequest.id.in_([r.request_id for r in shown]))
+            )
+        ).all()
+    }
     data = []
-    for r, _, item in await _items(db, shown):
+    for r, j, item in await _items(db, shown):
         f = follow.get(r.id)
+        number, phone = links.get(r.request_id, (None, None))
         data.append(
             CompanyReviewItem(
                 **item.model_dump(),
+                job_id=j.id,
+                customer_id=j.customer_id,
+                report_number=rlabel(number) if number else None,
+                contact_phone=phone,
                 tags=list(r.tags or []),
                 technician=_person(techs.get(r.technician_id)),
                 wants_call_back=r.wants_call_back,
@@ -288,7 +305,11 @@ async def update_settings(db: AsyncSession, p: Principal, body: ReviewSettingsIn
     if s is None:
         s = await settings_for(db, p.company_id)
         db.add(s)
-    changes = body.model_dump(exclude_unset=True)
+    changes = {
+        k: v
+        for k, v in body.model_dump(exclude_unset=True).items()
+        if v is not None or k == "google_review_url"
+    }
     for k, v in changes.items():
         setattr(s, k, (v or None) if k == "google_review_url" else v)
     await audit.record(

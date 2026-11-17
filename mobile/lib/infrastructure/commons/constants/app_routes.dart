@@ -40,6 +40,11 @@ abstract final class RoutesConstants {
   static const String customerScreen = '/customer';
   static const String myReviewsScreen = '/reviews/mine';
   static const String reviewDetailsScreen = '/reviews/one';
+  static const String companyReviewsScreen = '/reviews/company';
+  static const String reviewFollowupScreen = '/reviews/follow-up';
+  static const String reviewRequestsScreen = '/reviews/requests';
+  static const String reviewSettingsScreen = '/reviews/settings';
+  static const String reviewFollowupsScreen = '/reviews/follow-ups';
   static const String companySettingsScreen = '/settings/company';
   static const String inviteScreen = '/team/invite';
   static const String reportReviewScreen = '/review';
