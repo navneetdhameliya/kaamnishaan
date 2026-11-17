@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../../../infrastructure/commons/constants/app_routes.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/home_api_repository.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/lang/translation_service.dart';
@@ -122,4 +123,10 @@ class DashboardController extends GetxController {
 
   /// Review, team and job screens come in the next steps.
   void onComingSoonTap() => KnToast.info(LangKeys.commonComingSoon.tr);
+
+  /// Messages (M42): reports sent for review and more.
+  Future<void> onBellTap() async {
+    await Get.toNamed(RoutesConstants.messagesScreen);
+    load();
+  }
 }

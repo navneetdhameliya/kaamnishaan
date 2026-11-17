@@ -1174,4 +1174,48 @@ abstract final class LangKeys {
   static const countNoteOne = 'count.note_one';
   /// {n} notes
   static const countNotes = 'count.notes';
+  /// Messages
+  static const messagesTitle = 'messages.title';
+  /// {n} new
+  static const messagesNew = 'messages.new';
+  /// All read
+  static const messagesNoneNew = 'messages.none_new';
+  /// Today
+  static const messagesToday = 'messages.today';
+  /// Yesterday
+  static const messagesYesterday = 'messages.yesterday';
+  /// Just now
+  static const messagesJustNow = 'messages.just_now';
+  /// {n} min
+  static const messagesMinutes = 'messages.minutes';
+  /// {n} h
+  static const messagesHours = 'messages.hours';
+  /// No messages yet
+  static const messagesEmpty = 'messages.empty';
+  /// New jobs and report updates show here.
+  static const messagesEmptyBody = 'messages.empty_body';
+  /// New job
+  static const msgJobTitle = 'msg.job_title';
+  /// New job for today
+  static const msgJobTitleToday = 'msg.job_title_today';
+  /// Report to review
+  static const msgSubmittedTitle = 'msg.submitted_title';
+  /// {technician} sent the {customer} report.
+  static const msgSubmittedBody = 'msg.submitted_body';
+  /// Changes asked
+  static const msgChangesTitle = 'msg.changes_title';
+  /// {who}: {customer} — {note}
+  static const msgChangesBody = 'msg.changes_body';
+  /// {who} asked for changes to the {customer} report.
+  static const msgChangesBodyPlain = 'msg.changes_body_plain';
+  /// Report approved
+  static const msgApprovedTitle = 'msg.approved_title';
+  /// {customer} report was approved.
+  static const msgApprovedBody = 'msg.approved_body';
+  /// {customer} report was sent to the customer.
+  static const msgSharedBody = 'msg.shared_body';
+  /// Your manager
+  static const msgYourManager = 'msg.your_manager';
+  /// Your technician
+  static const msgTechnician = 'msg.technician';
 }

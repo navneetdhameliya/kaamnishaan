@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../../../../infrastructure/commons/constants/app_routes.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/me_api_repository.dart';
+import '../../../../infrastructure/data_access_layer/api_repository/notifications_api_repository.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
@@ -26,6 +27,7 @@ class MeController extends GetxController {
     required this.session,
     required this.translation,
     this.queue,
+    this.notifications,
   });
 
   final IMeApiRepository me;
@@ -34,6 +36,11 @@ class MeController extends GetxController {
 
   /// Photos, notes and answers still on this phone (technicians).
   final PhotoQueueService? queue;
+
+  /// For the red count on Messages.
+  final INotificationsApiRepository? notifications;
+
+  final RxInt unread = 0.obs;
 
   final Rxn<MeStatsModel> stats = Rxn<MeStatsModel>();
   Worker? _sentWorker;
@@ -53,8 +60,21 @@ class MeController extends GetxController {
   }
 
   Future<void> load() async {
-    final result = await me.stats();
-    if (result.dataOrNull != null) stats.value = result.dataOrNull;
+    final results = await Future.wait([
+      me.stats(),
+      if (notifications != null) notifications!.list(limit: 1),
+    ]);
+    final s = results.first.dataOrNull as MeStatsModel?;
+    if (s != null) stats.value = s;
+    if (results.length > 1) {
+      final list = results[1].dataOrNull as NotificationListModel?;
+      if (list != null) unread.value = (list.meta.counts?['unread'] as num?)?.toInt() ?? 0;
+    }
+  }
+
+  Future<void> onMessagesTap() async {
+    await Get.toNamed(RoutesConstants.messagesScreen);
+    load();
   }
 
   MeOutModel? get profile => session.me.value;
@@ -114,7 +134,7 @@ class MeController extends GetxController {
     session.me.refresh();
   }
 
-  /// Reviews (M44), messages (M42) and help come with their own steps.
+  /// Reviews (M44) and help come with their own steps.
   void onComingSoonTap() => KnToast.info(LangKeys.commonComingSoon.tr);
 
   /// Log out now; the screen asks first when things are still waiting to send.

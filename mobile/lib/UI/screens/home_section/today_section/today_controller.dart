@@ -5,7 +5,6 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../infrastructure/commons/constants/app_routes.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/home_api_repository.dart';
-import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/services/preferences_service.dart';
@@ -126,6 +125,9 @@ class TodayController extends GetxController {
 
   void onSeeAllTap() => Get.toNamed(RoutesConstants.jobListScreen);
 
-  /// Notifications come later.
-  void onBellTap() => KnToast.info(LangKeys.commonComingSoon.tr);
+  /// Messages (M42); the red dot goes once they are read.
+  Future<void> onBellTap() async {
+    await Get.toNamed(RoutesConstants.messagesScreen);
+    load();
+  }
 }

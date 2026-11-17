@@ -33,5 +33,6 @@ abstract final class RoutesConstants {
   static const String languageSettingsScreen = '/settings/language';
   static const String myReportsScreen = '/my-reports';
   static const String waitingToSendScreen = '/waiting-to-send';
+  static const String messagesScreen = '/messages';
   static const String homeScreen = '/home';
 }

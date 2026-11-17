@@ -45,7 +45,7 @@ from app.schemas.reports import (
     VersionOut,
 )
 from app.schemas.work import PersonRef
-from app.services import audit
+from app.services import audit, notifications
 from app.services.evidence import covers, lock_job_evidence, photo_counts, proof
 from app.services.jobs import get_job, label
 
@@ -482,6 +482,13 @@ async def submit(db: AsyncSession, p: Principal, report_id: uuid.UUID) -> Report
         cr.resolved_at = t
     db.add(_version(rep, "technician" if _is_author(p, job) else "manager", "submitted", p.user.id))
     db.add(_job_event(p, job, "report_submitted", before, {"report": rlabel(rep.number)}))
+    await notifications.notify(
+        db, company_id=p.company_id, to=await notifications.reviewers(db, p.company_id),
+        kind="report_submitted", actor_id=p.user.id, job=job, report_id=rep.id,
+        params={
+            **await notifications.job_params(db, job), "report": rlabel(rep.number), "technician": p.user.name
+        },
+    )  # fmt: skip
     await audit.record(
         db,
         "report.submitted",
@@ -509,6 +516,11 @@ async def approve(db: AsyncSession, p: Principal, report_id: uuid.UUID) -> Repor
     job.version += 1
     db.add(_version(rep, "manager", "approved", p.user.id))
     db.add(_job_event(p, job, "report_approved", before, {"report": rlabel(rep.number)}))
+    await notifications.notify(
+        db, company_id=p.company_id, to=[job.assigned_to], kind="report_approved", actor_id=p.user.id,
+        job=job, report_id=rep.id,
+        params={**await notifications.job_params(db, job), "report": rlabel(rep.number)},
+    )  # fmt: skip
     await audit.record(
         db,
         "report.approved",
@@ -547,6 +559,11 @@ async def request_changes(
         )
     )
     db.add(_job_event(p, job, "changes_requested", before, {"reasons": reasons, "note": note}))
+    await notifications.notify(
+        db, company_id=p.company_id, to=[job.assigned_to], kind="changes_requested", actor_id=p.user.id,
+        job=job, report_id=rep.id,
+        params={**await notifications.job_params(db, job), "report": rlabel(rep.number), "note": note},
+    )  # fmt: skip
     await audit.record(
         db,
         "report.changes_requested",

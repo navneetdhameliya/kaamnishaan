@@ -340,6 +340,7 @@ class Dashboard(BaseModel):
     reports_last_week: int = Field(description="Reports sent in the 7 days before that")
     team_now: list[TeamNow]
     onboarding: Onboarding
+    unread: int = Field(default=0, description="Messages not read yet (the bell's dot)")
 
 
 class TodayStats(BaseModel):

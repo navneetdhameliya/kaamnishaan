@@ -1133,6 +1133,8 @@ class DashboardModel {
   final List<TeamNowModel> teamNow;
   final int toReview;
   final Map<String, dynamic> today;
+  /// Messages not read yet (the bell's dot)
+  final int? unread;
   final List<DayCountModel> week;
 
   const DashboardModel({
@@ -1143,6 +1145,7 @@ class DashboardModel {
     required this.teamNow,
     required this.toReview,
     required this.today,
+    this.unread,
     required this.week,
   });
 
@@ -1154,6 +1157,7 @@ class DashboardModel {
         teamNow: (json['team_now'] as List).map((e) => TeamNowModel.fromJson(e as Map<String, dynamic>)).toList(),
         toReview: (json['to_review'] as num).toInt(),
         today: Map<String, dynamic>.from(json['today'] as Map),
+        unread: json['unread'] == null ? null : (json['unread'] as num).toInt(),
         week: (json['week'] as List).map((e) => DayCountModel.fromJson(e as Map<String, dynamic>)).toList(),
       );
 
@@ -1165,6 +1169,7 @@ class DashboardModel {
         'team_now': teamNow.map((e) => e.toJson()).toList(),
         'to_review': toReview,
         'today': today,
+        'unread': unread,
         'week': week.map((e) => e.toJson()).toList(),
       };
 }
@@ -3050,6 +3055,108 @@ class NoteOutModel {
         'created_at': createdAt.toIso8601String(),
         'id': id,
         'text': text,
+      };
+}
+
+NotificationListModel notificationListModelFromJson(String str) => NotificationListModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String notificationListModelToJson(NotificationListModel data) => json.encode(data.toJson());
+
+class NotificationListModel {
+  final List<NotificationOutModel> data;
+  /// counts: {"unread": n}
+  final ListMetaModel meta;
+
+  const NotificationListModel({
+    required this.data,
+    required this.meta,
+  });
+
+  factory NotificationListModel.fromJson(Map<String, dynamic> json) => NotificationListModel(
+        data: (json['data'] as List).map((e) => NotificationOutModel.fromJson(e as Map<String, dynamic>)).toList(),
+        meta: ListMetaModel.fromJson(json['meta'] as Map<String, dynamic>),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'data': data.map((e) => e.toJson()).toList(),
+        'meta': meta.toJson(),
+      };
+}
+
+NotificationOutModel notificationOutModelFromJson(String str) => NotificationOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String notificationOutModelToJson(NotificationOutModel data) => json.encode(data.toJson());
+
+class NotificationOutModel {
+  /// Who did it (the manager, the technician)
+  final PersonRefModel? actor;
+  /// The job's picture
+  final String? coverUrl;
+  final DateTime createdAt;
+  final String id;
+  final String? jobId;
+  /// One of: job_assigned, report_submitted, changes_requested, report_approved, report_shared
+  final String kind;
+  /// Names for the sentence the app writes in its own language: customer, job, report, note, scheduled_at (ISO), technician
+  final Map<String, dynamic> params;
+  final bool read;
+  final String? reportId;
+
+  const NotificationOutModel({
+    this.actor,
+    this.coverUrl,
+    required this.createdAt,
+    required this.id,
+    this.jobId,
+    required this.kind,
+    required this.params,
+    required this.read,
+    this.reportId,
+  });
+
+  factory NotificationOutModel.fromJson(Map<String, dynamic> json) => NotificationOutModel(
+        actor: json['actor'] == null ? null : PersonRefModel.fromJson(json['actor'] as Map<String, dynamic>),
+        coverUrl: json['cover_url'] as String?,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        id: json['id'] as String,
+        jobId: json['job_id'] as String?,
+        kind: json['kind'] as String,
+        params: Map<String, dynamic>.from(json['params'] as Map),
+        read: json['read'] as bool,
+        reportId: json['report_id'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'actor': actor?.toJson(),
+        'cover_url': coverUrl,
+        'created_at': createdAt.toIso8601String(),
+        'id': id,
+        'job_id': jobId,
+        'kind': kind,
+        'params': params,
+        'read': read,
+        'report_id': reportId,
+      };
+}
+
+NotificationsReadModel notificationsReadModelFromJson(String str) => NotificationsReadModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String notificationsReadModelToJson(NotificationsReadModel data) => json.encode(data.toJson());
+
+class NotificationsReadModel {
+  /// Leave out to mark all as read
+  final List<String>? ids;
+
+  const NotificationsReadModel({
+    this.ids,
+  });
+
+  factory NotificationsReadModel.fromJson(Map<String, dynamic> json) => NotificationsReadModel(
+        ids: json['ids'] == null ? null : (json['ids'] as List).map((e) => e as String).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ids': ids,
       };
 }
 
@@ -5821,6 +5928,26 @@ class TypedNoteCreateModel {
   Map<String, dynamic> toJson() => {
         'client_uuid': clientUuid,
         'text': text,
+      };
+}
+
+UnreadCountModel unreadCountModelFromJson(String str) => UnreadCountModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String unreadCountModelToJson(UnreadCountModel data) => json.encode(data.toJson());
+
+class UnreadCountModel {
+  final int unread;
+
+  const UnreadCountModel({
+    required this.unread,
+  });
+
+  factory UnreadCountModel.fromJson(Map<String, dynamic> json) => UnreadCountModel(
+        unread: (json['unread'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'unread': unread,
       };
 }
 

@@ -49,7 +49,7 @@ from app.schemas.sharing import (
     ShareInfo,
     ShareLinkOut,
 )
-from app.services import audit
+from app.services import audit, notifications
 from app.services.report_labels import LABELS, fmt_date, label
 from app.services.report_view import customer_view
 from app.services.reports import DONE, get_report, rlabel
@@ -284,6 +284,11 @@ async def _mark_shared(db: AsyncSession, p: Principal, rep: Report, job: Job, ch
                 data={"report": rlabel(rep.number), "channels": channels},
             )
         )
+        await notifications.notify(
+            db, company_id=job.company_id, to=[job.assigned_to], kind="report_shared", actor_id=p.user.id,
+            job=job, report_id=rep.id,
+            params={**await notifications.job_params(db, job), "report": rlabel(rep.number)},
+        )  # fmt: skip
 
 
 def _approved(rep: Report) -> None:
