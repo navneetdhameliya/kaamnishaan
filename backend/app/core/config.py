@@ -51,6 +51,19 @@ class Settings(BaseSettings):
     # store pages for "Get the app" on the website; empty until the apps are published
     android_app_url: str | None = None
     ios_app_url: str | None = None
+    # Contact page (W05). A card is hidden while its value is empty.
+    support_email: str | None = None
+    support_whatsapp: str | None = None  # digits with country code, e.g. 919876543210
+    help_url: str | None = None
+    office: str = "Ahmedabad, Gujarat, India"
+    support_open: str = "09:00"
+    support_close: str = "19:00"
+    support_days: list[int] = [1, 2, 3, 4, 5, 6]  # ISO weekdays, Monday = 1
+    # Book a demo (W03): 30-minute calls at these local times on weekdays, up to N days ahead
+    demo_timezone: str = "Asia/Kolkata"
+    demo_times: list[str] = ["10:00", "11:30", "14:00", "16:30"]
+    demo_days_ahead: int = 14
+    demo_minutes: int = 30
     # Any scheduler (e.g. a GitHub Actions schedule) calls POST /api/v1/cron/review-followups with this key
     # as X-Cron-Key so Day 2 review reminders go out on time. Without it the endpoint is closed.
     cron_key: SecretStr | None = None

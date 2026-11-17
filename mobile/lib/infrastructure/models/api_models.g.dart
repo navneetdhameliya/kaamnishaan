@@ -963,6 +963,7 @@ class ConfigOutModel {
   final bool maintenance;
   final String minAppVersion;
   final int passwordMinLength;
+  final SupportOutModel? support;
   final List<TradeOutModel> trades;
 
   const ConfigOutModel({
@@ -974,6 +975,7 @@ class ConfigOutModel {
     required this.maintenance,
     required this.minAppVersion,
     required this.passwordMinLength,
+    this.support,
     required this.trades,
   });
 
@@ -986,6 +988,7 @@ class ConfigOutModel {
         maintenance: json['maintenance'] as bool,
         minAppVersion: json['min_app_version'] as String,
         passwordMinLength: (json['password_min_length'] as num).toInt(),
+        support: json['support'] == null ? null : SupportOutModel.fromJson(json['support'] as Map<String, dynamic>),
         trades: (json['trades'] as List).map((e) => TradeOutModel.fromJson(e as Map<String, dynamic>)).toList(),
       );
 
@@ -998,6 +1001,7 @@ class ConfigOutModel {
         'maintenance': maintenance,
         'min_app_version': minAppVersion,
         'password_min_length': passwordMinLength,
+        'support': support?.toJson(),
         'trades': trades.map((e) => e.toJson()).toList(),
       };
 }
@@ -1023,86 +1027,6 @@ class ContactBriefModel {
   Map<String, dynamic> toJson() => {
         'name': name,
         'phone': phone,
-      };
-}
-
-ContactInModel contactInModelFromJson(String str) => ContactInModel.fromJson(json.decode(str) as Map<String, dynamic>);
-
-String contactInModelToJson(ContactInModel data) => json.encode(data.toJson());
-
-class ContactInModel {
-  final String? email;
-  final bool? isPrimary;
-  final String name;
-  final String? phone;
-  final String? title;
-
-  const ContactInModel({
-    this.email,
-    this.isPrimary,
-    required this.name,
-    this.phone,
-    this.title,
-  });
-
-  factory ContactInModel.fromJson(Map<String, dynamic> json) => ContactInModel(
-        email: json['email'] as String?,
-        isPrimary: json['is_primary'] as bool?,
-        name: json['name'] as String,
-        phone: json['phone'] as String?,
-        title: json['title'] as String?,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'email': email,
-        'is_primary': isPrimary,
-        'name': name,
-        'phone': phone,
-        'title': title,
-      };
-}
-
-ContactOutModel contactOutModelFromJson(String str) => ContactOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
-
-String contactOutModelToJson(ContactOutModel data) => json.encode(data.toJson());
-
-class ContactOutModel {
-  final String? email;
-  final String id;
-  final bool isPrimary;
-  final String name;
-  final String? phone;
-  final bool reviewOptedOut;
-  final String? title;
-
-  const ContactOutModel({
-    this.email,
-    required this.id,
-    required this.isPrimary,
-    required this.name,
-    this.phone,
-    required this.reviewOptedOut,
-    this.title,
-  });
-
-  factory ContactOutModel.fromJson(Map<String, dynamic> json) => ContactOutModel(
-        email: json['email'] as String?,
-        id: json['id'] as String,
-        isPrimary: json['is_primary'] as bool,
-        name: json['name'] as String,
-        phone: json['phone'] as String?,
-        reviewOptedOut: json['review_opted_out'] as bool,
-        title: json['title'] as String?,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'email': email,
-        'id': id,
-        'is_primary': isPrimary,
-        'name': name,
-        'phone': phone,
-        'review_opted_out': reviewOptedOut,
-        'title': title,
       };
 }
 
@@ -1351,7 +1275,7 @@ String customerCreateModelToJson(CustomerCreateModel data) => json.encode(data.t
 class CustomerCreateModel {
   /// Made on the device; a repeat returns the first result
   final String? clientUuid;
-  final ContactInModel? contact;
+  final app__schemas__work__ContactInModel? contact;
   final String name;
   final String? notes;
   final SiteInModel? site;
@@ -1366,7 +1290,7 @@ class CustomerCreateModel {
 
   factory CustomerCreateModel.fromJson(Map<String, dynamic> json) => CustomerCreateModel(
         clientUuid: json['client_uuid'] as String?,
-        contact: json['contact'] == null ? null : ContactInModel.fromJson(json['contact'] as Map<String, dynamic>),
+        contact: json['contact'] == null ? null : app__schemas__work__ContactInModel.fromJson(json['contact'] as Map<String, dynamic>),
         name: json['name'] as String,
         notes: json['notes'] as String?,
         site: json['site'] == null ? null : SiteInModel.fromJson(json['site'] as Map<String, dynamic>),
@@ -1455,7 +1379,7 @@ CustomerOutModel customerOutModelFromJson(String str) => CustomerOutModel.fromJs
 String customerOutModelToJson(CustomerOutModel data) => json.encode(data.toJson());
 
 class CustomerOutModel {
-  final List<ContactOutModel> contacts;
+  final List<app__schemas__work__ContactOutModel> contacts;
   final DateTime customerSince;
   final String id;
   final int jobCount;
@@ -1478,7 +1402,7 @@ class CustomerOutModel {
   });
 
   factory CustomerOutModel.fromJson(Map<String, dynamic> json) => CustomerOutModel(
-        contacts: (json['contacts'] as List).map((e) => ContactOutModel.fromJson(e as Map<String, dynamic>)).toList(),
+        contacts: (json['contacts'] as List).map((e) => app__schemas__work__ContactOutModel.fromJson(e as Map<String, dynamic>)).toList(),
         customerSince: DateTime.parse(json['customer_since'] as String),
         id: json['id'] as String,
         jobCount: (json['job_count'] as num).toInt(),
@@ -1630,6 +1554,145 @@ class DayCountModel {
         'completed': completed,
         'date': date,
         'reports_sent': reportsSent,
+      };
+}
+
+DemoDayModel demoDayModelFromJson(String str) => DemoDayModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String demoDayModelToJson(DemoDayModel data) => json.encode(data.toJson());
+
+class DemoDayModel {
+  final String date;
+  /// free start times, in the demo time zone
+  final List<DateTime> slots;
+
+  const DemoDayModel({
+    required this.date,
+    required this.slots,
+  });
+
+  factory DemoDayModel.fromJson(Map<String, dynamic> json) => DemoDayModel(
+        date: json['date'] as String,
+        slots: (json['slots'] as List).map((e) => DateTime.parse(e as String)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'date': date,
+        'slots': slots.map((e) => e.toIso8601String()).toList(),
+      };
+}
+
+DemoInModel demoInModelFromJson(String str) => DemoInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String demoInModelToJson(DemoInModel data) => json.encode(data.toJson());
+
+class DemoInModel {
+  final String company;
+  final String email;
+  /// One of: en, hi, gu, es, fr
+  final String? lang;
+  final String name;
+  final String phone;
+  final DateTime startsAt;
+  /// One of: 1-5, 6-15, 16-50, 51+
+  final String teamSize;
+  final String trade;
+
+  const DemoInModel({
+    required this.company,
+    required this.email,
+    this.lang,
+    required this.name,
+    required this.phone,
+    required this.startsAt,
+    required this.teamSize,
+    required this.trade,
+  });
+
+  factory DemoInModel.fromJson(Map<String, dynamic> json) => DemoInModel(
+        company: json['company'] as String,
+        email: json['email'] as String,
+        lang: json['lang'] as String?,
+        name: json['name'] as String,
+        phone: json['phone'] as String,
+        startsAt: DateTime.parse(json['starts_at'] as String),
+        teamSize: json['team_size'] as String,
+        trade: json['trade'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'company': company,
+        'email': email,
+        'lang': lang,
+        'name': name,
+        'phone': phone,
+        'starts_at': startsAt.toIso8601String(),
+        'team_size': teamSize,
+        'trade': trade,
+      };
+}
+
+DemoOutModel demoOutModelFromJson(String str) => DemoOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String demoOutModelToJson(DemoOutModel data) => json.encode(data.toJson());
+
+class DemoOutModel {
+  final DateTime endsAt;
+  final DateTime startsAt;
+  final String ticket;
+  final String timezone;
+
+  const DemoOutModel({
+    required this.endsAt,
+    required this.startsAt,
+    required this.ticket,
+    required this.timezone,
+  });
+
+  factory DemoOutModel.fromJson(Map<String, dynamic> json) => DemoOutModel(
+        endsAt: DateTime.parse(json['ends_at'] as String),
+        startsAt: DateTime.parse(json['starts_at'] as String),
+        ticket: json['ticket'] as String,
+        timezone: json['timezone'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ends_at': endsAt.toIso8601String(),
+        'starts_at': startsAt.toIso8601String(),
+        'ticket': ticket,
+        'timezone': timezone,
+      };
+}
+
+DemoSlotsOutModel demoSlotsOutModelFromJson(String str) => DemoSlotsOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String demoSlotsOutModelToJson(DemoSlotsOutModel data) => json.encode(data.toJson());
+
+class DemoSlotsOutModel {
+  final List<DemoDayModel> days;
+  final int minutes;
+  final List<String> teamSizes;
+  final String timezone;
+
+  const DemoSlotsOutModel({
+    required this.days,
+    required this.minutes,
+    required this.teamSizes,
+    required this.timezone,
+  });
+
+  factory DemoSlotsOutModel.fromJson(Map<String, dynamic> json) => DemoSlotsOutModel(
+        days: (json['days'] as List).map((e) => DemoDayModel.fromJson(e as Map<String, dynamic>)).toList(),
+        minutes: (json['minutes'] as num).toInt(),
+        teamSizes: (json['team_sizes'] as List).map((e) => e as String).toList(),
+        timezone: json['timezone'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'days': days.map((e) => e.toJson()).toList(),
+        'minutes': minutes,
+        'team_sizes': teamSizes,
+        'timezone': timezone,
       };
 }
 
@@ -2745,7 +2808,7 @@ class JobOutModel {
   final String? cancelReason;
   final DateTime? cancelledAt;
   final DateTime? completedAt;
-  final ContactOutModel? contact;
+  final app__schemas__work__ContactOutModel? contact;
   /// Latest photo of this job, else of the same site from an earlier visit
   final String? coverUrl;
   final DateTime createdAt;
@@ -2804,7 +2867,7 @@ class JobOutModel {
         cancelReason: json['cancel_reason'] as String?,
         cancelledAt: json['cancelled_at'] == null ? null : DateTime.parse(json['cancelled_at'] as String),
         completedAt: json['completed_at'] == null ? null : DateTime.parse(json['completed_at'] as String),
-        contact: json['contact'] == null ? null : ContactOutModel.fromJson(json['contact'] as Map<String, dynamic>),
+        contact: json['contact'] == null ? null : app__schemas__work__ContactOutModel.fromJson(json['contact'] as Map<String, dynamic>),
         coverUrl: json['cover_url'] as String?,
         createdAt: DateTime.parse(json['created_at'] as String),
         createdBy: json['created_by'] == null ? null : PersonRefModel.fromJson(json['created_by'] as Map<String, dynamic>),
@@ -5129,6 +5192,30 @@ class RefreshBodyModel {
       };
 }
 
+RegionModel regionModelFromJson(String str) => RegionModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String regionModelToJson(RegionModel data) => json.encode(data.toJson());
+
+class RegionModel {
+  final String country;
+  final List<String> languages;
+
+  const RegionModel({
+    required this.country,
+    required this.languages,
+  });
+
+  factory RegionModel.fromJson(Map<String, dynamic> json) => RegionModel(
+        country: json['country'] as String,
+        languages: (json['languages'] as List).map((e) => e as String).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'country': country,
+        'languages': languages,
+      };
+}
+
 RegisterModel registerModelFromJson(String str) => RegisterModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String registerModelToJson(RegisterModel data) => json.encode(data.toJson());
@@ -6745,6 +6832,65 @@ class SuggestionOutModel {
       };
 }
 
+SupportOutModel supportOutModelFromJson(String str) => SupportOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String supportOutModelToJson(SupportOutModel data) => json.encode(data.toJson());
+
+class SupportOutModel {
+  final String close;
+  /// ISO weekdays, Monday = 1
+  final List<int> days;
+  final String? email;
+  final String? helpUrl;
+  final String office;
+  /// HH:MM in timezone
+  final String open;
+  final List<RegionModel> regions;
+  final String timezone;
+  final List<String> topics;
+  /// digits with country code, for https://wa.me/<digits>
+  final String? whatsapp;
+
+  const SupportOutModel({
+    required this.close,
+    required this.days,
+    this.email,
+    this.helpUrl,
+    required this.office,
+    required this.open,
+    required this.regions,
+    required this.timezone,
+    required this.topics,
+    this.whatsapp,
+  });
+
+  factory SupportOutModel.fromJson(Map<String, dynamic> json) => SupportOutModel(
+        close: json['close'] as String,
+        days: (json['days'] as List).map((e) => (e as num).toInt()).toList(),
+        email: json['email'] as String?,
+        helpUrl: json['help_url'] as String?,
+        office: json['office'] as String,
+        open: json['open'] as String,
+        regions: (json['regions'] as List).map((e) => RegionModel.fromJson(e as Map<String, dynamic>)).toList(),
+        timezone: json['timezone'] as String,
+        topics: (json['topics'] as List).map((e) => e as String).toList(),
+        whatsapp: json['whatsapp'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'close': close,
+        'days': days,
+        'email': email,
+        'help_url': helpUrl,
+        'office': office,
+        'open': open,
+        'regions': regions.map((e) => e.toJson()).toList(),
+        'timezone': timezone,
+        'topics': topics,
+        'whatsapp': whatsapp,
+      };
+}
+
 SwitchCompanyModel switchCompanyModelFromJson(String str) => SwitchCompanyModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String switchCompanyModelToJson(SwitchCompanyModel data) => json.encode(data.toJson());
@@ -7883,5 +8029,148 @@ class VoiceNotePatchModel {
 
   Map<String, dynamic> toJson() => {
         'transcript_edited': transcriptEdited,
+      };
+}
+
+app__schemas__leads__ContactInModel app__schemas__leads__ContactInModelFromJson(String str) => app__schemas__leads__ContactInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String app__schemas__leads__ContactInModelToJson(app__schemas__leads__ContactInModel data) => json.encode(data.toJson());
+
+class app__schemas__leads__ContactInModel {
+  final String email;
+  /// One of: en, hi, gu, es, fr
+  final String? lang;
+  final String message;
+  final String name;
+  /// One of: sales, support, billing, partnership, other
+  final String topic;
+
+  const app__schemas__leads__ContactInModel({
+    required this.email,
+    this.lang,
+    required this.message,
+    required this.name,
+    required this.topic,
+  });
+
+  factory app__schemas__leads__ContactInModel.fromJson(Map<String, dynamic> json) => app__schemas__leads__ContactInModel(
+        email: json['email'] as String,
+        lang: json['lang'] as String?,
+        message: json['message'] as String,
+        name: json['name'] as String,
+        topic: json['topic'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'lang': lang,
+        'message': message,
+        'name': name,
+        'topic': topic,
+      };
+}
+
+app__schemas__leads__ContactOutModel app__schemas__leads__ContactOutModelFromJson(String str) => app__schemas__leads__ContactOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String app__schemas__leads__ContactOutModelToJson(app__schemas__leads__ContactOutModel data) => json.encode(data.toJson());
+
+class app__schemas__leads__ContactOutModel {
+  final String ticket;
+  /// One of: sales, support, billing, partnership, other
+  final String topic;
+
+  const app__schemas__leads__ContactOutModel({
+    required this.ticket,
+    required this.topic,
+  });
+
+  factory app__schemas__leads__ContactOutModel.fromJson(Map<String, dynamic> json) => app__schemas__leads__ContactOutModel(
+        ticket: json['ticket'] as String,
+        topic: json['topic'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ticket': ticket,
+        'topic': topic,
+      };
+}
+
+app__schemas__work__ContactInModel app__schemas__work__ContactInModelFromJson(String str) => app__schemas__work__ContactInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String app__schemas__work__ContactInModelToJson(app__schemas__work__ContactInModel data) => json.encode(data.toJson());
+
+class app__schemas__work__ContactInModel {
+  final String? email;
+  final bool? isPrimary;
+  final String name;
+  final String? phone;
+  final String? title;
+
+  const app__schemas__work__ContactInModel({
+    this.email,
+    this.isPrimary,
+    required this.name,
+    this.phone,
+    this.title,
+  });
+
+  factory app__schemas__work__ContactInModel.fromJson(Map<String, dynamic> json) => app__schemas__work__ContactInModel(
+        email: json['email'] as String?,
+        isPrimary: json['is_primary'] as bool?,
+        name: json['name'] as String,
+        phone: json['phone'] as String?,
+        title: json['title'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'is_primary': isPrimary,
+        'name': name,
+        'phone': phone,
+        'title': title,
+      };
+}
+
+app__schemas__work__ContactOutModel app__schemas__work__ContactOutModelFromJson(String str) => app__schemas__work__ContactOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String app__schemas__work__ContactOutModelToJson(app__schemas__work__ContactOutModel data) => json.encode(data.toJson());
+
+class app__schemas__work__ContactOutModel {
+  final String? email;
+  final String id;
+  final bool isPrimary;
+  final String name;
+  final String? phone;
+  final bool reviewOptedOut;
+  final String? title;
+
+  const app__schemas__work__ContactOutModel({
+    this.email,
+    required this.id,
+    required this.isPrimary,
+    required this.name,
+    this.phone,
+    required this.reviewOptedOut,
+    this.title,
+  });
+
+  factory app__schemas__work__ContactOutModel.fromJson(Map<String, dynamic> json) => app__schemas__work__ContactOutModel(
+        email: json['email'] as String?,
+        id: json['id'] as String,
+        isPrimary: json['is_primary'] as bool,
+        name: json['name'] as String,
+        phone: json['phone'] as String?,
+        reviewOptedOut: json['review_opted_out'] as bool,
+        title: json['title'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'id': id,
+        'is_primary': isPrimary,
+        'name': name,
+        'phone': phone,
+        'review_opted_out': reviewOptedOut,
+        'title': title,
       };
 }

@@ -23,6 +23,7 @@ from app.schemas.identity import (
 )
 from app.services.auth import PASSWORD_MIN
 from app.services.credits import plan_out
+from app.services.leads import support
 
 router = APIRouter(tags=["config"])
 Locale = Literal["en", "hi", "gu", "es", "fr"]
@@ -74,6 +75,7 @@ async def config(response: Response, locale: Locale = "en", db: AsyncSession = D
             "email": get_settings().email_enabled,
         },
         app_links=AppLinks(android=s.android_app_url, ios=s.ios_app_url),
+        support=support(),
     )
 
 

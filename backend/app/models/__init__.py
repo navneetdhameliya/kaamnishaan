@@ -24,6 +24,7 @@ from app.models.identity import (
     OtpChallenge,
     User,
 )
+from app.models.leads import Lead
 from app.models.notifications import Notification
 from app.models.reports import (
     AIUsage,
@@ -46,6 +47,7 @@ from app.models.work import Customer, CustomerContact, Equipment, Job, JobEvent,
 
 __all__ = [
     "AssistantMessage",
+    "Lead",
     "AIUsage",
     "BackgroundTask",
     "ChangeRequest",
