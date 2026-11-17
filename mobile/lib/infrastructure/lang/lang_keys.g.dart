@@ -2128,4 +2128,72 @@ abstract final class LangKeys {
   static const cbEmptyBody = 'cb.empty_body';
   /// Draft · tap Save checklist so technicians can use it.
   static const cbDraftNote = 'cb.draft_note';
+  /// Ask KaamNishaan AI
+  static const aiTitle = 'ai.title';
+  /// Answers only from your company's jobs
+  static const aiSubtitle = 'ai.subtitle';
+  /// Last visit?
+  static const aiChipLast = 'ai.chip_last';
+  /// When did we last visit 
+  static const aiChipLastText = 'ai.chip_last_text';
+  /// What is missing?
+  static const aiChipMissing = 'ai.chip_missing';
+  /// What is still missing on today's jobs?
+  static const aiChipMissingText = 'ai.chip_missing_text';
+  /// Reports this week?
+  static const aiChipWeek = 'ai.chip_week';
+  /// Which reports did we send this week?
+  static const aiChipWeekText = 'ai.chip_week_text';
+  /// Ask about your jobs…
+  static const aiHint = 'ai.hint';
+  /// Chat is paused
+  static const aiPausedHint = 'ai.paused_hint';
+  /// Chat is paused
+  static const aiPaused = 'ai.paused';
+  /// Your company used this month's {n} AI questions. It starts again on {date}.
+  static const aiPausedBody = 'ai.paused_body';
+  /// {a} of {b} questions
+  static const aiUsed = 'ai.used';
+  /// Upgrade plan
+  static const aiUpgrade = 'ai.upgrade';
+  /// Not now
+  static const aiNotNow = 'ai.not_now';
+  /// Ask the owner to upgrade the plan.
+  static const aiOwnerUpgrade = 'ai.owner_upgrade';
+  /// The assistant isn't switched on yet.
+  static const aiUnavailable = 'ai.unavailable';
+  /// Ask anything about your jobs
+  static const aiEmpty = 'ai.empty';
+  /// For example: when you last visited a customer, or what is still missing on a job.
+  static const aiEmptyBody = 'ai.empty_body';
+  /// From {sources}
+  static const aiFrom = 'ai.from';
+  /// {n} reports
+  static const aiNReports = 'ai.n_reports';
+  /// 1 report
+  static const aiOneReport = 'ai.one_report';
+  /// {n} jobs
+  static const aiNJobs = 'ai.n_jobs';
+  /// 1 job
+  static const aiOneJob = 'ai.one_job';
+  /// {n} photos
+  static const aiNPhotos = 'ai.n_photos';
+  /// Report #{n}
+  static const aiReportN = 'ai.report_n';
+  /// Missing: {steps}
+  static const aiMissing = 'ai.missing';
+  /// before photo
+  static const aiStepBefore = 'ai.step_before';
+  /// photo while working
+  static const aiStepDuring = 'ai.step_during';
+  /// after photo
+  static const aiStepAfter = 'ai.step_after';
+  /// checklist
+  static const aiStepChecklists = 'ai.step_checklists';
+  /// voice note
+  static const aiStepVoice = 'ai.step_voice';
+  /// All proof is in
+  static const aiAllDone = 'ai.all_done';
+  /// Send
+  static const aiSend = 'ai.send';
 }

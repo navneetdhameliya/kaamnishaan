@@ -60,6 +60,8 @@ import 'package:kaamnishaan/UI/screens/jobs_section/photo_gallery_section/photo_
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_gallery_section/photo_gallery_screen.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_pair_section/photo_pair_controller.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_pair_section/photo_pair_screen.dart';
+import 'package:kaamnishaan/UI/screens/me_section/assistant_section/assistant_controller.dart';
+import 'package:kaamnishaan/UI/screens/me_section/assistant_section/assistant_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/billing_section/billing_controller.dart';
 import 'package:kaamnishaan/UI/screens/me_section/billing_section/billing_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/company_settings_section/company_settings_controller.dart';
@@ -2174,6 +2176,58 @@ void main() {
     Get.put(ChecklistLibraryController(checklists: checklists));
     await shot(t, 'checklists_library', const ChecklistLibraryScreen());
   });
+
+  // ---- Step 2s: Ask KaamNishaan AI ---------------------------------------------------------------
+  Future<void> assistantShot(WidgetTester t, String name, {bool paused = false}) async {
+    final assistant = MockAssistantRepository();
+    final at = DateTime(2026, 11, 5, 12);
+    when(() => assistant.chat()).thenAnswer(
+      (_) async => ApiSuccess<AssistantOutModel>(
+        AssistantOutModel(
+          data: [
+            AssistantMessageOutModel(id: 'q1', role: 'user', text: 'When did we last service Green Valley Clinic?', at: at),
+            AssistantMessageOutModel(
+              id: 'a1',
+              role: 'assistant',
+              text: '12 August. Ramesh changed the air filter and the report was sent to Dr. Anita Rao.',
+              at: at,
+              reports: [
+                SourceReportModel(
+                  id: 'r1',
+                  number: 'R-0871',
+                  jobId: 'j1',
+                  customer: 'Green Valley Clinic',
+                  status: 'approved',
+                  at: DateTime(2026, 8, 12, 10),
+                ),
+              ],
+              photoCount: 3,
+            ),
+            AssistantMessageOutModel(id: 'q2', role: 'user', text: "What is still missing on today's job?", at: at),
+            AssistantMessageOutModel(
+              id: 'a2',
+              role: 'assistant',
+              text: 'An after photo of the outdoor unit. Everything else is done.',
+              at: at,
+              jobs: const [
+                SourceJobModel(id: 'j2', title: 'AC service', customer: 'Mehta house', status: 'in_progress', photos: [], missing: ['after']),
+              ],
+            ),
+          ],
+          used: paused ? 200 : 160,
+          limit: 200,
+          paused: paused,
+          renewsAt: DateTime(2026, 12, 1),
+          available: true,
+        ),
+      ),
+    );
+    Get.put(AssistantController(assistant: assistant, translation: translation(), session: session));
+    await shot(t, name, const AssistantScreen());
+  }
+
+  testWidgets('M36 AI assistant', (t) async => assistantShot(t, 'm36_assistant'));
+  testWidgets('M36 AI assistant, limit reached', (t) async => assistantShot(t, 'm36_assistant_paused', paused: true));
 
   testWidgets('M13 dashboard', (t) async {
     await dashboard(t, 'm13_dashboard', dashboardData(), reviews: [reviewItem()]);

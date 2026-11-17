@@ -50,6 +50,8 @@ import '../../../UI/screens/jobs_section/photo_gallery_section/photo_gallery_bin
 import '../../../UI/screens/jobs_section/photo_gallery_section/photo_gallery_screen.dart';
 import '../../../UI/screens/jobs_section/photo_pair_section/photo_pair_binding.dart';
 import '../../../UI/screens/jobs_section/photo_pair_section/photo_pair_screen.dart';
+import '../../../UI/screens/me_section/assistant_section/assistant_binding.dart';
+import '../../../UI/screens/me_section/assistant_section/assistant_screen.dart';
 import '../../../UI/screens/me_section/billing_section/billing_binding.dart';
 import '../../../UI/screens/me_section/billing_section/billing_screen.dart';
 import '../../../UI/screens/me_section/company_settings_section/company_settings_binding.dart';
@@ -262,6 +264,7 @@ abstract final class AppPages {
       page: () => const ChecklistBuilderScreen(),
       binding: ChecklistBuilderBinding(),
     ),
+    GetPage(name: RoutesConstants.assistantScreen, page: () => const AssistantScreen(), binding: AssistantBinding()),
     GetPage(name: RoutesConstants.teamScreen, page: () => const TeamScreen(), binding: TeamBinding()),
     GetPage(name: RoutesConstants.inviteScreen, page: () => const InviteScreen(), binding: InviteBinding()),
     GetPage(name: RoutesConstants.messagesScreen, page: () => const MessagesScreen(), binding: MessagesBinding()),
