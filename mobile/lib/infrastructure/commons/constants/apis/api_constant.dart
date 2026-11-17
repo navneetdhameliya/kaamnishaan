@@ -44,6 +44,12 @@ abstract final class APIConstant {
   static String jobTechniciansAPIEP(String id) => '/jobs/$id/assignable-technicians';
   static String assignJobAPIEP(String id) => '/jobs/$id/assign';
 
+  // reviews
+  static String reviewRequestAPIEP(String jobId) => '/jobs/$jobId/review-request';
+  static String cancelReviewRequestAPIEP(String id) => '/review-requests/$id';
+  static const String myReviewsAPIEP = '/me/reviews';
+  static String reviewAPIEP(String id) => '/reviews/$id';
+
   // customers
   static const String customersAPIEP = '/customers';
   static String customerAPIEP(String id) => '/customers/$id';

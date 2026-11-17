@@ -150,6 +150,11 @@ class MeController extends GetxController {
     load();
   }
 
+  /// M44 My reviews.
+  Future<void> onMyReviewsTap() async {
+    await Get.toNamed<void>(RoutesConstants.myReviewsScreen);
+  }
+
   Future<void> onWaitingTap() async {
     await Get.toNamed(RoutesConstants.waitingToSendScreen);
     load();
@@ -165,7 +170,7 @@ class MeController extends GetxController {
     session.me.refresh();
   }
 
-  /// Reviews (M44) and help come with their own steps.
+  /// Help comes with its own step.
   void onComingSoonTap() => KnToast.info(LangKeys.commonComingSoon.tr);
 
   /// Log out now; the screen asks first when things are still waiting to send.

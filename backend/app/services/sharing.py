@@ -465,6 +465,12 @@ def _photo(e) -> PublicPhoto:
     )
 
 
+async def _review_state(db: AsyncSession, rep: Report):
+    from app.services import reviews
+
+    return await reviews.public_state(db, rep)
+
+
 async def public_report(db: AsyncSession, token: str, lang: str | None) -> PublicReport:
     link, rep = await _link(db, token)
     t = now()
@@ -514,6 +520,7 @@ async def public_report(db: AsyncSession, token: str, lang: str | None) -> Publi
         link_expires_at=link.expires_at,
         pdf_ready=rep.pdf_status == "ready",
         fingerprint=rep.pdf_sha256,
+        review=await _review_state(db, rep),
     )
 
 

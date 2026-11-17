@@ -17,6 +17,7 @@ import '../data_access_layer/api_providers/jobs_api_provider.dart';
 import '../data_access_layer/api_providers/me_api_provider.dart';
 import '../data_access_layer/api_providers/notifications_api_provider.dart';
 import '../data_access_layer/api_providers/reports_api_provider.dart';
+import '../data_access_layer/api_providers/reviews_api_provider.dart';
 import '../data_access_layer/api_providers/voice_api_provider.dart';
 import '../data_access_layer/api_repository/auth_api_repository.dart';
 import '../data_access_layer/api_repository/checklists_api_repository.dart';
@@ -29,6 +30,7 @@ import '../data_access_layer/api_repository/jobs_api_repository.dart';
 import '../data_access_layer/api_repository/me_api_repository.dart';
 import '../data_access_layer/api_repository/notifications_api_repository.dart';
 import '../data_access_layer/api_repository/reports_api_repository.dart';
+import '../data_access_layer/api_repository/reviews_api_repository.dart';
 import '../data_access_layer/api_repository/voice_api_repository.dart';
 import '../data_access_layer/networks/api_client.dart';
 import '../lang/translation_service.dart';
@@ -80,6 +82,7 @@ abstract final class AppServices {
       permanent: true,
     );
     Get.put<IJobsApiRepository>(JobsApiRepository(provider: JobsApiProvider(client)), permanent: true);
+    Get.put<IReviewsApiRepository>(ReviewsApiRepository(provider: ReviewsApiProvider(client)), permanent: true);
     Get.put<ICustomersApiRepository>(CustomersApiRepository(provider: CustomersApiProvider(client)), permanent: true);
     Get.put<IVoiceApiRepository>(VoiceApiRepository(provider: VoiceApiProvider(client)), permanent: true);
     Get.put<IReportsApiRepository>(ReportsApiRepository(provider: ReportsApiProvider(client)), permanent: true);

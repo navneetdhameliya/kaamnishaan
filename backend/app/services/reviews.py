@@ -1,0 +1,427 @@
+"""Customer reviews: asking (M31, M15), the rating link with the approved report (Day 0), the customer's
+rating on the report page (W29) and the technician's own reviews (M44).
+
+Day 2 reminders and the Day 5 AI call are planned on each request (`reminder_at`, `ai_call_at`) so the
+screens can show them; the follow-up worker that sends them comes with credits (next reviews step).
+"""
+
+import uuid
+from datetime import UTC, datetime, time, timedelta
+from zoneinfo import ZoneInfo
+
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.core.deps import Principal
+from app.core.errors import AppError, Conflict, Forbidden, NotFound
+from app.core.security import now
+from app.models import (
+    Company,
+    CustomerContact,
+    Evidence,
+    Job,
+    Report,
+    Review,
+    ReviewReply,
+    ReviewRequest,
+    ReviewRequestEvent,
+    ReviewSettings,
+    User,
+)
+from app.models.reviews import POSITIVE_TAGS
+from app.providers.storage import get_storage
+from app.schemas.reviews import (
+    JobReview,
+    MyReviews,
+    PublicReviewState,
+    RatedOut,
+    ReplyOut,
+    ReviewBrief,
+    ReviewIn,
+    ReviewListItem,
+    ReviewOut,
+    TagCount,
+)
+from app.schemas.work import PersonRef
+from app.services import audit, sharing
+from app.services.report_labels import label
+from app.services.reports import DONE, rlabel
+
+STARTED = ("link_sent", "reminded", "ai_call_scheduled", "ai_call_done")
+
+
+# ---- settings ------------------------------------------------------------------------------------
+async def settings_for(db: AsyncSession, company_id: uuid.UUID) -> ReviewSettings:
+    """The company's review settings, or the defaults (M46 edits them later)."""
+    s = await db.get(ReviewSettings, company_id)
+    if s:
+        return s
+    return ReviewSettings(
+        company_id=company_id, ask_on_share=True, reminder_day=2, ai_call_enabled=True, ai_call_day=5,
+        techs_can_request=True, techs_see_reviews=True, low_rating_threshold=2,
+    )  # fmt: skip
+
+
+def _zone(company: Company) -> ZoneInfo:
+    try:
+        return ZoneInfo(company.timezone)
+    except Exception:  # noqa: BLE001 - a bad stored zone falls back to India
+        return ZoneInfo("Asia/Kolkata")
+
+
+def _plan(company: Company, start: datetime, days: int) -> datetime:
+    """[days] after [start], at 11:00 in the company's time zone (when people read messages)."""
+    zone = _zone(company)
+    day = start.astimezone(zone).date() + timedelta(days=days)
+    return datetime.combine(day, time(11, 0), tzinfo=zone).astimezone(UTC)
+
+
+# ---- reading -------------------------------------------------------------------------------------
+async def _report(db: AsyncSession, job: Job) -> Report | None:
+    return (await db.execute(select(Report).where(Report.job_id == job.id))).scalar_one_or_none()
+
+
+async def _request(db: AsyncSession, job_id: uuid.UUID, lock: bool = False) -> ReviewRequest | None:
+    q = select(ReviewRequest).where(ReviewRequest.job_id == job_id)
+    if lock:
+        q = q.with_for_update()
+    return (await db.execute(q)).scalar_one_or_none()
+
+
+def _manager(p: Principal) -> bool:
+    return "jobs.view_all" in p.permissions
+
+
+def _brief(r: Review) -> ReviewBrief:
+    return ReviewBrief(
+        id=r.id, rating=r.rating, technician_rating=r.technician_rating, comment=r.comment, source=r.source,
+        created_at=r.created_at,
+    )  # fmt: skip
+
+
+async def job_review(db: AsyncSession, p: Principal, job: Job) -> JobReview | None:
+    """The "Customer review" card on a job (M15). None until the job has a report."""
+    rep = await _report(db, job)
+    if rep is None:
+        return None
+    s = await settings_for(db, job.company_id)
+    req = await _request(db, job.id)
+    if req is None:
+        mine = job.assigned_to == p.user.id
+        contact = await sharing._contact(db, job)
+        reason = None
+        if not _manager(p) and not mine:
+            reason = "not_assigned"
+        elif not _manager(p) and not s.techs_can_request:
+            reason = "not_allowed"
+        elif contact is None or not (contact.phone or contact.email):
+            reason = "no_contact"
+        return JobReview(
+            status="not_requested", can_request=reason is None, blocked_reason=reason,
+            contact_name=contact.name if contact else None, contact_phone=contact.phone if contact else None,
+            ai_call_enabled=s.ai_call_enabled,
+        )  # fmt: skip
+    contact = await db.get(CustomerContact, req.contact_id) if req.contact_id else None
+    who = await db.get(User, req.requested_by) if req.requested_by else None
+    review = (await db.execute(select(Review).where(Review.request_id == req.id))).scalar_one_or_none()
+    return JobReview(
+        status=req.status,
+        request_id=req.id,
+        can_request=False,
+        can_cancel=req.status == "queued" and (req.requested_by == p.user.id or _manager(p)),
+        requested_by=PersonRef(id=who.id, name=who.name or "") if who else None,
+        requested_by_me=req.requested_by == p.user.id,
+        contact_name=contact.name if contact else None,
+        contact_phone=contact.phone if contact else None,
+        sent_at=req.sent_at,
+        channels=list(req.channels or []),
+        reminder_at=req.reminder_at,
+        ai_call_at=req.ai_call_at if s.ai_call_enabled else None,
+        ai_call_enabled=s.ai_call_enabled,
+        opted_out_at=req.opted_out_at,
+        opt_out_source=req.opt_out_source,
+        review=_brief(review) if review else None,
+    )
+
+
+# ---- asking --------------------------------------------------------------------------------------
+async def request_review(db: AsyncSession, p: Principal, job: Job) -> JobReview:
+    """M31 "Ask for review" / M15 "Request review". Sent now when the report is approved; otherwise it
+    waits and goes with the approval."""
+    rep = await _report(db, job)
+    if rep is None:
+        raise Conflict("no_report", "Send the report first, then ask for a review.")
+    s = await settings_for(db, job.company_id)
+    if not _manager(p):
+        if job.assigned_to != p.user.id:
+            raise Forbidden("forbidden", "Only the technician on this job or a manager can ask.")
+        if not s.techs_can_request:
+            raise Forbidden("reviews_not_allowed", "Your company asks for reviews itself.")
+    if await _request(db, job.id, lock=True):
+        raise Conflict("already_requested", "A review was already asked for this job.")
+    contact = await sharing._contact(db, job)
+    if contact is None or not (contact.phone or contact.email):
+        raise AppError(
+            "contact_missing", "Add the customer's phone or email first.", fields={"contact": "missing"}
+        )
+    req = ReviewRequest(
+        company_id=job.company_id, job_id=job.id, report_id=rep.id, contact_id=contact.id,
+        requested_by=p.user.id, status="queued",
+    )  # fmt: skip
+    db.add(req)
+    await db.flush()
+    db.add(ReviewRequestEvent(request_id=req.id, step="requested"))
+    if rep.status in DONE:
+        await _send(db, p, req, rep, job, contact)
+    await audit.record(
+        db, "review.requested", company_id=p.company_id, actor_id=p.user.id, actor_role=p.role,
+        target_type="job", target_id=job.id, data={"status": req.status},
+    )  # fmt: skip
+    await db.flush()
+    return await job_review(db, p, job)
+
+
+async def cancel(db: AsyncSession, p: Principal, request_id: uuid.UUID) -> None:
+    """Cancel while it waits for approval: the job goes back to "not asked yet"."""
+    req = await db.get(ReviewRequest, request_id, with_for_update=True)
+    if not req or req.company_id != p.company_id:
+        raise NotFound("not_found", "Review request not found.")
+    if req.requested_by != p.user.id and not _manager(p):
+        raise Forbidden("forbidden", "Only the person who asked, or a manager, can cancel.")
+    if req.status != "queued":
+        raise Conflict(
+            "invalid_transition", "The link has already gone to the customer.", {"status": req.status}
+        )
+    await db.delete(req)
+    await db.flush()
+
+
+async def on_report_approved(db: AsyncSession, p: Principal, rep: Report, job: Job) -> None:
+    """A request that waited for approval goes out now, with the report (Day 0)."""
+    req = await _request(db, job.id, lock=True)
+    if not req or req.status != "queued":
+        return
+    contact = (
+        await db.get(CustomerContact, req.contact_id) if req.contact_id else await sharing._contact(db, job)
+    )
+    if contact is None or not (contact.phone or contact.email):
+        req.status, req.stopped_reason = "stopped", "no_contact"
+        return
+    await _send(db, p, req, rep, job, contact)
+
+
+async def _send(
+    db: AsyncSession, p: Principal, req: ReviewRequest, rep: Report, job: Job, contact: CustomerContact
+) -> None:
+    """Day 0: the report link, opening on the rating, by SMS and email."""
+    company = await db.get(Company, job.company_id)
+    s = await settings_for(db, job.company_id)
+    channels = [c for c, to in (("sms", contact.phone), ("email", contact.email)) if to]
+    link = await sharing._ensure_link(
+        db, rep, channels[0], p.user.id, contact.name, contact.phone, contact.email
+    )
+    url = f"{sharing.link_url(link)}?rate=1"
+    texts = sharing._texts(company.name, rep, job, url, contact.name, link.expires_at.astimezone())
+    lang = rep.language
+    ask = label(lang, "review_sms", company=company.name, number=rlabel(rep.number), link=url)
+    texts.sms = f"{ask} {label(lang, 'stop')}"
+    texts.whatsapp = texts.sms
+    texts.email_body = f"{texts.email_body}\n\n{label(lang, 'review_email')}"
+    sent = []
+    for ch in channels:
+        to = contact.email if ch == "email" else contact.phone
+        msg = await sharing._deliver(db, rep, link, ch, to, texts, p.user.id, template="report_review")
+        db.add(ReviewRequestEvent(request_id=req.id, step="link_sent", channel=ch, status=msg.status))
+        if msg.status == "sent":
+            sent.append(ch)
+    if not sent:
+        req.status, req.stopped_reason = "stopped", "delivery_failed"
+        return
+    await sharing._mark_shared(db, p, rep, job, sent)
+    t = now()
+    req.status, req.sent_at, req.channels, req.share_link_id = "link_sent", t, sent, link.id
+    req.reminder_at = _plan(company, t, s.reminder_day)
+    req.ai_call_at = _plan(company, t, s.ai_call_day) if s.ai_call_enabled else None
+
+
+# ---- the customer's report page (W29) ------------------------------------------------------------
+async def public_state(db: AsyncSession, rep: Report) -> PublicReviewState:
+    job = await db.get(Job, rep.job_id)
+    req = await _request(db, job.id)
+    review = (
+        (await db.execute(select(Review).where(Review.request_id == req.id))).scalar_one_or_none()
+        if req
+        else None
+    )
+    tech = await db.get(User, job.assigned_to) if job.assigned_to else None
+    return PublicReviewState(
+        can_rate=review is None,
+        rated=review is not None,
+        rating=review.rating if review else None,
+        technician=(tech.name or "").split(" ")[0] or None if tech else None,
+    )
+
+
+async def _for_link(db: AsyncSession, token: str) -> tuple[Report, Job, ReviewRequest]:
+    _, rep = await sharing._link(db, token)
+    job = await db.get(Job, rep.job_id)
+    req = await _request(db, job.id, lock=True)
+    if req is None:  # rated without being asked (the report was shared on its own)
+        contact = await sharing._contact(db, job)
+        req = ReviewRequest(
+            company_id=job.company_id, job_id=job.id, report_id=rep.id,
+            contact_id=contact.id if contact else None, status="link_sent", sent_at=now(),
+        )  # fmt: skip
+        db.add(req)
+        await db.flush()
+    return rep, job, req
+
+
+async def rate(db: AsyncSession, token: str, body: ReviewIn) -> RatedOut:
+    rep, job, req = await _for_link(db, token)
+    if (await db.execute(select(Review.id).where(Review.request_id == req.id))).first():
+        raise Conflict("already_rated", "Thank you, this job was already rated.")
+    contact = await db.get(CustomerContact, req.contact_id) if req.contact_id else None
+    review = Review(
+        company_id=job.company_id, request_id=req.id, job_id=job.id, technician_id=job.assigned_to,
+        rating=body.rating, technician_rating=body.technician_rating, tags=body.tags,
+        comment=(body.comment or None), reviewer_name=body.name or (contact.name if contact else None),
+        source="link", public_allowed=body.public_allowed, wants_call_back=body.wants_call_back,
+    )  # fmt: skip
+    db.add(review)
+    req.status = "rated"
+    db.add(ReviewRequestEvent(request_id=req.id, step="rated", channel="link"))
+    await db.flush()
+    s = await settings_for(db, job.company_id)
+    return RatedOut(review_id=review.id, google_review_url=s.google_review_url if body.rating >= 4 else None)
+
+
+async def opt_out(db: AsyncSession, token: str) -> None:
+    """ "Don't ask me again" on the page: no more messages or calls for this job."""
+    _, _, req = await _for_link(db, token)
+    if req.status == "rated":
+        return
+    req.status, req.opted_out_at, req.opt_out_source = "opted_out", now(), "link"
+    db.add(ReviewRequestEvent(request_id=req.id, step="opted_out", channel="link"))
+    await db.flush()
+
+
+# ---- My reviews (M44) ----------------------------------------------------------------------------
+async def _items(db: AsyncSession, reviews: list[Review]) -> list[tuple[Review, Job, ReviewListItem]]:
+    if not reviews:
+        return []
+    from app.models import Customer
+    from app.services.evidence import thumbs_for
+
+    jobs = {
+        j.id: j
+        for j in (await db.execute(select(Job).where(Job.id.in_({r.job_id for r in reviews})))).scalars()
+    }
+    names = dict(
+        (
+            await db.execute(
+                select(Customer.id, Customer.name).where(
+                    Customer.id.in_({j.customer_id for j in jobs.values()})
+                )
+            )
+        ).all()
+    )
+    thumbs = await thumbs_for(db, list(jobs), each=1)
+    replies: dict[uuid.UUID, ReplyOut] = {}
+    for rp, author in (
+        await db.execute(
+            select(ReviewReply, User)
+            .outerjoin(User, User.id == ReviewReply.author_id)
+            .where(ReviewReply.review_id.in_([r.id for r in reviews]))
+            .order_by(ReviewReply.created_at)
+        )
+    ).all():
+        replies[rp.review_id] = ReplyOut(
+            author=PersonRef(id=author.id, name=author.name or "") if author else None,
+            text=rp.text,
+            created_at=rp.created_at,
+        )
+    out = []
+    for r in reviews:
+        j = jobs[r.job_id]
+        out.append(
+            (
+                r,
+                j,
+                ReviewListItem(
+                    id=r.id, rating=r.rating, technician_rating=r.technician_rating, comment=r.comment,
+                    reviewer_name=r.reviewer_name, source=r.source, customer=names.get(j.customer_id, ""),
+                    job_title=j.title, cover_url=(thumbs.get(j.id) or [None])[0], created_at=r.created_at,
+                    reply=replies.get(r.id),
+                ),
+            )
+        )  # fmt: skip
+    return out
+
+
+async def my_reviews(db: AsyncSession, p: Principal) -> MyReviews:
+    """The technician's own reviews this year, newest first, with the average and the good tags."""
+    s = await settings_for(db, p.company_id)
+    if not s.techs_see_reviews and not _manager(p):
+        raise Forbidden("reviews_hidden", "Your company keeps reviews for managers.")
+    company = await db.get(Company, p.company_id)
+    zone = _zone(company)
+    year_start = datetime(now().astimezone(zone).year, 1, 1, tzinfo=zone)
+    reviews = list(
+        (
+            await db.execute(
+                select(Review)
+                .where(
+                    Review.company_id == p.company_id, Review.technician_id == p.user.id,
+                    Review.status == "published", Review.created_at >= year_start,
+                )
+                .order_by(Review.created_at.desc())
+            )
+        ).scalars()
+    )  # fmt: skip
+    stars = [r.technician_rating or r.rating for r in reviews]
+    counts: dict[str, int] = {}
+    for r in reviews:
+        for t in r.tags or []:
+            if t in POSITIVE_TAGS:
+                counts[t] = counts.get(t, 0) + 1
+    return MyReviews(
+        average=round(sum(stars) / len(stars), 1) if stars else None,
+        count=len(stars),
+        share_4_plus=round(100 * sum(1 for x in stars if x >= 4) / len(stars)) if stars else 0,
+        tags=[TagCount(key=k, count=v) for k, v in sorted(counts.items(), key=lambda kv: -kv[1])],
+        data=[item for _, _, item in await _items(db, reviews)],
+    )
+
+
+async def get_review(db: AsyncSession, p: Principal, review_id: uuid.UUID) -> ReviewOut:
+    r = await db.get(Review, review_id)
+    if not r or r.company_id != p.company_id or (not _manager(p) and r.technician_id != p.user.id):
+        raise NotFound("not_found", "Review not found.")
+    [(_, job, item)] = await _items(db, [r])
+    rep = await _report(db, job)
+    tech = await db.get(User, r.technician_id) if r.technician_id else None
+    storage = get_storage()
+    shots: dict[str, str] = {}
+    for stage, key in (
+        await db.execute(
+            select(Evidence.stage, Evidence.thumb_key)
+            .where(Evidence.job_id == job.id, Evidence.deleted_at.is_(None), Evidence.thumb_key.is_not(None))
+            .order_by(Evidence.taken_at)
+        )
+    ).all():
+        if stage == "before":
+            shots.setdefault("before", key)
+        elif stage == "after":
+            shots["after"] = key  # the last after photo
+    return ReviewOut(
+        **item.model_dump(),
+        tags=list(r.tags or []),
+        job_id=job.id,
+        report_number=rlabel(rep.number) if rep else None,
+        technician=PersonRef(id=tech.id, name=tech.name or "") if tech else None,
+        before_url=storage.presign_get(shots["before"]) if "before" in shots else None,
+        after_url=storage.presign_get(shots["after"]) if "after" in shots else None,
+        public_allowed=r.public_allowed,
+        wants_call_back=r.wants_call_back,
+    )

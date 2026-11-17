@@ -3264,6 +3264,17 @@
             ],
             "description": "Only on Today's current job"
           },
+          "review": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/JobReview"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Customer review card (M15); none before a report"
+          },
           "scheduled_at": {
             "anyOf": [
               {
@@ -3443,6 +3454,193 @@
           }
         },
         "title": "JobPatch",
+        "type": "object"
+      },
+      "JobReview": {
+        "description": "The \"Customer review\" card on a job (M15).",
+        "properties": {
+          "ai_call_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Day 5 AI call, if still no rating",
+            "title": "Ai Call At"
+          },
+          "ai_call_enabled": {
+            "default": true,
+            "title": "Ai Call Enabled",
+            "type": "boolean"
+          },
+          "blocked_reason": {
+            "anyOf": [
+              {
+                "enum": [
+                  "no_report",
+                  "no_contact",
+                  "not_allowed",
+                  "not_assigned"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Blocked Reason"
+          },
+          "can_cancel": {
+            "default": false,
+            "title": "Can Cancel",
+            "type": "boolean"
+          },
+          "can_request": {
+            "description": "Request review shows (not asked yet, and allowed)",
+            "title": "Can Request",
+            "type": "boolean"
+          },
+          "channels": {
+            "description": "How the link went: sms, whatsapp, email",
+            "items": {
+              "type": "string"
+            },
+            "title": "Channels",
+            "type": "array"
+          },
+          "contact_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Name"
+          },
+          "contact_phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Phone"
+          },
+          "opt_out_source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Opt Out Source"
+          },
+          "opted_out_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Opted Out At"
+          },
+          "reminder_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Day 2 reminder (planned or done)",
+            "title": "Reminder At"
+          },
+          "request_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Request Id"
+          },
+          "requested_by": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PersonRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "requested_by_me": {
+            "default": false,
+            "title": "Requested By Me",
+            "type": "boolean"
+          },
+          "review": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReviewBrief"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sent_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sent At"
+          },
+          "status": {
+            "enum": [
+              "not_requested",
+              "queued",
+              "link_sent",
+              "reminded",
+              "ai_call_scheduled",
+              "ai_call_done",
+              "rated",
+              "opted_out",
+              "stopped",
+              "paused_no_credits"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "status",
+          "can_request"
+        ],
+        "title": "JobReview",
         "type": "object"
       },
       "LanguageOut": {
@@ -4253,6 +4451,56 @@
           "meta"
         ],
         "title": "MyInviteList",
+        "type": "object"
+      },
+      "MyReviews": {
+        "description": "M44: the technician's own reviews this year, newest first.",
+        "properties": {
+          "average": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Average stars for the technician (or the service when not given)",
+            "title": "Average"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/ReviewListItem"
+            },
+            "title": "Data",
+            "type": "array"
+          },
+          "share_4_plus": {
+            "description": "Percent of reviews with 4 stars or more",
+            "title": "Share 4 Plus",
+            "type": "integer"
+          },
+          "tags": {
+            "description": "Good tags, most given first",
+            "items": {
+              "$ref": "#/components/schemas/TagCount"
+            },
+            "title": "Tags",
+            "type": "array"
+          }
+        },
+        "required": [
+          "average",
+          "count",
+          "share_4_plus",
+          "tags",
+          "data"
+        ],
+        "title": "MyReviews",
         "type": "object"
       },
       "NewLinkOut": {
@@ -5546,6 +5794,17 @@
             ],
             "title": "Photos Locked At"
           },
+          "review": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PublicReviewState"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The rating part of the page (W29)"
+          },
           "summary": {
             "anyOf": [
               {
@@ -5607,6 +5866,61 @@
           "fingerprint"
         ],
         "title": "PublicReport",
+        "type": "object"
+      },
+      "PublicReviewState": {
+        "properties": {
+          "can_rate": {
+            "title": "Can Rate",
+            "type": "boolean"
+          },
+          "negative_tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Negative Tags",
+            "type": "array"
+          },
+          "positive_tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Positive Tags",
+            "type": "array"
+          },
+          "rated": {
+            "title": "Rated",
+            "type": "boolean"
+          },
+          "rating": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rating"
+          },
+          "technician": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The technician's first name, for 'Rate Ramesh'",
+            "title": "Technician"
+          }
+        },
+        "required": [
+          "can_rate",
+          "rated"
+        ],
+        "title": "PublicReviewState",
         "type": "object"
       },
       "QuestionIn": {
@@ -6124,6 +6438,33 @@
         "title": "QuickCustomer",
         "type": "object"
       },
+      "RatedOut": {
+        "properties": {
+          "google_review_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Shown after 4-5 stars, when the company set one",
+            "title": "Google Review Url"
+          },
+          "review_id": {
+            "format": "uuid",
+            "title": "Review Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "review_id",
+          "google_review_url"
+        ],
+        "title": "RatedOut",
+        "type": "object"
+      },
       "Recipient": {
         "properties": {
           "email": {
@@ -6225,6 +6566,36 @@
           "accept_terms"
         ],
         "title": "Register",
+        "type": "object"
+      },
+      "ReplyOut": {
+        "properties": {
+          "author": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PersonRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "author",
+          "text",
+          "created_at"
+        ],
+        "title": "ReplyOut",
         "type": "object"
       },
       "ReportFlag": {
@@ -6773,6 +7144,419 @@
           }
         },
         "title": "RetranscribeIn",
+        "type": "object"
+      },
+      "ReviewBrief": {
+        "properties": {
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "rating": {
+            "description": "The service, 1-5",
+            "title": "Rating",
+            "type": "integer"
+          },
+          "source": {
+            "enum": [
+              "link",
+              "reply",
+              "ai_call"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "technician_rating": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The technician, 1-5",
+            "title": "Technician Rating"
+          }
+        },
+        "required": [
+          "id",
+          "rating",
+          "technician_rating",
+          "comment",
+          "source",
+          "created_at"
+        ],
+        "title": "ReviewBrief",
+        "type": "object"
+      },
+      "ReviewIn": {
+        "additionalProperties": false,
+        "properties": {
+          "comment": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 160,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "public_allowed": {
+            "default": false,
+            "title": "Public Allowed",
+            "type": "boolean"
+          },
+          "rating": {
+            "description": "The service",
+            "maximum": 5.0,
+            "minimum": 1.0,
+            "title": "Rating",
+            "type": "integer"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 10,
+            "title": "Tags",
+            "type": "array"
+          },
+          "technician_rating": {
+            "anyOf": [
+              {
+                "maximum": 5.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Technician Rating"
+          },
+          "wants_call_back": {
+            "default": false,
+            "title": "Wants Call Back",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "rating"
+        ],
+        "title": "ReviewIn",
+        "type": "object"
+      },
+      "ReviewListItem": {
+        "properties": {
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          },
+          "cover_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cover Url"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "customer": {
+            "title": "Customer",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job_title": {
+            "title": "Job Title",
+            "type": "string"
+          },
+          "rating": {
+            "title": "Rating",
+            "type": "integer"
+          },
+          "reply": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReplyOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "reviewer_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewer Name"
+          },
+          "source": {
+            "enum": [
+              "link",
+              "reply",
+              "ai_call"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "technician_rating": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Technician Rating"
+          }
+        },
+        "required": [
+          "id",
+          "rating",
+          "technician_rating",
+          "comment",
+          "reviewer_name",
+          "source",
+          "customer",
+          "job_title",
+          "cover_url",
+          "created_at",
+          "reply"
+        ],
+        "title": "ReviewListItem",
+        "type": "object"
+      },
+      "ReviewOut": {
+        "description": "M44 review details.",
+        "properties": {
+          "after_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "After Url"
+          },
+          "before_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Before Url"
+          },
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
+          },
+          "cover_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cover Url"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "customer": {
+            "title": "Customer",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job_id": {
+            "format": "uuid",
+            "title": "Job Id",
+            "type": "string"
+          },
+          "job_title": {
+            "title": "Job Title",
+            "type": "string"
+          },
+          "public_allowed": {
+            "title": "Public Allowed",
+            "type": "boolean"
+          },
+          "rating": {
+            "title": "Rating",
+            "type": "integer"
+          },
+          "reply": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ReplyOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "report_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Report Number"
+          },
+          "reviewer_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewer Name"
+          },
+          "source": {
+            "enum": [
+              "link",
+              "reply",
+              "ai_call"
+            ],
+            "title": "Source",
+            "type": "string"
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
+          "technician": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PersonRef"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "technician_rating": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Technician Rating"
+          },
+          "wants_call_back": {
+            "title": "Wants Call Back",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "rating",
+          "technician_rating",
+          "comment",
+          "reviewer_name",
+          "source",
+          "customer",
+          "job_title",
+          "cover_url",
+          "created_at",
+          "reply",
+          "tags",
+          "job_id",
+          "report_number",
+          "technician",
+          "before_url",
+          "after_url",
+          "public_allowed",
+          "wants_call_back"
+        ],
+        "title": "ReviewOut",
         "type": "object"
       },
       "SendIn": {
@@ -7691,6 +8475,24 @@
           "has_more"
         ],
         "title": "SyncChanges",
+        "type": "object"
+      },
+      "TagCount": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "count"
+        ],
+        "title": "TagCount",
         "type": "object"
       },
       "TaskOut": {
@@ -13007,6 +13809,55 @@
         ]
       }
     },
+    "/api/v1/jobs/{job_id}/review-request": {
+      "post": {
+        "description": "Ask the customer for a review: sent with the approved report, or now if already approved.",
+        "operationId": "ask_api_v1_jobs__job_id__review_request_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobReview"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ask",
+        "tags": [
+          "reviews"
+        ]
+      }
+    },
     "/api/v1/jobs/{job_id}/start": {
       "post": {
         "operationId": "start_api_v1_jobs__job_id__start_post",
@@ -13422,6 +14273,32 @@
         "summary": "Patch Preferences",
         "tags": [
           "me"
+        ]
+      }
+    },
+    "/api/v1/me/reviews": {
+      "get": {
+        "operationId": "mine_api_v1_me_reviews_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MyReviews"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Mine",
+        "tags": [
+          "reviews"
         ]
       }
     },
@@ -13949,6 +14826,98 @@
           }
         },
         "summary": "Request Link",
+        "tags": [
+          "customer report page"
+        ]
+      }
+    },
+    "/api/v1/public/reports/{token}/review": {
+      "post": {
+        "description": "W29: the customer rates the service and the technician, ticks tags and writes a few words.",
+        "operationId": "rate_job_api_v1_public_reports__token__review_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "title": "Token",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RatedOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "description": "already_rated"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Rate Job",
+        "tags": [
+          "customer report page"
+        ]
+      }
+    },
+    "/api/v1/public/reports/{token}/review/stop": {
+      "post": {
+        "description": "W29 \"Don't ask me again\": no more reminders or calls for this job.",
+        "operationId": "stop_asking_api_v1_public_reports__token__review_stop_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "title": "Token",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Stop Asking",
         "tags": [
           "customer report page"
         ]
@@ -14701,6 +15670,96 @@
         "summary": "Versions",
         "tags": [
           "reports"
+        ]
+      }
+    },
+    "/api/v1/review-requests/{request_id}": {
+      "delete": {
+        "description": "Cancel a request that is still waiting for approval.",
+        "operationId": "cancel_api_v1_review_requests__request_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "request_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Request Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Cancel",
+        "tags": [
+          "reviews"
+        ]
+      }
+    },
+    "/api/v1/reviews/{review_id}": {
+      "get": {
+        "operationId": "one_api_v1_reviews__review_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "review_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Review Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReviewOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "One",
+        "tags": [
+          "reviews"
         ]
       }
     },

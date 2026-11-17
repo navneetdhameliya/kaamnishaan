@@ -66,7 +66,7 @@ abstract final class LangKeys {
   static const reviewRateJob = 'review.rate_job';
   /// Not asked yet
   static const reviewNotAsked = 'review.not_asked';
-  /// Customer asked not to be contacted
+  /// Opted out
   static const reviewOptedOut = 'review.opted_out';
   /// {count} credits left
   static const billingCreditsLeft = 'billing.credits_left';
@@ -1258,7 +1258,7 @@ abstract final class LangKeys {
   static const queueEmptyBody = 'queue.empty_body';
   /// Customer or report number
   static const queueSearchHint = 'queue.search_hint';
-  /// Report review
+  /// Customer review
   static const reviewTitle = 'review.title';
   /// AI draft
   static const reviewAiDraft = 'review.ai_draft';
@@ -1650,4 +1650,132 @@ abstract final class LangKeys {
   static const settingsTechShareHelp = 'settings.tech_share_help';
   /// Saved
   static const settingsSaved = 'settings.saved';
+  /// Send {name} a link to rate this job. Reminders and one AI call follow if needed.
+  static const reviewNotAskedBody = 'review.not_asked_body';
+  /// Send {name} a link to rate this job. A reminder follows if needed.
+  static const reviewNotAskedBodyNoCall = 'review.not_asked_body_no_call';
+  /// the customer
+  static const reviewTheCustomer = 'review.the_customer';
+  /// Add the customer's phone or email to ask for a review.
+  static const reviewNoContact = 'review.no_contact';
+  /// Your company asks for reviews itself.
+  static const reviewNotAllowed = 'review.not_allowed';
+  /// Queued
+  static const reviewQueued = 'review.queued';
+  /// Will send after your manager approves the report.
+  static const reviewQueuedBody = 'review.queued_body';
+  /// Cancel request
+  static const reviewCancel = 'review.cancel';
+  /// Request cancelled
+  static const reviewCancelled = 'review.cancelled';
+  /// Waiting for rating
+  static const reviewWaiting = 'review.waiting';
+  /// Link sent with report
+  static const reviewLinkSent = 'review.link_sent';
+  /// Reminder
+  static const reviewReminder = 'review.reminder';
+  /// AI review call
+  static const reviewAiCall = 'review.ai_call';
+  /// {date} · if still no rating
+  static const reviewIfNoRating = 'review.if_no_rating';
+  /// Requested by you · no need to ask again.
+  static const reviewByYou = 'review.by_you';
+  /// Requested by {name} · no need to ask again.
+  static const reviewByName = 'review.by_name';
+  /// Rated
+  static const reviewRated = 'review.rated';
+  /// {n} · via {source} · {date}
+  static const reviewRatedLine = 'review.rated_line';
+  /// link
+  static const reviewViaLink = 'review.via_link';
+  /// AI call
+  static const reviewViaAiCall = 'review.via_ai_call';
+  /// message
+  static const reviewViaReply = 'review.via_reply';
+  /// Open review
+  static const reviewOpen = 'review.open';
+  /// All reminders stopped.
+  static const reviewAllStopped = 'review.all_stopped';
+  /// Customer asked not to be contacted for reviews.
+  static const reviewOptedOutBody = 'review.opted_out_body';
+  /// Said “don't ask” on {date}. No more messages or calls.
+  static const reviewOptedOutLine = 'review.opted_out_line';
+  /// Stopped
+  static const reviewStopped = 'review.stopped';
+  /// No rating came. Nothing more will be sent.
+  static const reviewStoppedBody = 'review.stopped_body';
+  /// Asked. The link goes with the approved report.
+  static const reviewAskedQueued = 'review.asked_queued';
+  /// Rating link sent to {name}
+  static const reviewAskedSent = 'review.asked_sent';
+  /// Ask {name} for a review?
+  static const askTitle = 'ask.title';
+  /// Day {n}
+  static const askDay = 'ask.day';
+  /// Rating link goes with the approved report
+  static const askDay0 = 'ask.day0';
+  /// Reminder by SMS and email
+  static const askDay2 = 'ask.day2';
+  /// One AI call if still no rating
+  static const askDay5 = 'ask.day5';
+  /// Stops as soon as the customer rates, in any way.
+  static const askStops = 'ask.stops';
+  /// Not now
+  static const askNotNow = 'ask.not_now';
+  /// Ask for review
+  static const askAsk = 'ask.ask';
+  /// You will get a message when it is approved.
+  static const askSentBody = 'ask.sent_body';
+  /// From customers · this year
+  static const myrevSubtitle = 'myrev.subtitle';
+  /// {n} reviews · {p}% gave 4★ or more
+  static const myrevSummary = 'myrev.summary';
+  /// No ratings yet
+  static const myrevEmptyHead = 'myrev.empty_head';
+  /// Your first one is on its way
+  static const myrevEmptySub = 'myrev.empty_sub';
+  /// No reviews yet
+  static const myrevEmptyTitle = 'myrev.empty_title';
+  /// When a customer rates one of your jobs, it will show here.
+  static const myrevEmptyBody = 'myrev.empty_body';
+  /// Tip: clear before and after photos get more 5-star ratings.
+  static const myrevTip = 'myrev.tip';
+  /// See jobs to ask about
+  static const myrevSeeJobs = 'myrev.see_jobs';
+  /// {name} replied
+  static const myrevReplied = 'myrev.replied';
+  /// {label} · {n}
+  static const myrevTagCount = 'myrev.tag_count';
+  /// Review
+  static const rdTitle = 'rd.title';
+  /// Report #{n}
+  static const rdSubtitle = 'rd.subtitle';
+  /// The service
+  static const rdService = 'rd.service';
+  /// You ({name})
+  static const rdYou = 'rd.you';
+  /// {name} replied · {ago}
+  static const rdRepliedAgo = 'rd.replied_ago';
+  /// Only you and your managers see this review.
+  static const rdPrivate = 'rd.private';
+  /// On time
+  static const tagOnTime = 'tag.on_time';
+  /// Clean work
+  static const tagCleanWork = 'tag.clean_work';
+  /// Explained clearly
+  static const tagExplainedClearly = 'tag.explained_clearly';
+  /// Polite
+  static const tagPolite = 'tag.polite';
+  /// Fixed first time
+  static const tagFixedFirstTime = 'tag.fixed_first_time';
+  /// Late
+  static const tagLate = 'tag.late';
+  /// Messy
+  static const tagMessy = 'tag.messy';
+  /// Not fixed
+  static const tagNotFixed = 'tag.not_fixed';
+  /// Not explained
+  static const tagNotExplained = 'tag.not_explained';
+  /// Rude
+  static const tagRude = 'tag.rude';
 }

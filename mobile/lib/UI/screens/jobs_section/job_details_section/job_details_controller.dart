@@ -4,6 +4,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../infrastructure/commons/constants/app_routes.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/jobs_api_repository.dart';
+import '../../../../infrastructure/data_access_layer/api_repository/reviews_api_repository.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
@@ -11,6 +12,7 @@ import '../../../../infrastructure/services/location_service.dart';
 import '../../../../infrastructure/services/session_service.dart';
 import '../../../../infrastructure/services/speech_service.dart';
 import '../../../../infrastructure/shared/job_arguments.dart';
+import '../../../../infrastructure/shared/review_words.dart';
 import '../../../../infrastructure/shared/time_utils.dart';
 import '../../../common_widgets/kn_toast.dart';
 
@@ -22,6 +24,7 @@ class JobDetailsController extends GetxController {
     required this.speech,
     required this.translation,
     this.location,
+    this.reviews,
     JobArguments? args,
     DateTime Function()? clock,
     Future<bool> Function(Uri uri)? openUrl,
@@ -34,6 +37,9 @@ class JobDetailsController extends GetxController {
   final ISpeechService speech;
   final TranslationService translation;
   final ILocationService? location;
+
+  /// Asking the customer for a review (the card under the job).
+  final IReviewsApiRepository? reviews;
   final JobArguments args;
   final DateTime Function() _clock;
   final Future<bool> Function(Uri uri) _openUrl;
@@ -41,6 +47,9 @@ class JobDetailsController extends GetxController {
   final Rxn<JobOutModel> job = Rxn<JobOutModel>();
   final RxBool loading = false.obs;
   final RxBool starting = false.obs;
+  final RxBool askingReview = false.obs;
+
+  late final ReviewWords reviewWords = ReviewWords(translation.currentCode);
 
   @override
   void onInit() {
@@ -94,6 +103,40 @@ class JobDetailsController extends GetxController {
   }
 
   bool get mine => job.value?.assignee?.id == session.me.value?.id;
+
+  // ---- customer review (M15) ----------------------------------------------------------------
+
+  Future<void> onRequestReviewTap() async {
+    final repo = reviews;
+    final id = job.value?.id;
+    if (repo == null || id == null || askingReview.value) return;
+    askingReview.value = true;
+    final result = await repo.request(id);
+    askingReview.value = false;
+    final card = result.dataOrNull;
+    if (card == null) return KnToast.error(result.errorOrNull!.message);
+    KnToast.success(
+      card.status == 'queued'
+          ? LangKeys.reviewAskedQueued.tr
+          : LangKeys.reviewAskedSent.trParams({'name': reviewWords.contact(card)}),
+    );
+    await load();
+  }
+
+  Future<void> onCancelReviewTap() async {
+    final repo = reviews;
+    final id = job.value?.review?.requestId;
+    if (repo == null || id == null) return;
+    final result = await repo.cancel(id);
+    if (result.errorOrNull != null) return KnToast.error(result.errorOrNull!.message);
+    KnToast.info(LangKeys.reviewCancelled.tr);
+    await load();
+  }
+
+  Future<void> onOpenReviewTap() async {
+    final id = job.value?.review?.review?.id;
+    if (id != null) await Get.toNamed<void>(RoutesConstants.reviewDetailsScreen, arguments: id);
+  }
 
   /// Owners and managers open the customer's page (M18) from the name.
   bool get canOpenCustomer => const {'owner', 'manager'}.contains(session.me.value?.role) && job.value != null;

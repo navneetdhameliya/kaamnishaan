@@ -153,6 +153,7 @@ class PublicReport(BaseModel):
     link_expires_at: datetime
     pdf_ready: bool
     fingerprint: str | None = Field(description="SHA-256 of the PDF")
+    review: "PublicReviewState | None" = Field(default=None, description="The rating part of the page (W29)")
 
 
 class AcknowledgeIn(_In):
@@ -174,3 +175,8 @@ class NewLinkOut(BaseModel):
     sent_to: str | None = Field(description="Masked phone or email the new link went to")
     channel: Channel | None
     company_notified: bool
+
+
+from app.schemas.reviews import PublicReviewState  # noqa: E402
+
+PublicReport.model_rebuild()
