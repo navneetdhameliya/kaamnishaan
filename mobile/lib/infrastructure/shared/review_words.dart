@@ -56,7 +56,8 @@ class ReviewWords {
         'queued' => LangKeys.reviewQueued.tr,
         'rated' => LangKeys.reviewRated.tr,
         'opted_out' => LangKeys.reviewOptedOut.tr,
-        'stopped' || 'paused_no_credits' => LangKeys.reviewStopped.tr,
+        'paused_no_credits' => LangKeys.reviewPaused.tr,
+        'stopped' => LangKeys.reviewStopped.tr,
         _ => LangKeys.reviewWaiting.tr,
       };
 
@@ -131,6 +132,7 @@ class ReviewWords {
         'ai_call_scheduled' || 'ai_call_done' => LangKeys.rreqAiCallPlanned.tr,
         'rated' => LangKeys.rreqRatedVia.trParams({'n': '${r.rating ?? ''}', 'source': source(r.source ?? 'link')}),
         'opted_out' => LangKeys.reviewOptedOut.tr,
+        'paused_no_credits' => LangKeys.reviewPaused.tr,
         _ => LangKeys.reviewStopped.tr,
       };
 
@@ -139,7 +141,8 @@ class ReviewWords {
     final at = r.nextAt;
     return switch (r.status) {
       'queued' => LangKeys.rreqAfterApproval.tr,
-      'rated' || 'stopped' || 'paused_no_credits' => LangKeys.rreqStoppedLine.tr,
+      'rated' || 'stopped' => LangKeys.rreqStoppedLine.tr,
+      'paused_no_credits' => LangKeys.rreqPausedLine.tr,
       'opted_out' => LangKeys.rreqNoContact.tr,
       _ when at != null && r.nextStep == 'reminder' => LangKeys.rreqReminderOn.trParams({'date': weekday(at)}),
       _ when at != null && r.nextStep == 'ai_call' => LangKeys.rreqAiCallOn.trParams({'date': weekday(at)}),

@@ -46,6 +46,8 @@ abstract final class RoutesConstants {
   static const String reviewSettingsScreen = '/reviews/settings';
   static const String reviewFollowupsScreen = '/reviews/follow-ups';
   static const String companySettingsScreen = '/settings/company';
+  static const String billingScreen = '/settings/billing';
+  static const String creditsScreen = '/settings/credits';
   static const String inviteScreen = '/team/invite';
   static const String reportReviewScreen = '/review';
   static const String reportPdfScreen = '/review/pdf';

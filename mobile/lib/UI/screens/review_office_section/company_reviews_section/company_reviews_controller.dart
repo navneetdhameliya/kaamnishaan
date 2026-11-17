@@ -124,6 +124,10 @@ class CompanyReviewsController extends GetxController {
     await Get.toNamed<void>(RoutesConstants.reviewSettingsScreen);
   }
 
+  Future<void> onCreditsTap() async {
+    await Get.toNamed<void>(RoutesConstants.creditsScreen);
+  }
+
   Future<void> onFollowupsTap() async {
     await Get.toNamed<void>(RoutesConstants.reviewFollowupsScreen);
   }

@@ -56,6 +56,10 @@ abstract final class APIConstant {
   static const String reviewRequestsAPIEP = '/review-requests';
   static const String reviewSettingsAPIEP = '/review-settings';
 
+  // billing
+  static const String billingAPIEP = '/billing';
+  static const String creditsAPIEP = '/credits';
+
   // customers
   static const String customersAPIEP = '/customers';
   static String customerAPIEP(String id) => '/customers/$id';
