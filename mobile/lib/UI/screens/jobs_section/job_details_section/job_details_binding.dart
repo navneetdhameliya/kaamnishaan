@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../../../infrastructure/data_access_layer/api_repository/reviews_api_repository.dart';
+import '../../../../infrastructure/services/location_service.dart';
 import 'job_details_controller.dart';
 
 class JobDetailsBinding extends Bindings {
@@ -11,8 +13,8 @@ class JobDetailsBinding extends Bindings {
         session: Get.find(),
         speech: Get.find(),
         translation: Get.find(),
-        location: Get.find(),
-        reviews: Get.find(),
+        location: Get.find<ILocationService>(),
+        reviews: Get.find<IReviewsApiRepository>(),
       ),
     );
   }
