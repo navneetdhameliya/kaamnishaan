@@ -694,7 +694,8 @@
               {
                 "enum": [
                   "no_phone",
-                  "no_email"
+                  "no_email",
+                  "email_off"
                 ],
                 "type": "string"
               },
@@ -702,6 +703,7 @@
                 "type": "null"
               }
             ],
+            "description": "email_off: no email service yet",
             "title": "Reason"
           },
           "to": {

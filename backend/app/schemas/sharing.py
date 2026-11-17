@@ -46,7 +46,9 @@ class ChannelOut(BaseModel):
     key: Channel
     available: bool
     to: str | None
-    reason: Literal["no_phone", "no_email"] | None
+    reason: Literal["no_phone", "no_email", "email_off"] | None = Field(
+        description="email_off: no email service yet"
+    )
 
 
 class Preview(BaseModel):

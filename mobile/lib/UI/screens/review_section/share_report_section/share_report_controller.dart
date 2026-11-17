@@ -91,13 +91,22 @@ class ShareReportController extends GetxController {
   /// SMS and WhatsApp need a phone, email needs an email; the server can also say no (no credits…).
   bool available(String channel) {
     final fromServer = info.value?.channels.firstWhereOrNull((c) => c.key == channel);
-    if (channel == 'email') return (email ?? '').isNotEmpty || (fromServer?.available ?? false);
+    if (channel == 'email') {
+      if (fromServer?.reason == 'email_off') return false; // no email service yet
+      return (email ?? '').isNotEmpty || (fromServer?.available ?? false);
+    }
     final hasPhone = (phone ?? '').isNotEmpty;
     if (_typedPhone != null) return hasPhone;
     return (fromServer?.available ?? false) && hasPhone;
   }
 
-  String? reason(String channel) => info.value?.channels.firstWhereOrNull((c) => c.key == channel)?.reason;
+  /// Why a channel can't be used, in words.
+  String? reason(String channel) => switch (info.value?.channels.firstWhereOrNull((c) => c.key == channel)?.reason) {
+        'email_off' => LangKeys.shareEmailOff.tr,
+        'no_phone' => LangKeys.shareNoPhone.tr,
+        'no_email' => LangKeys.shareNoEmail.tr,
+        _ => null,
+      };
 
   void onChannelTap(String channel) {
     if (!available(channel)) {

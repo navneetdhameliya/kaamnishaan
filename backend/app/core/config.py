@@ -44,6 +44,10 @@ class Settings(BaseSettings):
     # Test servers only: with this key set, GET /api/v1/dev/outbox shows the login codes, invites and
     # emails that were "sent" (no SMS provider yet). Never allowed in production.
     test_outbox_key: SecretStr | None = None
+    # No email service is chosen yet. While this is false: owners' emails count as confirmed at sign-up,
+    # reports and reviews go by SMS / WhatsApp / link only, and email shows as "off" in the app. The
+    # password-reset email still goes to the test outbox (/api/v1/dev/outbox). Turn on with the provider.
+    email_enabled: bool = False
     # Any scheduler (e.g. a GitHub Actions schedule) calls POST /api/v1/cron/review-followups with this key
     # as X-Cron-Key so Day 2 review reminders go out on time. Without it the endpoint is closed.
     cron_key: SecretStr | None = None

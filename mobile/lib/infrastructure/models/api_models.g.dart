@@ -542,7 +542,8 @@ class ChannelOutModel {
   final bool available;
   /// One of: sms, whatsapp, email
   final String key;
-  /// One of: no_phone, no_email
+  /// email_off: no email service yet
+  /// One of: no_phone, no_email, email_off
   final String? reason;
   final String? to;
 

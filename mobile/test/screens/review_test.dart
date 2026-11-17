@@ -260,5 +260,27 @@ void main() {
       verify(() => reports.send('r1', channels: ['email'], email: 'office@greenvalley.in')).called(1);
       c.onClose();
     });
+
+    test('while email is off, the email button says so and stays off', () async {
+      final c = share(
+        const ShareInfoModel(
+          reportId: 'r1',
+          reportStatus: 'approved',
+          canShare: true,
+          recipient: RecipientModel(name: 'Dr. Anita Rao', email: 'office@greenvalley.in'),
+          channels: [
+            ChannelOutModel(key: 'sms', available: false, reason: 'no_phone'),
+            ChannelOutModel(key: 'whatsapp', available: false, reason: 'no_phone'),
+            ChannelOutModel(key: 'email', available: false, to: 'office@greenvalley.in', reason: 'email_off'),
+          ],
+          sent: [],
+        ),
+      );
+      await c.load();
+      expect((c.available('email'), c.picked.isEmpty), (false, true));
+      expect(c.reason('email'), "Email isn't switched on yet. Send by SMS or WhatsApp, or copy the link.");
+      expect(c.reason('sms'), 'No phone number saved for this customer.');
+      c.onClose();
+    });
   });
 }

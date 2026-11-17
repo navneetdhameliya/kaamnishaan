@@ -2418,4 +2418,42 @@ abstract final class LangKeys {
   static const webLangEs = 'web.lang.es';
   /// Français
   static const webLangFr = 'web.lang.fr';
+  /// Email isn't switched on yet. Send by SMS or WhatsApp, or copy the link.
+  static const shareEmailOff = 'share.email_off';
+  /// No phone number saved for this customer.
+  static const shareNoPhone = 'share.no_phone';
+  /// No email saved for this customer.
+  static const shareNoEmail = 'share.no_email';
+  /// Make a new password
+  static const webAuthResetTitle = 'web.auth.reset_title';
+  /// Use at least {n} characters.
+  static const webAuthResetBody = 'web.auth.reset_body';
+  /// New password
+  static const webAuthNewPassword = 'web.auth.new_password';
+  /// Type it again
+  static const webAuthAgain = 'web.auth.again';
+  /// The two passwords are not the same.
+  static const webAuthMismatch = 'web.auth.mismatch';
+  /// Use at least {n} characters.
+  static const webAuthTooShort = 'web.auth.too_short';
+  /// Save new password
+  static const webAuthSave = 'web.auth.save';
+  /// Password changed
+  static const webAuthResetDone = 'web.auth.reset_done';
+  /// Open the KaamNishaan app and log in with your new password. You were logged out everywhere else.
+  static const webAuthResetDoneBody = 'web.auth.reset_done_body';
+  /// Confirming your email…
+  static const webAuthVerifyWorking = 'web.auth.verify_working';
+  /// Email confirmed
+  static const webAuthVerified = 'web.auth.verified';
+  /// You can go back to the KaamNishaan app now.
+  static const webAuthVerifiedBody = 'web.auth.verified_body';
+  /// This link has expired
+  static const webAuthLinkExpired = 'web.auth.link_expired';
+  /// Ask for a new one in the KaamNishaan app.
+  static const webAuthLinkExpiredBody = 'web.auth.link_expired_body';
+  /// This link doesn't work
+  static const webAuthLinkBad = 'web.auth.link_bad';
+  /// It was already used, or part of it is missing. Ask for a new one in the KaamNishaan app.
+  static const webAuthLinkBadBody = 'web.auth.link_bad_body';
 }

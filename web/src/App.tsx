@@ -1,10 +1,14 @@
 import en from '../../shared/i18n/en.json';
+import { ResetPasswordPage, VerifyEmailPage } from './pages/auth/AuthLinkPages';
 import ReportPage from './pages/report/ReportPage';
 
-/** The website's pages. The customer report page (W27, W29) is at /r/{token}; the rest comes in later steps. */
+/** The website's pages: the customer report page (W27, W29) at /r/{token}, and the email link pages. */
 export default function App() {
   const report = window.location.pathname.match(/^\/r\/([^/]+)\/?$/);
   if (report) return <ReportPage token={decodeURIComponent(report[1]!)} />;
+  // the links in "Confirm your email" and "Reset your password"
+  if (window.location.pathname === '/verify-email') return <VerifyEmailPage />;
+  if (window.location.pathname === '/reset-password') return <ResetPasswordPage />;
   return <Home />;
 }
 
