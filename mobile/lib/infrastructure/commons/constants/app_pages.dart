@@ -64,6 +64,12 @@ import '../../../UI/screens/report_section/report_making_section/report_making_b
 import '../../../UI/screens/report_section/report_making_section/report_making_screen.dart';
 import '../../../UI/screens/report_section/report_sent_section/report_sent_binding.dart';
 import '../../../UI/screens/report_section/report_sent_section/report_sent_screen.dart';
+import '../../../UI/screens/review_section/report_pdf_section/report_pdf_binding.dart';
+import '../../../UI/screens/review_section/report_pdf_section/report_pdf_screen.dart';
+import '../../../UI/screens/review_section/report_review_section/report_review_binding.dart';
+import '../../../UI/screens/review_section/report_review_section/report_review_screen.dart';
+import '../../../UI/screens/review_section/share_report_section/share_report_binding.dart';
+import '../../../UI/screens/review_section/share_report_section/share_report_screen.dart';
 import '../../../UI/screens/voice_section/voice_note_section/voice_note_binding.dart';
 import '../../../UI/screens/voice_section/voice_note_section/voice_note_screen.dart';
 import '../../../UI/screens/voice_section/voice_notes_section/voice_notes_binding.dart';
@@ -161,6 +167,9 @@ abstract final class AppPages {
       page: () => const LanguageSettingsScreen(),
       binding: LanguageSettingsBinding(),
     ),
+    GetPage(name: RoutesConstants.reportReviewScreen, page: () => const ReportReviewScreen(), binding: ReportReviewBinding()),
+    GetPage(name: RoutesConstants.reportPdfScreen, page: () => const ReportPdfScreen(), binding: ReportPdfBinding()),
+    GetPage(name: RoutesConstants.shareReportScreen, page: () => const ShareReportScreen(), binding: ShareReportBinding()),
     GetPage(name: RoutesConstants.messagesScreen, page: () => const MessagesScreen(), binding: MessagesBinding()),
     GetPage(name: RoutesConstants.myReportsScreen, page: () => const MyReportsScreen(), binding: MyReportsBinding()),
     GetPage(

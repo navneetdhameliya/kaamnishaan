@@ -1218,4 +1218,198 @@ abstract final class LangKeys {
   static const msgYourManager = 'msg.your_manager';
   /// Your technician
   static const msgTechnician = 'msg.technician';
+  /// {n} waiting for your review
+  static const queueSubtitle = 'queue.subtitle';
+  /// Nothing waiting for review
+  static const queueSubtitleNone = 'queue.subtitle_none';
+  /// To review {n}
+  static const queueToReview = 'queue.to_review';
+  /// Approved
+  static const queueApproved = 'queue.approved';
+  /// Changes
+  static const queueChanges = 'queue.changes';
+  /// {name} · sent {ago}
+  static const queueSentAgo = 'queue.sent_ago';
+  /// just now
+  static const queueJustNow = 'queue.just_now';
+  /// {n} min ago
+  static const queueMinAgo = 'queue.min_ago';
+  /// {n} h ago
+  static const queueHAgo = 'queue.h_ago';
+  /// {n} days ago
+  static const queueDaysAgo = 'queue.days_ago';
+  /// {n} min
+  static const queueMin = 'queue.min';
+  /// {n} h
+  static const queueH = 'queue.h';
+  /// Oldest · {time}
+  static const queueOldest = 'queue.oldest';
+  /// Waiting {time}
+  static const queueWaiting = 'queue.waiting';
+  /// AI draft ready
+  static const queueAiReady = 'queue.ai_ready';
+  /// {n} approved this week
+  static const queueApprovedWeek = 'queue.approved_week';
+  /// Tap to see them
+  static const queueApprovedWeekBody = 'queue.approved_week_body';
+  /// Nothing to review
+  static const queueEmpty = 'queue.empty';
+  /// Reports your technicians send show here.
+  static const queueEmptyBody = 'queue.empty_body';
+  /// Customer or report number
+  static const queueSearchHint = 'queue.search_hint';
+  /// Report review
+  static const reviewTitle = 'review.title';
+  /// AI draft
+  static const reviewAiDraft = 'review.ai_draft';
+  /// Plain draft
+  static const reviewPlainDraft = 'review.plain_draft';
+  /// Sent {ago}
+  static const reviewSentAgo = 'review.sent_ago';
+  /// Photos
+  static const reviewPhotos = 'review.photos';
+  /// Checklist
+  static const reviewChecklist = 'review.checklist';
+  /// {a} of {b}
+  static const reviewOf = 'review.of';
+  /// Voice notes
+  static const reviewVoice = 'review.voice';
+  /// AI check · 1 thing to look at
+  static const reviewAiCheckOne = 'review.ai_check_one';
+  /// AI check · {n} things to look at
+  static const reviewAiCheckMany = 'review.ai_check_many';
+  /// {what} · no photo
+  static const reviewNoPhoto = 'review.no_photo';
+  /// Ask for changes
+  static const reviewAskChanges = 'review.ask_changes';
+  /// Approve
+  static const reviewApprove = 'review.approve';
+  /// Approved. Making the PDF…
+  static const reviewApproved = 'review.approved';
+  /// Share with customer
+  static const reviewShare = 'review.share';
+  /// See PDF
+  static const reviewSeePdf = 'review.see_pdf';
+  /// Ask {name} for changes
+  static const changesTitle = 'changes.title';
+  /// They get a message and can fix it on their phone.
+  static const changesBody = 'changes.body';
+  /// What needs fixing?
+  static const changesWhat = 'changes.what';
+  /// Add the missing photos
+  static const changesMissingPhotos = 'changes.missing_photos';
+  /// Add a photo of {what}
+  static const changesPhotoOf = 'changes.photo_of';
+  /// Explain the failed checks ({n})
+  static const changesFailedChecks = 'changes.failed_checks';
+  /// Fix the job details
+  static const changesWrongDetails = 'changes.wrong_details';
+  /// Fix the work done text
+  static const changesUnclearText = 'changes.unclear_text';
+  /// Something else
+  static const changesOther = 'changes.other';
+  /// Note for {name}
+  static const changesNote = 'changes.note';
+  /// Say what to fix
+  static const changesNoteHint = 'changes.note_hint';
+  /// Send to {name}
+  static const changesSend = 'changes.send';
+  /// Say what needs changing.
+  static const changesNoteRequired = 'changes.note_required';
+  /// Choose what needs fixing.
+  static const changesPickOne = 'changes.pick_one';
+  /// Sent to {name}
+  static const changesSent = 'changes.sent';
+  /// Report PDF
+  static const pdfTitle = 'pdf.title';
+  /// #{number} · {n} pages
+  static const pdfSubtitle = 'pdf.subtitle';
+  /// Making the PDF…
+  static const pdfBuilding = 'pdf.building';
+  /// This takes a few seconds.
+  static const pdfBuildingBody = 'pdf.building_body';
+  /// Could not make the PDF
+  static const pdfFailed = 'pdf.failed';
+  /// Try again
+  static const pdfTryAgain = 'pdf.try_again';
+  /// Service report
+  static const pdfServiceReport = 'pdf.service_report';
+  /// Customer
+  static const pdfCustomer = 'pdf.customer';
+  /// Technician
+  static const pdfTechnician = 'pdf.technician';
+  /// Problem
+  static const pdfProblem = 'pdf.problem';
+  /// Checklist · {a} of {b} passed
+  static const pdfChecklist = 'pdf.checklist';
+  /// Approved by {name}
+  static const pdfApprovedBy = 'pdf.approved_by';
+  /// Page 1 of {n}
+  static const pdfPage = 'pdf.page';
+  /// Download
+  static const pdfDownload = 'pdf.download';
+  /// Share
+  static const pdfShare = 'pdf.share';
+  /// Share report
+  static const shareTitle = 'share.title';
+  /// Service report · {n} pages
+  static const sharePdfTitle = 'share.pdf_title';
+  /// PDF · {size} · approved by {name}
+  static const sharePdfMeta = 'share.pdf_meta';
+  /// Send to
+  static const shareSendTo = 'share.send_to';
+  /// Change
+  static const shareChange = 'share.change';
+  /// Send by
+  static const shareSendBy = 'share.send_by';
+  /// SMS
+  static const shareSms = 'share.sms';
+  /// Email
+  static const shareEmail = 'share.email';
+  /// WhatsApp
+  static const shareWhatsapp = 'share.whatsapp';
+  /// More
+  static const shareMore = 'share.more';
+  /// Secure link
+  static const shareSecure = 'share.secure';
+  /// Copy
+  static const shareCopy = 'share.copy';
+  /// Link copied
+  static const shareCopied = 'share.copied';
+  /// Works for 30 days. Only people with the link can open it.
+  static const shareWorks = 'share.works';
+  /// Turn off link
+  static const shareTurnOff = 'share.turn_off';
+  /// Link turned off
+  static const shareTurnedOff = 'share.turned_off';
+  /// Make link
+  static const shareMakeLink = 'share.make_link';
+  /// No link yet
+  static const shareNoLink = 'share.no_link';
+  /// Send to customer
+  static const shareSend = 'share.send';
+  /// Sent to {name}
+  static const shareSent = 'share.sent';
+  /// No phone or email for this customer
+  static const shareNoContact = 'share.no_contact';
+  /// Add one to send the report. You can still copy the link.
+  static const shareNoContactBody = 'share.no_contact_body';
+  /// Add phone or email
+  static const shareAddContact = 'share.add_contact';
+  /// Who gets the report
+  static const shareContactTitle = 'share.contact_title';
+  /// Name
+  static const shareName = 'share.name';
+  /// Phone
+  static const sharePhone = 'share.phone';
+  /// Email
+  static const shareEmailLabel = 'share.email_label';
+  /// Use this
+  static const shareUse = 'share.use';
+  /// Choose how to send it.
+  static const sharePickChannel = 'share.pick_channel';
+  /// Sent {n} times
+  static const shareAlreadySent = 'share.already_sent';
+  /// {n} days
+  static const queueDays = 'queue.days';
 }

@@ -173,6 +173,7 @@ async def test_submit_locks_evidence_then_manager_approves(client, ready):
     assert queue["meta"]["counts"]["pending_review"] == 1
     brief = queue["data"][0]["job"]
     assert brief["photos"] >= 2 and brief["cover_url"]  # M13 "6 photos" and the picture
+    assert len(queue["data"][0]["thumbs"]) == 2  # M30: the newest photos
     r = await client.post(f"/api/v1/reports/{rep['id']}/approve", headers=auth(owner))
     assert r.status_code == 200 and r.json()["status"] == "approved"
     assert r.json()["approved_by"]["id"] == owner["user"]["id"]

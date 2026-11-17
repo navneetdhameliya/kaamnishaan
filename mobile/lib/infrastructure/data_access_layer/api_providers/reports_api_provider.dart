@@ -9,6 +9,14 @@ abstract class IReportsApiProvider {
   Future<dynamic> patchReport(String id, Map<String, dynamic> body);
   Future<dynamic> postRegenerate(String id, String section);
   Future<dynamic> postSubmit(String id);
+  Future<dynamic> getReports(Map<String, dynamic> query);
+  Future<dynamic> postApprove(String id);
+  Future<dynamic> postChanges(String id, Map<String, dynamic> body);
+  Future<dynamic> getPdf(String id);
+  Future<dynamic> getShare(String id);
+  Future<dynamic> postShareLink(String id, Map<String, dynamic> body);
+  Future<dynamic> deleteShareLink(String linkId);
+  Future<dynamic> postSend(String id, Map<String, dynamic> body);
 }
 
 class ReportsApiProvider implements IReportsApiProvider {
@@ -35,4 +43,31 @@ class ReportsApiProvider implements IReportsApiProvider {
 
   @override
   Future<dynamic> postSubmit(String id) => _client.post(APIConstant.reportSubmitAPIEP(id));
+
+  @override
+  Future<dynamic> getReports(Map<String, dynamic> query) => _client.get(APIConstant.reportsAPIEP, query: query);
+
+  @override
+  Future<dynamic> postApprove(String id) => _client.post(APIConstant.reportApproveAPIEP(id));
+
+  @override
+  Future<dynamic> postChanges(String id, Map<String, dynamic> body) =>
+      _client.post(APIConstant.reportChangesAPIEP(id), body: body);
+
+  @override
+  Future<dynamic> getPdf(String id) => _client.get(APIConstant.reportPdfAPIEP(id));
+
+  @override
+  Future<dynamic> getShare(String id) => _client.get(APIConstant.reportShareAPIEP(id));
+
+  @override
+  Future<dynamic> postShareLink(String id, Map<String, dynamic> body) =>
+      _client.post(APIConstant.reportShareLinksAPIEP(id), body: body);
+
+  @override
+  Future<dynamic> deleteShareLink(String linkId) => _client.delete(APIConstant.shareLinkAPIEP(linkId));
+
+  @override
+  Future<dynamic> postSend(String id, Map<String, dynamic> body) =>
+      _client.post(APIConstant.reportSendAPIEP(id), body: body);
 }

@@ -75,6 +75,14 @@ import 'package:kaamnishaan/UI/screens/report_section/report_making_section/repo
 import 'package:kaamnishaan/UI/screens/report_section/report_making_section/report_making_screen.dart';
 import 'package:kaamnishaan/UI/screens/report_section/report_sent_section/report_sent_controller.dart';
 import 'package:kaamnishaan/UI/screens/report_section/report_sent_section/report_sent_screen.dart';
+import 'package:kaamnishaan/UI/screens/review_section/report_pdf_section/report_pdf_controller.dart';
+import 'package:kaamnishaan/UI/screens/review_section/report_pdf_section/report_pdf_screen.dart';
+import 'package:kaamnishaan/UI/screens/review_section/report_review_section/report_review_controller.dart';
+import 'package:kaamnishaan/UI/screens/review_section/report_review_section/report_review_screen.dart';
+import 'package:kaamnishaan/UI/screens/review_section/review_queue_section/review_queue_controller.dart';
+import 'package:kaamnishaan/UI/screens/review_section/review_queue_section/review_queue_tab.dart';
+import 'package:kaamnishaan/UI/screens/review_section/share_report_section/share_report_controller.dart';
+import 'package:kaamnishaan/UI/screens/review_section/share_report_section/share_report_screen.dart';
 import 'package:kaamnishaan/UI/screens/voice_section/voice_note_section/voice_note_controller.dart';
 import 'package:kaamnishaan/UI/screens/voice_section/voice_note_section/voice_note_screen.dart';
 import 'package:kaamnishaan/UI/screens/voice_section/voice_notes_section/voice_notes_controller.dart';
@@ -1189,6 +1197,165 @@ void main() {
     Get.put(MessagesController(repository: repo, translation: translation(), clock: () => at));
     await shot(t, 'm42_messages', const MessagesScreen());
   });
+
+  // ---- Step 2k: manager review ------------------------------------------------------------------
+  final reviewAt = DateTime(2026, 10, 31, 12, 8);
+  const reviewArgs = ReportArguments(jobId: 'j1', customer: 'Green Valley Clinic', reportId: 'r1');
+
+  ReportListItemModel queueItem(String id, String customer, String title, String tech, int waiting, int photos) =>
+      ReportListItemModel(
+        id: id,
+        number: 'R-$id',
+        status: 'pending_review',
+        draftedBy: 'ai',
+        flags: 0,
+        waitingMinutes: waiting,
+        submittedAt: reviewAt.subtract(Duration(minutes: waiting)),
+        updatedAt: reviewAt,
+        thumbs: const ['https://x/1.jpg', 'https://x/2.jpg', 'https://x/3.jpg'],
+        job: JobBriefModel(
+          id: 'j$id',
+          number: 'J-$id',
+          title: title,
+          customer: customer,
+          status: 'in_review',
+          photos: photos,
+          technician: PersonRefModel(id: 'u$id', name: tech),
+        ),
+      );
+
+  testWidgets('M30 review queue', (t) async {
+    final reports = MockReportsRepository();
+    when(() => reports.list(statuses: any(named: 'statuses'), period: any(named: 'period'), q: any(named: 'q'), cursor: any(named: 'cursor')))
+        .thenAnswer((i) async {
+      final statuses = i.namedArguments[#statuses] as List<String>?;
+      if (statuses?.first == 'approved') {
+        return ApiSuccess<ReportListModel>(
+          ReportListModel(data: List.generate(5, (k) => queueItem('9$k', 'X', 'Y', 'Z', 0, 1)), meta: const ListMetaModel()),
+        );
+      }
+      return ApiSuccess<ReportListModel>(
+        ReportListModel(
+          data: [
+            queueItem('1041', 'Lake View Apartments', 'Duct cleaning', 'Carlos Diaz', 65, 9),
+            queueItem('1042', 'Green Valley Clinic', 'AC not cooling', 'Ramesh Patel', 10, 6),
+          ],
+          meta: const ListMetaModel(counts: {'pending_review': 2}),
+        ),
+      );
+    });
+    Get.put(ReviewQueueController(reports: reports, clock: () => reviewAt));
+    await shot(t, 'm30_review_queue', const Scaffold(body: ReviewQueueTab()));
+  });
+
+  testWidgets('M33 report review', (t) async {
+    final reports = MockReportsRepository();
+    final jobs = MockJobsRepository();
+    when(() => reports.report(any())).thenAnswer(
+      (_) async => ApiSuccess<ReportOutModel>(
+        reportOut(
+          status: 'pending_review',
+          actions: const ['approve', 'request_changes', 'edit'],
+          summary: null,
+          advice: null,
+          workDone: 'Cleaned the filter and coil. Topped up gas. Room 2 now cools to 22 °C.',
+          flags: const [ReportFlagModel(kind: 'missing_evidence', text: 'drain pipe has a leak')],
+        ),
+      ),
+    );
+    when(() => jobs.evidence(any())).thenAnswer(
+      (_) async => ApiSuccess<EvidenceListModel>(
+        EvidenceListModel(
+          data: [photo('b1', 'before', 10, 52), photo('a1', 'after', 11, 41), photo('d1', 'during', 11, 5)],
+          meta: const ListMetaModel(),
+          pairs: const [],
+        ),
+      ),
+    );
+    Get.put(ReportReviewController(reports: reports, jobs: jobs, translation: translation(), args: reviewArgs, clock: () => reviewAt));
+    await shot(t, 'm33_report_review', const ReportReviewScreen());
+  });
+
+  Future<void> pdfShot(WidgetTester t, String name, PdfOutModel pdf) async {
+    technicianWithCompany();
+    final reports = MockReportsRepository();
+    final jobs = MockJobsRepository();
+    when(() => reports.report(any())).thenAnswer(
+      (_) async => ApiSuccess<ReportOutModel>(
+        reportOut(
+          status: 'approved',
+          summary: 'AC not cooling in room 2. Filter and coil were blocked with dust.',
+          workDone: 'Cleaned the filter and coil. Topped up gas. Room now cools to 22 °C.',
+        ),
+      ),
+    );
+    when(() => jobs.evidence(any())).thenAnswer(
+      (_) async => ApiSuccess<EvidenceListModel>(
+        EvidenceListModel(data: [photo('b1', 'before', 10, 52), photo('a1', 'after', 11, 41)], meta: const ListMetaModel(), pairs: const []),
+      ),
+    );
+    when(() => reports.pdf(any())).thenAnswer((_) async => ApiSuccess<PdfOutModel>(pdf));
+    Get.put(
+      ReportPdfController(
+        reports: reports,
+        jobs: jobs,
+        session: session,
+        translation: translation(),
+        args: reviewArgs,
+        pollEvery: const Duration(hours: 1),
+      ),
+    );
+    await shot(t, name, const ReportPdfScreen());
+  }
+
+  testWidgets('M34 PDF', (t) async => pdfShot(
+        t,
+        'm34_pdf',
+        const PdfOutModel(status: 'ready', filename: 'R-1042.pdf', pages: 3, size: 2400000, url: 'https://x/r.pdf'),
+      ));
+
+  testWidgets('M34 PDF building', (t) async => pdfShot(t, 'm34_pdf_building', const PdfOutModel(status: 'building', filename: 'R-1042.pdf')));
+
+  Future<void> shareShot(WidgetTester t, String name, RecipientModel? to) async {
+    final reports = MockReportsRepository();
+    when(() => reports.share(any())).thenAnswer(
+      (_) async => ApiSuccess<ShareInfoModel>(
+        ShareInfoModel(
+          reportId: 'r1',
+          reportStatus: 'approved',
+          canShare: true,
+          recipient: to,
+          channels: [
+            ChannelOutModel(key: 'sms', available: to?.phone != null),
+            const ChannelOutModel(key: 'whatsapp', available: true),
+            ChannelOutModel(key: 'email', available: to?.email != null),
+          ],
+          link: ShareLinkOutModel(
+            id: 'l1',
+            url: 'https://kn.app/r/7GX2-QK',
+            channel: 'copy',
+            status: 'active',
+            openCount: 0,
+            createdAt: reviewAt,
+            expiresAt: reviewAt.add(const Duration(days: 30)),
+          ),
+          sent: const [],
+        ),
+      ),
+    );
+    when(() => reports.pdf(any())).thenAnswer(
+      (_) async => const ApiSuccess<PdfOutModel>(PdfOutModel(status: 'ready', filename: 'r.pdf', pages: 3, size: 2400000)),
+    );
+    when(() => reports.report(any())).thenAnswer(
+      (_) async => ApiSuccess<ReportOutModel>(reportOut(status: 'approved')),
+    );
+    Get.put(ShareReportController(reports: reports, args: reviewArgs));
+    await shot(t, name, const ShareReportScreen());
+  }
+
+  testWidgets('M35 share report', (t) async => shareShot(t, 'm35_share', const RecipientModel(name: 'Dr. Anita Rao', phone: '+1 555 010 0444')));
+
+  testWidgets('M35 share report, no contact', (t) async => shareShot(t, 'm35_share_no_contact', const RecipientModel(name: 'Dr. Anita Rao')));
 
   testWidgets('M13 dashboard', (t) async {
     await dashboard(t, 'm13_dashboard', dashboardData(), reviews: [reviewItem()]);

@@ -4458,6 +4458,8 @@ class ReportListItemModel {
   /// One of: generating, generation_failed, draft, pending_review, changes_requested, approved, shared, acknowledged
   final String status;
   final DateTime? submittedAt;
+  /// Up to 3 newest photos (M30 review queue)
+  final List<String>? thumbs;
   final DateTime updatedAt;
   /// Minutes since it was sent for review
   final int? waitingMinutes;
@@ -4472,6 +4474,7 @@ class ReportListItemModel {
     required this.number,
     required this.status,
     this.submittedAt,
+    this.thumbs,
     required this.updatedAt,
     this.waitingMinutes,
   });
@@ -4486,6 +4489,7 @@ class ReportListItemModel {
         number: json['number'] as String,
         status: json['status'] as String,
         submittedAt: json['submitted_at'] == null ? null : DateTime.parse(json['submitted_at'] as String),
+        thumbs: json['thumbs'] == null ? null : (json['thumbs'] as List).map((e) => e as String).toList(),
         updatedAt: DateTime.parse(json['updated_at'] as String),
         waitingMinutes: json['waiting_minutes'] == null ? null : (json['waiting_minutes'] as num).toInt(),
       );
@@ -4500,6 +4504,7 @@ class ReportListItemModel {
         'number': number,
         'status': status,
         'submitted_at': submittedAt?.toIso8601String(),
+        'thumbs': thumbs,
         'updated_at': updatedAt.toIso8601String(),
         'waiting_minutes': waitingMinutes,
       };

@@ -6301,6 +6301,14 @@
             ],
             "title": "Submitted At"
           },
+          "thumbs": {
+            "description": "Up to 3 newest photos (M30 review queue)",
+            "items": {
+              "type": "string"
+            },
+            "title": "Thumbs",
+            "type": "array"
+          },
           "updated_at": {
             "format": "date-time",
             "title": "Updated At",
