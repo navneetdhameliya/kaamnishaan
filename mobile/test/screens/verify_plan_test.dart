@@ -103,7 +103,7 @@ void main() {
     await c.load();
     expect((c.title, c.resets, c.fraction), ('You used 60 of 60 reports', 'Starter · resets on 22 Nov', 1.0));
     expect(c.body, startsWith('Upgrade to keep sending reports'));
-    expect((c.price(c.data.value!.plan), c.limits(c.data.value!.plan)), ('₹499 / mo', '60 reports · 3 techs'));
+    expect((c.price(c.data.value!.plan), c.limits(c.data.value!.plan)), ('₹499\u00A0/\u00A0mo', '60 reports · 3 techs'));
     expect(c.upgradeLabel, 'Upgrade to Professional · ₹1,299');
     when(() => billing.plan()).thenAnswer((_) async => ApiSuccess<PlanStatusModel>(status(owner: false)));
     await c.load();

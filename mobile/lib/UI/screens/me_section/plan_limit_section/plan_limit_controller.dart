@@ -63,8 +63,10 @@ class PlanLimitController extends GetxController {
   }
 
   /// "₹499 / mo"
-  String price(PlanOutModel p) =>
-      p.price == null ? LangKeys.billContact.tr : LangKeys.plPerMonth.trParams({'price': MoneyText.format(p.price!)});
+  /// The price stays on one line ("₹1,299 / mo" never breaks at the slash).
+  String price(PlanOutModel p) => p.price == null
+      ? LangKeys.billContact.tr
+      : LangKeys.plPerMonth.trParams({'price': MoneyText.format(p.price!)}).replaceAll(' / ', '\u00A0/\u00A0');
 
   /// "60 reports · 3 techs"
   String limits(PlanOutModel p) {
