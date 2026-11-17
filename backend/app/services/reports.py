@@ -523,6 +523,9 @@ async def approve(db: AsyncSession, p: Principal, report_id: uuid.UUID) -> Repor
         job=job, report_id=rep.id,
         params={**await notifications.job_params(db, job), "report": rlabel(rep.number)},
     )  # fmt: skip
+    from app.services import reviews
+
+    await reviews.on_report_approved(db, p, rep, job)
     await audit.record(
         db,
         "report.approved",

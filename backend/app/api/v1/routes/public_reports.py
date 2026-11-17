@@ -12,6 +12,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import get_db
 from app.core.errors import Conflict
+from app.schemas.reviews import RatedOut, ReviewIn
 from app.schemas.sharing import (
     AcknowledgeIn,
     Acknowledgement,
@@ -20,7 +21,7 @@ from app.schemas.sharing import (
     NewLinkOut,
     PublicReport,
 )
-from app.services import sharing
+from app.services import reviews, sharing
 from app.tasks import enqueue
 
 router = APIRouter(prefix="/public/reports", tags=["customer report page"])
@@ -63,3 +64,20 @@ async def report_problem(token: str, body: IssueIn, db: AsyncSession = Depends(g
     """ "Report a problem": the company's owner and managers get an email."""
     issue = await sharing.report_issue(db, token, body.message, body.contact)
     return IssueOut(id=issue.id, received_at=issue.created_at)
+
+
+@router.post(
+    "/{token}/review",
+    response_model=RatedOut,
+    status_code=201,
+    responses={409: {"description": "already_rated"}},
+)
+async def rate_job(token: str, body: ReviewIn, db: AsyncSession = Depends(get_db)) -> RatedOut:
+    """W29: the customer rates the service and the technician, ticks tags and writes a few words."""
+    return await reviews.rate(db, token, body)
+
+
+@router.post("/{token}/review/stop", status_code=204)
+async def stop_asking(token: str, db: AsyncSession = Depends(get_db)) -> None:
+    """W29 "Don't ask me again": no more reminders or calls for this job."""
+    await reviews.opt_out(db, token)

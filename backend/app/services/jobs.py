@@ -145,6 +145,8 @@ def actions(p: Principal, j: Job) -> list[str]:
 
 
 async def job_out(db: AsyncSession, p: Principal, j: Job) -> JobOut:
+    from app.services import reviews
+
     base = (await items(db, [j]))[0]
     contact = await db.get(CustomerContact, j.contact_id) if j.contact_id else None
     equipment = await db.get(Equipment, j.equipment_id) if j.equipment_id else None
@@ -159,6 +161,7 @@ async def job_out(db: AsyncSession, p: Principal, j: Job) -> JobOut:
         created_by=PersonRef(id=creator.id, name=creator.name or "") if creator else None,
         created_at=j.created_at,
         actions=actions(p, j),
+        review=await reviews.job_review(db, p, j),
     )  # fmt: skip
 
 

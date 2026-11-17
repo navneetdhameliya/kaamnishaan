@@ -38,6 +38,8 @@ abstract final class RoutesConstants {
   static const String messagesScreen = '/messages';
   static const String teamScreen = '/team';
   static const String customerScreen = '/customer';
+  static const String myReviewsScreen = '/reviews/mine';
+  static const String reviewDetailsScreen = '/reviews/one';
   static const String companySettingsScreen = '/settings/company';
   static const String inviteScreen = '/team/invite';
   static const String reportReviewScreen = '/review';

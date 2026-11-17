@@ -66,6 +66,10 @@ import 'package:kaamnishaan/UI/screens/me_section/messages_section/messages_cont
 import 'package:kaamnishaan/UI/screens/me_section/messages_section/messages_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/my_reports_section/my_reports_controller.dart';
 import 'package:kaamnishaan/UI/screens/me_section/my_reports_section/my_reports_screen.dart';
+import 'package:kaamnishaan/UI/screens/me_section/my_reviews_section/my_reviews_controller.dart';
+import 'package:kaamnishaan/UI/screens/me_section/my_reviews_section/my_reviews_screen.dart';
+import 'package:kaamnishaan/UI/screens/me_section/review_details_section/review_details_controller.dart';
+import 'package:kaamnishaan/UI/screens/me_section/review_details_section/review_details_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/waiting_to_send_section/waiting_to_send_controller.dart';
 import 'package:kaamnishaan/UI/screens/me_section/waiting_to_send_section/waiting_to_send_screen.dart';
 import 'package:kaamnishaan/UI/screens/onboarding_section/intro_section/intro_controller.dart';
@@ -1622,6 +1626,209 @@ void main() {
     ownerSession(role: 'manager');
     putMe(stats: const MeStatsModel(jobsDone: 0, photos: 0, reportsSent: 38, team: 4, customers: 24, toReview: 2));
     await shot(t, 'm37_me_manager', const Scaffold(body: MeTab()));
+  });
+
+  // ---- Step 2o: reviews (technician) ----------------------------------------------------------------
+  testWidgets('M31 report sent, ask for review', (t) async {
+    final reports = MockReportsRepository();
+    final jobs = MockJobsRepository();
+    when(() => reports.report(any())).thenAnswer(
+      (_) async => ApiSuccess<ReportOutModel>(reportOut(status: 'pending_review')),
+    );
+    when(() => jobs.job(any())).thenAnswer(
+      (_) async => ApiSuccess<JobOutModel>(
+        jobOut(
+          status: 'in_review',
+          review: const JobReviewModel(
+            status: 'not_requested',
+            canRequest: true,
+            contactName: 'Dr. Anita Rao',
+            contactPhone: '+1 555 010 0444',
+            aiCallEnabled: true,
+          ),
+        ),
+      ),
+    );
+    Get.put(
+      ReportSentController(
+        reports: reports,
+        translation: translation(),
+        jobs: jobs,
+        reviews: MockReviewsRepository(),
+        args: const ReportArguments(jobId: 'j1', customer: 'Green Valley Clinic', reportId: 'r1'),
+      ),
+    );
+    await shot(t, 'm31_ask_review', const ReportSentScreen());
+  });
+
+  Future<void> reviewCard(WidgetTester t, String name, JobReviewModel review, {String status = 'completed'}) async {
+    final jobs = MockJobsRepository();
+    when(() => jobs.job(any())).thenAnswer(
+      (_) async => ApiSuccess<JobOutModel>(jobOut(status: status, actions: const [], review: review)),
+    );
+    session.me.value = me();
+    Get.put(
+      JobDetailsController(
+        repository: jobs,
+        session: session,
+        speech: FakeSpeech(),
+        translation: translation(),
+        reviews: MockReviewsRepository(),
+        args: const JobArguments(id: 'j1', customer: 'Green Valley Clinic'),
+        clock: () => DateTime(2026, 10, 31, 9),
+      ),
+    );
+    await shot(t, name, const JobDetailsScreen());
+  }
+
+  testWidgets('M15 review not asked', (t) async => reviewCard(
+        t,
+        'm15_review_not_asked',
+        const JobReviewModel(status: 'not_requested', canRequest: true, contactName: 'Dr. Anita Rao', aiCallEnabled: true),
+      ));
+
+  testWidgets('M15 review queued', (t) async => reviewCard(
+        t,
+        'm15_review_queued',
+        const JobReviewModel(status: 'queued', canRequest: false, canCancel: true, requestedByMe: true),
+        status: 'in_review',
+      ));
+
+  testWidgets('M15 review link sent', (t) async => reviewCard(
+        t,
+        'm15_review_link_sent',
+        JobReviewModel(
+          status: 'link_sent',
+          canRequest: false,
+          sentAt: DateTime(2026, 10, 31, 12),
+          channels: const ['sms', 'email'],
+          reminderAt: DateTime(2026, 11, 2, 11),
+          aiCallAt: DateTime(2026, 11, 5, 11),
+          requestedByMe: true,
+        ),
+      ));
+
+  testWidgets('M15 review rated', (t) async => reviewCard(
+        t,
+        'm15_review_rated',
+        JobReviewModel(
+          status: 'rated',
+          canRequest: false,
+          review: ReviewBriefModel(
+            id: 'v1',
+            rating: 4,
+            comment: 'He was quick and tidy.',
+            source: 'ai_call',
+            createdAt: DateTime(2026, 11, 5, 10),
+          ),
+        ),
+      ));
+
+  testWidgets('M15 review opted out', (t) async => reviewCard(
+        t,
+        'm15_review_opted_out',
+        JobReviewModel(
+          status: 'opted_out',
+          canRequest: false,
+          optedOutAt: DateTime(2026, 11, 5, 10),
+          optOutSource: 'call',
+        ),
+      ));
+
+  Future<void> myReviews(WidgetTester t, String name, MyReviewsModel data) async {
+    final reviews = MockReviewsRepository();
+    when(() => reviews.mine()).thenAnswer((_) async => ApiSuccess<MyReviewsModel>(data));
+    Get.put(MyReviewsController(reviews: reviews, clock: () => DateTime(2026, 11, 5, 12)));
+    await shot(t, name, const MyReviewsScreen());
+  }
+
+  testWidgets('M44 my reviews', (t) async => myReviews(
+        t,
+        'm44_my_reviews',
+        MyReviewsModel(
+          average: 4.8,
+          count: 36,
+          share4Plus: 94,
+          tags: const [
+            TagCountModel(key: 'on_time', count: 31),
+            TagCountModel(key: 'clean_work', count: 28),
+            TagCountModel(key: 'explained_clearly', count: 22),
+          ],
+          data: [
+            ReviewListItemModel(
+              id: 'v1',
+              rating: 5,
+              technicianRating: 5,
+              comment: 'Quick and tidy. Showed me the dirty filter before he cleaned it.',
+              reviewerName: 'Dr. Anita Rao',
+              source: 'link',
+              customer: 'Green Valley Clinic',
+              jobTitle: 'AC not cooling',
+              createdAt: DateTime(2026, 11, 5, 10),
+              reply: ReplyOutModel(
+                author: const PersonRefModel(id: 'm1', name: 'Priya Mehta'),
+                text: 'Thank you, Dr. Rao! See you in February.',
+                createdAt: DateTime(2026, 11, 5, 11),
+              ),
+            ),
+            ReviewListItemModel(
+              id: 'v2',
+              rating: 4,
+              technicianRating: 4,
+              comment: 'Good work. Came 20 minutes late but called first.',
+              reviewerName: 'Lake View Apartments',
+              source: 'link',
+              customer: 'Lake View Apartments',
+              jobTitle: 'Filter change · 4B',
+              createdAt: DateTime(2026, 11, 2, 9),
+            ),
+          ],
+        ),
+      ));
+
+  testWidgets('M44 my reviews, empty', (t) async => myReviews(
+        t,
+        'm44_my_reviews_empty',
+        const MyReviewsModel(count: 0, share4Plus: 0, tags: [], data: []),
+      ));
+
+  testWidgets('M44 review details', (t) async {
+    final reviews = MockReviewsRepository();
+    when(() => reviews.review(any())).thenAnswer(
+      (_) async => ApiSuccess<ReviewOutModel>(
+        ReviewOutModel(
+          id: 'v1',
+          rating: 4,
+          technicianRating: 5,
+          comment: 'Quick and tidy. Ramesh showed me the dirty filter before he cleaned it.',
+          reviewerName: 'Dr. Anita Rao',
+          source: 'link',
+          customer: 'Green Valley Clinic',
+          jobTitle: 'AC not cooling',
+          createdAt: DateTime(2026, 10, 31, 15),
+          tags: const ['on_time', 'clean_work', 'explained_clearly'],
+          jobId: 'j1',
+          reportNumber: 'R-1042',
+          technician: const PersonRefModel(id: 'u1', name: 'Ramesh Patel'),
+          publicAllowed: false,
+          wantsCallBack: false,
+          reply: ReplyOutModel(
+            author: const PersonRefModel(id: 'm1', name: 'Priya Mehta'),
+            text: 'Thank you, Dr. Rao! See you in February.',
+            createdAt: DateTime(2026, 11, 5, 11),
+          ),
+        ),
+      ),
+    );
+    Get.put(
+      ReviewDetailsController(
+        reviews: reviews,
+        translation: translation(),
+        reviewId: 'v1',
+        clock: () => DateTime(2026, 11, 5, 12),
+      ),
+    );
+    await shot(t, 'm44_review_details', const ReviewDetailsScreen());
   });
 
   testWidgets('M13 dashboard', (t) async {

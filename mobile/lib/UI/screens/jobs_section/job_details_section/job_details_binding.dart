@@ -12,6 +12,7 @@ class JobDetailsBinding extends Bindings {
         speech: Get.find(),
         translation: Get.find(),
         location: Get.find(),
+        reviews: Get.find(),
       ),
     );
   }

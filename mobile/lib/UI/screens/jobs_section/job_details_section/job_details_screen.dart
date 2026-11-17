@@ -15,6 +15,7 @@ import '../../../commons/text_widgets/base/custom_base_text_widget.dart';
 import '../../../theme/kn_app_theme.dart';
 import '../../../theme/kn_tokens.g.dart';
 import 'custom_widgets/job_info_cards.dart';
+import 'custom_widgets/review_card.dart';
 import 'job_details_controller.dart';
 
 /// M15 Job details (Figma 20:1050). The live map comes later (D-54); the top shows the site's photo.
@@ -179,6 +180,17 @@ class JobDetailsScreen extends GetView<JobDetailsController> {
             ),
           ],
         ),
+        if (job.review != null) ...[
+          const SizedBox(height: KnSize.space12),
+          ReviewCard(
+            review: job.review!,
+            words: controller.reviewWords,
+            busy: controller.askingReview.value,
+            onRequest: controller.onRequestReviewTap,
+            onCancel: controller.onCancelReviewTap,
+            onOpen: controller.onOpenReviewTap,
+          ),
+        ],
         if (contact != null) ...[
           const SizedBox(height: KnSize.space12),
           JobContactCard(name: contact.name, title: contact.title),

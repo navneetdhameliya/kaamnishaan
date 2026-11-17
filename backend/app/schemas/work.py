@@ -276,6 +276,9 @@ class JobOut(JobListItem):
     actions: list[str] = Field(
         description="What the signed-in person may do now: edit, assign, start, cancel, delete"
     )
+    review: "JobReview | None" = Field(
+        default=None, description="Customer review card (M15); none before a report"
+    )
 
 
 class TimelineEvent(BaseModel):
@@ -382,3 +385,8 @@ class SyncChanges(BaseModel):
 
 
 CustomerListItem.model_rebuild()
+
+
+from app.schemas.reviews import JobReview  # noqa: E402 - reviews uses PersonRef from here
+
+JobOut.model_rebuild()

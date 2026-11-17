@@ -172,7 +172,7 @@ class MeTab extends GetView<MeController> {
                               key: const ValueKey('me-reviews'),
                               icon: LucideIcons.star,
                               label: LangKeys.meMyReviews.tr,
-                              onTap: controller.onComingSoonTap,
+                              onTap: controller.onMyReviewsTap,
                             ),
                           if (technician || controller.waiting > 0)
                             MeRow(

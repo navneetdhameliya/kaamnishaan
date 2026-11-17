@@ -16,6 +16,7 @@ import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/jobs
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/me_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/notifications_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/reports_api_repository.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/reviews_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/voice_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
 import 'package:kaamnishaan/infrastructure/services/audio_service.dart';
@@ -40,6 +41,8 @@ class MockHomeRepository extends Mock implements IHomeApiRepository {}
 class MockJobsRepository extends Mock implements IJobsApiRepository {}
 
 class MockCustomersRepository extends Mock implements ICustomersApiRepository {}
+
+class MockReviewsRepository extends Mock implements IReviewsApiRepository {}
 
 class MockChecklistsRepository extends Mock implements IChecklistsApiRepository {}
 
@@ -140,7 +143,12 @@ class FakeLocation implements ILocationService {
   Future<LatLng?> current() async => where;
 }
 
-JobOutModel jobOut({String status = 'assigned', List<String> actions = const ['start'], String assigneeId = 'u1'}) =>
+JobOutModel jobOut({
+  String status = 'assigned',
+  List<String> actions = const ['start'],
+  String assigneeId = 'u1',
+  JobReviewModel? review,
+}) =>
     JobOutModel(
       id: 'j1',
       number: 'J-1001',
@@ -171,6 +179,7 @@ JobOutModel jobOut({String status = 'assigned', List<String> actions = const ['s
       ),
       createdAt: DateTime(2026, 10, 30),
       actions: actions,
+      review: review,
     );
 
 ProofModel proofData({bool started = true, int before = 3, int during = 1, int after = 0}) => ProofModel(

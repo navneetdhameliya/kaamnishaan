@@ -54,6 +54,10 @@ import '../../../UI/screens/me_section/messages_section/messages_binding.dart';
 import '../../../UI/screens/me_section/messages_section/messages_screen.dart';
 import '../../../UI/screens/me_section/my_reports_section/my_reports_binding.dart';
 import '../../../UI/screens/me_section/my_reports_section/my_reports_screen.dart';
+import '../../../UI/screens/me_section/my_reviews_section/my_reviews_binding.dart';
+import '../../../UI/screens/me_section/my_reviews_section/my_reviews_screen.dart';
+import '../../../UI/screens/me_section/review_details_section/review_details_binding.dart';
+import '../../../UI/screens/me_section/review_details_section/review_details_screen.dart';
 import '../../../UI/screens/me_section/waiting_to_send_section/waiting_to_send_binding.dart';
 import '../../../UI/screens/me_section/waiting_to_send_section/waiting_to_send_screen.dart';
 import '../../../UI/screens/onboarding_section/intro_section/intro_binding.dart';
@@ -197,6 +201,12 @@ abstract final class AppPages {
       name: RoutesConstants.companySettingsScreen,
       page: () => const CompanySettingsScreen(),
       binding: CompanySettingsBinding(),
+    ),
+    GetPage(name: RoutesConstants.myReviewsScreen, page: () => const MyReviewsScreen(), binding: MyReviewsBinding()),
+    GetPage(
+      name: RoutesConstants.reviewDetailsScreen,
+      page: () => const ReviewDetailsScreen(),
+      binding: ReviewDetailsBinding(),
     ),
     GetPage(name: RoutesConstants.teamScreen, page: () => const TeamScreen(), binding: TeamBinding()),
     GetPage(name: RoutesConstants.inviteScreen, page: () => const InviteScreen(), binding: InviteBinding()),
