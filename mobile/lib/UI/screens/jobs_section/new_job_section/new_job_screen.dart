@@ -7,6 +7,7 @@ import '../../../common_widgets/custom_inkwell.dart';
 import '../../../common_widgets/kn_bottom_sheet.dart';
 import '../../../common_widgets/kn_custom_button.dart';
 import '../../../common_widgets/kn_custom_text_form_field.dart';
+import '../../../common_widgets/kn_customer_search.dart';
 import '../../../common_widgets/kn_dropdown_field.dart';
 import '../../../common_widgets/kn_screen_footer.dart';
 import '../../../common_widgets/kn_title_bar.dart';
@@ -25,7 +26,12 @@ class NewJobScreen extends GetView<NewJobController> {
     controller.prepareSearch();
     showKnBottomSheet<void>(
       title: LangKeys.newjobSearchCustomers.tr,
-      child: _CustomerSearch(controller: controller),
+      child: KnCustomerSearchSheet(
+        search: controller,
+        selectedId: controller.customer.value?.id,
+        onPicked: controller.onCustomerPicked,
+        onAddNew: controller.onNewCustomerPicked,
+      ),
     );
   }
 
@@ -36,7 +42,7 @@ class NewJobScreen extends GetView<NewJobController> {
         () => ListView(
           shrinkWrap: true,
           children: [
-            PickRow(
+            KnPickRow(
               key: const ValueKey('checklist-none'),
               title: LangKeys.newjobChecklistNone.tr,
               selected: controller.checklist.value == null,
@@ -44,7 +50,7 @@ class NewJobScreen extends GetView<NewJobController> {
             ),
             for (final t in controller.templates) ...[
               const SizedBox(height: KnSize.space8),
-              PickRow(
+              KnPickRow(
                 key: ValueKey('checklist-${t.id}'),
                 title: controller.checklistLabel(t),
                 selected: controller.checklist.value?.id == t.id,
@@ -213,82 +219,6 @@ class NewJobScreen extends GetView<NewJobController> {
           );
         }),
       ),
-    );
-  }
-}
-
-/// The customer search sheet: a search box, matching customers with their address, and
-/// "Add “…” as new customer".
-class _CustomerSearch extends StatelessWidget {
-  const _CustomerSearch({required this.controller});
-
-  final NewJobController controller;
-
-  @override
-  Widget build(BuildContext context) {
-    final kn = context.kn;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        TextField(
-          key: const ValueKey('customer-search'),
-          controller: controller.search,
-          autofocus: true,
-          onChanged: controller.onSearchChanged,
-          textCapitalization: TextCapitalization.words,
-          style: context.knText.body,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: kn.bgSurface,
-            hintText: LangKeys.newjobCustomerHint.tr,
-            prefixIcon: Icon(LucideIcons.search, size: 20, color: kn.textSecondary),
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(KnSize.radiusMd)),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(KnSize.radiusMd),
-              borderSide: BorderSide(color: kn.borderStrong),
-            ),
-          ),
-        ),
-        const SizedBox(height: KnSize.space12),
-        Flexible(
-          child: Obx(
-            () => ListView(
-              shrinkWrap: true,
-              children: [
-                if (controller.canAddNew)
-                  PickRow(
-                    key: const ValueKey('customer-add'),
-                    icon: LucideIcons.userPlus,
-                    title: LangKeys.newjobAddCustomer.trParams({'name': controller.query.value.trim()}),
-                    subtitle: LangKeys.newjobNewCustomer.tr,
-                    onTap: controller.onNewCustomerPicked,
-                  ),
-                for (final c in controller.found) ...[
-                  const SizedBox(height: KnSize.space8),
-                  PickRow(
-                    key: ValueKey('customer-${c.id}'),
-                    title: c.name,
-                    subtitle: c.site?.address ?? c.city,
-                    selected: controller.customer.value?.id == c.id,
-                    onTap: () => controller.onCustomerPicked(c),
-                  ),
-                ],
-                if (!controller.searching.value && controller.found.isEmpty && !controller.canAddNew)
-                  Padding(
-                    padding: const EdgeInsets.all(KnSize.space16),
-                    child: CustomBaseTextWidget(
-                      LangKeys.newjobNoCustomers.tr,
-                      style: context.knText.body,
-                      color: kn.textSecondary,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-              ],
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

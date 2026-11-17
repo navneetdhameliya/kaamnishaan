@@ -12,6 +12,14 @@ class JobArguments {
   final String? title;
 }
 
+/// Opens Customer details (M18). [name] shows at once, before the customer has loaded.
+class CustomerArguments {
+  const CustomerArguments({required this.id, required this.name});
+
+  final String id;
+  final String name;
+}
+
 /// Opens Assign technician (M17). With [jobId] the pick is saved at once; without it (from New job, M16)
 /// the screen returns the picked technician. [at] gives the day whose jobs are counted.
 class AssignArguments {

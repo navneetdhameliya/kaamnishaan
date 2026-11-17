@@ -135,7 +135,21 @@ class JobDetailsScreen extends GetView<JobDetailsController> {
           ],
         ),
         const SizedBox(height: KnSize.space12),
-        CustomBaseTextWidget(controller.customer, style: text.h1),
+        if (controller.canOpenCustomer)
+          CustomInkWell(
+            key: const ValueKey('job-customer'),
+            onTap: controller.onCustomerTap,
+            borderRadius: BorderRadius.circular(KnSize.radiusMd),
+            child: Row(
+              children: [
+                Flexible(child: CustomBaseTextWidget(controller.customer, style: text.h1)),
+                const SizedBox(width: 4),
+                Icon(LucideIcons.chevronRight, size: 24, color: kn.textSecondary),
+              ],
+            ),
+          )
+        else
+          CustomBaseTextWidget(controller.customer, style: text.h1),
         if (controller.address.isNotEmpty) ...[
           const SizedBox(height: KnSize.space2),
           CustomBaseTextWidget(controller.address, style: text.body, color: kn.textSecondary),

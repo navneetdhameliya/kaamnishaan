@@ -24,6 +24,8 @@ import '../../../UI/screens/checklists_section/checklist_question_section/checkl
 import '../../../UI/screens/checklists_section/checklist_question_section/checklist_question_screen.dart';
 import '../../../UI/screens/checklists_section/checklists_section/checklists_binding.dart';
 import '../../../UI/screens/checklists_section/checklists_section/checklists_screen.dart';
+import '../../../UI/screens/customer_section/customer_details_section/customer_details_binding.dart';
+import '../../../UI/screens/customer_section/customer_details_section/customer_details_screen.dart';
 import '../../../UI/screens/home_section/home_shell_section/home_shell_binding.dart';
 import '../../../UI/screens/home_section/home_shell_section/home_shell_screen.dart';
 import '../../../UI/screens/jobs_section/assign_technician_section/assign_technician_binding.dart';
@@ -44,6 +46,8 @@ import '../../../UI/screens/jobs_section/photo_gallery_section/photo_gallery_bin
 import '../../../UI/screens/jobs_section/photo_gallery_section/photo_gallery_screen.dart';
 import '../../../UI/screens/jobs_section/photo_pair_section/photo_pair_binding.dart';
 import '../../../UI/screens/jobs_section/photo_pair_section/photo_pair_screen.dart';
+import '../../../UI/screens/me_section/company_settings_section/company_settings_binding.dart';
+import '../../../UI/screens/me_section/company_settings_section/company_settings_screen.dart';
 import '../../../UI/screens/me_section/language_settings_section/language_settings_binding.dart';
 import '../../../UI/screens/me_section/language_settings_section/language_settings_screen.dart';
 import '../../../UI/screens/me_section/messages_section/messages_binding.dart';
@@ -184,6 +188,16 @@ abstract final class AppPages {
       binding: AssignTechnicianBinding(),
     ),
     GetPage(name: RoutesConstants.shareReportScreen, page: () => const ShareReportScreen(), binding: ShareReportBinding()),
+    GetPage(
+      name: RoutesConstants.customerScreen,
+      page: () => const CustomerDetailsScreen(),
+      binding: CustomerDetailsBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.companySettingsScreen,
+      page: () => const CompanySettingsScreen(),
+      binding: CompanySettingsBinding(),
+    ),
     GetPage(name: RoutesConstants.teamScreen, page: () => const TeamScreen(), binding: TeamBinding()),
     GetPage(name: RoutesConstants.inviteScreen, page: () => const InviteScreen(), binding: InviteBinding()),
     GetPage(name: RoutesConstants.messagesScreen, page: () => const MessagesScreen(), binding: MessagesBinding()),

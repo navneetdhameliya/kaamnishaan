@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../../../infrastructure/commons/constants/app_routes.dart';
+import '../../../../infrastructure/data_access_layer/api_repository/customers_api_repository.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/me_api_repository.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/notifications_api_repository.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
@@ -8,6 +9,9 @@ import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/services/photo_queue_service.dart';
 import '../../../../infrastructure/services/session_service.dart';
+import '../../../../infrastructure/shared/job_arguments.dart';
+import '../../../common_widgets/kn_bottom_sheet.dart';
+import '../../../common_widgets/kn_customer_search.dart';
 import '../../../common_widgets/kn_toast.dart';
 import '../../auth_section/profile_setup_section/profile_setup_controller.dart';
 
@@ -95,9 +99,9 @@ class MeController extends GetxController {
     final s = stats.value;
     if (isManager) {
       return [
+        MeStat(s?.reportsSent ?? 0, LangKeys.meReportsSent.tr),
         MeStat(s?.team ?? 0, LangKeys.meTeam.tr),
-        MeStat(s?.customers ?? 0, LangKeys.meCustomers.tr),
-        MeStat(s?.reportsSent ?? 0, LangKeys.meReports.tr),
+        MeStat(s?.toReview ?? 0, LangKeys.meToReview.tr),
       ];
     }
     return [
@@ -117,6 +121,27 @@ class MeController extends GetxController {
   Future<void> onMyReportsTap() async {
     await Get.toNamed(RoutesConstants.myReportsScreen);
     load();
+  }
+
+  /// M39 Company settings (owners and managers; only owners change things).
+  Future<void> onCompanySettingsTap() async {
+    await Get.toNamed<void>(RoutesConstants.companySettingsScreen);
+  }
+
+  /// Customers: find one, then open their page (M18).
+  Future<void> onCustomersTap() async {
+    final finder = CustomerFinder(customers: Get.find<ICustomersApiRepository>())..startSearch();
+    await showKnBottomSheet<void>(
+      title: LangKeys.meCustomers.tr,
+      child: KnCustomerSearchSheet(
+        search: finder,
+        onPicked: (c) {
+          Get.back<void>();
+          Get.toNamed<void>(RoutesConstants.customerScreen, arguments: CustomerArguments(id: c.id, name: c.name));
+        },
+      ),
+    );
+    finder.onClose();
   }
 
   /// M40 Team (owners and managers).
