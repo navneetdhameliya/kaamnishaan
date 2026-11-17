@@ -85,6 +85,8 @@ class MessagesController extends GetxController {
             : LangKeys.msgJobTitle.tr,
         'report_submitted' => LangKeys.msgSubmittedTitle.tr,
         'changes_requested' => LangKeys.msgChangesTitle.tr,
+        'review_received' => LangKeys.msgReviewTitle.tr,
+        'low_rating' => LangKeys.msgLowTitle.tr,
         _ => LangKeys.msgApprovedTitle.tr,
       };
 
@@ -114,6 +116,10 @@ class MessagesController extends GetxController {
             : LangKeys.msgChangesBody.trParams({'who': _who(n), 'customer': customer, 'note': note});
       case 'report_shared':
         return LangKeys.msgSharedBody.trParams({'customer': customer});
+      case 'review_received':
+        return LangKeys.msgReviewBody.trParams({'customer': customer, 'n': _p(n, 'rating')});
+      case 'low_rating':
+        return LangKeys.msgLowBody.trParams({'customer': customer, 'n': _p(n, 'rating')});
       default:
         return LangKeys.msgApprovedBody.trParams({'customer': customer});
     }
@@ -132,7 +138,7 @@ class MessagesController extends GetxController {
   MessageTone tone(NotificationOutModel n) => switch (n.kind) {
         'job_assigned' => MessageTone.job,
         'report_submitted' => MessageTone.review,
-        'changes_requested' => MessageTone.problem,
+        'changes_requested' || 'low_rating' => MessageTone.problem,
         _ => MessageTone.done,
       };
 
@@ -146,6 +152,10 @@ class MessagesController extends GetxController {
         await Get.toNamed(RoutesConstants.jobDetailsScreen, arguments: JobArguments(id: job, customer: customer));
       case 'changes_requested':
         await Get.toNamed(RoutesConstants.captureHubScreen, arguments: JobArguments(id: job, customer: customer));
+      case 'review_received':
+        await Get.toNamed(RoutesConstants.myReviewsScreen);
+      case 'low_rating':
+        await Get.toNamed(RoutesConstants.companyReviewsScreen, arguments: 'low');
       default:
         if (n.reportId == null) return;
         await Get.toNamed(

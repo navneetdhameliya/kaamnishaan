@@ -109,6 +109,44 @@ class ReviewWords {
     return at == null ? '' : LangKeys.reviewOptedOutLine.trParams({'date': day(at)});
   }
 
+  // ---- the office side (M45) -------------------------------------------------------------------
+
+  /// The name on a review card: who rated, or the customer.
+  static String who(CompanyReviewItemModel r) {
+    final n = r.reviewerName?.trim();
+    return n == null || n.isEmpty ? r.customer : n;
+  }
+
+  /// "Mehta house · AC service"
+  static String where(CompanyReviewItemModel r) {
+    final n = r.reviewerName?.trim();
+    return [if (n != null && n.isNotEmpty) r.customer, r.jobTitle].join(' · ');
+  }
+
+  /// The chip on a review request (M45 Review requests).
+  static String requestChip(RequestItemModel r) => switch (r.status) {
+        'queued' => LangKeys.reviewQueued.tr,
+        'link_sent' => LangKeys.rreqLinkSent.tr,
+        'reminded' => LangKeys.rreqReminderSent.tr,
+        'ai_call_scheduled' || 'ai_call_done' => LangKeys.rreqAiCallPlanned.tr,
+        'rated' => LangKeys.rreqRatedVia.trParams({'n': '${r.rating ?? ''}', 'source': source(r.source ?? 'link')}),
+        'opted_out' => LangKeys.reviewOptedOut.tr,
+        _ => LangKeys.reviewStopped.tr,
+      };
+
+  /// The line under the chip: what happens next.
+  String requestLine(RequestItemModel r) {
+    final at = r.nextAt;
+    return switch (r.status) {
+      'queued' => LangKeys.rreqAfterApproval.tr,
+      'rated' || 'stopped' || 'paused_no_credits' => LangKeys.rreqStoppedLine.tr,
+      'opted_out' => LangKeys.rreqNoContact.tr,
+      _ when at != null && r.nextStep == 'reminder' => LangKeys.rreqReminderOn.trParams({'date': weekday(at)}),
+      _ when at != null && r.nextStep == 'ai_call' => LangKeys.rreqAiCallOn.trParams({'date': weekday(at)}),
+      _ => LangKeys.rreqWaitingLine.tr,
+    };
+  }
+
   /// "2 h ago", "3 days ago"
   static String ago(DateTime t, DateTime now) {
     final m = now.difference(t.toLocal()).inMinutes;

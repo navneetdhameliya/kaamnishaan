@@ -14,7 +14,10 @@ from sqlalchemy.orm import Mapped, mapped_column
 
 from app.models.base import Base, IdMixin, TimestampMixin
 
-KINDS = ("job_assigned", "report_submitted", "changes_requested", "report_approved", "report_shared")
+KINDS = (
+    "job_assigned", "report_submitted", "changes_requested", "report_approved", "report_shared",
+    "review_received", "low_rating",
+)  # fmt: skip
 
 
 class Notification(IdMixin, TimestampMixin, Base):

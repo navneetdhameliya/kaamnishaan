@@ -150,6 +150,11 @@ class MeController extends GetxController {
     load();
   }
 
+  /// M45 Customer reviews (owners and managers).
+  Future<void> onCustomerReviewsTap() async {
+    await Get.toNamed<void>(RoutesConstants.companyReviewsScreen);
+  }
+
   /// M44 My reviews.
   Future<void> onMyReviewsTap() async {
     await Get.toNamed<void>(RoutesConstants.myReviewsScreen);

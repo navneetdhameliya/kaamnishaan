@@ -1778,4 +1778,186 @@ abstract final class LangKeys {
   static const tagNotExplained = 'tag.not_explained';
   /// Rude
   static const tagRude = 'tag.rude';
+  /// Customer reviews
+  static const crevTitle = 'crev.title';
+  /// {n} reviews
+  static const crevCount = 'crev.count';
+  /// 1 review
+  static const crevCountOne = 'crev.count_one';
+  /// All {n}
+  static const crevAll = 'crev.all';
+  /// Needs reply {n}
+  static const crevNeedsReply = 'crev.needs_reply';
+  /// Low {n}
+  static const crevLow = 'crev.low';
+  /// Call me
+  static const crevCallMe = 'crev.call_me';
+  /// Follow up
+  static const crevFollowUp = 'crev.follow_up';
+  /// Reply
+  static const crevReply = 'crev.reply';
+  /// Resolved
+  static const crevResolved = 'crev.resolved';
+  /// No reviews yet
+  static const crevEmpty = 'crev.empty';
+  /// Ask for a rating when you share a report. Reviews show here.
+  static const crevEmptyBody = 'crev.empty_body';
+  /// Nothing here right now.
+  static const crevNoneHere = 'crev.none_here';
+  /// Reviews
+  static const crevMore = 'crev.more';
+  /// Review requests
+  static const crevRequests = 'crev.requests';
+  /// Review settings
+  static const crevSettings = 'crev.settings';
+  /// Review follow-ups
+  static const crevFollowups = 'crev.followups';
+  /// Reply to {name}
+  static const crevReplyTo = 'crev.reply_to';
+  /// Suggest a reply
+  static const crevSuggest = 'crev.suggest';
+  /// Write your reply
+  static const crevReplyHint = 'crev.reply_hint';
+  /// Your reply shows on the customer's report page and to {name}.
+  static const crevReplyNote = 'crev.reply_note';
+  /// Your reply shows on the customer's report page.
+  static const crevReplyNotePlain = 'crev.reply_note_plain';
+  /// Send reply
+  static const crevSendReply = 'crev.send_reply';
+  /// Reply sent
+  static const crevReplied = 'crev.replied';
+  /// {n}-star review
+  static const crevNStar = 'crev.n_star';
+  /// Needs follow-up · {ago}
+  static const crevNeedsFollow = 'crev.needs_follow';
+  /// Resolved · {ago}
+  static const crevResolvedAgo = 'crev.resolved_ago';
+  /// Report #{n}
+  static const crevReportN = 'crev.report_n';
+  /// Customer asked for a call
+  static const crevAskedCall = 'crev.asked_call';
+  /// within 1 working day
+  static const crevCallWithin = 'crev.call_within';
+  /// Call now
+  static const crevCallNow = 'crev.call_now';
+  /// Revisit job
+  static const crevRevisit = 'crev.revisit';
+  /// Private note for the team
+  static const crevNote = 'crev.note';
+  /// Only your team sees this
+  static const crevNoteHint = 'crev.note_hint';
+  /// Save note
+  static const crevSaveNote = 'crev.save_note';
+  /// Note saved
+  static const crevNoteSaved = 'crev.note_saved';
+  /// Mark as resolved
+  static const crevMarkResolved = 'crev.mark_resolved';
+  /// Marked as resolved
+  static const crevMarkedResolved = 'crev.marked_resolved';
+  /// Reopen
+  static const crevReopen = 'crev.reopen';
+  /// No phone number for this customer.
+  static const crevNoPhone = 'crev.no_phone';
+  /// Where each job's rating stands
+  static const rreqSubtitle = 'rreq.subtitle';
+  /// Waiting {n}
+  static const rreqWaiting = 'rreq.waiting';
+  /// Rated {n}
+  static const rreqRated = 'rreq.rated';
+  /// Opted out {n}
+  static const rreqOptedOut = 'rreq.opted_out';
+  /// AI call planned
+  static const rreqAiCallPlanned = 'rreq.ai_call_planned';
+  /// Reminder sent
+  static const rreqReminderSent = 'rreq.reminder_sent';
+  /// Link sent
+  static const rreqLinkSent = 'rreq.link_sent';
+  /// Rated {n}★ via {source}
+  static const rreqRatedVia = 'rreq.rated_via';
+  /// Reminder on {date}
+  static const rreqReminderOn = 'rreq.reminder_on';
+  /// AI call on {date}
+  static const rreqAiCallOn = 'rreq.ai_call_on';
+  /// Sends when the report is approved
+  static const rreqAfterApproval = 'rreq.after_approval';
+  /// Waiting for the customer
+  static const rreqWaitingLine = 'rreq.waiting_line';
+  /// Follow-ups stopped
+  static const rreqStoppedLine = 'rreq.stopped_line';
+  /// No more contact
+  static const rreqNoContact = 'rreq.no_contact';
+  /// Nothing here yet
+  static const rreqEmpty = 'rreq.empty';
+  /// Requests show here once you ask a customer to rate a job.
+  static const rreqEmptyBody = 'rreq.empty_body';
+  /// Company settings · owner and managers
+  static const rsetSubtitle = 'rset.subtitle';
+  /// Ask for a review
+  static const rsetAsk = 'rset.ask';
+  /// Add "Rate this job" to every shared report
+  static const rsetAskSub = 'rset.ask_sub';
+  /// Send a reminder
+  static const rsetRemind = 'rset.remind';
+  /// If no review after {n} days, by {channels}
+  static const rsetRemindSub = 'rset.remind_sub';
+  /// Alert me for low ratings
+  static const rsetLow = 'rset.low';
+  /// {n} stars or less · in the app
+  static const rsetLowSub = 'rset.low_sub';
+  /// Technicians see their reviews
+  static const rsetTechsSee = 'rset.techs_see';
+  /// Shown in their app under Me
+  static const rsetTechsSeeSub = 'rset.techs_see_sub';
+  /// Show good reviews on our page
+  static const rsetPublic = 'rset.public';
+  /// 5-star reviews, only with customer permission
+  static const rsetPublicSub = 'rset.public_sub';
+  /// Google review link (optional)
+  static const rsetGoogle = 'rset.google';
+  /// Happy customers get a button to post on Google too.
+  static const rsetGoogleHelp = 'rset.google_help';
+  /// Saved
+  static const rsetSaved = 'rset.saved';
+  /// Day {n}
+  static const rfuDay = 'rfu.day';
+  /// With the report
+  static const rfuWithReport = 'rfu.with_report';
+  /// Rating link in the share message
+  static const rfuWithReportSub = 'rfu.with_report_sub';
+  /// Reminder
+  static const rfuReminder = 'rfu.reminder';
+  /// Only if there is no rating yet
+  static const rfuReminderSub = 'rfu.reminder_sub';
+  /// AI review call
+  static const rfuAi = 'rfu.ai';
+  /// One call + voicemail, {from} – {to}
+  static const rfuAiSub = 'rfu.ai_sub';
+  /// Customer's language
+  static const rfuAiLang = 'rfu.ai_lang';
+  /// Recorded · disclosed
+  static const rfuAiRecorded = 'rfu.ai_recorded';
+  /// AI calls are not live yet. We will tell you when they start.
+  static const rfuAiNotLive = 'rfu.ai_not_live';
+  /// Stops right away when the customer rates by any channel, or asks not to be contacted.
+  static const rfuStops = 'rfu.stops';
+  /// Technicians can request reviews
+  static const rfuTechs = 'rfu.techs';
+  /// Shows "Request review" in their app
+  static const rfuTechsSub = 'rfu.techs_sub';
+  /// Pick at least one way to send.
+  static const rfuPickOne = 'rfu.pick_one';
+  /// Ask for a rating too
+  static const shareAskReview = 'share.ask_review';
+  /// Reminders follow if there is no rating
+  static const shareAskReviewSub = 'share.ask_review_sub';
+  /// A rating was already asked for this job.
+  static const shareReviewAsked = 'share.review_asked';
+  /// New review
+  static const msgReviewTitle = 'msg.review_title';
+  /// {customer} rated you {n}★
+  static const msgReviewBody = 'msg.review_body';
+  /// Low rating
+  static const msgLowTitle = 'msg.low_title';
+  /// {customer} gave {n}★. Follow up soon.
+  static const msgLowBody = 'msg.low_body';
 }

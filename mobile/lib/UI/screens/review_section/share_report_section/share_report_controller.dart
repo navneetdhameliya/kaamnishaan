@@ -25,6 +25,9 @@ class ShareReportController extends GetxController {
   final RxSet<String> picked = <String>{}.obs;
   final RxBool editing = false.obs;
   final RxBool sending = false.obs;
+
+  /// "Ask for a rating too" (starts from the company setting; off when already asked).
+  final RxBool askReview = false.obs;
   final RxBool linkBusy = false.obs;
   final RxnString contactError = RxnString();
   final TextEditingController contact = TextEditingController();
@@ -58,6 +61,7 @@ class ShareReportController extends GetxController {
       return;
     }
     info.value = i;
+    askReview.value = i.reviewAsk == 'on';
     if (picked.isEmpty) {
       final first = channelOrder.firstWhereOrNull(available);
       if (first != null) picked.add(first);
@@ -193,6 +197,13 @@ class ShareReportController extends GetxController {
 
   // ---- send ----------------------------------------------------------------------------------
 
+  /// A rating was already asked for this job.
+  bool get reviewAsked => info.value?.reviewAsk == 'asked';
+
+  void onAskReviewChanged(bool v) {
+    if (!reviewAsked) askReview.value = v;
+  }
+
   bool get canSend => picked.isNotEmpty && (info.value?.canShare ?? false);
 
   Future<void> onSendTap() async {
@@ -206,6 +217,8 @@ class ShareReportController extends GetxController {
       channels: [for (final c in channelOrder) if (picked.contains(c)) c],
       phone: _typedPhone,
       email: _typedMail,
+      // empty = the company setting, so it is sent only when changed here
+      askForReview: reviewAsked || askReview.value == (info.value?.reviewAsk == 'on') ? null : askReview.value,
     );
     sending.value = false;
     final i = result.dataOrNull;

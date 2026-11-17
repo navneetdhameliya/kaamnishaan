@@ -500,6 +500,109 @@ class CompanyOutModel {
       };
 }
 
+CompanyReviewItemModel companyReviewItemModelFromJson(String str) => CompanyReviewItemModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String companyReviewItemModelToJson(CompanyReviewItemModel data) => json.encode(data.toJson());
+
+class CompanyReviewItemModel {
+  final String? comment;
+  /// For M45 'Call now'
+  final String? contactPhone;
+  final String? coverUrl;
+  final DateTime createdAt;
+  final String customer;
+  final String customerId;
+  final FollowupOutModel? followup;
+  final String id;
+  final String jobId;
+  final String jobTitle;
+  /// At or under the company's low-rating line (2 stars by default)
+  final bool low;
+  final bool needsReply;
+  final int rating;
+  final ReplyOutModel? reply;
+  final String? reportNumber;
+  final String? reviewerName;
+  /// One of: link, reply, ai_call
+  final String source;
+  final List<String> tags;
+  final PersonRefModel? technician;
+  final int? technicianRating;
+  final bool wantsCallBack;
+
+  const CompanyReviewItemModel({
+    this.comment,
+    this.contactPhone,
+    this.coverUrl,
+    required this.createdAt,
+    required this.customer,
+    required this.customerId,
+    this.followup,
+    required this.id,
+    required this.jobId,
+    required this.jobTitle,
+    required this.low,
+    required this.needsReply,
+    required this.rating,
+    this.reply,
+    this.reportNumber,
+    this.reviewerName,
+    required this.source,
+    required this.tags,
+    this.technician,
+    this.technicianRating,
+    required this.wantsCallBack,
+  });
+
+  factory CompanyReviewItemModel.fromJson(Map<String, dynamic> json) => CompanyReviewItemModel(
+        comment: json['comment'] as String?,
+        contactPhone: json['contact_phone'] as String?,
+        coverUrl: json['cover_url'] as String?,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        customer: json['customer'] as String,
+        customerId: json['customer_id'] as String,
+        followup: json['followup'] == null ? null : FollowupOutModel.fromJson(json['followup'] as Map<String, dynamic>),
+        id: json['id'] as String,
+        jobId: json['job_id'] as String,
+        jobTitle: json['job_title'] as String,
+        low: json['low'] as bool,
+        needsReply: json['needs_reply'] as bool,
+        rating: (json['rating'] as num).toInt(),
+        reply: json['reply'] == null ? null : ReplyOutModel.fromJson(json['reply'] as Map<String, dynamic>),
+        reportNumber: json['report_number'] as String?,
+        reviewerName: json['reviewer_name'] as String?,
+        source: json['source'] as String,
+        tags: (json['tags'] as List).map((e) => e as String).toList(),
+        technician: json['technician'] == null ? null : PersonRefModel.fromJson(json['technician'] as Map<String, dynamic>),
+        technicianRating: json['technician_rating'] == null ? null : (json['technician_rating'] as num).toInt(),
+        wantsCallBack: json['wants_call_back'] as bool,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'comment': comment,
+        'contact_phone': contactPhone,
+        'cover_url': coverUrl,
+        'created_at': createdAt.toIso8601String(),
+        'customer': customer,
+        'customer_id': customerId,
+        'followup': followup?.toJson(),
+        'id': id,
+        'job_id': jobId,
+        'job_title': jobTitle,
+        'low': low,
+        'needs_reply': needsReply,
+        'rating': rating,
+        'reply': reply?.toJson(),
+        'report_number': reportNumber,
+        'reviewer_name': reviewerName,
+        'source': source,
+        'tags': tags,
+        'technician': technician?.toJson(),
+        'technician_rating': technicianRating,
+        'wants_call_back': wantsCallBack,
+      };
+}
+
 CompanySettingsModel companySettingsModelFromJson(String str) => CompanySettingsModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String companySettingsModelToJson(CompanySettingsModel data) => json.encode(data.toJson());
@@ -1721,6 +1824,60 @@ class EvidenceSummaryModel {
         'pairs': pairs,
         'photos': photos,
         'thumbs': thumbs,
+      };
+}
+
+FollowupInModel followupInModelFromJson(String str) => FollowupInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String followupInModelToJson(FollowupInModel data) => json.encode(data.toJson());
+
+class FollowupInModel {
+  final String? privateNote;
+  /// One of: open, contacted, resolved
+  final String? status;
+
+  const FollowupInModel({
+    this.privateNote,
+    this.status,
+  });
+
+  factory FollowupInModel.fromJson(Map<String, dynamic> json) => FollowupInModel(
+        privateNote: json['private_note'] as String?,
+        status: json['status'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'private_note': privateNote,
+        'status': status,
+      };
+}
+
+FollowupOutModel followupOutModelFromJson(String str) => FollowupOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String followupOutModelToJson(FollowupOutModel data) => json.encode(data.toJson());
+
+class FollowupOutModel {
+  final String? privateNote;
+  final DateTime? resolvedAt;
+  /// One of: open, contacted, resolved
+  final String status;
+
+  const FollowupOutModel({
+    this.privateNote,
+    this.resolvedAt,
+    required this.status,
+  });
+
+  factory FollowupOutModel.fromJson(Map<String, dynamic> json) => FollowupOutModel(
+        privateNote: json['private_note'] as String?,
+        resolvedAt: json['resolved_at'] == null ? null : DateTime.parse(json['resolved_at'] as String),
+        status: json['status'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'private_note': privateNote,
+        'resolved_at': resolvedAt?.toIso8601String(),
+        'status': status,
       };
 }
 
@@ -3271,7 +3428,7 @@ class NotificationOutModel {
   final DateTime createdAt;
   final String id;
   final String? jobId;
-  /// One of: job_assigned, report_submitted, changes_requested, report_approved, report_shared
+  /// One of: job_assigned, report_submitted, changes_requested, report_approved, report_shared, review_received, low_rating
   final String kind;
   /// Names for the sentence the app writes in its own language: customer, job, report, note, scheduled_at (ISO), technician
   final Map<String, dynamic> params;
@@ -4636,6 +4793,26 @@ class RegisterModel {
       };
 }
 
+ReplyInModel replyInModelFromJson(String str) => ReplyInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String replyInModelToJson(ReplyInModel data) => json.encode(data.toJson());
+
+class ReplyInModel {
+  final String text;
+
+  const ReplyInModel({
+    required this.text,
+  });
+
+  factory ReplyInModel.fromJson(Map<String, dynamic> json) => ReplyInModel(
+        text: json['text'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'text': text,
+      };
+}
+
 ReplyOutModel replyOutModelFromJson(String str) => ReplyOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String replyOutModelToJson(ReplyOutModel data) => json.encode(data.toJson());
@@ -4966,6 +5143,122 @@ class ReportStartedModel {
       };
 }
 
+RequestCountsModel requestCountsModelFromJson(String str) => RequestCountsModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String requestCountsModelToJson(RequestCountsModel data) => json.encode(data.toJson());
+
+class RequestCountsModel {
+  final int optedOut;
+  final int rated;
+  final int waiting;
+
+  const RequestCountsModel({
+    required this.optedOut,
+    required this.rated,
+    required this.waiting,
+  });
+
+  factory RequestCountsModel.fromJson(Map<String, dynamic> json) => RequestCountsModel(
+        optedOut: (json['opted_out'] as num).toInt(),
+        rated: (json['rated'] as num).toInt(),
+        waiting: (json['waiting'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'opted_out': optedOut,
+        'rated': rated,
+        'waiting': waiting,
+      };
+}
+
+RequestItemModel requestItemModelFromJson(String str) => RequestItemModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String requestItemModelToJson(RequestItemModel data) => json.encode(data.toJson());
+
+class RequestItemModel {
+  final String? coverUrl;
+  final String customer;
+  final String id;
+  final String jobId;
+  final DateTime? nextAt;
+  /// What happens next, if nothing changes
+  /// One of: reminder, ai_call
+  final String? nextStep;
+  final int? rating;
+  final DateTime? sentAt;
+  /// One of: link, reply, ai_call
+  final String? source;
+  /// One of: not_requested, queued, link_sent, reminded, ai_call_scheduled, ai_call_done, rated, opted_out, stopped, paused_no_credits
+  final String status;
+  final PersonRefModel? technician;
+
+  const RequestItemModel({
+    this.coverUrl,
+    required this.customer,
+    required this.id,
+    required this.jobId,
+    this.nextAt,
+    this.nextStep,
+    this.rating,
+    this.sentAt,
+    this.source,
+    required this.status,
+    this.technician,
+  });
+
+  factory RequestItemModel.fromJson(Map<String, dynamic> json) => RequestItemModel(
+        coverUrl: json['cover_url'] as String?,
+        customer: json['customer'] as String,
+        id: json['id'] as String,
+        jobId: json['job_id'] as String,
+        nextAt: json['next_at'] == null ? null : DateTime.parse(json['next_at'] as String),
+        nextStep: json['next_step'] as String?,
+        rating: json['rating'] == null ? null : (json['rating'] as num).toInt(),
+        sentAt: json['sent_at'] == null ? null : DateTime.parse(json['sent_at'] as String),
+        source: json['source'] as String?,
+        status: json['status'] as String,
+        technician: json['technician'] == null ? null : PersonRefModel.fromJson(json['technician'] as Map<String, dynamic>),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'cover_url': coverUrl,
+        'customer': customer,
+        'id': id,
+        'job_id': jobId,
+        'next_at': nextAt?.toIso8601String(),
+        'next_step': nextStep,
+        'rating': rating,
+        'sent_at': sentAt?.toIso8601String(),
+        'source': source,
+        'status': status,
+        'technician': technician?.toJson(),
+      };
+}
+
+RequestsPageModel requestsPageModelFromJson(String str) => RequestsPageModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String requestsPageModelToJson(RequestsPageModel data) => json.encode(data.toJson());
+
+class RequestsPageModel {
+  final RequestCountsModel counts;
+  final List<RequestItemModel> data;
+
+  const RequestsPageModel({
+    required this.counts,
+    required this.data,
+  });
+
+  factory RequestsPageModel.fromJson(Map<String, dynamic> json) => RequestsPageModel(
+        counts: RequestCountsModel.fromJson(json['counts'] as Map<String, dynamic>),
+        data: (json['data'] as List).map((e) => RequestItemModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'counts': counts.toJson(),
+        'data': data.map((e) => e.toJson()).toList(),
+      };
+}
+
 RetranscribeInModel retranscribeInModelFromJson(String str) => RetranscribeInModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String retranscribeInModelToJson(RetranscribeInModel data) => json.encode(data.toJson());
@@ -5027,6 +5320,34 @@ class ReviewBriefModel {
         'rating': rating,
         'source': source,
         'technician_rating': technicianRating,
+      };
+}
+
+ReviewCountsModel reviewCountsModelFromJson(String str) => ReviewCountsModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String reviewCountsModelToJson(ReviewCountsModel data) => json.encode(data.toJson());
+
+class ReviewCountsModel {
+  final int all;
+  final int low;
+  final int needsReply;
+
+  const ReviewCountsModel({
+    required this.all,
+    required this.low,
+    required this.needsReply,
+  });
+
+  factory ReviewCountsModel.fromJson(Map<String, dynamic> json) => ReviewCountsModel(
+        all: (json['all'] as num).toInt(),
+        low: (json['low'] as num).toInt(),
+        needsReply: (json['needs_reply'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'all': all,
+        'low': low,
+        'needs_reply': needsReply,
       };
 }
 
@@ -5230,11 +5551,175 @@ class ReviewOutModel {
       };
 }
 
+ReviewSettingsInModel reviewSettingsInModelFromJson(String str) => ReviewSettingsInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String reviewSettingsInModelToJson(ReviewSettingsInModel data) => json.encode(data.toJson());
+
+class ReviewSettingsInModel {
+  final bool? aiCallEnabled;
+  final bool? askOnShare;
+  final String? googleReviewUrl;
+  final bool? lowRatingAlert;
+  final List<String>? reminderChannels;
+  final bool? reminderEnabled;
+  final bool? showPublicReviews;
+  final bool? techsCanRequest;
+  final bool? techsSeeReviews;
+
+  const ReviewSettingsInModel({
+    this.aiCallEnabled,
+    this.askOnShare,
+    this.googleReviewUrl,
+    this.lowRatingAlert,
+    this.reminderChannels,
+    this.reminderEnabled,
+    this.showPublicReviews,
+    this.techsCanRequest,
+    this.techsSeeReviews,
+  });
+
+  factory ReviewSettingsInModel.fromJson(Map<String, dynamic> json) => ReviewSettingsInModel(
+        aiCallEnabled: json['ai_call_enabled'] as bool?,
+        askOnShare: json['ask_on_share'] as bool?,
+        googleReviewUrl: json['google_review_url'] as String?,
+        lowRatingAlert: json['low_rating_alert'] as bool?,
+        reminderChannels: json['reminder_channels'] == null ? null : (json['reminder_channels'] as List).map((e) => e as String).toList(),
+        reminderEnabled: json['reminder_enabled'] as bool?,
+        showPublicReviews: json['show_public_reviews'] as bool?,
+        techsCanRequest: json['techs_can_request'] as bool?,
+        techsSeeReviews: json['techs_see_reviews'] as bool?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ai_call_enabled': aiCallEnabled,
+        'ask_on_share': askOnShare,
+        'google_review_url': googleReviewUrl,
+        'low_rating_alert': lowRatingAlert,
+        'reminder_channels': reminderChannels,
+        'reminder_enabled': reminderEnabled,
+        'show_public_reviews': showPublicReviews,
+        'techs_can_request': techsCanRequest,
+        'techs_see_reviews': techsSeeReviews,
+      };
+}
+
+ReviewSettingsOutModel reviewSettingsOutModelFromJson(String str) => ReviewSettingsOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String reviewSettingsOutModelToJson(ReviewSettingsOutModel data) => json.encode(data.toJson());
+
+class ReviewSettingsOutModel {
+  final int aiCallDay;
+  final bool aiCallEnabled;
+  final bool askOnShare;
+  /// When AI calls may happen, local time
+  final String callWindow;
+  final bool canEdit;
+  final String? googleReviewUrl;
+  final bool lowRatingAlert;
+  final int lowRatingThreshold;
+  final List<String> reminderChannels;
+  final int reminderDay;
+  final bool reminderEnabled;
+  final bool showPublicReviews;
+  final bool techsCanRequest;
+  final bool techsSeeReviews;
+
+  const ReviewSettingsOutModel({
+    required this.aiCallDay,
+    required this.aiCallEnabled,
+    required this.askOnShare,
+    required this.callWindow,
+    required this.canEdit,
+    this.googleReviewUrl,
+    required this.lowRatingAlert,
+    required this.lowRatingThreshold,
+    required this.reminderChannels,
+    required this.reminderDay,
+    required this.reminderEnabled,
+    required this.showPublicReviews,
+    required this.techsCanRequest,
+    required this.techsSeeReviews,
+  });
+
+  factory ReviewSettingsOutModel.fromJson(Map<String, dynamic> json) => ReviewSettingsOutModel(
+        aiCallDay: (json['ai_call_day'] as num).toInt(),
+        aiCallEnabled: json['ai_call_enabled'] as bool,
+        askOnShare: json['ask_on_share'] as bool,
+        callWindow: json['call_window'] as String,
+        canEdit: json['can_edit'] as bool,
+        googleReviewUrl: json['google_review_url'] as String?,
+        lowRatingAlert: json['low_rating_alert'] as bool,
+        lowRatingThreshold: (json['low_rating_threshold'] as num).toInt(),
+        reminderChannels: (json['reminder_channels'] as List).map((e) => e as String).toList(),
+        reminderDay: (json['reminder_day'] as num).toInt(),
+        reminderEnabled: json['reminder_enabled'] as bool,
+        showPublicReviews: json['show_public_reviews'] as bool,
+        techsCanRequest: json['techs_can_request'] as bool,
+        techsSeeReviews: json['techs_see_reviews'] as bool,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ai_call_day': aiCallDay,
+        'ai_call_enabled': aiCallEnabled,
+        'ask_on_share': askOnShare,
+        'call_window': callWindow,
+        'can_edit': canEdit,
+        'google_review_url': googleReviewUrl,
+        'low_rating_alert': lowRatingAlert,
+        'low_rating_threshold': lowRatingThreshold,
+        'reminder_channels': reminderChannels,
+        'reminder_day': reminderDay,
+        'reminder_enabled': reminderEnabled,
+        'show_public_reviews': showPublicReviews,
+        'techs_can_request': techsCanRequest,
+        'techs_see_reviews': techsSeeReviews,
+      };
+}
+
+ReviewsPageModel reviewsPageModelFromJson(String str) => ReviewsPageModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String reviewsPageModelToJson(ReviewsPageModel data) => json.encode(data.toJson());
+
+class ReviewsPageModel {
+  final double? average;
+  /// How many 1, 2, 3, 4 and 5 star reviews (index 0 is 1 star)
+  final List<int> breakdown;
+  final int count;
+  final ReviewCountsModel counts;
+  final List<CompanyReviewItemModel> data;
+
+  const ReviewsPageModel({
+    this.average,
+    required this.breakdown,
+    required this.count,
+    required this.counts,
+    required this.data,
+  });
+
+  factory ReviewsPageModel.fromJson(Map<String, dynamic> json) => ReviewsPageModel(
+        average: json['average'] == null ? null : (json['average'] as num).toDouble(),
+        breakdown: (json['breakdown'] as List).map((e) => (e as num).toInt()).toList(),
+        count: (json['count'] as num).toInt(),
+        counts: ReviewCountsModel.fromJson(json['counts'] as Map<String, dynamic>),
+        data: (json['data'] as List).map((e) => CompanyReviewItemModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'average': average,
+        'breakdown': breakdown,
+        'count': count,
+        'counts': counts.toJson(),
+        'data': data.map((e) => e.toJson()).toList(),
+      };
+}
+
 SendInModel sendInModelFromJson(String str) => SendInModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String sendInModelToJson(SendInModel data) => json.encode(data.toJson());
 
 class SendInModel {
+  /// Also ask for a rating with this send; empty = the company setting
+  final bool? askForReview;
   final List<String> channels;
   final String? email;
   final String? name;
@@ -5242,6 +5727,7 @@ class SendInModel {
   final String? phone;
 
   const SendInModel({
+    this.askForReview,
     required this.channels,
     this.email,
     this.name,
@@ -5249,6 +5735,7 @@ class SendInModel {
   });
 
   factory SendInModel.fromJson(Map<String, dynamic> json) => SendInModel(
+        askForReview: json['ask_for_review'] as bool?,
         channels: (json['channels'] as List).map((e) => e as String).toList(),
         email: json['email'] as String?,
         name: json['name'] as String?,
@@ -5256,6 +5743,7 @@ class SendInModel {
       );
 
   Map<String, dynamic> toJson() => {
+        'ask_for_review': askForReview,
         'channels': channels,
         'email': email,
         'name': name,
@@ -5349,6 +5837,9 @@ class ShareInfoModel {
   final RecipientModel? recipient;
   final String reportId;
   final String reportStatus;
+  /// M35 'Ask for a review' switch: its default (company setting), or already asked
+  /// One of: on, off, asked
+  final String? reviewAsk;
   final List<MessageOutModel> sent;
 
   const ShareInfoModel({
@@ -5360,6 +5851,7 @@ class ShareInfoModel {
     this.recipient,
     required this.reportId,
     required this.reportStatus,
+    this.reviewAsk,
     required this.sent,
   });
 
@@ -5372,6 +5864,7 @@ class ShareInfoModel {
         recipient: json['recipient'] == null ? null : RecipientModel.fromJson(json['recipient'] as Map<String, dynamic>),
         reportId: json['report_id'] as String,
         reportStatus: json['report_status'] as String,
+        reviewAsk: json['review_ask'] as String?,
         sent: (json['sent'] as List).map((e) => MessageOutModel.fromJson(e as Map<String, dynamic>)).toList(),
       );
 
@@ -5384,6 +5877,7 @@ class ShareInfoModel {
         'recipient': recipient?.toJson(),
         'report_id': reportId,
         'report_status': reportStatus,
+        'review_ask': reviewAsk,
         'sent': sent.map((e) => e.toJson()).toList(),
       };
 }
@@ -5770,6 +6264,26 @@ class SubmissionOutModel {
         'questions': questions.map((e) => e.toJson()).toList(),
         'status': status,
         'total': total,
+      };
+}
+
+SuggestionOutModel suggestionOutModelFromJson(String str) => SuggestionOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String suggestionOutModelToJson(SuggestionOutModel data) => json.encode(data.toJson());
+
+class SuggestionOutModel {
+  final String text;
+
+  const SuggestionOutModel({
+    required this.text,
+  });
+
+  factory SuggestionOutModel.fromJson(Map<String, dynamic> json) => SuggestionOutModel(
+        text: json['text'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'text': text,
       };
 }
 

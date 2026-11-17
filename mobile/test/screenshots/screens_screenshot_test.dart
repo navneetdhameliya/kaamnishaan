@@ -88,6 +88,15 @@ import 'package:kaamnishaan/UI/screens/report_section/report_making_section/repo
 import 'package:kaamnishaan/UI/screens/report_section/report_making_section/report_making_screen.dart';
 import 'package:kaamnishaan/UI/screens/report_section/report_sent_section/report_sent_controller.dart';
 import 'package:kaamnishaan/UI/screens/report_section/report_sent_section/report_sent_screen.dart';
+import 'package:kaamnishaan/UI/screens/review_office_section/company_reviews_section/company_reviews_controller.dart';
+import 'package:kaamnishaan/UI/screens/review_office_section/company_reviews_section/company_reviews_screen.dart';
+import 'package:kaamnishaan/UI/screens/review_office_section/review_followup_section/review_followup_controller.dart';
+import 'package:kaamnishaan/UI/screens/review_office_section/review_followup_section/review_followup_screen.dart';
+import 'package:kaamnishaan/UI/screens/review_office_section/review_requests_section/review_requests_controller.dart';
+import 'package:kaamnishaan/UI/screens/review_office_section/review_requests_section/review_requests_screen.dart';
+import 'package:kaamnishaan/UI/screens/review_office_section/review_settings_section/review_followups_screen.dart';
+import 'package:kaamnishaan/UI/screens/review_office_section/review_settings_section/review_settings_controller.dart';
+import 'package:kaamnishaan/UI/screens/review_office_section/review_settings_section/review_settings_screen.dart';
 import 'package:kaamnishaan/UI/screens/review_section/report_pdf_section/report_pdf_controller.dart';
 import 'package:kaamnishaan/UI/screens/review_section/report_pdf_section/report_pdf_screen.dart';
 import 'package:kaamnishaan/UI/screens/review_section/report_review_section/report_review_controller.dart';
@@ -210,6 +219,7 @@ void main() {
     Widget screen, {
     Locale locale = const Locale('en', 'IN'),
     bool dark = false,
+    Future<void> Function()? act,
   }) async {
     tester.view.physicalSize = const Size(720, 1600);
     tester.view.devicePixelRatio = 2;
@@ -232,6 +242,7 @@ void main() {
     await tester.pump(const Duration(milliseconds: 300));
     await tester.runAsync(() => Future<void>.delayed(const Duration(milliseconds: 200)));
     await tester.pump();
+    if (act != null) await act();
     await expectLater(find.byType(GetMaterialApp), matchesGoldenFile('out/$name.png'));
     Get.deleteAll(force: true); // stops screen timers (the code countdown)
   }
@@ -1362,6 +1373,7 @@ void main() {
             expiresAt: reviewAt.add(const Duration(days: 30)),
           ),
           sent: const [],
+          reviewAsk: 'on',
         ),
       ),
     );
@@ -1830,6 +1842,183 @@ void main() {
     );
     await shot(t, 'm44_review_details', const ReviewDetailsScreen());
   });
+
+  // ---- Step 2p: reviews (office) ------------------------------------------------------------------
+  final officeNow = DateTime(2026, 11, 5, 12);
+  List<CompanyReviewItemModel> officeReviews() => [
+        CompanyReviewItemModel(
+          id: 'v1',
+          rating: 2,
+          comment: 'Came 2 hours late. Room still warm in the evening.',
+          reviewerName: 'Mr. Mehta',
+          source: 'link',
+          customer: 'Mehta house',
+          customerId: 'c1',
+          jobId: 'j1',
+          jobTitle: 'AC service',
+          reportNumber: 'R-1046',
+          contactPhone: '+1 555 010 0321',
+          createdAt: officeNow.subtract(const Duration(minutes: 25)),
+          tags: const ['late', 'not_fixed'],
+          technician: const PersonRefModel(id: 'u2', name: 'Carlos Ruiz'),
+          wantsCallBack: true,
+          low: true,
+          needsReply: true,
+          followup: const FollowupOutModel(status: 'open'),
+        ),
+        CompanyReviewItemModel(
+          id: 'v2',
+          rating: 4,
+          comment: 'Quick and tidy. Showed me the dirty filter first.',
+          reviewerName: 'Dr. Anita Rao',
+          source: 'link',
+          customer: 'Green Valley Clinic',
+          customerId: 'c2',
+          jobId: 'j2',
+          jobTitle: 'AC not cooling',
+          createdAt: officeNow.subtract(const Duration(hours: 2)),
+          tags: const ['on_time'],
+          technician: const PersonRefModel(id: 'u1', name: 'Ramesh Patel'),
+          wantsCallBack: false,
+          low: false,
+          needsReply: true,
+        ),
+      ];
+
+  Future<void> officeShot(
+    WidgetTester t,
+    String name,
+    List<CompanyReviewItemModel> data, {
+    Future<void> Function()? act,
+  }) async {
+    final reviews = MockReviewsRepository();
+    when(() => reviews.company(any())).thenAnswer(
+      (_) async => ApiSuccess<ReviewsPageModel>(
+        ReviewsPageModel(
+          average: data.isEmpty ? null : 4.7,
+          count: data.isEmpty ? 0 : 48,
+          breakdown: data.isEmpty ? const [0, 0, 0, 0, 0] : const [1, 1, 2, 9, 35],
+          counts: data.isEmpty ? const ReviewCountsModel(all: 0, needsReply: 0, low: 0) : const ReviewCountsModel(all: 48, needsReply: 3, low: 1),
+          data: data,
+        ),
+      ),
+    );
+    when(() => reviews.suggestion(any())).thenAnswer((_) async => const ApiSuccess<String>('Thank you, Dr. Rao!'));
+    Get.put(CompanyReviewsController(reviews: reviews, filter: 'all', clock: () => officeNow));
+    await shot(t, name, const CompanyReviewsScreen(), act: act);
+  }
+
+  testWidgets('M45 reviews', (t) async => officeShot(t, 'm45_reviews', officeReviews()));
+  testWidgets('M45 reviews, empty', (t) async => officeShot(t, 'm45_reviews_empty', const []));
+
+  testWidgets('M45 reply sheet', (t) async => officeShot(
+        t,
+        'm45_reply',
+        officeReviews(),
+        act: () async {
+          await t.ensureVisible(find.byKey(const ValueKey('reply-v2')));
+          await t.pump();
+          await t.tap(find.byKey(const ValueKey('reply-v2')));
+          await t.pump(const Duration(milliseconds: 600));
+          await t.enterText(
+            find.byKey(const ValueKey('reply-text')),
+            'Thank you, Dr. Rao! We will see you for the next service in February.',
+          );
+          await t.pump(const Duration(milliseconds: 600));
+        },
+      ));
+
+  testWidgets('M45 low rating follow-up', (t) async {
+    Get.put(ReviewFollowupController(reviews: MockReviewsRepository(), review: officeReviews().first, clock: () => officeNow));
+    await shot(t, 'm45_followup', const ReviewFollowupScreen());
+  });
+
+  testWidgets('M45 review requests', (t) async {
+    final reviews = MockReviewsRepository();
+    when(() => reviews.requests(any())).thenAnswer(
+      (_) async => ApiSuccess<RequestsPageModel>(
+        RequestsPageModel(
+          counts: const RequestCountsModel(waiting: 5, rated: 41, optedOut: 2),
+          data: [
+            RequestItemModel(
+              id: 'q1',
+              jobId: 'j1',
+              customer: 'Mehta house',
+              status: 'ai_call_scheduled',
+              nextStep: 'ai_call',
+              nextAt: officeNow,
+              technician: const PersonRefModel(id: 'u2', name: 'Carlos Ruiz'),
+            ),
+            RequestItemModel(
+              id: 'q2',
+              jobId: 'j2',
+              customer: 'Lake View Apartments',
+              status: 'reminded',
+              nextStep: 'ai_call',
+              nextAt: officeNow,
+              technician: const PersonRefModel(id: 'u2', name: 'Carlos Ruiz'),
+            ),
+            RequestItemModel(
+              id: 'q3',
+              jobId: 'j3',
+              customer: 'Sharma residence',
+              status: 'link_sent',
+              nextStep: 'reminder',
+              nextAt: DateTime(2026, 11, 2, 11),
+              technician: const PersonRefModel(id: 'u1', name: 'Ramesh Patel'),
+            ),
+            const RequestItemModel(
+              id: 'q4',
+              jobId: 'j4',
+              customer: 'Green Valley Clinic',
+              status: 'rated',
+              rating: 4,
+              source: 'ai_call',
+              technician: PersonRefModel(id: 'u1', name: 'Ramesh Patel'),
+            ),
+            const RequestItemModel(
+              id: 'q5',
+              jobId: 'j5',
+              customer: 'Riverside Offices',
+              status: 'opted_out',
+              technician: PersonRefModel(id: 'u1', name: 'Ramesh Patel'),
+            ),
+          ],
+        ),
+      ),
+    );
+    Get.put(ReviewRequestsController(reviews: reviews, translation: translation()));
+    await shot(t, 'm45_requests', const ReviewRequestsScreen());
+  });
+
+  Future<void> reviewSettingsShot(WidgetTester t, String name, Widget screen) async {
+    final reviews = MockReviewsRepository();
+    when(() => reviews.settings()).thenAnswer(
+      (_) async => const ApiSuccess<ReviewSettingsOutModel>(
+        ReviewSettingsOutModel(
+          askOnShare: true,
+          reminderEnabled: true,
+          reminderDay: 2,
+          reminderChannels: ['sms'],
+          aiCallEnabled: true,
+          aiCallDay: 5,
+          callWindow: '10:00-19:00',
+          lowRatingAlert: true,
+          lowRatingThreshold: 2,
+          techsCanRequest: true,
+          techsSeeReviews: true,
+          showPublicReviews: false,
+          googleReviewUrl: 'g.page/r/brightair-services/review',
+          canEdit: true,
+        ),
+      ),
+    );
+    Get.put(ReviewSettingsController(reviews: reviews, translation: translation()));
+    await shot(t, name, screen);
+  }
+
+  testWidgets('M46 review settings', (t) async => reviewSettingsShot(t, 'm46_settings', const ReviewSettingsScreen()));
+  testWidgets('M46 review follow-ups', (t) async => reviewSettingsShot(t, 'm46_followups', const ReviewFollowupsScreen()));
 
   testWidgets('M13 dashboard', (t) async {
     await dashboard(t, 'm13_dashboard', dashboardData(), reviews: [reviewItem()]);

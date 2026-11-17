@@ -49,6 +49,12 @@ abstract final class APIConstant {
   static String cancelReviewRequestAPIEP(String id) => '/review-requests/$id';
   static const String myReviewsAPIEP = '/me/reviews';
   static String reviewAPIEP(String id) => '/reviews/$id';
+  static const String companyReviewsAPIEP = '/reviews';
+  static String reviewReplyAPIEP(String id) => '/reviews/$id/reply';
+  static String reviewSuggestionAPIEP(String id) => '/reviews/$id/reply-suggestion';
+  static String reviewFollowupAPIEP(String id) => '/reviews/$id/follow-up';
+  static const String reviewRequestsAPIEP = '/review-requests';
+  static const String reviewSettingsAPIEP = '/review-settings';
 
   // customers
   static const String customersAPIEP = '/customers';
