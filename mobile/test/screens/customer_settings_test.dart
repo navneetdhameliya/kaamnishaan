@@ -154,7 +154,7 @@ void main() {
     test('shows the plan and lets the owner switch technician sharing off', () async {
       final c = open('owner');
       await c.loadPlan();
-      expect(c.planValue, 'Professional · ₹1,299/mo');
+      expect(c.planValue.replaceAll('\u2060', ''), 'Professional · ₹1,299/mo');
       expect(c.planLine, 'Trial ends 1 Dec');
       expect(c.techniciansCanShare, isTrue);
       when(() => repo.setTechniciansCanShare(any())).thenAnswer(

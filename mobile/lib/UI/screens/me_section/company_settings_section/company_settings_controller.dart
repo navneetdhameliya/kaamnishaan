@@ -84,7 +84,8 @@ class CompanySettingsController extends GetxController {
       name: price.currency,
       decimalDigits: price.amount % 100 == 0 ? 0 : 2,
     ).format(price.amount / 100);
-    return LangKeys.settingsPlanPrice.trParams({'name': name, 'price': money});
+    // keep "₹1,299/mo" together when the line wraps
+    return LangKeys.settingsPlanPrice.trParams({'name': name, 'price': money}).replaceAll('/', '\u2060/\u2060');
   }
 
   /// "Trial ends 1 Dec" while on trial.
