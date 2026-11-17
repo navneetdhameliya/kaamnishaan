@@ -1,6 +1,11 @@
 include: package:flutter_lints/flutter.yaml
 analyzer:
-  exclude: ["**/*.g.dart"]
+  exclude:
+    - "**\/*.g.dart"
+    - build/**
+    - android/**
+    - ios/**
+    - macos/**
 linter:
   rules:
     prefer_const_constructors: true
