@@ -1302,7 +1302,7 @@
   "site.ind.roofing": "Inspecciones, reparaciones y prueba de garantía para cada tejado.",
   "site.ind.solar": "Instalaciones, limpieza de paneles y revisión de inversores.",
   "site.ind.maintenance": "Órdenes de trabajo, informes de entrada y salida.",
-  "site.ind.pest-control": "Registros de tratamiento y visitas de seguimiento.",
+  "site.ind.pest_control": "Registros de tratamiento y visitas de seguimiento.",
   "site.ind.cleaning": "Listas por turno con prueba fotográfica.",
   "site.compare.title": "Mira la diferencia",
   "site.compare.body": "Arrastra la línea para comparar. Cada informe muestra al cliente exactamente qué cambió.",

@@ -1302,7 +1302,7 @@
   "site.ind.roofing": "Inspections, réparations et preuve de garantie pour chaque toit.",
   "site.ind.solar": "Installations, nettoyage de panneaux et contrôle d’onduleurs.",
   "site.ind.maintenance": "Bons d’intervention, états des lieux d’entrée et de sortie.",
-  "site.ind.pest-control": "Suivi des traitements et visites de contrôle.",
+  "site.ind.pest_control": "Suivi des traitements et visites de contrôle.",
   "site.ind.cleaning": "Checklists de poste avec preuve photo.",
   "site.compare.title": "Voyez la différence",
   "site.compare.body": "Faites glisser la ligne pour comparer. Chaque rapport montre au client ce qui a changé.",

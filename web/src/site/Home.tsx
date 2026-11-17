@@ -292,7 +292,7 @@ function Industries({ t, trades }: { t: T; trades: TradeOut[] }) {
               )}
               <span className="absolute bottom-20 left-20 right-[76px] flex flex-col gap-[6px]">
                 <span className="text-web-h3 text-cream-50">{tr.name}</span>
-                <span className="text-web-label font-semibold text-cream-100">{t(`site.ind.${tr.key}`)}</span>
+                <span className="text-web-label font-semibold text-cream-100">{t(`site.ind.${tr.key.replace(/-/g, '_')}`)}</span>
                 <span className="inline-flex items-center gap-[6px] text-web-label font-semibold text-mocha-300">
                   {t('site.ind.learn')}
                   <ChevronRight width={16} height={16} aria-hidden />

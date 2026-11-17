@@ -2609,7 +2609,7 @@ abstract final class LangKeys {
   /// Work orders, move-in and move-out reports.
   static const siteIndMaintenance = 'site.ind.maintenance';
   /// Treatment records and follow-up visits.
-  static const siteIndPest-control = 'site.ind.pest-control';
+  static const siteIndPestControl = 'site.ind.pest_control';
   /// Shift checklists with photo proof.
   static const siteIndCleaning = 'site.ind.cleaning';
   /// See the difference

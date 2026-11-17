@@ -1302,7 +1302,7 @@
   "site.ind.roofing": "Inspections, repairs and warranty proof for every roof.",
   "site.ind.solar": "Installs, panel cleaning and inverter checks.",
   "site.ind.maintenance": "Work orders, move-in and move-out reports.",
-  "site.ind.pest-control": "Treatment records and follow-up visits.",
+  "site.ind.pest_control": "Treatment records and follow-up visits.",
   "site.ind.cleaning": "Shift checklists with photo proof.",
   "site.compare.title": "See the difference",
   "site.compare.body": "Drag the line to compare. Every report shows your customer exactly what changed.",
