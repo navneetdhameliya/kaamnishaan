@@ -92,7 +92,7 @@ void main() {
   test('M36 chips: "What is missing?" asks at once, "Last visit?" waits for a name', () async {
     when(() => assistant.chat()).thenAnswer((_) async => ApiSuccess<AssistantOutModel>(chat()));
     when(() => assistant.ask(any())).thenAnswer(
-      (_) async => ApiFailure<AskOutModel>(const ApiException(code: 'unknown', message: 'x')),
+      (_) async => const ApiFailure<AskOutModel>(ApiException(code: 'unknown', message: 'x')),
     );
     final c = make();
     await c.load();
@@ -110,8 +110,8 @@ void main() {
   test('M36 the monthly limit pauses chat', () async {
     when(() => assistant.chat()).thenAnswer((_) async => ApiSuccess<AssistantOutModel>(chat(used: 199)));
     when(() => assistant.ask(any())).thenAnswer(
-      (_) async => ApiFailure<AskOutModel>(
-        const ApiException(code: 'ai_limit_reached', message: 'used up', details: {'used': 200, 'limit': 200}),
+      (_) async => const ApiFailure<AskOutModel>(
+        ApiException(code: 'ai_limit_reached', message: 'used up', details: {'used': 200, 'limit': 200}),
       ),
     );
     final c = make();
