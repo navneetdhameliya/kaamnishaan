@@ -3116,4 +3116,194 @@ abstract final class LangKeys {
   static const siteForgotNoEmail = 'site.forgot.no_email';
   /// Back to log in
   static const siteForgotBack = 'site.forgot.back';
+  /// See KaamNishaan on your own jobs
+  static const siteBdTitle = 'site.bd.title';
+  /// A {n}-minute call with our team. Bring a manager or a technician — we will set up a real job from your trade and show the report your customer gets.
+  static const siteBdBody = 'site.bd.body';
+  /// Live walkthrough for your trade
+  static const siteBdB1 = 'site.bd.b1';
+  /// Photos, checklist and voice note to finished report in minutes.
+  static const siteBdB1B = 'site.bd.b1_b';
+  /// A pilot plan for your team
+  static const siteBdB2 = 'site.bd.b2';
+  /// Which jobs to start with, who approves, and what success looks like.
+  static const siteBdB2B = 'site.bd.b2_b';
+  /// Straight answers on pricing
+  static const siteBdB3 = 'site.bd.b3';
+  /// Plans from {price}. AI reports and follow-up credits on every plan.
+  static const siteBdB3B = 'site.bd.b3_b';
+  /// A technician checking an outdoor AC unit with pressure gauges
+  static const siteBdPhotoAlt = 'site.bd.photo_alt';
+  /// What to expect
+  static const siteBdExpect = 'site.bd.expect';
+  /// {n}-minute video call
+  static const siteBdE1 = 'site.bd.e1';
+  /// Pick a time that suits you. We call on Google Meet or Zoom.
+  static const siteBdE1B = 'site.bd.e1_b';
+  /// See your trade’s checklists
+  static const siteBdE2 = 'site.bd.e2';
+  /// {trades} — we show yours.
+  static const siteBdE2B = 'site.bd.e2_b';
+  /// Leave with a pilot plan
+  static const siteBdE3 = 'site.bd.e3';
+  /// Clear next steps and a {n}-day trial of {plan} for your team.
+  static const siteBdE3B = 'site.bd.e3_b';
+  /// Book your demo
+  static const siteBdForm = 'site.bd.form';
+  /// Takes under a minute. We confirm your time within one working day.
+  static const siteBdFormB = 'site.bd.form_b';
+  /// Full name
+  static const siteBdName = 'site.bd.name';
+  /// Your name
+  static const siteBdNameHint = 'site.bd.name_hint';
+  /// Phone
+  static const siteBdPhone = 'site.bd.phone';
+  /// Team size
+  static const siteBdTeam = 'site.bd.team';
+  /// 1–5 technicians
+  static const siteBdTeam1 = 'site.bd.team_1';
+  /// 6–15 technicians
+  static const siteBdTeam2 = 'site.bd.team_2';
+  /// 16–50 technicians
+  static const siteBdTeam3 = 'site.bd.team_3';
+  /// More than 50 technicians
+  static const siteBdTeam4 = 'site.bd.team_4';
+  /// Preferred day
+  static const siteBdDay = 'site.bd.day';
+  /// Preferred time ({tz})
+  static const siteBdTime = 'site.bd.time';
+  /// No free times on this day. Pick another day.
+  static const siteBdNoSlots = 'site.bd.no_slots';
+  /// Book my demo
+  static const siteBdSubmit = 'site.bd.submit';
+  /// We never share your details. See our {privacy}.
+  static const siteBdPrivacy = 'site.bd.privacy';
+  /// 1 field needs your attention before we can book your demo.
+  static const siteBdFixOne = 'site.bd.fix_one';
+  /// {n} fields need your attention before we can book your demo.
+  static const siteBdFixMany = 'site.bd.fix_many';
+  /// This number looks too short — enter at least 10 digits
+  static const siteBdErrPhone = 'site.bd.err_phone';
+  /// Pick a time
+  static const siteBdErrTime = 'site.bd.err_time';
+  /// Someone just booked that time. Pick another.
+  static const siteBdErrTaken = 'site.bd.err_taken';
+  /// You’re booked, {name}!
+  static const siteBdOk = 'site.bd.ok';
+  /// We will confirm your time and send the video link to {email} within one working day.
+  static const siteBdOkB = 'site.bd.ok_b';
+  /// {start} – {end} {tz} ({n} minutes)
+  static const siteBdOkRange = 'site.bd.ok_range';
+  /// Video call · link in your email
+  static const siteBdOkVideo = 'site.bd.ok_video';
+  /// With the KaamNishaan product team
+  static const siteBdOkTeam = 'site.bd.ok_team';
+  /// Add to calendar
+  static const siteBdCalendar = 'site.bd.calendar';
+  /// KaamNishaan demo
+  static const siteBdCalTitle = 'site.bd.cal_title';
+  /// Before the call
+  static const siteBdBefore = 'site.bd.before';
+  /// Think of one recent job you would like to see as a report
+  static const siteBdBefore1 = 'site.bd.before1';
+  /// Invite a manager or technician to join you
+  static const siteBdBefore2 = 'site.bd.before2';
+  /// Keep your phone handy to try the app live
+  static const siteBdBefore3 = 'site.bd.before3';
+  /// Need to change something? Contact us and quote {ticket}.
+  static const siteBdChange = 'site.bd.change';
+  /// Contact
+  static const siteCtEyebrow = 'site.ct.eyebrow';
+  /// We’re here to help
+  static const siteCtTitle = 'site.ct.title';
+  /// Questions about KaamNishaan? We reply within one working day — in English, Hindi or Gujarati.
+  static const siteCtBody = 'site.ct.body';
+  /// Email support
+  static const siteCtEmail = 'site.ct.email';
+  /// Replies within one working day
+  static const siteCtEmailB = 'site.ct.email_b';
+  /// Write to us
+  static const siteCtEmailCta = 'site.ct.email_cta';
+  /// WhatsApp or call
+  static const siteCtWa = 'site.ct.wa';
+  /// Fastest for urgent field issues
+  static const siteCtWaB = 'site.ct.wa_b';
+  /// Start a WhatsApp chat
+  static const siteCtWaCta = 'site.ct.wa_cta';
+  /// Help centre
+  static const siteCtHelp = 'site.ct.help';
+  /// Guides for setup, jobs and reports
+  static const siteCtHelpB = 'site.ct.help_b';
+  /// Step-by-step, with screenshots
+  static const siteCtHelpB2 = 'site.ct.help_b2';
+  /// Visit help centre
+  static const siteCtHelpCta = 'site.ct.help_cta';
+  /// {days}, {open} – {close} {tz}
+  static const siteCtHours = 'site.ct.hours';
+  /// Send us a message
+  static const siteCtForm = 'site.ct.form';
+  /// Tell us a little about your team and we will point you to the right person.
+  static const siteCtFormB = 'site.ct.form_b';
+  /// Name
+  static const siteCtName = 'site.ct.name';
+  /// Email
+  static const siteCtEmailF = 'site.ct.email_f';
+  /// Topic
+  static const siteCtTopic = 'site.ct.topic';
+  /// Choose a topic
+  static const siteCtTopicHint = 'site.ct.topic_hint';
+  /// Sales
+  static const siteCtTopicSales = 'site.ct.topic.sales';
+  /// Help with the app
+  static const siteCtTopicSupport = 'site.ct.topic.support';
+  /// Billing
+  static const siteCtTopicBilling = 'site.ct.topic.billing';
+  /// Partnership
+  static const siteCtTopicPartnership = 'site.ct.topic.partnership';
+  /// Something else
+  static const siteCtTopicOther = 'site.ct.topic.other';
+  /// Message
+  static const siteCtMessage = 'site.ct.message';
+  /// How can we help? Tell us about your team and what you need.
+  static const siteCtMessageHint = 'site.ct.message_hint';
+  /// Send message
+  static const siteCtSubmit = 'site.ct.submit';
+  /// We only use your details to reply. See our {privacy}.
+  static const siteCtPrivacy = 'site.ct.privacy';
+  /// 1 field needs your attention before we can send this.
+  static const siteCtFixOne = 'site.ct.fix_one';
+  /// {n} fields need your attention before we can send this.
+  static const siteCtFixMany = 'site.ct.fix_many';
+  /// Pick a topic so the right person replies
+  static const siteCtErrTopic = 'site.ct.err_topic';
+  /// Add a few more details — at least {n} characters
+  static const siteCtErrMessage = 'site.ct.err_message';
+  /// Message sent
+  static const siteCtSent = 'site.ct.sent';
+  /// Thanks, {name}. We will reply to {email} within one working day.
+  static const siteCtSentB = 'site.ct.sent_b';
+  /// Ticket {ticket}
+  static const siteCtTicket = 'site.ct.ticket';
+  /// What happens next
+  static const siteCtNext = 'site.ct.next';
+  /// A real person from our team reads every message
+  static const siteCtNext1 = 'site.ct.next1';
+  /// You get a reply by email
+  static const siteCtNext2 = 'site.ct.next2';
+  /// Urgent field issue? WhatsApp us for the fastest answer
+  static const siteCtNext3 = 'site.ct.next3';
+  /// Back to home
+  static const siteCtHome = 'site.ct.home';
+  /// Office
+  static const siteCtOffice = 'site.ct.office';
+  /// Support hours {hours}
+  static const siteCtSupportHours = 'site.ct.support_hours';
+  /// Teams we support
+  static const siteCtRegions = 'site.ct.regions';
+  /// Talking to sales?
+  static const siteCtSales = 'site.ct.sales';
+  /// Book a {n}-minute demo instead
+  static const siteCtSalesB = 'site.ct.sales_b';
+  /// Map of the office area
+  static const siteCtMapAlt = 'site.ct.map_alt';
 }

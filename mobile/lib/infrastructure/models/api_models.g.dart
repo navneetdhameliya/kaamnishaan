@@ -6840,6 +6840,7 @@ class SupportOutModel {
   final String close;
   /// ISO weekdays, Monday = 1
   final List<int> days;
+  final int demoMinutes;
   final String? email;
   final String? helpUrl;
   final String office;
@@ -6854,6 +6855,7 @@ class SupportOutModel {
   const SupportOutModel({
     required this.close,
     required this.days,
+    required this.demoMinutes,
     this.email,
     this.helpUrl,
     required this.office,
@@ -6867,6 +6869,7 @@ class SupportOutModel {
   factory SupportOutModel.fromJson(Map<String, dynamic> json) => SupportOutModel(
         close: json['close'] as String,
         days: (json['days'] as List).map((e) => (e as num).toInt()).toList(),
+        demoMinutes: (json['demo_minutes'] as num).toInt(),
         email: json['email'] as String?,
         helpUrl: json['help_url'] as String?,
         office: json['office'] as String,
@@ -6880,6 +6883,7 @@ class SupportOutModel {
   Map<String, dynamic> toJson() => {
         'close': close,
         'days': days,
+        'demo_minutes': demoMinutes,
         'email': email,
         'help_url': helpUrl,
         'office': office,

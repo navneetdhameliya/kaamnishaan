@@ -9855,6 +9855,10 @@
             "title": "Days",
             "type": "array"
           },
+          "demo_minutes": {
+            "title": "Demo Minutes",
+            "type": "integer"
+          },
           "email": {
             "anyOf": [
               {
@@ -9934,7 +9938,8 @@
           "days",
           "timezone",
           "regions",
-          "topics"
+          "topics",
+          "demo_minutes"
         ],
         "title": "SupportOut",
         "type": "object"

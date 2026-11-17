@@ -247,7 +247,7 @@ export default function StartTrial({ t, lang, plans, config }: { t: T; lang: Lan
   const count = Object.keys(errors).length;
   return (
     <section className="bg-bg-canvas py-40 md:py-64">
-      <Container className="grid items-start gap-32 lg:grid-cols-[minmax(0,576px)_minmax(0,560px)] lg:justify-between">
+      <Container className="grid grid-cols-1 items-start gap-32 lg:grid-cols-[minmax(0,576px)_minmax(0,560px)] lg:justify-between">
         {done && token ? (
           <Ready t={t} lang={lang} email={email.trim()} company={done} plans={plans} config={config} token={token} />
         ) : (

@@ -45,6 +45,7 @@ def support() -> SupportOut:
         timezone=s.demo_timezone,
         regions=[Region(country=c, languages=ls) for c, ls in REGIONS],  # type: ignore[arg-type]
         topics=TOPICS,  # type: ignore[arg-type]
+        demo_minutes=s.demo_minutes,
     )
 
 

@@ -68,3 +68,4 @@ class SupportOut(BaseModel):
     timezone: str
     regions: list[Region]
     topics: list[Topic]
+    demo_minutes: int
