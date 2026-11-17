@@ -244,7 +244,7 @@ class DashboardTab extends GetView<DashboardController> {
           teamInvited: o.teamInvited,
           jobCreated: o.firstJobCreated,
           onInvite: controller.onComingSoonTap,
-          onCreateJob: controller.onComingSoonTap,
+          onCreateJob: controller.onNewJobTap,
         ),
         const SizedBox(height: KnSize.space16),
         _section(context, LangKeys.dashHowTitle.tr),

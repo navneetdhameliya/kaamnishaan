@@ -15,7 +15,7 @@ import uuid
 from datetime import date, datetime, time, timedelta
 from zoneinfo import ZoneInfo
 
-from sqlalchemy import func, or_, select, text
+from sqlalchemy import func, or_, select, text, true
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import Principal
@@ -316,6 +316,22 @@ async def _check_links(
             )
 
 
+async def _site_for(db: AsyncSession, p: Principal, customer_id: uuid.UUID, address: str) -> uuid.UUID:
+    """The customer's site with this address, or a new one (M16 lets the manager type it)."""
+    typed = " ".join(address.split())
+    for s in (
+        await db.execute(select(Site).where(Site.customer_id == customer_id, Site.deleted_at.is_(None)))
+    ).scalars():
+        if ", ".join(filter(None, [s.address_line1, s.address_line2])).lower() == typed.lower():
+            return s.id
+    site = Site(
+        company_id=p.company_id, customer_id=customer_id, address_line1=typed, country=p.company.country
+    )
+    db.add(site)
+    await db.flush()
+    return site.id
+
+
 async def create_job(db: AsyncSession, p: Principal, body: JobCreate) -> tuple[Job, bool]:
     manager = "jobs.create" in p.permissions
     if not manager and "jobs.create_quick" not in p.permissions:
@@ -364,6 +380,8 @@ async def create_job(db: AsyncSession, p: Principal, body: JobCreate) -> tuple[J
         if body.customer.address and not body.site_id:
             body.site_id = (await db.execute(select(Site.id).where(Site.customer_id == c.id))).scalar_one()
         customer_id = c.id
+    if body.customer_id and body.address and not body.site_id:
+        body.site_id = await _site_for(db, p, customer_id, body.address)
     await _check_links(db, p, customer_id, body.site_id, body.contact_id, body.equipment_id)
 
     assignee = body.assigned_to
@@ -503,16 +521,21 @@ async def delete(db: AsyncSession, p: Principal, job_id: uuid.UUID) -> None:
     )  # fmt: skip
 
 
-async def assignable(db: AsyncSession, p: Principal, job_id: uuid.UUID) -> AssignableList:
+async def assignable(
+    db: AsyncSession, p: Principal, job_id: uuid.UUID | None = None, at: datetime | None = None
+) -> AssignableList:
+    """Technicians to pick on M17, with their jobs that day. Before a job exists (M16), `at` gives the day."""
     p.require("jobs.assign")
-    j = await get_job(db, p, job_id)
-    day = j.scheduled_at.astimezone(tz(p)).date() if j.scheduled_at else local_today(p)
+    j = await get_job(db, p, job_id) if job_id else None
+    when = j.scheduled_at if j else at
+    day = when.astimezone(tz(p)).date() if when else local_today(p)
     start_, end_ = day_bounds(p, day)
+    other = Job.id != j.id if j else true()
     jobs_today = (
         select(Job.assigned_to, func.count().label("n"))
         .where(
             Job.company_id == p.company_id, Job.deleted_at.is_(None), Job.status != "cancelled",
-            Job.scheduled_at >= start_, Job.scheduled_at < end_, Job.id != j.id,
+            Job.scheduled_at >= start_, Job.scheduled_at < end_, other,
         )
         .group_by(Job.assigned_to)
         .subquery()
@@ -529,6 +552,9 @@ async def assignable(db: AsyncSession, p: Principal, job_id: uuid.UUID) -> Assig
             )
         )
     ).all()
+    from app.providers.storage import get_storage
+
+    storage = get_storage()
     out = []
     for m, u, n in rows:
         # invited people are shown but disabled (M17); a full day is a hint, not a block
@@ -543,6 +569,7 @@ async def assignable(db: AsyncSession, p: Principal, job_id: uuid.UUID) -> Assig
                 capacity=m.daily_job_capacity,
                 available=reason is None and n < m.daily_job_capacity,
                 disabled_reason=reason,
+                avatar_url=storage.presign_get(u.avatar_key) if u.avatar_key else None,
             )  # fmt: skip
         )
     out.sort(key=lambda t: (t.status != "active", not t.available, t.jobs_today, t.name.lower()))

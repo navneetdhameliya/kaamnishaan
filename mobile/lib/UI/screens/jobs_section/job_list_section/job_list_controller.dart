@@ -136,6 +136,12 @@ class JobListController extends GetxController {
       Get.toNamed(RoutesConstants.jobDetailsScreen, arguments: JobArguments.of(job));
 
   /// Filters sheet and new job (M16) come with the job editing step.
+  /// M16 New job; the list (or dashboard) loads again when a job was made.
+  Future<void> onNewJobTap() async {
+    final made = await Get.toNamed(RoutesConstants.newJobScreen);
+    if (made == true) await load();
+  }
+
   void onComingSoonTap() => KnToast.info(LangKeys.commonComingSoon.tr);
 
   @override

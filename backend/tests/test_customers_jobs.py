@@ -221,6 +221,39 @@ async def test_assignable_technicians_show_load(client):
     assert all(t["capacity"] == 6 and t["available"] for t in lst["data"])
 
 
+async def test_new_job_screen_flow(client):
+    """M16: pick a customer (its address comes along), type another address, pick a technician first."""
+    owner = await make_owner(client)
+    t1 = await invite_and_join(client, owner, TECH)
+    c = await new_customer(client, owner)
+    found = (await client.get("/api/v1/customers?q=Sharma", headers=auth(owner))).json()["data"][0]
+    assert found["site"]["address"] == "12 Ring Road" and found["site"]["id"] == c["sites"][0]["id"]
+    when = (datetime.now(UTC) + timedelta(days=1)).replace(hour=6, minute=0, second=0, microsecond=0)
+    await new_job(client, owner, c, assigned_to=t1["user"]["id"], scheduled_at=when.isoformat())
+    lst = (
+        await client.get(
+            "/api/v1/jobs/assignable-technicians", params={"at": when.isoformat()}, headers=auth(owner)
+        )
+    ).json()
+    assert [(t["name"], t["jobs_today"]) for t in lst["data"]] == [(t1["user"]["name"], 1)]
+    body = {
+        "title": "Duct clean",
+        "customer_id": c["id"],
+        "address": "  4 Lake  Road ",
+        "scheduled_at": at(3),
+    }
+    j = (await client.post("/api/v1/jobs", json=body, headers=auth(owner))).json()
+    assert j["site"]["address"] == "4 Lake Road"
+    again = (
+        await client.post("/api/v1/jobs", json={**body, "address": "4 lake road"}, headers=auth(owner))
+    ).json()
+    assert again["site"]["id"] == j["site"]["id"]  # same address, same site
+    same = (
+        await client.post("/api/v1/jobs", json={**body, "address": "12 Ring Road"}, headers=auth(owner))
+    ).json()
+    assert same["site"]["id"] == c["sites"][0]["id"]
+
+
 async def test_job_list_filters_and_tab_counts(client):
     owner = await make_owner(client)
     tech = await invite_and_join(client, owner, TECH)

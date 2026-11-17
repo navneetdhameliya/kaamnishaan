@@ -53,6 +53,25 @@ abstract class IJobsApiRepository {
     double? lng,
     String? shotSlot,
   });
+
+  /// M16 New job. [customerId] picks a known customer; otherwise [newCustomer] names a new one.
+  /// [address] is typed: the server keeps it as the customer's site (an existing one when it matches).
+  Future<ApiResult<JobOutModel>> create({
+    required String title,
+    required DateTime scheduledAt,
+    required String clientUuid,
+    String? customerId,
+    String? newCustomer,
+    String? address,
+    String? technicianId,
+    List<String> checklistIds = const [],
+  });
+
+  /// M17 Who can do the job, with their jobs that day. Before the job exists, [at] gives the day.
+  Future<ApiResult<AssignableListModel>> technicians({String? jobId, DateTime? at});
+
+  /// M17 on a saved job: give it to [technicianId] (null takes it back).
+  Future<ApiResult<JobOutModel>> assign(String jobId, String? technicianId);
 }
 
 class JobsApiRepository implements IJobsApiRepository {
@@ -131,4 +150,41 @@ class JobsApiRepository implements IJobsApiRepository {
         });
         return (json as Map)['id'] as String;
       });
+
+  @override
+  Future<ApiResult<JobOutModel>> create({
+    required String title,
+    required DateTime scheduledAt,
+    required String clientUuid,
+    String? customerId,
+    String? newCustomer,
+    String? address,
+    String? technicianId,
+    List<String> checklistIds = const [],
+  }) {
+    final typed = address?.trim();
+    return guard(() async => JobOutModel.fromJson(_map(await provider.postJob({
+          'title': title.trim(),
+          'scheduled_at': scheduledAt.toUtc().toIso8601String(),
+          'client_uuid': clientUuid,
+          'customer_id': ?customerId,
+          if (customerId == null) 'customer': {'name': newCustomer?.trim(), if (typed != null && typed.isNotEmpty) 'address': typed},
+          if (customerId != null && typed != null && typed.isNotEmpty) 'address': typed,
+          'assigned_to': ?technicianId,
+          'checklist_template_ids': checklistIds,
+        }))));
+  }
+
+  @override
+  Future<ApiResult<AssignableListModel>> technicians({String? jobId, DateTime? at}) => guard(
+        () async => AssignableListModel.fromJson(_map(await provider.getTechnicians(
+              jobId: jobId,
+              query: {if (jobId == null && at != null) 'at': at.toUtc().toIso8601String()},
+            ))),
+      );
+
+  @override
+  Future<ApiResult<JobOutModel>> assign(String jobId, String? technicianId) => guard(
+        () async => JobOutModel.fromJson(_map(await provider.postAssign(jobId, {'technician_id': technicianId}))),
+      );
 }

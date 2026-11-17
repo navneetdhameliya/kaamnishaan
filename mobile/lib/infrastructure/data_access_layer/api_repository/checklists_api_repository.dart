@@ -15,6 +15,9 @@ abstract class IChecklistsApiRepository {
     String? photoId,
     String? signatureUploadId,
   });
+
+  /// The company's checklists to add to a new job (M16).
+  Future<ApiResult<TemplateListModel>> templates();
 }
 
 class ChecklistsApiRepository implements IChecklistsApiRepository {
@@ -47,4 +50,8 @@ class ChecklistsApiRepository implements IChecklistsApiRepository {
             'signature_upload_id': ?signatureUploadId,
             'client_uuid': clientUuid,
           }))));
+
+  @override
+  Future<ApiResult<TemplateListModel>> templates() =>
+      guard(() async => TemplateListModel.fromJson(_map(await provider.getTemplates())));
 }

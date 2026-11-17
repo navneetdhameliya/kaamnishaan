@@ -36,6 +36,8 @@ import 'package:kaamnishaan/UI/screens/home_section/dashboard_section/dashboard_
 import 'package:kaamnishaan/UI/screens/home_section/home_shell_section/home_shell_controller.dart';
 import 'package:kaamnishaan/UI/screens/home_section/home_shell_section/home_shell_screen.dart';
 import 'package:kaamnishaan/UI/screens/home_section/today_section/today_controller.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/assign_technician_section/assign_technician_controller.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/assign_technician_section/assign_technician_screen.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/camera_section/camera_controller.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/camera_section/camera_screen.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/capture_hub_section/capture_hub_controller.dart';
@@ -44,6 +46,8 @@ import 'package:kaamnishaan/UI/screens/jobs_section/job_details_section/job_deta
 import 'package:kaamnishaan/UI/screens/jobs_section/job_details_section/job_details_screen.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/job_list_section/job_list_controller.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/job_list_section/job_list_screen.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/new_job_section/new_job_controller.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/new_job_section/new_job_screen.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_details_section/photo_details_controller.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_details_section/photo_details_screen.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_gallery_section/photo_gallery_controller.dart';
@@ -159,6 +163,7 @@ void main() {
     registerFallbackValue(const JobQuery());
     registerFallbackValue(UploadKind.photo);
     registerFallbackValue(<int>[]);
+    registerFallbackValue(DateTime(2026));
     await initializeDateFormatting();
     await _loadFonts();
   });
@@ -1360,6 +1365,117 @@ void main() {
   testWidgets('M35 share report', (t) async => shareShot(t, 'm35_share', const RecipientModel(name: 'Dr. Anita Rao', phone: '+1 555 010 0444')));
 
   testWidgets('M35 share report, no contact', (t) async => shareShot(t, 'm35_share_no_contact', const RecipientModel(name: 'Dr. Anita Rao')));
+
+  // ---- Step 2l: new job and assign ----------------------------------------------------------------
+  void ownerSession() => session.me.value = const MeOutModel(
+        id: 'u9',
+        name: 'Priya Mehta',
+        email: 'priya@brightair.example',
+        emailVerified: true,
+        appLanguage: 'en',
+        theme: 'system',
+        role: 'owner',
+        company: CompanyOutModel(
+          id: 'c1',
+          name: 'BrightAir Services',
+          country: 'IN',
+          timezone: 'Asia/Kolkata',
+          currency: 'INR',
+          reportLanguage: 'en',
+          plan: 'professional',
+          status: 'trial',
+          settings: CompanySettingsModel(),
+        ),
+        permissions: [],
+      );
+
+  NewJobController putNewJob() {
+    ownerSession();
+    final customers = MockCustomersRepository();
+    final checklists = MockChecklistsRepository();
+    when(() => customers.search(any())).thenAnswer(
+      (_) async => const ApiSuccess<CustomerListModel>(CustomerListModel(data: [], meta: ListMetaModel())),
+    );
+    when(() => checklists.templates()).thenAnswer(
+      (_) async => const ApiSuccess<TemplateListModel>(
+        TemplateListModel(
+          data: [
+            TemplateListItemModel(
+              id: 't1', name: 'HVAC service check', questionCount: 12, status: 'published',
+              needsTranslation: 0, scope: 'company', usageCount: 3, version: 1,
+            ),
+          ],
+          meta: ListMetaModel(),
+        ),
+      ),
+    );
+    return Get.put(
+      NewJobController(
+        jobs: MockJobsRepository(),
+        customers: customers,
+        checklists: checklists,
+        session: session,
+        translation: translation(),
+        clock: () => DateTime(2026, 10, 31, 9, 30),
+      ),
+    );
+  }
+
+  testWidgets('M16 new job', (t) async {
+    final c = putNewJob();
+    c.customer.value = const CustomerListItemModel(
+      id: 'c1', name: 'Green Valley Clinic', jobCount: 4, site: SiteBriefModel(id: 's1', address: '4 Lake Road, Springfield'),
+    );
+    c.address.text = '4 Lake Road, Springfield';
+    c.time.value = const TimeOfDay(hour: 11, minute: 30);
+    c.work.text = 'AC not cooling in room 2';
+    c.onWorkChanged(c.work.text);
+    c.checklist.value = const TemplateListItemModel(
+      id: 't1', name: 'HVAC service check', questionCount: 12, status: 'published',
+      needsTranslation: 0, scope: 'company', usageCount: 3, version: 1,
+    );
+    await shot(t, 'm16_new_job', const NewJobScreen());
+  });
+
+  testWidgets('M16 new job, missing', (t) async {
+    final c = putNewJob();
+    c.work.text = 'AC not cooling in room 2';
+    c.onWorkChanged(c.work.text);
+    c.tried.value = true;
+    await shot(t, 'm16_new_job_missing', const NewJobScreen());
+  });
+
+  Future<void> assignShot(WidgetTester t, String name, List<AssignableTechnicianModel> people) async {
+    final jobs = MockJobsRepository();
+    when(() => jobs.technicians(jobId: any(named: 'jobId'), at: any(named: 'at'))).thenAnswer(
+      (_) async => ApiSuccess<AssignableListModel>(AssignableListModel(data: people, meta: const ListMetaModel())),
+    );
+    final c = Get.put(
+      AssignTechnicianController(
+        jobs: jobs,
+        translation: translation(),
+        clock: () => DateTime(2026, 10, 31, 9, 30),
+        args: AssignArguments(customer: 'Green Valley Clinic', title: 'AC not cooling', at: DateTime(2026, 10, 31, 11, 30)),
+      ),
+    );
+    if (people.isNotEmpty) c.picked.value = people.first.id;
+    await shot(t, name, const AssignTechnicianScreen());
+  }
+
+  testWidgets('M17 assign technician', (t) async => assignShot(t, 'm17_assign', const [
+        AssignableTechnicianModel(
+          id: 'u1', name: 'Ramesh Patel', status: 'active', jobsToday: 3, capacity: 5, available: true, distanceKm: 1.1,
+        ),
+        AssignableTechnicianModel(
+          id: 'u2', name: 'Carlos Ruiz', status: 'active', jobsToday: 2, capacity: 5, available: true, distanceKm: 4.8,
+        ),
+        AssignableTechnicianModel(
+          id: 'u3', name: 'Arjun Desai', status: 'invited', jobsToday: 0, capacity: 5, available: false,
+          disabledReason: 'invite_pending',
+        ),
+      ]));
+
+  testWidgets('M17 assign, no technicians', (t) async => assignShot(t, 'm17_assign_empty', const []));
 
   testWidgets('M13 dashboard', (t) async {
     await dashboard(t, 'm13_dashboard', dashboardData(), reviews: [reviewItem()]);

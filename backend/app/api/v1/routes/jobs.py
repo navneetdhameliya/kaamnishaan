@@ -1,5 +1,5 @@
 import uuid
-from datetime import date
+from datetime import date, datetime
 from typing import Literal
 
 from fastapi import APIRouter, Depends, Header, Query, Response, status
@@ -64,6 +64,16 @@ async def create_job(
     else:
         response.status_code = status.HTTP_200_OK
     return await svc.job_out(db, p, j)
+
+
+@router.get("/assignable-technicians", response_model=AssignableList)
+async def assignable_new(
+    at: datetime | None = Query(default=None, description="When the new job is (gives the day)"),
+    p: Principal = Depends(member),
+    db: AsyncSession = Depends(get_db),
+) -> AssignableList:
+    """M17 before the job is saved (M16 → Assign)."""
+    return await svc.assignable(db, p, at=at)
 
 
 @router.get("/{job_id}", response_model=JobOut)

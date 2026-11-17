@@ -34,8 +34,15 @@ abstract final class APIConstant {
   static String startJobAPIEP(String id) => '/jobs/$id/start';
   static String jobProofAPIEP(String id) => '/jobs/$id/proof';
   static String jobEvidenceAPIEP(String id) => '/jobs/$id/evidence';
+  static const String newJobTechniciansAPIEP = '/jobs/assignable-technicians';
+  static String jobTechniciansAPIEP(String id) => '/jobs/$id/assignable-technicians';
+  static String assignJobAPIEP(String id) => '/jobs/$id/assign';
+
+  // customers
+  static const String customersAPIEP = '/customers';
 
   // checklists
+  static const String checklistTemplatesAPIEP = '/checklist-templates';
   static String jobChecklistsAPIEP(String jobId) => '/jobs/$jobId/checklists';
   static String submissionAPIEP(String id) => '/checklist-submissions/$id';
   static String answerAPIEP(String id, String questionId) => '/checklist-submissions/$id/answers/$questionId';

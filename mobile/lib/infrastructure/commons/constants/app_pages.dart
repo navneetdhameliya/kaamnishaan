@@ -26,6 +26,8 @@ import '../../../UI/screens/checklists_section/checklists_section/checklists_bin
 import '../../../UI/screens/checklists_section/checklists_section/checklists_screen.dart';
 import '../../../UI/screens/home_section/home_shell_section/home_shell_binding.dart';
 import '../../../UI/screens/home_section/home_shell_section/home_shell_screen.dart';
+import '../../../UI/screens/jobs_section/assign_technician_section/assign_technician_binding.dart';
+import '../../../UI/screens/jobs_section/assign_technician_section/assign_technician_screen.dart';
 import '../../../UI/screens/jobs_section/camera_section/camera_binding.dart';
 import '../../../UI/screens/jobs_section/camera_section/camera_screen.dart';
 import '../../../UI/screens/jobs_section/capture_hub_section/capture_hub_binding.dart';
@@ -34,6 +36,8 @@ import '../../../UI/screens/jobs_section/job_details_section/job_details_binding
 import '../../../UI/screens/jobs_section/job_details_section/job_details_screen.dart';
 import '../../../UI/screens/jobs_section/job_list_section/job_list_binding.dart';
 import '../../../UI/screens/jobs_section/job_list_section/job_list_screen.dart';
+import '../../../UI/screens/jobs_section/new_job_section/new_job_binding.dart';
+import '../../../UI/screens/jobs_section/new_job_section/new_job_screen.dart';
 import '../../../UI/screens/jobs_section/photo_details_section/photo_details_binding.dart';
 import '../../../UI/screens/jobs_section/photo_details_section/photo_details_screen.dart';
 import '../../../UI/screens/jobs_section/photo_gallery_section/photo_gallery_binding.dart';
@@ -169,6 +173,12 @@ abstract final class AppPages {
     ),
     GetPage(name: RoutesConstants.reportReviewScreen, page: () => const ReportReviewScreen(), binding: ReportReviewBinding()),
     GetPage(name: RoutesConstants.reportPdfScreen, page: () => const ReportPdfScreen(), binding: ReportPdfBinding()),
+    GetPage(name: RoutesConstants.newJobScreen, page: () => const NewJobScreen(), binding: NewJobBinding()),
+    GetPage(
+      name: RoutesConstants.assignTechnicianScreen,
+      page: () => const AssignTechnicianScreen(),
+      binding: AssignTechnicianBinding(),
+    ),
     GetPage(name: RoutesConstants.shareReportScreen, page: () => const ShareReportScreen(), binding: ShareReportBinding()),
     GetPage(name: RoutesConstants.messagesScreen, page: () => const MessagesScreen(), binding: MessagesBinding()),
     GetPage(name: RoutesConstants.myReportsScreen, page: () => const MyReportsScreen(), binding: MyReportsBinding()),

@@ -138,6 +138,12 @@ class DashboardController extends GetxController {
   void onJobTilesTap() => onOpenTab?.call(1);
 
   /// Review, team and job screens come in the next steps.
+  /// M16 New job; the list (or dashboard) loads again when a job was made.
+  Future<void> onNewJobTap() async {
+    final made = await Get.toNamed(RoutesConstants.newJobScreen);
+    if (made == true) await load();
+  }
+
   void onComingSoonTap() => KnToast.info(LangKeys.commonComingSoon.tr);
 
   /// Messages (M42): reports sent for review and more.
