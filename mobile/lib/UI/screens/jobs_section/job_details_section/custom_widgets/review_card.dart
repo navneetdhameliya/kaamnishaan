@@ -91,12 +91,14 @@ class ReviewCard extends StatelessWidget {
             const SizedBox(height: KnSize.space16),
             Align(
               alignment: Alignment.centerLeft,
-              child: KnCustomButton(
-                key: const ValueKey('review-request'),
-                text: LangKeys.reviewRequest.tr,
-                icon: LucideIcons.sparkles,
-                loading: busy,
-                onTap: onRequest,
+              child: IntrinsicWidth(
+                child: KnCustomButton(
+                  key: const ValueKey('review-request'),
+                  text: LangKeys.reviewRequest.tr,
+                  icon: LucideIcons.sparkles,
+                  loading: busy,
+                  onTap: onRequest,
+                ),
               ),
             ),
           ],

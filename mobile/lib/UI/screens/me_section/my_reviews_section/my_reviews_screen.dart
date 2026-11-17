@@ -236,12 +236,14 @@ class _Empty extends GetView<MyReviewsController> {
         const SizedBox(height: KnSize.space16),
         Align(
           alignment: Alignment.centerLeft,
-          child: KnCustomButton(
-            key: const ValueKey('my-reviews-see-jobs'),
-            text: LangKeys.myrevSeeJobs.tr,
-            icon: LucideIcons.briefcase,
-            variant: KnButtonVariant.secondary,
-            onTap: controller.onSeeJobsTap,
+          child: IntrinsicWidth(
+            child: KnCustomButton(
+              key: const ValueKey('my-reviews-see-jobs'),
+              text: LangKeys.myrevSeeJobs.tr,
+              icon: LucideIcons.briefcase,
+              variant: KnButtonVariant.secondary,
+              onTap: controller.onSeeJobsTap,
+            ),
           ),
         ),
       ],

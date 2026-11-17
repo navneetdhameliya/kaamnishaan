@@ -49,12 +49,14 @@ class ReportSentScreen extends GetView<ReportSentController> {
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: KnCustomButton(
-                key: const ValueKey('sent-back-today'),
-                text: LangKeys.sentBackToday.tr,
-                icon: LucideIcons.house,
-                variant: KnButtonVariant.secondary,
-                onTap: controller.onBackTodayTap,
+              child: IntrinsicWidth(
+                child: KnCustomButton(
+                  key: const ValueKey('sent-back-today'),
+                  text: LangKeys.sentBackToday.tr,
+                  icon: LucideIcons.house,
+                  variant: KnButtonVariant.secondary,
+                  onTap: controller.onBackTodayTap,
+                ),
               ),
             ),
           ],
@@ -132,7 +134,7 @@ class ReportSentScreen extends GetView<ReportSentController> {
                     Row(
                       children: [
                         Expanded(
-                          flex: 3,
+                          flex: 5,
                           child: KnCustomButton(
                             key: const ValueKey('ask-not-now'),
                             text: LangKeys.askNotNow.tr,
@@ -143,7 +145,7 @@ class ReportSentScreen extends GetView<ReportSentController> {
                         ),
                         const SizedBox(width: KnSize.space8),
                         Expanded(
-                          flex: 4,
+                          flex: 8,
                           child: KnCustomButton(
                             key: const ValueKey('ask-review'),
                             text: LangKeys.askAsk.tr,
