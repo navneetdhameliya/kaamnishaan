@@ -1,7 +1,15 @@
 import en from '../../shared/i18n/en.json';
+import ReportPage from './pages/report/ReportPage';
 
-/** Step 0 placeholder: proves tokens, type scale and translations are wired. Real pages come in Step 5. */
+/** The website's pages. The customer report page (W27, W29) is at /r/{token}; the rest comes in later steps. */
 export default function App() {
+  const report = window.location.pathname.match(/^\/r\/([^/]+)\/?$/);
+  if (report) return <ReportPage token={decodeURIComponent(report[1]!)} />;
+  return <Home />;
+}
+
+/** Step 0 placeholder for the home page (W01 comes in a later step). */
+function Home() {
   return (
     <main className="mx-auto max-w-[1200px] px-16 py-64 md:px-32">
       <p className="text-web-eyebrow uppercase text-text-secondary">Proof of work for field teams</p>
