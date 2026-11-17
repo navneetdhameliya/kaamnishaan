@@ -24,6 +24,8 @@ abstract final class APIConstant {
   static const String invitePreviewAPIEP = '/invites/preview';
   static String resendInviteAPIEP(String id) => '/invites/$id/resend';
   static const String teamAPIEP = '/team';
+  static const String companySettingsAPIEP = '/company/settings';
+  static const String plansAPIEP = '/plans';
   static String acceptInviteAPIEP(String id) => '/invites/$id/accept';
   static String declineInviteAPIEP(String id) => '/invites/$id/decline';
 
@@ -44,6 +46,8 @@ abstract final class APIConstant {
 
   // customers
   static const String customersAPIEP = '/customers';
+  static String customerAPIEP(String id) => '/customers/$id';
+  static String customerJobsAPIEP(String id) => '/customers/$id/jobs';
 
   // checklists
   static const String checklistTemplatesAPIEP = '/checklist-templates';

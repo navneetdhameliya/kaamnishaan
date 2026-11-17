@@ -1582,4 +1582,72 @@ abstract final class LangKeys {
   static const inviteAlreadyInvited = 'invite.already_invited';
   /// See {name} in Team
   static const inviteSeeInTeam = 'invite.see_in_team';
+  /// Reports sent
+  static const meReportsSent = 'me.reports_sent';
+  /// To review
+  static const meToReview = 'me.to_review';
+  /// {n} people
+  static const mePeople = 'me.people';
+  /// Company settings
+  static const meCompanySettings = 'me.company_settings';
+  /// Customer since {year} · {n} jobs
+  static const customerSince = 'customer.since';
+  /// Main contact
+  static const customerMainContact = 'customer.main_contact';
+  /// {title} · main contact
+  static const customerRoleMain = 'customer.role_main';
+  /// Phone
+  static const customerPhone = 'customer.phone';
+  /// Email
+  static const customerEmail = 'customer.email';
+  /// Address
+  static const customerAddress = 'customer.address';
+  /// Not saved
+  static const customerNotSaved = 'customer.not_saved';
+  /// Past jobs
+  static const customerPastJobs = 'customer.past_jobs';
+  /// See all {n}
+  static const customerSeeAll = 'customer.see_all';
+  /// Show less
+  static const customerShowLess = 'customer.show_less';
+  /// No jobs for this customer yet.
+  static const customerNoJobs = 'customer.no_jobs';
+  /// New job for this customer
+  static const customerNewJob = 'customer.new_job';
+  /// Not assigned
+  static const customerNotAssigned = 'customer.not_assigned';
+  /// Company settings
+  static const settingsTitle = 'settings.title';
+  /// Only the owner can change these
+  static const settingsSubtitle = 'settings.subtitle';
+  /// Owner only
+  static const settingsOwnerOnly = 'settings.owner_only';
+  /// Only the owner can change this.
+  static const settingsOwnerOnlyToast = 'settings.owner_only_toast';
+  /// Company
+  static const settingsCompany = 'settings.company';
+  /// Trade
+  static const settingsTrade = 'settings.trade';
+  /// Country
+  static const settingsCountry = 'settings.country';
+  /// The country sets prices and phone numbers, so it can't be changed here.
+  static const settingsCountryFixed = 'settings.country_fixed';
+  /// Logo
+  static const settingsLogo = 'settings.logo';
+  /// Logo saved
+  static const settingsLogoSaved = 'settings.logo_saved';
+  /// Plan
+  static const settingsPlan = 'settings.plan';
+  /// {name} · {price}/mo
+  static const settingsPlanPrice = 'settings.plan_price';
+  /// Trial ends {date}
+  static const settingsTrialEnds = 'settings.trial_ends';
+  /// Permissions
+  static const settingsPermissions = 'settings.permissions';
+  /// Technicians can share reports
+  static const settingsTechShare = 'settings.tech_share';
+  /// If off, only managers can send reports to customers.
+  static const settingsTechShareHelp = 'settings.tech_share_help';
+  /// Saved
+  static const settingsSaved = 'settings.saved';
 }

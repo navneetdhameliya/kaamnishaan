@@ -37,6 +37,8 @@ abstract final class RoutesConstants {
   static const String waitingToSendScreen = '/waiting-to-send';
   static const String messagesScreen = '/messages';
   static const String teamScreen = '/team';
+  static const String customerScreen = '/customer';
+  static const String companySettingsScreen = '/settings/company';
   static const String inviteScreen = '/team/invite';
   static const String reportReviewScreen = '/review';
   static const String reportPdfScreen = '/review/pdf';

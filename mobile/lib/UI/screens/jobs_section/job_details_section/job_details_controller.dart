@@ -95,6 +95,15 @@ class JobDetailsController extends GetxController {
 
   bool get mine => job.value?.assignee?.id == session.me.value?.id;
 
+  /// Owners and managers open the customer's page (M18) from the name.
+  bool get canOpenCustomer => const {'owner', 'manager'}.contains(session.me.value?.role) && job.value != null;
+
+  Future<void> onCustomerTap() async {
+    final c = job.value?.customer;
+    if (c == null) return;
+    await Get.toNamed<void>(RoutesConstants.customerScreen, arguments: CustomerArguments(id: c.id, name: c.name));
+  }
+
   bool get canStart => job.value?.actions.contains('start') ?? false;
 
   bool get canContinue {

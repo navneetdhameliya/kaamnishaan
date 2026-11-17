@@ -28,6 +28,15 @@ abstract class ICompanyApiRepository {
 
   /// The SMS text, shown while the invite is filled in.
   Future<ApiResult<String>> invitePreview();
+
+  /// M39: the company's trade (owner only).
+  Future<ApiResult<CompanyOutModel>> setTrade(String trade);
+
+  /// M39: "Technicians can share reports" (owner only).
+  Future<ApiResult<CompanyOutModel>> setTechniciansCanShare(bool on);
+
+  /// The plans with prices in [currency], names in [locale] (M39 plan row).
+  Future<ApiResult<PlansOutModel>> plans({required String currency, required String locale});
 }
 
 class CompanyApiRepository implements ICompanyApiRepository {
@@ -84,4 +93,18 @@ class CompanyApiRepository implements ICompanyApiRepository {
   @override
   Future<ApiResult<String>> invitePreview() =>
       guard(() async => _map(await provider.getInvitePreview())['text'] as String);
+
+  @override
+  Future<ApiResult<CompanyOutModel>> setTrade(String trade) =>
+      guard(() async => CompanyOutModel.fromJson(_map(await provider.patchCompany({'trade': trade}))));
+
+  @override
+  Future<ApiResult<CompanyOutModel>> setTechniciansCanShare(bool on) => guard(
+        () async => CompanyOutModel.fromJson(_map(await provider.patchSettings({'technicians_can_share': on}))),
+      );
+
+  @override
+  Future<ApiResult<PlansOutModel>> plans({required String currency, required String locale}) => guard(
+        () async => PlansOutModel.fromJson(_map(await provider.getPlans({'currency': currency, 'locale': locale}))),
+      );
 }

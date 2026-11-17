@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -15,6 +13,7 @@ import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/services/session_service.dart';
 import '../../../../infrastructure/shared/job_arguments.dart';
 import '../../../../infrastructure/shared/text_utils.dart';
+import '../../../common_widgets/kn_customer_search.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// What Assign technician (M17) says when the manager taps "Save job without technician".
@@ -22,7 +21,7 @@ const saveWithoutTechnician = 'save';
 
 /// M16 New job: customer (search, or a new name), address, day and time, the work, a checklist and,
 /// if the manager wants, the technician (M17). Customer, time and work are needed.
-class NewJobController extends GetxController {
+class NewJobController extends GetxController with CustomerSearchMixin {
   NewJobController({
     required this.jobs,
     required this.customers,
@@ -31,16 +30,23 @@ class NewJobController extends GetxController {
     required this.translation,
     DateTime Function()? clock,
     this.searchDelay = const Duration(milliseconds: 300),
+    CustomerListItemModel? preset,
   })  : _clock = clock ?? DateTime.now,
+        _preset = preset ?? (Get.arguments is CustomerListItemModel ? Get.arguments as CustomerListItemModel : null),
         clientUuid = const Uuid().v4();
 
   final IJobsApiRepository jobs;
+  @override
   final ICustomersApiRepository customers;
   final IChecklistsApiRepository checklists;
   final SessionService session;
   final TranslationService translation;
   final DateTime Function() _clock;
+  @override
   final Duration searchDelay;
+
+  /// From Customer details (M18): the job starts with this customer and address.
+  final CustomerListItemModel? _preset;
 
   /// Sent with the job so a retry after a lost answer makes one job, not two.
   final String clientUuid;
@@ -63,28 +69,26 @@ class NewJobController extends GetxController {
   final RxBool tried = false.obs;
   final RxBool saving = false.obs;
 
-  // ---- the customer search sheet ------------------------------------------------------------
-  final TextEditingController search = TextEditingController();
-  final RxString query = ''.obs;
-  final RxList<CustomerListItemModel> found = <CustomerListItemModel>[].obs;
-  final RxBool searching = false.obs;
-  Timer? _debounce;
 
   @override
   void onInit() {
     super.onInit();
     final now = _clock();
     day = DateTime(now.year, now.month, now.day).obs;
+    final c = _preset;
+    if (c != null) {
+      customer.value = c;
+      address.text = c.site?.address ?? '';
+    }
     loadTemplates();
   }
 
   @override
   void onClose() {
-    _debounce?.cancel();
     address.dispose();
     work.dispose();
     workFocus.dispose();
-    search.dispose();
+    disposeSearch();
     super.onClose();
   }
 
@@ -141,31 +145,8 @@ class NewJobController extends GetxController {
 
   // ---- customer ----------------------------------------------------------------------------
 
-  /// Opens the search with all customers (A–Z); typing narrows it.
-  void prepareSearch() {
-    search.text = newCustomer.value ?? '';
-    query.value = search.text;
-    _find(search.text);
-  }
-
-  void onSearchChanged(String q) {
-    query.value = q;
-    _debounce?.cancel();
-    _debounce = Timer(searchDelay, () => _find(q));
-  }
-
-  Future<void> _find(String q) async {
-    searching.value = true;
-    final list = (await customers.search(q)).dataOrNull;
-    searching.value = false;
-    if (list != null && q == query.value) found.assignAll(list.data);
-  }
-
-  /// "Add “Sharma house” as new customer" shows when no customer has exactly that name.
-  bool get canAddNew {
-    final q = query.value.trim().toLowerCase();
-    return q.isNotEmpty && !found.any((c) => c.name.toLowerCase() == q);
-  }
+  /// Opens the search with all customers (A–Z), or the new name typed before; typing narrows it.
+  void prepareSearch() => startSearch(newCustomer.value ?? '');
 
   void onCustomerPicked(CustomerListItemModel c) {
     customer.value = c;

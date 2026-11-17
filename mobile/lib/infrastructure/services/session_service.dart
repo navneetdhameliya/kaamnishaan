@@ -61,6 +61,13 @@ class SessionService extends GetxService {
     return nextRoute();
   }
 
+  /// After the company changes (M39): the signed-in person sees the new details at once.
+  void setCompany(CompanyOutModel company) {
+    final m = me.value;
+    if (m == null) return;
+    me.value = MeOutModel.fromJson({...m.toJson(), 'company': company.toJson()});
+  }
+
   Future<void> logout() async {
     await repository.logout();
     await clear();

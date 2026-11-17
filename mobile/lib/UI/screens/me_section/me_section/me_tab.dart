@@ -182,14 +182,30 @@ class MeTab extends GetView<MeController> {
                               badge: controller.waiting,
                               onTap: controller.onWaitingTap,
                             ),
-                          if (!technician)
+                          if (!technician) ...[
                             MeRow(
                               key: const ValueKey('me-team'),
                               icon: LucideIcons.users,
                               label: LangKeys.meTeam.tr,
-                              value: '${controller.stats.value?.team ?? ''}',
+                              value: controller.stats.value?.team == null
+                                  ? ''
+                                  : LangKeys.mePeople.trParams({'n': '${controller.stats.value!.team}'}),
                               onTap: controller.onTeamTap,
                             ),
+                            MeRow(
+                              key: const ValueKey('me-company-settings'),
+                              icon: LucideIcons.building,
+                              label: LangKeys.meCompanySettings.tr,
+                              onTap: controller.onCompanySettingsTap,
+                            ),
+                            MeRow(
+                              key: const ValueKey('me-customers'),
+                              icon: LucideIcons.briefcase,
+                              label: LangKeys.meCustomers.tr,
+                              value: '${controller.stats.value?.customers ?? ''}',
+                              onTap: controller.onCustomersTap,
+                            ),
+                          ],
                           MeRow(
                             key: const ValueKey('me-language'),
                             icon: LucideIcons.globe,

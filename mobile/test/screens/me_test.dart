@@ -92,7 +92,7 @@ void main() {
           const ApiSuccess<MeStatsModel>(MeStatsModel(jobsDone: 0, photos: 0, reportsSent: 40, team: 6, customers: 31)),
     );
     await c.load();
-    expect(c.numbers.map((s) => s.label), ['Team', 'Customers', 'Reports']);
+    expect(c.numbers.map((s) => s.label), ['Reports sent', 'Team', 'To review']);
   });
 
   test('M38 saves the language on the phone and on the account', () async {

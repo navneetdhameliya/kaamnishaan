@@ -32,6 +32,8 @@ import 'package:kaamnishaan/UI/screens/checklists_section/checklist_question_sec
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_question_section/checklist_question_screen.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklists_section/checklists_controller.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklists_section/checklists_screen.dart';
+import 'package:kaamnishaan/UI/screens/customer_section/customer_details_section/customer_details_controller.dart';
+import 'package:kaamnishaan/UI/screens/customer_section/customer_details_section/customer_details_screen.dart';
 import 'package:kaamnishaan/UI/screens/home_section/dashboard_section/dashboard_controller.dart';
 import 'package:kaamnishaan/UI/screens/home_section/home_shell_section/home_shell_controller.dart';
 import 'package:kaamnishaan/UI/screens/home_section/home_shell_section/home_shell_screen.dart';
@@ -54,9 +56,12 @@ import 'package:kaamnishaan/UI/screens/jobs_section/photo_gallery_section/photo_
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_gallery_section/photo_gallery_screen.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_pair_section/photo_pair_controller.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_pair_section/photo_pair_screen.dart';
+import 'package:kaamnishaan/UI/screens/me_section/company_settings_section/company_settings_controller.dart';
+import 'package:kaamnishaan/UI/screens/me_section/company_settings_section/company_settings_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/language_settings_section/language_settings_controller.dart';
 import 'package:kaamnishaan/UI/screens/me_section/language_settings_section/language_settings_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/me_section/me_controller.dart';
+import 'package:kaamnishaan/UI/screens/me_section/me_section/me_tab.dart';
 import 'package:kaamnishaan/UI/screens/me_section/messages_section/messages_controller.dart';
 import 'package:kaamnishaan/UI/screens/me_section/messages_section/messages_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/my_reports_section/my_reports_controller.dart';
@@ -1382,6 +1387,7 @@ void main() {
         company: const CompanyOutModel(
           id: 'c1',
           name: 'BrightAir Services',
+          trade: 'hvac',
           country: 'IN',
           timezone: 'Asia/Kolkata',
           currency: 'INR',
@@ -1534,6 +1540,88 @@ void main() {
     c.existingJoined.value = true;
     c.existingName.value = 'Carlos Ruiz';
     await shot(t, 'm40_invite_in_team', const InviteScreen());
+  });
+
+  // ---- Step 2n: customer details, company settings, manager Me -------------------------------------
+  testWidgets('M18 customer details', (t) async {
+    final repo = MockCustomersRepository();
+    when(() => repo.customer(any())).thenAnswer(
+      (_) async => ApiSuccess<CustomerOutModel>(
+        CustomerOutModel(
+          id: 'c1',
+          name: 'Green Valley Clinic',
+          customerSince: DateTime(2024, 3, 2),
+          jobCount: 5,
+          contacts: const [
+            ContactOutModel(
+              id: 'k1', name: 'Dr. Anita Rao', title: 'Clinic owner', isPrimary: true, reviewOptedOut: false,
+              phone: '+1 555 010 0444', email: 'office@greenvalley.example',
+            ),
+          ],
+          sites: const [SiteOutModel(id: 's1', addressLine1: '4 Lake Road', city: 'Springfield', country: 'US')],
+          updatedAt: DateTime(2026, 10, 31),
+          version: 1,
+        ),
+      ),
+    );
+    when(() => repo.jobs(any())).thenAnswer(
+      (_) async => ApiSuccess<JobListModel>(
+        JobListModel(
+          data: [
+            job(id: 'a', title: 'Filter change', status: 'completed', at: DateTime(2026, 8, 12)),
+            job(id: 'b', title: 'Outdoor AC service', status: 'completed', at: DateTime(2026, 5, 3)),
+            job(id: 'c', title: 'Gas refill', status: 'completed', at: DateTime(2026, 1, 9)),
+          ],
+          meta: const ListMetaModel(),
+        ),
+      ),
+    );
+    Get.put(
+      CustomerDetailsController(
+        customers: repo,
+        translation: translation(),
+        args: const CustomerArguments(id: 'c1', name: 'Green Valley Clinic'),
+      ),
+    );
+    await shot(t, 'm18_customer', const CustomerDetailsScreen());
+  });
+
+  testWidgets('M39 company settings', (t) async {
+    ownerSession();
+    final repo = MockCompanyRepository();
+    when(() => repo.plans(currency: any(named: 'currency'), locale: any(named: 'locale'))).thenAnswer(
+      (_) async => const ApiSuccess<PlansOutModel>(
+        PlansOutModel(
+          currency: 'INR',
+          trialDays: 14,
+          creditPacks: [],
+          creditRules: CreditRulesModel(),
+          plans: [
+            PlanOutModel(
+              code: 'professional', name: 'Professional', price: MoneyModel(amount: 129900, currency: 'INR'),
+              features: [], mostPopular: true,
+            ),
+          ],
+        ),
+      ),
+    );
+    Get.put(
+      CompanySettingsController(
+        companies: repo,
+        files: MockFilesRepository(),
+        session: session,
+        config: config,
+        picker: FakeImagePicker(),
+        translation: translation(),
+      ),
+    );
+    await shot(t, 'm39_company_settings', const CompanySettingsScreen());
+  });
+
+  testWidgets('M37 Me, manager', (t) async {
+    ownerSession(role: 'manager');
+    putMe(stats: const MeStatsModel(jobsDone: 0, photos: 0, reportsSent: 38, team: 4, customers: 24, toReview: 2));
+    await shot(t, 'm37_me_manager', const Scaffold(body: MeTab()));
   });
 
   testWidgets('M13 dashboard', (t) async {
