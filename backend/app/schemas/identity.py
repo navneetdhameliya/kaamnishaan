@@ -40,6 +40,7 @@ class CountryOut(BaseModel):
 class TradeOut(BaseModel):
     key: str
     name: str
+    checklists: int = Field(default=0, description="ready checklist templates for this trade (website W01)")
 
 
 class ConfigOut(BaseModel):
@@ -302,7 +303,9 @@ class PlanOut(BaseModel):
     ai_questions_monthly: int | None
     monthly_credits: int | None
     most_popular: bool
-    features: list[str]
+    features: list[str] = Field(description="what the plan includes, e.g. branded_pdf, manager_approvals")
+    annual_price: Money | None = Field(default=None, description="a year = 10 months' price")
+    support: str | None = Field(default=None, description="email | email_chat | priority | dedicated")
 
 
 class CreditPackOut(BaseModel):

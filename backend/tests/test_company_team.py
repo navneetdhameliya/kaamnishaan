@@ -289,3 +289,23 @@ async def test_audit_log_records_changes(client):
         row = (await db.execute(select(AuditLog).where(AuditLog.action == "company.updated"))).scalar_one()
     assert row.data == {"before": {"name": "BrightAir"}, "after": {"name": "BrightAir Services"}}
     assert row.actor_role == "owner"
+
+
+async def test_plans_for_the_website(client):
+    usd = (await client.get("/api/v1/plans?currency=USD")).json()
+    by = {p["code"]: p for p in usd["plans"]}
+    assert [p["code"] for p in usd["plans"]] == ["free", "starter", "professional", "business", "enterprise"]
+    assert by["starter"]["annual_price"] == {"amount": 9000, "currency": "USD"}  # 2 months free
+    assert by["free"]["annual_price"] is None and by["enterprise"]["annual_price"] is None
+    assert "branded_pdf" not in by["free"]["features"] and "branded_pdf" in by["starter"]["features"]
+    assert "manager_approvals" in by["professional"]["features"]
+    assert "custom_checklists" in by["business"]["features"] and "sso_audit" not in by["business"]["features"]
+    assert "sso_audit" in by["enterprise"]["features"]
+    assert [by[c]["support"] for c in by] == ["email", "email", "email_chat", "priority", "dedicated"]
+    assert by["professional"]["most_popular"] is True
+
+
+async def test_config_counts_ready_checklists_per_trade(client):
+    trades = {t["key"]: t for t in (await client.get("/api/v1/config")).json()["trades"]}
+    assert trades["hvac"]["checklists"] > 0  # the seeded HVAC templates
+    assert trades["roofing"]["checklists"] == 0

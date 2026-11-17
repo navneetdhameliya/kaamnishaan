@@ -4121,7 +4121,10 @@ String planOutModelToJson(PlanOutModel data) => json.encode(data.toJson());
 
 class PlanOutModel {
   final int? aiQuestionsMonthly;
+  /// a year = 10 months' price
+  final MoneyModel? annualPrice;
   final String code;
+  /// what the plan includes, e.g. branded_pdf, manager_approvals
   final List<String> features;
   final int? monthlyCredits;
   final bool mostPopular;
@@ -4130,10 +4133,13 @@ class PlanOutModel {
   final MoneyModel? price;
   /// null = fair use
   final int? reportLimitMonthly;
+  /// email | email_chat | priority | dedicated
+  final String? support;
   final int? technicianLimit;
 
   const PlanOutModel({
     this.aiQuestionsMonthly,
+    this.annualPrice,
     required this.code,
     required this.features,
     this.monthlyCredits,
@@ -4141,11 +4147,13 @@ class PlanOutModel {
     required this.name,
     this.price,
     this.reportLimitMonthly,
+    this.support,
     this.technicianLimit,
   });
 
   factory PlanOutModel.fromJson(Map<String, dynamic> json) => PlanOutModel(
         aiQuestionsMonthly: json['ai_questions_monthly'] == null ? null : (json['ai_questions_monthly'] as num).toInt(),
+        annualPrice: json['annual_price'] == null ? null : MoneyModel.fromJson(json['annual_price'] as Map<String, dynamic>),
         code: json['code'] as String,
         features: (json['features'] as List).map((e) => e as String).toList(),
         monthlyCredits: json['monthly_credits'] == null ? null : (json['monthly_credits'] as num).toInt(),
@@ -4153,11 +4161,13 @@ class PlanOutModel {
         name: json['name'] as String,
         price: json['price'] == null ? null : MoneyModel.fromJson(json['price'] as Map<String, dynamic>),
         reportLimitMonthly: json['report_limit_monthly'] == null ? null : (json['report_limit_monthly'] as num).toInt(),
+        support: json['support'] as String?,
         technicianLimit: json['technician_limit'] == null ? null : (json['technician_limit'] as num).toInt(),
       );
 
   Map<String, dynamic> toJson() => {
         'ai_questions_monthly': aiQuestionsMonthly,
+        'annual_price': annualPrice?.toJson(),
         'code': code,
         'features': features,
         'monthly_credits': monthlyCredits,
@@ -4165,6 +4175,7 @@ class PlanOutModel {
         'name': name,
         'price': price?.toJson(),
         'report_limit_monthly': reportLimitMonthly,
+        'support': support,
         'technician_limit': technicianLimit,
       };
 }
@@ -7366,20 +7377,25 @@ TradeOutModel tradeOutModelFromJson(String str) => TradeOutModel.fromJson(json.d
 String tradeOutModelToJson(TradeOutModel data) => json.encode(data.toJson());
 
 class TradeOutModel {
+  /// ready checklist templates for this trade (website W01)
+  final int? checklists;
   final String key;
   final String name;
 
   const TradeOutModel({
+    this.checklists,
     required this.key,
     required this.name,
   });
 
   factory TradeOutModel.fromJson(Map<String, dynamic> json) => TradeOutModel(
+        checklists: json['checklists'] == null ? null : (json['checklists'] as num).toInt(),
         key: json['key'] as String,
         name: json['name'] as String,
       );
 
   Map<String, dynamic> toJson() => {
+        'checklists': checklists,
         'key': key,
         'name': name,
       };
