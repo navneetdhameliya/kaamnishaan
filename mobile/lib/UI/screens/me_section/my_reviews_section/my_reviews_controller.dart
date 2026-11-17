@@ -69,7 +69,8 @@ class MyReviewsController extends GetxController {
   String who(ReviewListItemModel r) => r.reviewerName ?? r.customer;
 
   /// "Green Valley Clinic · AC not cooling"
-  String meta(ReviewListItemModel r) => [if (r.reviewerName != null) r.customer, r.jobTitle].join(' · ');
+  String meta(ReviewListItemModel r) =>
+      [if (r.reviewerName != null && r.reviewerName != r.customer) r.customer, r.jobTitle].join(' · ');
 
   String ago(ReviewListItemModel r) => ReviewWords.ago(r.createdAt, _clock());
 

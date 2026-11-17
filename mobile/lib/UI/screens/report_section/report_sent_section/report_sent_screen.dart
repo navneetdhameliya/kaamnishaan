@@ -132,6 +132,7 @@ class ReportSentScreen extends GetView<ReportSentController> {
                     Row(
                       children: [
                         Expanded(
+                          flex: 3,
                           child: KnCustomButton(
                             key: const ValueKey('ask-not-now'),
                             text: LangKeys.askNotNow.tr,
@@ -142,6 +143,7 @@ class ReportSentScreen extends GetView<ReportSentController> {
                         ),
                         const SizedBox(width: KnSize.space8),
                         Expanded(
+                          flex: 4,
                           child: KnCustomButton(
                             key: const ValueKey('ask-review'),
                             text: LangKeys.askAsk.tr,
