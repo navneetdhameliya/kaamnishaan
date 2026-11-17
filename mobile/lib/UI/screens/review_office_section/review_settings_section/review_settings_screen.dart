@@ -92,6 +92,8 @@ class ReviewSettingsScreen extends GetView<ReviewSettingsController> {
                         controller: c.googleUrl,
                         readOnly: !c.canEdit,
                         keyboardType: TextInputType.url,
+                        minLines: 1,
+                        maxLines: 2,
                         style: text.bodyLg,
                         decoration: InputDecoration(
                           filled: true,

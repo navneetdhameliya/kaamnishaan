@@ -85,8 +85,14 @@ class RatingBreakdownCard extends StatelessWidget {
                     child: Row(
                       children: [
                         SizedBox(
-                          width: 22,
-                          child: CustomBaseTextWidget('$star★', style: text.caption, color: kn.textSecondary),
+                          width: 24,
+                          child: Row(
+                            children: [
+                              CustomBaseTextWidget('$star', style: text.caption, color: kn.textSecondary),
+                              const SizedBox(width: 2),
+                              Icon(LucideIcons.star, size: 10, color: kn.textSecondary),
+                            ],
+                          ),
                         ),
                         const SizedBox(width: 6),
                         Expanded(
@@ -105,7 +111,7 @@ class RatingBreakdownCard extends StatelessWidget {
                                             ? kn.statusDanger
                                             : star == 3
                                                 ? kn.borderStrong
-                                                : kn.brandMocha,
+                                                : kn.statusWarning,
                                   ),
                                 ),
                               ],
