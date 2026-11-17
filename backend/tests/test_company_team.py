@@ -150,6 +150,7 @@ async def test_duplicate_invite_and_seat_limit(client):
     dup = await client.post("/api/v1/invites", json=body, headers=auth(owner))
     assert dup.status_code == 409 and dup.json()["error"]["code"] == "phone_in_team"
     assert dup.json()["error"]["details"]["existing_member"]["status"] == "invited"
+    assert dup.json()["error"]["details"]["existing_member"]["name"] == "R"  # "Already in your team (R)"
 
     async with SessionLocal() as db:  # Free plan: 1 technician seat
         await db.execute(update(Company).values(plan_code="free"))
@@ -158,6 +159,50 @@ async def test_duplicate_invite_and_seat_limit(client):
     assert full.status_code == 402
     assert full.json()["error"]["code"] == "seat_limit_reached"
     assert full.json()["error"]["details"] == {"limit": 1, "used": 1, "plan": "free"}
+
+
+async def test_team_screen_shows_today_and_waiting_invites(client):
+    """M40: jobs today, who is on a job, when the invite SMS went, and the SMS preview."""
+    owner = await make_owner(client)
+    tech = await invite_and_join(client, owner, TECH)
+    await client.post(
+        "/api/v1/invites", json={"phone": TECH2, "name": "Arjun", "role": "technician"}, headers=auth(owner)
+    )
+    c = (
+        await client.post(
+            "/api/v1/customers",
+            json={"name": "Clinic", "site": {"address_line1": "4 Lake Road"}},
+            headers=auth(owner),
+        )
+    ).json()
+    from datetime import UTC, datetime, timedelta
+
+    soon = (datetime.now(UTC) + timedelta(minutes=5)).isoformat()
+    j = (
+        await client.post(
+            "/api/v1/jobs",
+            json={
+                "title": "AC",
+                "customer_id": c["id"],
+                "scheduled_at": soon,
+                "assigned_to": tech["user"]["id"],
+            },
+            headers=auth(owner),
+        )
+    ).json()
+    await client.post(f"/api/v1/jobs/{j['id']}/start", headers=auth(tech))
+    team = (await client.get("/api/v1/team", headers=auth(owner))).json()["data"]
+    by_role = {(m["role"], m["status"]): m for m in team}
+    owner_row, active, waiting = (
+        by_role[("owner", "active")],
+        by_role[("technician", "active")],
+        by_role[("technician", "invited")],
+    )
+    assert owner_row["live_status"] is None and owner_row["invited_at"] is None
+    assert (active["live_status"], active["jobs_today"]) == ("on_job", 1)
+    assert waiting["name"] == "Arjun" and waiting["invited_at"] and waiting["invite_id"]
+    text = (await client.get("/api/v1/invites/preview", headers=auth(owner))).json()["text"]
+    assert "invited you" in text and "/join/" in text
 
 
 async def test_manager_limits(client):

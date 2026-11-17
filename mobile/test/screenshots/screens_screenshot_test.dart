@@ -54,14 +54,6 @@ import 'package:kaamnishaan/UI/screens/jobs_section/photo_gallery_section/photo_
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_gallery_section/photo_gallery_screen.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_pair_section/photo_pair_controller.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/photo_pair_section/photo_pair_screen.dart';
-import 'package:kaamnishaan/UI/screens/onboarding_section/intro_section/intro_controller.dart';
-import 'package:kaamnishaan/UI/screens/onboarding_section/intro_section/intro_screen.dart';
-import 'package:kaamnishaan/UI/screens/onboarding_section/language_section/language_controller.dart';
-import 'package:kaamnishaan/UI/screens/onboarding_section/language_section/language_screen.dart';
-import 'package:kaamnishaan/UI/screens/onboarding_section/splash_section/splash_controller.dart';
-import 'package:kaamnishaan/UI/screens/onboarding_section/splash_section/splash_screen.dart';
-import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_controller.dart';
-import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/language_settings_section/language_settings_controller.dart';
 import 'package:kaamnishaan/UI/screens/me_section/language_settings_section/language_settings_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/me_section/me_controller.dart';
@@ -71,6 +63,14 @@ import 'package:kaamnishaan/UI/screens/me_section/my_reports_section/my_reports_
 import 'package:kaamnishaan/UI/screens/me_section/my_reports_section/my_reports_screen.dart';
 import 'package:kaamnishaan/UI/screens/me_section/waiting_to_send_section/waiting_to_send_controller.dart';
 import 'package:kaamnishaan/UI/screens/me_section/waiting_to_send_section/waiting_to_send_screen.dart';
+import 'package:kaamnishaan/UI/screens/onboarding_section/intro_section/intro_controller.dart';
+import 'package:kaamnishaan/UI/screens/onboarding_section/intro_section/intro_screen.dart';
+import 'package:kaamnishaan/UI/screens/onboarding_section/language_section/language_controller.dart';
+import 'package:kaamnishaan/UI/screens/onboarding_section/language_section/language_screen.dart';
+import 'package:kaamnishaan/UI/screens/onboarding_section/splash_section/splash_controller.dart';
+import 'package:kaamnishaan/UI/screens/onboarding_section/splash_section/splash_screen.dart';
+import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_controller.dart';
+import 'package:kaamnishaan/UI/screens/onboarding_section/welcome_section/welcome_screen.dart';
 import 'package:kaamnishaan/UI/screens/report_section/report_draft_section/report_draft_controller.dart';
 import 'package:kaamnishaan/UI/screens/report_section/report_draft_section/report_draft_screen.dart';
 import 'package:kaamnishaan/UI/screens/report_section/report_editor_section/report_editor_controller.dart';
@@ -87,6 +87,10 @@ import 'package:kaamnishaan/UI/screens/review_section/review_queue_section/revie
 import 'package:kaamnishaan/UI/screens/review_section/review_queue_section/review_queue_tab.dart';
 import 'package:kaamnishaan/UI/screens/review_section/share_report_section/share_report_controller.dart';
 import 'package:kaamnishaan/UI/screens/review_section/share_report_section/share_report_screen.dart';
+import 'package:kaamnishaan/UI/screens/team_section/invite_section/invite_controller.dart';
+import 'package:kaamnishaan/UI/screens/team_section/invite_section/invite_screen.dart';
+import 'package:kaamnishaan/UI/screens/team_section/team_section/team_controller.dart';
+import 'package:kaamnishaan/UI/screens/team_section/team_section/team_screen.dart';
 import 'package:kaamnishaan/UI/screens/voice_section/voice_note_section/voice_note_controller.dart';
 import 'package:kaamnishaan/UI/screens/voice_section/voice_note_section/voice_note_screen.dart';
 import 'package:kaamnishaan/UI/screens/voice_section/voice_notes_section/voice_notes_controller.dart';
@@ -1367,15 +1371,15 @@ void main() {
   testWidgets('M35 share report, no contact', (t) async => shareShot(t, 'm35_share_no_contact', const RecipientModel(name: 'Dr. Anita Rao')));
 
   // ---- Step 2l: new job and assign ----------------------------------------------------------------
-  void ownerSession() => session.me.value = const MeOutModel(
+  void ownerSession({String role = 'owner'}) => session.me.value = MeOutModel(
         id: 'u9',
         name: 'Priya Mehta',
         email: 'priya@brightair.example',
         emailVerified: true,
         appLanguage: 'en',
         theme: 'system',
-        role: 'owner',
-        company: CompanyOutModel(
+        role: role,
+        company: const CompanyOutModel(
           id: 'c1',
           name: 'BrightAir Services',
           country: 'IN',
@@ -1386,7 +1390,7 @@ void main() {
           status: 'trial',
           settings: CompanySettingsModel(),
         ),
-        permissions: [],
+        permissions: const [],
       );
 
   NewJobController putNewJob() {
@@ -1476,6 +1480,61 @@ void main() {
       ]));
 
   testWidgets('M17 assign, no technicians', (t) async => assignShot(t, 'm17_assign_empty', const []));
+
+  // ---- Step 2m: team and invite --------------------------------------------------------------------
+  testWidgets('M40 team', (t) async {
+    ownerSession(role: 'manager');
+    final repo = MockCompanyRepository();
+    final at = DateTime.now().subtract(const Duration(days: 2));
+    when(() => repo.team(role: any(named: 'role'), q: any(named: 'q'))).thenAnswer(
+      (_) async => ApiSuccess<MemberListModel>(
+        MemberListModel(
+          data: [
+            const MemberOutModel(id: 'u9', name: 'Priya Mehta', role: 'manager', status: 'active'),
+            const MemberOutModel(
+              id: 'u1', name: 'Ramesh Patel', role: 'technician', status: 'active', liveStatus: 'on_job', jobsToday: 3,
+            ),
+            const MemberOutModel(
+              id: 'u2', name: 'Carlos Ruiz', role: 'technician', status: 'active', liveStatus: 'driving', jobsToday: 2,
+            ),
+            MemberOutModel(id: 'u3', name: 'Arjun Desai', role: 'technician', status: 'invited', inviteId: 'i3', invitedAt: at),
+          ],
+          meta: const ListMetaModel(),
+        ),
+      ),
+    );
+    Get.put(TeamController(company: repo, session: session));
+    await shot(t, 'm40_team', const TeamScreen());
+  });
+
+  InviteController putInvite() {
+    ownerSession(role: 'manager');
+    final repo = MockCompanyRepository();
+    when(() => repo.invitePreview()).thenAnswer(
+      (_) async => const ApiSuccess<String>(
+        'Priya from BrightAir Services invited you to KaamNishaan. Tap to join: kn.app/j/4KQ2',
+      ),
+    );
+    final c = Get.put(InviteController(company: repo, config: config, session: session, translation: translation(), role: 'technician'));
+    c.smsLanguage.value = 'en';
+    c.phone.text = '98250 11111';
+    c.onPhoneChanged(c.phone.text);
+    c.name.text = 'Arjun Desai';
+    c.onNameChanged(c.name.text);
+    return c;
+  }
+
+  testWidgets('M40 invite', (t) async {
+    putInvite();
+    await shot(t, 'm40_invite', const InviteScreen());
+  });
+
+  testWidgets('M40 invite, number in team', (t) async {
+    final c = putInvite();
+    c.existingJoined.value = true;
+    c.existingName.value = 'Carlos Ruiz';
+    await shot(t, 'm40_invite_in_team', const InviteScreen());
+  });
 
   testWidgets('M13 dashboard', (t) async {
     await dashboard(t, 'm13_dashboard', dashboardData(), reviews: [reviewItem()]);

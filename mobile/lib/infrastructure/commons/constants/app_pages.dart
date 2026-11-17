@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 
-import '../../../UI/screens/auth_section/choose_company_section/choose_company_binding.dart';
 import '../../../UI/screens/auth_section/check_email_section/check_email_binding.dart';
 import '../../../UI/screens/auth_section/check_email_section/check_email_screen.dart';
+import '../../../UI/screens/auth_section/choose_company_section/choose_company_binding.dart';
 import '../../../UI/screens/auth_section/choose_company_section/choose_company_screen.dart';
 import '../../../UI/screens/auth_section/company_setup_section/company_setup_binding.dart';
 import '../../../UI/screens/auth_section/company_setup_section/company_setup_screen.dart';
@@ -44,14 +44,6 @@ import '../../../UI/screens/jobs_section/photo_gallery_section/photo_gallery_bin
 import '../../../UI/screens/jobs_section/photo_gallery_section/photo_gallery_screen.dart';
 import '../../../UI/screens/jobs_section/photo_pair_section/photo_pair_binding.dart';
 import '../../../UI/screens/jobs_section/photo_pair_section/photo_pair_screen.dart';
-import '../../../UI/screens/onboarding_section/intro_section/intro_binding.dart';
-import '../../../UI/screens/onboarding_section/intro_section/intro_screen.dart';
-import '../../../UI/screens/onboarding_section/language_section/language_binding.dart';
-import '../../../UI/screens/onboarding_section/language_section/language_screen.dart';
-import '../../../UI/screens/onboarding_section/splash_section/splash_binding.dart';
-import '../../../UI/screens/onboarding_section/splash_section/splash_screen.dart';
-import '../../../UI/screens/onboarding_section/welcome_section/welcome_binding.dart';
-import '../../../UI/screens/onboarding_section/welcome_section/welcome_screen.dart';
 import '../../../UI/screens/me_section/language_settings_section/language_settings_binding.dart';
 import '../../../UI/screens/me_section/language_settings_section/language_settings_screen.dart';
 import '../../../UI/screens/me_section/messages_section/messages_binding.dart';
@@ -60,6 +52,14 @@ import '../../../UI/screens/me_section/my_reports_section/my_reports_binding.dar
 import '../../../UI/screens/me_section/my_reports_section/my_reports_screen.dart';
 import '../../../UI/screens/me_section/waiting_to_send_section/waiting_to_send_binding.dart';
 import '../../../UI/screens/me_section/waiting_to_send_section/waiting_to_send_screen.dart';
+import '../../../UI/screens/onboarding_section/intro_section/intro_binding.dart';
+import '../../../UI/screens/onboarding_section/intro_section/intro_screen.dart';
+import '../../../UI/screens/onboarding_section/language_section/language_binding.dart';
+import '../../../UI/screens/onboarding_section/language_section/language_screen.dart';
+import '../../../UI/screens/onboarding_section/splash_section/splash_binding.dart';
+import '../../../UI/screens/onboarding_section/splash_section/splash_screen.dart';
+import '../../../UI/screens/onboarding_section/welcome_section/welcome_binding.dart';
+import '../../../UI/screens/onboarding_section/welcome_section/welcome_screen.dart';
 import '../../../UI/screens/report_section/report_draft_section/report_draft_binding.dart';
 import '../../../UI/screens/report_section/report_draft_section/report_draft_screen.dart';
 import '../../../UI/screens/report_section/report_editor_section/report_editor_binding.dart';
@@ -74,6 +74,10 @@ import '../../../UI/screens/review_section/report_review_section/report_review_b
 import '../../../UI/screens/review_section/report_review_section/report_review_screen.dart';
 import '../../../UI/screens/review_section/share_report_section/share_report_binding.dart';
 import '../../../UI/screens/review_section/share_report_section/share_report_screen.dart';
+import '../../../UI/screens/team_section/invite_section/invite_binding.dart';
+import '../../../UI/screens/team_section/invite_section/invite_screen.dart';
+import '../../../UI/screens/team_section/team_section/team_binding.dart';
+import '../../../UI/screens/team_section/team_section/team_screen.dart';
 import '../../../UI/screens/voice_section/voice_note_section/voice_note_binding.dart';
 import '../../../UI/screens/voice_section/voice_note_section/voice_note_screen.dart';
 import '../../../UI/screens/voice_section/voice_notes_section/voice_notes_binding.dart';
@@ -180,6 +184,8 @@ abstract final class AppPages {
       binding: AssignTechnicianBinding(),
     ),
     GetPage(name: RoutesConstants.shareReportScreen, page: () => const ShareReportScreen(), binding: ShareReportBinding()),
+    GetPage(name: RoutesConstants.teamScreen, page: () => const TeamScreen(), binding: TeamBinding()),
+    GetPage(name: RoutesConstants.inviteScreen, page: () => const InviteScreen(), binding: InviteBinding()),
     GetPage(name: RoutesConstants.messagesScreen, page: () => const MessagesScreen(), binding: MessagesBinding()),
     GetPage(name: RoutesConstants.myReportsScreen, page: () => const MyReportsScreen(), binding: MyReportsBinding()),
     GetPage(

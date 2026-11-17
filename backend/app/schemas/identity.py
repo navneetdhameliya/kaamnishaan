@@ -242,6 +242,7 @@ class MemberOut(BaseModel):
     joined_at: datetime | None = None
     live_status: Literal["on_job", "driving", "idle", "offline"] | None = None
     jobs_today: int = 0
+    invited_at: datetime | None = Field(default=None, description="When the open invite SMS was sent")
 
 
 class MemberList(BaseModel):
@@ -258,6 +259,10 @@ class InviteCreate(_In):
     name: str = Field(min_length=1, max_length=120)
     role: Literal["technician", "manager"]
     sms_language: Locale | None = None
+
+
+class InvitePreview(BaseModel):
+    text: str = Field(description="The SMS the person will get; the real link is made when it is sent")
 
 
 class InviteOut(BaseModel):

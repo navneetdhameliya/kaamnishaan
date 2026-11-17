@@ -1514,4 +1514,72 @@ abstract final class LangKeys {
   static const assignSaveWithout = 'assign.save_without';
   /// Job given to {name}
   static const assignDone = 'assign.done';
+  /// Team
+  static const teamTitle = 'team.title';
+  /// {company} · {n} people
+  static const teamSubtitle = 'team.subtitle';
+  /// All {n}
+  static const teamAll = 'team.all';
+  /// Technicians {n}
+  static const teamTechnicians = 'team.technicians';
+  /// Managers {n}
+  static const teamManagers = 'team.managers';
+  /// Search name or phone
+  static const teamSearch = 'team.search';
+  /// {name} (you)
+  static const teamYou = 'team.you';
+  /// {role} · {n} jobs
+  static const teamJobsToday = 'team.jobs_today';
+  /// Online
+  static const teamOnline = 'team.online';
+  /// On a job
+  static const teamOnJob = 'team.on_job';
+  /// Driving
+  static const teamDriving = 'team.driving';
+  /// Free
+  static const teamFree = 'team.free';
+  /// Waiting to join
+  static const teamWaiting = 'team.waiting';
+  /// {role} · SMS sent {ago}
+  static const teamSmsSent = 'team.sms_sent';
+  /// Resend
+  static const teamResend = 'team.resend';
+  /// Invite sent again to {name}
+  static const teamResent = 'team.resent';
+  /// Invite person
+  static const teamInvitePerson = 'team.invite_person';
+  /// Only you so far
+  static const teamEmptyTitle = 'team.empty_title';
+  /// Invite your technicians. They join with a link by SMS.
+  static const teamEmptyBody = 'team.empty_body';
+  /// No one called “{q}”
+  static const teamNoResults = 'team.no_results';
+  /// Invite person
+  static const inviteTitle = 'invite.title';
+  /// They join with a link by SMS
+  static const inviteSubtitle = 'invite.subtitle';
+  /// Role
+  static const inviteRole = 'invite.role';
+  /// Mobile number
+  static const invitePhone = 'invite.phone';
+  /// Name
+  static const inviteName = 'invite.name';
+  /// Write their name
+  static const inviteNameMissing = 'invite.name_missing';
+  /// SMS language
+  static const inviteLanguage = 'invite.language';
+  /// {name} will get this SMS
+  static const inviteWillGet = 'invite.will_get';
+  /// They will get this SMS
+  static const inviteTheyGet = 'invite.they_get';
+  /// Send invite
+  static const inviteSend = 'invite.send';
+  /// Invite sent to {name}
+  static const inviteSent = 'invite.sent';
+  /// Already in your team ({name}).
+  static const inviteInTeam = 'invite.in_team';
+  /// Already invited ({name}).
+  static const inviteAlreadyInvited = 'invite.already_invited';
+  /// See {name} in Team
+  static const inviteSeeInTeam = 'invite.see_in_team';
 }

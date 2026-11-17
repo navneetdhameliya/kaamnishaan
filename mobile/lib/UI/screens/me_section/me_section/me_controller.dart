@@ -119,6 +119,12 @@ class MeController extends GetxController {
     load();
   }
 
+  /// M40 Team (owners and managers).
+  Future<void> onTeamTap() async {
+    await Get.toNamed(RoutesConstants.teamScreen);
+    load();
+  }
+
   Future<void> onWaitingTap() async {
     await Get.toNamed(RoutesConstants.waitingToSendScreen);
     load();

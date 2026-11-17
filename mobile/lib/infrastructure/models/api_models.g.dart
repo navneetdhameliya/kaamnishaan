@@ -1876,6 +1876,27 @@ class InviteOutModel {
       };
 }
 
+InvitePreviewModel invitePreviewModelFromJson(String str) => InvitePreviewModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String invitePreviewModelToJson(InvitePreviewModel data) => json.encode(data.toJson());
+
+class InvitePreviewModel {
+  /// The SMS the person will get; the real link is made when it is sent
+  final String text;
+
+  const InvitePreviewModel({
+    required this.text,
+  });
+
+  factory InvitePreviewModel.fromJson(Map<String, dynamic> json) => InvitePreviewModel(
+        text: json['text'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'text': text,
+      };
+}
+
 InviterOutModel inviterOutModelFromJson(String str) => InviterOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String inviterOutModelToJson(InviterOutModel data) => json.encode(data.toJson());
@@ -2757,6 +2778,8 @@ class MemberOutModel {
   /// The person's user id
   final String id;
   final String? inviteId;
+  /// When the open invite SMS was sent
+  final DateTime? invitedAt;
   final int? jobsToday;
   final DateTime? joinedAt;
   /// One of: on_job, driving, idle, offline
@@ -2772,6 +2795,7 @@ class MemberOutModel {
     this.avatarUrl,
     required this.id,
     this.inviteId,
+    this.invitedAt,
     this.jobsToday,
     this.joinedAt,
     this.liveStatus,
@@ -2785,6 +2809,7 @@ class MemberOutModel {
         avatarUrl: json['avatar_url'] as String?,
         id: json['id'] as String,
         inviteId: json['invite_id'] as String?,
+        invitedAt: json['invited_at'] == null ? null : DateTime.parse(json['invited_at'] as String),
         jobsToday: json['jobs_today'] == null ? null : (json['jobs_today'] as num).toInt(),
         joinedAt: json['joined_at'] == null ? null : DateTime.parse(json['joined_at'] as String),
         liveStatus: json['live_status'] as String?,
@@ -2798,6 +2823,7 @@ class MemberOutModel {
         'avatar_url': avatarUrl,
         'id': id,
         'invite_id': inviteId,
+        'invited_at': invitedAt?.toIso8601String(),
         'jobs_today': jobsToday,
         'joined_at': joinedAt?.toIso8601String(),
         'live_status': liveStatus,

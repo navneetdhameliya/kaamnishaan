@@ -138,6 +138,17 @@ class DashboardController extends GetxController {
   void onJobTilesTap() => onOpenTab?.call(1);
 
   /// Review, team and job screens come in the next steps.
+  /// M40 Team, and the invite straight from "Get started"; the dashboard loads again after.
+  Future<void> onTeamTap() async {
+    await Get.toNamed(RoutesConstants.teamScreen);
+    await load();
+  }
+
+  Future<void> onInviteTap() async {
+    final sent = await Get.toNamed(RoutesConstants.inviteScreen);
+    if (sent == true) await load();
+  }
+
   /// M16 New job; the list (or dashboard) loads again when a job was made.
   Future<void> onNewJobTap() async {
     final made = await Get.toNamed(RoutesConstants.newJobScreen);

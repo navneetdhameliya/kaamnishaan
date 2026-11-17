@@ -14,12 +14,13 @@ from app.core.config import get_settings
 from app.core.deps import Principal
 from app.core.errors import Conflict, Forbidden, Gone, NotFound, PlanLimit, RateLimited
 from app.core.security import digest, normalize_phone, now, random_token
-from app.models import AuthSession, Company, Invitation, Membership, Plan, User
+from app.models import AuthSession, Company, Invitation, Job, Membership, Plan, User
 from app.providers.messaging import SMS_TEMPLATES, send_sms
 from app.schemas.identity import (
     InviteCompany,
     InviteCreate,
     InviteOut,
+    InvitePreview,
     InviterOut,
     ListMeta,
     MemberList,
@@ -58,12 +59,13 @@ async def list_members(
 ) -> MemberList:
     open_invites = (
         await db.execute(
-            select(Invitation.membership_id, Invitation.id, Invitation.name)
+            select(Invitation.membership_id, Invitation.id, Invitation.name, Invitation.created_at)
             .where(Invitation.company_id == company_id, *_open_invite_filter())
             .order_by(Invitation.created_at)
         )
     ).all()
-    latest = {mid: (iid, name) for mid, iid, name in open_invites}  # newest wins
+    latest = {mid: (iid, name) for mid, iid, name, _ in open_invites}  # newest wins
+    sent = {mid: at for mid, _, _, at in open_invites}
     members = (
         await db.execute(
             select(Membership, User)
@@ -86,6 +88,40 @@ async def list_members(
             return needle in hay
         return True
 
+    # today's jobs and who is on one now (M40); "driving" needs live location (later)
+    from app.services.jobs import day_bounds_for
+
+    start_, end_ = day_bounds_for(await db.get(Company, company_id))
+    load = dict(
+        (
+            await db.execute(
+                select(Job.assigned_to, func.count())
+                .where(
+                    Job.company_id == company_id, Job.deleted_at.is_(None), Job.status != "cancelled",
+                    Job.scheduled_at >= start_, Job.scheduled_at < end_,
+                )
+                .group_by(Job.assigned_to)
+            )
+        ).all()
+    )  # fmt: skip
+    busy = set(
+        (
+            await db.execute(
+                select(Job.assigned_to).where(
+                    Job.company_id == company_id, Job.deleted_at.is_(None), Job.status == "in_progress"
+                )
+            )
+        ).scalars()
+    )
+    from app.providers.storage import get_storage
+
+    storage = get_storage()
+
+    def live(m: Membership, u: User) -> str | None:
+        if m.status != "active" or m.role != "technician":
+            return None
+        return "on_job" if u.id in busy else "idle"
+
     order = {"owner": 0, "manager": 1, "technician": 2}
     items = [
         MemberOut(
@@ -96,6 +132,10 @@ async def list_members(
             status=m.status,
             invite_id=inv_id if m.status == "invited" else None,
             joined_at=m.joined_at,
+            avatar_url=storage.presign_get(u.avatar_key) if u.avatar_key else None,
+            live_status=live(m, u),
+            jobs_today=load.get(u.id, 0),
+            invited_at=sent.get(m.id) if m.status == "invited" else None,
         )
         for m, u, inv_id, inv_name in sorted(
             rows, key=lambda r: (order[r[0].role], (r[1].name or r[3] or ""))
@@ -251,7 +291,14 @@ async def invite(db: AsyncSession, p: Principal, body: InviteCreate, ip: str | N
                 "This number is already on your team."
                 if m.status == "active"
                 else "This number is already invited.",
-                {"existing_member": {"user_id": str(user.id), "status": m.status, "role": m.role}},
+                {
+                    "existing_member": {
+                        "user_id": str(user.id),
+                        "status": m.status,
+                        "role": m.role,
+                        "name": user.name or await _invite_name(db, m),
+                    }
+                },
                 fields={"phone": "phone_in_team"},
             )
     if body.role == "technician":
@@ -274,6 +321,22 @@ async def invite(db: AsyncSession, p: Principal, body: InviteCreate, ip: str | N
         target_type="invite", target_id=out.id, data={"role": body.role}, ip=ip,
     )  # fmt: skip
     return out
+
+
+async def _invite_name(db: AsyncSession, m: Membership) -> str:
+    return (
+        await db.execute(
+            select(Invitation.name)
+            .where(Invitation.membership_id == m.id)
+            .order_by(Invitation.created_at.desc())
+        )
+    ).scalar() or ""
+
+
+def preview(p: Principal) -> InvitePreview:
+    """M40 shows the SMS while the form is filled; the real link is made when it is sent."""
+    link = f"{get_settings().web_url}/join/…"
+    return InvitePreview(text=_sms_text(p.user.name or "Your team", p.company.name, link))
 
 
 async def _company_invite(db: AsyncSession, p: Principal, invite_id: uuid.UUID) -> Invitation:

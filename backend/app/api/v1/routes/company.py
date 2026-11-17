@@ -13,6 +13,7 @@ from app.schemas.identity import (
     CompanyUpdate,
     InviteCreate,
     InviteOut,
+    InvitePreview,
     ListMeta,
     MemberList,
     MemberOut,
@@ -114,6 +115,12 @@ async def create_invite(
     db: AsyncSession = Depends(get_db),
 ) -> InviteOut:
     return await team.invite(db, _need_company(p), body, client_ip(request))
+
+
+@router.get("/invites/preview", response_model=InvitePreview, tags=["invites"])
+async def invite_preview(p: Principal = Depends(get_principal)) -> InvitePreview:
+    """The SMS text M40 shows while the form is filled."""
+    return team.preview(_need_company(p))
 
 
 @router.get("/invites/mine", response_model=MyInviteList, tags=["invites"])
