@@ -62,6 +62,10 @@ class AIProvider:
 
     async def draft_report(self, system_prompt: str, evidence: dict) -> Draft: ...
 
+    async def answer(
+        self, system_prompt: str, context: dict, history: list[dict], question: str
+    ) -> Draft: ...
+
 
 class OpenAIProvider(AIProvider):
     base = "https://api.openai.com/v1"
@@ -138,6 +142,35 @@ class OpenAIProvider(AIProvider):
                         {"role": "system", "content": system_prompt},
                         {"role": "user", "content": json.dumps(evidence, ensure_ascii=False, default=str)},
                     ],
+                },
+            )
+            r.raise_for_status()
+        body = r.json()
+        usage = body.get("usage") or {}
+        return Draft(
+            data=json.loads(body["choices"][0]["message"]["content"]),
+            model=body.get("model", s.openai_text_model),
+            tokens_in=usage.get("prompt_tokens", 0),
+            tokens_out=usage.get("completion_tokens", 0),
+        )
+
+    async def answer(self, system_prompt, context, history, question):
+        s = get_settings()
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "system", "content": json.dumps(context, ensure_ascii=False, default=str)},
+            *history,
+            {"role": "user", "content": question},
+        ]
+        async with httpx.AsyncClient(timeout=60) as c:
+            r = await c.post(
+                f"{self.base}/chat/completions",
+                headers=self.headers,
+                json={
+                    "model": s.openai_text_model,
+                    "temperature": 0.1,
+                    "response_format": {"type": "json_object"},
+                    "messages": messages,
                 },
             )
             r.raise_for_status()

@@ -126,6 +126,62 @@ class AnswerOutModel {
       };
 }
 
+AskInModel askInModelFromJson(String str) => AskInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String askInModelToJson(AskInModel data) => json.encode(data.toJson());
+
+class AskInModel {
+  final String text;
+
+  const AskInModel({
+    required this.text,
+  });
+
+  factory AskInModel.fromJson(Map<String, dynamic> json) => AskInModel(
+        text: json['text'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'text': text,
+      };
+}
+
+AskOutModel askOutModelFromJson(String str) => AskOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String askOutModelToJson(AskOutModel data) => json.encode(data.toJson());
+
+class AskOutModel {
+  final AssistantMessageOutModel answer;
+  final int? limit;
+  final bool paused;
+  final AssistantMessageOutModel question;
+  final int used;
+
+  const AskOutModel({
+    required this.answer,
+    this.limit,
+    required this.paused,
+    required this.question,
+    required this.used,
+  });
+
+  factory AskOutModel.fromJson(Map<String, dynamic> json) => AskOutModel(
+        answer: AssistantMessageOutModel.fromJson(json['answer'] as Map<String, dynamic>),
+        limit: json['limit'] == null ? null : (json['limit'] as num).toInt(),
+        paused: json['paused'] as bool,
+        question: AssistantMessageOutModel.fromJson(json['question'] as Map<String, dynamic>),
+        used: (json['used'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'answer': answer.toJson(),
+        'limit': limit,
+        'paused': paused,
+        'question': question.toJson(),
+        'used': used,
+      };
+}
+
 AssignBodyModel assignBodyModelFromJson(String str) => AssignBodyModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String assignBodyModelToJson(AssignBodyModel data) => json.encode(data.toJson());
@@ -225,6 +281,96 @@ class AssignableTechnicianModel {
         'name': name,
         'phone': phone,
         'status': status,
+      };
+}
+
+AssistantMessageOutModel assistantMessageOutModelFromJson(String str) => AssistantMessageOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String assistantMessageOutModelToJson(AssistantMessageOutModel data) => json.encode(data.toJson());
+
+class AssistantMessageOutModel {
+  final DateTime at;
+  final String id;
+  final List<SourceJobModel>? jobs;
+  /// Photos on the jobs the answer used
+  final int? photoCount;
+  final List<SourceReportModel>? reports;
+  /// One of: user, assistant
+  final String role;
+  final String text;
+
+  const AssistantMessageOutModel({
+    required this.at,
+    required this.id,
+    this.jobs,
+    this.photoCount,
+    this.reports,
+    required this.role,
+    required this.text,
+  });
+
+  factory AssistantMessageOutModel.fromJson(Map<String, dynamic> json) => AssistantMessageOutModel(
+        at: DateTime.parse(json['at'] as String),
+        id: json['id'] as String,
+        jobs: json['jobs'] == null ? null : (json['jobs'] as List).map((e) => SourceJobModel.fromJson(e as Map<String, dynamic>)).toList(),
+        photoCount: json['photo_count'] == null ? null : (json['photo_count'] as num).toInt(),
+        reports: json['reports'] == null ? null : (json['reports'] as List).map((e) => SourceReportModel.fromJson(e as Map<String, dynamic>)).toList(),
+        role: json['role'] as String,
+        text: json['text'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'at': at.toIso8601String(),
+        'id': id,
+        'jobs': jobs?.map((e) => e.toJson()).toList(),
+        'photo_count': photoCount,
+        'reports': reports?.map((e) => e.toJson()).toList(),
+        'role': role,
+        'text': text,
+      };
+}
+
+AssistantOutModel assistantOutModelFromJson(String str) => AssistantOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String assistantOutModelToJson(AssistantOutModel data) => json.encode(data.toJson());
+
+class AssistantOutModel {
+  /// false while the AI service isn't set up
+  final bool available;
+  final List<AssistantMessageOutModel> data;
+  /// null = no limit
+  final int? limit;
+  /// This month's questions are used up
+  final bool paused;
+  final DateTime renewsAt;
+  /// Questions asked by the company this month
+  final int used;
+
+  const AssistantOutModel({
+    required this.available,
+    required this.data,
+    this.limit,
+    required this.paused,
+    required this.renewsAt,
+    required this.used,
+  });
+
+  factory AssistantOutModel.fromJson(Map<String, dynamic> json) => AssistantOutModel(
+        available: json['available'] as bool,
+        data: (json['data'] as List).map((e) => AssistantMessageOutModel.fromJson(e as Map<String, dynamic>)).toList(),
+        limit: json['limit'] == null ? null : (json['limit'] as num).toInt(),
+        paused: json['paused'] as bool,
+        renewsAt: DateTime.parse(json['renews_at'] as String),
+        used: (json['used'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'available': available,
+        'data': data.map((e) => e.toJson()).toList(),
+        'limit': limit,
+        'paused': paused,
+        'renews_at': renewsAt.toIso8601String(),
+        'used': used,
       };
 }
 
@@ -6329,6 +6475,92 @@ class SitePatchModel {
         'lng': lng,
         'postcode': postcode,
         'state': state,
+      };
+}
+
+SourceJobModel sourceJobModelFromJson(String str) => SourceJobModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String sourceJobModelToJson(SourceJobModel data) => json.encode(data.toJson());
+
+class SourceJobModel {
+  final String customer;
+  final String id;
+  /// Proof steps not done yet (open jobs only)
+  final List<String> missing;
+  /// Up to 3 thumbnails
+  final List<String> photos;
+  final String status;
+  final String title;
+
+  const SourceJobModel({
+    required this.customer,
+    required this.id,
+    required this.missing,
+    required this.photos,
+    required this.status,
+    required this.title,
+  });
+
+  factory SourceJobModel.fromJson(Map<String, dynamic> json) => SourceJobModel(
+        customer: json['customer'] as String,
+        id: json['id'] as String,
+        missing: (json['missing'] as List).map((e) => e as String).toList(),
+        photos: (json['photos'] as List).map((e) => e as String).toList(),
+        status: json['status'] as String,
+        title: json['title'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'customer': customer,
+        'id': id,
+        'missing': missing,
+        'photos': photos,
+        'status': status,
+        'title': title,
+      };
+}
+
+SourceReportModel sourceReportModelFromJson(String str) => SourceReportModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String sourceReportModelToJson(SourceReportModel data) => json.encode(data.toJson());
+
+class SourceReportModel {
+  final DateTime at;
+  final String? coverUrl;
+  final String customer;
+  final String id;
+  final String jobId;
+  final String number;
+  final String status;
+
+  const SourceReportModel({
+    required this.at,
+    this.coverUrl,
+    required this.customer,
+    required this.id,
+    required this.jobId,
+    required this.number,
+    required this.status,
+  });
+
+  factory SourceReportModel.fromJson(Map<String, dynamic> json) => SourceReportModel(
+        at: DateTime.parse(json['at'] as String),
+        coverUrl: json['cover_url'] as String?,
+        customer: json['customer'] as String,
+        id: json['id'] as String,
+        jobId: json['job_id'] as String,
+        number: json['number'] as String,
+        status: json['status'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'at': at.toIso8601String(),
+        'cover_url': coverUrl,
+        'customer': customer,
+        'id': id,
+        'job_id': jobId,
+        'number': number,
+        'status': status,
       };
 }
 

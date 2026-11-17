@@ -1,3 +1,4 @@
+from app.models.assistant import AssistantMessage
 from app.models.base import Base
 from app.models.catalog import CreditPack, Industry, Plan
 from app.models.checklists import (
@@ -44,6 +45,7 @@ from app.models.sharing import Message, ReportIssue, ShareLink
 from app.models.work import Customer, CustomerContact, Equipment, Job, JobEvent, Site
 
 __all__ = [
+    "AssistantMessage",
     "AIUsage",
     "BackgroundTask",
     "ChangeRequest",

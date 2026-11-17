@@ -9,6 +9,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.config import get_settings
 from app.core.deps import get_db
 from app.models import CreditPack, Industry, Plan
+from app.providers.ai import get_ai
 from app.schemas.identity import (
     ConfigOut,
     CountryOut,
@@ -54,7 +55,7 @@ async def config(response: Response, locale: Locale = "en", db: AsyncSession = D
         password_min_length=PASSWORD_MIN,
         min_app_version="1.0.0",
         maintenance=False,
-        features={"signups": True, "ai_drafting": True, "ai_assistant": False},
+        features={"signups": True, "ai_drafting": True, "ai_assistant": get_ai() is not None},
     )
 
 
