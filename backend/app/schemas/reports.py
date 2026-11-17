@@ -75,6 +75,7 @@ class ReportListItem(BaseModel):
     approved_at: datetime | None
     change_note: str | None
     updated_at: datetime
+    thumbs: list[str] = Field(default_factory=list, description="Up to 3 newest photos (M30 review queue)")
 
 
 class ReportList(BaseModel):

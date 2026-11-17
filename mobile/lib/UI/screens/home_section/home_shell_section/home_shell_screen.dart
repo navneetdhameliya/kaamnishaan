@@ -7,9 +7,9 @@ import '../../../common_widgets/kn_glass_tab_bar.dart';
 import '../../../theme/kn_app_theme.dart';
 import '../../jobs_section/job_list_section/job_list_screen.dart';
 import '../../me_section/me_section/me_tab.dart';
+import '../../review_section/review_queue_section/review_queue_tab.dart';
 import '../dashboard_section/dashboard_tab.dart';
 import '../today_section/today_tab.dart';
-import 'custom_widgets/simple_tabs.dart';
 import 'home_shell_controller.dart';
 
 /// After login: the tabs and the floating tab bar with the camera button (Figma "Tab bar").
@@ -34,7 +34,7 @@ class HomeShellScreen extends GetView<HomeShellController> {
         ? [
             const DashboardTab(),
             const JobListScreen(asTab: true),
-            ComingSoonTab(title: LangKeys.navReports.tr, icon: LucideIcons.fileText),
+            const ReviewQueueTab(),
             const MeTab(),
           ]
         : [

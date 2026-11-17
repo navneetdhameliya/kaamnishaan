@@ -6,6 +6,7 @@ import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/services/session_service.dart';
+import '../../../../infrastructure/shared/job_arguments.dart';
 import '../../../../infrastructure/shared/text_utils.dart';
 import '../../../../infrastructure/shared/time_utils.dart';
 import '../../../common_widgets/kn_toast.dart';
@@ -118,6 +119,21 @@ class DashboardController extends GetxController {
   }
 
   void onReviewTilesTap() => onOpenTab?.call(2);
+
+  /// M33: review this report.
+  Future<void> onReviewTap(ReportListItemModel r) async {
+    await Get.toNamed(
+      RoutesConstants.reportReviewScreen,
+      arguments: ReportArguments(
+        jobId: r.job.id,
+        customer: r.job.customer,
+        reportId: r.id,
+        coverUrl: r.job.coverUrl,
+        photos: r.job.photos ?? 0,
+      ),
+    );
+    load();
+  }
 
   void onJobTilesTap() => onOpenTab?.call(1);
 

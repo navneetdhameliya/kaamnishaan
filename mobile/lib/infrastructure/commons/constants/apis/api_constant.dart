@@ -57,6 +57,13 @@ abstract final class APIConstant {
   static String reportSubmitAPIEP(String id) => '/reports/$id/submit';
   static String reportRegenerateAPIEP(String id, String section) => '/reports/$id/sections/$section/regenerate';
   static String taskAPIEP(String id) => '/tasks/$id';
+  static String reportApproveAPIEP(String id) => '/reports/$id/approve';
+  static String reportChangesAPIEP(String id) => '/reports/$id/request-changes';
+  static String reportPdfAPIEP(String id) => '/reports/$id/pdf';
+  static String reportShareAPIEP(String id) => '/reports/$id/share';
+  static String reportShareLinksAPIEP(String id) => '/reports/$id/share-links';
+  static String reportSendAPIEP(String id) => '/reports/$id/send';
+  static String shareLinkAPIEP(String id) => '/share-links/$id';
 
   // company
   static const String companiesAPIEP = '/companies';

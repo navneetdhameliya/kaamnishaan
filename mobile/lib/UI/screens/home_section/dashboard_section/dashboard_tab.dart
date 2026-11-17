@@ -212,7 +212,7 @@ class DashboardTab extends GetView<DashboardController> {
               report: reviews[i],
               meta: controller.reviewMeta(reviews[i]),
               evidence: controller.reviewEvidence(reviews[i]),
-              onTap: controller.onComingSoonTap,
+              onTap: () => controller.onReviewTap(reviews[i]),
             ),
           ],
         ],

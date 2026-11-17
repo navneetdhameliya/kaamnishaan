@@ -46,7 +46,7 @@ from app.schemas.reports import (
 )
 from app.schemas.work import PersonRef
 from app.services import audit, notifications
-from app.services.evidence import covers, lock_job_evidence, photo_counts, proof
+from app.services.evidence import covers, lock_job_evidence, photo_counts, proof, thumbs_for
 from app.services.jobs import get_job, label
 
 SECTIONS = ("summary", "work_done", "advice")
@@ -363,6 +363,7 @@ async def list_reports(
     page_jobs = [j for _, j in page]
     photos = await photo_counts(db, [j.id for j in page_jobs])
     cover_urls = await covers(db, page_jobs)
+    thumbs = await thumbs_for(db, [j.id for j in page_jobs])
     notes = {}
     ids = [r.id for r, _ in page]
     if ids:
@@ -392,6 +393,7 @@ async def list_reports(
                 approved_at=r.approved_at,
                 change_note=notes.get(r.id) if r.status == "changes_requested" else None,
                 updated_at=r.updated_at,
+                thumbs=thumbs.get(j.id, []),
             )
         )
     return ReportList(

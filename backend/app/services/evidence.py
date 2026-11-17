@@ -465,6 +465,28 @@ async def lock_job_evidence(db: AsyncSession, job_id: uuid.UUID) -> int:
     return r.rowcount or 0
 
 
+async def thumbs_for(db: AsyncSession, job_ids: list[uuid.UUID], each: int = 3) -> dict[uuid.UUID, list[str]]:
+    """The newest few photo thumbnails of each job (M30 review queue)."""
+    if not job_ids:
+        return {}
+    rows = (
+        await db.execute(
+            select(Evidence.job_id, Evidence.thumb_key)
+            .where(
+                Evidence.job_id.in_(job_ids), Evidence.deleted_at.is_(None), Evidence.thumb_key.is_not(None)
+            )
+            .order_by(Evidence.job_id, Evidence.taken_at.desc())
+        )
+    ).all()
+    storage = get_storage()
+    out: dict[uuid.UUID, list[str]] = {}
+    for job_id, key in rows:
+        got = out.setdefault(job_id, [])
+        if len(got) < each:
+            got.append(storage.presign_get(key))
+    return out
+
+
 async def covers(db: AsyncSession, jobs: list[Job]) -> dict[uuid.UUID, str]:
     """A picture for each job card: its latest photo, else the latest photo of the same site."""
     if not jobs:
