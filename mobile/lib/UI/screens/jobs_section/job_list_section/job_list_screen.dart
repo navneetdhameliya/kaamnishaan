@@ -33,7 +33,7 @@ class JobListScreen extends GetView<JobListController> {
               padding: const EdgeInsets.only(bottom: 76),
               child: CustomInkWell(
                 key: const ValueKey('new-job'),
-                onTap: controller.onComingSoonTap,
+                onTap: controller.onNewJobTap,
                 borderRadius: BorderRadius.circular(28),
                 semanticLabel: LangKeys.jobsNewJob.tr,
                 child: Ink(

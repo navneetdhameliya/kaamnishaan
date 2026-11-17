@@ -220,6 +220,17 @@
             "title": "Available",
             "type": "boolean"
           },
+          "avatar_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Avatar Url"
+          },
           "capacity": {
             "title": "Capacity",
             "type": "integer"
@@ -1315,6 +1326,17 @@
                 "type": "null"
               }
             ]
+          },
+          "site": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SiteBrief"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "First address, for a new job"
           }
         },
         "required": [
@@ -2769,6 +2791,19 @@
       "JobCreate": {
         "additionalProperties": false,
         "properties": {
+          "address": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Typed address; a new site if new",
+            "title": "Address"
+          },
           "assigned_to": {
             "anyOf": [
               {
@@ -11911,6 +11946,64 @@
           }
         ],
         "summary": "Create Job",
+        "tags": [
+          "jobs"
+        ]
+      }
+    },
+    "/api/v1/jobs/assignable-technicians": {
+      "get": {
+        "description": "M17 before the job is saved (M16 → Assign).",
+        "operationId": "assignable_new_api_v1_jobs_assignable_technicians_get",
+        "parameters": [
+          {
+            "description": "When the new job is (gives the day)",
+            "in": "query",
+            "name": "at",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "When the new job is (gives the day)",
+              "title": "At"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssignableList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Assignable New",
         "tags": [
           "jobs"
         ]

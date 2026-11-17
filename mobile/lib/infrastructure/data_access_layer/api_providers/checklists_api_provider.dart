@@ -6,6 +6,7 @@ abstract class IChecklistsApiProvider {
   Future<dynamic> getJobChecklists(String jobId);
   Future<dynamic> getSubmission(String id);
   Future<dynamic> putAnswer(String id, String questionId, Map<String, dynamic> body);
+  Future<dynamic> getTemplates();
 }
 
 class ChecklistsApiProvider implements IChecklistsApiProvider {
@@ -22,4 +23,7 @@ class ChecklistsApiProvider implements IChecklistsApiProvider {
   @override
   Future<dynamic> putAnswer(String id, String questionId, Map<String, dynamic> body) =>
       _client.put(APIConstant.answerAPIEP(id, questionId), body: body);
+
+  @override
+  Future<dynamic> getTemplates() => _client.get(APIConstant.checklistTemplatesAPIEP);
 }

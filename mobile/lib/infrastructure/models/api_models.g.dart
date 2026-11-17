@@ -177,6 +177,7 @@ String assignableTechnicianModelToJson(AssignableTechnicianModel data) => json.e
 
 class AssignableTechnicianModel {
   final bool available;
+  final String? avatarUrl;
   final int capacity;
   final String? disabledReason;
   final double? distanceKm;
@@ -189,6 +190,7 @@ class AssignableTechnicianModel {
 
   const AssignableTechnicianModel({
     required this.available,
+    this.avatarUrl,
     required this.capacity,
     this.disabledReason,
     this.distanceKm,
@@ -201,6 +203,7 @@ class AssignableTechnicianModel {
 
   factory AssignableTechnicianModel.fromJson(Map<String, dynamic> json) => AssignableTechnicianModel(
         available: json['available'] as bool,
+        avatarUrl: json['avatar_url'] as String?,
         capacity: (json['capacity'] as num).toInt(),
         disabledReason: json['disabled_reason'] as String?,
         distanceKm: json['distance_km'] == null ? null : (json['distance_km'] as num).toDouble(),
@@ -213,6 +216,7 @@ class AssignableTechnicianModel {
 
   Map<String, dynamic> toJson() => {
         'available': available,
+        'avatar_url': avatarUrl,
         'capacity': capacity,
         'disabled_reason': disabledReason,
         'distance_km': distanceKm,
@@ -990,6 +994,8 @@ class CustomerListItemModel {
   final DateTime? lastJobAt;
   final String name;
   final ContactBriefModel? primaryContact;
+  /// First address, for a new job
+  final SiteBriefModel? site;
 
   const CustomerListItemModel({
     this.city,
@@ -998,6 +1004,7 @@ class CustomerListItemModel {
     this.lastJobAt,
     required this.name,
     this.primaryContact,
+    this.site,
   });
 
   factory CustomerListItemModel.fromJson(Map<String, dynamic> json) => CustomerListItemModel(
@@ -1007,6 +1014,7 @@ class CustomerListItemModel {
         lastJobAt: json['last_job_at'] == null ? null : DateTime.parse(json['last_job_at'] as String),
         name: json['name'] as String,
         primaryContact: json['primary_contact'] == null ? null : ContactBriefModel.fromJson(json['primary_contact'] as Map<String, dynamic>),
+        site: json['site'] == null ? null : SiteBriefModel.fromJson(json['site'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toJson() => {
@@ -1016,6 +1024,7 @@ class CustomerListItemModel {
         'last_job_at': lastJobAt?.toIso8601String(),
         'name': name,
         'primary_contact': primaryContact?.toJson(),
+        'site': site?.toJson(),
       };
 }
 
@@ -2065,6 +2074,8 @@ JobCreateModel jobCreateModelFromJson(String str) => JobCreateModel.fromJson(jso
 String jobCreateModelToJson(JobCreateModel data) => json.encode(data.toJson());
 
 class JobCreateModel {
+  /// Typed address; a new site if new
+  final String? address;
   final String? assignedTo;
   final List<String>? checklistTemplateIds;
   final String? clientUuid;
@@ -2079,6 +2090,7 @@ class JobCreateModel {
   final String title;
 
   const JobCreateModel({
+    this.address,
     this.assignedTo,
     this.checklistTemplateIds,
     this.clientUuid,
@@ -2094,6 +2106,7 @@ class JobCreateModel {
   });
 
   factory JobCreateModel.fromJson(Map<String, dynamic> json) => JobCreateModel(
+        address: json['address'] as String?,
         assignedTo: json['assigned_to'] as String?,
         checklistTemplateIds: json['checklist_template_ids'] == null ? null : (json['checklist_template_ids'] as List).map((e) => e as String).toList(),
         clientUuid: json['client_uuid'] as String?,
@@ -2109,6 +2122,7 @@ class JobCreateModel {
       );
 
   Map<String, dynamic> toJson() => {
+        'address': address,
         'assigned_to': assignedTo,
         'checklist_template_ids': checklistTemplateIds,
         'client_uuid': clientUuid,
