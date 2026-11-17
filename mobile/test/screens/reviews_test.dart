@@ -211,7 +211,8 @@ void main() {
     final c = ReviewDetailsController(reviews: reviews, translation: translation, reviewId: 'v1', clock: () => now);
     await c.load();
     expect((c.subtitle, c.name, c.meta), ('Report #R-1042', 'Dr. Anita Rao', 'Green Valley Clinic · 31 Oct'));
-    expect((c.youLabel, c.quote, c.tags), ('You (Ramesh)', '“Quick and tidy.”', ['On time', 'Clean work']));
+    expect((c.youLabel, c.quote), ('You (Ramesh)', '“Quick and tidy.”'));
+    expect(c.tags, ['On time', 'Clean work']);
     expect(c.replyBy, 'Priya Mehta replied · 1 h ago');
   });
 }
