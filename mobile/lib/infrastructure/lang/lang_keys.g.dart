@@ -2934,4 +2934,186 @@ abstract final class LangKeys {
   static const siteDemoVoiceAlt = 'site.demo.voice_alt';
   /// The approved service report in English
   static const siteDemoReportAlt = 'site.demo.report_alt';
+  /// {n}-day free trial
+  static const siteTrialEyebrow = 'site.trial.eyebrow';
+  /// Start your free trial
+  static const siteTrialTitle = 'site.trial.title';
+  /// No card needed. Set up your company and first job in 15 minutes.
+  static const siteTrialBody = 'site.trial.body';
+  /// Your name
+  static const siteTrialName = 'site.trial.name';
+  /// Full name
+  static const siteTrialNameHint = 'site.trial.name_hint';
+  /// Work email
+  static const siteTrialEmail = 'site.trial.email';
+  /// Password
+  static const siteTrialPassword = 'site.trial.password';
+  /// Show
+  static const siteTrialShow = 'site.trial.show';
+  /// Hide
+  static const siteTrialHide = 'site.trial.hide';
+  /// Strong password
+  static const siteTrialStrong = 'site.trial.strong';
+  /// Weak password
+  static const siteTrialWeak = 'site.trial.weak';
+  /// At least {min} characters (you have {n})
+  static const siteTrialRuleLen = 'site.trial.rule_len';
+  /// Contains a letter and a number
+  static const siteTrialRuleMix = 'site.trial.rule_mix';
+  /// Does not include your name or email
+  static const siteTrialRuleName = 'site.trial.rule_name';
+  /// Company name
+  static const siteTrialCompany = 'site.trial.company';
+  /// Trade
+  static const siteTrialTrade = 'site.trial.trade';
+  /// Choose your trade
+  static const siteTrialTradeHint = 'site.trial.trade_hint';
+  /// Country
+  static const siteTrialCountry = 'site.trial.country';
+  /// Create my workspace
+  static const siteTrialSubmit = 'site.trial.submit';
+  /// By continuing you agree to the {terms} and {privacy}.
+  static const siteTrialTerms = 'site.trial.terms';
+  /// Terms
+  static const siteTrialTermsLink = 'site.trial.terms_link';
+  /// Privacy policy
+  static const siteTrialPrivacyLink = 'site.trial.privacy_link';
+  /// Already have a workspace?
+  static const siteTrialHave = 'site.trial.have';
+  /// 1 thing to fix before we create your workspace.
+  static const siteTrialFixOne = 'site.trial.fix_one';
+  /// {n} things to fix before we create your workspace.
+  static const siteTrialFixMany = 'site.trial.fix_many';
+  /// This email already has a KaamNishaan workspace.
+  static const siteTrialTaken = 'site.trial.taken';
+  /// Is this you?
+  static const siteTrialIsYou = 'site.trial.is_you';
+  /// Log in instead
+  static const siteTrialLoginInstead = 'site.trial.login_instead';
+  /// Enter your name
+  static const siteErrName = 'site.err.name';
+  /// Enter a full email address, like name@company.com
+  static const siteErrEmail = 'site.err.email';
+  /// Enter your company name
+  static const siteErrCompany = 'site.err.company';
+  /// Choose your trade
+  static const siteErrTrade = 'site.err.trade';
+  /// Choose a stronger password
+  static const siteErrPassword = 'site.err.password';
+  /// Something went wrong. Please try again.
+  static const siteErrGeneric = 'site.err.generic';
+  /// No connection. Check your internet and try again.
+  static const siteErrOffline = 'site.err.offline';
+  /// Too many tries. Wait a few minutes and try again.
+  static const siteErrWait = 'site.err.wait';
+  /// Everything in {plan}, free for {n} days
+  static const siteAsideTitle = 'site.aside.title';
+  /// {techs} technicians and {reports} AI reports a month
+  static const siteAsideLimits = 'site.aside.limits';
+  /// Manager approvals and branded PDF reports
+  static const siteAsideApprovals = 'site.aside.approvals';
+  /// Works offline on any Android phone or iPhone
+  static const siteAsideOffline = 'site.aside.offline';
+  /// No card needed — keep Free after the trial
+  static const siteAsideNoCard = 'site.aside.no_card';
+  /// Reports in 5 languages
+  static const siteAsideLangs = 'site.aside.langs';
+  /// Workspace ready
+  static const siteReadyEyebrow = 'site.ready.eyebrow';
+  /// Check your email
+  static const siteReadyTitleEmail = 'site.ready.title_email';
+  /// We sent a confirmation link to {email}. Open it on this computer or your phone.
+  static const siteReadyBodyEmail = 'site.ready.body_email';
+  /// You’re all set
+  static const siteReadyTitle = 'site.ready.title';
+  /// Log in on the KaamNishaan app with {email} and your password.
+  static const siteReadyBody = 'site.ready.body';
+  /// Ready
+  static const siteReadyBadge = 'site.ready.badge';
+  /// {plan} trial · ends {date}
+  static const siteReadyTrialEnds = 'site.ready.trial_ends';
+  /// Next steps
+  static const siteReadyNext = 'site.ready.next';
+  /// Confirm your email
+  static const siteReadySConfirm = 'site.ready.s_confirm';
+  /// Tap the link we just sent — it expires in 24 hours.
+  static const siteReadySConfirmB = 'site.ready.s_confirm_b';
+  /// Get the app on your phone
+  static const siteReadySApp = 'site.ready.s_app';
+  /// Technicians capture photos, checklists and voice notes on site.
+  static const siteReadySAppB = 'site.ready.s_app_b';
+  /// Invite your technicians
+  static const siteReadySInvite = 'site.ready.s_invite';
+  /// Send a WhatsApp or SMS invite from the app.
+  static const siteReadySInviteB = 'site.ready.s_invite_b';
+  /// Create your first job
+  static const siteReadySJob = 'site.ready.s_job';
+  /// We will guide you — it takes about 2 minutes.
+  static const siteReadySJobB = 'site.ready.s_job_b';
+  /// Resend email
+  static const siteReadyResend = 'site.ready.resend';
+  /// Didn’t get it? Check your spam folder or resend in {n} seconds.
+  static const siteReadyResendWait = 'site.ready.resend_wait';
+  /// Didn’t get it? Check your spam folder or resend it now.
+  static const siteReadyResendNow = 'site.ready.resend_now';
+  /// Sent again to {email}.
+  static const siteReadyResent = 'site.ready.resent';
+  /// Get the app
+  static const siteAppTitle = 'site.app.title';
+  /// GET IT ON
+  static const siteAppPlaySmall = 'site.app.play_small';
+  /// Download on the
+  static const siteAppStoreSmall = 'site.app.store_small';
+  /// The app is coming soon to Google Play and the App Store.
+  static const siteAppSoon = 'site.app.soon';
+  /// Welcome back.
+  static const siteLoginWelcome = 'site.login.welcome';
+  /// Every job, every photo, every proof.
+  static const siteLoginTagline = 'site.login.tagline';
+  /// Log in
+  static const siteLoginTitle = 'site.login.title';
+  /// Open your KaamNishaan workspace with your work email.
+  static const siteLoginBody = 'site.login.body';
+  /// Forgot password?
+  static const siteLoginForgot = 'site.login.forgot';
+  /// Log in
+  static const siteLoginSubmit = 'site.login.submit';
+  /// or
+  static const siteLoginOr = 'site.login.or';
+  /// Log in with phone (technicians)
+  static const siteLoginPhone = 'site.login.phone';
+  /// Technicians log in on the KaamNishaan app with their phone number — no password needed.
+  static const siteLoginPhoneNote = 'site.login.phone_note';
+  /// New to KaamNishaan?
+  static const siteLoginNew = 'site.login.new';
+  /// Email or password is wrong.
+  static const siteLoginWrong = 'site.login.wrong';
+  /// Email or password is wrong. {n} tries left.
+  static const siteLoginWrongLeft = 'site.login.wrong_left';
+  /// Too many wrong tries. Try again after {time}, or reset your password.
+  static const siteLoginLocked = 'site.login.locked';
+  /// This account is turned off. Ask your company owner.
+  static const siteLoginDisabled = 'site.login.disabled';
+  /// Enter a valid email, like name@company.com.
+  static const siteLoginErrEmail = 'site.login.err_email';
+  /// Enter your password.
+  static const siteLoginErrPassword = 'site.login.err_password';
+  /// You’re logged in, {name}
+  static const siteLoginOkTitle = 'site.login.ok_title';
+  /// Your workspace{company} opens in the KaamNishaan app. Log in there with the same email and password.
+  static const siteLoginOkBody = 'site.login.ok_body';
+  /// Use another account
+  static const siteLoginOkAgain = 'site.login.ok_again';
+  /// Reset your password
+  static const siteForgotTitle = 'site.forgot.title';
+  /// Enter your work email and we will send you a link to choose a new password.
+  static const siteForgotBody = 'site.forgot.body';
+  /// Send link
+  static const siteForgotSubmit = 'site.forgot.submit';
+  /// If {email} has a KaamNishaan account, a link is on its way. It works for 30 minutes.
+  static const siteForgotSent = 'site.forgot.sent';
+  /// Email isn’t switched on yet, so we can’t send the link. Contact support and we will reset it for you.
+  static const siteForgotNoEmail = 'site.forgot.no_email';
+  /// Back to log in
+  static const siteForgotBack = 'site.forgot.back';
 }
