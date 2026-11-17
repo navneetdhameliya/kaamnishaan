@@ -217,7 +217,15 @@ async def register_owner(
     return await start_session(db, user)
 
 
+def _email_off() -> bool:
+    return not get_settings().email_enabled
+
+
 async def _send_verification(db: AsyncSession, user: User) -> None:
+    if _email_off():
+        # no email service yet: nothing can be confirmed, so it counts as confirmed (D-96)
+        user.email_verified_at = user.email_verified_at or now()
+        return
     if await audit.count_recent(db, "email.verify_sent", user.id, timedelta(hours=1)) >= EMAILS_PER_HOUR:
         raise RateLimited("rate_limited", "We've sent a few emails already. Try again later.")
     token = create_link_token("email_verify", str(user.id), EMAIL_VERIFY_TTL, fingerprint=user.email or "")

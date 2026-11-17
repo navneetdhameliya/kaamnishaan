@@ -52,6 +52,13 @@ Login codes, invites and emails are not really sent yet. On this test server you
 2. Open `https://kaamnishaan-api.onrender.com/api/v1/dev/outbox?key=<that key>`
    — the newest login codes and emails are at the top.
 
+**Forgot password (no email service yet):** in the app tap "Forgot password?", then open the outbox above.
+The newest email "Reset your password" has a link to `https://kaamnishaan-web.vercel.app/reset-password?…`
+— open it, type the new password, and log in with it in the app.
+
+Email is switched off until an email service is chosen (`KN_EMAIL_ENABLED` is not set): new owners don't
+have to confirm their email, and reports and review requests go by SMS, WhatsApp or link.
+
 Keep this key private: anyone with it can read login codes on the test server. It can never be turned on
 for the real (production) server.
 

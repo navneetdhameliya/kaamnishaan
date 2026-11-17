@@ -24,6 +24,7 @@ os.environ.update(
     KN_SECRET_KEY="test-secret-key-for-automated-tests-only-0123456789",
     KN_SMS_PROVIDER="console",
     KN_WEB_URL="http://web.test",
+    KN_EMAIL_ENABLED="true",  # the tests check what each email says; test_no_email.py turns it off
 )
 
 from httpx import ASGITransport, AsyncClient  # noqa: E402
