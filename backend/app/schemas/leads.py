@@ -21,7 +21,7 @@ class DemoSlotsOut(BaseModel):
     team_sizes: list[TeamSize]
 
 
-class DemoIn(_In):
+class DemoRequestIn(_In):
     name: str = Field(min_length=1, max_length=120)
     email: EmailStr
     phone: str = Field(min_length=6, max_length=20)
@@ -32,14 +32,14 @@ class DemoIn(_In):
     lang: Locale = "en"
 
 
-class DemoOut(BaseModel):
+class DemoBookedOut(BaseModel):
     ticket: str
     starts_at: datetime
     ends_at: datetime
     timezone: str
 
 
-class ContactIn(_In):
+class ContactMessageIn(_In):
     name: str = Field(min_length=1, max_length=120)
     email: EmailStr
     topic: Topic
@@ -47,12 +47,12 @@ class ContactIn(_In):
     lang: Locale = "en"
 
 
-class ContactOut(BaseModel):
+class ContactMessageOut(BaseModel):
     ticket: str
     topic: Topic
 
 
-class Region(BaseModel):
+class SupportRegion(BaseModel):
     country: str
     languages: list[Locale]
 
@@ -66,6 +66,6 @@ class SupportOut(BaseModel):
     close: str
     days: list[int] = Field(description="ISO weekdays, Monday = 1")
     timezone: str
-    regions: list[Region]
+    regions: list[SupportRegion]
     topics: list[Topic]
     demo_minutes: int

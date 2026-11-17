@@ -1379,6 +1379,205 @@
         "title": "ContactBrief",
         "type": "object"
       },
+      "ContactIn": {
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "anyOf": [
+              {
+                "format": "email",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "is_primary": {
+            "default": false,
+            "title": "Is Primary",
+            "type": "boolean"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "ContactIn",
+        "type": "object"
+      },
+      "ContactMessageIn": {
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "format": "email",
+            "title": "Email",
+            "type": "string"
+          },
+          "lang": {
+            "default": "en",
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Lang",
+            "type": "string"
+          },
+          "message": {
+            "maxLength": 1000,
+            "minLength": 20,
+            "title": "Message",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "topic": {
+            "enum": [
+              "sales",
+              "support",
+              "billing",
+              "partnership",
+              "other"
+            ],
+            "title": "Topic",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "topic",
+          "message"
+        ],
+        "title": "ContactMessageIn",
+        "type": "object"
+      },
+      "ContactMessageOut": {
+        "properties": {
+          "ticket": {
+            "title": "Ticket",
+            "type": "string"
+          },
+          "topic": {
+            "enum": [
+              "sales",
+              "support",
+              "billing",
+              "partnership",
+              "other"
+            ],
+            "title": "Topic",
+            "type": "string"
+          }
+        },
+        "required": [
+          "ticket",
+          "topic"
+        ],
+        "title": "ContactMessageOut",
+        "type": "object"
+      },
+      "ContactOut": {
+        "properties": {
+          "email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Email"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "is_primary": {
+            "title": "Is Primary",
+            "type": "boolean"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone"
+          },
+          "review_opted_out": {
+            "title": "Review Opted Out",
+            "type": "boolean"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "title",
+          "phone",
+          "email",
+          "is_primary",
+          "review_opted_out"
+        ],
+        "title": "ContactOut",
+        "type": "object"
+      },
       "ContactPatch": {
         "additionalProperties": false,
         "properties": {
@@ -1673,7 +1872,7 @@
           "contact": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/app__schemas__work__ContactIn"
+                "$ref": "#/components/schemas/ContactIn"
               },
               {
                 "type": "null"
@@ -1810,7 +2009,7 @@
         "properties": {
           "contacts": {
             "items": {
-              "$ref": "#/components/schemas/app__schemas__work__ContactOut"
+              "$ref": "#/components/schemas/ContactOut"
             },
             "title": "Contacts",
             "type": "array"
@@ -2015,6 +2214,36 @@
         "title": "DayCount",
         "type": "object"
       },
+      "DemoBookedOut": {
+        "properties": {
+          "ends_at": {
+            "format": "date-time",
+            "title": "Ends At",
+            "type": "string"
+          },
+          "starts_at": {
+            "format": "date-time",
+            "title": "Starts At",
+            "type": "string"
+          },
+          "ticket": {
+            "title": "Ticket",
+            "type": "string"
+          },
+          "timezone": {
+            "title": "Timezone",
+            "type": "string"
+          }
+        },
+        "required": [
+          "ticket",
+          "starts_at",
+          "ends_at",
+          "timezone"
+        ],
+        "title": "DemoBookedOut",
+        "type": "object"
+      },
       "DemoDay": {
         "properties": {
           "date": {
@@ -2039,7 +2268,7 @@
         "title": "DemoDay",
         "type": "object"
       },
-      "DemoIn": {
+      "DemoRequestIn": {
         "additionalProperties": false,
         "properties": {
           "company": {
@@ -2106,37 +2335,7 @@
           "trade",
           "starts_at"
         ],
-        "title": "DemoIn",
-        "type": "object"
-      },
-      "DemoOut": {
-        "properties": {
-          "ends_at": {
-            "format": "date-time",
-            "title": "Ends At",
-            "type": "string"
-          },
-          "starts_at": {
-            "format": "date-time",
-            "title": "Starts At",
-            "type": "string"
-          },
-          "ticket": {
-            "title": "Ticket",
-            "type": "string"
-          },
-          "timezone": {
-            "title": "Timezone",
-            "type": "string"
-          }
-        },
-        "required": [
-          "ticket",
-          "starts_at",
-          "ends_at",
-          "timezone"
-        ],
-        "title": "DemoOut",
+        "title": "DemoRequestIn",
         "type": "object"
       },
       "DemoSlotsOut": {
@@ -3866,7 +4065,7 @@
           "contact": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/app__schemas__work__ContactOut"
+                "$ref": "#/components/schemas/ContactOut"
               },
               {
                 "type": "null"
@@ -7291,34 +7490,6 @@
         "title": "RefreshBody",
         "type": "object"
       },
-      "Region": {
-        "properties": {
-          "country": {
-            "title": "Country",
-            "type": "string"
-          },
-          "languages": {
-            "items": {
-              "enum": [
-                "en",
-                "hi",
-                "gu",
-                "es",
-                "fr"
-              ],
-              "type": "string"
-            },
-            "title": "Languages",
-            "type": "array"
-          }
-        },
-        "required": [
-          "country",
-          "languages"
-        ],
-        "title": "Region",
-        "type": "object"
-      },
       "Register": {
         "additionalProperties": false,
         "properties": {
@@ -9892,7 +10063,7 @@
           },
           "regions": {
             "items": {
-              "$ref": "#/components/schemas/Region"
+              "$ref": "#/components/schemas/SupportRegion"
             },
             "title": "Regions",
             "type": "array"
@@ -9942,6 +10113,34 @@
           "demo_minutes"
         ],
         "title": "SupportOut",
+        "type": "object"
+      },
+      "SupportRegion": {
+        "properties": {
+          "country": {
+            "title": "Country",
+            "type": "string"
+          },
+          "languages": {
+            "items": {
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "type": "string"
+            },
+            "title": "Languages",
+            "type": "array"
+          }
+        },
+        "required": [
+          "country",
+          "languages"
+        ],
+        "title": "SupportRegion",
         "type": "object"
       },
       "SwitchCompany": {
@@ -11566,205 +11765,6 @@
           "transcript_edited"
         ],
         "title": "VoiceNotePatch",
-        "type": "object"
-      },
-      "app__schemas__leads__ContactIn": {
-        "additionalProperties": false,
-        "properties": {
-          "email": {
-            "format": "email",
-            "title": "Email",
-            "type": "string"
-          },
-          "lang": {
-            "default": "en",
-            "enum": [
-              "en",
-              "hi",
-              "gu",
-              "es",
-              "fr"
-            ],
-            "title": "Lang",
-            "type": "string"
-          },
-          "message": {
-            "maxLength": 1000,
-            "minLength": 20,
-            "title": "Message",
-            "type": "string"
-          },
-          "name": {
-            "maxLength": 120,
-            "minLength": 1,
-            "title": "Name",
-            "type": "string"
-          },
-          "topic": {
-            "enum": [
-              "sales",
-              "support",
-              "billing",
-              "partnership",
-              "other"
-            ],
-            "title": "Topic",
-            "type": "string"
-          }
-        },
-        "required": [
-          "name",
-          "email",
-          "topic",
-          "message"
-        ],
-        "title": "ContactIn",
-        "type": "object"
-      },
-      "app__schemas__leads__ContactOut": {
-        "properties": {
-          "ticket": {
-            "title": "Ticket",
-            "type": "string"
-          },
-          "topic": {
-            "enum": [
-              "sales",
-              "support",
-              "billing",
-              "partnership",
-              "other"
-            ],
-            "title": "Topic",
-            "type": "string"
-          }
-        },
-        "required": [
-          "ticket",
-          "topic"
-        ],
-        "title": "ContactOut",
-        "type": "object"
-      },
-      "app__schemas__work__ContactIn": {
-        "additionalProperties": false,
-        "properties": {
-          "email": {
-            "anyOf": [
-              {
-                "format": "email",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Email"
-          },
-          "is_primary": {
-            "default": false,
-            "title": "Is Primary",
-            "type": "boolean"
-          },
-          "name": {
-            "maxLength": 160,
-            "minLength": 1,
-            "title": "Name",
-            "type": "string"
-          },
-          "phone": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Phone"
-          },
-          "title": {
-            "anyOf": [
-              {
-                "maxLength": 80,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Title"
-          }
-        },
-        "required": [
-          "name"
-        ],
-        "title": "ContactIn",
-        "type": "object"
-      },
-      "app__schemas__work__ContactOut": {
-        "properties": {
-          "email": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Email"
-          },
-          "id": {
-            "format": "uuid",
-            "title": "Id",
-            "type": "string"
-          },
-          "is_primary": {
-            "title": "Is Primary",
-            "type": "boolean"
-          },
-          "name": {
-            "title": "Name",
-            "type": "string"
-          },
-          "phone": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Phone"
-          },
-          "review_opted_out": {
-            "title": "Review Opted Out",
-            "type": "boolean"
-          },
-          "title": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Title"
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "title",
-          "phone",
-          "email",
-          "is_primary",
-          "review_opted_out"
-        ],
-        "title": "ContactOut",
         "type": "object"
       }
     },
@@ -13519,7 +13519,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/app__schemas__work__ContactIn"
+                "$ref": "#/components/schemas/ContactIn"
               }
             }
           },
@@ -13530,7 +13530,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/app__schemas__work__ContactOut"
+                  "$ref": "#/components/schemas/ContactOut"
                 }
               }
             },
@@ -13647,7 +13647,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/app__schemas__work__ContactOut"
+                  "$ref": "#/components/schemas/ContactOut"
                 }
               }
             },
@@ -16546,7 +16546,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/app__schemas__leads__ContactIn"
+                "$ref": "#/components/schemas/ContactMessageIn"
               }
             }
           },
@@ -16557,7 +16557,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/app__schemas__leads__ContactOut"
+                  "$ref": "#/components/schemas/ContactMessageOut"
                 }
               }
             },
@@ -16587,7 +16587,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/DemoIn"
+                "$ref": "#/components/schemas/DemoRequestIn"
               }
             }
           },
@@ -16598,7 +16598,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DemoOut"
+                  "$ref": "#/components/schemas/DemoBookedOut"
                 }
               }
             },

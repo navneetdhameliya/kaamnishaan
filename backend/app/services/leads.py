@@ -11,14 +11,14 @@ from app.core.errors import AppError, Conflict, RateLimited
 from app.core.security import now
 from app.models import Industry, Lead
 from app.schemas.leads import (
-    ContactIn,
-    ContactOut,
+    ContactMessageIn,
+    ContactMessageOut,
+    DemoBookedOut,
     DemoDay,
-    DemoIn,
-    DemoOut,
+    DemoRequestIn,
     DemoSlotsOut,
-    Region,
     SupportOut,
+    SupportRegion,
 )
 
 TEAM_SIZES = ["1-5", "6-15", "16-50", "51+"]
@@ -43,7 +43,7 @@ def support() -> SupportOut:
         close=s.support_close,
         days=s.support_days,
         timezone=s.demo_timezone,
-        regions=[Region(country=c, languages=ls) for c, ls in REGIONS],  # type: ignore[arg-type]
+        regions=[SupportRegion(country=c, languages=ls) for c, ls in REGIONS],  # type: ignore[arg-type]
         topics=TOPICS,  # type: ignore[arg-type]
         demo_minutes=s.demo_minutes,
     )
@@ -102,7 +102,7 @@ async def _limit(db: AsyncSession, ip: str | None) -> None:
         raise RateLimited("rate_limited", "Too many requests. Try again later.")
 
 
-async def book_demo(db: AsyncSession, body: DemoIn, ip: str | None) -> DemoOut:
+async def book_demo(db: AsyncSession, body: DemoRequestIn, ip: str | None) -> DemoBookedOut:
     s = get_settings()
     await _limit(db, ip)
     if not await db.get(Industry, body.trade):
@@ -133,7 +133,7 @@ async def book_demo(db: AsyncSession, body: DemoIn, ip: str | None) -> DemoOut:
     db.add(lead)
     await db.flush()
     tz = ZoneInfo(s.demo_timezone)
-    return DemoOut(
+    return DemoBookedOut(
         ticket=ticket(lead),
         starts_at=at.astimezone(tz),
         ends_at=(at + timedelta(minutes=s.demo_minutes)).astimezone(tz),
@@ -141,7 +141,7 @@ async def book_demo(db: AsyncSession, body: DemoIn, ip: str | None) -> DemoOut:
     )
 
 
-async def contact(db: AsyncSession, body: ContactIn, ip: str | None) -> ContactOut:
+async def contact(db: AsyncSession, body: ContactMessageIn, ip: str | None) -> ContactMessageOut:
     await _limit(db, ip)
     lead = Lead(
         kind="contact",
@@ -154,4 +154,4 @@ async def contact(db: AsyncSession, body: ContactIn, ip: str | None) -> ContactO
     )
     db.add(lead)
     await db.flush()
-    return ContactOut(ticket=ticket(lead), topic=body.topic)
+    return ContactMessageOut(ticket=ticket(lead), topic=body.topic)
