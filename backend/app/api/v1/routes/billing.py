@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import Principal, get_db
-from app.schemas.billing import BillingOut, CreditsOut
+from app.schemas.billing import BillingOut, CreditsOut, PlanStatus
 from app.services import credits
 
 from .jobs import member
@@ -22,3 +22,9 @@ async def billing(p: Principal = Depends(member), db: AsyncSession = Depends(get
 async def follow_up_credits(p: Principal = Depends(member), db: AsyncSession = Depends(get_db)) -> CreditsOut:
     """Credits left this month, what used them, and the top-up packs."""
     return await credits.credits(db, p)
+
+
+@router.get("/plan", response_model=PlanStatus)
+async def plan(p: Principal = Depends(member), db: AsyncSession = Depends(get_db)) -> PlanStatus:
+    """M41 Plan limit reached: this month's reports and technicians against the plan, and the next plan."""
+    return await credits.plan_status(db, p)

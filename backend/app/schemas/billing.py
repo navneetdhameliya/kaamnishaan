@@ -43,3 +43,14 @@ class CreditsOut(BaseModel):
     packs: list[CreditPackOut]
     rules: CreditRules
     payments_ready: bool
+
+
+class PlanStatus(BaseModel):
+    """M41 "Plan limit reached": what the plan allows, what is used, and the next plan (any member)."""
+
+    plan: PlanOut
+    upgrade: PlanOut | None
+    renews_at: datetime
+    reports: UsageTile
+    technicians: UsageTile
+    can_upgrade: bool = Field(description="The owner may change the plan")

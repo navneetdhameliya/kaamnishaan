@@ -82,3 +82,24 @@ async def test_reminders_use_credits_and_pause_without_them(client, ready):
 async def test_technicians_cannot_see_credits(client, ready):
     tech = await invite_and_join(client, ready["owner"], "+919898989898")
     assert (await client.get("/api/v1/credits", headers=auth(tech))).status_code == 403
+
+
+async def test_no_new_report_past_the_plans_monthly_number(client, ready):
+    tech, owner = ready["tech"], ready["owner"]
+    async with engine.begin() as c:
+        await c.execute(text("update plans set report_limit_monthly = 0 where code = 'professional'"))
+    try:
+        r = await client.post(f"/api/v1/jobs/{ready['job']['id']}/reports", headers=auth(tech))
+        assert r.status_code == 402, r.text
+        err = r.json()["error"]
+        assert err["code"] == "report_limit_reached" and err["details"]["limit"] == 0
+        s = (await client.get("/api/v1/plan", headers=auth(tech))).json()
+        assert s["reports"] == {"key": "reports", "used": 0, "limit": 0} and s["can_upgrade"] is False
+        assert s["plan"]["code"] == "professional" and s["upgrade"]["code"] == "business"
+        assert (await client.get("/api/v1/plan", headers=auth(owner))).json()["can_upgrade"] is True
+        # the job's photos are still there
+        proof = (await client.get(f"/api/v1/jobs/{ready['job']['id']}/proof", headers=auth(tech))).json()
+        assert proof
+    finally:
+        async with engine.begin() as c:
+            await c.execute(text("update plans set report_limit_monthly = 300 where code = 'professional'"))

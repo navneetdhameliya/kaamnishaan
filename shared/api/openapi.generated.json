@@ -5819,6 +5819,50 @@
         "title": "PlanOut",
         "type": "object"
       },
+      "PlanStatus": {
+        "description": "M41 \"Plan limit reached\": what the plan allows, what is used, and the next plan (any member).",
+        "properties": {
+          "can_upgrade": {
+            "description": "The owner may change the plan",
+            "title": "Can Upgrade",
+            "type": "boolean"
+          },
+          "plan": {
+            "$ref": "#/components/schemas/PlanOut"
+          },
+          "renews_at": {
+            "format": "date-time",
+            "title": "Renews At",
+            "type": "string"
+          },
+          "reports": {
+            "$ref": "#/components/schemas/UsageTile"
+          },
+          "technicians": {
+            "$ref": "#/components/schemas/UsageTile"
+          },
+          "upgrade": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/PlanOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "plan",
+          "upgrade",
+          "renews_at",
+          "reports",
+          "technicians",
+          "can_upgrade"
+        ],
+        "title": "PlanStatus",
+        "type": "object"
+      },
       "PlansOut": {
         "properties": {
           "credit_packs": {
@@ -15953,6 +15997,33 @@
         "summary": "Delete Pair",
         "tags": [
           "evidence"
+        ]
+      }
+    },
+    "/api/v1/plan": {
+      "get": {
+        "description": "M41 Plan limit reached: this month's reports and technicians against the plan, and the next plan.",
+        "operationId": "plan_api_v1_plan_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PlanStatus"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Plan",
+        "tags": [
+          "billing"
         ]
       }
     },
