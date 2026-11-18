@@ -525,7 +525,7 @@ function Benefits({ t }: { t: T }) {
   );
 }
 
-function HomePricing({ t, lang, plans, retry }: { t: T; lang: Lang; plans: Load<PlansOut>; retry: () => void }) {
+export function HomePricing({ t, lang, plans, retry, title }: { t: T; lang: Lang; plans: Load<PlansOut>; retry: () => void; title?: string }) {
   const ready = plans.kind === 'ready' ? plans.data : null;
   const pro = ready?.plans.find((p) => p.most_popular);
   const free = ready?.plans.find((p) => p.price?.amount === 0);
@@ -533,7 +533,8 @@ function HomePricing({ t, lang, plans, retry }: { t: T; lang: Lang; plans: Load<
     <Section id="pricing" tone="surface" className="border-t-0">
       <Container>
         <Heading
-          title={t('site.price.title')}
+          eyebrow={title ? t('site.nav.pricing') : undefined}
+          title={title ?? t('site.price.title')}
           body={ready ? t('site.price.body', { currency: ready.currency, plan: pro?.name ?? '', n: ready.trial_days }) : undefined}
         />
         <div className="mt-40 md:mt-48">

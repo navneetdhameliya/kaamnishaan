@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { api } from '../lib/api';
 import { isLang, rememberLang, startLang, translator, type Lang, type T } from '../lib/i18n';
-import type { ConfigOut, Money, PlansOut } from '../lib/types';
+import type { ConfigOut, Money, PlansOut, PublicChecklistTemplates } from '../lib/types';
 
 /** The website's routes. Pages from later steps show "coming soon" until they are built. */
 export const ROUTES = {
@@ -47,7 +47,7 @@ export function startCurrency(): 'INR' | 'USD' {
   return india ? 'INR' : 'USD';
 }
 
-type Load<D> = { kind: 'loading' } | { kind: 'ready'; data: D } | { kind: 'error' };
+export type Load<D> = { kind: 'loading' } | { kind: 'ready'; data: D } | { kind: 'error' };
 
 function useApi<D>(path: string): [Load<D>, () => void] {
   const [state, setState] = useState<Load<D>>({ kind: 'loading' });
@@ -69,6 +69,11 @@ function useApi<D>(path: string): [Load<D>, () => void] {
 export function usePlans(lang: Lang): [Load<PlansOut>, () => void] {
   const [currency] = useState(startCurrency);
   return useApi<PlansOut>(`/plans?currency=${currency}&locale=${lang}`);
+}
+
+/** GET /public/checklist-templates: KaamNishaan's ready checklists for one trade, with their questions. */
+export function useReadyChecklists(trade: string, lang: Lang) {
+  return useApi<PublicChecklistTemplates>(`/public/checklist-templates?trade=${encodeURIComponent(trade)}&locale=${lang}`);
 }
 
 /** GET /config: the trades (names in the chosen language and how many ready checklists each has). */

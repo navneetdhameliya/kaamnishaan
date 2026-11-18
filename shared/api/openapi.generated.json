@@ -6485,6 +6485,137 @@
         "title": "PublicChecklist",
         "type": "object"
       },
+      "PublicChecklistQuestion": {
+        "properties": {
+          "photo_rule": {
+            "description": "none / always / if_no / if_fail",
+            "title": "Photo Rule",
+            "type": "string"
+          },
+          "required": {
+            "title": "Required",
+            "type": "boolean"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unit"
+          }
+        },
+        "required": [
+          "text",
+          "type",
+          "photo_rule",
+          "required"
+        ],
+        "title": "PublicChecklistQuestion",
+        "type": "object"
+      },
+      "PublicChecklistTemplate": {
+        "properties": {
+          "key": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Key"
+          },
+          "languages": {
+            "description": "languages every question is written in",
+            "items": {
+              "type": "string"
+            },
+            "title": "Languages",
+            "type": "array"
+          },
+          "minutes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minutes"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "photo_questions": {
+            "description": "questions that take or may ask for a photo",
+            "title": "Photo Questions",
+            "type": "integer"
+          },
+          "question_count": {
+            "title": "Question Count",
+            "type": "integer"
+          },
+          "questions": {
+            "items": {
+              "$ref": "#/components/schemas/PublicChecklistQuestion"
+            },
+            "title": "Questions",
+            "type": "array"
+          }
+        },
+        "required": [
+          "key",
+          "name",
+          "minutes",
+          "question_count",
+          "photo_questions",
+          "languages",
+          "questions"
+        ],
+        "title": "PublicChecklistTemplate",
+        "type": "object"
+      },
+      "PublicChecklistTemplates": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PublicChecklistTemplate"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "language": {
+            "title": "Language",
+            "type": "string"
+          },
+          "trade": {
+            "title": "Trade",
+            "type": "string"
+          }
+        },
+        "required": [
+          "trade",
+          "language",
+          "items"
+        ],
+        "title": "PublicChecklistTemplates",
+        "type": "object"
+      },
       "PublicCompany": {
         "properties": {
           "logo_url": {
@@ -16536,6 +16667,66 @@
         "summary": "Plans",
         "tags": [
           "config"
+        ]
+      }
+    },
+    "/api/v1/public/checklist-templates": {
+      "get": {
+        "description": "KaamNishaan's ready checklists for a trade, with every question, in the asked language.",
+        "operationId": "ready_checklists_api_v1_public_checklist_templates_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "trade",
+            "required": true,
+            "schema": {
+              "title": "Trade",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicChecklistTemplates"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Ready Checklists",
+        "tags": [
+          "website"
         ]
       }
     },

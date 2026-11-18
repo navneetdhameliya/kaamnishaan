@@ -1,13 +1,28 @@
-"""Website forms that need no login: Book a demo (W03) and Contact (W05)."""
+"""No-login website endpoints: Book a demo (W03), Contact (W05) and ready checklists per trade (W18–W23)."""
 
-from fastapi import APIRouter, Depends, Request, status
+from typing import Literal
+
+from fastapi import APIRouter, Depends, Request, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import client_ip, get_db
+from app.schemas.checklists import PublicChecklistTemplates
 from app.schemas.leads import ContactMessageIn, ContactMessageOut, DemoBookedOut, DemoRequestIn, DemoSlotsOut
-from app.services import leads
+from app.services import checklists, leads
 
 router = APIRouter(prefix="/public", tags=["website"])
+
+
+@router.get("/checklist-templates", response_model=PublicChecklistTemplates)
+async def ready_checklists(
+    response: Response,
+    trade: str,
+    locale: Literal["en", "hi", "gu", "es", "fr"] = "en",
+    db: AsyncSession = Depends(get_db),
+) -> PublicChecklistTemplates:
+    """KaamNishaan's ready checklists for a trade, with every question, in the asked language."""
+    response.headers["Cache-Control"] = "public, max-age=300"
+    return await checklists.ready_templates(db, trade, locale)
 
 
 @router.get("/demo-slots", response_model=DemoSlotsOut)

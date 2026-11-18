@@ -4492,4 +4492,534 @@ abstract final class LangKeys {
   static const siteFpReviewsAns4 = 'site.fp.reviews.ans4';
   /// Turn every finished job into a review
   static const siteFpReviewsCta = 'site.fp.reviews.cta';
+  /// Industries
+  static const siteIndpCrumb = 'site.indp.crumb';
+  /// Industry · {trade}
+  static const siteIndpPill = 'site.indp.pill';
+  /// A {trade} technician answering a checklist in the KaamNishaan app
+  static const siteIndpAlt = 'site.indp.alt';
+  /// Problems we solve
+  static const siteIndpPains = 'site.indp.pains';
+  /// Ready-made checklists
+  static const siteIndpReadyEyebrow = 'site.indp.ready_eyebrow';
+  /// Ready {trade} checklists, day one
+  static const siteIndpReadyTitle = 'site.indp.ready_title';
+  /// Written by KaamNishaan for this work. Copy one and change any question, or build your own.
+  static const siteIndpReadyBody = 'site.indp.ready_body';
+  /// Ready checklist
+  static const siteIndpReadyTag = 'site.indp.ready_tag';
+  /// 1 ready checklist
+  static const siteIndpReadyOne = 'site.indp.ready_one';
+  /// {n} ready checklists
+  static const siteIndpReadyN = 'site.indp.ready_n';
+  /// {n} questions · {l} languages
+  static const siteIndpTplMeta = 'site.indp.tpl_meta';
+  /// photo prompts
+  static const siteIndpTplPhotos = 'site.indp.tpl_photos';
+  /// + {n} more
+  static const siteIndpMore = 'site.indp.more';
+  /// Preview checklist
+  static const siteIndpPreview = 'site.indp.preview';
+  /// Close
+  static const siteIndpClose = 'site.indp.close';
+  /// In the app, copy it and change any question.
+  static const siteIndpTplCopy = 'site.indp.tpl_copy';
+  /// Try again
+  static const siteIndpRetry = 'site.indp.retry';
+  /// Ready {trade} checklists are on the way
+  static const siteIndpNoneTitle = 'site.indp.none_title';
+  /// Until then, build your own in a few minutes — with the questions your team already asks. A question can ask for:
+  static const siteIndpNoneBody = 'site.indp.none_body';
+  /// Yes / No
+  static const siteIndpTypeYesNo = 'site.indp.type_yes_no';
+  /// Pass / Fail
+  static const siteIndpTypePassFail = 'site.indp.type_pass_fail';
+  /// A number and unit
+  static const siteIndpTypeNumber = 'site.indp.type_number';
+  /// A few words
+  static const siteIndpTypeText = 'site.indp.type_text';
+  /// A photo
+  static const siteIndpTypePhoto = 'site.indp.type_photo';
+  /// A choice
+  static const siteIndpTypeChoice = 'site.indp.type_choice';
+  /// A signature
+  static const siteIndpTypeSignature = 'site.indp.type_signature';
+  /// May ask for a photo
+  static const siteIndpPhotoRule = 'site.indp.photo_rule';
+  /// How checklists work
+  static const siteIndpHowChecklists = 'site.indp.how_checklists';
+  /// Sample report
+  static const siteIndpSample = 'site.indp.sample';
+  /// See what your customer receives
+  static const siteIndpSampleTitle = 'site.indp.sample_title';
+  /// Sample
+  static const siteIndpSampleLabel = 'site.indp.sample_label';
+  /// Approved
+  static const siteIndpApproved = 'site.indp.approved';
+  /// Before
+  static const siteIndpBefore = 'site.indp.before';
+  /// After
+  static const siteIndpAfter = 'site.indp.after';
+  /// Work done
+  static const siteIndpWorkDone = 'site.indp.work_done';
+  /// Written in {lang}
+  static const siteIndpWrittenIn = 'site.indp.written_in';
+  /// Linked to evidence
+  static const siteIndpLinked = 'site.indp.linked';
+  /// Written in the customer’s language
+  static const siteIndpRB3 = 'site.indp.r_b3';
+  /// Approved by your manager before it’s sent
+  static const siteIndpRB4 = 'site.indp.r_b4';
+  /// A job, start to finish
+  static const siteIndpFlowEyebrow = 'site.indp.flow_eyebrow';
+  /// Photos → checklist → voice → report. Your team does the work; the app builds the proof.
+  static const siteIndpFlowBody = 'site.indp.flow_body';
+  /// Take before photos
+  static const siteIndpF1 = 'site.indp.f1';
+  /// Questions with photo prompts, answered with one tap.
+  static const siteIndpF2B = 'site.indp.f2_b';
+  /// Speak a voice note
+  static const siteIndpF3 = 'site.indp.f3';
+  /// In Gujarati, Hindi, Spanish, French or English. It is written down for the report.
+  static const siteIndpF3B = 'site.indp.f3_b';
+  /// Approve and send
+  static const siteIndpF4 = 'site.indp.f4';
+  /// The manager reviews the AI draft and sends it to the customer.
+  static const siteIndpF4B = 'site.indp.f4_b';
+  /// Can I edit the ready checklists or add my own?
+  static const siteIndpQ2 = 'site.indp.q2';
+  /// Yes. Copy a ready checklist and change, reorder or remove any question — or build your own from scratch. Jobs already running keep the questions they started with.
+  static const siteIndpAns2 = 'site.indp.ans2';
+  /// Does it work where there is no signal?
+  static const siteIndpQ3 = 'site.indp.q3';
+  /// Yes. Photos, answers and voice notes are saved on the phone and sent once the signal is back — each one only once.
+  static const siteIndpAns3 = 'site.indp.ans3';
+  /// Can customers see reports without an app?
+  static const siteIndpQ4 = 'site.indp.q4';
+  /// Yes. They get a secure link that opens in any phone browser, with a PDF they can download.
+  static const siteIndpAns4 = 'site.indp.ans4';
+  /// Proof of work for HVAC teams
+  static const siteIndpHvacTitle = 'site.indp.hvac.title';
+  /// Service reports your customers trust — made on site from timestamped photos, ready AC checklists and a voice note, in minutes.
+  static const siteIndpHvacBody = 'site.indp.hvac.body';
+  /// Before & after photos
+  static const siteIndpHvacTick = 'site.indp.hvac.tick';
+  /// Split AC service done
+  static const siteIndpHvacChip1 = 'site.indp.hvac.chip1';
+  /// 9 of 9 questions · 4:12 PM
+  static const siteIndpHvacChip1Sub = 'site.indp.hvac.chip1_sub';
+  /// Filter: before & after
+  static const siteIndpHvacChip2 = 'site.indp.hvac.chip2';
+  /// 2 photos · timestamped on site
+  static const siteIndpHvacChip2Sub = 'site.indp.hvac.chip2_sub';
+  /// What slows HVAC teams down
+  static const siteIndpHvacPainTitle = 'site.indp.hvac.pain_title';
+  /// Three problems HVAC owners tell us about — and how KaamNishaan fixes each one.
+  static const siteIndpHvacPainBody = 'site.indp.hvac.pain_body';
+  /// Disputed repairs
+  static const siteIndpHvacP1 = 'site.indp.hvac.p1';
+  /// “Was the filter really cleaned?” Customers question work they didn’t see.
+  static const siteIndpHvacP1B = 'site.indp.hvac.p1_b';
+  /// Timestamped before and after photos on every visit settle it in seconds.
+  static const siteIndpHvacP1Fix = 'site.indp.hvac.p1_fix';
+  /// Slow reports
+  static const siteIndpHvacP2 = 'site.indp.hvac.p2';
+  /// Technicians write reports at night from memory, days after the job.
+  static const siteIndpHvacP2B = 'site.indp.hvac.p2_b';
+  /// AI drafts the report on site, so it can go out the same day.
+  static const siteIndpHvacP2Fix = 'site.indp.hvac.p2_fix';
+  /// Mixed-language crews
+  static const siteIndpHvacP3 = 'site.indp.hvac.p3';
+  /// Your technicians speak Hindi, Gujarati or Spanish. Customers want English.
+  static const siteIndpHvacP3B = 'site.indp.hvac.p3_b';
+  /// Each technician speaks their own language; the report goes out in the customer’s.
+  static const siteIndpHvacP3Fix = 'site.indp.hvac.p3_fix';
+  /// A clean, branded service report with the proof built in — sent as a PDF or a secure link the customer can acknowledge.
+  static const siteIndpHvacRBody = 'site.indp.hvac.r_body';
+  /// Before and after filter photos, timestamped on site
+  static const siteIndpHvacRB1 = 'site.indp.hvac.r_b1';
+  /// Checklist results with temperature and current readings
+  static const siteIndpHvacRB2 = 'site.indp.hvac.r_b2';
+  /// BrightAir Services
+  static const siteIndpHvacRCompany = 'site.indp.hvac.r_company';
+  /// AC service report: Green Valley Clinic
+  static const siteIndpHvacRTitle = 'site.indp.hvac.r_title';
+  /// Report #R-1042 · 31 Oct · Technician Ramesh Patel
+  static const siteIndpHvacRMeta = 'site.indp.hvac.r_meta';
+  /// Cleaned the indoor filter, refilled gas and tested cooling for 15 minutes. The room now cools to 22°C.
+  static const siteIndpHvacRWork = 'site.indp.hvac.r_work';
+  /// 9 checks passed
+  static const siteIndpHvacRChecks = 'site.indp.hvac.r_checks';
+  /// One AC service visit in KaamNishaan
+  static const siteIndpHvacFlowTitle = 'site.indp.hvac.flow_title';
+  /// Dirty filter, gauges and unit plate — timestamped and filed to the job.
+  static const siteIndpHvacF1B = 'site.indp.hvac.f1_b';
+  /// Run the split AC service
+  static const siteIndpHvacF2 = 'site.indp.hvac.f2';
+  /// Features HVAC teams use most
+  static const siteIndpHvacFeatEyebrow = 'site.indp.hvac.feat_eyebrow';
+  /// Everything for the service visit
+  static const siteIndpHvacFeatTitle = 'site.indp.hvac.feat_title';
+  /// Plans for HVAC teams of every size
+  static const siteIndpHvacPriceTitle = 'site.indp.hvac.price_title';
+  /// Do the checklists record temperature and current readings?
+  static const siteIndpHvacQ1 = 'site.indp.hvac.q1';
+  /// Yes. A question can ask for a number with its unit, a photo or a yes/no answer, so readings appear in the report next to the photos that prove them.
+  static const siteIndpHvacAns1 = 'site.indp.hvac.ans1';
+  /// Give every HVAC job its proof
+  static const siteIndpHvacCta = 'site.indp.hvac.cta';
+  /// Proof of work for roofing teams
+  static const siteIndpRoofingTitle = 'site.indp.roofing.title';
+  /// Inspection and repair reports your customers trust — made on the roof from timestamped photos, checklists and a voice note.
+  static const siteIndpRoofingBody = 'site.indp.roofing.body';
+  /// Damage & repair photos
+  static const siteIndpRoofingTick = 'site.indp.roofing.tick';
+  /// Roof inspection done
+  static const siteIndpRoofingChip1 = 'site.indp.roofing.chip1';
+  /// 15 of 15 questions · 3:40 PM
+  static const siteIndpRoofingChip1Sub = 'site.indp.roofing.chip1_sub';
+  /// Ridge: before & after
+  static const siteIndpRoofingChip2 = 'site.indp.roofing.chip2';
+  /// 4 photos · timestamped on site
+  static const siteIndpRoofingChip2Sub = 'site.indp.roofing.chip2_sub';
+  /// What slows roofing teams down
+  static const siteIndpRoofingPainTitle = 'site.indp.roofing.pain_title';
+  /// Three problems roofing owners tell us about — and how KaamNishaan fixes each one.
+  static const siteIndpRoofingPainBody = 'site.indp.roofing.pain_body';
+  /// Disputed damage
+  static const siteIndpRoofingP1 = 'site.indp.roofing.p1';
+  /// “Was the roof already damaged?” Customers and insurers question what they can’t see.
+  static const siteIndpRoofingP1B = 'site.indp.roofing.p1_b';
+  /// Timestamped photos of every slope and repair, before and after.
+  static const siteIndpRoofingP1Fix = 'site.indp.roofing.p1_fix';
+  /// Slow inspection reports
+  static const siteIndpRoofingP2 = 'site.indp.roofing.p2';
+  /// Inspectors write up findings at the office, days after the climb.
+  static const siteIndpRoofingP2B = 'site.indp.roofing.p2_b';
+  /// AI drafts the report from the roof’s proof, so it can go out the same day.
+  static const siteIndpRoofingP2Fix = 'site.indp.roofing.p2_fix';
+  /// Proof for warranties
+  static const siteIndpRoofingP3 = 'site.indp.roofing.p3';
+  /// Warranty claims stall when there’s no record of how the job was done.
+  static const siteIndpRoofingP3B = 'site.indp.roofing.p3_b';
+  /// Every job keeps its photos, checklist answers and notes, ready when you need them.
+  static const siteIndpRoofingP3Fix = 'site.indp.roofing.p3_fix';
+  /// A clean, branded inspection and repair report with the proof built in — sent as a PDF or a secure link.
+  static const siteIndpRoofingRBody = 'site.indp.roofing.r_body';
+  /// Before and after photos of every repaired area
+  static const siteIndpRoofingRB1 = 'site.indp.roofing.r_b1';
+  /// Checklist results for every part of the roof
+  static const siteIndpRoofingRB2 = 'site.indp.roofing.r_b2';
+  /// Summit Roofing Co.
+  static const siteIndpRoofingRCompany = 'site.indp.roofing.r_company';
+  /// Roof repair report: Hill Road residence
+  static const siteIndpRoofingRTitle = 'site.indp.roofing.r_title';
+  /// Report #R-2087 · 31 Oct · Technician Ramesh Patel
+  static const siteIndpRoofingRMeta = 'site.indp.roofing.r_meta';
+  /// Replaced three cracked shingles near the chimney and resealed the flashing. A 20-minute water test showed no leaks.
+  static const siteIndpRoofingRWork = 'site.indp.roofing.r_work';
+  /// 14 checks passed
+  static const siteIndpRoofingRChecks = 'site.indp.roofing.r_checks';
+  /// One roof repair in KaamNishaan
+  static const siteIndpRoofingFlowTitle = 'site.indp.roofing.flow_title';
+  /// Every slope, the damage and the flashing — timestamped and filed to the job.
+  static const siteIndpRoofingF1B = 'site.indp.roofing.f1_b';
+  /// Run the roof inspection
+  static const siteIndpRoofingF2 = 'site.indp.roofing.f2';
+  /// Features roofing teams use most
+  static const siteIndpRoofingFeatEyebrow = 'site.indp.roofing.feat_eyebrow';
+  /// Everything for the job on the roof
+  static const siteIndpRoofingFeatTitle = 'site.indp.roofing.feat_title';
+  /// Plans for roofing teams of every size
+  static const siteIndpRoofingPriceTitle = 'site.indp.roofing.price_title';
+  /// Can photos show which part of the roof they belong to?
+  static const siteIndpRoofingQ1 = 'site.indp.roofing.q1';
+  /// Yes. Photos taken for a checklist question stay with that question — “Photo of the north slope?” keeps its own photos — and every photo keeps the time and place it was taken.
+  static const siteIndpRoofingAns1 = 'site.indp.roofing.ans1';
+  /// Give every roofing job its proof
+  static const siteIndpRoofingCta = 'site.indp.roofing.cta';
+  /// Proof of work for solar teams
+  static const siteIndpSolarTitle = 'site.indp.solar.title';
+  /// Install handovers and cleaning reports your customers trust — made on site from timestamped photos, checklists and a voice note.
+  static const siteIndpSolarBody = 'site.indp.solar.body';
+  /// Panel & inverter photos
+  static const siteIndpSolarTick = 'site.indp.solar.tick';
+  /// Install handover done
+  static const siteIndpSolarChip1 = 'site.indp.solar.chip1';
+  /// 20 of 20 questions · 5:05 PM
+  static const siteIndpSolarChip1Sub = 'site.indp.solar.chip1_sub';
+  /// Panels: before & after
+  static const siteIndpSolarChip2 = 'site.indp.solar.chip2';
+  /// 6 photos · timestamped on site
+  static const siteIndpSolarChip2Sub = 'site.indp.solar.chip2_sub';
+  /// What slows solar teams down
+  static const siteIndpSolarPainTitle = 'site.indp.solar.pain_title';
+  /// Three problems solar owners tell us about — and how KaamNishaan fixes each one.
+  static const siteIndpSolarPainBody = 'site.indp.solar.pain_body';
+  /// Handover disputes
+  static const siteIndpSolarP1 = 'site.indp.solar.p1';
+  /// “Is it really producing what you promised?” Customers question the install.
+  static const siteIndpSolarP1B = 'site.indp.solar.p1_b';
+  /// Inverter readings and panel photos are recorded at handover, with the time.
+  static const siteIndpSolarP1Fix = 'site.indp.solar.p1_fix';
+  /// Paper handover packs
+  static const siteIndpSolarP2 = 'site.indp.solar.p2';
+  /// Serial numbers, readings and photos end up in different places.
+  static const siteIndpSolarP2B = 'site.indp.solar.p2_b';
+  /// One job holds every reading, serial number and photo — sent as one report.
+  static const siteIndpSolarP2Fix = 'site.indp.solar.p2_fix';
+  /// Cleaning proof
+  static const siteIndpSolarP3 = 'site.indp.solar.p3';
+  /// Panel cleaning is hard to prove once the crew has left the roof.
+  static const siteIndpSolarP3B = 'site.indp.solar.p3_b';
+  /// Before and after photos of every row show the difference.
+  static const siteIndpSolarP3Fix = 'site.indp.solar.p3_fix';
+  /// A clean, branded cleaning and handover report with the proof built in — sent as a PDF or a secure link.
+  static const siteIndpSolarRBody = 'site.indp.solar.r_body';
+  /// Panel photos before and after, timestamped on site
+  static const siteIndpSolarRB1 = 'site.indp.solar.r_b1';
+  /// Checklist results with inverter readings and serial numbers
+  static const siteIndpSolarRB2 = 'site.indp.solar.r_b2';
+  /// SunPeak Energy
+  static const siteIndpSolarRCompany = 'site.indp.solar.r_company';
+  /// Panel cleaning report: Patel residence
+  static const siteIndpSolarRTitle = 'site.indp.solar.r_title';
+  /// Report #R-3124 · 31 Oct · Technician Ramesh Patel
+  static const siteIndpSolarRMeta = 'site.indp.solar.r_meta';
+  /// Cleaned 24 panels with water and a soft brush. Output at noon went from 3.6 kW to 4.2 kW.
+  static const siteIndpSolarRWork = 'site.indp.solar.r_work';
+  /// 8 checks passed
+  static const siteIndpSolarRChecks = 'site.indp.solar.r_checks';
+  /// One solar install in KaamNishaan
+  static const siteIndpSolarFlowTitle = 'site.indp.solar.flow_title';
+  /// Roof, panels and the inverter — timestamped and filed to the job.
+  static const siteIndpSolarF1B = 'site.indp.solar.f1_b';
+  /// Run the install handover
+  static const siteIndpSolarF2 = 'site.indp.solar.f2';
+  /// Features solar teams use most
+  static const siteIndpSolarFeatEyebrow = 'site.indp.solar.feat_eyebrow';
+  /// Everything from survey to handover
+  static const siteIndpSolarFeatTitle = 'site.indp.solar.feat_title';
+  /// Plans for solar teams of every size
+  static const siteIndpSolarPriceTitle = 'site.indp.solar.price_title';
+  /// Can checklists record inverter readings and serial numbers?
+  static const siteIndpSolarQ1 = 'site.indp.solar.q1';
+  /// Yes. A question can ask for a number with its unit, a few words such as a serial number, or a photo — so readings sit next to the photos that prove them.
+  static const siteIndpSolarAns1 = 'site.indp.solar.ans1';
+  /// Give every solar job its proof
+  static const siteIndpSolarCta = 'site.indp.solar.cta';
+  /// Proof of work for property maintenance teams
+  static const siteIndpMaintenanceTitle = 'site.indp.maintenance.title';
+  /// Work orders and condition reports owners and tenants trust — made on site from timestamped photos, checklists and a voice note.
+  static const siteIndpMaintenanceBody = 'site.indp.maintenance.body';
+  /// Before & after photos
+  static const siteIndpMaintenanceTick = 'site.indp.maintenance.tick';
+  /// Work order closed
+  static const siteIndpMaintenanceChip1 = 'site.indp.maintenance.chip1';
+  /// 9 of 9 questions · 2:15 PM
+  static const siteIndpMaintenanceChip1Sub = 'site.indp.maintenance.chip1_sub';
+  /// Kitchen tap: before & after
+  static const siteIndpMaintenanceChip2 = 'site.indp.maintenance.chip2';
+  /// 2 photos · timestamped on site
+  static const siteIndpMaintenanceChip2Sub = 'site.indp.maintenance.chip2_sub';
+  /// What slows maintenance teams down
+  static const siteIndpMaintenancePainTitle = 'site.indp.maintenance.pain_title';
+  /// Three problems property managers tell us about — and how KaamNishaan fixes each one.
+  static const siteIndpMaintenancePainBody = 'site.indp.maintenance.pain_body';
+  /// Deposit disputes
+  static const siteIndpMaintenanceP1 = 'site.indp.maintenance.p1';
+  /// “That damage was there when I moved in.” Move-out arguments with no proof.
+  static const siteIndpMaintenanceP1B = 'site.indp.maintenance.p1_b';
+  /// Dated move-in and move-out photos of every room settle it.
+  static const siteIndpMaintenanceP1Fix = 'site.indp.maintenance.p1_fix';
+  /// Work orders lost in chats
+  static const siteIndpMaintenanceP2 = 'site.indp.maintenance.p2';
+  /// Requests and updates are scattered across calls and WhatsApp.
+  static const siteIndpMaintenanceP2B = 'site.indp.maintenance.p2_b';
+  /// Every work order is one job, with a status, photos and a report.
+  static const siteIndpMaintenanceP2Fix = 'site.indp.maintenance.p2_fix';
+  /// Owners want updates
+  static const siteIndpMaintenanceP3 = 'site.indp.maintenance.p3';
+  /// Owners ask what was done, and when, across many units.
+  static const siteIndpMaintenanceP3B = 'site.indp.maintenance.p3_b';
+  /// Share each finished job’s report with the owner as a link or PDF.
+  static const siteIndpMaintenanceP3Fix = 'site.indp.maintenance.p3_fix';
+  /// A clean, branded work-order report with the proof built in — sent as a PDF or a secure link.
+  static const siteIndpMaintenanceRBody = 'site.indp.maintenance.r_body';
+  /// Before and after photos of every repair, timestamped on site
+  static const siteIndpMaintenanceRB1 = 'site.indp.maintenance.r_b1';
+  /// Checklist results for every room
+  static const siteIndpMaintenanceRB2 = 'site.indp.maintenance.r_b2';
+  /// Urban Nest Property Care
+  static const siteIndpMaintenanceRCompany = 'site.indp.maintenance.r_company';
+  /// Work order report: Flat 4B, Lake View
+  static const siteIndpMaintenanceRTitle = 'site.indp.maintenance.r_title';
+  /// Report #R-4410 · 31 Oct · Technician Ramesh Patel
+  static const siteIndpMaintenanceRMeta = 'site.indp.maintenance.r_meta';
+  /// Found a leak under the kitchen sink. Replaced the tap washer and the waste pipe seal. No leak after a 10-minute test.
+  static const siteIndpMaintenanceRWork = 'site.indp.maintenance.r_work';
+  /// 9 checks passed
+  static const siteIndpMaintenanceRChecks = 'site.indp.maintenance.r_checks';
+  /// One work order in KaamNishaan
+  static const siteIndpMaintenanceFlowTitle = 'site.indp.maintenance.flow_title';
+  /// The problem, the room and the unit — timestamped and filed to the job.
+  static const siteIndpMaintenanceF1B = 'site.indp.maintenance.f1_b';
+  /// Run the work order check
+  static const siteIndpMaintenanceF2 = 'site.indp.maintenance.f2';
+  /// Features maintenance teams use most
+  static const siteIndpMaintenanceFeatEyebrow = 'site.indp.maintenance.feat_eyebrow';
+  /// Everything for every unit
+  static const siteIndpMaintenanceFeatTitle = 'site.indp.maintenance.feat_title';
+  /// Plans for maintenance teams of every size
+  static const siteIndpMaintenancePriceTitle = 'site.indp.maintenance.price_title';
+  /// Can I do move-in and move-out reports for the same flat?
+  static const siteIndpMaintenanceQ1 = 'site.indp.maintenance.q1';
+  /// Yes. Make a job for each visit at the same customer and address. Both reports keep their dated photos, so you can open them side by side when a tenant leaves.
+  static const siteIndpMaintenanceAns1 = 'site.indp.maintenance.ans1';
+  /// Give every work order its proof
+  static const siteIndpMaintenanceCta = 'site.indp.maintenance.cta';
+  /// Proof of work for pest control teams
+  static const siteIndpPestControlTitle = 'site.indp.pest_control.title';
+  /// Treatment records your customers and auditors trust — made on site from timestamped photos, checklists and a voice note.
+  static const siteIndpPestControlBody = 'site.indp.pest_control.body';
+  /// Treatment photos
+  static const siteIndpPestControlTick = 'site.indp.pest_control.tick';
+  /// Treatment check done
+  static const siteIndpPestControlChip1 = 'site.indp.pest_control.chip1';
+  /// 11 of 11 questions · 10:20 AM
+  static const siteIndpPestControlChip1Sub = 'site.indp.pest_control.chip1_sub';
+  /// Bait station 3: checked
+  static const siteIndpPestControlChip2 = 'site.indp.pest_control.chip2';
+  /// 2 photos · timestamped on site
+  static const siteIndpPestControlChip2Sub = 'site.indp.pest_control.chip2_sub';
+  /// What slows pest control teams down
+  static const siteIndpPestControlPainTitle = 'site.indp.pest_control.pain_title';
+  /// Three problems pest control owners tell us about — and how KaamNishaan fixes each one.
+  static const siteIndpPestControlPainBody = 'site.indp.pest_control.pain_body';
+  /// Audit paperwork
+  static const siteIndpPestControlP1 = 'site.indp.pest_control.p1';
+  /// Food businesses need treatment records for audits — paper logs go missing.
+  static const siteIndpPestControlP1B = 'site.indp.pest_control.p1_b';
+  /// Every visit becomes a dated report with products, areas and photos.
+  static const siteIndpPestControlP1Fix = 'site.indp.pest_control.p1_fix';
+  /// “Did you even come?”
+  static const siteIndpPestControlP2 = 'site.indp.pest_control.p2';
+  /// Treatments are often invisible, so customers doubt the visit happened.
+  static const siteIndpPestControlP2B = 'site.indp.pest_control.p2_b';
+  /// Timestamped photos of each bait station and treated area prove it.
+  static const siteIndpPestControlP2Fix = 'site.indp.pest_control.p2_fix';
+  /// Missed follow-ups
+  static const siteIndpPestControlP3 = 'site.indp.pest_control.p3';
+  /// Follow-up visits are forgotten when they live in someone’s notebook.
+  static const siteIndpPestControlP3B = 'site.indp.pest_control.p3_b';
+  /// Book the follow-up as its own job, with the right checklist and a date.
+  static const siteIndpPestControlP3Fix = 'site.indp.pest_control.p3_fix';
+  /// A clean, branded treatment record with the proof built in — sent as a PDF or a secure link.
+  static const siteIndpPestControlRBody = 'site.indp.pest_control.r_body';
+  /// Photos of each treated area and bait station, timestamped on site
+  static const siteIndpPestControlRB1 = 'site.indp.pest_control.r_b1';
+  /// Products, amounts and treated areas, from the checklist
+  static const siteIndpPestControlRB2 = 'site.indp.pest_control.r_b2';
+  /// ShieldPest Services
+  static const siteIndpPestControlRCompany = 'site.indp.pest_control.r_company';
+  /// Treatment record: Sunrise Bakery
+  static const siteIndpPestControlRTitle = 'site.indp.pest_control.r_title';
+  /// Report #R-5034 · 31 Oct · Technician Ramesh Patel
+  static const siteIndpPestControlRMeta = 'site.indp.pest_control.r_meta';
+  /// Checked 6 bait stations and replaced bait in station 3. Gel applied in the kitchen and store room.
+  static const siteIndpPestControlRWork = 'site.indp.pest_control.r_work';
+  /// 11 checks passed
+  static const siteIndpPestControlRChecks = 'site.indp.pest_control.r_checks';
+  /// Treated area
+  static const siteIndpPestControlRPhoto1 = 'site.indp.pest_control.r_photo1';
+  /// Bait station
+  static const siteIndpPestControlRPhoto2 = 'site.indp.pest_control.r_photo2';
+  /// One treatment visit in KaamNishaan
+  static const siteIndpPestControlFlowTitle = 'site.indp.pest_control.flow_title';
+  /// Signs of pests, bait stations and entry points — timestamped and filed.
+  static const siteIndpPestControlF1B = 'site.indp.pest_control.f1_b';
+  /// Run the treatment checklist
+  static const siteIndpPestControlF2 = 'site.indp.pest_control.f2';
+  /// Features pest control teams use most
+  static const siteIndpPestControlFeatEyebrow = 'site.indp.pest_control.feat_eyebrow';
+  /// Everything for every treatment
+  static const siteIndpPestControlFeatTitle = 'site.indp.pest_control.feat_title';
+  /// Plans for pest control teams of every size
+  static const siteIndpPestControlPriceTitle = 'site.indp.pest_control.price_title';
+  /// Can checklists record the products and amounts used?
+  static const siteIndpPestControlQ1 = 'site.indp.pest_control.q1';
+  /// Yes. A question can ask for a product name, an amount with its unit or a photo, so every treatment record lists what was used and where.
+  static const siteIndpPestControlAns1 = 'site.indp.pest_control.ans1';
+  /// Give every treatment its proof
+  static const siteIndpPestControlCta = 'site.indp.pest_control.cta';
+  /// Proof of work for commercial cleaning teams
+  static const siteIndpCleaningTitle = 'site.indp.cleaning.title';
+  /// Shift reports facility managers trust — made on site from timestamped photos, checklists and a voice note.
+  static const siteIndpCleaningBody = 'site.indp.cleaning.body';
+  /// Photo proof per area
+  static const siteIndpCleaningTick = 'site.indp.cleaning.tick';
+  /// Night shift complete
+  static const siteIndpCleaningChip1 = 'site.indp.cleaning.chip1';
+  /// 16 of 16 questions · 6:00 AM
+  static const siteIndpCleaningChip1Sub = 'site.indp.cleaning.chip1_sub';
+  /// Lobby: before & after
+  static const siteIndpCleaningChip2 = 'site.indp.cleaning.chip2';
+  /// 2 photos · timestamped on site
+  static const siteIndpCleaningChip2Sub = 'site.indp.cleaning.chip2_sub';
+  /// What slows cleaning teams down
+  static const siteIndpCleaningPainTitle = 'site.indp.cleaning.pain_title';
+  /// Three problems cleaning company owners tell us about — and how KaamNishaan fixes each one.
+  static const siteIndpCleaningPainBody = 'site.indp.cleaning.pain_body';
+  /// “That area was missed”
+  static const siteIndpCleaningP1 = 'site.indp.cleaning.p1';
+  /// Facility managers complain about areas they think were skipped.
+  static const siteIndpCleaningP1B = 'site.indp.cleaning.p1_b';
+  /// Timestamped photos of every area, every shift, show what was done.
+  static const siteIndpCleaningP1Fix = 'site.indp.cleaning.p1_fix';
+  /// Many sites, one manager
+  static const siteIndpCleaningP2 = 'site.indp.cleaning.p2';
+  /// Supervisors can’t visit every site every night.
+  static const siteIndpCleaningP2B = 'site.indp.cleaning.p2_b';
+  /// Each shift’s checklist and photos reach the manager’s phone for review.
+  static const siteIndpCleaningP2Fix = 'site.indp.cleaning.p2_fix';
+  /// New staff every month
+  static const siteIndpCleaningP3 = 'site.indp.cleaning.p3';
+  /// With new cleaners joining often, the routine is easy to miss.
+  static const siteIndpCleaningP3B = 'site.indp.cleaning.p3_b';
+  /// Simple checklists in their own language show exactly what to do.
+  static const siteIndpCleaningP3Fix = 'site.indp.cleaning.p3_fix';
+  /// A clean, branded shift report with the proof built in — sent as a PDF or a secure link.
+  static const siteIndpCleaningRBody = 'site.indp.cleaning.r_body';
+  /// Before and after photos of every area, timestamped on site
+  static const siteIndpCleaningRB1 = 'site.indp.cleaning.r_b1';
+  /// Checklist results for every floor and washroom
+  static const siteIndpCleaningRB2 = 'site.indp.cleaning.r_b2';
+  /// Sparkle Facility Services
+  static const siteIndpCleaningRCompany = 'site.indp.cleaning.r_company';
+  /// Night shift report: Block B offices
+  static const siteIndpCleaningRTitle = 'site.indp.cleaning.r_title';
+  /// Report #R-6201 · 31 Oct · Cleaner Sunita Rao
+  static const siteIndpCleaningRMeta = 'site.indp.cleaning.r_meta';
+  /// Cleaned all 4 floors and 8 washrooms, refilled supplies and mopped the lobby. One broken soap dispenser reported on floor 2.
+  static const siteIndpCleaningRWork = 'site.indp.cleaning.r_work';
+  /// 16 checks passed
+  static const siteIndpCleaningRChecks = 'site.indp.cleaning.r_checks';
+  /// One night shift in KaamNishaan
+  static const siteIndpCleaningFlowTitle = 'site.indp.cleaning.flow_title';
+  /// Each floor, washroom and the lobby — timestamped and filed to the job.
+  static const siteIndpCleaningF1B = 'site.indp.cleaning.f1_b';
+  /// Run the shift check
+  static const siteIndpCleaningF2 = 'site.indp.cleaning.f2';
+  /// Features cleaning teams use most
+  static const siteIndpCleaningFeatEyebrow = 'site.indp.cleaning.feat_eyebrow';
+  /// Everything for every shift
+  static const siteIndpCleaningFeatTitle = 'site.indp.cleaning.feat_title';
+  /// Plans for cleaning teams of every size
+  static const siteIndpCleaningPriceTitle = 'site.indp.cleaning.price_title';
+  /// Can I see a shift’s progress while it’s happening?
+  static const siteIndpCleaningQ1 = 'site.indp.cleaning.q1';
+  /// Yes. The job shows its status and how many proof steps are done, and photos arrive as they are sent from the phone.
+  static const siteIndpCleaningAns1 = 'site.indp.cleaning.ans1';
+  /// Give every shift its proof
+  static const siteIndpCleaningCta = 'site.indp.cleaning.cta';
 }

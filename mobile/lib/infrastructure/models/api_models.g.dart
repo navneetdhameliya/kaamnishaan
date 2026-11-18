@@ -4729,6 +4729,117 @@ class PublicChecklistModel {
       };
 }
 
+PublicChecklistQuestionModel publicChecklistQuestionModelFromJson(String str) => PublicChecklistQuestionModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String publicChecklistQuestionModelToJson(PublicChecklistQuestionModel data) => json.encode(data.toJson());
+
+class PublicChecklistQuestionModel {
+  /// none / always / if_no / if_fail
+  final String photoRule;
+  final bool requiredValue;
+  final String text;
+  final String type;
+  final String? unit;
+
+  const PublicChecklistQuestionModel({
+    required this.photoRule,
+    required this.requiredValue,
+    required this.text,
+    required this.type,
+    this.unit,
+  });
+
+  factory PublicChecklistQuestionModel.fromJson(Map<String, dynamic> json) => PublicChecklistQuestionModel(
+        photoRule: json['photo_rule'] as String,
+        requiredValue: json['required'] as bool,
+        text: json['text'] as String,
+        type: json['type'] as String,
+        unit: json['unit'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'photo_rule': photoRule,
+        'required': requiredValue,
+        'text': text,
+        'type': type,
+        'unit': unit,
+      };
+}
+
+PublicChecklistTemplateModel publicChecklistTemplateModelFromJson(String str) => PublicChecklistTemplateModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String publicChecklistTemplateModelToJson(PublicChecklistTemplateModel data) => json.encode(data.toJson());
+
+class PublicChecklistTemplateModel {
+  final String? key;
+  /// languages every question is written in
+  final List<String> languages;
+  final int? minutes;
+  final String name;
+  /// questions that take or may ask for a photo
+  final int photoQuestions;
+  final int questionCount;
+  final List<PublicChecklistQuestionModel> questions;
+
+  const PublicChecklistTemplateModel({
+    this.key,
+    required this.languages,
+    this.minutes,
+    required this.name,
+    required this.photoQuestions,
+    required this.questionCount,
+    required this.questions,
+  });
+
+  factory PublicChecklistTemplateModel.fromJson(Map<String, dynamic> json) => PublicChecklistTemplateModel(
+        key: json['key'] as String?,
+        languages: (json['languages'] as List).map((e) => e as String).toList(),
+        minutes: json['minutes'] == null ? null : (json['minutes'] as num).toInt(),
+        name: json['name'] as String,
+        photoQuestions: (json['photo_questions'] as num).toInt(),
+        questionCount: (json['question_count'] as num).toInt(),
+        questions: (json['questions'] as List).map((e) => PublicChecklistQuestionModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'key': key,
+        'languages': languages,
+        'minutes': minutes,
+        'name': name,
+        'photo_questions': photoQuestions,
+        'question_count': questionCount,
+        'questions': questions.map((e) => e.toJson()).toList(),
+      };
+}
+
+PublicChecklistTemplatesModel publicChecklistTemplatesModelFromJson(String str) => PublicChecklistTemplatesModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String publicChecklistTemplatesModelToJson(PublicChecklistTemplatesModel data) => json.encode(data.toJson());
+
+class PublicChecklistTemplatesModel {
+  final List<PublicChecklistTemplateModel> items;
+  final String language;
+  final String trade;
+
+  const PublicChecklistTemplatesModel({
+    required this.items,
+    required this.language,
+    required this.trade,
+  });
+
+  factory PublicChecklistTemplatesModel.fromJson(Map<String, dynamic> json) => PublicChecklistTemplatesModel(
+        items: (json['items'] as List).map((e) => PublicChecklistTemplateModel.fromJson(e as Map<String, dynamic>)).toList(),
+        language: json['language'] as String,
+        trade: json['trade'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'items': items.map((e) => e.toJson()).toList(),
+        'language': language,
+        'trade': trade,
+      };
+}
+
 PublicCompanyModel publicCompanyModelFromJson(String str) => PublicCompanyModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String publicCompanyModelToJson(PublicCompanyModel data) => json.encode(data.toJson());
