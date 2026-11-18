@@ -4,6 +4,7 @@ import { useState, type ReactNode } from 'react';
 import { cx } from '../components/ui';
 import type { T } from '../lib/i18n';
 import { LinkButton } from './Layout';
+import { rv } from './motion';
 import { ROUTES } from './site';
 
 /** Max 1200 wide, 120 side margins on desktop like the Figma frames. */
@@ -26,7 +27,7 @@ export function Section({
     <section
       id={id}
       className={cx(
-        'scroll-mt-16 py-64 md:py-[96px] xl:py-[112px]',
+        'scroll-mt-[96px] py-64 md:py-[96px] xl:py-[112px]',
         tone === 'canvas' && 'bg-bg-canvas',
         tone === 'surface' && 'border-y border-border-default bg-bg-surface',
         tone === 'dark' && 'bg-espresso-950',
@@ -53,8 +54,14 @@ export function Heading({
 }) {
   return (
     <div className={cx('flex flex-col gap-16', align === 'center' ? 'mx-auto max-w-[760px] text-center' : 'max-w-[480px]', className)}>
-      <h2 className={cx('text-web-m-h2 md:text-web-h2', dark ? 'text-cream-50' : 'text-text-primary')}>{title}</h2>
-      {body && <p className={cx('text-latin-body-lg md:text-web-body-lg', dark ? 'text-cream-400' : 'text-text-secondary')}>{body}</p>}
+      <h2 {...rv('up')} className={cx('text-web-m-h2 md:text-web-h2', dark ? 'text-cream-50' : 'text-text-primary')}>
+        {title}
+      </h2>
+      {body && (
+        <p {...rv('up', 1)} className={cx('text-latin-body-lg md:text-web-body-lg', dark ? 'text-cream-400' : 'text-text-secondary')}>
+          {body}
+        </p>
+      )}
     </div>
   );
 }
@@ -65,12 +72,12 @@ export function Faq({ t, title, body, items }: { t: T; title: string; body: stri
   return (
     <Section id="faq">
       <Container className="flex flex-col gap-32 lg:flex-row lg:gap-[96px]">
-        <div className="flex flex-col items-start gap-16 lg:w-[384px] lg:shrink-0">
+        <div {...rv('left')} className="flex flex-col items-start gap-16 lg:w-[384px] lg:shrink-0">
           <h2 className="text-web-m-h2 md:text-web-h2">{title}</h2>
           <p className="text-latin-body-lg text-text-secondary">{body}</p>
-          <a href={ROUTES.contact} className="inline-flex items-center gap-4 text-web-label font-semibold text-text-primary hover:underline">
-            {t('site.faq.talk')}
-            <ChevronRight width={16} height={16} aria-hidden />
+          <a href={ROUTES.contact} className="group inline-flex items-center gap-4 text-web-label font-semibold text-text-primary">
+            <span className="kn-link">{t('site.faq.talk')}</span>
+            <ChevronRight width={16} height={16} className="kn-nudge" aria-hidden />
           </a>
         </div>
         <div className="flex flex-1 flex-col">
@@ -79,9 +86,10 @@ export function Faq({ t, title, body, items }: { t: T; title: string; body: stri
             return (
               <div
                 key={it.q}
+                {...rv('up', i)}
                 className={cx(
-                  'border-b border-border-default',
-                  isOpen && 'rounded-lg border border-border-default bg-bg-surface',
+                  'border-b border-border-default transition-[background-color,border-radius,box-shadow] duration-300',
+                  isOpen ? 'rounded-lg border border-border-default bg-bg-surface shadow-sm' : 'hover:bg-bg-surface/60',
                 )}
               >
                 <button
@@ -91,9 +99,18 @@ export function Faq({ t, title, body, items }: { t: T; title: string; body: stri
                   className="flex w-full items-center justify-between gap-16 px-[24px] py-[24px] text-left"
                 >
                   <span className="text-latin-h3 md:text-web-h3">{it.q}</span>
-                  <ChevronDown width={20} height={20} className={cx('shrink-0 transition', isOpen && 'rotate-180')} aria-hidden />
+                  <ChevronDown width={20} height={20} className={cx('shrink-0 transition-transform duration-300', isOpen && 'rotate-180')} aria-hidden />
                 </button>
-                {isOpen && <p className="-mt-8 px-[24px] pb-[24px] text-latin-body text-text-secondary md:text-web-body">{it.a}</p>}
+                <div
+                  className={cx(
+                    'grid transition-[grid-template-rows,opacity] duration-500 ease-[cubic-bezier(.22,1,.36,1)]',
+                    isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
+                  )}
+                >
+                  <p className="-mt-8 overflow-hidden px-[24px] text-latin-body text-text-secondary md:text-web-body" aria-hidden={!isOpen}>
+                    <span className="block pb-[24px]">{it.a}</span>
+                  </p>
+                </div>
               </div>
             );
           })}
@@ -108,18 +125,22 @@ export function FinalCta({ t, trialDays }: { t: T; trialDays: number | null }) {
   return (
     <section className="bg-bg-canvas pb-64 md:pb-[112px]">
       <Container>
-        <div className="relative overflow-hidden rounded-xl bg-espresso-950 px-24 pt-48 md:px-[80px] md:pt-[88px] lg:min-h-[440px]">
+        <div {...rv('zoom')} className="relative overflow-hidden rounded-xl bg-espresso-950 px-24 pt-48 md:px-[80px] md:pt-[88px] lg:min-h-[440px]">
           <div
             aria-hidden
-            className="pointer-events-none absolute -right-[120px] -top-[100px] h-[560px] w-[560px] rounded-full border-[56px] border-mocha-950"
+            className="pointer-events-none absolute -right-[120px] -top-[100px] h-[560px] w-[560px] animate-[spin_60s_linear_infinite] rounded-full border-[56px] border-mocha-950 border-l-transparent"
           />
           <div className="relative flex flex-col gap-40 lg:flex-row lg:items-start lg:justify-between">
             <div className="flex max-w-[640px] flex-col gap-24 pb-48 lg:pb-[88px]">
-              <h2 className="text-web-m-display text-cream-50 md:text-web-display">{t('site.final.title')}</h2>
+              <h2 {...rv('up', 1)} className="text-web-m-display text-cream-50 md:text-web-display">
+                {t('site.final.title')}
+              </h2>
               {trialDays != null && (
-                <p className="text-latin-body-lg text-cream-400 md:text-web-body-lg">{t('site.final.body', { n: trialDays })}</p>
+                <p {...rv('up', 2)} className="text-latin-body-lg text-cream-400 md:text-web-body-lg">
+                  {t('site.final.body', { n: trialDays })}
+                </p>
               )}
-              <div className="flex flex-wrap gap-16">
+              <div {...rv('up', 3)} className="flex flex-wrap gap-16">
                 <LinkButton href={ROUTES.trial} variant="light">
                   {t('site.cta.trial')}
                 </LinkButton>
@@ -134,7 +155,7 @@ export function FinalCta({ t, trialDays }: { t: T; trialDays: number | null }) {
               width={258}
               height={368}
               loading="lazy"
-              className="mx-auto w-[220px] self-end lg:mx-0 lg:mr-[40px] lg:w-[258px]"
+              className="mx-auto w-[220px] self-end transition-transform duration-700 hover:-translate-y-8 lg:mx-0 lg:mr-[40px] lg:w-[258px]"
             />
           </div>
         </div>

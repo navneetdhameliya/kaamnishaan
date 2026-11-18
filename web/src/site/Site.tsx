@@ -4,6 +4,7 @@ import Contact from './Contact';
 import Home from './Home';
 import { SiteLayout } from './Layout';
 import Login from './Login';
+import { PageLoader, useRevealOnScroll } from './motion';
 import Pricing from './Pricing';
 import { ROUTES, useConfig, useLang, usePlans } from './site';
 import StartTrial from './StartTrial';
@@ -17,7 +18,11 @@ export default function Site({ path }: { path: string }) {
   const trades = cfg?.trades ?? [];
   const planData = plans.kind === 'ready' ? plans.data : null;
   const page = path.replace(/\/+$/, '') || '/';
+  useRevealOnScroll();
+  const firstDataIn = config.kind !== 'loading' && plans.kind !== 'loading';
   return (
+    <>
+    <PageLoader ready={firstDataIn} />
     <SiteLayout t={t} lang={lang} setLang={setLang} trades={trades} announcement={page !== ROUTES.login}>
       {page === ROUTES.home ? (
         <Home t={t} lang={lang} plans={plans} retryPlans={retryPlans} trades={trades} />
@@ -35,5 +40,6 @@ export default function Site({ path }: { path: string }) {
         <ComingSoon t={t} />
       )}
     </SiteLayout>
+    </>
   );
 }

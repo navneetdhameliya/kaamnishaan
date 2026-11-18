@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { cx } from '../components/ui';
 import { LANGS, type Lang, type T } from '../lib/i18n';
 import type { TradeOut } from '../lib/types';
+import { rv, useScroll } from './motion';
 import { ROUTES } from './site';
 
 /** A link that looks like the Figma buttons (Start free trial, Book a demo, …). */
@@ -33,7 +34,7 @@ export function LinkButton({
     <a
       href={href}
       className={cx(
-        'inline-flex items-center justify-center gap-8 whitespace-nowrap rounded-lg px-24 font-semibold transition focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
+        'kn-btn group inline-flex items-center justify-center gap-8 whitespace-nowrap rounded-lg px-24 font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring',
         size === 'lg' ? 'h-[56px] text-latin-label' : 'h-[48px] px-20 text-latin-label',
         v,
         className,
@@ -47,8 +48,14 @@ export function LinkButton({
 
 export function Logo({ dark = true }: { dark?: boolean }) {
   return (
-    <span className="inline-flex items-center gap-[9px]">
-      <img src="/brand-mark-dark.svg" alt="" width={35} height={35} className="h-[35px] w-[35px]" />
+    <span className="group inline-flex items-center gap-[9px]">
+      <img
+        src="/brand-mark-dark.svg"
+        alt=""
+        width={35}
+        height={35}
+        className="h-[35px] w-[35px] transition-transform duration-500 ease-[cubic-bezier(.34,1.56,.64,1)] group-hover:-rotate-6 group-hover:scale-110"
+      />
       <span
         className={cx('text-[22px] font-bold tracking-[-0.01em]', dark ? 'text-cream-100' : 'text-text-primary')}
         style={{ fontFamily: '"Baloo 2", "Noto Sans", sans-serif' }}
@@ -61,13 +68,13 @@ export function Logo({ dark = true }: { dark?: boolean }) {
 
 function AnnouncementBar({ t }: { t: T }) {
   return (
-    <div className="flex items-center justify-center gap-8 bg-mocha-900 px-16 py-[8px] text-center md:py-12">
-      <Sparkles width={16} height={16} className="hidden shrink-0 text-cream-400 sm:block" aria-hidden />
+    <div {...rv('down')} className="flex items-center justify-center gap-8 bg-mocha-900 px-16 py-[8px] text-center md:py-12">
+      <Sparkles width={16} height={16} className="hidden shrink-0 animate-pulse text-cream-400 sm:block" aria-hidden />
       <p className="text-[13px] font-semibold leading-[18px] text-cream-100 md:text-latin-label-sm">{t('site.ann.text')}</p>
       <span className="hidden h-[14px] w-px bg-cream-100/30 md:block" aria-hidden />
-      <a href="/#how-it-works" className="hidden items-center gap-4 text-latin-label-sm font-semibold text-mocha-300 hover:text-cream-50 md:inline-flex">
-        {t('site.ann.link')}
-        <ChevronRight width={14} height={14} aria-hidden />
+      <a href="/#how-it-works" className="group hidden items-center gap-4 text-latin-label-sm font-semibold text-mocha-300 hover:text-cream-50 md:inline-flex">
+        <span className="kn-link">{t('site.ann.link')}</span>
+        <ChevronRight width={14} height={14} className="kn-nudge" aria-hidden />
       </a>
     </div>
   );
@@ -95,22 +102,23 @@ function NavMenu({ label, items }: { label: string; items: { href: string; label
         type="button"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
-        className="inline-flex items-center gap-4 text-web-label font-semibold text-cream-200 hover:text-cream-50"
+        className="inline-flex items-center gap-4 text-web-label font-semibold text-cream-200 transition-colors hover:text-cream-50"
       >
-        {label}
-        <ChevronDown width={16} height={16} className={cx('transition', open && 'rotate-180')} aria-hidden />
+        <span className="kn-link">{label}</span>
+        <ChevronDown width={16} height={16} className={cx('transition-transform duration-300', open && 'rotate-180')} aria-hidden />
       </button>
       {open && (
-        <div className="absolute left-1/2 top-[calc(100%+20px)] z-30 w-[260px] -translate-x-1/2 rounded-xl border border-border-default bg-bg-surface p-8 shadow-lg">
-          {items.map((i) => (
+        <div className="kn-menu absolute left-1/2 top-[calc(100%+20px)] z-30 w-[260px] rounded-xl border border-border-default bg-bg-surface p-8 shadow-lg">
+          {items.map((i, n) => (
             <a
               key={i.href + i.label}
               href={i.href}
               onClick={() => setOpen(false)}
-              className="flex items-center justify-between rounded-md px-12 py-12 text-latin-label font-semibold text-text-primary hover:bg-bg-canvas"
+              style={{ animationDelay: `${n * 35}ms` }}
+              className="kn-drawer group flex items-center justify-between rounded-md px-12 py-12 text-latin-label font-semibold text-text-primary transition-colors hover:bg-bg-canvas"
             >
               {i.label}
-              <ChevronRight width={16} height={16} className="text-text-secondary" aria-hidden />
+              <ChevronRight width={16} height={16} className="kn-nudge text-text-secondary" aria-hidden />
             </a>
           ))}
         </div>
@@ -121,8 +129,8 @@ function NavMenu({ label, items }: { label: string; items: { href: string; label
 
 function LangPicker({ lang, setLang, t, label }: { lang: Lang; setLang: (l: Lang) => void; t: T; label: 'code' | 'name' }) {
   return (
-    <label className="relative inline-flex cursor-pointer items-center gap-[6px] text-web-label font-semibold text-cream-200 hover:text-cream-50">
-      <Globe width={18} height={18} aria-hidden />
+    <label className="group relative inline-flex cursor-pointer items-center gap-[6px] text-web-label font-semibold text-cream-200 transition-colors hover:text-cream-50">
+      <Globe width={18} height={18} className="transition-transform duration-700 group-hover:rotate-[360deg]" aria-hidden />
       {label === 'code' ? lang.toUpperCase() : t(`web.lang.${lang}`)}
       <ChevronDown width={16} height={16} aria-hidden />
       <select
@@ -153,12 +161,23 @@ function productItems(t: T) {
 
 function Nav({ t, lang, setLang, trades }: { t: T; lang: Lang; setLang: (l: Lang) => void; trades: TradeOut[] }) {
   const [drawer, setDrawer] = useState(false);
+  const { progress, scrolled } = useScroll();
   const industries = trades.map((tr) => ({ href: ROUTES.industry(tr.key), label: tr.name }));
   useEffect(() => {
     document.body.style.overflow = drawer ? 'hidden' : '';
   }, [drawer]);
   return (
-    <header className="relative z-20 border-b border-cream-100/[0.08] bg-espresso-950">
+    <header
+      className={cx(
+        'sticky top-0 z-30 border-b border-cream-100/[0.08] transition-[background-color,box-shadow,backdrop-filter] duration-300',
+        scrolled ? 'bg-espresso-950/[0.92] shadow-[0_8px_24px_-12px_rgba(0,0,0,0.6)] backdrop-blur-md' : 'bg-espresso-950',
+      )}
+    >
+      <span
+        aria-hidden
+        className="absolute bottom-[-1px] left-0 h-[2px] w-full origin-left bg-sage-500"
+        style={{ transform: `scaleX(${progress})` }}
+      />
       <div className="mx-auto flex h-[64px] max-w-[1200px] items-center justify-between px-16 md:h-[89px] md:px-32 xl:px-0">
         <a href={ROUTES.home} aria-label={t('site.nav.home')}>
           <Logo />
@@ -166,16 +185,16 @@ function Nav({ t, lang, setLang, trades }: { t: T; lang: Lang; setLang: (l: Lang
         <nav className="hidden items-center gap-32 lg:flex">
           <NavMenu label={t('site.nav.product')} items={productItems(t)} />
           <NavMenu label={t('site.nav.industries')} items={industries} />
-          <a href={ROUTES.pricing} className="text-web-label font-semibold text-cream-200 hover:text-cream-50">
+          <a href={ROUTES.pricing} className="kn-link text-web-label font-semibold text-cream-200 hover:text-cream-50">
             {t('site.nav.pricing')}
           </a>
-          <a href={ROUTES.demo} className="text-web-label font-semibold text-cream-200 hover:text-cream-50">
+          <a href={ROUTES.demo} className="kn-link text-web-label font-semibold text-cream-200 hover:text-cream-50">
             {t('site.nav.demo')}
           </a>
         </nav>
         <div className="hidden items-center gap-24 lg:flex">
           <LangPicker lang={lang} setLang={setLang} t={t} label="code" />
-          <a href={ROUTES.login} className="text-web-label font-semibold text-cream-50 hover:underline">
+          <a href={ROUTES.login} className="kn-link text-web-label font-semibold text-cream-50">
             {t('site.nav.login')}
           </a>
           <LinkButton href={ROUTES.trial} variant="light" size="md">
@@ -186,20 +205,20 @@ function Nav({ t, lang, setLang, trades }: { t: T; lang: Lang; setLang: (l: Lang
           type="button"
           onClick={() => setDrawer(true)}
           aria-label={t('site.nav.menu')}
-          className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-full text-cream-50 hover:bg-espresso-850 lg:hidden"
+          className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-full text-cream-50 transition hover:bg-espresso-850 active:scale-90 lg:hidden"
         >
           <Menu width={24} height={24} />
         </button>
       </div>
       {drawer && (
-        <div className="fixed inset-0 z-40 flex flex-col overflow-y-auto bg-espresso-950 lg:hidden" role="dialog" aria-modal="true">
+        <div className="kn-drawer fixed inset-0 z-40 flex flex-col overflow-y-auto bg-espresso-950 lg:hidden" role="dialog" aria-modal="true">
           <div className="flex h-[64px] items-center justify-between px-16 md:h-[89px] md:px-32">
             <Logo />
             <button
               type="button"
               onClick={() => setDrawer(false)}
               aria-label={t('site.nav.close')}
-              className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-full text-cream-50 hover:bg-espresso-850"
+              className="inline-flex h-[44px] w-[44px] items-center justify-center rounded-full text-cream-50 transition hover:rotate-90 hover:bg-espresso-850"
             >
               <X width={24} height={24} />
             </button>
@@ -208,18 +227,19 @@ function Nav({ t, lang, setLang, trades }: { t: T; lang: Lang; setLang: (l: Lang
             {[
               { title: t('site.nav.product'), items: productItems(t) },
               { title: t('site.nav.industries'), items: industries },
-            ].map((g) => (
+            ].map((g, gi) => (
               <div key={g.title}>
                 <p className="mb-8 text-web-eyebrow uppercase text-cream-400">{g.title}</p>
-                {g.items.map((i) => (
+                {g.items.map((i, n) => (
                   <a
                     key={i.href + i.label}
                     href={i.href}
                     onClick={() => setDrawer(false)}
-                    className="flex items-center justify-between border-b border-cream-100/[0.08] py-12 text-latin-body font-semibold text-cream-50"
+                    style={{ animationDelay: `${(gi * 5 + n) * 30}ms` }}
+                    className="kn-drawer group flex items-center justify-between border-b border-cream-100/[0.08] py-12 text-latin-body font-semibold text-cream-50"
                   >
                     {i.label}
-                    <ChevronRight width={18} height={18} className="text-cream-400" aria-hidden />
+                    <ChevronRight width={18} height={18} className="kn-nudge text-cream-400" aria-hidden />
                   </a>
                 ))}
               </div>
@@ -278,7 +298,7 @@ function Footer({ t, lang, setLang, trades }: { t: T; lang: Lang; setLang: (l: L
     <footer className="bg-espresso-950 text-cream-200">
       <div className="mx-auto max-w-[1200px] px-16 pb-32 pt-48 md:px-32 md:pt-64 xl:px-0">
         <div className="flex flex-col gap-40 lg:flex-row lg:justify-between">
-          <div className="flex flex-col items-start gap-16 lg:w-[360px]">
+          <div {...rv('up')} className="flex flex-col items-start gap-16 lg:w-[360px]">
             <Logo />
             <p className="text-web-body-lg text-cream-100">{t('site.foot.tagline')}</p>
             <span className="inline-flex rounded-full border border-cream-100/[0.14] bg-cream-100/[0.06] px-16 py-8">
@@ -286,13 +306,13 @@ function Footer({ t, lang, setLang, trades }: { t: T; lang: Lang; setLang: (l: L
             </span>
           </div>
           <div className="grid grid-cols-2 gap-x-24 gap-y-32 sm:grid-cols-4 lg:w-[752px]">
-            {groups.map((g) => (
-              <div key={g.title}>
+            {groups.map((g, gi) => (
+              <div key={g.title} {...rv('up', gi + 1)}>
                 <p className="mb-16 text-web-eyebrow uppercase text-cream-400">{g.title}</p>
                 <ul className="flex flex-col gap-12">
                   {g.links.map((l) => (
                     <li key={l.label}>
-                      <a href={l.href} className="text-web-body text-cream-200 hover:text-cream-50">
+                      <a href={l.href} className="kn-link text-web-body text-cream-200 hover:text-cream-50">
                         {l.label}
                       </a>
                     </li>

@@ -9,7 +9,12 @@ export function cx(...parts: (string | false | null | undefined)[]): string {
 
 export function Card({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <section className={cx('rounded-xl border border-border-default bg-bg-surface p-20 md:p-24', className)}>{children}</section>
+    <section
+      data-reveal="up"
+      className={cx('rounded-xl border border-border-default bg-bg-surface p-20 transition-shadow duration-300 hover:shadow-md md:p-24', className)}
+    >
+      {children}
+    </section>
   );
 }
 
@@ -51,7 +56,7 @@ export function Button({
     <button
       {...rest}
       className={cx(
-        'inline-flex min-h-[48px] items-center justify-center gap-8 rounded-lg px-20 text-web-label font-semibold transition disabled:cursor-not-allowed disabled:opacity-50',
+        'kn-btn inline-flex min-h-[48px] items-center justify-center gap-8 rounded-lg px-20 text-web-label font-semibold disabled:cursor-not-allowed disabled:opacity-50',
         full && 'w-full',
         v[variant],
         className,
@@ -95,7 +100,7 @@ export function Stars({
             aria-checked={value === n}
             aria-label={`${n}`}
             onClick={() => onPick(n)}
-            className="rounded-sm p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring"
+            className="rounded-sm p-2 transition-transform duration-200 ease-[cubic-bezier(.34,1.56,.64,1)] hover:scale-125 focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring active:scale-90"
           >
             {star}
           </button>
@@ -135,7 +140,7 @@ export function TagChip({ label, on, onClick, danger }: { label: string; on: boo
       aria-pressed={on}
       onClick={onClick}
       className={cx(
-        'inline-flex min-h-[40px] items-center gap-4 rounded-full border px-12 text-latin-label-sm font-semibold transition',
+        'inline-flex min-h-[40px] items-center gap-4 rounded-full border px-12 text-latin-label-sm font-semibold transition-all duration-200 hover:-translate-y-[2px] active:scale-95',
         on
           ? danger
             ? 'border-status-danger bg-status-danger-bg text-status-danger'

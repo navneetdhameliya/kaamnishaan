@@ -8,6 +8,7 @@ import type { ConfigOut, DemoOut, DemoSlotsOut, PlansOut } from '../lib/types';
 import { LinkButton } from './Layout';
 import { Container } from './parts';
 import { EMAIL_RE, ErrorSummary, Field, SelectInput, TextInput, inputClass } from './form';
+import { rv, Spinner } from './motion';
 import { ROUTES, money } from './site';
 import { icsFile, longDay, monthDay, timeIn, zoneLabel } from './when';
 
@@ -30,13 +31,17 @@ export function withLinks(text: string, links: Record<string, { href: string; la
   });
 }
 
-function Point({ icon, title, body }: { icon: React.ReactNode; title: string; body: string }) {
+function Point({ icon, title, body, i }: { icon: React.ReactNode; title: string; body: string; i: number }) {
   return (
-    <li className="flex gap-12">
-      <span className="inline-flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full bg-sage-100 text-sage-700">{icon}</span>
+    <li {...rv('left', i + 3)}>
+      <span className="group flex gap-12">
+      <span className="inline-flex h-[40px] w-[40px] shrink-0 items-center justify-center rounded-full bg-sage-100 text-sage-700 transition-transform duration-500 ease-[cubic-bezier(.34,1.56,.64,1)] group-hover:-rotate-12 group-hover:scale-110">
+        {icon}
+      </span>
       <span className="flex flex-col">
         <span className="text-latin-label-sm font-semibold">{title}</span>
         <span className="text-latin-body text-text-secondary">{body}</span>
+      </span>
       </span>
     </li>
   );
@@ -56,8 +61,8 @@ function Booked({ t, lang, booked, name, email }: { t: T; lang: Lang; booked: De
     URL.revokeObjectURL(url);
   }
   return (
-    <div className="flex flex-col gap-24">
-      <span className="inline-flex h-[48px] w-[48px] items-center justify-center rounded-full bg-status-success-bg text-status-success">
+    <div className="kn-drawer flex flex-col gap-24">
+      <span className="kn-pop inline-flex h-[48px] w-[48px] items-center justify-center rounded-full bg-status-success-bg text-status-success">
         <Check width={24} height={24} aria-hidden />
       </span>
       <div>
@@ -205,22 +210,27 @@ export default function BookDemo({ t, lang, plans, config }: { t: T; lang: Lang;
     <section className="bg-bg-canvas py-40 md:py-64">
       <Container className="grid grid-cols-1 items-start gap-32 lg:grid-cols-[minmax(0,560px)_minmax(0,560px)] lg:justify-between">
         <div className="flex flex-col gap-24">
-          <span className="inline-flex items-center gap-8 self-start rounded-full bg-cream-200 px-12 py-[6px] text-web-eyebrow uppercase text-mocha-700">
+          <span {...rv('down')} className="inline-flex items-center gap-8 self-start rounded-full bg-cream-200 px-12 py-[6px] text-web-eyebrow uppercase text-mocha-700">
             <Play width={14} height={14} aria-hidden />
             {t('site.nav.demo')}
           </span>
-          <h1 className="text-web-m-display md:text-web-display">{t('site.bd.title')}</h1>
-          <p className="text-latin-body-lg text-text-secondary">{t('site.bd.body', { n: minutes })}</p>
+          <h1 {...rv('up', 1)} className="text-web-m-display md:text-web-display">
+            {t('site.bd.title')}
+          </h1>
+          <p {...rv('up', 2)} className="text-latin-body-lg text-text-secondary">
+            {t('site.bd.body', { n: minutes })}
+          </p>
           <ul className="flex flex-col gap-16">
-            <Point icon={<Play width={18} height={18} aria-hidden />} title={t('site.bd.b1')} body={t('site.bd.b1_b')} />
-            <Point icon={<Briefcase width={18} height={18} aria-hidden />} title={t('site.bd.b2')} body={t('site.bd.b2_b')} />
+            <Point i={0} icon={<Play width={18} height={18} aria-hidden />} title={t('site.bd.b1')} body={t('site.bd.b1_b')} />
+            <Point i={1} icon={<Briefcase width={18} height={18} aria-hidden />} title={t('site.bd.b2')} body={t('site.bd.b2_b')} />
             {cheapest?.price && (
-              <Point icon={<FileText width={18} height={18} aria-hidden />} title={t('site.bd.b3')} body={t('site.bd.b3_b', { price: money(cheapest.price, lang) })} />
+              <Point i={2} icon={<FileText width={18} height={18} aria-hidden />} title={t('site.bd.b3')} body={t('site.bd.b3_b', { price: money(cheapest.price, lang) })} />
             )}
           </ul>
-          <div className="relative overflow-hidden rounded-xl">
-            <img src="/img/industry-hvac.webp" alt={t('site.bd.photo_alt')} loading="lazy" className="aspect-[560/320] w-full object-cover" />
-            <span className="absolute bottom-16 left-16 flex items-center gap-12 rounded-full bg-cream-50 py-8 pl-8 pr-16 shadow-md">
+          <div {...rv('zoom')}>
+          <div className="group relative overflow-hidden rounded-xl">
+            <img src="/img/industry-hvac.webp" alt={t('site.bd.photo_alt')} loading="lazy" className="kn-zoom aspect-[560/320] w-full object-cover" />
+            <span className="kn-float absolute bottom-16 left-16 flex items-center gap-12 rounded-full bg-cream-50 py-8 pl-8 pr-16 shadow-md">
               <span className="inline-flex h-[32px] w-[32px] items-center justify-center rounded-full bg-status-success-bg text-status-success">
                 <Check width={16} height={16} aria-hidden />
               </span>
@@ -230,7 +240,9 @@ export default function BookDemo({ t, lang, plans, config }: { t: T; lang: Lang;
               </span>
             </span>
           </div>
-          <div className="rounded-xl border border-border-default bg-bg-surface p-24">
+          </div>
+          <div {...rv('up')}>
+          <div className="kn-lift rounded-xl border border-border-default bg-bg-surface p-24">
             <h2 className="text-latin-h2 font-semibold">{t('site.bd.expect')}</h2>
             <ol className="mt-16 flex flex-col gap-16">
               {[
@@ -250,8 +262,9 @@ export default function BookDemo({ t, lang, plans, config }: { t: T; lang: Lang;
               ))}
             </ol>
           </div>
+          </div>
         </div>
-        <div className="rounded-xl border border-border-default bg-bg-surface p-24 shadow-lg md:p-32 lg:sticky lg:top-24">
+        <div {...rv('right', 1)} className="rounded-xl border border-border-default bg-bg-surface p-24 shadow-lg md:p-32 lg:sticky lg:top-[112px]">
           {booked ? (
             <Booked t={t} lang={lang} booked={booked} name={name.trim()} email={email.trim()} />
           ) : (
@@ -353,7 +366,7 @@ export default function BookDemo({ t, lang, plans, config }: { t: T; lang: Lang;
                         aria-checked={on}
                         onClick={() => setTime(s)}
                         className={cx(
-                          'inline-flex h-[40px] items-center gap-4 rounded-full border px-16 text-latin-label-sm font-semibold transition',
+                          'inline-flex h-[40px] items-center gap-4 rounded-full border px-16 text-latin-label-sm font-semibold transition-all duration-300 hover:-translate-y-[2px] active:scale-95',
                           on ? 'border-mocha-900 bg-mocha-900 text-cream-50' : 'border-border-strong bg-bg-surface text-text-primary hover:bg-bg-canvas',
                         )}
                       >
@@ -369,8 +382,9 @@ export default function BookDemo({ t, lang, plans, config }: { t: T; lang: Lang;
               <button
                 type="submit"
                 disabled={busy || !slots}
-                className="inline-flex h-[56px] items-center justify-center rounded-lg bg-action-primary text-latin-label font-semibold text-text-on-action hover:bg-action-primary-pressed disabled:opacity-60"
+                className="inline-flex h-[56px] items-center justify-center rounded-lg kn-btn inline-flex items-center justify-center gap-8 bg-action-primary text-latin-label font-semibold text-text-on-action hover:bg-action-primary-pressed disabled:opacity-60"
               >
+                {busy && <Spinner />}
                 {t('site.bd.submit')}
               </button>
               <p className="inline-flex items-center gap-8 text-latin-caption text-text-secondary">

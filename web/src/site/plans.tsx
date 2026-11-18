@@ -5,6 +5,7 @@ import { cx } from '../components/ui';
 import type { Lang, T } from '../lib/i18n';
 import type { PlanOut, PlansOut } from '../lib/types';
 import { LinkButton } from './Layout';
+import { rv } from './motion';
 import { Container, Section } from './parts';
 import { money, num, ROUTES } from './site';
 
@@ -60,12 +61,12 @@ function PlanCard({
   return (
     <article
       className={cx(
-        'relative flex flex-col rounded-xl p-24',
-        dark ? 'bg-mocha-900 text-cream-50 shadow-lg' : 'border border-border-default bg-bg-surface',
+        'kn-lift group relative flex h-full flex-col rounded-xl p-24',
+        dark ? 'bg-mocha-900 text-cream-50 shadow-lg' : 'border border-border-default bg-bg-surface hover:border-mocha-300',
       )}
     >
       {p.most_popular && (
-        <span className="absolute left-24 top-[-13px] rounded-full bg-sage-500 px-12 py-4 text-web-eyebrow uppercase text-mocha-950">
+        <span className="kn-glow absolute left-24 top-[-13px] rounded-full bg-sage-500 px-12 py-4 text-web-eyebrow uppercase text-mocha-950">
           {t('site.price.popular')}
         </span>
       )}
@@ -75,7 +76,9 @@ function PlanCard({
           <span className="text-[40px] font-bold leading-[48px]">{t('site.price.custom')}</span>
         ) : (
           <>
-            <span className="text-web-display">{money(yearly ? p.annual_price! : p.price!, lang)}</span>
+            <span key={yearly ? 'y' : 'm'} className="kn-pop text-web-display">
+              {money(yearly ? p.annual_price! : p.price!, lang)}
+            </span>
             <span className={cx('text-latin-body', dark ? 'text-cream-400' : 'text-text-secondary')}>
               {free ? t('site.price.forever') : yearly ? t('site.price.year') : t('site.price.month')}
             </span>
@@ -112,7 +115,12 @@ function PlanCard({
       <ul className="flex flex-1 flex-col gap-12">
         {planBullets(plans, i, t).map((b) => (
           <li key={b} className="flex gap-12 text-latin-body">
-            <Check width={18} height={18} className={cx('mt-[3px] shrink-0', dark ? 'text-sage-500' : 'text-status-success')} aria-hidden />
+            <Check
+              width={18}
+              height={18}
+              className={cx('mt-[3px] shrink-0 transition-transform duration-300 group-hover:scale-125', dark ? 'text-sage-500' : 'text-status-success')}
+              aria-hidden
+            />
             {b}
           </li>
         ))}
@@ -147,8 +155,10 @@ export function PlanGrid({
         shown.length >= 5 ? 'lg:grid-cols-3 xl:grid-cols-5 xl:gap-[14px]' : 'lg:grid-cols-4',
       )}
     >
-      {shown.map(({ p, i }) => (
-        <PlanCard key={p.code} plans={data.plans} i={i} t={t} lang={lang} annual={annual} showAnnualLine={showAnnualLine} />
+      {shown.map(({ p, i }, n) => (
+        <div key={p.code} {...rv('up', n)}>
+          <PlanCard plans={data.plans} i={i} t={t} lang={lang} annual={annual} showAnnualLine={showAnnualLine} />
+        </div>
       ))}
     </div>
   );
@@ -157,9 +167,10 @@ export function PlanGrid({
 /** "Free forever for 1 technician" strip under the home pricing cards. */
 export function FreeStrip({ plan, t }: { plan: PlanOut; t: T }) {
   return (
-    <div className="mt-32 flex flex-col gap-16 rounded-xl border border-dashed border-border-strong p-20 sm:flex-row sm:items-center sm:justify-between md:px-24">
+    <div {...rv('up')} className="mt-32">
+    <div className="group flex flex-col gap-16 rounded-xl border border-dashed border-border-strong p-20 transition-colors duration-300 hover:border-solid hover:border-status-success hover:bg-bg-surface sm:flex-row sm:items-center sm:justify-between md:px-24">
       <div className="flex items-center gap-16">
-        <span className="inline-flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-status-success-bg text-status-success">
+        <span className="inline-flex h-[44px] w-[44px] shrink-0 items-center justify-center rounded-full bg-status-success-bg text-status-success transition-transform duration-500 group-hover:rotate-[360deg]">
           <User width={20} height={20} aria-hidden />
         </span>
         <div>
@@ -171,6 +182,7 @@ export function FreeStrip({ plan, t }: { plan: PlanOut; t: T }) {
         {t('site.price.start_free')}
       </LinkButton>
     </div>
+    </div>
   );
 }
 
@@ -179,14 +191,14 @@ export function PriceState({ kind, t, retry }: { kind: 'loading' | 'error'; t: T
     return (
       <div className="grid gap-16 sm:grid-cols-2 lg:grid-cols-4" aria-busy="true" aria-label={t('site.price.loading')}>
         {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="h-[420px] animate-pulse rounded-xl bg-bg-subtle" />
+          <div key={i} className="kn-shimmer h-[420px] rounded-xl" />
         ))}
       </div>
     );
   return (
     <div className="rounded-xl border border-border-default bg-bg-surface p-24 text-center">
       <p className="text-latin-body text-text-secondary">{t('site.price.error')}</p>
-      <button type="button" onClick={retry} className="mt-12 text-web-label font-semibold text-text-primary underline">
+      <button type="button" onClick={retry} className="kn-link mt-12 text-web-label font-semibold text-text-primary">
         {t('site.price.retry')}
       </button>
     </div>
@@ -205,15 +217,15 @@ export function CreditsCard({ data, t, lang }: { data: PlansOut; t: T; lang: Lan
     ...(pack ? [{ icon: <Plus width={18} height={18} />, big: money(pack.price, lang), small: t('site.cr.pack', { n: num(pack.credits, lang) }) }] : []),
   ];
   return (
-    <div className="mt-40 flex flex-col gap-24 rounded-xl border border-border-default bg-bg-surface p-24 md:p-32 lg:flex-row lg:items-center lg:justify-between">
+    <div {...rv('up')} className="mt-40 flex flex-col gap-24 rounded-xl border border-border-default bg-bg-surface p-24 md:p-32 lg:flex-row lg:items-center lg:justify-between">
       <div className="lg:max-w-[400px]">
         <h3 className="text-web-h3">{t('site.cr.title')}</h3>
         <p className="mt-8 text-latin-body text-text-secondary md:text-web-body">{t('site.cr.body')}</p>
       </div>
       <ul className="grid grid-cols-2 gap-12 sm:grid-cols-4 lg:w-[560px]">
         {items.map((it) => (
-          <li key={it.small} className="flex flex-col gap-4 rounded-lg bg-bg-canvas p-16">
-            <span className="text-mocha-700" aria-hidden>
+          <li key={it.small} className="kn-lift group flex flex-col gap-4 rounded-lg bg-bg-canvas p-16">
+            <span className="inline-block text-mocha-700 transition-transform duration-300 group-hover:-rotate-12 group-hover:scale-125" aria-hidden>
               {it.icon}
             </span>
             <span className="text-[20px] font-semibold leading-[28px]">{it.big}</span>
@@ -261,10 +273,10 @@ export function Comparison({ data, t, lang }: { data: PlansOut; t: T; lang: Lang
     <Section tone="surface" id="compare">
       <Container>
         <div className="mx-auto mb-40 flex max-w-[760px] flex-col gap-16 text-center md:mb-48">
-          <h2 className="text-web-m-h2 md:text-web-h2">{t('site.cmp.title')}</h2>
-          <p className="text-latin-body-lg text-text-secondary md:text-web-body-lg">{t('site.cmp.body')}</p>
+          <h2 {...rv('up')} className="text-web-m-h2 md:text-web-h2">{t('site.cmp.title')}</h2>
+          <p {...rv('up', 1)} className="text-latin-body-lg text-text-secondary md:text-web-body-lg">{t('site.cmp.body')}</p>
         </div>
-        <div className="overflow-x-auto rounded-xl border border-border-default">
+        <div {...rv('up', 2)} className="overflow-x-auto rounded-xl border border-border-default">
           <table className="w-full min-w-[760px] border-collapse bg-bg-surface text-left">
             <thead>
               <tr>
@@ -292,7 +304,7 @@ export function Comparison({ data, t, lang }: { data: PlansOut; t: T; lang: Lang
                     </th>
                   </tr>
                   {g.rows.map((r) => (
-                    <tr key={r.key} className="border-t border-border-default">
+                    <tr key={r.key} className="kn-row border-t border-border-default">
                       <th scope="row" className="sticky left-0 z-10 bg-bg-surface px-16 py-12 text-latin-body font-normal">
                         {r.label}
                       </th>
@@ -325,8 +337,8 @@ export function BillingSwitch({ annual, onChange, t }: { annual: boolean; onChan
       aria-checked={on}
       onClick={() => onChange(value)}
       className={cx(
-        'inline-flex h-[40px] items-center gap-8 rounded-full px-20 text-web-label font-semibold transition',
-        on ? 'bg-cream-50 text-mocha-950' : 'text-cream-200 hover:text-cream-50',
+        'inline-flex h-[40px] items-center gap-8 rounded-full px-20 text-web-label font-semibold transition-all duration-300 active:scale-95',
+        on ? 'bg-cream-50 text-mocha-950 shadow-md' : 'text-cream-200 hover:bg-cream-100/[0.08] hover:text-cream-50',
       )}
     >
       {label}
@@ -339,7 +351,7 @@ export function BillingSwitch({ annual, onChange, t }: { annual: boolean; onChan
         annual,
         <>
           {t('site.pp.annual')}
-          <span className="rounded-full bg-sage-500 px-8 py-2 text-[12px] leading-[16px] text-mocha-950">{t('site.pp.two_free')}</span>
+          <span className="kn-glow rounded-full bg-sage-500 px-8 py-2 text-[12px] leading-[16px] text-mocha-950">{t('site.pp.two_free')}</span>
         </>,
         true,
       )}

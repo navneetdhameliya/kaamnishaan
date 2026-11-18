@@ -114,8 +114,8 @@ export function TitleBlock({ ctx, compact }: { ctx: PageCtx; compact?: boolean }
 
 function Photo({ p, label, className }: { p: PublicPhoto; label?: string; className?: string }) {
   return (
-    <figure className={cx('relative overflow-hidden rounded-lg bg-bg-subtle', className)}>
-      <img src={p.url} alt={label ?? ''} loading="lazy" className="h-full w-full object-cover" />
+    <figure className={cx('group relative overflow-hidden rounded-lg bg-bg-subtle', className)}>
+      <img src={p.url} alt={label ?? ''} loading="lazy" className="kn-zoom h-full w-full object-cover" />
       {label && (
         <figcaption className="absolute left-8 top-8 rounded-sm bg-espresso-900 px-8 py-2 text-latin-caption font-bold uppercase tracking-wide text-cream-50">
           {label}

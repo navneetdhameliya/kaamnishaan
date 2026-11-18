@@ -4,6 +4,7 @@ import { useId, useState, type InputHTMLAttributes, type ReactNode } from 'react
 import { cx } from '../components/ui';
 import type { T } from '../lib/i18n';
 import type { ConfigOut, PlansOut } from '../lib/types';
+import { rv } from './motion';
 
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -32,7 +33,7 @@ export function Field({
       </div>
       {children(id, !!error)}
       {error && (
-        <p id={`${id}-error`} className="inline-flex items-start gap-4 text-latin-caption text-status-danger">
+        <p id={`${id}-error`} className="kn-drawer inline-flex items-start gap-4 text-latin-caption text-status-danger">
           <CircleAlert width={14} height={14} className="mt-[2px] shrink-0" aria-hidden />
           {error}
         </p>
@@ -45,7 +46,8 @@ export function Field({
 export function inputClass(invalid: boolean) {
   return cx(
     'h-[52px] w-full rounded-lg border bg-bg-surface px-12 text-latin-body text-text-primary placeholder:text-taupe-500 focus:outline-none focus:ring-2 focus:ring-focus-ring',
-    invalid ? 'border-[1.5px] border-status-danger' : 'border-border-strong',
+    'transition-[border-color,box-shadow,background-color] duration-200',
+    invalid ? 'border-[1.5px] border-status-danger' : 'border-border-strong hover:border-mocha-500',
   );
 }
 
@@ -137,7 +139,7 @@ export function SelectInput({
 
 export function ErrorSummary({ children }: { children: ReactNode }) {
   return (
-    <div role="alert" className="flex items-start gap-8 rounded-md bg-status-danger-bg px-12 py-12 text-latin-label-sm font-semibold text-status-danger">
+    <div role="alert" className="kn-shake flex items-start gap-8 rounded-md bg-status-danger-bg px-12 py-12 text-latin-label-sm font-semibold text-status-danger">
       <CircleAlert width={16} height={16} className="mt-[2px] shrink-0" aria-hidden />
       <span>{children}</span>
     </div>
@@ -146,7 +148,7 @@ export function ErrorSummary({ children }: { children: ReactNode }) {
 
 export function Rule({ ok, children }: { ok: boolean; children: ReactNode }) {
   return (
-    <li className={cx('flex items-center gap-[6px] text-latin-caption', ok ? 'text-text-secondary' : 'text-status-danger')}>
+    <li className={cx('flex items-center gap-[6px] text-latin-caption transition-colors duration-300', ok ? 'text-text-secondary' : 'text-status-danger')}>
       {ok ? <Check width={14} height={14} className="text-status-success" aria-hidden /> : <X width={14} height={14} aria-hidden />}
       {children}
     </li>
@@ -159,7 +161,7 @@ function Badge({ href, small, big }: { href: string; small: string; big: string 
       href={href}
       target="_blank"
       rel="noreferrer"
-      className="inline-flex h-[44px] items-center gap-8 rounded-md bg-black px-12 text-white hover:bg-espresso-900"
+      className="kn-btn inline-flex h-[44px] items-center gap-8 rounded-md bg-black px-12 text-white hover:bg-espresso-900"
     >
       <Smartphone width={20} height={20} aria-hidden />
       <span className="flex flex-col leading-none">
@@ -196,7 +198,7 @@ export function TrialAside({ t, plans, config }: { t: T; plans: PlansOut | null;
     t('site.aside.no_card'),
   ].filter((x): x is string => !!x);
   return (
-    <aside className="relative overflow-hidden rounded-xl bg-espresso-950 px-24 pt-40 md:px-48 md:pt-48">
+    <aside {...rv('right', 1)} className="relative overflow-hidden rounded-xl bg-espresso-950 px-24 pt-40 md:px-48 md:pt-48">
       <div
         aria-hidden
         className="pointer-events-none absolute -bottom-[120px] -right-[160px] h-[420px] w-[420px] rounded-full border-[48px] border-mocha-950"
@@ -232,7 +234,7 @@ export function TrialAside({ t, plans, config }: { t: T; plans: PlansOut | null;
           alt=""
           width={243}
           height={516}
-          className="mx-auto mb-40 mt-32 w-[200px] md:w-[243px]"
+          className="kn-float mx-auto mb-40 mt-32 w-[200px] drop-shadow-[0_16px_32px_rgba(0,0,0,0.35)] md:w-[243px]"
         />
       </div>
     </aside>
