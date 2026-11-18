@@ -1,0 +1,234 @@
+{
+  "slug": "voice-notes-in-hindi-and-gujarati",
+  "category": "voice",
+  "featured": false,
+  "published": "2026-10-12",
+  "cover": "/img/photo-voice.webp",
+  "content": {
+    "en": {
+      "author": "KaamNishaan team",
+      "title": "Voice notes in Hindi and Gujarati: reports without typing",
+      "summary": "Many technicians explain their work far better out loud, in their own language. Here is how to turn that into a report the customer can read.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Ask a technician what they did and you get a clear, detailed answer. Ask them to type it on a small screen and you get three words. Voice notes close that gap."
+        },
+        {
+          "type": "h2",
+          "text": "Speak the way you normally speak"
+        },
+        {
+          "type": "p",
+          "text": "Say what was wrong, what you fixed and any advice for the customer. Mixing languages is fine — that is how most teams talk on site."
+        },
+        {
+          "type": "list",
+          "title": "A good voice note covers:",
+          "items": [
+            "What the customer said was wrong",
+            "What you found",
+            "What you did",
+            "What the customer should do next"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Keep the recording"
+        },
+        {
+          "type": "p",
+          "text": "The written version can be corrected, but the original audio should stay with the job. If a question comes up later, the manager can listen to exactly what was said."
+        },
+        {
+          "type": "h2",
+          "text": "Report in the customer’s language"
+        },
+        {
+          "type": "p",
+          "text": "In KaamNishaan the note is written down word for word, and the AI uses it with the photos and checklist to draft the report — in English, Hindi, Gujarati, Spanish or French, whichever the customer reads."
+        }
+      ]
+    },
+    "hi": {
+      "author": "KaamNishaan टीम",
+      "title": "हिंदी और गुजराती में वॉइस नोट: बिना टाइपिंग के रिपोर्ट",
+      "summary": "कई टेक्नीशियन अपना काम बोलकर, अपनी भाषा में कहीं बेहतर समझाते हैं। इसे ग्राहक के पढ़ने लायक रिपोर्ट में ऐसे बदलें।",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "टेक्नीशियन से पूछें क्या किया, तो साफ़ और पूरा जवाब मिलता है। छोटी स्क्रीन पर टाइप करने को कहें, तो तीन शब्द मिलते हैं। वॉइस नोट यह दूरी मिटाते हैं।"
+        },
+        {
+          "type": "h2",
+          "text": "वैसे ही बोलें जैसे रोज़ बोलते हैं"
+        },
+        {
+          "type": "p",
+          "text": "बताएँ क्या ख़राब था, क्या ठीक किया और ग्राहक के लिए कोई सलाह। भाषाएँ मिलाना ठीक है — साइट पर ज़्यादातर टीमें ऐसे ही बात करती हैं।"
+        },
+        {
+          "type": "list",
+          "title": "अच्छे वॉइस नोट में होता है:",
+          "items": [
+            "ग्राहक ने क्या समस्या बताई",
+            "आपको क्या मिला",
+            "आपने क्या किया",
+            "ग्राहक को आगे क्या करना है"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "रिकॉर्डिंग संभालकर रखें"
+        },
+        {
+          "type": "p",
+          "text": "लिखा हुआ ठीक किया जा सकता है, लेकिन असली ऑडियो जॉब के साथ रहना चाहिए। बाद में सवाल उठे, तो मैनेजर ठीक वही सुन सकता है जो कहा गया।"
+        },
+        {
+          "type": "h2",
+          "text": "ग्राहक की भाषा में रिपोर्ट"
+        },
+        {
+          "type": "p",
+          "text": "KaamNishaan में नोट शब्दशः लिखा जाता है, और AI उसे फ़ोटो और चेकलिस्ट के साथ मिलाकर रिपोर्ट बनाता है — अंग्रेज़ी, हिंदी, गुजराती, स्पेनिश या फ़्रेंच में, जो भाषा ग्राहक पढ़ता है।"
+        }
+      ]
+    },
+    "gu": {
+      "author": "KaamNishaan ટીમ",
+      "title": "હિન્દી અને ગુજરાતીમાં વૉઇસ નોટ: ટાઇપિંગ વગર રિપોર્ટ",
+      "summary": "ઘણા ટેક્નિશિયન પોતાનું કામ બોલીને, પોતાની ભાષામાં ઘણું સારું સમજાવે છે. તેને ગ્રાહક વાંચી શકે એવા રિપોર્ટમાં આ રીતે ફેરવો.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "ટેક્નિશિયનને પૂછો શું કર્યું, તો સ્પષ્ટ અને પૂરો જવાબ મળે છે. નાની સ્ક્રીન પર ટાઇપ કરવા કહો, તો ત્રણ શબ્દો મળે છે. વૉઇસ નોટ આ અંતર દૂર કરે છે."
+        },
+        {
+          "type": "h2",
+          "text": "રોજની જેમ બોલો"
+        },
+        {
+          "type": "p",
+          "text": "કહો શું ખરાબ હતું, શું સુધાર્યું અને ગ્રાહક માટે કોઈ સલાહ. ભાષાઓ ભેળવવી ઠીક છે — સાઇટ પર મોટા ભાગની ટીમો એમ જ વાત કરે છે."
+        },
+        {
+          "type": "list",
+          "title": "સારી વૉઇસ નોટમાં હોય છે:",
+          "items": [
+            "ગ્રાહકે શું સમસ્યા કહી",
+            "તમને શું મળ્યું",
+            "તમે શું કર્યું",
+            "ગ્રાહકે આગળ શું કરવું"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "રેકોર્ડિંગ સાચવી રાખો"
+        },
+        {
+          "type": "p",
+          "text": "લખેલું સુધારી શકાય, પણ મૂળ ઑડિયો જૉબ સાથે રહેવો જોઈએ. પછી સવાલ ઊઠે, તો મેનેજર બરાબર એ જ સાંભળી શકે જે કહેવાયું."
+        },
+        {
+          "type": "h2",
+          "text": "ગ્રાહકની ભાષામાં રિપોર્ટ"
+        },
+        {
+          "type": "p",
+          "text": "KaamNishaanમાં નોટ શબ્દશઃ લખાય છે, અને AI તેને ફોટો અને ચેકલિસ્ટ સાથે જોડીને રિપોર્ટ બનાવે છે — અંગ્રેજી, હિન્દી, ગુજરાતી, સ્પેનિશ કે ફ્રેન્ચમાં, જે ભાષા ગ્રાહક વાંચે."
+        }
+      ]
+    },
+    "es": {
+      "author": "Equipo de KaamNishaan",
+      "title": "Notas de voz en hindi y guyaratí: informes sin escribir",
+      "summary": "Muchos técnicos explican mucho mejor su trabajo hablando, en su idioma. Así se convierte en un informe que el cliente puede leer.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Pregunta a un técnico qué hizo y obtendrás una respuesta clara y detallada. Pídele que lo escriba en una pantalla pequeña y obtendrás tres palabras. Las notas de voz cierran esa brecha."
+        },
+        {
+          "type": "h2",
+          "text": "Habla como hablas siempre"
+        },
+        {
+          "type": "p",
+          "text": "Di qué fallaba, qué arreglaste y algún consejo para el cliente. Mezclar idiomas está bien: así hablan la mayoría de los equipos en el sitio."
+        },
+        {
+          "type": "list",
+          "title": "Una buena nota de voz incluye:",
+          "items": [
+            "Qué problema contó el cliente",
+            "Qué encontraste",
+            "Qué hiciste",
+            "Qué debe hacer el cliente después"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Guarda la grabación"
+        },
+        {
+          "type": "p",
+          "text": "El texto se puede corregir, pero el audio original debe quedarse con el trabajo. Si surge una duda, el responsable puede oír exactamente lo que se dijo."
+        },
+        {
+          "type": "h2",
+          "text": "Informe en el idioma del cliente"
+        },
+        {
+          "type": "p",
+          "text": "En KaamNishaan la nota se transcribe palabra por palabra y la IA la usa con las fotos y la lista para redactar el informe, en inglés, hindi, guyaratí, español o francés, según lo que lea el cliente."
+        }
+      ]
+    },
+    "fr": {
+      "author": "L’équipe KaamNishaan",
+      "title": "Notes vocales en hindi et en gujarati : des rapports sans taper",
+      "summary": "Beaucoup de techniciens expliquent bien mieux leur travail à voix haute, dans leur langue. Voici comment en faire un rapport lisible par le client.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Demandez à un technicien ce qu’il a fait : la réponse est claire et détaillée. Demandez-lui de la taper sur un petit écran : trois mots. Les notes vocales comblent cet écart."
+        },
+        {
+          "type": "h2",
+          "text": "Parlez comme d’habitude"
+        },
+        {
+          "type": "p",
+          "text": "Dites ce qui n’allait pas, ce que vous avez réparé et un conseil pour le client. Mélanger les langues ne pose aucun problème — c’est ainsi que parlent la plupart des équipes."
+        },
+        {
+          "type": "list",
+          "title": "Une bonne note vocale dit :",
+          "items": [
+            "Le problème décrit par le client",
+            "Ce que vous avez trouvé",
+            "Ce que vous avez fait",
+            "Ce que le client doit faire ensuite"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Gardez l’enregistrement"
+        },
+        {
+          "type": "p",
+          "text": "Le texte peut être corrigé, mais l’audio original doit rester avec l’intervention. En cas de question, le responsable peut réécouter exactement ce qui a été dit."
+        },
+        {
+          "type": "h2",
+          "text": "Un rapport dans la langue du client"
+        },
+        {
+          "type": "p",
+          "text": "Dans KaamNishaan, la note est transcrite mot à mot, et l’IA s’en sert avec les photos et la checklist pour rédiger le rapport — en anglais, hindi, gujarati, espagnol ou français, selon la langue du client."
+        }
+      ]
+    }
+  }
+}

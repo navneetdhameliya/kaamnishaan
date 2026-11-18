@@ -1,0 +1,294 @@
+{
+  "slug": "how-photo-proof-wins-hvac-disputes",
+  "category": "hvac",
+  "featured": false,
+  "published": "2026-10-28",
+  "cover": "/img/ind-hvac-photo.webp",
+  "content": {
+    "en": {
+      "author": "KaamNishaan team",
+      "title": "How photo proof wins HVAC disputes",
+      "summary": "“Was the filter really cleaned?” Three photos taken the same way on every visit end most arguments before they start.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Most HVAC disputes are not about bad work. They are about work the customer didn’t see. The AC is inside a ceiling or on a roof, the visit took forty minutes, and a week later the room is warm again."
+        },
+        {
+          "type": "h2",
+          "text": "Take the same three photos every time"
+        },
+        {
+          "type": "list",
+          "title": "On every service visit:",
+          "items": [
+            "The unit plate, so the model and serial are on record",
+            "The dirty filter or coil before you clean it",
+            "The same part, from the same angle, after cleaning"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "When every technician takes the same photos, the before and after line up and anyone can compare them in a second."
+        },
+        {
+          "type": "h2",
+          "text": "Let the time and place speak"
+        },
+        {
+          "type": "p",
+          "text": "A photo is stronger when it carries when and where it was taken. Photos added from the gallery, days later, can’t prove much. Photos taken inside the job, on site, can."
+        },
+        {
+          "type": "h2",
+          "text": "Add the readings"
+        },
+        {
+          "type": "p",
+          "text": "Write down the numbers that matter — supply and return air temperature, gas pressure, current — next to the photos. A reading with a unit and a time is hard to argue with."
+        },
+        {
+          "type": "quote",
+          "text": "The best answer to a complaint is a dated photo you already have.",
+          "by": "KaamNishaan team"
+        },
+        {
+          "type": "h2",
+          "text": "Send it before the customer asks"
+        },
+        {
+          "type": "p",
+          "text": "Share the report the same day. A customer who has already seen the clean filter rarely calls to ask whether it was cleaned."
+        }
+      ]
+    },
+    "hi": {
+      "author": "KaamNishaan टीम",
+      "title": "फ़ोटो सबूत से HVAC विवाद कैसे जीतें",
+      "summary": "“क्या फ़िल्टर सच में साफ़ हुआ?” हर विज़िट पर एक जैसी ली गई तीन फ़ोटो ज़्यादातर बहस शुरू होने से पहले ही ख़त्म कर देती हैं।",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "ज़्यादातर HVAC विवाद ख़राब काम के बारे में नहीं होते। वे उस काम के बारे में होते हैं जो ग्राहक ने देखा नहीं। AC छत के अंदर या छत के ऊपर होता है, विज़िट चालीस मिनट की थी, और एक हफ़्ते बाद कमरा फिर गर्म है।"
+        },
+        {
+          "type": "h2",
+          "text": "हर बार वही तीन फ़ोटो लें"
+        },
+        {
+          "type": "list",
+          "title": "हर सर्विस विज़िट पर:",
+          "items": [
+            "यूनिट प्लेट, ताकि मॉडल और सीरियल रिकॉर्ड में रहे",
+            "साफ़ करने से पहले गंदा फ़िल्टर या कॉइल",
+            "साफ़ करने के बाद वही हिस्सा, उसी कोण से"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "जब हर टेक्नीशियन एक जैसी फ़ोटो लेता है, तो पहले और बाद की फ़ोटो मेल खाती हैं और कोई भी उन्हें एक सेकंड में मिला सकता है।"
+        },
+        {
+          "type": "h2",
+          "text": "समय और जगह को बोलने दें"
+        },
+        {
+          "type": "p",
+          "text": "फ़ोटो तब ज़्यादा मज़बूत होती है जब उसमें लेने का समय और जगह हो। दिनों बाद गैलरी से जोड़ी गई फ़ोटो ज़्यादा साबित नहीं करती। साइट पर, जॉब के अंदर ली गई फ़ोटो करती है।"
+        },
+        {
+          "type": "h2",
+          "text": "रीडिंग जोड़ें"
+        },
+        {
+          "type": "p",
+          "text": "ज़रूरी नंबर फ़ोटो के पास लिखें — सप्लाई और रिटर्न हवा का तापमान, गैस प्रेशर, करंट। यूनिट और समय वाली रीडिंग पर बहस करना मुश्किल है।"
+        },
+        {
+          "type": "quote",
+          "text": "शिकायत का सबसे अच्छा जवाब वह तारीख वाली फ़ोटो है जो आपके पास पहले से है।",
+          "by": "KaamNishaan टीम"
+        },
+        {
+          "type": "h2",
+          "text": "ग्राहक के पूछने से पहले भेजें"
+        },
+        {
+          "type": "p",
+          "text": "उसी दिन रिपोर्ट शेयर करें। जिस ग्राहक ने साफ़ फ़िल्टर पहले ही देख लिया, वह शायद ही पूछने के लिए फ़ोन करता है कि साफ़ हुआ या नहीं।"
+        }
+      ]
+    },
+    "gu": {
+      "author": "KaamNishaan ટીમ",
+      "title": "ફોટો પુરાવાથી HVAC વિવાદ કેવી રીતે જીતવા",
+      "summary": "“શું ફિલ્ટર ખરેખર સાફ થયું?” દરેક વિઝિટ પર એક જ રીતે લીધેલા ત્રણ ફોટો મોટા ભાગની દલીલ શરૂ થતાં પહેલાં જ પૂરી કરી દે છે.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "મોટા ભાગના HVAC વિવાદ ખરાબ કામ વિશે નથી હોતા. તે એ કામ વિશે હોય છે જે ગ્રાહકે જોયું નથી. AC છતની અંદર કે છત પર હોય છે, વિઝિટ ચાલીસ મિનિટની હતી, અને એક અઠવાડિયા પછી રૂમ ફરી ગરમ છે."
+        },
+        {
+          "type": "h2",
+          "text": "દર વખતે એ જ ત્રણ ફોટો લો"
+        },
+        {
+          "type": "list",
+          "title": "દરેક સર્વિસ વિઝિટ પર:",
+          "items": [
+            "યુનિટ પ્લેટ, જેથી મૉડલ અને સીરિયલ રેકોર્ડમાં રહે",
+            "સાફ કરતાં પહેલાં ગંદું ફિલ્ટર કે કૉઇલ",
+            "સાફ કર્યા પછી એ જ ભાગ, એ જ ખૂણેથી"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "જ્યારે દરેક ટેક્નિશિયન એકસરખા ફોટો લે છે, ત્યારે પહેલાં અને પછીના ફોટો મેળ ખાય છે અને કોઈ પણ તેને એક સેકન્ડમાં સરખાવી શકે છે."
+        },
+        {
+          "type": "h2",
+          "text": "સમય અને જગ્યાને બોલવા દો"
+        },
+        {
+          "type": "p",
+          "text": "ફોટો ત્યારે વધુ મજબૂત હોય છે જ્યારે તેમાં લેવાનો સમય અને જગ્યા હોય. દિવસો પછી ગૅલરીમાંથી ઉમેરેલો ફોટો બહુ સાબિત કરતો નથી. સાઇટ પર, જૉબની અંદર લીધેલો ફોટો કરે છે."
+        },
+        {
+          "type": "h2",
+          "text": "રીડિંગ ઉમેરો"
+        },
+        {
+          "type": "p",
+          "text": "જરૂરી નંબર ફોટોની પાસે લખો — સપ્લાય અને રિટર્ન હવાનું તાપમાન, ગેસ પ્રેશર, કરંટ. યુનિટ અને સમયવાળા રીડિંગ પર દલીલ કરવી મુશ્કેલ છે."
+        },
+        {
+          "type": "quote",
+          "text": "ફરિયાદનો સૌથી સારો જવાબ એ તારીખવાળો ફોટો છે જે તમારી પાસે પહેલેથી છે.",
+          "by": "KaamNishaan ટીમ"
+        },
+        {
+          "type": "h2",
+          "text": "ગ્રાહક પૂછે તે પહેલાં મોકલો"
+        },
+        {
+          "type": "p",
+          "text": "એ જ દિવસે રિપોર્ટ શેર કરો. જે ગ્રાહકે સાફ ફિલ્ટર પહેલેથી જોઈ લીધું છે, તે ભાગ્યે જ પૂછવા ફોન કરે છે કે સાફ થયું કે નહીં."
+        }
+      ]
+    },
+    "es": {
+      "author": "Equipo de KaamNishaan",
+      "title": "Cómo las fotos ganan las disputas de climatización",
+      "summary": "“¿De verdad se limpió el filtro?”. Tres fotos hechas igual en cada visita acaban con la mayoría de las discusiones antes de empezar.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "La mayoría de las disputas de climatización no son por un mal trabajo, sino por un trabajo que el cliente no vio. El equipo está en el techo o en la azotea, la visita duró cuarenta minutos y una semana después la sala vuelve a estar caliente."
+        },
+        {
+          "type": "h2",
+          "text": "Haz las mismas tres fotos siempre"
+        },
+        {
+          "type": "list",
+          "title": "En cada visita de servicio:",
+          "items": [
+            "La placa del equipo, para registrar modelo y número de serie",
+            "El filtro o la batería sucios antes de limpiar",
+            "La misma pieza, desde el mismo ángulo, después de limpiar"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Cuando todos los técnicos hacen las mismas fotos, el antes y el después coinciden y cualquiera puede compararlos en un segundo."
+        },
+        {
+          "type": "h2",
+          "text": "Deja que hablen la hora y el lugar"
+        },
+        {
+          "type": "p",
+          "text": "Una foto vale más cuando lleva cuándo y dónde se hizo. Las fotos añadidas desde la galería días después prueban poco. Las hechas dentro del trabajo, en el sitio, sí."
+        },
+        {
+          "type": "h2",
+          "text": "Añade las lecturas"
+        },
+        {
+          "type": "p",
+          "text": "Anota los números importantes —temperatura de impulsión y retorno, presión del gas, corriente— junto a las fotos. Una lectura con unidad y hora es difícil de discutir."
+        },
+        {
+          "type": "quote",
+          "text": "La mejor respuesta a una queja es una foto con fecha que ya tienes.",
+          "by": "Equipo de KaamNishaan"
+        },
+        {
+          "type": "h2",
+          "text": "Envíalo antes de que pregunten"
+        },
+        {
+          "type": "p",
+          "text": "Comparte el informe el mismo día. Un cliente que ya ha visto el filtro limpio rara vez llama para preguntar si se limpió."
+        }
+      ]
+    },
+    "fr": {
+      "author": "L’équipe KaamNishaan",
+      "title": "Comment la preuve photo règle les litiges en CVC",
+      "summary": "« Le filtre a-t-il vraiment été nettoyé ? » Trois photos prises de la même façon à chaque visite évitent la plupart des disputes.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "La plupart des litiges en CVC ne portent pas sur un mauvais travail, mais sur un travail que le client n’a pas vu. L’appareil est dans un faux plafond ou sur le toit, la visite a duré quarante minutes, et une semaine plus tard la pièce est de nouveau chaude."
+        },
+        {
+          "type": "h2",
+          "text": "Prenez toujours les trois mêmes photos"
+        },
+        {
+          "type": "list",
+          "title": "À chaque entretien :",
+          "items": [
+            "La plaque de l’appareil, pour garder modèle et numéro de série",
+            "Le filtre ou la batterie sales avant nettoyage",
+            "La même pièce, sous le même angle, après nettoyage"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Quand chaque technicien prend les mêmes photos, l’avant et l’après se correspondent et n’importe qui peut les comparer en une seconde."
+        },
+        {
+          "type": "h2",
+          "text": "Laissez parler l’heure et le lieu"
+        },
+        {
+          "type": "p",
+          "text": "Une photo pèse plus lourd quand elle garde où et quand elle a été prise. Une photo ajoutée de la galerie des jours plus tard prouve peu. Une photo prise dans l’intervention, sur place, prouve beaucoup."
+        },
+        {
+          "type": "h2",
+          "text": "Ajoutez les mesures"
+        },
+        {
+          "type": "p",
+          "text": "Notez les chiffres qui comptent — température de soufflage et de reprise, pression du gaz, intensité — à côté des photos. Une mesure avec unité et heure se conteste difficilement."
+        },
+        {
+          "type": "quote",
+          "text": "La meilleure réponse à une réclamation, c’est une photo datée que vous avez déjà.",
+          "by": "L’équipe KaamNishaan"
+        },
+        {
+          "type": "h2",
+          "text": "Envoyez avant qu’on vous le demande"
+        },
+        {
+          "type": "p",
+          "text": "Partagez le rapport le jour même. Un client qui a déjà vu le filtre propre appelle rarement pour demander s’il a été nettoyé."
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,199 @@
+{
+  "slug": "before-and-after-photos-guide-for-technicians",
+  "category": "tips",
+  "featured": false,
+  "published": "2026-10-20",
+  "cover": "/img/photo-phonecam.webp",
+  "content": {
+    "en": {
+      "author": "KaamNishaan team",
+      "title": "Before and after photos: a simple guide for technicians",
+      "summary": "Five habits that make every before and after photo clear, honest and easy to compare.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "A good before and after pair answers one question at a glance: what changed? These five habits make sure it does."
+        },
+        {
+          "type": "list",
+          "title": "Five habits:",
+          "items": [
+            "Take the before photo first — before you touch anything",
+            "Stand in the same spot for the after photo, at the same angle",
+            "Fill the frame with the part you worked on",
+            "Wipe the lens and use the flash in dark places",
+            "Take one wide photo so the customer knows where it is"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Don’t edit, don’t filter"
+        },
+        {
+          "type": "p",
+          "text": "Proof photos should look exactly as you saw it. Cropping or filters make customers doubt the picture, even when the work was good."
+        },
+        {
+          "type": "h2",
+          "text": "Take them inside the job"
+        },
+        {
+          "type": "p",
+          "text": "Photos taken in the app are filed to the right job with the time and place. No naming, no sorting and nothing lost in a personal gallery."
+        }
+      ]
+    },
+    "hi": {
+      "author": "KaamNishaan टीम",
+      "title": "पहले और बाद की फ़ोटो: टेक्नीशियन के लिए आसान गाइड",
+      "summary": "पाँच आदतें जो हर पहले और बाद की फ़ोटो को साफ़, ईमानदार और मिलाने में आसान बनाती हैं।",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "पहले और बाद की अच्छी जोड़ी एक नज़र में एक सवाल का जवाब देती है: क्या बदला? ये पाँच आदतें पक्का करती हैं कि ऐसा हो।"
+        },
+        {
+          "type": "list",
+          "title": "पाँच आदतें:",
+          "items": [
+            "पहले की फ़ोटो सबसे पहले लें — कुछ भी छूने से पहले",
+            "बाद की फ़ोटो के लिए उसी जगह खड़े हों, उसी कोण से",
+            "जिस हिस्से पर काम किया, उससे फ़्रेम भरें",
+            "लेंस पोंछें और अँधेरे में फ़्लैश इस्तेमाल करें",
+            "एक दूर की फ़ोटो लें ताकि ग्राहक जाने कि यह कहाँ है"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "न एडिट, न फ़िल्टर"
+        },
+        {
+          "type": "p",
+          "text": "सबूत की फ़ोटो ठीक वैसी दिखनी चाहिए जैसा आपने देखा। काटने या फ़िल्टर से ग्राहक फ़ोटो पर शक करते हैं, भले ही काम अच्छा हो।"
+        },
+        {
+          "type": "h2",
+          "text": "फ़ोटो जॉब के अंदर लें"
+        },
+        {
+          "type": "p",
+          "text": "ऐप में ली गई फ़ोटो समय और जगह के साथ सही जॉब में जाती है। न नाम देना, न छाँटना, और निजी गैलरी में कुछ नहीं खोता।"
+        }
+      ]
+    },
+    "gu": {
+      "author": "KaamNishaan ટીમ",
+      "title": "પહેલાં અને પછીના ફોટો: ટેક્નિશિયન માટે સરળ ગાઇડ",
+      "summary": "પાંચ ટેવો જે દરેક પહેલાં અને પછીના ફોટોને સ્પષ્ટ, પ્રામાણિક અને સરખાવવામાં સરળ બનાવે છે.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "પહેલાં અને પછીની સારી જોડી એક નજરમાં એક પ્રશ્નનો જવાબ આપે છે: શું બદલાયું? આ પાંચ ટેવો ખાતરી કરે છે કે એવું થાય."
+        },
+        {
+          "type": "list",
+          "title": "પાંચ ટેવો:",
+          "items": [
+            "પહેલાંનો ફોટો સૌથી પહેલાં લો — કંઈ પણ અડતાં પહેલાં",
+            "પછીના ફોટો માટે એ જ જગ્યાએ ઊભા રહો, એ જ ખૂણેથી",
+            "જે ભાગ પર કામ કર્યું તેનાથી ફ્રેમ ભરો",
+            "લેન્સ લૂછો અને અંધારામાં ફ્લૅશ વાપરો",
+            "એક દૂરનો ફોટો લો જેથી ગ્રાહકને ખબર પડે કે તે ક્યાં છે"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "ન એડિટ, ન ફિલ્ટર"
+        },
+        {
+          "type": "p",
+          "text": "પુરાવાના ફોટો બરાબર એવા જ દેખાવા જોઈએ જેવું તમે જોયું. કાપવાથી કે ફિલ્ટરથી ગ્રાહક ફોટો પર શંકા કરે છે, ભલે કામ સારું હોય."
+        },
+        {
+          "type": "h2",
+          "text": "ફોટો જૉબની અંદર લો"
+        },
+        {
+          "type": "p",
+          "text": "ઍપમાં લીધેલા ફોટો સમય અને જગ્યા સાથે યોગ્ય જૉબમાં જાય છે. ન નામ આપવું, ન ગોઠવવું, અને અંગત ગૅલરીમાં કંઈ ખોવાતું નથી."
+        }
+      ]
+    },
+    "es": {
+      "author": "Equipo de KaamNishaan",
+      "title": "Fotos de antes y después: guía sencilla para técnicos",
+      "summary": "Cinco hábitos que hacen que cada foto de antes y después sea clara, honesta y fácil de comparar.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Un buen par de antes y después responde de un vistazo a una pregunta: ¿qué cambió? Estos cinco hábitos lo aseguran."
+        },
+        {
+          "type": "list",
+          "title": "Cinco hábitos:",
+          "items": [
+            "Haz la foto del antes primero, antes de tocar nada",
+            "Colócate en el mismo sitio para la del después, con el mismo ángulo",
+            "Llena el encuadre con la pieza en la que trabajaste",
+            "Limpia la lente y usa el flash en sitios oscuros",
+            "Haz una foto general para que el cliente sepa dónde está"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Sin retoques ni filtros"
+        },
+        {
+          "type": "p",
+          "text": "Las fotos de prueba deben verse tal como lo viste. Recortes o filtros hacen dudar al cliente, aunque el trabajo sea bueno."
+        },
+        {
+          "type": "h2",
+          "text": "Hazlas dentro del trabajo"
+        },
+        {
+          "type": "p",
+          "text": "Las fotos hechas en la app se archivan en el trabajo correcto con hora y lugar. Sin nombrar, sin ordenar y sin perder nada en una galería personal."
+        }
+      ]
+    },
+    "fr": {
+      "author": "L’équipe KaamNishaan",
+      "title": "Photos avant et après : un guide simple pour les techniciens",
+      "summary": "Cinq habitudes pour des photos avant/après claires, honnêtes et faciles à comparer.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Une bonne paire avant/après répond d’un coup d’œil à une question : qu’est-ce qui a changé ? Ces cinq habitudes y veillent."
+        },
+        {
+          "type": "list",
+          "title": "Cinq habitudes :",
+          "items": [
+            "Prenez la photo avant en premier — avant de toucher quoi que ce soit",
+            "Placez-vous au même endroit pour la photo après, sous le même angle",
+            "Remplissez le cadre avec la pièce travaillée",
+            "Essuyez l’objectif et utilisez le flash dans le noir",
+            "Prenez une vue large pour situer l’endroit"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Ni retouche, ni filtre"
+        },
+        {
+          "type": "p",
+          "text": "Une photo de preuve doit montrer exactement ce que vous avez vu. Un recadrage ou un filtre fait douter le client, même quand le travail est bon."
+        },
+        {
+          "type": "h2",
+          "text": "Prenez-les dans l’intervention"
+        },
+        {
+          "type": "p",
+          "text": "Les photos prises dans l’app sont rangées dans la bonne intervention, avec l’heure et le lieu. Rien à nommer, rien à trier, rien de perdu dans une galerie perso."
+        }
+      ]
+    }
+  }
+}

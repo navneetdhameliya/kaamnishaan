@@ -1,4 +1,4 @@
-"""W03 demo bookings and W05 contact messages from the website (before anyone has an account)."""
+"""Website leads before anyone has an account: W03 demos, W05 contact messages, W25 newsletter emails."""
 
 from datetime import datetime
 
@@ -14,7 +14,7 @@ class Lead(IdMixin, TimestampMixin, Base):
 
     # shown to the person as "KN-20418"
     number: Mapped[int] = mapped_column(Integer, Identity(start=20001), unique=True)
-    kind: Mapped[str] = mapped_column(String(16), index=True)  # demo, contact
+    kind: Mapped[str] = mapped_column(String(16), index=True)  # demo, contact, newsletter
     name: Mapped[str] = mapped_column(String(120))
     email: Mapped[str] = mapped_column(String(254), index=True)
     phone: Mapped[str | None] = mapped_column(String(20))

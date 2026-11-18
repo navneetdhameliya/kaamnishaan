@@ -1,0 +1,199 @@
+{
+  "slug": "checklists-every-solar-installer-needs",
+  "category": "solar",
+  "featured": false,
+  "published": "2026-10-24",
+  "cover": "/img/ind-solar-photo.webp",
+  "content": {
+    "en": {
+      "author": "KaamNishaan team",
+      "title": "5 checklists every solar installer needs",
+      "summary": "From the first site survey to the yearly check-up, five short checklists keep every solar job complete — and give the customer proof of each step.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Solar jobs run over weeks and involve several people. A short checklist at each stage makes sure nothing is missed and leaves a clear record for the customer."
+        },
+        {
+          "type": "list",
+          "title": "The five checklists:",
+          "items": [
+            "Site survey — roof direction and tilt, a shading photo at noon, main panel capacity",
+            "Install handover — inverter reading, panel serial numbers, earthing test",
+            "Panel cleaning — a before and after photo of each row",
+            "Inverter check — error codes on the display, output reading at noon",
+            "Yearly check-up — mounting bolts, cables, output compared with last year"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Keep each one short"
+        },
+        {
+          "type": "p",
+          "text": "Ten to twenty questions is enough. Ask for numbers with their unit, ask for a photo wherever the customer might later ask for proof, and make the important questions required."
+        },
+        {
+          "type": "h2",
+          "text": "Build them once, use them on every job"
+        },
+        {
+          "type": "p",
+          "text": "In KaamNishaan you can build these checklists yourself in a few minutes and attach the right one to each job. Ready-made solar checklists are on the way."
+        }
+      ]
+    },
+    "hi": {
+      "author": "KaamNishaan टीम",
+      "title": "हर सोलर इंस्टॉलर के लिए 5 चेकलिस्ट",
+      "summary": "पहले साइट सर्वे से सालाना जाँच तक, पाँच छोटी चेकलिस्ट हर सोलर जॉब को पूरा रखती हैं — और ग्राहक को हर कदम का सबूत देती हैं।",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "सोलर जॉब कई हफ़्ते चलते हैं और उनमें कई लोग होते हैं। हर चरण पर छोटी चेकलिस्ट पक्का करती है कि कुछ न छूटे और ग्राहक के लिए साफ़ रिकॉर्ड रहे।"
+        },
+        {
+          "type": "list",
+          "title": "पाँच चेकलिस्ट:",
+          "items": [
+            "साइट सर्वे — छत की दिशा और ढलान, दोपहर में छाया की फ़ोटो, मेन पैनल की क्षमता",
+            "इंस्टॉल हैंडओवर — इन्वर्टर रीडिंग, पैनल सीरियल नंबर, अर्थिंग टेस्ट",
+            "पैनल सफ़ाई — हर पंक्ति की पहले और बाद की फ़ोटो",
+            "इन्वर्टर जाँच — डिस्प्ले पर एरर कोड, दोपहर की आउटपुट रीडिंग",
+            "सालाना जाँच — माउंटिंग बोल्ट, केबल, पिछले साल से आउटपुट की तुलना"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "हर चेकलिस्ट छोटी रखें"
+        },
+        {
+          "type": "p",
+          "text": "दस से बीस सवाल काफ़ी हैं। यूनिट के साथ नंबर माँगें, जहाँ ग्राहक बाद में सबूत माँग सकता है वहाँ फ़ोटो माँगें, और ज़रूरी सवालों को अनिवार्य बनाएँ।"
+        },
+        {
+          "type": "h2",
+          "text": "एक बार बनाएँ, हर जॉब पर इस्तेमाल करें"
+        },
+        {
+          "type": "p",
+          "text": "KaamNishaan में आप ये चेकलिस्ट कुछ मिनटों में खुद बना सकते हैं और हर जॉब से सही चेकलिस्ट जोड़ सकते हैं। तैयार सोलर चेकलिस्ट जल्द आ रही हैं।"
+        }
+      ]
+    },
+    "gu": {
+      "author": "KaamNishaan ટીમ",
+      "title": "દરેક સોલર ઇન્સ્ટોલર માટે 5 ચેકલિસ્ટ",
+      "summary": "પહેલા સાઇટ સર્વેથી વાર્ષિક તપાસ સુધી, પાંચ નાની ચેકલિસ્ટ દરેક સોલર જૉબને પૂરી રાખે છે — અને ગ્રાહકને દરેક પગલાનો પુરાવો આપે છે.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "સોલર જૉબ ઘણાં અઠવાડિયાં ચાલે છે અને તેમાં ઘણા લોકો હોય છે. દરેક તબક્કે નાની ચેકલિસ્ટ ખાતરી કરે છે કે કંઈ છૂટે નહીં અને ગ્રાહક માટે સ્પષ્ટ રેકોર્ડ રહે."
+        },
+        {
+          "type": "list",
+          "title": "પાંચ ચેકલિસ્ટ:",
+          "items": [
+            "સાઇટ સર્વે — છતની દિશા અને ઢાળ, બપોરે છાયાનો ફોટો, મેઇન પૅનલની ક્ષમતા",
+            "ઇન્સ્ટોલ હેન્ડઓવર — ઇન્વર્ટર રીડિંગ, પૅનલ સીરિયલ નંબર, અર્થિંગ ટેસ્ટ",
+            "પૅનલ સફાઈ — દરેક હરોળના પહેલાં અને પછીના ફોટો",
+            "ઇન્વર્ટર તપાસ — ડિસ્પ્લે પર એરર કોડ, બપોરનું આઉટપુટ રીડિંગ",
+            "વાર્ષિક તપાસ — માઉન્ટિંગ બોલ્ટ, કેબલ, ગયા વર્ષ સાથે આઉટપુટની સરખામણી"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "દરેક ચેકલિસ્ટ નાની રાખો"
+        },
+        {
+          "type": "p",
+          "text": "દસથી વીસ પ્રશ્નો પૂરતા છે. યુનિટ સાથે નંબર માગો, જ્યાં ગ્રાહક પછી પુરાવો માગી શકે ત્યાં ફોટો માગો, અને જરૂરી પ્રશ્નોને ફરજિયાત બનાવો."
+        },
+        {
+          "type": "h2",
+          "text": "એક વાર બનાવો, દરેક જૉબ પર વાપરો"
+        },
+        {
+          "type": "p",
+          "text": "KaamNishaanમાં તમે આ ચેકલિસ્ટ થોડી મિનિટોમાં જાતે બનાવી શકો અને દરેક જૉબ સાથે યોગ્ય ચેકલિસ્ટ જોડી શકો. તૈયાર સોલર ચેકલિસ્ટ જલદી આવી રહી છે."
+        }
+      ]
+    },
+    "es": {
+      "author": "Equipo de KaamNishaan",
+      "title": "5 listas que todo instalador solar necesita",
+      "summary": "Del primer estudio del tejado a la revisión anual, cinco listas cortas mantienen completo cada trabajo solar y dan al cliente la prueba de cada paso.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Los trabajos solares duran semanas e implican a varias personas. Una lista corta en cada etapa asegura que no se olvide nada y deja un registro claro para el cliente."
+        },
+        {
+          "type": "list",
+          "title": "Las cinco listas:",
+          "items": [
+            "Estudio del sitio: orientación e inclinación del tejado, foto de sombras al mediodía, capacidad del cuadro",
+            "Entrega de la instalación: lectura del inversor, números de serie de los paneles, prueba de puesta a tierra",
+            "Limpieza de paneles: foto de antes y después de cada fila",
+            "Revisión del inversor: códigos de error, producción al mediodía",
+            "Revisión anual: tornillos de anclaje, cables, producción frente al año anterior"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Que cada una sea corta"
+        },
+        {
+          "type": "p",
+          "text": "Entre diez y veinte preguntas bastan. Pide números con su unidad, pide una foto donde el cliente pueda pedir pruebas y marca como obligatorias las preguntas importantes."
+        },
+        {
+          "type": "h2",
+          "text": "Créalas una vez y úsalas siempre"
+        },
+        {
+          "type": "p",
+          "text": "En KaamNishaan puedes crear estas listas en unos minutos y añadir la adecuada a cada trabajo. Las listas solares preparadas están en camino."
+        }
+      ]
+    },
+    "fr": {
+      "author": "L’équipe KaamNishaan",
+      "title": "5 checklists indispensables pour les installateurs solaires",
+      "summary": "De l’étude du site à la visite annuelle, cinq checklists courtes rendent chaque chantier solaire complet — et prouvent chaque étape au client.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Un chantier solaire dure des semaines et mobilise plusieurs personnes. Une courte checklist à chaque étape évite les oublis et laisse une trace claire pour le client."
+        },
+        {
+          "type": "list",
+          "title": "Les cinq checklists :",
+          "items": [
+            "Étude du site — orientation et inclinaison du toit, photo des ombres à midi, capacité du tableau",
+            "Remise de l’installation — mesure de l’onduleur, numéros de série des panneaux, test de terre",
+            "Nettoyage des panneaux — une photo avant et après de chaque rangée",
+            "Contrôle de l’onduleur — codes d’erreur, production à midi",
+            "Visite annuelle — fixations, câbles, production comparée à l’an dernier"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Gardez-les courtes"
+        },
+        {
+          "type": "p",
+          "text": "Dix à vingt questions suffisent. Demandez des chiffres avec leur unité, une photo là où le client pourrait demander une preuve, et rendez obligatoires les questions importantes."
+        },
+        {
+          "type": "h2",
+          "text": "Créez-les une fois, utilisez-les partout"
+        },
+        {
+          "type": "p",
+          "text": "Dans KaamNishaan, vous créez ces checklists en quelques minutes et attachez la bonne à chaque intervention. Des checklists solaires prêtes à l’emploi arrivent bientôt."
+        }
+      ]
+    }
+  }
+}

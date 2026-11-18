@@ -476,6 +476,202 @@ class BillingOutModel {
       };
 }
 
+/// One piece of an article: a paragraph, heading, quote, checklist box or picture.
+BlogBlockModel blogBlockModelFromJson(String str) => BlogBlockModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String blogBlockModelToJson(BlogBlockModel data) => json.encode(data.toJson());
+
+class BlogBlockModel {
+  /// who said the quote
+  final String? by;
+  final String? caption;
+  final List<String>? items;
+  /// picture path on the website, e.g. /img/x.webp
+  final String? src;
+  final String? text;
+  /// heading of a list box
+  final String? title;
+  /// One of: p, h2, quote, list, image
+  final String type;
+
+  const BlogBlockModel({
+    this.by,
+    this.caption,
+    this.items,
+    this.src,
+    this.text,
+    this.title,
+    required this.type,
+  });
+
+  factory BlogBlockModel.fromJson(Map<String, dynamic> json) => BlogBlockModel(
+        by: json['by'] as String?,
+        caption: json['caption'] as String?,
+        items: json['items'] == null ? null : (json['items'] as List).map((e) => e as String).toList(),
+        src: json['src'] as String?,
+        text: json['text'] as String?,
+        title: json['title'] as String?,
+        type: json['type'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'by': by,
+        'caption': caption,
+        'items': items,
+        'src': src,
+        'text': text,
+        'title': title,
+        'type': type,
+      };
+}
+
+BlogListOutModel blogListOutModelFromJson(String str) => BlogListOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String blogListOutModelToJson(BlogListOutModel data) => json.encode(data.toJson());
+
+class BlogListOutModel {
+  /// categories that have posts, in display order
+  final List<String> categories;
+  final BlogPostCardModel? featured;
+  final List<BlogPostCardModel> items;
+
+  const BlogListOutModel({
+    required this.categories,
+    this.featured,
+    required this.items,
+  });
+
+  factory BlogListOutModel.fromJson(Map<String, dynamic> json) => BlogListOutModel(
+        categories: (json['categories'] as List).map((e) => e as String).toList(),
+        featured: json['featured'] == null ? null : BlogPostCardModel.fromJson(json['featured'] as Map<String, dynamic>),
+        items: (json['items'] as List).map((e) => BlogPostCardModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'categories': categories,
+        'featured': featured?.toJson(),
+        'items': items.map((e) => e.toJson()).toList(),
+      };
+}
+
+BlogPostCardModel blogPostCardModelFromJson(String str) => BlogPostCardModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String blogPostCardModelToJson(BlogPostCardModel data) => json.encode(data.toJson());
+
+class BlogPostCardModel {
+  /// One of: hvac, roofing, solar, maintenance, pest, cleaning, reports, tips, voice
+  final String category;
+  final String cover;
+  /// language the words are in (English when the asked one is missing)
+  /// One of: en, hi, gu, es, fr
+  final String language;
+  final String publishedOn;
+  final int readMinutes;
+  final String slug;
+  final String summary;
+  final String title;
+
+  const BlogPostCardModel({
+    required this.category,
+    required this.cover,
+    required this.language,
+    required this.publishedOn,
+    required this.readMinutes,
+    required this.slug,
+    required this.summary,
+    required this.title,
+  });
+
+  factory BlogPostCardModel.fromJson(Map<String, dynamic> json) => BlogPostCardModel(
+        category: json['category'] as String,
+        cover: json['cover'] as String,
+        language: json['language'] as String,
+        publishedOn: json['published_on'] as String,
+        readMinutes: (json['read_minutes'] as num).toInt(),
+        slug: json['slug'] as String,
+        summary: json['summary'] as String,
+        title: json['title'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'category': category,
+        'cover': cover,
+        'language': language,
+        'published_on': publishedOn,
+        'read_minutes': readMinutes,
+        'slug': slug,
+        'summary': summary,
+        'title': title,
+      };
+}
+
+BlogPostOutModel blogPostOutModelFromJson(String str) => BlogPostOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String blogPostOutModelToJson(BlogPostOutModel data) => json.encode(data.toJson());
+
+class BlogPostOutModel {
+  final String author;
+  final List<BlogBlockModel> blocks;
+  /// One of: hvac, roofing, solar, maintenance, pest, cleaning, reports, tips, voice
+  final String category;
+  final String cover;
+  final bool featured;
+  /// language the words are in (English when the asked one is missing)
+  /// One of: en, hi, gu, es, fr
+  final String language;
+  final String publishedOn;
+  final int readMinutes;
+  final List<BlogPostCardModel> related;
+  final String slug;
+  final String summary;
+  final String title;
+
+  const BlogPostOutModel({
+    required this.author,
+    required this.blocks,
+    required this.category,
+    required this.cover,
+    required this.featured,
+    required this.language,
+    required this.publishedOn,
+    required this.readMinutes,
+    required this.related,
+    required this.slug,
+    required this.summary,
+    required this.title,
+  });
+
+  factory BlogPostOutModel.fromJson(Map<String, dynamic> json) => BlogPostOutModel(
+        author: json['author'] as String,
+        blocks: (json['blocks'] as List).map((e) => BlogBlockModel.fromJson(e as Map<String, dynamic>)).toList(),
+        category: json['category'] as String,
+        cover: json['cover'] as String,
+        featured: json['featured'] as bool,
+        language: json['language'] as String,
+        publishedOn: json['published_on'] as String,
+        readMinutes: (json['read_minutes'] as num).toInt(),
+        related: (json['related'] as List).map((e) => BlogPostCardModel.fromJson(e as Map<String, dynamic>)).toList(),
+        slug: json['slug'] as String,
+        summary: json['summary'] as String,
+        title: json['title'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'author': author,
+        'blocks': blocks.map((e) => e.toJson()).toList(),
+        'category': category,
+        'cover': cover,
+        'featured': featured,
+        'language': language,
+        'published_on': publishedOn,
+        'read_minutes': readMinutes,
+        'related': related.map((e) => e.toJson()).toList(),
+        'slug': slug,
+        'summary': summary,
+        'title': title,
+      };
+}
+
 CancelBodyModel cancelBodyModelFromJson(String str) => CancelBodyModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String cancelBodyModelToJson(CancelBodyModel data) => json.encode(data.toJson());
@@ -3861,6 +4057,51 @@ class NewLinkOutModel {
         'channel': channel,
         'company_notified': companyNotified,
         'sent_to': sentTo,
+      };
+}
+
+NewsletterInModel newsletterInModelFromJson(String str) => NewsletterInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String newsletterInModelToJson(NewsletterInModel data) => json.encode(data.toJson());
+
+class NewsletterInModel {
+  final String email;
+  /// One of: en, hi, gu, es, fr
+  final String? lang;
+
+  const NewsletterInModel({
+    required this.email,
+    this.lang,
+  });
+
+  factory NewsletterInModel.fromJson(Map<String, dynamic> json) => NewsletterInModel(
+        email: json['email'] as String,
+        lang: json['lang'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'lang': lang,
+      };
+}
+
+NewsletterOutModel newsletterOutModelFromJson(String str) => NewsletterOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String newsletterOutModelToJson(NewsletterOutModel data) => json.encode(data.toJson());
+
+class NewsletterOutModel {
+  final bool? subscribed;
+
+  const NewsletterOutModel({
+    this.subscribed,
+  });
+
+  factory NewsletterOutModel.fromJson(Map<String, dynamic> json) => NewsletterOutModel(
+        subscribed: json['subscribed'] as bool?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'subscribed': subscribed,
       };
 }
 
