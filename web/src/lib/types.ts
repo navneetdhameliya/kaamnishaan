@@ -182,3 +182,40 @@ export interface PublicChecklistTemplates {
   language: string;
   items: PublicChecklistTemplate[];
 }
+
+/** GET /public/blog and /public/blog/{slug} (W25/W26). */
+export type BlogCategory = 'hvac' | 'roofing' | 'solar' | 'maintenance' | 'pest' | 'cleaning' | 'reports' | 'tips' | 'voice';
+
+export interface BlogPostCard {
+  slug: string;
+  category: BlogCategory;
+  title: string;
+  summary: string;
+  cover: string;
+  published_on: string;
+  read_minutes: number;
+  language: string;
+}
+
+export interface BlogListOut {
+  categories: BlogCategory[];
+  featured: BlogPostCard | null;
+  items: BlogPostCard[];
+}
+
+export interface BlogBlock {
+  type: 'p' | 'h2' | 'quote' | 'list' | 'image';
+  text: string | null;
+  by: string | null;
+  title: string | null;
+  items: string[];
+  src: string | null;
+  caption: string | null;
+}
+
+export interface BlogPostOut extends BlogPostCard {
+  author: string;
+  featured: boolean;
+  blocks: BlogBlock[];
+  related: BlogPostCard[];
+}

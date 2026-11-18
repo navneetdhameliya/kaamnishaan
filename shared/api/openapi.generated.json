@@ -586,6 +586,302 @@
         "title": "BillingOut",
         "type": "object"
       },
+      "BlogBlock": {
+        "description": "One piece of an article: a paragraph, heading, quote, checklist box or picture.",
+        "properties": {
+          "by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "who said the quote",
+            "title": "By"
+          },
+          "caption": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Caption"
+          },
+          "items": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "src": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "picture path on the website, e.g. /img/x.webp",
+            "title": "Src"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "heading of a list box",
+            "title": "Title"
+          },
+          "type": {
+            "enum": [
+              "p",
+              "h2",
+              "quote",
+              "list",
+              "image"
+            ],
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "title": "BlogBlock",
+        "type": "object"
+      },
+      "BlogListOut": {
+        "properties": {
+          "categories": {
+            "description": "categories that have posts, in display order",
+            "items": {
+              "enum": [
+                "hvac",
+                "roofing",
+                "solar",
+                "maintenance",
+                "pest",
+                "cleaning",
+                "reports",
+                "tips",
+                "voice"
+              ],
+              "type": "string"
+            },
+            "title": "Categories",
+            "type": "array"
+          },
+          "featured": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BlogPostCard"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/BlogPostCard"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "categories",
+          "featured",
+          "items"
+        ],
+        "title": "BlogListOut",
+        "type": "object"
+      },
+      "BlogPostCard": {
+        "properties": {
+          "category": {
+            "enum": [
+              "hvac",
+              "roofing",
+              "solar",
+              "maintenance",
+              "pest",
+              "cleaning",
+              "reports",
+              "tips",
+              "voice"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "cover": {
+            "title": "Cover",
+            "type": "string"
+          },
+          "language": {
+            "description": "language the words are in (English when the asked one is missing)",
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Language",
+            "type": "string"
+          },
+          "published_on": {
+            "format": "date",
+            "title": "Published On",
+            "type": "string"
+          },
+          "read_minutes": {
+            "title": "Read Minutes",
+            "type": "integer"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "category",
+          "title",
+          "summary",
+          "cover",
+          "published_on",
+          "read_minutes",
+          "language"
+        ],
+        "title": "BlogPostCard",
+        "type": "object"
+      },
+      "BlogPostOut": {
+        "properties": {
+          "author": {
+            "title": "Author",
+            "type": "string"
+          },
+          "blocks": {
+            "items": {
+              "$ref": "#/components/schemas/BlogBlock"
+            },
+            "title": "Blocks",
+            "type": "array"
+          },
+          "category": {
+            "enum": [
+              "hvac",
+              "roofing",
+              "solar",
+              "maintenance",
+              "pest",
+              "cleaning",
+              "reports",
+              "tips",
+              "voice"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "cover": {
+            "title": "Cover",
+            "type": "string"
+          },
+          "featured": {
+            "title": "Featured",
+            "type": "boolean"
+          },
+          "language": {
+            "description": "language the words are in (English when the asked one is missing)",
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Language",
+            "type": "string"
+          },
+          "published_on": {
+            "format": "date",
+            "title": "Published On",
+            "type": "string"
+          },
+          "read_minutes": {
+            "title": "Read Minutes",
+            "type": "integer"
+          },
+          "related": {
+            "items": {
+              "$ref": "#/components/schemas/BlogPostCard"
+            },
+            "title": "Related",
+            "type": "array"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "category",
+          "title",
+          "summary",
+          "cover",
+          "published_on",
+          "read_minutes",
+          "language",
+          "author",
+          "featured",
+          "blocks",
+          "related"
+        ],
+        "title": "BlogPostOut",
+        "type": "object"
+      },
       "CancelBody": {
         "additionalProperties": false,
         "properties": {
@@ -5441,6 +5737,43 @@
           "company_notified"
         ],
         "title": "NewLinkOut",
+        "type": "object"
+      },
+      "NewsletterIn": {
+        "properties": {
+          "email": {
+            "format": "email",
+            "title": "Email",
+            "type": "string"
+          },
+          "lang": {
+            "default": "en",
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Lang",
+            "type": "string"
+          }
+        },
+        "required": [
+          "email"
+        ],
+        "title": "NewsletterIn",
+        "type": "object"
+      },
+      "NewsletterOut": {
+        "properties": {
+          "subscribed": {
+            "default": true,
+            "title": "Subscribed",
+            "type": "boolean"
+          }
+        },
+        "title": "NewsletterOut",
         "type": "object"
       },
       "NoteIn": {
@@ -16670,6 +17003,142 @@
         ]
       }
     },
+    "/api/v1/public/blog": {
+      "get": {
+        "operationId": "blog_list_api_v1_public_blog_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "hvac",
+                    "roofing",
+                    "solar",
+                    "maintenance",
+                    "pest",
+                    "cleaning",
+                    "reports",
+                    "tips",
+                    "voice"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Category"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlogListOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Blog List",
+        "tags": [
+          "website"
+        ]
+      }
+    },
+    "/api/v1/public/blog/{slug}": {
+      "get": {
+        "operationId": "blog_post_api_v1_public_blog__slug__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "schema": {
+              "title": "Slug",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlogPostOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Blog Post",
+        "tags": [
+          "website"
+        ]
+      }
+    },
     "/api/v1/public/checklist-templates": {
       "get": {
         "description": "KaamNishaan's ready checklists for a trade, with every question, in the asked language.",
@@ -16828,6 +17297,47 @@
           }
         },
         "summary": "Demo Slots",
+        "tags": [
+          "website"
+        ]
+      }
+    },
+    "/api/v1/public/newsletter": {
+      "post": {
+        "operationId": "newsletter_api_v1_public_newsletter_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewsletterIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewsletterOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Newsletter",
         "tags": [
           "website"
         ]

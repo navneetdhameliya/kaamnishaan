@@ -1,0 +1,329 @@
+{
+  "slug": "how-to-write-a-service-report-customers-trust",
+  "category": "reports",
+  "featured": true,
+  "published": "2026-10-31",
+  "cover": "/img/feature-report.webp",
+  "content": {
+    "en": {
+      "author": "KaamNishaan team",
+      "title": "How to write a service report customers trust",
+      "summary": "Customers trust what they can see. Here is a simple structure — photos, checks, plain words and a sign-off — that turns any job into a report nobody argues with.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "A good service report does one job: it lets a customer see the work they didn’t watch. Here is a simple structure any team can follow — and how to make it the default."
+        },
+        {
+          "type": "h2",
+          "text": "Start with photos, not paragraphs"
+        },
+        {
+          "type": "p",
+          "text": "Customers trust what they can see. Take a photo before you touch anything, a few during the work, and the same angle again when you finish. The time and place saved with each photo do the rest."
+        },
+        {
+          "type": "quote",
+          "text": "If the customer can see the before and after, the report has already done half its job.",
+          "by": "KaamNishaan team"
+        },
+        {
+          "type": "h2",
+          "text": "Use a checklist so nothing is skipped"
+        },
+        {
+          "type": "p",
+          "text": "A short checklist makes every report complete. Ask yes/no questions, ask for a photo where proof matters, and record readings as numbers with their unit."
+        },
+        {
+          "type": "list",
+          "title": "A report customers trust has:",
+          "items": [
+            "Before and after photos with the time and date",
+            "Checklist results in plain words",
+            "What was done, in two or three sentences",
+            "What the customer should do next",
+            "A manager’s approval before it’s sent"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Write it in plain words"
+        },
+        {
+          "type": "p",
+          "text": "Two or three short sentences are enough: what was wrong, what you did, and what the customer should do next. Let technicians speak in their own language — the report can go out in the customer’s."
+        },
+        {
+          "type": "image",
+          "src": "/img/compare-after.webp",
+          "caption": "After photos make the result obvious — the filter, cleaned on site."
+        },
+        {
+          "type": "h2",
+          "text": "Approve before you send"
+        },
+        {
+          "type": "p",
+          "text": "A quick manager check catches missing photos and unclear sentences. Then send a secure link or a PDF while the job is still fresh in the customer’s mind."
+        }
+      ]
+    },
+    "hi": {
+      "author": "KaamNishaan टीम",
+      "title": "ऐसी सर्विस रिपोर्ट कैसे लिखें जिस पर ग्राहक भरोसा करें",
+      "summary": "ग्राहक उसी पर भरोसा करते हैं जो उन्हें दिखता है। यह आसान ढाँचा — फ़ोटो, जाँच, आसान शब्द और मंज़ूरी — हर जॉब को ऐसी रिपोर्ट बना देता है जिस पर कोई बहस न करे।",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "अच्छी सर्विस रिपोर्ट का एक ही काम है: ग्राहक को वह काम दिखाना जो उसने खुद नहीं देखा। यह एक आसान ढाँचा है जिसे हर टीम अपना सकती है — और इसे रोज़ की आदत कैसे बनाएँ।"
+        },
+        {
+          "type": "h2",
+          "text": "पैराग्राफ़ नहीं, फ़ोटो से शुरू करें"
+        },
+        {
+          "type": "p",
+          "text": "ग्राहक उसी पर भरोसा करते हैं जो उन्हें दिखता है। कुछ भी छूने से पहले फ़ोटो लें, काम के दौरान कुछ फ़ोटो लें, और काम पूरा होने पर उसी कोण से फिर लें। हर फ़ोटो के साथ सेव हुआ समय और जगह बाकी काम कर देते हैं।"
+        },
+        {
+          "type": "quote",
+          "text": "अगर ग्राहक पहले और बाद की फ़ोटो देख ले, तो रिपोर्ट का आधा काम हो गया।",
+          "by": "KaamNishaan टीम"
+        },
+        {
+          "type": "h2",
+          "text": "चेकलिस्ट लें ताकि कुछ न छूटे"
+        },
+        {
+          "type": "p",
+          "text": "छोटी चेकलिस्ट हर रिपोर्ट को पूरा बनाती है। हाँ/नहीं वाले सवाल पूछें, जहाँ सबूत ज़रूरी हो वहाँ फ़ोटो माँगें, और रीडिंग यूनिट के साथ नंबर में लिखें।"
+        },
+        {
+          "type": "list",
+          "title": "भरोसेमंद रिपोर्ट में होता है:",
+          "items": [
+            "समय और तारीख के साथ पहले और बाद की फ़ोटो",
+            "आसान शब्दों में चेकलिस्ट के नतीजे",
+            "क्या किया गया, दो-तीन वाक्यों में",
+            "ग्राहक को आगे क्या करना है",
+            "भेजने से पहले मैनेजर की मंज़ूरी"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "आसान शब्दों में लिखें"
+        },
+        {
+          "type": "p",
+          "text": "दो-तीन छोटे वाक्य काफ़ी हैं: क्या ख़राब था, आपने क्या किया, और ग्राहक को आगे क्या करना है। टेक्नीशियन अपनी भाषा में बोलें — रिपोर्ट ग्राहक की भाषा में जा सकती है।"
+        },
+        {
+          "type": "image",
+          "src": "/img/compare-after.webp",
+          "caption": "बाद की फ़ोटो नतीजा साफ़ दिखाती है — साइट पर साफ़ किया गया फ़िल्टर।"
+        },
+        {
+          "type": "h2",
+          "text": "भेजने से पहले मंज़ूर करें"
+        },
+        {
+          "type": "p",
+          "text": "मैनेजर की छोटी-सी जाँच छूटी फ़ोटो और अधूरे वाक्य पकड़ लेती है। फिर सुरक्षित लिंक या PDF भेजें, जब काम ग्राहक के मन में ताज़ा हो।"
+        }
+      ]
+    },
+    "gu": {
+      "author": "KaamNishaan ટીમ",
+      "title": "એવો સર્વિસ રિપોર્ટ કેવી રીતે લખવો જેના પર ગ્રાહક વિશ્વાસ કરે",
+      "summary": "ગ્રાહક એ જ માને છે જે તેમને દેખાય. આ સરળ માળખું — ફોટો, તપાસ, સરળ શબ્દો અને મંજૂરી — દરેક જૉબને એવો રિપોર્ટ બનાવે છે જેના પર કોઈ દલીલ ન કરે.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "સારા સર્વિસ રિપોર્ટનું એક જ કામ છે: ગ્રાહકને એ કામ બતાવવું જે તેમણે જાતે જોયું નથી. આ એક સરળ માળખું છે જે દરેક ટીમ અપનાવી શકે — અને તેને રોજની ટેવ કેવી રીતે બનાવવી."
+        },
+        {
+          "type": "h2",
+          "text": "ફકરા નહીં, ફોટોથી શરૂ કરો"
+        },
+        {
+          "type": "p",
+          "text": "ગ્રાહક એ જ માને છે જે તેમને દેખાય. કંઈ પણ અડતાં પહેલાં ફોટો લો, કામ દરમિયાન થોડા ફોટો લો, અને કામ પૂરું થાય ત્યારે એ જ ખૂણેથી ફરી લો. દરેક ફોટો સાથે સેવ થયેલો સમય અને જગ્યા બાકીનું કામ કરી દે છે."
+        },
+        {
+          "type": "quote",
+          "text": "જો ગ્રાહક પહેલાં અને પછીના ફોટો જોઈ લે, તો રિપોર્ટનું અડધું કામ થઈ ગયું.",
+          "by": "KaamNishaan ટીમ"
+        },
+        {
+          "type": "h2",
+          "text": "ચેકલિસ્ટ વાપરો જેથી કંઈ છૂટે નહીં"
+        },
+        {
+          "type": "p",
+          "text": "નાની ચેકલિસ્ટ દરેક રિપોર્ટને પૂરો બનાવે છે. હા/ના વાળા પ્રશ્નો પૂછો, જ્યાં પુરાવો જરૂરી હોય ત્યાં ફોટો માગો, અને રીડિંગ યુનિટ સાથે નંબરમાં લખો."
+        },
+        {
+          "type": "list",
+          "title": "વિશ્વસનીય રિપોર્ટમાં હોય છે:",
+          "items": [
+            "સમય અને તારીખ સાથે પહેલાં અને પછીના ફોટો",
+            "સરળ શબ્દોમાં ચેકલિસ્ટનાં પરિણામ",
+            "શું કર્યું, બે-ત્રણ વાક્યોમાં",
+            "ગ્રાહકે આગળ શું કરવું",
+            "મોકલતાં પહેલાં મેનેજરની મંજૂરી"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "સરળ શબ્દોમાં લખો"
+        },
+        {
+          "type": "p",
+          "text": "બે-ત્રણ નાનાં વાક્યો પૂરતાં છે: શું ખરાબ હતું, તમે શું કર્યું, અને ગ્રાહકે આગળ શું કરવું. ટેક્નિશિયન પોતાની ભાષામાં બોલે — રિપોર્ટ ગ્રાહકની ભાષામાં જઈ શકે."
+        },
+        {
+          "type": "image",
+          "src": "/img/compare-after.webp",
+          "caption": "પછીનો ફોટો પરિણામ સ્પષ્ટ બતાવે છે — સાઇટ પર સાફ કરેલું ફિલ્ટર."
+        },
+        {
+          "type": "h2",
+          "text": "મોકલતાં પહેલાં મંજૂર કરો"
+        },
+        {
+          "type": "p",
+          "text": "મેનેજરની નાની તપાસ છૂટેલા ફોટો અને અધૂરાં વાક્યો પકડી લે છે. પછી સુરક્ષિત લિંક કે PDF મોકલો, જ્યારે કામ ગ્રાહકના મનમાં તાજું હોય."
+        }
+      ]
+    },
+    "es": {
+      "author": "Equipo de KaamNishaan",
+      "title": "Cómo escribir un informe de servicio que tus clientes crean",
+      "summary": "Los clientes confían en lo que ven. Esta estructura sencilla —fotos, controles, palabras claras y una aprobación— convierte cualquier trabajo en un informe que nadie discute.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Un buen informe de servicio tiene una sola misión: que el cliente vea el trabajo que no presenció. Esta es una estructura sencilla que cualquier equipo puede seguir, y cómo convertirla en costumbre."
+        },
+        {
+          "type": "h2",
+          "text": "Empieza con fotos, no con párrafos"
+        },
+        {
+          "type": "p",
+          "text": "Los clientes confían en lo que ven. Haz una foto antes de tocar nada, algunas durante el trabajo y otra desde el mismo ángulo al terminar. La hora y el lugar guardados con cada foto hacen el resto."
+        },
+        {
+          "type": "quote",
+          "text": "Si el cliente ve el antes y el después, el informe ya ha hecho la mitad de su trabajo.",
+          "by": "Equipo de KaamNishaan"
+        },
+        {
+          "type": "h2",
+          "text": "Usa una lista para no saltarte nada"
+        },
+        {
+          "type": "p",
+          "text": "Una lista corta completa cada informe. Haz preguntas de sí/no, pide una foto donde importa la prueba y anota las lecturas como números con su unidad."
+        },
+        {
+          "type": "list",
+          "title": "Un informe fiable incluye:",
+          "items": [
+            "Fotos de antes y después con fecha y hora",
+            "Resultados de la lista en palabras claras",
+            "Qué se hizo, en dos o tres frases",
+            "Qué debe hacer el cliente después",
+            "La aprobación de un responsable antes de enviarlo"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Escríbelo con palabras sencillas"
+        },
+        {
+          "type": "p",
+          "text": "Bastan dos o tres frases cortas: qué fallaba, qué hiciste y qué debe hacer el cliente. Deja que los técnicos hablen en su idioma; el informe puede salir en el del cliente."
+        },
+        {
+          "type": "image",
+          "src": "/img/compare-after.webp",
+          "caption": "Las fotos del después muestran el resultado: el filtro, limpio en el sitio."
+        },
+        {
+          "type": "h2",
+          "text": "Aprueba antes de enviar"
+        },
+        {
+          "type": "p",
+          "text": "Una revisión rápida del responsable detecta fotos que faltan y frases confusas. Después envía un enlace seguro o un PDF mientras el trabajo sigue fresco para el cliente."
+        }
+      ]
+    },
+    "fr": {
+      "author": "L’équipe KaamNishaan",
+      "title": "Comment rédiger un rapport d’intervention qui inspire confiance",
+      "summary": "Les clients croient ce qu’ils voient. Voici une structure simple — photos, contrôles, mots clairs et validation — qui transforme chaque intervention en rapport incontestable.",
+      "blocks": [
+        {
+          "type": "p",
+          "text": "Un bon rapport d’intervention n’a qu’un rôle : montrer au client le travail qu’il n’a pas vu. Voici une structure simple que toute équipe peut suivre — et comment en faire une habitude."
+        },
+        {
+          "type": "h2",
+          "text": "Commencez par des photos, pas des paragraphes"
+        },
+        {
+          "type": "p",
+          "text": "Les clients croient ce qu’ils voient. Prenez une photo avant de toucher quoi que ce soit, quelques-unes pendant le travail, puis le même angle à la fin. L’heure et le lieu enregistrés avec chaque photo font le reste."
+        },
+        {
+          "type": "quote",
+          "text": "Si le client voit l’avant et l’après, le rapport a déjà fait la moitié du travail.",
+          "by": "L’équipe KaamNishaan"
+        },
+        {
+          "type": "h2",
+          "text": "Utilisez une checklist pour ne rien oublier"
+        },
+        {
+          "type": "p",
+          "text": "Une courte checklist rend chaque rapport complet. Posez des questions oui/non, demandez une photo là où la preuve compte, et notez les mesures en chiffres avec leur unité."
+        },
+        {
+          "type": "list",
+          "title": "Un rapport fiable contient :",
+          "items": [
+            "Des photos avant et après, avec date et heure",
+            "Les résultats de la checklist en mots simples",
+            "Ce qui a été fait, en deux ou trois phrases",
+            "Ce que le client doit faire ensuite",
+            "La validation d’un responsable avant l’envoi"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Écrivez avec des mots simples"
+        },
+        {
+          "type": "p",
+          "text": "Deux ou trois phrases courtes suffisent : ce qui n’allait pas, ce que vous avez fait, et ce que le client doit faire. Laissez les techniciens parler leur langue — le rapport peut partir dans celle du client."
+        },
+        {
+          "type": "image",
+          "src": "/img/compare-after.webp",
+          "caption": "Les photos après rendent le résultat évident — le filtre, nettoyé sur place."
+        },
+        {
+          "type": "h2",
+          "text": "Validez avant d’envoyer"
+        },
+        {
+          "type": "p",
+          "text": "Une relecture rapide repère les photos manquantes et les phrases floues. Envoyez ensuite un lien sécurisé ou un PDF pendant que l’intervention est encore fraîche pour le client."
+        }
+      ]
+    }
+  }
+}

@@ -10,6 +10,7 @@ from app.core.config import get_settings
 from app.core.errors import AppError, Conflict, RateLimited
 from app.core.security import now
 from app.models import Industry, Lead
+from app.schemas.blog import NewsletterIn, NewsletterOut
 from app.schemas.leads import (
     ContactMessageIn,
     ContactMessageOut,
@@ -155,3 +156,14 @@ async def contact(db: AsyncSession, body: ContactMessageIn, ip: str | None) -> C
     db.add(lead)
     await db.flush()
     return ContactMessageOut(ticket=ticket(lead), topic=body.topic)
+
+
+async def newsletter(db: AsyncSession, body: NewsletterIn, ip: str | None) -> NewsletterOut:
+    """Blog newsletter (W25). Saving the same email twice is fine and stores it once."""
+    email = body.email.lower()
+    if await db.scalar(select(Lead.id).where(Lead.kind == "newsletter", Lead.email == email)):
+        return NewsletterOut()
+    await _limit(db, ip)
+    db.add(Lead(kind="newsletter", name="", email=email, lang=body.lang, ip=ip))
+    await db.flush()
+    return NewsletterOut()

@@ -49,7 +49,7 @@ export function startCurrency(): 'INR' | 'USD' {
 
 export type Load<D> = { kind: 'loading' } | { kind: 'ready'; data: D } | { kind: 'error' };
 
-function useApi<D>(path: string): [Load<D>, () => void] {
+export function useApi<D>(path: string): [Load<D>, () => void] {
   const [state, setState] = useState<Load<D>>({ kind: 'loading' });
   const [tick, setTick] = useState(0);
   useEffect(() => {

@@ -5098,4 +5098,82 @@ abstract final class LangKeys {
   static const siteAboutCtaBody = 'site.about.cta_body';
   /// Contact us
   static const siteAboutContact = 'site.about.contact';
+  /// Blog
+  static const siteBlogEyebrow = 'site.blog.eyebrow';
+  /// Guides for field service teams
+  static const siteBlogTitle = 'site.blog.title';
+  /// Practical how-tos on photo proof, checklists and reports — for HVAC, roofing, solar, maintenance, pest control and cleaning teams.
+  static const siteBlogBody = 'site.blog.body';
+  /// Filter guides by topic
+  static const siteBlogFilter = 'site.blog.filter';
+  /// All
+  static const siteBlogAll = 'site.blog.all';
+  /// Featured
+  static const siteBlogFeatured = 'site.blog.featured';
+  /// KaamNishaan team
+  static const siteBlogTeam = 'site.blog.team';
+  /// {n} min read
+  static const siteBlogMinutes = 'site.blog.minutes';
+  /// Read article
+  static const siteBlogRead = 'site.blog.read';
+  /// Read more
+  static const siteBlogReadMore = 'site.blog.read_more';
+  /// In {lang}
+  static const siteBlogInLang = 'site.blog.in_lang';
+  /// Latest
+  static const siteBlogLatest = 'site.blog.latest';
+  /// More guides for field teams
+  static const siteBlogMore = 'site.blog.more';
+  /// No guides on this topic yet.
+  static const siteBlogEmpty = 'site.blog.empty';
+  /// HVAC
+  static const siteBlogCatHvac = 'site.blog.cat.hvac';
+  /// Roofing
+  static const siteBlogCatRoofing = 'site.blog.cat.roofing';
+  /// Solar
+  static const siteBlogCatSolar = 'site.blog.cat.solar';
+  /// Maintenance
+  static const siteBlogCatMaintenance = 'site.blog.cat.maintenance';
+  /// Pest control
+  static const siteBlogCatPest = 'site.blog.cat.pest';
+  /// Cleaning
+  static const siteBlogCatCleaning = 'site.blog.cat.cleaning';
+  /// Reports
+  static const siteBlogCatReports = 'site.blog.cat.reports';
+  /// Tips
+  static const siteBlogCatTips = 'site.blog.cat.tips';
+  /// Voice notes
+  static const siteBlogCatVoice = 'site.blog.cat.voice';
+  /// Newsletter
+  static const siteBlogNewsEyebrow = 'site.blog.news_eyebrow';
+  /// Get new guides by email
+  static const siteBlogNewsTitle = 'site.blog.news_title';
+  /// Field service tips, checklists and report ideas when we publish new guides. No spam.
+  static const siteBlogNewsBody = 'site.blog.news_body';
+  /// Subscribe
+  static const siteBlogSubscribe = 'site.blog.subscribe';
+  /// You’re on the list. Thank you!
+  static const siteBlogNewsDone = 'site.blog.news_done';
+  /// We’ll only use your email to send the newsletter. See our
+  static const siteBlogNewsNote = 'site.blog.news_note';
+  /// Put these guides to work
+  static const siteBlogCta = 'site.blog.cta';
+  /// Share this guide
+  static const siteBlogShare = 'site.blog.share';
+  /// Copy link
+  static const siteBlogCopy = 'site.blog.copy';
+  /// Link copied
+  static const siteBlogCopied = 'site.blog.copied';
+  /// Email
+  static const siteBlogEmail = 'site.blog.email';
+  /// Turn every job into a report like this
+  static const siteBlogBoxTitle = 'site.blog.box_title';
+  /// Keep reading
+  static const siteBlogKeep = 'site.blog.keep';
+  /// Related guides
+  static const siteBlogRelated = 'site.blog.related';
+  /// All guides
+  static const siteBlogAllPosts = 'site.blog.all_posts';
+  /// This guide doesn’t exist
+  static const siteBlogMissing = 'site.blog.missing';
 }
