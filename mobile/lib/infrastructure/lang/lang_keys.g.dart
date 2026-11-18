@@ -3306,4 +3306,1190 @@ abstract final class LangKeys {
   static const siteCtSalesB = 'site.ct.sales_b';
   /// Map of the office area
   static const siteCtMapAlt = 'site.ct.map_alt';
+  /// Features
+  static const siteFpCrumb = 'site.fp.crumb';
+  /// Breadcrumb
+  static const siteFpCrumbLabel = 'site.fp.crumb_label';
+  /// Overview
+  static const siteFpOverview = 'site.fp.overview';
+  /// Feature · {name}
+  static const siteFpEyebrow = 'site.fp.eyebrow';
+  /// Included on every plan
+  static const siteFpEveryPlan = 'site.fp.every_plan';
+  /// How it works
+  static const siteFpHow = 'site.fp.how';
+  /// Capabilities
+  static const siteFpCaps = 'site.fp.caps';
+  /// See it in the app
+  static const siteFpApp = 'site.fp.app';
+  /// Use cases
+  static const siteFpUse = 'site.fp.use';
+  /// View industry
+  static const siteFpViewIndustry = 'site.fp.view_industry';
+  /// Keep exploring
+  static const siteFpExplore = 'site.fp.explore';
+  /// Related features
+  static const siteFpRelated = 'site.fp.related';
+  /// See all features
+  static const siteFpAll = 'site.fp.all';
+  /// Learn more
+  static const siteFpLearn = 'site.fp.learn';
+  /// Coming soon
+  static const siteFpSoon = 'site.fp.soon';
+  /// {name} in the KaamNishaan app
+  static const siteFpAltHero = 'site.fp.alt_hero';
+  /// Build your own checklist
+  static const siteFpBuildOwn = 'site.fp.build_own';
+  /// Features · Overview
+  static const siteFpOvPill = 'site.fp.ov.pill';
+  /// {n} tools. One app. Proof for every job.
+  static const siteFpOvTitle = 'site.fp.ov.title';
+  /// From the first photo to a customer review: jobs, photo proof, checklists, voice notes, AI reports, an AI assistant, PDF reports, customer sharing, offline mode and reviews — in one simple app your whole team can use.
+  static const siteFpOvBody = 'site.fp.ov.body';
+  /// {n} report languages
+  static const siteFpOvLangs = 'site.fp.ov.langs';
+  /// The technician’s day and an approved report in the KaamNishaan app
+  static const siteFpOvAlt = 'site.fp.ov.alt';
+  /// Report drafted from proof
+  static const siteFpOvChip1 = 'site.fp.ov.chip1';
+  /// Photos, checklist, voice note
+  static const siteFpOvChip1Sub = 'site.fp.ov.chip1_sub';
+  /// Spoken in Gujarati
+  static const siteFpOvChip2 = 'site.fp.ov.chip2';
+  /// Report sent in English
+  static const siteFpOvChip2Sub = 'site.fp.ov.chip2_sub';
+  /// {n} tools, one app
+  static const siteFpOvGridEyebrow = 'site.fp.ov.grid_eyebrow';
+  /// Every feature, in one simple app
+  static const siteFpOvGridTitle = 'site.fp.ov.grid_title';
+  /// One job, start to finish
+  static const siteFpOvFitTitle = 'site.fp.ov.fit_title';
+  /// Every feature hands off to the next, so the proof builds itself while your team works.
+  static const siteFpOvFitBody = 'site.fp.ov.fit_body';
+  /// Job
+  static const siteFpOvF1 = 'site.fp.ov.f1';
+  /// Create and assign it
+  static const siteFpOvF1B = 'site.fp.ov.f1_b';
+  /// Evidence
+  static const siteFpOvF2 = 'site.fp.ov.f2';
+  /// Before, during, after
+  static const siteFpOvF2B = 'site.fp.ov.f2_b';
+  /// Checklist
+  static const siteFpOvF3 = 'site.fp.ov.f3';
+  /// One tap per question
+  static const siteFpOvF3B = 'site.fp.ov.f3_b';
+  /// Voice
+  static const siteFpOvF4 = 'site.fp.ov.f4';
+  /// Speak your notes
+  static const siteFpOvF4B = 'site.fp.ov.f4_b';
+  /// AI report
+  static const siteFpOvF5 = 'site.fp.ov.f5';
+  /// Drafted from the proof
+  static const siteFpOvF5B = 'site.fp.ov.f5_b';
+  /// Approve
+  static const siteFpOvF6 = 'site.fp.ov.f6';
+  /// A manager signs off
+  static const siteFpOvF6B = 'site.fp.ov.f6_b';
+  /// Share
+  static const siteFpOvF7 = 'site.fp.ov.f7';
+  /// Secure link or PDF
+  static const siteFpOvF7B = 'site.fp.ov.f7_b';
+  /// Do I need to use every feature?
+  static const siteFpOvQ1 = 'site.fp.ov.q1';
+  /// No. Every plan includes every feature, so use only what your team needs. Most teams start with jobs, photos and checklists, then add AI reports.
+  static const siteFpOvAns1 = 'site.fp.ov.ans1';
+  /// What is different between the plans?
+  static const siteFpOvQ2 = 'site.fp.ov.q2';
+  /// Not the features. Plans differ in how many technicians you can add, reports a month, AI questions a month and follow-up credits. See the pricing page for the numbers.
+  static const siteFpOvAns2 = 'site.fp.ov.ans2';
+  /// Does it work without mobile signal?
+  static const siteFpOvQ3 = 'site.fp.ov.q3';
+  /// Yes. Photos, checklist answers and voice notes are saved on the phone and sent once the signal is back — each item only once.
+  static const siteFpOvAns3 = 'site.fp.ov.ans3';
+  /// Can I try every feature for free?
+  static const siteFpOvQ4 = 'site.fp.ov.q4';
+  /// Yes. You get {plan} free for {trial} days, with no card needed. After that, pick a plan or stay on {free}.
+  static const siteFpOvAns4 = 'site.fp.ov.ans4';
+  /// See every feature in action
+  static const siteFpOvCta = 'site.fp.ov.cta';
+  /// Jobs
+  static const siteFpJobsName = 'site.fp.jobs.name';
+  /// Schedule, assign and track every visit.
+  static const siteFpJobsCard = 'site.fp.jobs.card';
+  /// Every job in one place — from booking to proof
+  static const siteFpJobsTitle = 'site.fp.jobs.title';
+  /// Create a job in seconds, assign the right technician and follow it live. Photos, checklists, voice notes and the report stay attached to the job — no more lost WhatsApp threads.
+  static const siteFpJobsBody = 'site.fp.jobs.body';
+  /// Live job status
+  static const siteFpJobsTick1 = 'site.fp.jobs.tick1';
+  /// Works offline
+  static const siteFpJobsTick2 = 'site.fp.jobs.tick2';
+  /// Assigned to Ramesh Patel
+  static const siteFpJobsChip1 = 'site.fp.jobs.chip1';
+  /// Green Valley Clinic · 11:00 AM
+  static const siteFpJobsChip1Sub = 'site.fp.jobs.chip1_sub';
+  /// In progress
+  static const siteFpJobsChip2 = 'site.fp.jobs.chip2';
+  /// 3 of 5 proof steps done
+  static const siteFpJobsChip2Sub = 'site.fp.jobs.chip2_sub';
+  /// How jobs work
+  static const siteFpJobsHowTitle = 'site.fp.jobs.how_title';
+  /// Four steps from booking to a closed job — everyone sees the same live status.
+  static const siteFpJobsHowBody = 'site.fp.jobs.how_body';
+  /// Create the job
+  static const siteFpJobsS1 = 'site.fp.jobs.s1';
+  /// Add the customer, address, work to do and checklist in under a minute.
+  static const siteFpJobsS1B = 'site.fp.jobs.s1_b';
+  /// Assign a technician
+  static const siteFpJobsS2 = 'site.fp.jobs.s2';
+  /// Pick who is free. The job appears on their phone with the address and details.
+  static const siteFpJobsS2B = 'site.fp.jobs.s2_b';
+  /// Work on site
+  static const siteFpJobsS3 = 'site.fp.jobs.s3';
+  /// The technician follows the job: photos, checklist and a voice note.
+  static const siteFpJobsS3B = 'site.fp.jobs.s3_b';
+  /// Close with proof
+  static const siteFpJobsS4 = 'site.fp.jobs.s4';
+  /// The manager reviews the report and the job is marked done.
+  static const siteFpJobsS4B = 'site.fp.jobs.s4_b';
+  /// Run the day without the phone calls
+  static const siteFpJobsCapTitle = 'site.fp.jobs.cap_title';
+  /// Everything a dispatcher needs, simple enough for every technician.
+  static const siteFpJobsCapBody = 'site.fp.jobs.cap_body';
+  /// Create a job in under a minute
+  static const siteFpJobsC1 = 'site.fp.jobs.c1';
+  /// Customer, address, work to do, date and checklist on one screen. Technicians can add a quick job on site too.
+  static const siteFpJobsC1B = 'site.fp.jobs.c1_b';
+  /// Assign the right person
+  static const siteFpJobsC2 = 'site.fp.jobs.c2';
+  /// See who is free and how many jobs they have. The technician gets a message in the app.
+  static const siteFpJobsC2B = 'site.fp.jobs.c2_b';
+  /// In-app message
+  static const siteFpJobsTag = 'site.fp.jobs.tag';
+  /// Live job status
+  static const siteFpJobsC3 = 'site.fp.jobs.c3';
+  /// Unassigned, assigned, in progress, in review, changes asked, done — updated as the work happens.
+  static const siteFpJobsC3B = 'site.fp.jobs.c3_b';
+  /// A simple Today view
+  static const siteFpJobsC4 = 'site.fp.jobs.c4';
+  /// Each technician opens the app to today’s jobs, in order, in their own language.
+  static const siteFpJobsC4B = 'site.fp.jobs.c4_b';
+  /// Directions and calls
+  static const siteFpJobsC5 = 'site.fp.jobs.c5';
+  /// One tap opens Google Maps or calls the customer, right from the job.
+  static const siteFpJobsC5B = 'site.fp.jobs.c5_b';
+  /// Everything filed to the job
+  static const siteFpJobsC6 = 'site.fp.jobs.c6';
+  /// Photos, checklist, voice notes and the report stay attached and easy to find later.
+  static const siteFpJobsC6B = 'site.fp.jobs.c6_b';
+  /// A job, from booking to done
+  static const siteFpJobsAppTitle = 'site.fp.jobs.app_title';
+  /// Create → assign → work → review. Everyone sees the same job.
+  static const siteFpJobsAppBody = 'site.fp.jobs.app_body';
+  /// Create the job
+  static const siteFpJobsP1 = 'site.fp.jobs.p1';
+  /// Customer, address and checklist in one screen.
+  static const siteFpJobsP1B = 'site.fp.jobs.p1_b';
+  /// Assign a technician
+  static const siteFpJobsP2 = 'site.fp.jobs.p2';
+  /// Pick who is free; they get a message.
+  static const siteFpJobsP2B = 'site.fp.jobs.p2_b';
+  /// The technician’s day
+  static const siteFpJobsP3 = 'site.fp.jobs.p3';
+  /// Today’s jobs, in order, in their language.
+  static const siteFpJobsP3B = 'site.fp.jobs.p3_b';
+  /// Track every job
+  static const siteFpJobsP4 = 'site.fp.jobs.p4';
+  /// The manager’s home shows what needs review.
+  static const siteFpJobsP4B = 'site.fp.jobs.p4_b';
+  /// Jobs for every trade
+  static const siteFpJobsUseTitle = 'site.fp.jobs.use_title';
+  /// The same simple job flow works for every kind of field team.
+  static const siteFpJobsUseBody = 'site.fp.jobs.use_body';
+  /// Can technicians see only their own jobs?
+  static const siteFpJobsQ1 = 'site.fp.jobs.q1';
+  /// Yes. Technicians see the jobs given to them. Owners and managers see every job, can filter by technician or status, and search by customer or address.
+  static const siteFpJobsAns1 = 'site.fp.jobs.ans1';
+  /// Can I reassign a job?
+  static const siteFpJobsQ2 = 'site.fp.jobs.q2';
+  /// Yes, until the technician starts it. After that the job stays with that technician, so all its proof comes from one person.
+  static const siteFpJobsAns2 = 'site.fp.jobs.ans2';
+  /// Can technicians add a job themselves?
+  static const siteFpJobsQ3 = 'site.fp.jobs.q3';
+  /// Yes. A technician can start a quick job on site — for example when the customer asks for one more unit to be checked.
+  static const siteFpJobsAns3 = 'site.fp.jobs.ans3';
+  /// Does the customer need the app?
+  static const siteFpJobsQ4 = 'site.fp.jobs.q4';
+  /// No. Customers get the report as a secure link or a PDF. Only your team uses the app.
+  static const siteFpJobsAns4 = 'site.fp.jobs.ans4';
+  /// Put every job in one place
+  static const siteFpJobsCta = 'site.fp.jobs.cta';
+  /// Evidence capture
+  static const siteFpEvidenceName = 'site.fp.evidence.name';
+  /// Timestamped before, during and after photos.
+  static const siteFpEvidenceCard = 'site.fp.evidence.card';
+  /// Photo proof for every job — timestamped and filed
+  static const siteFpEvidenceTitle = 'site.fp.evidence.title';
+  /// Before, during and after photos keep the time and place they were taken and go straight to the right job. When a customer asks “was it really done?”, the answer is one tap away.
+  static const siteFpEvidenceBody = 'site.fp.evidence.body';
+  /// Time and place on every photo
+  static const siteFpEvidenceTick1 = 'site.fp.evidence.tick1';
+  /// Works offline
+  static const siteFpEvidenceTick2 = 'site.fp.evidence.tick2';
+  /// Before and after paired
+  static const siteFpEvidenceChip1 = 'site.fp.evidence.chip1';
+  /// Air filter · room 2
+  static const siteFpEvidenceChip1Sub = 'site.fp.evidence.chip1_sub';
+  /// 6 photos · timestamped
+  static const siteFpEvidenceChip2 = 'site.fp.evidence.chip2';
+  /// 31 Oct, 11:42 AM · on site
+  static const siteFpEvidenceChip2Sub = 'site.fp.evidence.chip2_sub';
+  /// How evidence capture works
+  static const siteFpEvidenceHowTitle = 'site.fp.evidence.how_title';
+  /// Four steps from the first photo to proof your customer can see.
+  static const siteFpEvidenceHowBody = 'site.fp.evidence.how_body';
+  /// Open the job
+  static const siteFpEvidenceS1 = 'site.fp.evidence.s1';
+  /// The app shows which photos this job needs — before, during and after.
+  static const siteFpEvidenceS1B = 'site.fp.evidence.s1_b';
+  /// Take before photos
+  static const siteFpEvidenceS2 = 'site.fp.evidence.s2';
+  /// Photograph the problem first. Time and place are saved automatically.
+  static const siteFpEvidenceS2B = 'site.fp.evidence.s2_b';
+  /// Do the work
+  static const siteFpEvidenceS3 = 'site.fp.evidence.s3';
+  /// Add during photos as you go. Nothing to name, sort or upload.
+  static const siteFpEvidenceS3B = 'site.fp.evidence.s3_b';
+  /// Show the after
+  static const siteFpEvidenceS4 = 'site.fp.evidence.s4';
+  /// After photos are paired with the before shots for a side-by-side view.
+  static const siteFpEvidenceS4B = 'site.fp.evidence.s4_b';
+  /// Proof nobody can argue with
+  static const siteFpEvidenceCapTitle = 'site.fp.evidence.cap_title';
+  /// Simple enough for any technician. Strong enough to settle a dispute.
+  static const siteFpEvidenceCapBody = 'site.fp.evidence.cap_body';
+  /// Time and place saved
+  static const siteFpEvidenceC1 = 'site.fp.evidence.c1';
+  /// Every photo keeps when and where it was taken. No settings to remember.
+  static const siteFpEvidenceC1B = 'site.fp.evidence.c1_b';
+  /// Automatic
+  static const siteFpEvidenceTag = 'site.fp.evidence.tag';
+  /// Filed to the right job
+  static const siteFpEvidenceC2 = 'site.fp.evidence.c2';
+  /// Photos go straight to the job — never to a personal gallery or chat.
+  static const siteFpEvidenceC2B = 'site.fp.evidence.c2_b';
+  /// Before and after, side by side
+  static const siteFpEvidenceC3 = 'site.fp.evidence.c3';
+  /// Matching shots are paired in the report so customers see the difference.
+  static const siteFpEvidenceC3B = 'site.fp.evidence.c3_b';
+  /// Works with no signal
+  static const siteFpEvidenceC4 = 'site.fp.evidence.c4';
+  /// Photos are saved on the phone and sent when you are back online.
+  static const siteFpEvidenceC4B = 'site.fp.evidence.c4_b';
+  /// Can’t be changed later
+  static const siteFpEvidenceC5 = 'site.fp.evidence.c5';
+  /// Once the report is in, photos are locked with a fingerprint. Notes can still be added.
+  static const siteFpEvidenceC5B = 'site.fp.evidence.c5_b';
+  /// Easy to find later
+  static const siteFpEvidenceC6 = 'site.fp.evidence.c6';
+  /// Search jobs by customer or address and open the photos months later.
+  static const siteFpEvidenceC6B = 'site.fp.evidence.c6_b';
+  /// From the first photo to the report
+  static const siteFpEvidenceAppTitle = 'site.fp.evidence.app_title';
+  /// Open the job → take photos → check → report. No sorting, no uploading.
+  static const siteFpEvidenceAppBody = 'site.fp.evidence.app_body';
+  /// Open the proof steps
+  static const siteFpEvidenceP1 = 'site.fp.evidence.p1';
+  /// See which photos the job needs.
+  static const siteFpEvidenceP1B = 'site.fp.evidence.p1_b';
+  /// Take the photo
+  static const siteFpEvidenceP2 = 'site.fp.evidence.p2';
+  /// Big buttons, one hand, any light.
+  static const siteFpEvidenceP2B = 'site.fp.evidence.p2_b';
+  /// Check the photos
+  static const siteFpEvidenceP3 = 'site.fp.evidence.p3';
+  /// Before, during and after, in order.
+  static const siteFpEvidenceP3B = 'site.fp.evidence.p3_b';
+  /// Ready for the report
+  static const siteFpEvidenceP4 = 'site.fp.evidence.p4';
+  /// Photos flow into the report review.
+  static const siteFpEvidenceP4B = 'site.fp.evidence.p4_b';
+  /// Photo proof for every trade
+  static const siteFpEvidenceUseTitle = 'site.fp.evidence.use_title';
+  /// Whatever the work, the before and after tell the story.
+  static const siteFpEvidenceUseBody = 'site.fp.evidence.use_body';
+  /// Can photos be edited or replaced after the job?
+  static const siteFpEvidenceQ1 = 'site.fp.evidence.q1';
+  /// No. Once the report is sent for review, photos are locked: their time, place and who took them can’t change. A manager can still add notes.
+  static const siteFpEvidenceAns1 = 'site.fp.evidence.ans1';
+  /// Do photos use a lot of mobile data?
+  static const siteFpEvidenceQ2 = 'site.fp.evidence.q2';
+  /// No. Photos are made smaller on the phone before they are sent, so a job uses little data.
+  static const siteFpEvidenceAns2 = 'site.fp.evidence.ans2';
+  /// What happens if there is no signal on site?
+  static const siteFpEvidenceQ3 = 'site.fp.evidence.q3';
+  /// Keep working. Photos wait on the phone and are sent once you are back online — each one only once.
+  static const siteFpEvidenceAns3 = 'site.fp.evidence.ans3';
+  /// Can customers see the photos?
+  static const siteFpEvidenceQ4 = 'site.fp.evidence.q4';
+  /// Yes, the ones in the approved report. Customers get a copy without the location data hidden in the file.
+  static const siteFpEvidenceAns4 = 'site.fp.evidence.ans4';
+  /// Give every job its photo proof
+  static const siteFpEvidenceCta = 'site.fp.evidence.cta';
+  /// Checklists
+  static const siteFpChecklistsName = 'site.fp.checklists.name';
+  /// Ready templates, answered on site with one tap.
+  static const siteFpChecklistsCard = 'site.fp.checklists.card';
+  /// Checklists your team actually finishes
+  static const siteFpChecklistsTitle = 'site.fp.checklists.title';
+  /// Start from a ready template or build your own, ask for photos where they matter, and let technicians answer with one tap — in their own language. Every answer goes straight into the report.
+  static const siteFpChecklistsBody = 'site.fp.checklists.body';
+  /// Photo rules per question
+  static const siteFpChecklistsTick1 = 'site.fp.checklists.tick1';
+  /// Can’t be skipped
+  static const siteFpChecklistsTick2 = 'site.fp.checklists.tick2';
+  /// Question 3 of 12
+  static const siteFpChecklistsChip1 = 'site.fp.checklists.chip1';
+  /// Is the air filter clean?
+  static const siteFpChecklistsChip1Sub = 'site.fp.checklists.chip1_sub';
+  /// Photo needed
+  static const siteFpChecklistsChip2 = 'site.fp.checklists.chip2';
+  /// The report waits for it
+  static const siteFpChecklistsChip2Sub = 'site.fp.checklists.chip2_sub';
+  /// How checklists work
+  static const siteFpChecklistsHowTitle = 'site.fp.checklists.how_title';
+  /// Four steps from a template to answers in the report.
+  static const siteFpChecklistsHowBody = 'site.fp.checklists.how_body';
+  /// Pick a template
+  static const siteFpChecklistsS1 = 'site.fp.checklists.s1';
+  /// Start from a ready KaamNishaan checklist, or build your own in minutes.
+  static const siteFpChecklistsS1B = 'site.fp.checklists.s1_b';
+  /// Attach it to the job
+  static const siteFpChecklistsS2 = 'site.fp.checklists.s2';
+  /// Choose the checklist when you create the job. Later edits never change a running job.
+  static const siteFpChecklistsS2B = 'site.fp.checklists.s2_b';
+  /// Answer on site
+  static const siteFpChecklistsS3 = 'site.fp.checklists.s3';
+  /// One question at a time, with big buttons and photo prompts.
+  static const siteFpChecklistsS3B = 'site.fp.checklists.s3_b';
+  /// Results in the report
+  static const siteFpChecklistsS4 = 'site.fp.checklists.s4';
+  /// Every answer and reading appears in the report next to its photo.
+  static const siteFpChecklistsS4B = 'site.fp.checklists.s4_b';
+  /// Simple for technicians, complete for managers
+  static const siteFpChecklistsCapTitle = 'site.fp.checklists.cap_title';
+  /// Every visit follows the same steps — and nothing gets skipped.
+  static const siteFpChecklistsCapBody = 'site.fp.checklists.cap_body';
+  /// Ready templates
+  static const siteFpChecklistsC1 = 'site.fp.checklists.c1';
+  /// KaamNishaan checklists are ready on day one. Copy one to make it your own.
+  static const siteFpChecklistsC1B = 'site.fp.checklists.c1_b';
+  /// Photo rules
+  static const siteFpChecklistsC2 = 'site.fp.checklists.c2';
+  /// Ask for a photo every time, or only when the answer is No or Fail.
+  static const siteFpChecklistsC2B = 'site.fp.checklists.c2_b';
+  /// Required
+  static const siteFpChecklistsTag = 'site.fp.checklists.tag';
+  /// The right kind of answer
+  static const siteFpChecklistsC3 = 'site.fp.checklists.c3';
+  /// Yes / No, Pass / Fail, a number with its unit, a few words or a photo.
+  static const siteFpChecklistsC3B = 'site.fp.checklists.c3_b';
+  /// One question at a time
+  static const siteFpChecklistsC4 = 'site.fp.checklists.c4';
+  /// Large text and buttons that are easy to use on a roof or in bright sun.
+  static const siteFpChecklistsC4B = 'site.fp.checklists.c4_b';
+  /// In the technician’s language
+  static const siteFpChecklistsC5 = 'site.fp.checklists.c5';
+  /// KaamNishaan’s ready checklists come in English, Hindi, Gujarati, Spanish and French.
+  static const siteFpChecklistsC5B = 'site.fp.checklists.c5_b';
+  /// Can’t skip, can’t forget
+  static const siteFpChecklistsC6 = 'site.fp.checklists.c6';
+  /// Required questions, and their photos, must be done before the report can be made.
+  static const siteFpChecklistsC6B = 'site.fp.checklists.c6_b';
+  /// A checklist, start to finish
+  static const siteFpChecklistsAppTitle = 'site.fp.checklists.app_title';
+  /// Job → checklist → answers → report. One tap per question.
+  static const siteFpChecklistsAppBody = 'site.fp.checklists.app_body';
+  /// Open the job
+  static const siteFpChecklistsP1 = 'site.fp.checklists.p1';
+  /// The checklist is already attached.
+  static const siteFpChecklistsP1B = 'site.fp.checklists.p1_b';
+  /// See the checklist
+  static const siteFpChecklistsP2 = 'site.fp.checklists.p2';
+  /// Progress at a glance.
+  static const siteFpChecklistsP2B = 'site.fp.checklists.p2_b';
+  /// Answer one question
+  static const siteFpChecklistsP3 = 'site.fp.checklists.p3';
+  /// Yes, No, or take a photo.
+  static const siteFpChecklistsP3B = 'site.fp.checklists.p3_b';
+  /// Results in the report
+  static const siteFpChecklistsP4 = 'site.fp.checklists.p4';
+  /// Answers land next to the photos.
+  static const siteFpChecklistsP4B = 'site.fp.checklists.p4_b';
+  /// Checklists for every trade
+  static const siteFpChecklistsUseTitle = 'site.fp.checklists.use_title';
+  /// See which trades have ready checklists today. For the others, build your own in minutes.
+  static const siteFpChecklistsUseBody = 'site.fp.checklists.use_body';
+  /// Can I edit the ready templates?
+  static const siteFpChecklistsQ1 = 'site.fp.checklists.q1';
+  /// Yes. Copy a KaamNishaan checklist, then change, reorder or remove any question and add your own. Your copy is saved for your team.
+  static const siteFpChecklistsAns1 = 'site.fp.checklists.ans1';
+  /// Which trades have ready checklists?
+  static const siteFpChecklistsQ2 = 'site.fp.checklists.q2';
+  /// The list above shows it live. HVAC comes first; more trades are being added. Any team can build its own checklist today.
+  static const siteFpChecklistsAns2 = 'site.fp.checklists.ans2';
+  /// What if I change a checklist while jobs are running?
+  static const siteFpChecklistsQ3 = 'site.fp.checklists.q3';
+  /// Running jobs keep the questions they started with. Your change applies to new jobs.
+  static const siteFpChecklistsAns3 = 'site.fp.checklists.ans3';
+  /// Do checklist answers show in the report?
+  static const siteFpChecklistsQ4 = 'site.fp.checklists.q4';
+  /// Yes. The customer sees each answer and reading, with the photos taken for it.
+  static const siteFpChecklistsAns4 = 'site.fp.checklists.ans4';
+  /// Make every visit follow the same steps
+  static const siteFpChecklistsCta = 'site.fp.checklists.cta';
+  /// Voice notes
+  static const siteFpVoiceName = 'site.fp.voice.name';
+  /// Speak in your language. It is written down for the report.
+  static const siteFpVoiceCard = 'site.fp.voice.card';
+  /// Speak your notes. We write them down.
+  static const siteFpVoiceTitle = 'site.fp.voice.title';
+  /// Technicians record a quick voice note in Hindi, Gujarati, Spanish, French or English. KaamNishaan writes down what they said, and the AI report uses it — in the language your customer reads.
+  static const siteFpVoiceBody = 'site.fp.voice.body';
+  /// No typing on site
+  static const siteFpVoiceTick1 = 'site.fp.voice.tick1';
+  /// Works offline
+  static const siteFpVoiceTick2 = 'site.fp.voice.tick2';
+  /// Voice note · 0:42
+  static const siteFpVoiceChip1 = 'site.fp.voice.chip1';
+  /// Spoken in Gujarati
+  static const siteFpVoiceChip1Sub = 'site.fp.voice.chip1_sub';
+  /// Written down
+  static const siteFpVoiceChip2 = 'site.fp.voice.chip2';
+  /// Original recording kept
+  static const siteFpVoiceChip2Sub = 'site.fp.voice.chip2_sub';
+  /// How voice notes work
+  static const siteFpVoiceHowTitle = 'site.fp.voice.how_title';
+  /// Four steps from a spoken note to a clear line in the report.
+  static const siteFpVoiceHowBody = 'site.fp.voice.how_body';
+  /// Tap and speak
+  static const siteFpVoiceS1 = 'site.fp.voice.s1';
+  /// Press the big mic button and say what you did, in your own words.
+  static const siteFpVoiceS1B = 'site.fp.voice.s1_b';
+  /// Any of 5 languages
+  static const siteFpVoiceS2 = 'site.fp.voice.s2';
+  /// Hindi, Gujarati, Spanish, French or English. The language is found for you.
+  static const siteFpVoiceS2B = 'site.fp.voice.s2_b';
+  /// Written down
+  static const siteFpVoiceS3 = 'site.fp.voice.s3';
+  /// The note is written down word for word. You can fix a word if needed.
+  static const siteFpVoiceS3B = 'site.fp.voice.s3_b';
+  /// Into the report
+  static const siteFpVoiceS4 = 'site.fp.voice.s4';
+  /// The AI report uses it, and the manager can play the original recording.
+  static const siteFpVoiceS4B = 'site.fp.voice.s4_b';
+  /// Built for people who would rather talk than type
+  static const siteFpVoiceCapTitle = 'site.fp.voice.cap_title';
+  /// The fastest way to record what happened on site.
+  static const siteFpVoiceCapBody = 'site.fp.voice.cap_body';
+  /// Speak in your language
+  static const siteFpVoiceC1 = 'site.fp.voice.c1';
+  /// Technicians talk the way they normally do. No spelling, no typing.
+  static const siteFpVoiceC1B = 'site.fp.voice.c1_b';
+  /// Recording always kept
+  static const siteFpVoiceC2 = 'site.fp.voice.c2';
+  /// The original audio stays with the job, next to the written version, and is never changed.
+  static const siteFpVoiceC2B = 'site.fp.voice.c2_b';
+  /// Original kept
+  static const siteFpVoiceTag = 'site.fp.voice.tag';
+  /// Word for word
+  static const siteFpVoiceC3 = 'site.fp.voice.c3';
+  /// What was said is written down as it was said. The AI report turns it into clear sentences.
+  static const siteFpVoiceC3B = 'site.fp.voice.c3_b';
+  /// Report in the customer’s language
+  static const siteFpVoiceC4 = 'site.fp.voice.c4';
+  /// Speak Gujarati, send English — or any of the 5 languages.
+  static const siteFpVoiceC4B = 'site.fp.voice.c4_b';
+  /// Speak to change
+  static const siteFpVoiceC5 = 'site.fp.voice.c5';
+  /// Missed something? Record again. The earlier note stays until you delete it.
+  static const siteFpVoiceC5B = 'site.fp.voice.c5_b';
+  /// Works offline
+  static const siteFpVoiceC6 = 'site.fp.voice.c6';
+  /// Record with no signal. The note is saved on the phone and sent when you are back online.
+  static const siteFpVoiceC6B = 'site.fp.voice.c6_b';
+  /// Speak Gujarati. Send English.
+  static const siteFpVoiceAppTitle = 'site.fp.voice.app_title';
+  /// Ramesh speaks Gujarati on site. The AI drafts the report in English from his voice note and photos.
+  static const siteFpVoiceAppBody = 'site.fp.voice.app_body';
+  /// Voice notes for every trade
+  static const siteFpVoiceUseTitle = 'site.fp.voice.use_title';
+  /// Hands busy or gloves on? Say it instead of typing it.
+  static const siteFpVoiceUseBody = 'site.fp.voice.use_body';
+  /// Which languages can technicians speak in?
+  static const siteFpVoiceQ1 = 'site.fp.voice.q1';
+  /// English, Hindi, Gujarati, Spanish and French. They can pick the language before recording, or let KaamNishaan find it.
+  static const siteFpVoiceAns1 = 'site.fp.voice.ans1';
+  /// Is the original recording kept?
+  static const siteFpVoiceQ2 = 'site.fp.voice.q2';
+  /// Yes. The audio is part of the job’s proof. It is never changed, and managers can play it next to the written version.
+  static const siteFpVoiceAns2 = 'site.fp.voice.ans2';
+  /// Can I correct what was written down?
+  static const siteFpVoiceQ3 = 'site.fp.voice.q3';
+  /// Yes. Fix any word in the written version. The recording itself stays as it was.
+  static const siteFpVoiceAns3 = 'site.fp.voice.ans3';
+  /// How long can a voice note be?
+  static const siteFpVoiceQ4 = 'site.fp.voice.q4';
+  /// Up to 10 minutes. Most notes are under a minute. You can record more than one note per job.
+  static const siteFpVoiceAns4 = 'site.fp.voice.ans4';
+  /// Let your team speak their language
+  static const siteFpVoiceCta = 'site.fp.voice.cta';
+  /// AI reports
+  static const siteFpReportsName = 'site.fp.reports.name';
+  /// Drafted from real proof. Never invents work.
+  static const siteFpReportsCard = 'site.fp.reports.card';
+  /// Reports that write themselves — from real proof
+  static const siteFpReportsTitle = 'site.fp.reports.title';
+  /// KaamNishaan AI turns the photos, checklist answers and voice notes from a job into a clear, customer-ready report. Every sentence links back to its proof, and nothing is sent until a manager approves.
+  static const siteFpReportsBody = 'site.fp.reports.body';
+  /// Never invents work
+  static const siteFpReportsTick1 = 'site.fp.reports.tick1';
+  /// 5 report languages
+  static const siteFpReportsTick2 = 'site.fp.reports.tick2';
+  /// Every sentence linked
+  static const siteFpReportsChip1 = 'site.fp.reports.chip1';
+  /// 6 photos · 11 checks · 1 voice note
+  static const siteFpReportsChip1Sub = 'site.fp.reports.chip1_sub';
+  /// Spoken in Gujarati
+  static const siteFpReportsChip2 = 'site.fp.reports.chip2';
+  /// Report written in English
+  static const siteFpReportsChip2Sub = 'site.fp.reports.chip2_sub';
+  /// How AI reports work
+  static const siteFpReportsHowTitle = 'site.fp.reports.how_title';
+  /// Four steps from the job site to your customer — your technician never types a paragraph.
+  static const siteFpReportsHowBody = 'site.fp.reports.how_body';
+  /// Capture the proof
+  static const siteFpReportsS1 = 'site.fp.reports.s1';
+  /// Before, during and after photos are saved with time and place and filed to the job.
+  static const siteFpReportsS1B = 'site.fp.reports.s1_b';
+  /// Speak your notes
+  static const siteFpReportsS2 = 'site.fp.reports.s2';
+  /// Record a voice note in Hindi, Gujarati, Spanish, French or English.
+  static const siteFpReportsS2B = 'site.fp.reports.s2_b';
+  /// AI drafts the report
+  static const siteFpReportsS3 = 'site.fp.reports.s3';
+  /// Photos, checklist answers and the voice note become a clear draft.
+  static const siteFpReportsS3B = 'site.fp.reports.s3_b';
+  /// Approve and send
+  static const siteFpReportsS4 = 'site.fp.reports.s4';
+  /// A manager reviews and approves, then shares a secure link or PDF.
+  static const siteFpReportsS4B = 'site.fp.reports.s4_b';
+  /// Built to be trusted, not just fast
+  static const siteFpReportsCapTitle = 'site.fp.reports.cap_title';
+  /// AI that only writes what your team can prove.
+  static const siteFpReportsCapBody = 'site.fp.reports.cap_body';
+  /// Drafts from photos, checklist and voice
+  static const siteFpReportsC1 = 'site.fp.reports.c1';
+  /// One tap turns a job’s proof into a summary, the work done and advice for the customer.
+  static const siteFpReportsC1B = 'site.fp.reports.c1_b';
+  /// Never invents work
+  static const siteFpReportsC2 = 'site.fp.reports.c2';
+  /// Every sentence links to the photo, checklist answer or voice note it came from.
+  static const siteFpReportsC2B = 'site.fp.reports.c2_b';
+  /// Linked to proof
+  static const siteFpReportsTag = 'site.fp.reports.tag';
+  /// Easy to edit
+  static const siteFpReportsC3 = 'site.fp.reports.c3';
+  /// Change any part in your own words — or with your phone’s voice typing — or ask the AI to write one part again.
+  static const siteFpReportsC3B = 'site.fp.reports.c3_b';
+  /// Choose the report language
+  static const siteFpReportsC4 = 'site.fp.reports.c4';
+  /// Technicians speak their language. Reports go out in English, Hindi, Gujarati, Spanish or French.
+  static const siteFpReportsC4B = 'site.fp.reports.c4_b';
+  /// Missing-proof check
+  static const siteFpReportsC5 = 'site.fp.reports.c5';
+  /// Flags a missing after photo or an unanswered question before the report goes for review.
+  static const siteFpReportsC5B = 'site.fp.reports.c5_b';
+  /// Manager approval
+  static const siteFpReportsC6 = 'site.fp.reports.c6';
+  /// Nothing reaches the customer until a manager approves — or asks for changes.
+  static const siteFpReportsC6B = 'site.fp.reports.c6_b';
+  /// From a voice note to a finished report
+  static const siteFpReportsAppTitle = 'site.fp.reports.app_title';
+  /// Ramesh speaks Gujarati on site. The AI drafts the report in English, linked to his photos and checklist answers.
+  static const siteFpReportsAppBody = 'site.fp.reports.app_body';
+  /// AI reports for every trade
+  static const siteFpReportsUseTitle = 'site.fp.reports.use_title';
+  /// The report is written from the job’s own proof, whatever the work.
+  static const siteFpReportsUseBody = 'site.fp.reports.use_body';
+  /// Can the AI invent work that wasn’t done?
+  static const siteFpReportsQ1 = 'site.fp.reports.q1';
+  /// No. The draft only describes what is in the job’s photos, checklist answers and voice notes. Every sentence links to its proof, and a manager approves the report before the customer sees it.
+  static const siteFpReportsAns1 = 'site.fp.reports.ans1';
+  /// Which languages can reports be written in?
+  static const siteFpReportsQ2 = 'site.fp.reports.q2';
+  /// English, Hindi, Gujarati, Spanish and French. The technician can speak one language and the customer can read another.
+  static const siteFpReportsAns2 = 'site.fp.reports.ans2';
+  /// Can I edit the draft before it’s sent?
+  static const siteFpReportsQ3 = 'site.fp.reports.q3';
+  /// Yes. The technician can change any part before sending it for review, and the manager can ask for changes before approving.
+  static const siteFpReportsAns3 = 'site.fp.reports.ans3';
+  /// Do AI reports cost extra?
+  static const siteFpReportsQ4 = 'site.fp.reports.q4';
+  /// No. AI reports are included on every plan. Plans differ in how many reports you can make each month.
+  static const siteFpReportsAns4 = 'site.fp.reports.ans4';
+  /// Let AI write your next report
+  static const siteFpReportsCta = 'site.fp.reports.cta';
+  /// AI assistant
+  static const siteFpAssistantName = 'site.fp.assistant.name';
+  /// Ask anything about your jobs and reports.
+  static const siteFpAssistantCard = 'site.fp.assistant.card';
+  /// Ask about any job — get answers with sources
+  static const siteFpAssistantTitle = 'site.fp.assistant.title';
+  /// Ask a question like “When did we last visit Green Valley Clinic?” KaamNishaan AI looks through your company’s jobs and reports and tells you which ones it used.
+  static const siteFpAssistantBody = 'site.fp.assistant.body';
+  /// Answers name their sources
+  static const siteFpAssistantTick1 = 'site.fp.assistant.tick1';
+  /// Only your company’s data
+  static const siteFpAssistantTick2 = 'site.fp.assistant.tick2';
+  /// Answer from Report #R-0988
+  static const siteFpAssistantChip1 = 'site.fp.assistant.chip1';
+  /// 12 Aug · approved by Priya
+  static const siteFpAssistantChip1Sub = 'site.fp.assistant.chip1_sub';
+  /// Looks through recent jobs
+  static const siteFpAssistantChip2 = 'site.fp.assistant.chip2';
+  /// Customers, status and reports
+  static const siteFpAssistantChip2Sub = 'site.fp.assistant.chip2_sub';
+  /// How the AI assistant works
+  static const siteFpAssistantHowTitle = 'site.fp.assistant.how_title';
+  /// Four steps from a question to an answer you can check.
+  static const siteFpAssistantHowBody = 'site.fp.assistant.how_body';
+  /// Ask a question
+  static const siteFpAssistantS1 = 'site.fp.assistant.s1';
+  /// Type it, or use your phone’s voice typing, the way you would ask a colleague.
+  static const siteFpAssistantS1B = 'site.fp.assistant.s1_b';
+  /// It looks through your jobs
+  static const siteFpAssistantS2 = 'site.fp.assistant.s2';
+  /// Your recent jobs, plus older ones that match the customer or job you named.
+  static const siteFpAssistantS2B = 'site.fp.assistant.s2_b';
+  /// Get a short answer
+  static const siteFpAssistantS3 = 'site.fp.assistant.s3';
+  /// A plain answer in your app’s language — not a list of files to dig through.
+  static const siteFpAssistantS3B = 'site.fp.assistant.s3_b';
+  /// See the source
+  static const siteFpAssistantS4 = 'site.fp.assistant.s4';
+  /// Each answer names the reports and jobs it came from.
+  static const siteFpAssistantS4B = 'site.fp.assistant.s4_b';
+  /// Answers you can check
+  static const siteFpAssistantCapTitle = 'site.fp.assistant.cap_title';
+  /// The assistant only answers from your own job records.
+  static const siteFpAssistantCapBody = 'site.fp.assistant.cap_body';
+  /// Ask in plain language
+  static const siteFpAssistantC1 = 'site.fp.assistant.c1';
+  /// No filters or search codes. Ready chips like “What is missing?” help you start.
+  static const siteFpAssistantC1B = 'site.fp.assistant.c1_b';
+  /// Every answer has a source
+  static const siteFpAssistantC2 = 'site.fp.assistant.c2';
+  /// Answers name the report and job numbers they used. Numbers it can’t find are dropped.
+  static const siteFpAssistantC2B = 'site.fp.assistant.c2_b';
+  /// Sources named
+  static const siteFpAssistantTag = 'site.fp.assistant.tag';
+  /// Knows what is missing
+  static const siteFpAssistantC3 = 'site.fp.assistant.c3';
+  /// Ask which jobs still need photos or a report, and see them in one answer.
+  static const siteFpAssistantC3B = 'site.fp.assistant.c3_b';
+  /// Answers in your language
+  static const siteFpAssistantC4 = 'site.fp.assistant.c4';
+  /// Ask in English, Hindi, Gujarati, Spanish or French and get the answer in the same language.
+  static const siteFpAssistantC4B = 'site.fp.assistant.c4_b';
+  /// Your data stays yours
+  static const siteFpAssistantC5 = 'site.fp.assistant.c5';
+  /// Only your own company’s jobs are used. Nothing from other companies.
+  static const siteFpAssistantC5B = 'site.fp.assistant.c5_b';
+  /// For owners and managers
+  static const siteFpAssistantC6 = 'site.fp.assistant.c6';
+  /// The office asks; technicians keep their app simple and focused on today’s jobs.
+  static const siteFpAssistantC6B = 'site.fp.assistant.c6_b';
+  /// Try it: ask about any job
+  static const siteFpAssistantAppTitle = 'site.fp.assistant.app_title';
+  /// Plain questions, short answers, and the reports they came from.
+  static const siteFpAssistantAppBody = 'site.fp.assistant.app_body';
+  /// When did we last visit Green Valley Clinic?
+  static const siteFpAssistantAsk1 = 'site.fp.assistant.ask1';
+  /// Which jobs are still missing proof?
+  static const siteFpAssistantAsk2 = 'site.fp.assistant.ask2';
+  /// Which reports are waiting for approval?
+  static const siteFpAssistantAsk3 = 'site.fp.assistant.ask3';
+  /// Questions every trade asks
+  static const siteFpAssistantUseTitle = 'site.fp.assistant.use_title';
+  /// Last visits, open jobs and missing proof — for every kind of field team.
+  static const siteFpAssistantUseBody = 'site.fp.assistant.use_body';
+  /// Who can use the AI assistant?
+  static const siteFpAssistantQ1 = 'site.fp.assistant.q1';
+  /// Owners and managers, from the Me tab in the app.
+  static const siteFpAssistantAns1 = 'site.fp.assistant.ans1';
+  /// How many questions can I ask?
+  static const siteFpAssistantQ2 = 'site.fp.assistant.q2';
+  /// It depends on your plan: {free} includes {ai_free} questions a month and {plan} includes {ai_pro}. A question that fails is not counted.
+  static const siteFpAssistantAns2 = 'site.fp.assistant.ans2';
+  /// Which languages can I ask in?
+  static const siteFpAssistantQ3 = 'site.fp.assistant.q3';
+  /// English, Hindi, Gujarati, Spanish and French. The answer comes in your app’s language.
+  static const siteFpAssistantAns3 = 'site.fp.assistant.ans3';
+  /// Is my data shared with other companies?
+  static const siteFpAssistantQ4 = 'site.fp.assistant.q4';
+  /// No. Only your own company’s jobs are used to answer your questions.
+  static const siteFpAssistantAns4 = 'site.fp.assistant.ans4';
+  /// Find any job’s answer in seconds
+  static const siteFpAssistantCta = 'site.fp.assistant.cta';
+  /// PDF reports
+  static const siteFpPdfName = 'site.fp.pdf.name';
+  /// A clean PDF with your logo, in your customer’s language.
+  static const siteFpPdfCard = 'site.fp.pdf.card';
+  /// PDF reports your customers keep
+  static const siteFpPdfTitle = 'site.fp.pdf.title';
+  /// Every approved report becomes a clean PDF with your logo, before and after photos, checklist results and the work done — in your customer’s language. Download it, print it or send it.
+  static const siteFpPdfBody = 'site.fp.pdf.body';
+  /// Your logo and details
+  static const siteFpPdfTick1 = 'site.fp.pdf.tick1';
+  /// Hindi and Gujarati script
+  static const siteFpPdfTick2 = 'site.fp.pdf.tick2';
+  /// Report #R-1042 · PDF
+  static const siteFpPdfChip1 = 'site.fp.pdf.chip1';
+  /// 3 pages · 6 photos
+  static const siteFpPdfChip1Sub = 'site.fp.pdf.chip1_sub';
+  /// Approved by Priya
+  static const siteFpPdfChip2 = 'site.fp.pdf.chip2';
+  /// Ready to send
+  static const siteFpPdfChip2Sub = 'site.fp.pdf.chip2_sub';
+  /// How PDF reports work
+  static const siteFpPdfHowTitle = 'site.fp.pdf.how_title';
+  /// Four steps from an approved job to a PDF in your customer’s hands.
+  static const siteFpPdfHowBody = 'site.fp.pdf.how_body';
+  /// Finish the job
+  static const siteFpPdfS1 = 'site.fp.pdf.s1';
+  /// Photos, checklist and voice notes are collected on site.
+  static const siteFpPdfS1B = 'site.fp.pdf.s1_b';
+  /// AI drafts the report
+  static const siteFpPdfS2 = 'site.fp.pdf.s2';
+  /// The draft is written from the job’s proof.
+  static const siteFpPdfS2B = 'site.fp.pdf.s2_b';
+  /// Manager approves
+  static const siteFpPdfS3 = 'site.fp.pdf.s3';
+  /// Check the draft, ask for changes, then approve. The PDF is made right away.
+  static const siteFpPdfS3B = 'site.fp.pdf.s3_b';
+  /// Download or send
+  static const siteFpPdfS4 = 'site.fp.pdf.s4';
+  /// Get the PDF, print it, or send it with a secure link.
+  static const siteFpPdfS4B = 'site.fp.pdf.s4_b';
+  /// Reports that look like your business
+  static const siteFpPdfCapTitle = 'site.fp.pdf.cap_title';
+  /// Professional, the same every time, and backed by the proof.
+  static const siteFpPdfCapBody = 'site.fp.pdf.cap_body';
+  /// Photos in the report
+  static const siteFpPdfC1 = 'site.fp.pdf.c1';
+  /// Before and after photos side by side, with the date and time.
+  static const siteFpPdfC1B = 'site.fp.pdf.c1_b';
+  /// Your logo and details
+  static const siteFpPdfC2 = 'site.fp.pdf.c2';
+  /// The owner adds your logo once in company settings. Every PDF uses it.
+  static const siteFpPdfC2B = 'site.fp.pdf.c2_b';
+  /// Your brand
+  static const siteFpPdfTag = 'site.fp.pdf.tag';
+  /// Checklist results included
+  static const siteFpPdfC3 = 'site.fp.pdf.c3';
+  /// Every answer and reading, with how many checks passed.
+  static const siteFpPdfC3B = 'site.fp.pdf.c3_b';
+  /// In your customer’s language
+  static const siteFpPdfC4 = 'site.fp.pdf.c4';
+  /// English, Hindi, Gujarati, Spanish or French — with the right script for each.
+  static const siteFpPdfC4B = 'site.fp.pdf.c4_b';
+  /// Numbered and dated
+  static const siteFpPdfC5 = 'site.fp.pdf.c5';
+  /// Each report gets a number, the date and the technician’s name for your records.
+  static const siteFpPdfC5B = 'site.fp.pdf.c5_b';
+  /// Ready to print or share
+  static const siteFpPdfC6 = 'site.fp.pdf.c6';
+  /// Clean A4 pages that open on any phone or computer.
+  static const siteFpPdfC6B = 'site.fp.pdf.c6_b';
+  /// From draft to PDF
+  static const siteFpPdfAppTitle = 'site.fp.pdf.app_title';
+  /// Draft → review → PDF → send. Approved in one tap.
+  static const siteFpPdfAppBody = 'site.fp.pdf.app_body';
+  /// AI draft
+  static const siteFpPdfP1 = 'site.fp.pdf.p1';
+  /// Built from the job’s proof.
+  static const siteFpPdfP1B = 'site.fp.pdf.p1_b';
+  /// Manager review
+  static const siteFpPdfP2 = 'site.fp.pdf.p2';
+  /// Check, ask for changes or approve.
+  static const siteFpPdfP2B = 'site.fp.pdf.p2_b';
+  /// PDF preview
+  static const siteFpPdfP3 = 'site.fp.pdf.p3';
+  /// See exactly what the customer gets.
+  static const siteFpPdfP3B = 'site.fp.pdf.p3_b';
+  /// Send it
+  static const siteFpPdfP4 = 'site.fp.pdf.p4';
+  /// As a PDF or a secure link.
+  static const siteFpPdfP4B = 'site.fp.pdf.p4_b';
+  /// PDF reports for every trade
+  static const siteFpPdfUseTitle = 'site.fp.pdf.use_title';
+  /// A record your customer can keep, file or show an auditor.
+  static const siteFpPdfUseBody = 'site.fp.pdf.use_body';
+  /// Can I add my own logo to the PDF?
+  static const siteFpPdfQ1 = 'site.fp.pdf.q1';
+  /// Yes. The owner adds the logo once in company settings, and every PDF report uses it.
+  static const siteFpPdfAns1 = 'site.fp.pdf.ans1';
+  /// Which languages can the PDF be in?
+  static const siteFpPdfQ2 = 'site.fp.pdf.q2';
+  /// The same language as the approved report: English, Hindi, Gujarati, Spanish or French. Hindi and Gujarati letters print correctly.
+  static const siteFpPdfAns2 = 'site.fp.pdf.ans2';
+  /// Can customers download the PDF themselves?
+  static const siteFpPdfQ3 = 'site.fp.pdf.q3';
+  /// Yes. The report link you send has a Download PDF button.
+  static const siteFpPdfAns3 = 'site.fp.pdf.ans3';
+  /// Can the PDF be changed after it is sent?
+  static const siteFpPdfQ4 = 'site.fp.pdf.q4';
+  /// No. The PDF is made from the approved report, and its fingerprint is saved so anyone can see it was not changed.
+  static const siteFpPdfAns4 = 'site.fp.pdf.ans4';
+  /// Send reports that look as good as your work
+  static const siteFpPdfCta = 'site.fp.pdf.cta';
+  /// Customer sharing
+  static const siteFpSharingName = 'site.fp.sharing.name';
+  /// Send a secure link and get an acknowledgement.
+  static const siteFpSharingCard = 'site.fp.sharing.card';
+  /// Share the report with one secure link
+  static const siteFpSharingTitle = 'site.fp.sharing.title';
+  /// Send customers a secure link by WhatsApp, SMS or email. They see the photos, checklist results and report on any phone — no app, no login — and tap once to confirm they’ve seen it.
+  static const siteFpSharingBody = 'site.fp.sharing.body';
+  /// No app or login
+  static const siteFpSharingTick1 = 'site.fp.sharing.tick1';
+  /// See when it’s opened
+  static const siteFpSharingTick2 = 'site.fp.sharing.tick2';
+  /// Link sent on WhatsApp
+  static const siteFpSharingChip1 = 'site.fp.sharing.chip1';
+  /// Opened by the customer
+  static const siteFpSharingChip1Sub = 'site.fp.sharing.chip1_sub';
+  /// Acknowledged by Dr. Rao
+  static const siteFpSharingChip2 = 'site.fp.sharing.chip2';
+  /// 31 Oct · 4:26 PM
+  static const siteFpSharingChip2Sub = 'site.fp.sharing.chip2_sub';
+  /// How customer sharing works
+  static const siteFpSharingHowTitle = 'site.fp.sharing.how_title';
+  /// Four steps from an approved report to your customer’s acknowledgement.
+  static const siteFpSharingHowBody = 'site.fp.sharing.how_body';
+  /// Approve the report
+  static const siteFpSharingS1 = 'site.fp.sharing.s1';
+  /// The manager checks the AI draft and approves it.
+  static const siteFpSharingS1B = 'site.fp.sharing.s1_b';
+  /// Send a secure link
+  static const siteFpSharingS2 = 'site.fp.sharing.s2';
+  /// Share by WhatsApp, SMS or email — or copy the link.
+  static const siteFpSharingS2B = 'site.fp.sharing.s2_b';
+  /// Customer opens it
+  static const siteFpSharingS3 = 'site.fp.sharing.s3';
+  /// Photos, checklist and report open on any phone, no app needed.
+  static const siteFpSharingS3B = 'site.fp.sharing.s3_b';
+  /// Tap to acknowledge
+  static const siteFpSharingS4 = 'site.fp.sharing.s4';
+  /// The customer confirms they’ve seen it. You see it in the job.
+  static const siteFpSharingS4B = 'site.fp.sharing.s4_b';
+  /// Proof your customer can open anywhere
+  static const siteFpSharingCapTitle = 'site.fp.sharing.cap_title';
+  /// Simple for the customer, clear for your records.
+  static const siteFpSharingCapBody = 'site.fp.sharing.cap_body';
+  /// Secure, private link
+  static const siteFpSharingC1 = 'site.fp.sharing.c1';
+  /// Each report gets its own hard-to-guess link. Only people you send it to can open it.
+  static const siteFpSharingC1B = 'site.fp.sharing.c1_b';
+  /// No app, no login
+  static const siteFpSharingC2 = 'site.fp.sharing.c2';
+  /// Customers open the report in their phone’s browser in seconds.
+  static const siteFpSharingC2B = 'site.fp.sharing.c2_b';
+  /// No login
+  static const siteFpSharingTag = 'site.fp.sharing.tag';
+  /// One-tap acknowledgement
+  static const siteFpSharingC3 = 'site.fp.sharing.c3';
+  /// The customer confirms with their name, and the time is recorded.
+  static const siteFpSharingC3B = 'site.fp.sharing.c3_b';
+  /// Know when it’s opened
+  static const siteFpSharingC4 = 'site.fp.sharing.c4';
+  /// See when the link was first opened and acknowledged, right in the job.
+  static const siteFpSharingC4B = 'site.fp.sharing.c4_b';
+  /// Links that expire
+  static const siteFpSharingC5 = 'site.fp.sharing.c5';
+  /// A link works for 30 days, and you can turn it off at any time.
+  static const siteFpSharingC5B = 'site.fp.sharing.c5_b';
+  /// Download the PDF
+  static const siteFpSharingC6 = 'site.fp.sharing.c6';
+  /// Customers can save or print a PDF copy for their records.
+  static const siteFpSharingC6B = 'site.fp.sharing.c6_b';
+  /// From approval to acknowledgement
+  static const siteFpSharingAppTitle = 'site.fp.sharing.app_title';
+  /// Approve → share → customer views → acknowledged.
+  static const siteFpSharingAppBody = 'site.fp.sharing.app_body';
+  /// Approve
+  static const siteFpSharingP1 = 'site.fp.sharing.p1';
+  /// The manager approves the report.
+  static const siteFpSharingP1B = 'site.fp.sharing.p1_b';
+  /// Share the link
+  static const siteFpSharingP2 = 'site.fp.sharing.p2';
+  /// WhatsApp, SMS, email or copy.
+  static const siteFpSharingP2B = 'site.fp.sharing.p2_b';
+  /// Customer views it
+  static const siteFpSharingP3 = 'site.fp.sharing.p3';
+  /// On any phone, no app needed.
+  static const siteFpSharingP3B = 'site.fp.sharing.p3_b';
+  /// Acknowledged
+  static const siteFpSharingP4 = 'site.fp.sharing.p4';
+  /// The time is saved in the job.
+  static const siteFpSharingP4B = 'site.fp.sharing.p4_b';
+  /// Customer sharing for every trade
+  static const siteFpSharingUseTitle = 'site.fp.sharing.use_title';
+  /// Homeowners, landlords and facility managers all get the same clear proof.
+  static const siteFpSharingUseBody = 'site.fp.sharing.use_body';
+  /// Do customers need to download an app?
+  static const siteFpSharingQ1 = 'site.fp.sharing.q1';
+  /// No. The report opens in any phone or computer browser. There is nothing to install and no account to create.
+  static const siteFpSharingAns1 = 'site.fp.sharing.ans1';
+  /// What happens when a link expires?
+  static const siteFpSharingQ2 = 'site.fp.sharing.q2';
+  /// The customer can ask for a new one. It is sent only to the phone or email the report first went to, never to whoever asks.
+  static const siteFpSharingAns2 = 'site.fp.sharing.ans2';
+  /// Can I see if the customer opened the report?
+  static const siteFpSharingQ3 = 'site.fp.sharing.q3';
+  /// Yes. The job shows when the link was first opened and when the customer acknowledged it.
+  static const siteFpSharingAns3 = 'site.fp.sharing.ans3';
+  /// Can a link be turned off?
+  static const siteFpSharingQ4 = 'site.fp.sharing.q4';
+  /// Yes. Turn it off at any time and it stops working straight away. Sharing again makes a new link.
+  static const siteFpSharingAns4 = 'site.fp.sharing.ans4';
+  /// Send proof your customers can open anywhere
+  static const siteFpSharingCta = 'site.fp.sharing.cta';
+  /// Offline mode
+  static const siteFpOfflineName = 'site.fp.offline.name';
+  /// Works on rooftops and in basements.
+  static const siteFpOfflineCard = 'site.fp.offline.card';
+  /// Works with no signal. Syncs when you’re back.
+  static const siteFpOfflineTitle = 'site.fp.offline.title';
+  /// Rooftops, basements and plant rooms rarely have signal. KaamNishaan saves every photo, answer and voice note on the phone, keeps it safe in a queue and sends it when you’re back online — nothing lost, nothing sent twice.
+  static const siteFpOfflineBody = 'site.fp.offline.body';
+  /// Nothing lost
+  static const siteFpOfflineTick1 = 'site.fp.offline.tick1';
+  /// Nothing sent twice
+  static const siteFpOfflineTick2 = 'site.fp.offline.tick2';
+  /// Saved on this phone
+  static const siteFpOfflineChip1 = 'site.fp.offline.chip1';
+  /// 4 photos · 1 voice note waiting
+  static const siteFpOfflineChip1Sub = 'site.fp.offline.chip1_sub';
+  /// Sent at 4:12 PM
+  static const siteFpOfflineChip2 = 'site.fp.offline.chip2';
+  /// Each item sent once
+  static const siteFpOfflineChip2Sub = 'site.fp.offline.chip2_sub';
+  /// How offline mode works
+  static const siteFpOfflineHowTitle = 'site.fp.offline.how_title';
+  /// Four steps from no signal to everything safely sent.
+  static const siteFpOfflineHowBody = 'site.fp.offline.how_body';
+  /// Lose signal
+  static const siteFpOfflineS1 = 'site.fp.offline.s1';
+  /// The app tells you your work is being saved on the phone, and keeps working.
+  static const siteFpOfflineS1B = 'site.fp.offline.s1_b';
+  /// Keep working
+  static const siteFpOfflineS2 = 'site.fp.offline.s2';
+  /// Take photos, answer the checklist and record voice notes as usual.
+  static const siteFpOfflineS2B = 'site.fp.offline.s2_b';
+  /// Saved in a queue
+  static const siteFpOfflineS3 = 'site.fp.offline.s3';
+  /// Everything waits on the phone and shows “Saved on phone”.
+  static const siteFpOfflineS3B = 'site.fp.offline.s3_b';
+  /// Sent once
+  static const siteFpOfflineS4 = 'site.fp.offline.s4';
+  /// Back online, each item is sent once and the server confirms it.
+  static const siteFpOfflineS4B = 'site.fp.offline.s4_b';
+  /// Built for places without signal
+  static const siteFpOfflineCapTitle = 'site.fp.offline.cap_title';
+  /// No more lost photos or half-sent reports.
+  static const siteFpOfflineCapBody = 'site.fp.offline.cap_body';
+  /// Keep working on the job
+  static const siteFpOfflineC1 = 'site.fp.offline.c1';
+  /// Photos, checklist answers, voice notes and typed notes all work with no connection.
+  static const siteFpOfflineC1B = 'site.fp.offline.c1_b';
+  /// Automatic sending
+  static const siteFpOfflineC2 = 'site.fp.offline.c2';
+  /// When signal returns, everything is sent in the background.
+  static const siteFpOfflineC2B = 'site.fp.offline.c2_b';
+  /// Automatic
+  static const siteFpOfflineTag = 'site.fp.offline.tag';
+  /// Nothing sent twice
+  static const siteFpOfflineC3 = 'site.fp.offline.c3';
+  /// Each photo and answer has its own tag, so it is saved once even if the signal drops mid-send.
+  static const siteFpOfflineC3B = 'site.fp.offline.c3_b';
+  /// See what’s waiting
+  static const siteFpOfflineC4 = 'site.fp.offline.c4';
+  /// Items still on the phone show “Saved on phone”, so you know what hasn’t been sent yet.
+  static const siteFpOfflineC4B = 'site.fp.offline.c4_b';
+  /// Safe if the app closes
+  static const siteFpOfflineC5 = 'site.fp.offline.c5';
+  /// The queue is kept in the app’s storage, so it survives a restart.
+  static const siteFpOfflineC5B = 'site.fp.offline.c5_b';
+  /// Easy on mobile data
+  static const siteFpOfflineC6 = 'site.fp.offline.c6';
+  /// Photos are made smaller on the phone before they are sent.
+  static const siteFpOfflineC6B = 'site.fp.offline.c6_b';
+  /// A job with no signal
+  static const siteFpOfflineAppTitle = 'site.fp.offline.app_title';
+  /// Offline → capture → queue → sent. Nothing lost, nothing doubled.
+  static const siteFpOfflineAppBody = 'site.fp.offline.app_body';
+  /// No signal
+  static const siteFpOfflineP1 = 'site.fp.offline.p1';
+  /// The app keeps working.
+  static const siteFpOfflineP1B = 'site.fp.offline.p1_b';
+  /// Capture as usual
+  static const siteFpOfflineP2 = 'site.fp.offline.p2';
+  /// Photos, checklist and voice.
+  static const siteFpOfflineP2B = 'site.fp.offline.p2_b';
+  /// Waiting to send
+  static const siteFpOfflineP3 = 'site.fp.offline.p3';
+  /// See what is still on the phone.
+  static const siteFpOfflineP3B = 'site.fp.offline.p3_b';
+  /// Sent
+  static const siteFpOfflineP4 = 'site.fp.offline.p4';
+  /// The manager gets it once.
+  static const siteFpOfflineP4B = 'site.fp.offline.p4_b';
+  /// Offline for every trade
+  static const siteFpOfflineUseTitle = 'site.fp.offline.use_title';
+  /// Built for the places field teams actually work.
+  static const siteFpOfflineUseBody = 'site.fp.offline.use_body';
+  /// Can anything be sent twice?
+  static const siteFpOfflineQ1 = 'site.fp.offline.q1';
+  /// No. Each item has its own tag, so even if the signal drops in the middle of sending, the server keeps only one copy.
+  static const siteFpOfflineAns1 = 'site.fp.offline.ans1';
+  /// What if the phone restarts before it sends?
+  static const siteFpOfflineQ2 = 'site.fp.offline.q2';
+  /// Your work is still there. The queue is kept on the phone and continues when the app opens again.
+  static const siteFpOfflineAns2 = 'site.fp.offline.ans2';
+  /// Do voice notes work offline too?
+  static const siteFpOfflineQ3 = 'site.fp.offline.q3';
+  /// Yes. The recording is saved on the phone and written down after it is sent.
+  static const siteFpOfflineAns3 = 'site.fp.offline.ans3';
+  /// Does offline mode work on every plan?
+  static const siteFpOfflineQ4 = 'site.fp.offline.q4';
+  /// Yes, including {free}. Nothing to switch on.
+  static const siteFpOfflineAns4 = 'site.fp.offline.ans4';
+  /// Keep working, even with no signal
+  static const siteFpOfflineCta = 'site.fp.offline.cta';
+  /// Reviews & follow-ups
+  static const siteFpReviewsName = 'site.fp.reviews.name';
+  /// Ask every customer for a rating, and follow up on low ones.
+  static const siteFpReviewsCard = 'site.fp.reviews.card';
+  /// Get a review for every job — automatically
+  static const siteFpReviewsTitle = 'site.fp.reviews.title';
+  /// Customers rate the job right from the report link. If they forget, KaamNishaan sends one friendly reminder by WhatsApp, SMS or email — and a low rating alerts your managers straight away.
+  static const siteFpReviewsBody = 'site.fp.reviews.body';
+  /// No app for your customer
+  static const siteFpReviewsTick1 = 'site.fp.reviews.tick1';
+  /// Stops when they rate
+  static const siteFpReviewsTick2 = 'site.fp.reviews.tick2';
+  /// A customer’s rating on the report page and the office’s review list
+  static const siteFpReviewsAlt = 'site.fp.reviews.alt';
+  /// Three steps. Stops the moment they rate.
+  static const siteFpReviewsHowTitle = 'site.fp.reviews.how_title';
+  /// Day {n}
+  static const siteFpReviewsDay = 'site.fp.reviews.day';
+  /// Rating link with the report
+  static const siteFpReviewsS1 = 'site.fp.reviews.s1';
+  /// When the manager shares the approved report, the customer can rate the service and the technician on the same page.
+  static const siteFpReviewsS1B = 'site.fp.reviews.s1_b';
+  /// Friendly reminder
+  static const siteFpReviewsS2 = 'site.fp.reviews.s2';
+  /// No rating yet? One reminder goes out by the channels you choose: WhatsApp, SMS or email.
+  static const siteFpReviewsS2B = 'site.fp.reviews.s2_b';
+  /// One AI review call
+  static const siteFpReviewsS3 = 'site.fp.reviews.s3';
+  /// Still nothing? An AI assistant will call once, say it is an AI and ask for a 1–5 rating. You can switch it on now; calls start when the voice service goes live.
+  static const siteFpReviewsS3B = 'site.fp.reviews.s3_b';
+  /// Any rating stops every reminder. “Don’t ask me again” is always respected.
+  static const siteFpReviewsNote = 'site.fp.reviews.note';
+  /// Everything around the review, handled
+  static const siteFpReviewsCapTitle = 'site.fp.reviews.cap_title';
+  /// Rate from the report
+  static const siteFpReviewsC1 = 'site.fp.reviews.c1';
+  /// Customers see the proof first — photos, checklist, work done — then rate the service and the technician, with quick tags and a few words.
+  static const siteFpReviewsC1B = 'site.fp.reviews.c1_b';
+  /// Smart reminders
+  static const siteFpReviewsC2 = 'site.fp.reviews.c2';
+  /// One reminder on the channels you pick. Never after they rate, never after they opt out.
+  static const siteFpReviewsC2B = 'site.fp.reviews.c2_b';
+  /// AI review call
+  static const siteFpReviewsC3 = 'site.fp.reviews.c3';
+  /// One polite call in the customer’s language, honest about being an AI. Coming with the voice service.
+  static const siteFpReviewsC3B = 'site.fp.reviews.c3_b';
+  /// Low-rating alerts
+  static const siteFpReviewsC4 = 'site.fp.reviews.c4';
+  /// A low rating opens a follow-up and alerts owners and managers, with Call now and Revisit job ready.
+  static const siteFpReviewsC4B = 'site.fp.reviews.c4_b';
+  /// Technician feedback
+  static const siteFpReviewsC5 = 'site.fp.reviews.c5';
+  /// Technicians see their own ratings and your replies — a reason to take great photos and explain the work.
+  static const siteFpReviewsC5B = 'site.fp.reviews.c5_b';
+  /// Reply to every review
+  static const siteFpReviewsC6 = 'site.fp.reviews.c6';
+  /// Write one reply per review. It shows on the customer’s report page and to the technician.
+  static const siteFpReviewsC6B = 'site.fp.reviews.c6_b';
+  /// The last step
+  static const siteFpReviewsCallEyebrow = 'site.fp.reviews.call_eyebrow';
+  /// An AI call that respects your customer
+  static const siteFpReviewsCallTitle = 'site.fp.reviews.call_title';
+  /// One call, only if there is still no rating. Polite, short and honest about being an AI. You can switch it on today; calls start when the voice service goes live.
+  static const siteFpReviewsCallBody = 'site.fp.reviews.call_body';
+  /// Says it is an AI and that the call is recorded
+  static const siteFpReviewsCallL1 = 'site.fp.reviews.call_l1';
+  /// Calls only at sensible hours, in the customer’s time
+  static const siteFpReviewsCallL2 = 'site.fp.reviews.call_l2';
+  /// One call only — never more
+  static const siteFpReviewsCallL3 = 'site.fp.reviews.call_l3';
+  /// “Don’t call me” stops it for good
+  static const siteFpReviewsCallL4 = 'site.fp.reviews.call_l4';
+  /// Uses follow-up credits from your plan
+  static const siteFpReviewsCallL5 = 'site.fp.reviews.call_l5';
+  /// Example of an AI review call where the customer gives 4 stars
+  static const siteFpReviewsCallAlt = 'site.fp.reviews.call_alt';
+  /// AI review call · example
+  static const siteFpReviewsCallHead = 'site.fp.reviews.call_head';
+  /// AI
+  static const siteFpReviewsCallAi = 'site.fp.reviews.call_ai';
+  /// Customer
+  static const siteFpReviewsCallCustomer = 'site.fp.reviews.call_customer';
+  /// Hi, this is BrightAir’s virtual assistant — I’m an AI, and this call is recorded. Do you have a minute about Ramesh’s visit?
+  static const siteFpReviewsCallM1 = 'site.fp.reviews.call_m1';
+  /// Yes, go ahead.
+  static const siteFpReviewsCallM2 = 'site.fp.reviews.call_m2';
+  /// On a scale of 1 to 5, how happy are you with the service?
+  static const siteFpReviewsCallM3 = 'site.fp.reviews.call_m3';
+  /// A 4. He was quick and tidy.
+  static const siteFpReviewsCallM4 = 'site.fp.reviews.call_m4';
+  /// So that’s 4 stars. Thank you!
+  static const siteFpReviewsCallM5 = 'site.fp.reviews.call_m5';
+  /// Saved: 4★ · reminders stopped
+  static const siteFpReviewsCallSaved = 'site.fp.reviews.call_saved';
+  /// Questions about reviews
+  static const siteFpReviewsFaqTitle = 'site.fp.reviews.faq_title';
+  /// Does the customer need an app?
+  static const siteFpReviewsQ1 = 'site.fp.reviews.q1';
+  /// No. The rating form is on the report page, which opens in any phone browser.
+  static const siteFpReviewsAns1 = 'site.fp.reviews.ans1';
+  /// What if the customer already rated?
+  static const siteFpReviewsQ2 = 'site.fp.reviews.q2';
+  /// Then nothing else is sent. Any rating stops every reminder for that job.
+  static const siteFpReviewsAns2 = 'site.fp.reviews.ans2';
+  /// How many credits do reminders use?
+  static const siteFpReviewsQ3 = 'site.fp.reviews.q3';
+  /// An SMS reminder uses {sms} credit, WhatsApp {whatsapp} and email none. An AI call will use {ai_call}. {plan} includes {credits_pro} credits a month.
+  static const siteFpReviewsAns3 = 'site.fp.reviews.ans3';
+  /// Can we delete bad reviews?
+  static const siteFpReviewsQ4 = 'site.fp.reviews.q4';
+  /// No. Reviews stay as the customer wrote them. You can reply, call the customer and plan a revisit from the follow-up.
+  static const siteFpReviewsAns4 = 'site.fp.reviews.ans4';
+  /// Turn every finished job into a review
+  static const siteFpReviewsCta = 'site.fp.reviews.cta';
 }
