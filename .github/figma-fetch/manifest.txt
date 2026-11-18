@@ -1,9 +1,0 @@
-photo-report.webp 0 https://www.figma.com/api/mcp/asset/ed0e7798-ce63-44d5-9576-f7ae28a8d333.png
-photo-clinic.webp 0 https://www.figma.com/api/mcp/asset/b6165a54-4b06-4f5a-bd57-48f37242b87e.png
-photo-map.webp 0 https://www.figma.com/api/mcp/asset/5ba29102-d24d-4c9b-961d-c5179b56b336.png
-photo-tech.webp 0 https://www.figma.com/api/mcp/asset/e563e504-dbde-4ab3-9872-41fdbf9812f2.png
-photo-phonecam.webp 0 https://www.figma.com/api/mcp/asset/2f0edaac-490c-41db-a031-d90f5a11b18d.png
-photo-indoor.webp 0 https://www.figma.com/api/mcp/asset/eb557af0-f14a-4e16-aadb-339c6e852129.png
-photo-outdoor.webp 0 https://www.figma.com/api/mcp/asset/3974da1c-a411-4cdb-bc93-0359af86dc92.png
-photo-voice.webp 0 https://www.figma.com/api/mcp/asset/eea6c3c1-d2d7-43cb-815b-1d8bb590b43c.png
-photo-house.webp 0 https://www.figma.com/api/mcp/asset/06f0989a-5796-4b96-8568-3bbae880c021.png

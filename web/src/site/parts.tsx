@@ -42,18 +42,25 @@ export function Section({
 export function Heading({
   title,
   body,
+  eyebrow,
   dark,
   align = 'center',
   className,
 }: {
   title: string;
   body?: string;
+  eyebrow?: string;
   dark?: boolean;
   align?: 'center' | 'left';
   className?: string;
 }) {
   return (
     <div className={cx('flex flex-col gap-16', align === 'center' ? 'mx-auto max-w-[760px] text-center' : 'max-w-[480px]', className)}>
+      {eyebrow && (
+        <p {...rv('fade')} className={cx('-mb-4 text-web-eyebrow uppercase', dark ? 'text-cream-400' : 'text-mocha-700')}>
+          {eyebrow}
+        </p>
+      )}
       <h2 {...rv('up')} className={cx('text-web-m-h2 md:text-web-h2', dark ? 'text-cream-50' : 'text-text-primary')}>
         {title}
       </h2>
@@ -121,7 +128,7 @@ export function Faq({ t, title, body, items }: { t: T; title: string; body: stri
 }
 
 /** "Start proving your work today" with the manager's phone (W01, W02). */
-export function FinalCta({ t, trialDays }: { t: T; trialDays: number | null }) {
+export function FinalCta({ t, trialDays, title }: { t: T; trialDays: number | null; title?: string }) {
   return (
     <section className="bg-bg-canvas pb-64 md:pb-[112px]">
       <Container>
@@ -133,7 +140,7 @@ export function FinalCta({ t, trialDays }: { t: T; trialDays: number | null }) {
           <div className="relative flex flex-col gap-40 lg:flex-row lg:items-start lg:justify-between">
             <div className="flex max-w-[640px] flex-col gap-24 pb-48 lg:pb-[88px]">
               <h2 {...rv('up', 1)} className="text-web-m-display text-cream-50 md:text-web-display">
-                {t('site.final.title')}
+                {title ?? t('site.final.title')}
               </h2>
               {trialDays != null && (
                 <p {...rv('up', 2)} className="text-latin-body-lg text-cream-400 md:text-web-body-lg">

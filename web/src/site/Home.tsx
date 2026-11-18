@@ -30,7 +30,7 @@ import { ROUTES } from './site';
 
 type Load<D> = { kind: 'loading' } | { kind: 'ready'; data: D } | { kind: 'error' };
 
-const TRADE_PHOTO: Record<string, string> = {
+export const TRADE_PHOTO: Record<string, string> = {
   hvac: '/img/industry-hvac.webp',
   roofing: '/img/industry-roofing.webp',
   solar: '/img/industry-solar.webp',
@@ -233,7 +233,7 @@ function HowItWorks({ t }: { t: T }) {
   );
 }
 
-function IconDot({ children, tone = 'bg-cream-200 text-mocha-700', size = 48 }: { children: ReactNode; tone?: string; size?: number }) {
+export function IconDot({ children, tone = 'bg-cream-200 text-mocha-700', size = 48 }: { children: ReactNode; tone?: string; size?: number }) {
   return (
     <span
       style={{ width: size, height: size }}
@@ -435,11 +435,11 @@ function BeforeAfter({ t }: { t: T }) {
   );
 }
 
-function ReportDemo({ t }: { t: T }) {
+export function ReportDemo({ t, title, body }: { t: T; title?: string; body?: string }) {
   return (
     <Section tone="dark">
       <Container>
-        <Heading title={t('site.demo.title')} body={t('site.demo.body')} dark className="max-w-[880px]" />
+        <Heading title={title ?? t('site.demo.title')} body={body ?? t('site.demo.body')} dark className="max-w-[880px]" />
         <div className="mt-40 flex flex-col items-center gap-24 md:mt-48 lg:flex-row lg:justify-between lg:gap-0">
           <div {...rv('left')} className="w-full max-w-[500px] lg:w-[41.7%]">
             <img src="/img/demo-voice.webp" alt={t('site.demo.voice_alt')} width={500} height={344} loading="lazy" className="w-full rounded-xl transition-transform duration-500 hover:-translate-y-4 hover:rotate-[-1deg]" />
@@ -459,14 +459,14 @@ function ReportDemo({ t }: { t: T }) {
   );
 }
 
-function Assistant({ t }: { t: T }) {
+export function Assistant({ t, title, body, questions }: { t: T; title?: string; body?: string; questions?: string[] }) {
   return (
     <Section id="assistant">
       <Container className="flex flex-col gap-40 lg:flex-row lg:items-center lg:justify-between">
         <div className="flex flex-col gap-32 lg:w-[480px]">
-          <Heading title={t('site.ask.title')} body={t('site.ask.body')} align="left" />
+          <Heading title={title ?? t('site.ask.title')} body={body ?? t('site.ask.body')} align="left" />
           <ul className="flex flex-col gap-16">
-            {[t('site.ask.q1'), t('site.ask.q2'), t('site.ask.q3')].map((q, i) => (
+            {(questions ?? [t('site.ask.q1'), t('site.ask.q2'), t('site.ask.q3')]).map((q, i) => (
               <li key={q} {...rv('left', i + 2)}>
                 <span className="group flex cursor-default items-center gap-12 rounded-full py-4 pr-12 text-latin-body transition-colors hover:bg-sage-100/60">
                   <IconDot size={32} tone="bg-sage-100 text-sage-700">

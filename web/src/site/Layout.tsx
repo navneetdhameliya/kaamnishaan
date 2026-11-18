@@ -5,6 +5,7 @@ import { cx } from '../components/ui';
 import { LANGS, type Lang, type T } from '../lib/i18n';
 import type { TradeOut } from '../lib/types';
 import { rv, useScroll } from './motion';
+import { featureHref, type FeatureId } from './features/catalog';
 import { ROUTES } from './site';
 
 /** A link that looks like the Figma buttons (Start free trial, Book a demo, …). */
@@ -150,13 +151,8 @@ function LangPicker({ lang, setLang, t, label }: { lang: Lang; setLang: (l: Lang
 }
 
 function productItems(t: T) {
-  return [
-    { href: '/#how-it-works', label: t('site.menu.how') },
-    { href: '/#features', label: t('site.menu.features') },
-    { href: '/#ai-reports', label: t('site.menu.reports') },
-    { href: '/#before-after', label: t('site.menu.compare') },
-    { href: '/#assistant', label: t('site.menu.assistant') },
-  ];
+  const ids: FeatureId[] = ['jobs', 'evidence', 'checklists', 'reports', 'sharing', 'reviews'];
+  return [{ href: ROUTES.features, label: t('site.menu.features') }, ...ids.map((id) => ({ href: featureHref(id), label: t(`site.fp.${id}.name`) }))];
 }
 
 function Nav({ t, lang, setLang, trades }: { t: T; lang: Lang; setLang: (l: Lang) => void; trades: TradeOut[] }) {
@@ -271,9 +267,9 @@ function Footer({ t, lang, setLang, trades }: { t: T; lang: Lang; setLang: (l: L
     {
       title: t('site.foot.product'),
       links: [
-        { href: '/#features', label: t('site.foot.features') },
+        { href: ROUTES.features, label: t('site.foot.features') },
         { href: ROUTES.pricing, label: t('site.nav.pricing') },
-        { href: '/#features', label: t('site.foot.offline') },
+        { href: featureHref('offline'), label: t('site.foot.offline') },
         { href: ROUTES.demo, label: t('site.nav.demo') },
       ],
     },
