@@ -5022,4 +5022,80 @@ abstract final class LangKeys {
   static const siteIndpCleaningAns1 = 'site.indp.cleaning.ans1';
   /// Give every shift its proof
   static const siteIndpCleaningCta = 'site.indp.cleaning.cta';
+  /// Company
+  static const siteAboutCrumb = 'site.about.crumb';
+  /// About KaamNishaan
+  static const siteAboutPill = 'site.about.pill';
+  /// Every Job. Every Photo. Every Proof.
+  static const siteAboutTitle = 'site.about.title';
+  /// KaamNishaan means “mark of work”. We build simple tools that help field teams prove what they did — in their own language, on the phones they already use.
+  static const siteAboutBody = 'site.about.body';
+  /// No typing needed
+  static const siteAboutTick1 = 'site.about.tick1';
+  /// {n} languages
+  static const siteAboutLangs = 'site.about.langs';
+  /// A technician’s day and a voice note being recorded in the KaamNishaan app
+  static const siteAboutAlt = 'site.about.alt';
+  /// Built for the people who do the work
+  static const siteAboutChip1 = 'site.about.chip1';
+  /// Technicians, installers, cleaners
+  static const siteAboutChip1Sub = 'site.about.chip1_sub';
+  /// Speak, don’t type
+  static const siteAboutChip2 = 'site.about.chip2';
+  /// Voice notes in 5 languages
+  static const siteAboutChip2Sub = 'site.about.chip2_sub';
+  /// Why we built it
+  static const siteAboutWhyEyebrow = 'site.about.why_eyebrow';
+  /// Simple tools for every field worker
+  static const siteAboutWhyTitle = 'site.about.why_title';
+  /// Whatever their reading level, and whatever language they speak.
+  static const siteAboutWhyBody = 'site.about.why_body';
+  /// Most field software is built for office staff. It expects long forms, perfect spelling and English.
+  static const siteAboutWhyP1 = 'site.about.why_p1';
+  /// But the people doing the work — technicians, installers, cleaners — are often more comfortable speaking than typing, and many prefer their own language.
+  static const siteAboutWhyP2 = 'site.about.why_p2';
+  /// So we built KaamNishaan voice-first: big buttons, one question at a time, and voice notes in English, Hindi, Gujarati, Spanish or French. The app turns what they say and photograph into a report the customer can trust.
+  static const siteAboutWhyP3 = 'site.about.why_p3';
+  /// The people we build for · illustrative photos, not real staff
+  static const siteAboutWhyCaption = 'site.about.why_caption';
+  /// What we believe
+  static const siteAboutValuesEyebrow = 'site.about.values_eyebrow';
+  /// Our values
+  static const siteAboutValuesTitle = 'site.about.values_title';
+  /// Four ideas behind every screen we design.
+  static const siteAboutValuesBody = 'site.about.values_body';
+  /// Simple first
+  static const siteAboutV1 = 'site.about.v1';
+  /// If you can use WhatsApp, you can use KaamNishaan. Big buttons, few words, one step at a time.
+  static const siteAboutV1B = 'site.about.v1_b';
+  /// Honest AI
+  static const siteAboutV2 = 'site.about.v2';
+  /// AI never invents work. Every sentence links to a photo, an answer or a voice note.
+  static const siteAboutV2B = 'site.about.v2_b';
+  /// Your language
+  static const siteAboutV3 = 'site.about.v3';
+  /// Workers speak their own language. Reports go out in the customer’s.
+  static const siteAboutV3B = 'site.about.v3_b';
+  /// Proof protects everyone
+  static const siteAboutV4 = 'site.about.v4';
+  /// Clear records protect workers, owners and customers from disputes.
+  static const siteAboutV4B = 'site.about.v4_b';
+  /// Industries
+  static const siteAboutIndEyebrow = 'site.about.ind_eyebrow';
+  /// Built for teams in
+  static const siteAboutIndTitle = 'site.about.ind_title';
+  /// Six trades today. Use our ready checklists where they exist, or build your own.
+  static const siteAboutIndBody = 'site.about.ind_body';
+  /// Speak your language
+  static const siteAboutLangTitle = 'site.about.lang_title';
+  /// The app, voice notes and reports work in {n} languages.
+  static const siteAboutLangBody = 'site.about.lang_body';
+  /// {lang} · app, voice, reports
+  static const siteAboutLangLine = 'site.about.lang_line';
+  /// Talk to us — or work with us
+  static const siteAboutCta = 'site.about.cta';
+  /// Questions, partnerships or careers: write to us and a real person replies within one working day.
+  static const siteAboutCtaBody = 'site.about.cta_body';
+  /// Contact us
+  static const siteAboutContact = 'site.about.contact';
 }
