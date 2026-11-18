@@ -157,3 +157,28 @@ export interface SessionOut {
   user: { id: string; name: string; email: string | null; email_verified: boolean };
   companies: { company_id: string; name: string; active: boolean }[];
 }
+
+/** GET /public/checklist-templates?trade=&locale= — KaamNishaan's ready checklists for one trade (W18–W23). */
+export interface PublicChecklistQuestion {
+  text: string;
+  type: string;
+  unit: string | null;
+  photo_rule: 'none' | 'always' | 'if_no' | 'if_fail' | string;
+  required: boolean;
+}
+
+export interface PublicChecklistTemplate {
+  key: string | null;
+  name: string;
+  minutes: number | null;
+  question_count: number;
+  photo_questions: number;
+  languages: string[];
+  questions: PublicChecklistQuestion[];
+}
+
+export interface PublicChecklistTemplates {
+  trade: string;
+  language: string;
+  items: PublicChecklistTemplate[];
+}

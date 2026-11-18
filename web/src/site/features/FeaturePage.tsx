@@ -38,11 +38,11 @@ export function facts(plans: PlansOut | null, config: ConfigOut | null, lang: La
 }
 export type Facts = ReturnType<typeof facts>;
 
-export function Breadcrumb({ t, here }: { t: T; here: string }) {
+export function Breadcrumb({ t, here, root }: { t: T; here: string; root?: { href: string; label: string } }) {
   return (
     <nav aria-label={t('site.fp.crumb_label')} {...rv('fade')} className="mb-32 flex items-center gap-8 text-latin-label-sm font-semibold text-cream-400 lg:mb-48">
-      <a href={ROUTES.features} className="kn-link hover:text-cream-50">
-        {t('site.fp.crumb')}
+      <a href={root?.href ?? ROUTES.features} className="kn-link hover:text-cream-50">
+        {root?.label ?? t('site.fp.crumb')}
       </a>
       <ChevronRight width={14} height={14} aria-hidden />
       <span aria-current="page" className="text-cream-200">
@@ -84,9 +84,11 @@ export function FeatureHero({
   ticks,
   children,
   secondary,
+  root,
 }: {
   t: T;
   crumb: string;
+  root?: { href: string; label: string };
   pill: string;
   pillIcon: ReactNode;
   title: string;
@@ -102,7 +104,7 @@ export function FeatureHero({
         className="pointer-events-none absolute -right-[260px] -top-[220px] hidden h-[720px] w-[720px] animate-[spin_90s_linear_infinite] rounded-full border-[72px] border-mocha-950 border-b-transparent lg:block"
       />
       <Container className="relative">
-        <Breadcrumb t={t} here={crumb} />
+        <Breadcrumb t={t} here={crumb} root={root} />
         <div className="flex flex-col gap-48 lg:flex-row lg:items-start lg:justify-between lg:gap-24">
           <div className="flex flex-col items-start gap-32 lg:mt-24 lg:w-[560px] lg:shrink-0">
             <span

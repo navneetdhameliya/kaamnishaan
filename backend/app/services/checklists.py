@@ -40,6 +40,9 @@ from app.schemas.checklists import (
     ManagerQuestionList,
     ManagerQuestionOut,
     OptionOut,
+    PublicChecklistQuestion,
+    PublicChecklistTemplate,
+    PublicChecklistTemplates,
     QuestionIn,
     QuestionOut,
     QuestionPatch,
@@ -1029,3 +1032,44 @@ async def lock_answers(db: AsyncSession, job_id: uuid.UUID) -> int:
         .values(locked_at=now())
     )
     return r.rowcount or 0
+
+
+async def ready_templates(db: AsyncSession, trade: str, lang: str) -> PublicChecklistTemplates:
+    """KaamNishaan's own published checklists for one trade, for the website's industry pages (no login)."""
+    rows = list(
+        (
+            await db.execute(
+                select(ChecklistTemplate)
+                .where(
+                    ChecklistTemplate.company_id.is_(None),
+                    ChecklistTemplate.status == "published",
+                    ChecklistTemplate.trade == trade,
+                )
+                .order_by(ChecklistTemplate.usage_count.desc(), ChecklistTemplate.created_at)
+            )
+        ).scalars()
+    )
+    items = []
+    for t in rows:
+        qs = await _questions(db, t.id)
+        items.append(
+            PublicChecklistTemplate(
+                key=t.key,
+                name=pick(t.name, lang, t.source_language),
+                minutes=t.minutes,
+                question_count=len(qs),
+                photo_questions=sum(1 for q in qs if q.type == "photo" or q.photo_rule != "none"),
+                languages=[x for x in LANGS if qs and all((q.text or {}).get(x) for q in qs)],
+                questions=[
+                    PublicChecklistQuestion(
+                        text=pick(q.text, lang, t.source_language),
+                        type=q.type,
+                        unit=q.unit,
+                        photo_rule=q.photo_rule,
+                        required=q.required,
+                    )
+                    for q in qs
+                ],
+            )
+        )
+    return PublicChecklistTemplates(trade=trade, language=lang, items=items)

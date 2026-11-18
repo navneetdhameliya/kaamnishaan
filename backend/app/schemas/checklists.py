@@ -282,3 +282,28 @@ class VoiceNoteOut(VoiceNoteItem):
     confidence: float | None
     error: str | None
     can_edit: bool
+
+
+# ---- website: ready checklists for a trade (W18–W23) -----------------------------------------
+class PublicChecklistQuestion(BaseModel):
+    text: str
+    type: str
+    unit: str | None = None
+    photo_rule: str = Field(description="none / always / if_no / if_fail")
+    required: bool
+
+
+class PublicChecklistTemplate(BaseModel):
+    key: str | None
+    name: str
+    minutes: int | None
+    question_count: int
+    photo_questions: int = Field(description="questions that take or may ask for a photo")
+    languages: list[str] = Field(description="languages every question is written in")
+    questions: list[PublicChecklistQuestion]
+
+
+class PublicChecklistTemplates(BaseModel):
+    trade: str
+    language: str
+    items: list[PublicChecklistTemplate]

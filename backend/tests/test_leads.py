@@ -95,3 +95,23 @@ async def test_config_has_contact_details(client):
     assert s["office"] == "Ahmedabad, Gujarat, India" and s["email"] is None
     assert s["days"] == [1, 2, 3, 4, 5, 6] and s["topics"][0] == "sales"
     assert s["regions"][0] == {"country": "IN", "languages": ["hi", "gu", "en"]}
+
+
+async def test_ready_checklists_for_a_trade_need_no_login(client) -> None:
+    r = await client.get("/api/v1/public/checklist-templates?trade=hvac&locale=gu")
+    assert r.status_code == 200
+    assert r.headers["cache-control"] == "public, max-age=300"
+    body = r.json()
+    assert body["trade"] == "hvac" and body["language"] == "gu"
+    cfg = (await client.get("/api/v1/config")).json()
+    hvac = next(t for t in cfg["trades"] if t["key"] == "hvac")
+    assert len(body["items"]) == hvac["checklists"] > 0
+    t = body["items"][0]
+    assert t["question_count"] == len(t["questions"]) > 0
+    assert set(t["languages"]) == {"en", "hi", "gu", "es", "fr"}
+    assert 0 < t["photo_questions"] <= t["question_count"]
+    assert {"text", "type", "unit", "photo_rule", "required"} <= set(t["questions"][0])
+    # a trade with no ready checklists yet is an empty list, not an error
+    empty = (await client.get("/api/v1/public/checklist-templates?trade=cleaning")).json()
+    assert empty["items"] == []
+    assert (await client.get("/api/v1/public/checklist-templates?trade=hvac&locale=de")).status_code == 422
