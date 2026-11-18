@@ -322,7 +322,7 @@ export function UseCases({ t, eyebrow, title, body, trades, counts }: { t: T; ey
                   {counts && (
                     <span
                       className={cx(
-                        'mt-4 inline-flex w-fit items-center rounded-full px-8 py-[2px] text-latin-caption-strong',
+                        'mt-4 inline-flex w-fit items-center rounded-md px-8 py-[2px] text-latin-caption-strong',
                         tr.checklists ? 'bg-status-success-bg text-status-success' : 'bg-cream-200 text-mocha-700',
                       )}
                     >

@@ -128,9 +128,24 @@ export function Faq({ t, title, body, items }: { t: T; title: string; body: stri
 }
 
 /** "Start proving your work today" with the manager's phone (W01, W02). */
-export function FinalCta({ t, trialDays, title }: { t: T; trialDays: number | null; title?: string }) {
+export function FinalCta({
+  t,
+  trialDays,
+  title,
+  body,
+  primary,
+  spaced,
+}: {
+  t: T;
+  /** Add space above when the section before is dark too. */
+  spaced?: boolean;
+  trialDays: number | null;
+  title?: string;
+  body?: string;
+  primary?: { href: string; label: string };
+}) {
   return (
-    <section className="bg-bg-canvas pb-64 md:pb-[112px]">
+    <section className={cx('bg-bg-canvas pb-64 md:pb-[112px]', spaced && 'pt-64 md:pt-[112px]')}>
       <Container>
         <div {...rv('zoom')} className="relative overflow-hidden rounded-xl bg-espresso-950 px-24 pt-48 md:px-[80px] md:pt-[88px] lg:min-h-[440px]">
           <div
@@ -142,14 +157,14 @@ export function FinalCta({ t, trialDays, title }: { t: T; trialDays: number | nu
               <h2 {...rv('up', 1)} className="text-web-m-display text-cream-50 md:text-web-display">
                 {title ?? t('site.final.title')}
               </h2>
-              {trialDays != null && (
+              {(body || trialDays != null) && (
                 <p {...rv('up', 2)} className="text-latin-body-lg text-cream-400 md:text-web-body-lg">
-                  {t('site.final.body', { n: trialDays })}
+                  {body ?? t('site.final.body', { n: trialDays ?? '' })}
                 </p>
               )}
               <div {...rv('up', 3)} className="flex flex-wrap gap-16">
-                <LinkButton href={ROUTES.trial} variant="light">
-                  {t('site.cta.trial')}
+                <LinkButton href={primary?.href ?? ROUTES.trial} variant="light">
+                  {primary?.label ?? t('site.cta.trial')}
                 </LinkButton>
                 <LinkButton href={ROUTES.demo} variant="outline-light" icon={<Play width={20} height={20} aria-hidden />}>
                   {t('site.cta.demo')}
