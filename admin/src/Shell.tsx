@@ -49,7 +49,7 @@ export const NAV: { section: string; items: NavItem[] }[] = [
       { key: 'usage', path: '/usage', icon: SlidersHorizontal },
     ],
   },
-  { section: 'content', items: [{ key: 'checklists', path: '/checklist-templates', icon: ListChecks }] },
+  { section: 'content', items: [{ key: 'checklists', path: '/checklist-templates', icon: ListChecks, ready: true }] },
   {
     section: 'system',
     items: [

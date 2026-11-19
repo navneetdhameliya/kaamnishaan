@@ -104,7 +104,7 @@ async def get_template(db: AsyncSession, p: Principal, template_id: uuid.UUID) -
     return t
 
 
-async def _questions(db: AsyncSession, template_id: uuid.UUID) -> list[ChecklistQuestion]:
+async def questions(db: AsyncSession, template_id: uuid.UUID) -> list[ChecklistQuestion]:
     return list(
         (
             await db.execute(
@@ -194,7 +194,7 @@ def _question_out(q: ChecklistQuestion, lg: str, source: str) -> TemplateQuestio
 
 async def template_out(db: AsyncSession, p: Principal, t: ChecklistTemplate, lang: str | None) -> TemplateOut:
     lg = _lang(p, lang)
-    qs = await _questions(db, t.id)
+    qs = await questions(db, t.id)
     outs = [_question_out(q, lg, t.source_language) for q in qs]
     missing = sum(1 for o in outs for x in LANGS if o.text_status[x] != "ready")
     return TemplateOut(
@@ -224,14 +224,14 @@ async def _editable(db: AsyncSession, p: Principal, template_id: uuid.UUID) -> C
     return t
 
 
-async def _check_trade(db: AsyncSession, trade: str | None) -> None:
+async def check_trade(db: AsyncSession, trade: str | None) -> None:
     if trade and not await db.get(Industry, trade):
         raise AppError("validation_error", "Pick a trade from the list.", fields={"trade": "unknown"})
 
 
 async def create_template(db: AsyncSession, p: Principal, body: TemplateCreate) -> ChecklistTemplate:
     p.require("checklists.manage")
-    await _check_trade(db, body.trade)
+    await check_trade(db, body.trade)
     lg = body.language or p.user.app_language or "en"
     t = ChecklistTemplate(
         company_id=p.company_id,
@@ -264,12 +264,12 @@ async def update_template(
     if body.name is not None:
         t.name = {**t.name, t.source_language: body.name}
     if body.trade is not None:
-        await _check_trade(db, body.trade)
+        await check_trade(db, body.trade)
         t.trade = body.trade
     if body.minutes is not None:
         t.minutes = body.minutes
     if body.status is not None:
-        if body.status == "published" and not await _questions(db, t.id):
+        if body.status == "published" and not await questions(db, t.id):
             raise AppError(
                 "validation_error", "Add at least one question first.", fields={"status": "no_questions"}
             )
@@ -294,7 +294,7 @@ async def copy_template(db: AsyncSession, p: Principal, template_id: uuid.UUID) 
     db.add(t)
     await db.flush()
     mapping: dict[str, str] = {}
-    old = await _questions(db, src.id)
+    old = await questions(db, src.id)
     for q in old:
         mapping[str(q.id)] = str(uuid.uuid4())
     for q in old:
@@ -392,7 +392,7 @@ def _validate_question(
 async def _renumber(
     db: AsyncSession, template_id: uuid.UUID, moving: ChecklistQuestion | None, to: int | None
 ) -> None:
-    qs = [q for q in await _questions(db, template_id) if moving is None or q.id != moving.id]
+    qs = [q for q in await questions(db, template_id) if moving is None or q.id != moving.id]
     if moving is not None:
         idx = max(0, min(len(qs), (to or len(qs) + 1) - 1))
         qs.insert(idx, moving)
@@ -409,7 +409,18 @@ async def add_question(
     db: AsyncSession, p: Principal, template_id: uuid.UUID, body: QuestionIn
 ) -> ChecklistQuestion:
     t = await _editable(db, p, template_id)
-    existing = await _questions(db, t.id)
+    ref = None
+    if body.reference_upload_id:
+        up, _ = await take_upload(db, p, body.reference_upload_id, "photo")
+        ref = up.key
+    return await add_question_to(db, t, body, ref)
+
+
+async def add_question_to(
+    db: AsyncSession, t: ChecklistTemplate, body: QuestionIn, reference_key: str | None = None
+) -> ChecklistQuestion:
+    """Adds a question to any template (a company's, or KaamNishaan's from the admin panel)."""
+    existing = await questions(db, t.id)
     position = min(body.position or len(existing) + 1, len(existing) + 1)
     src = t.source_language
     taken: set[str] = set()
@@ -433,10 +444,6 @@ async def add_question(
         {str(q.id): q for q in existing},
         position,
     )
-    ref = None
-    if body.reference_upload_id:
-        up, _ = await take_upload(db, p, body.reference_upload_id, "photo")
-        ref = up.key
     q = ChecklistQuestion(
         template_id=t.id,
         position=position,
@@ -451,7 +458,7 @@ async def add_question(
         photo_rule=body.photo_rule,
         required=body.required,
         condition=cond,
-        reference_image_key=ref,
+        reference_image_key=reference_key,
     )
     db.add(q)
     await db.flush()
@@ -461,7 +468,7 @@ async def add_question(
     return q
 
 
-async def _template_question(
+async def template_question(
     db: AsyncSession, t: ChecklistTemplate, question_id: uuid.UUID
 ) -> ChecklistQuestion:
     q = await db.get(ChecklistQuestion, question_id)
@@ -475,7 +482,21 @@ async def update_question(
 ) -> tuple[ChecklistQuestion, bool]:
     """Returns the question and whether its words changed (so translations must be redone)."""
     t = await _editable(db, p, template_id)
-    q = await _template_question(db, t, question_id)
+    q = await template_question(db, t, question_id)
+    ref = None
+    if body.reference_upload_id:
+        up, _ = await take_upload(db, p, body.reference_upload_id, "photo")
+        ref = up.key
+    return await update_question_in(db, t, q, body, ref)
+
+
+async def update_question_in(
+    db: AsyncSession,
+    t: ChecklistTemplate,
+    q: ChecklistQuestion,
+    body: QuestionPatch,
+    reference_key: str | None = None,
+) -> tuple[ChecklistQuestion, bool]:
     src = t.source_language
     words_changed = False
     if body.text is not None and body.text != q.text.get(src):
@@ -505,16 +526,15 @@ async def update_question(
             "question_id": str(body.condition.question_id),
             "equals": str(body.condition.equals).lower(),
         }
-    if body.reference_upload_id:
-        up, _ = await take_upload(db, p, body.reference_upload_id, "photo")
-        q.reference_image_key = up.key
+    if reference_key:
+        q.reference_image_key = reference_key
     if body.translations:
         for lg, txt in body.translations.items():
             q.text = {**q.text, lg: txt}
             q.text_status = {**(q.text_status or {}), lg: "ready"}
     if body.position is not None:
         await _renumber(db, t.id, q, body.position)
-    others = {str(x.id): x for x in await _questions(db, t.id) if x.id != q.id}
+    others = {str(x.id): x for x in await questions(db, t.id) if x.id != q.id}
     _validate_question(
         q.type, q.photo_rule, q.options or [], q.min_value, q.max_value, q.condition, others, q.position
     )
@@ -527,9 +547,12 @@ async def delete_question(
     db: AsyncSession, p: Principal, template_id: uuid.UUID, question_id: uuid.UUID
 ) -> None:
     t = await _editable(db, p, template_id)
-    q = await _template_question(db, t, question_id)
+    await delete_question_in(db, t, await template_question(db, t, question_id))
+
+
+async def delete_question_in(db: AsyncSession, t: ChecklistTemplate, q: ChecklistQuestion) -> None:
     q.deleted_at = now()
-    for other in await _questions(db, t.id):  # questions that depended on it are always shown now
+    for other in await questions(db, t.id):  # questions that depended on it are always shown now
         if other.condition and other.condition.get("question_id") == str(q.id):
             other.condition = None
     await _renumber(db, t.id, None, None)
@@ -571,7 +594,7 @@ async def attach(db: AsyncSession, p: Principal, job: Job, template_id: uuid.UUI
     ).first()
     if exists:
         raise Conflict("checklist_already_added", "This checklist is already on the job.")
-    qs = await _questions(db, t.id)
+    qs = await questions(db, t.id)
     snap = [_snapshot(q) for q in qs]
     jc = JobChecklist(
         company_id=p.company_id,
@@ -1051,7 +1074,7 @@ async def ready_templates(db: AsyncSession, trade: str, lang: str) -> PublicChec
     )
     items = []
     for t in rows:
-        qs = await _questions(db, t.id)
+        qs = await questions(db, t.id)
         items.append(
             PublicChecklistTemplate(
                 key=t.key,

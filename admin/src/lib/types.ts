@@ -241,3 +241,56 @@ export interface AuditList {
   page_size: number;
   company: Option | null;
 }
+
+export type LangState = 'ready' | 'review' | 'missing';
+export type TemplateStatus = 'draft' | 'published' | 'archived';
+export interface ChecklistRow {
+  id: string;
+  name: string;
+  trade: string | null;
+  trade_name: string | null;
+  status: TemplateStatus;
+  question_count: number;
+  photo_questions: number;
+  languages: Record<string, LangState>;
+  used_by: number;
+  updated_at: string;
+}
+export interface ChecklistList {
+  items: ChecklistRow[];
+  total: number;
+  counts: { all: number; needs_translation: number; drafts: number };
+  trades: Option[];
+}
+export interface ChecklistQuestion {
+  id: string;
+  position: number;
+  type: 'yes_no' | 'pass_fail' | 'number' | 'text' | 'choice' | 'photo' | 'signature';
+  text: Record<string, string>;
+  help: Record<string, string>;
+  text_status: Record<string, string>;
+  options: { key: string; label: Record<string, string> }[];
+  unit: string | null;
+  min_value: number | null;
+  max_value: number | null;
+  photo_rule: 'none' | 'always' | 'if_no' | 'if_fail';
+  required: boolean;
+  condition: { question_id: string; equals: string } | null;
+}
+export interface ChecklistDetail {
+  id: string;
+  key: string | null;
+  name: Record<string, string>;
+  source_language: string;
+  trade: string | null;
+  trade_name: string | null;
+  minutes: number | null;
+  status: TemplateStatus;
+  version: number;
+  used_by: number;
+  updated_at: string;
+  languages: Record<string, LangState>;
+  questions: ChecklistQuestion[];
+  ai_available: boolean;
+  trades: Option[];
+}

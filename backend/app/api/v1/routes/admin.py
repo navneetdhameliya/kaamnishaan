@@ -11,9 +11,18 @@ from app.core.deps import Staff, client_ip, get_db, get_staff
 from app.core.errors import AppError, Forbidden
 from app.core.security import now
 from app.schemas.admin_audit import AdminAuditList
+from app.schemas.admin_checklists import (
+    AdminChecklistApprove,
+    AdminChecklistCreate,
+    AdminChecklistDetail,
+    AdminChecklistList,
+    AdminChecklistPatch,
+    AdminTranslateOut,
+)
 from app.schemas.admin_companies import AdminCompanyDetail, AdminCompanyList
 from app.schemas.admin_leads import AdminLeadDetail, AdminLeadList, AdminLeadUpdate
 from app.schemas.admin_users import AdminUserAction, AdminUserDetail, AdminUserList
+from app.schemas.checklists import QuestionIn, QuestionPatch
 from app.schemas.identity import Locale
 from app.schemas.staff import (
     AdminDashboardOut,
@@ -25,7 +34,18 @@ from app.schemas.staff import (
     StaffSetupInfo,
     StaffSetupOut,
 )
-from app.services import admin_audit, admin_companies, admin_dashboard, admin_leads, admin_users, audit, staff
+from app.services import (
+    admin_audit,
+    admin_checklists,
+    admin_companies,
+    admin_dashboard,
+    admin_leads,
+    admin_users,
+    audit,
+    staff,
+)
+from app.services import checklists as checklist_svc
+from app.tasks import enqueue
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -342,3 +362,146 @@ async def audit_logs_csv(
             "Cache-Control": "no-store",
         },
     )
+
+
+# ---- A23 checklist templates (KaamNishaan's own) -----------------------------------------------------
+def _can_edit(me: Staff) -> None:
+    if me.staff.role not in ("super_admin", "admin"):
+        raise Forbidden("forbidden", "Support staff can look but not change checklists.")
+
+
+@router.get("/checklist-templates", response_model=AdminChecklistList)
+async def checklist_templates(
+    tab: Literal["all", "by_trade", "needs_translation", "drafts"] = "all",
+    q: str | None = Query(None, max_length=120),
+    trade: str | None = Query(None, max_length=40),
+    language_state: Literal["ready", "review", "missing"] | None = None,
+    locale: Locale = "en",
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminChecklistList:
+    """KaamNishaan's own checklists (not archived). language_state: some language is in that state."""
+    return await admin_checklists.templates(
+        db, tab=tab, q=q, trade=trade, lang_state=language_state, lang=locale
+    )
+
+
+@router.post("/checklist-templates", response_model=AdminChecklistDetail, status_code=201)
+async def create_checklist(
+    body: AdminChecklistCreate,
+    locale: Locale = "en",
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminChecklistDetail:
+    """A new draft, written in English. Companies see it once it is published."""
+    _can_edit(me)
+    t = await admin_checklists.create(db, body, staff_id=me.staff.id)
+    return await admin_checklists.detail(db, t.id, lang=locale)
+
+
+@router.get("/checklist-templates/{template_id}", response_model=AdminChecklistDetail)
+async def checklist_template(
+    template_id: uuid.UUID,
+    locale: Locale = "en",
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminChecklistDetail:
+    return await admin_checklists.detail(db, template_id, lang=locale)
+
+
+@router.patch("/checklist-templates/{template_id}", response_model=AdminChecklistDetail)
+async def patch_checklist(
+    template_id: uuid.UUID, body: AdminChecklistPatch, locale: Locale = "en",
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminChecklistDetail:  # fmt: skip
+    """Name (and its translations), trade, minutes, or status (published needs a question)."""
+    _can_edit(me)
+    t = await admin_checklists.global_template(db, template_id)
+    await admin_checklists.update(db, t, body, staff_id=me.staff.id)
+    return await admin_checklists.detail(db, template_id, lang=locale)
+
+
+@router.post(
+    "/checklist-templates/{template_id}/questions", response_model=AdminChecklistDetail, status_code=201
+)
+async def add_checklist_question(
+    template_id: uuid.UUID, body: QuestionIn, locale: Locale = "en",
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminChecklistDetail:  # fmt: skip
+    """Same rules as the app. Other languages are machine-translated afterwards (when AI is set up)."""
+    _can_edit(me)
+    if body.reference_upload_id:
+        raise AppError(
+            "validation_error",
+            "Reference photos can't be added here yet.",
+            fields={"reference_upload_id": "not_supported"},
+        )
+    t = await admin_checklists.global_template(db, template_id)
+    q = await checklist_svc.add_question_to(db, t, body)
+    await db.commit()
+    await enqueue("translate_checklist_question", question_id=str(q.id))
+    return await admin_checklists.detail(db, template_id, lang=locale)
+
+
+@router.patch(
+    "/checklist-templates/{template_id}/questions/{question_id}", response_model=AdminChecklistDetail
+)
+async def patch_checklist_question(
+    template_id: uuid.UUID, question_id: uuid.UUID, body: QuestionPatch, locale: Locale = "en",
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminChecklistDetail:  # fmt: skip
+    """Change the question (its other languages are translated again) or fix one translation by hand."""
+    _can_edit(me)
+    if body.reference_upload_id:
+        raise AppError(
+            "validation_error",
+            "Reference photos can't be added here yet.",
+            fields={"reference_upload_id": "not_supported"},
+        )
+    t = await admin_checklists.global_template(db, template_id)
+    q = await checklist_svc.template_question(db, t, question_id)
+    q, words_changed = await checklist_svc.update_question_in(db, t, q, body)
+    await db.commit()
+    if words_changed:
+        await enqueue("translate_checklist_question", question_id=str(q.id))
+    return await admin_checklists.detail(db, template_id, lang=locale)
+
+
+@router.delete(
+    "/checklist-templates/{template_id}/questions/{question_id}", response_model=AdminChecklistDetail
+)
+async def delete_checklist_question(
+    template_id: uuid.UUID, question_id: uuid.UUID, locale: Locale = "en",
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminChecklistDetail:  # fmt: skip
+    _can_edit(me)
+    t = await admin_checklists.global_template(db, template_id)
+    await checklist_svc.delete_question_in(db, t, await checklist_svc.template_question(db, t, question_id))
+    return await admin_checklists.detail(db, template_id, lang=locale)
+
+
+@router.post("/checklist-templates/{template_id}/approve", response_model=AdminChecklistDetail)
+async def approve_checklist_language(
+    template_id: uuid.UUID, body: AdminChecklistApprove, locale: Locale = "en",
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminChecklistDetail:  # fmt: skip
+    """Mark all machine translations in one language as checked."""
+    _can_edit(me)
+    t = await admin_checklists.global_template(db, template_id)
+    await admin_checklists.approve(db, t, body.language, staff_id=me.staff.id)
+    return await admin_checklists.detail(db, template_id, lang=locale)
+
+
+@router.post("/checklist-templates/{template_id}/translate", response_model=AdminTranslateOut)
+async def translate_checklist(
+    template_id: uuid.UUID, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminTranslateOut:
+    """Machine-translate every question that is missing a language. Needs the AI key."""
+    _can_edit(me)
+    t = await admin_checklists.global_template(db, template_id)
+    ids = await admin_checklists.untranslated(db, t)
+    ai = admin_checklists.get_ai() is not None
+    if ai:
+        for qid in ids:
+            await enqueue("translate_checklist_question", question_id=str(qid))
+    return AdminTranslateOut(queued=len(ids) if ai else 0, ai_available=ai)
