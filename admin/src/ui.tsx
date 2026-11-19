@@ -1,4 +1,4 @@
-import { AlertCircle, Globe, Loader2, Lock } from 'lucide-react';
+import { AlertCircle, ChevronDown, Globe, Loader2, Lock } from 'lucide-react';
 import { useEffect, useRef, useState, type ClipboardEvent, type KeyboardEvent, type ReactNode } from 'react';
 
 import { LANGS, type Lang, type T } from './lib/i18n';
@@ -196,5 +196,23 @@ export function Card({ children, className, wide }: { children: ReactNode; class
     <div className={cx('kn-in w-full rounded-xl border border-border-default bg-bg-surface p-24 shadow-md sm:p-32', wide ? 'max-w-[560px]' : 'max-w-[480px]', className)}>
       {children}
     </div>
+  );
+}
+
+/** "Plan: All ▾" style filter (a real <select>, so it works with keyboard and screen readers). */
+export function FilterSelect({ label, value, options, allLabel, onChange }: { label: string; value: string; options: { value: string; label: string }[]; allLabel: string; onChange: (v: string) => void }) {
+  return (
+    <label className={cx('relative inline-flex h-[44px] items-center rounded-lg border bg-bg-surface pl-12 pr-[34px] text-latin-label-sm font-semibold transition-colors hover:border-mocha-500', value ? 'border-mocha-500' : 'border-border-default')}>
+      <span aria-hidden>{label}:&nbsp;</span>
+      <select value={value} onChange={(e) => onChange(e.target.value)} aria-label={label} className="max-w-[160px] cursor-pointer appearance-none truncate bg-transparent focus:outline-none">
+        <option value="">{allLabel}</option>
+        {options.map((o) => (
+          <option key={o.value} value={o.value}>
+            {o.label}
+          </option>
+        ))}
+      </select>
+      <ChevronDown width={16} height={16} className="pointer-events-none absolute right-12" aria-hidden />
+    </label>
   );
 }

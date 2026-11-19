@@ -82,3 +82,33 @@ export function money(minor: number, currency: string, lang: Lang, digits = 0): 
 export function plural(t: T, key: string, n: number, params: Record<string, string | number> = {}): string {
   return n === 1 ? t(`${key}_one`, params) : t(key, { n, ...params });
 }
+
+/** "2 min ago", "yesterday", "3 weeks ago" in the language. */
+export function ago(iso: string, lang: Lang): string {
+  const s = (new Date(iso).getTime() - Date.now()) / 1000;
+  const f = new Intl.RelativeTimeFormat(LOCALES[lang], { numeric: 'auto' });
+  const steps: [Intl.RelativeTimeFormatUnit, number][] = [
+    ['second', 60],
+    ['minute', 60],
+    ['hour', 24],
+    ['day', 7],
+    ['week', 4.35],
+    ['month', 12],
+    ['year', Infinity],
+  ];
+  let v = s;
+  for (const [unit, size] of steps) {
+    if (Math.abs(v) < size) return f.format(Math.round(v), unit === 'second' ? 'minute' : unit).replace(/^0 /, '');
+    v /= size;
+  }
+  return '';
+}
+
+/** "India", "United States" in the language. */
+export function region(code: string, lang: Lang): string {
+  try {
+    return new Intl.DisplayNames([LOCALES[lang]], { type: 'region' }).of(code) ?? code;
+  } catch {
+    return code;
+  }
+}

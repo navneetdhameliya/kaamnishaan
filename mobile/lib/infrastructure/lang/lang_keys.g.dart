@@ -5464,4 +5464,180 @@ abstract final class LangKeys {
   static const adminTagStaff = 'admin.tag.staff';
   /// Yesterday
   static const adminYesterday = 'admin.yesterday';
+  /// All
+  static const adminCoTabAll = 'admin.co.tab_all';
+  /// Trial
+  static const adminCoStTrial = 'admin.co.st.trial';
+  /// Active
+  static const adminCoStActive = 'admin.co.st.active';
+  /// Past due
+  static const adminCoStPastDue = 'admin.co.st.past_due';
+  /// Suspended
+  static const adminCoStSuspended = 'admin.co.st.suspended';
+  /// Cancelled
+  static const adminCoStCancelled = 'admin.co.st.cancelled';
+  /// Near limit
+  static const adminCoStNearLimit = 'admin.co.st.near_limit';
+  /// Trial · {n} days left
+  static const adminCoTrialLeft = 'admin.co.trial_left';
+  /// Trial · 1 day left
+  static const adminCoTrialLeftOne = 'admin.co.trial_left_one';
+  /// Trial ended
+  static const adminCoTrialEnded = 'admin.co.trial_ended';
+  /// Company status
+  static const adminCoTabs = 'admin.co.tabs';
+  /// Search company, owner or email
+  static const adminCoSearch = 'admin.co.search';
+  /// Plan
+  static const adminCoFPlan = 'admin.co.f_plan';
+  /// Industry
+  static const adminCoFIndustry = 'admin.co.f_industry';
+  /// Country
+  static const adminCoFCountry = 'admin.co.f_country';
+  /// Status
+  static const adminCoFStatus = 'admin.co.f_status';
+  /// All
+  static const adminCoFAll = 'admin.co.f_all';
+  /// Export CSV
+  static const adminCoExport = 'admin.co.export';
+  /// Company
+  static const adminCoCCompany = 'admin.co.c_company';
+  /// Industry
+  static const adminCoCIndustry = 'admin.co.c_industry';
+  /// Plan
+  static const adminCoCPlan = 'admin.co.c_plan';
+  /// Technicians
+  static const adminCoCTechs = 'admin.co.c_techs';
+  /// Reports (30 d)
+  static const adminCoCReports = 'admin.co.c_reports';
+  /// Status
+  static const adminCoCStatus = 'admin.co.c_status';
+  /// Sort by {col}
+  static const adminCoSortBy = 'admin.co.sort_by';
+  /// View
+  static const adminCoView = 'admin.co.view';
+  /// View {name}
+  static const adminCoViewName = 'admin.co.view_name';
+  /// No owner
+  static const adminCoNoOwner = 'admin.co.no_owner';
+  /// Showing {from}–{to} of {total}
+  static const adminCoShowing = 'admin.co.showing';
+  /// Previous page
+  static const adminCoPrev = 'admin.co.prev';
+  /// Next page
+  static const adminCoNext = 'admin.co.next';
+  /// Page {n}
+  static const adminCoPage = 'admin.co.page';
+  /// No companies match
+  static const adminCoEmptyTitle = 'admin.co.empty_title';
+  /// Try another name, or clear the filters.
+  static const adminCoEmptyBody = 'admin.co.empty_body';
+  /// No companies yet. They appear here when owners sign up in the app.
+  static const adminCoNoneYet = 'admin.co.none_yet';
+  /// Clear filters
+  static const adminCoClear = 'admin.co.clear';
+  /// Companies
+  static const adminCoBack = 'admin.co.back';
+  /// Owner: {name}
+  static const adminCoOwner = 'admin.co.owner';
+  /// Customer since {date}
+  static const adminCoSince = 'admin.co.since';
+  /// {price}/mo
+  static const adminCoPerMonth = 'admin.co.per_month';
+  /// Health
+  static const adminCoHealth = 'admin.co.health';
+  /// Good
+  static const adminCoHGood = 'admin.co.h.good';
+  /// Quiet
+  static const adminCoHQuiet = 'admin.co.h.quiet';
+  /// At risk
+  static const adminCoHAtRisk = 'admin.co.h.at_risk';
+  /// At risk: payment late or suspended. Quiet: nobody active for 14 days.
+  static const adminCoHRule = 'admin.co.h_rule';
+  /// Jobs this month
+  static const adminCoJobsMonth = 'admin.co.jobs_month';
+  /// Last active
+  static const adminCoLastActive = 'admin.co.last_active';
+  /// Never
+  static const adminCoNever = 'admin.co.never';
+  /// {n} of {limit}
+  static const adminCoTechsOf = 'admin.co.techs_of';
+  /// Seat limit reached
+  static const adminCoSeatsFull = 'admin.co.seats_full';
+  /// Seat limit reached · suggest {plan}
+  static const adminCoSeatsFullSuggest = 'admin.co.seats_full_suggest';
+  /// {n} seats free
+  static const adminCoSeatsFree = 'admin.co.seats_free';
+  /// 1 seat free
+  static const adminCoSeatsFreeOne = 'admin.co.seats_free_one';
+  /// No seat limit
+  static const adminCoNoSeatLimit = 'admin.co.no_seat_limit';
+  /// Reports this month
+  static const adminCoReportsMonth = 'admin.co.reports_month';
+  /// Over plan · fair-use review
+  static const adminCoOverPlan = 'admin.co.over_plan';
+  /// {n} left this month
+  static const adminCoReportsLeft = 'admin.co.reports_left';
+  /// Fair use, no fixed limit
+  static const adminCoFairUse = 'admin.co.fair_use';
+  /// Approval time
+  static const adminCoApproval = 'admin.co.approval';
+  /// Median, job done → approved (30 d)
+  static const adminCoApprovalSub = 'admin.co.approval_sub';
+  /// No approvals in 30 days
+  static const adminCoNoApprovals = 'admin.co.no_approvals';
+  /// {n} min
+  static const adminCoMinutes = 'admin.co.minutes';
+  /// {n} h
+  static const adminCoHours = 'admin.co.hours';
+  /// AI cost (30 d)
+  static const adminCoAiCost = 'admin.co.ai_cost';
+  /// No AI use in 30 days
+  static const adminCoNoAi = 'admin.co.no_ai';
+  /// Team
+  static const adminCoTeam = 'admin.co.team';
+  /// {n} people
+  static const adminCoPeople = 'admin.co.people';
+  /// 1 person
+  static const adminCoPeopleOne = 'admin.co.people_one';
+  /// Owner
+  static const adminCoRoleOwner = 'admin.co.role.owner';
+  /// Manager
+  static const adminCoRoleManager = 'admin.co.role.manager';
+  /// Technician
+  static const adminCoRoleTechnician = 'admin.co.role.technician';
+  /// email login
+  static const adminCoLoginEmail = 'admin.co.login.email';
+  /// phone + OTP
+  static const adminCoLoginPhone = 'admin.co.login.phone';
+  /// Invited
+  static const adminCoInvited = 'admin.co.invited';
+  /// Active {when}
+  static const adminCoActiveWhen = 'admin.co.active_when';
+  /// Nobody has joined yet.
+  static const adminCoNoTeam = 'admin.co.no_team';
+  /// Subscription
+  static const adminCoSub = 'admin.co.sub';
+  /// Plan
+  static const adminCoSubPlan = 'admin.co.sub_plan';
+  /// Status
+  static const adminCoSubStatus = 'admin.co.sub_status';
+  /// Trial ends {date}
+  static const adminCoSubTrialEnds = 'admin.co.sub_trial_ends';
+  /// Billing
+  static const adminCoSubBilling = 'admin.co.sub_billing';
+  /// No payments yet
+  static const adminCoSubNoPayments = 'admin.co.sub_no_payments';
+  /// This month
+  static const adminCoSubMonth = 'admin.co.sub_month';
+  /// Usage
+  static const adminCoSubUsage = 'admin.co.sub_usage';
+  /// {reports} reports · {seats} seats
+  static const adminCoUsageLine = 'admin.co.usage_line';
+  /// This plan’s limit is reached. Suggest {plan} ({price}).
+  static const adminCoSuggest = 'admin.co.suggest';
+  /// This plan’s limit is reached, and there is no bigger plan. Talk to the owner.
+  static const adminCoTopPlan = 'admin.co.top_plan';
+  /// This company doesn’t exist any more.
+  static const adminCoNotFound = 'admin.co.not_found';
 }

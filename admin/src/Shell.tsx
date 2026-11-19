@@ -39,7 +39,7 @@ export const NAV: { section: string; items: NavItem[] }[] = [
   {
     section: 'customers',
     items: [
-      { key: 'companies', path: '/companies', icon: Briefcase },
+      { key: 'companies', path: '/companies', icon: Briefcase, ready: true },
       { key: 'users', path: '/users', icon: User },
       { key: 'reviews', path: '/reviews', icon: CheckCheck },
       { key: 'ai_calls', path: '/ai-review-calls', icon: Phone },
@@ -58,7 +58,11 @@ export const NAV: { section: string; items: NavItem[] }[] = [
   },
 ];
 
-export const findNav = (path: string) => NAV.flatMap((s) => s.items.map((i) => ({ ...i, section: s.section }))).find((i) => i.path === path);
+/** The menu item for a path; /companies/<id> belongs to Companies. */
+export const findNav = (path: string) => {
+  const items = NAV.flatMap((s) => s.items.map((i) => ({ ...i, section: s.section })));
+  return items.find((i) => i.path === path) ?? items.find((i) => i.path !== '/' && path.startsWith(`${i.path}/`));
+};
 
 function Sidebar({ t, path, staff, onPick }: { t: T; path: string; staff: StaffOut; onPick?: () => void }) {
   const [leaving, setLeaving] = useState(false);
@@ -86,7 +90,7 @@ function Sidebar({ t, path, staff, onPick }: { t: T; path: string; staff: StaffO
           <div key={s.section} className="mb-16">
             <p className="px-4 pb-4 text-[13px] font-semibold uppercase tracking-wide text-cream-400">{t(`admin.nav.${s.section}`)}</p>
             {s.items.map((i) => {
-              const on = path === i.path;
+              const on = path === i.path || (i.path !== '/' && path.startsWith(`${i.path}/`));
               const Icon = i.icon;
               return (
                 <Link
