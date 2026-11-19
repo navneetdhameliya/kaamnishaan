@@ -8,7 +8,7 @@ from app.core.deps import Staff, client_ip, get_db, get_staff
 from app.core.errors import AppError
 from app.schemas.identity import Locale
 from app.schemas.staff import (
-    DashboardOut,
+    AdminDashboardOut,
     StaffLoginIn,
     StaffOut,
     StaffRefreshIn,
@@ -74,13 +74,13 @@ async def me(s: Staff = Depends(get_staff)) -> StaffOut:
     return staff.staff_out(s.staff)
 
 
-@router.get("/dashboard", response_model=DashboardOut)
+@router.get("/dashboard", response_model=AdminDashboardOut)
 async def dashboard(
     days: int = Query(30, description="7, 30 or 90"),
     locale: Locale = "en",
     _: Staff = Depends(get_staff),
     db: AsyncSession = Depends(get_db),
-) -> DashboardOut:
+) -> AdminDashboardOut:
     if days not in (7, 30, 90):
         raise AppError(
             "validation_error", "Some fields are not valid.", fields={"days": "choose_7_30_90"}, status=422

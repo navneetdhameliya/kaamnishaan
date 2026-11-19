@@ -59,30 +59,30 @@ class StaffSetupOut(StaffSessionOut):
 
 
 # ---- A03 dashboard ----------------------------------------------------------------------------------
-class Stat(BaseModel):
+class AdminStat(BaseModel):
     value: float
     previous: float = Field(description="Same length of time just before")
 
 
-class Money(BaseModel):
+class AdminMoney(BaseModel):
     currency: str
     amount_minor: int
 
 
-class DayCount(BaseModel):
+class AdminDayCount(BaseModel):
     day: date
     approved: int
     ai_drafts: int
 
 
-class PlanMixRow(BaseModel):
+class AdminPlanMixRow(BaseModel):
     code: str
     name: str
     prices: dict[str, int]
     companies: int
 
 
-class TopCompany(BaseModel):
+class AdminTopCompany(BaseModel):
     id: uuid.UUID
     name: str
     trade: str | None
@@ -90,7 +90,7 @@ class TopCompany(BaseModel):
     reports: int
 
 
-class AttentionRow(BaseModel):
+class AdminAttentionRow(BaseModel):
     kind: Literal["near_limit", "past_due", "trial_ending", "new_leads"]
     count: int
     example: str | None = Field(default=None, description="One company or lead to name")
@@ -98,25 +98,25 @@ class AttentionRow(BaseModel):
     limit: int | None = None
 
 
-class ActivityRow(BaseModel):
+class AdminActivityRow(BaseModel):
     kind: Literal["company_created", "lead_demo", "lead_contact", "lead_newsletter", "staff_joined"]
     title: str = Field(description="Company, person or ticket the event is about")
     at: datetime
 
 
-class DashboardOut(BaseModel):
+class AdminDashboardOut(BaseModel):
     days: int
     since: datetime
-    active_companies: Stat
-    technicians: Stat
-    reports_sent: Stat
-    ai_cost_usd: Stat
+    active_companies: AdminStat
+    technicians: AdminStat
+    reports_sent: AdminStat
+    ai_cost_usd: AdminStat
     ai_cost_per_report_usd: float | None
-    monthly_revenue: list[Money] = Field(
+    monthly_revenue: list[AdminMoney] = Field(
         description="From the plans of paying companies (status active); no payments are taken yet"
     )
-    reports_per_day: list[DayCount]
-    plan_mix: list[PlanMixRow]
-    top_companies: list[TopCompany]
-    attention: list[AttentionRow]
-    activity: list[ActivityRow]
+    reports_per_day: list[AdminDayCount]
+    plan_mix: list[AdminPlanMixRow]
+    top_companies: list[AdminTopCompany]
+    attention: list[AdminAttentionRow]
+    activity: list[AdminActivityRow]

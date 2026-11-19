@@ -60,7 +60,7 @@
         "title": "Acknowledgement",
         "type": "object"
       },
-      "ActivityRow": {
+      "AdminActivityRow": {
         "properties": {
           "at": {
             "format": "date-time",
@@ -89,7 +89,294 @@
           "title",
           "at"
         ],
-        "title": "ActivityRow",
+        "title": "AdminActivityRow",
+        "type": "object"
+      },
+      "AdminAttentionRow": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "example": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "One company or lead to name",
+            "title": "Example"
+          },
+          "kind": {
+            "enum": [
+              "near_limit",
+              "past_due",
+              "trial_ending",
+              "new_leads"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "limit": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Limit"
+          },
+          "used": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Used"
+          }
+        },
+        "required": [
+          "kind",
+          "count"
+        ],
+        "title": "AdminAttentionRow",
+        "type": "object"
+      },
+      "AdminDashboardOut": {
+        "properties": {
+          "active_companies": {
+            "$ref": "#/components/schemas/AdminStat"
+          },
+          "activity": {
+            "items": {
+              "$ref": "#/components/schemas/AdminActivityRow"
+            },
+            "title": "Activity",
+            "type": "array"
+          },
+          "ai_cost_per_report_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ai Cost Per Report Usd"
+          },
+          "ai_cost_usd": {
+            "$ref": "#/components/schemas/AdminStat"
+          },
+          "attention": {
+            "items": {
+              "$ref": "#/components/schemas/AdminAttentionRow"
+            },
+            "title": "Attention",
+            "type": "array"
+          },
+          "days": {
+            "title": "Days",
+            "type": "integer"
+          },
+          "monthly_revenue": {
+            "description": "From the plans of paying companies (status active); no payments are taken yet",
+            "items": {
+              "$ref": "#/components/schemas/AdminMoney"
+            },
+            "title": "Monthly Revenue",
+            "type": "array"
+          },
+          "plan_mix": {
+            "items": {
+              "$ref": "#/components/schemas/AdminPlanMixRow"
+            },
+            "title": "Plan Mix",
+            "type": "array"
+          },
+          "reports_per_day": {
+            "items": {
+              "$ref": "#/components/schemas/AdminDayCount"
+            },
+            "title": "Reports Per Day",
+            "type": "array"
+          },
+          "reports_sent": {
+            "$ref": "#/components/schemas/AdminStat"
+          },
+          "since": {
+            "format": "date-time",
+            "title": "Since",
+            "type": "string"
+          },
+          "technicians": {
+            "$ref": "#/components/schemas/AdminStat"
+          },
+          "top_companies": {
+            "items": {
+              "$ref": "#/components/schemas/AdminTopCompany"
+            },
+            "title": "Top Companies",
+            "type": "array"
+          }
+        },
+        "required": [
+          "days",
+          "since",
+          "active_companies",
+          "technicians",
+          "reports_sent",
+          "ai_cost_usd",
+          "ai_cost_per_report_usd",
+          "monthly_revenue",
+          "reports_per_day",
+          "plan_mix",
+          "top_companies",
+          "attention",
+          "activity"
+        ],
+        "title": "AdminDashboardOut",
+        "type": "object"
+      },
+      "AdminDayCount": {
+        "properties": {
+          "ai_drafts": {
+            "title": "Ai Drafts",
+            "type": "integer"
+          },
+          "approved": {
+            "title": "Approved",
+            "type": "integer"
+          },
+          "day": {
+            "format": "date",
+            "title": "Day",
+            "type": "string"
+          }
+        },
+        "required": [
+          "day",
+          "approved",
+          "ai_drafts"
+        ],
+        "title": "AdminDayCount",
+        "type": "object"
+      },
+      "AdminMoney": {
+        "properties": {
+          "amount_minor": {
+            "title": "Amount Minor",
+            "type": "integer"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          }
+        },
+        "required": [
+          "currency",
+          "amount_minor"
+        ],
+        "title": "AdminMoney",
+        "type": "object"
+      },
+      "AdminPlanMixRow": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "companies": {
+            "title": "Companies",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "prices": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Prices",
+            "type": "object"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "prices",
+          "companies"
+        ],
+        "title": "AdminPlanMixRow",
+        "type": "object"
+      },
+      "AdminStat": {
+        "properties": {
+          "previous": {
+            "description": "Same length of time just before",
+            "title": "Previous",
+            "type": "number"
+          },
+          "value": {
+            "title": "Value",
+            "type": "number"
+          }
+        },
+        "required": [
+          "value",
+          "previous"
+        ],
+        "title": "AdminStat",
+        "type": "object"
+      },
+      "AdminTopCompany": {
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "plan": {
+            "title": "Plan",
+            "type": "string"
+          },
+          "reports": {
+            "title": "Reports",
+            "type": "integer"
+          },
+          "trade": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trade"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "trade",
+          "plan",
+          "reports"
+        ],
+        "title": "AdminTopCompany",
         "type": "object"
       },
       "AnswerIn": {
@@ -541,64 +828,6 @@
           "template_id"
         ],
         "title": "AttachChecklist",
-        "type": "object"
-      },
-      "AttentionRow": {
-        "properties": {
-          "count": {
-            "title": "Count",
-            "type": "integer"
-          },
-          "example": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "description": "One company or lead to name",
-            "title": "Example"
-          },
-          "kind": {
-            "enum": [
-              "near_limit",
-              "past_due",
-              "trial_ending",
-              "new_leads"
-            ],
-            "title": "Kind",
-            "type": "string"
-          },
-          "limit": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Limit"
-          },
-          "used": {
-            "anyOf": [
-              {
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Used"
-          }
-        },
-        "required": [
-          "kind",
-          "count"
-        ],
-        "title": "AttentionRow",
         "type": "object"
       },
       "BillingOut": {
@@ -2095,7 +2324,7 @@
             "type": "string"
           },
           "price": {
-            "$ref": "#/components/schemas/app__schemas__identity__Money"
+            "$ref": "#/components/schemas/Money"
           }
         },
         "required": [
@@ -2557,7 +2786,7 @@
           },
           "week": {
             "items": {
-              "$ref": "#/components/schemas/app__schemas__work__DayCount"
+              "$ref": "#/components/schemas/DayCount"
             },
             "title": "Week",
             "type": "array"
@@ -2576,100 +2805,28 @@
         "title": "Dashboard",
         "type": "object"
       },
-      "DashboardOut": {
+      "DayCount": {
         "properties": {
-          "active_companies": {
-            "$ref": "#/components/schemas/Stat"
-          },
-          "activity": {
-            "items": {
-              "$ref": "#/components/schemas/ActivityRow"
-            },
-            "title": "Activity",
-            "type": "array"
-          },
-          "ai_cost_per_report_usd": {
-            "anyOf": [
-              {
-                "type": "number"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Ai Cost Per Report Usd"
-          },
-          "ai_cost_usd": {
-            "$ref": "#/components/schemas/Stat"
-          },
-          "attention": {
-            "items": {
-              "$ref": "#/components/schemas/AttentionRow"
-            },
-            "title": "Attention",
-            "type": "array"
-          },
-          "days": {
-            "title": "Days",
+          "completed": {
+            "title": "Completed",
             "type": "integer"
           },
-          "monthly_revenue": {
-            "description": "From the plans of paying companies (status active); no payments are taken yet",
-            "items": {
-              "$ref": "#/components/schemas/app__schemas__staff__Money"
-            },
-            "title": "Monthly Revenue",
-            "type": "array"
-          },
-          "plan_mix": {
-            "items": {
-              "$ref": "#/components/schemas/PlanMixRow"
-            },
-            "title": "Plan Mix",
-            "type": "array"
-          },
-          "reports_per_day": {
-            "items": {
-              "$ref": "#/components/schemas/app__schemas__staff__DayCount"
-            },
-            "title": "Reports Per Day",
-            "type": "array"
-          },
-          "reports_sent": {
-            "$ref": "#/components/schemas/Stat"
-          },
-          "since": {
-            "format": "date-time",
-            "title": "Since",
+          "date": {
+            "format": "date",
+            "title": "Date",
             "type": "string"
           },
-          "technicians": {
-            "$ref": "#/components/schemas/Stat"
-          },
-          "top_companies": {
-            "items": {
-              "$ref": "#/components/schemas/TopCompany"
-            },
-            "title": "Top Companies",
-            "type": "array"
+          "reports_sent": {
+            "title": "Reports Sent",
+            "type": "integer"
           }
         },
         "required": [
-          "days",
-          "since",
-          "active_companies",
-          "technicians",
-          "reports_sent",
-          "ai_cost_usd",
-          "ai_cost_per_report_usd",
-          "monthly_revenue",
-          "reports_per_day",
-          "plan_mix",
-          "top_companies",
-          "attention",
-          "activity"
+          "date",
+          "completed",
+          "reports_sent"
         ],
-        "title": "DashboardOut",
+        "title": "DayCount",
         "type": "object"
       },
       "DemoBookedOut": {
@@ -5818,6 +5975,29 @@
         "title": "MessageOut",
         "type": "object"
       },
+      "Money": {
+        "properties": {
+          "amount": {
+            "description": "Minor units: paise or cents",
+            "title": "Amount",
+            "type": "integer"
+          },
+          "currency": {
+            "enum": [
+              "INR",
+              "USD"
+            ],
+            "title": "Currency",
+            "type": "string"
+          }
+        },
+        "required": [
+          "amount",
+          "currency"
+        ],
+        "title": "Money",
+        "type": "object"
+      },
       "MyCompanies": {
         "properties": {
           "data": {
@@ -6612,37 +6792,6 @@
         "title": "PersonRef",
         "type": "object"
       },
-      "PlanMixRow": {
-        "properties": {
-          "code": {
-            "title": "Code",
-            "type": "string"
-          },
-          "companies": {
-            "title": "Companies",
-            "type": "integer"
-          },
-          "name": {
-            "title": "Name",
-            "type": "string"
-          },
-          "prices": {
-            "additionalProperties": {
-              "type": "integer"
-            },
-            "title": "Prices",
-            "type": "object"
-          }
-        },
-        "required": [
-          "code",
-          "name",
-          "prices",
-          "companies"
-        ],
-        "title": "PlanMixRow",
-        "type": "object"
-      },
       "PlanOut": {
         "properties": {
           "ai_questions_monthly": {
@@ -6659,7 +6808,7 @@
           "annual_price": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/app__schemas__identity__Money"
+                "$ref": "#/components/schemas/Money"
               },
               {
                 "type": "null"
@@ -6701,7 +6850,7 @@
           "price": {
             "anyOf": [
               {
-                "$ref": "#/components/schemas/app__schemas__identity__Money"
+                "$ref": "#/components/schemas/Money"
               },
               {
                 "type": "null"
@@ -10939,25 +11088,6 @@
         "title": "StartBody",
         "type": "object"
       },
-      "Stat": {
-        "properties": {
-          "previous": {
-            "description": "Same length of time just before",
-            "title": "Previous",
-            "type": "number"
-          },
-          "value": {
-            "title": "Value",
-            "type": "number"
-          }
-        },
-        "required": [
-          "value",
-          "previous"
-        ],
-        "title": "Stat",
-        "type": "object"
-      },
       "SubmissionOut": {
         "properties": {
           "answered": {
@@ -12069,47 +12199,6 @@
         "title": "TokenBody",
         "type": "object"
       },
-      "TopCompany": {
-        "properties": {
-          "id": {
-            "format": "uuid",
-            "title": "Id",
-            "type": "string"
-          },
-          "name": {
-            "title": "Name",
-            "type": "string"
-          },
-          "plan": {
-            "title": "Plan",
-            "type": "string"
-          },
-          "reports": {
-            "title": "Reports",
-            "type": "integer"
-          },
-          "trade": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Trade"
-          }
-        },
-        "required": [
-          "id",
-          "name",
-          "trade",
-          "plan",
-          "reports"
-        ],
-        "title": "TopCompany",
-        "type": "object"
-      },
       "TradeOut": {
         "properties": {
           "checklists": {
@@ -12829,95 +12918,6 @@
         ],
         "title": "VoiceNotePatch",
         "type": "object"
-      },
-      "app__schemas__identity__Money": {
-        "properties": {
-          "amount": {
-            "description": "Minor units: paise or cents",
-            "title": "Amount",
-            "type": "integer"
-          },
-          "currency": {
-            "enum": [
-              "INR",
-              "USD"
-            ],
-            "title": "Currency",
-            "type": "string"
-          }
-        },
-        "required": [
-          "amount",
-          "currency"
-        ],
-        "title": "Money",
-        "type": "object"
-      },
-      "app__schemas__staff__DayCount": {
-        "properties": {
-          "ai_drafts": {
-            "title": "Ai Drafts",
-            "type": "integer"
-          },
-          "approved": {
-            "title": "Approved",
-            "type": "integer"
-          },
-          "day": {
-            "format": "date",
-            "title": "Day",
-            "type": "string"
-          }
-        },
-        "required": [
-          "day",
-          "approved",
-          "ai_drafts"
-        ],
-        "title": "DayCount",
-        "type": "object"
-      },
-      "app__schemas__staff__Money": {
-        "properties": {
-          "amount_minor": {
-            "title": "Amount Minor",
-            "type": "integer"
-          },
-          "currency": {
-            "title": "Currency",
-            "type": "string"
-          }
-        },
-        "required": [
-          "currency",
-          "amount_minor"
-        ],
-        "title": "Money",
-        "type": "object"
-      },
-      "app__schemas__work__DayCount": {
-        "properties": {
-          "completed": {
-            "title": "Completed",
-            "type": "integer"
-          },
-          "date": {
-            "format": "date",
-            "title": "Date",
-            "type": "string"
-          },
-          "reports_sent": {
-            "title": "Reports Sent",
-            "type": "integer"
-          }
-        },
-        "required": [
-          "date",
-          "completed",
-          "reports_sent"
-        ],
-        "title": "DayCount",
-        "type": "object"
       }
     },
     "securitySchemes": {
@@ -13159,7 +13159,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DashboardOut"
+                  "$ref": "#/components/schemas/AdminDashboardOut"
                 }
               }
             },

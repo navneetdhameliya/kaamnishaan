@@ -11,14 +11,14 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.security import now
 from app.models import AIUsage, AuditLog, Company, Industry, Lead, Membership, Plan, Report, StaffUser
 from app.schemas.staff import (
-    ActivityRow,
-    AttentionRow,
-    DashboardOut,
-    DayCount,
-    Money,
-    PlanMixRow,
-    Stat,
-    TopCompany,
+    AdminActivityRow,
+    AdminAttentionRow,
+    AdminDashboardOut,
+    AdminDayCount,
+    AdminMoney,
+    AdminPlanMixRow,
+    AdminStat,
+    AdminTopCompany,
 )
 from app.services.checklists import pick
 from app.services.credits import cycle
@@ -32,7 +32,7 @@ async def _count(db: AsyncSession, q) -> int:
     return int(await db.scalar(q) or 0)
 
 
-async def dashboard(db: AsyncSession, *, days: int, lang: str) -> DashboardOut:
+async def dashboard(db: AsyncSession, *, days: int, lang: str) -> AdminDashboardOut:
     t = now()
     since = t - timedelta(days=days)
     before = since - timedelta(days=days)
@@ -89,7 +89,7 @@ async def dashboard(db: AsyncSession, *, days: int, lang: str) -> DashboardOut:
     )  # fmt: skip
     first = since.astimezone(UTC).date() + timedelta(days=1)
     per_day = [
-        DayCount(day=d, approved=approved.get(d, 0), ai_drafts=drafts.get(d, 0))
+        AdminDayCount(day=d, approved=approved.get(d, 0), ai_drafts=drafts.get(d, 0))
         for d in (first + timedelta(days=i) for i in range(days))
     ]
 
@@ -103,7 +103,7 @@ async def dashboard(db: AsyncSession, *, days: int, lang: str) -> DashboardOut:
     )  # fmt: skip
     plans = (await db.execute(select(Plan).order_by(Plan.sort))).scalars().all()
     mix = [
-        PlanMixRow(
+        AdminPlanMixRow(
             code=p.code, name=pick(p.name, lang), prices=p.prices or {}, companies=counts.get(p.code, 0)
         )
         for p in plans
@@ -125,7 +125,7 @@ async def dashboard(db: AsyncSession, *, days: int, lang: str) -> DashboardOut:
         )
     ).all()
     top = [
-        TopCompany(
+        AdminTopCompany(
             id=c.id,
             name=c.name,
             trade=pick(i.name, lang) if i else None,
@@ -136,7 +136,7 @@ async def dashboard(db: AsyncSession, *, days: int, lang: str) -> DashboardOut:
     ]
 
     # ---- needs attention ------------------------------------------------------------------------
-    attention: list[AttentionRow] = []
+    attention: list[AdminAttentionRow] = []
     limits = {p.code: p.report_limit_monthly for p in plans if p.report_limit_monthly}
     near: list[tuple[float, Company, int, int]] = []
     if limits:
@@ -154,7 +154,7 @@ async def dashboard(db: AsyncSession, *, days: int, lang: str) -> DashboardOut:
         near.sort(key=lambda x: (-x[0], x[1].name))
         _, c, used, limit = near[0]
         attention.append(
-            AttentionRow(kind="near_limit", count=len(near), example=c.name, used=used, limit=limit)
+            AdminAttentionRow(kind="near_limit", count=len(near), example=c.name, used=used, limit=limit)
         )
     past_due = (
         (await db.execute(select(Company.name).where(Company.status == "past_due").order_by(Company.name)))
@@ -162,7 +162,7 @@ async def dashboard(db: AsyncSession, *, days: int, lang: str) -> DashboardOut:
         .all()
     )
     if past_due:
-        attention.append(AttentionRow(kind="past_due", count=len(past_due), example=past_due[0]))
+        attention.append(AdminAttentionRow(kind="past_due", count=len(past_due), example=past_due[0]))
     ending = (
         (
             await db.execute(
@@ -179,7 +179,7 @@ async def dashboard(db: AsyncSession, *, days: int, lang: str) -> DashboardOut:
         .all()
     )
     if ending:
-        attention.append(AttentionRow(kind="trial_ending", count=len(ending), example=ending[0]))
+        attention.append(AdminAttentionRow(kind="trial_ending", count=len(ending), example=ending[0]))
     new_leads = (
         await db.execute(
             select(Lead.name, Lead.company)
@@ -189,16 +189,16 @@ async def dashboard(db: AsyncSession, *, days: int, lang: str) -> DashboardOut:
     ).all()
     if new_leads:
         name, company = new_leads[0]
-        attention.append(AttentionRow(kind="new_leads", count=len(new_leads), example=company or name))
+        attention.append(AdminAttentionRow(kind="new_leads", count=len(new_leads), example=company or name))
 
     # ---- recent activity --------------------------------------------------------------------------
-    events: list[ActivityRow] = []
+    events: list[AdminActivityRow] = []
     for name, at in (
         await db.execute(
             select(Company.name, Company.created_at).order_by(Company.created_at.desc()).limit(6)
         )
     ).all():
-        events.append(ActivityRow(kind="company_created", title=name, at=at))
+        events.append(AdminActivityRow(kind="company_created", title=name, at=at))
     for kind, name, company, number, at in (
         await db.execute(
             select(Lead.kind, Lead.name, Lead.company, Lead.number, Lead.created_at)
@@ -208,7 +208,7 @@ async def dashboard(db: AsyncSession, *, days: int, lang: str) -> DashboardOut:
     ).all():
         title = name if kind == "newsletter" else f"{company or name} · KN-{number}"
         if kind in ("demo", "contact", "newsletter"):
-            events.append(ActivityRow(kind=f"lead_{kind}", title=title, at=at))
+            events.append(AdminActivityRow(kind=f"lead_{kind}", title=title, at=at))
     # each person once, when they first set up (a later reset is not "joining" again)
     joined = func.min(AuditLog.created_at).label("at")
     for name, at in (
@@ -221,18 +221,18 @@ async def dashboard(db: AsyncSession, *, days: int, lang: str) -> DashboardOut:
             .limit(3)
         )
     ).all():
-        events.append(ActivityRow(kind="staff_joined", title=name, at=at))
+        events.append(AdminActivityRow(kind="staff_joined", title=name, at=at))
     events.sort(key=lambda e: e.at, reverse=True)
 
-    return DashboardOut(
+    return AdminDashboardOut(
         days=days,
         since=since,
-        active_companies=Stat(value=companies_now, previous=companies_now - companies_new),
-        technicians=Stat(value=techs_now, previous=techs_now - techs_new),
-        reports_sent=Stat(value=sent_now, previous=sent_before),
-        ai_cost_usd=Stat(value=round(cost_now, 4), previous=round(cost_before, 4)),
+        active_companies=AdminStat(value=companies_now, previous=companies_now - companies_new),
+        technicians=AdminStat(value=techs_now, previous=techs_now - techs_new),
+        reports_sent=AdminStat(value=sent_now, previous=sent_before),
+        ai_cost_usd=AdminStat(value=round(cost_now, 4), previous=round(cost_before, 4)),
         ai_cost_per_report_usd=round(cost_now / drafted, 4) if drafted else None,
-        monthly_revenue=[Money(currency=k, amount_minor=v) for k, v in sorted(revenue.items())],
+        monthly_revenue=[AdminMoney(currency=k, amount_minor=v) for k, v in sorted(revenue.items())],
         reports_per_day=per_day,
         plan_mix=mix,
         top_companies=top,

@@ -53,24 +53,24 @@ class AcknowledgementModel {
       };
 }
 
-ActivityRowModel activityRowModelFromJson(String str) => ActivityRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+AdminActivityRowModel adminActivityRowModelFromJson(String str) => AdminActivityRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
-String activityRowModelToJson(ActivityRowModel data) => json.encode(data.toJson());
+String adminActivityRowModelToJson(AdminActivityRowModel data) => json.encode(data.toJson());
 
-class ActivityRowModel {
+class AdminActivityRowModel {
   final DateTime at;
   /// One of: company_created, lead_demo, lead_contact, lead_newsletter, staff_joined
   final String kind;
   /// Company, person or ticket the event is about
   final String title;
 
-  const ActivityRowModel({
+  const AdminActivityRowModel({
     required this.at,
     required this.kind,
     required this.title,
   });
 
-  factory ActivityRowModel.fromJson(Map<String, dynamic> json) => ActivityRowModel(
+  factory AdminActivityRowModel.fromJson(Map<String, dynamic> json) => AdminActivityRowModel(
         at: DateTime.parse(json['at'] as String),
         kind: json['kind'] as String,
         title: json['title'] as String,
@@ -80,6 +80,258 @@ class ActivityRowModel {
         'at': at.toIso8601String(),
         'kind': kind,
         'title': title,
+      };
+}
+
+AdminAttentionRowModel adminAttentionRowModelFromJson(String str) => AdminAttentionRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAttentionRowModelToJson(AdminAttentionRowModel data) => json.encode(data.toJson());
+
+class AdminAttentionRowModel {
+  final int count;
+  /// One company or lead to name
+  final String? example;
+  /// One of: near_limit, past_due, trial_ending, new_leads
+  final String kind;
+  final int? limit;
+  final int? used;
+
+  const AdminAttentionRowModel({
+    required this.count,
+    this.example,
+    required this.kind,
+    this.limit,
+    this.used,
+  });
+
+  factory AdminAttentionRowModel.fromJson(Map<String, dynamic> json) => AdminAttentionRowModel(
+        count: (json['count'] as num).toInt(),
+        example: json['example'] as String?,
+        kind: json['kind'] as String,
+        limit: json['limit'] == null ? null : (json['limit'] as num).toInt(),
+        used: json['used'] == null ? null : (json['used'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'count': count,
+        'example': example,
+        'kind': kind,
+        'limit': limit,
+        'used': used,
+      };
+}
+
+AdminDashboardOutModel adminDashboardOutModelFromJson(String str) => AdminDashboardOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminDashboardOutModelToJson(AdminDashboardOutModel data) => json.encode(data.toJson());
+
+class AdminDashboardOutModel {
+  final AdminStatModel activeCompanies;
+  final List<AdminActivityRowModel> activity;
+  final double? aiCostPerReportUsd;
+  final AdminStatModel aiCostUsd;
+  final List<AdminAttentionRowModel> attention;
+  final int days;
+  /// From the plans of paying companies (status active); no payments are taken yet
+  final List<AdminMoneyModel> monthlyRevenue;
+  final List<AdminPlanMixRowModel> planMix;
+  final List<AdminDayCountModel> reportsPerDay;
+  final AdminStatModel reportsSent;
+  final DateTime since;
+  final AdminStatModel technicians;
+  final List<AdminTopCompanyModel> topCompanies;
+
+  const AdminDashboardOutModel({
+    required this.activeCompanies,
+    required this.activity,
+    this.aiCostPerReportUsd,
+    required this.aiCostUsd,
+    required this.attention,
+    required this.days,
+    required this.monthlyRevenue,
+    required this.planMix,
+    required this.reportsPerDay,
+    required this.reportsSent,
+    required this.since,
+    required this.technicians,
+    required this.topCompanies,
+  });
+
+  factory AdminDashboardOutModel.fromJson(Map<String, dynamic> json) => AdminDashboardOutModel(
+        activeCompanies: AdminStatModel.fromJson(json['active_companies'] as Map<String, dynamic>),
+        activity: (json['activity'] as List).map((e) => AdminActivityRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        aiCostPerReportUsd: json['ai_cost_per_report_usd'] == null ? null : (json['ai_cost_per_report_usd'] as num).toDouble(),
+        aiCostUsd: AdminStatModel.fromJson(json['ai_cost_usd'] as Map<String, dynamic>),
+        attention: (json['attention'] as List).map((e) => AdminAttentionRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        days: (json['days'] as num).toInt(),
+        monthlyRevenue: (json['monthly_revenue'] as List).map((e) => AdminMoneyModel.fromJson(e as Map<String, dynamic>)).toList(),
+        planMix: (json['plan_mix'] as List).map((e) => AdminPlanMixRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        reportsPerDay: (json['reports_per_day'] as List).map((e) => AdminDayCountModel.fromJson(e as Map<String, dynamic>)).toList(),
+        reportsSent: AdminStatModel.fromJson(json['reports_sent'] as Map<String, dynamic>),
+        since: DateTime.parse(json['since'] as String),
+        technicians: AdminStatModel.fromJson(json['technicians'] as Map<String, dynamic>),
+        topCompanies: (json['top_companies'] as List).map((e) => AdminTopCompanyModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'active_companies': activeCompanies.toJson(),
+        'activity': activity.map((e) => e.toJson()).toList(),
+        'ai_cost_per_report_usd': aiCostPerReportUsd,
+        'ai_cost_usd': aiCostUsd.toJson(),
+        'attention': attention.map((e) => e.toJson()).toList(),
+        'days': days,
+        'monthly_revenue': monthlyRevenue.map((e) => e.toJson()).toList(),
+        'plan_mix': planMix.map((e) => e.toJson()).toList(),
+        'reports_per_day': reportsPerDay.map((e) => e.toJson()).toList(),
+        'reports_sent': reportsSent.toJson(),
+        'since': since.toIso8601String(),
+        'technicians': technicians.toJson(),
+        'top_companies': topCompanies.map((e) => e.toJson()).toList(),
+      };
+}
+
+AdminDayCountModel adminDayCountModelFromJson(String str) => AdminDayCountModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminDayCountModelToJson(AdminDayCountModel data) => json.encode(data.toJson());
+
+class AdminDayCountModel {
+  final int aiDrafts;
+  final int approved;
+  final String day;
+
+  const AdminDayCountModel({
+    required this.aiDrafts,
+    required this.approved,
+    required this.day,
+  });
+
+  factory AdminDayCountModel.fromJson(Map<String, dynamic> json) => AdminDayCountModel(
+        aiDrafts: (json['ai_drafts'] as num).toInt(),
+        approved: (json['approved'] as num).toInt(),
+        day: json['day'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ai_drafts': aiDrafts,
+        'approved': approved,
+        'day': day,
+      };
+}
+
+AdminMoneyModel adminMoneyModelFromJson(String str) => AdminMoneyModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminMoneyModelToJson(AdminMoneyModel data) => json.encode(data.toJson());
+
+class AdminMoneyModel {
+  final int amountMinor;
+  final String currency;
+
+  const AdminMoneyModel({
+    required this.amountMinor,
+    required this.currency,
+  });
+
+  factory AdminMoneyModel.fromJson(Map<String, dynamic> json) => AdminMoneyModel(
+        amountMinor: (json['amount_minor'] as num).toInt(),
+        currency: json['currency'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'amount_minor': amountMinor,
+        'currency': currency,
+      };
+}
+
+AdminPlanMixRowModel adminPlanMixRowModelFromJson(String str) => AdminPlanMixRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPlanMixRowModelToJson(AdminPlanMixRowModel data) => json.encode(data.toJson());
+
+class AdminPlanMixRowModel {
+  final String code;
+  final int companies;
+  final String name;
+  final Map<String, dynamic> prices;
+
+  const AdminPlanMixRowModel({
+    required this.code,
+    required this.companies,
+    required this.name,
+    required this.prices,
+  });
+
+  factory AdminPlanMixRowModel.fromJson(Map<String, dynamic> json) => AdminPlanMixRowModel(
+        code: json['code'] as String,
+        companies: (json['companies'] as num).toInt(),
+        name: json['name'] as String,
+        prices: Map<String, dynamic>.from(json['prices'] as Map),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'code': code,
+        'companies': companies,
+        'name': name,
+        'prices': prices,
+      };
+}
+
+AdminStatModel adminStatModelFromJson(String str) => AdminStatModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminStatModelToJson(AdminStatModel data) => json.encode(data.toJson());
+
+class AdminStatModel {
+  /// Same length of time just before
+  final double previous;
+  final double value;
+
+  const AdminStatModel({
+    required this.previous,
+    required this.value,
+  });
+
+  factory AdminStatModel.fromJson(Map<String, dynamic> json) => AdminStatModel(
+        previous: (json['previous'] as num).toDouble(),
+        value: (json['value'] as num).toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'previous': previous,
+        'value': value,
+      };
+}
+
+AdminTopCompanyModel adminTopCompanyModelFromJson(String str) => AdminTopCompanyModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTopCompanyModelToJson(AdminTopCompanyModel data) => json.encode(data.toJson());
+
+class AdminTopCompanyModel {
+  final String id;
+  final String name;
+  final String plan;
+  final int reports;
+  final String? trade;
+
+  const AdminTopCompanyModel({
+    required this.id,
+    required this.name,
+    required this.plan,
+    required this.reports,
+    this.trade,
+  });
+
+  factory AdminTopCompanyModel.fromJson(Map<String, dynamic> json) => AdminTopCompanyModel(
+        id: json['id'] as String,
+        name: json['name'] as String,
+        plan: json['plan'] as String,
+        reports: (json['reports'] as num).toInt(),
+        trade: json['trade'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'plan': plan,
+        'reports': reports,
+        'trade': trade,
       };
 }
 
@@ -447,44 +699,6 @@ class AttachChecklistModel {
 
   Map<String, dynamic> toJson() => {
         'template_id': templateId,
-      };
-}
-
-AttentionRowModel attentionRowModelFromJson(String str) => AttentionRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
-
-String attentionRowModelToJson(AttentionRowModel data) => json.encode(data.toJson());
-
-class AttentionRowModel {
-  final int count;
-  /// One company or lead to name
-  final String? example;
-  /// One of: near_limit, past_due, trial_ending, new_leads
-  final String kind;
-  final int? limit;
-  final int? used;
-
-  const AttentionRowModel({
-    required this.count,
-    this.example,
-    required this.kind,
-    this.limit,
-    this.used,
-  });
-
-  factory AttentionRowModel.fromJson(Map<String, dynamic> json) => AttentionRowModel(
-        count: (json['count'] as num).toInt(),
-        example: json['example'] as String?,
-        kind: json['kind'] as String,
-        limit: json['limit'] == null ? null : (json['limit'] as num).toInt(),
-        used: json['used'] == null ? null : (json['used'] as num).toInt(),
-      );
-
-  Map<String, dynamic> toJson() => {
-        'count': count,
-        'example': example,
-        'kind': kind,
-        'limit': limit,
-        'used': used,
       };
 }
 
@@ -1536,7 +1750,7 @@ String creditPackOutModelToJson(CreditPackOutModel data) => json.encode(data.toJ
 class CreditPackOutModel {
   final int credits;
   final String id;
-  final app__schemas__identity__MoneyModel price;
+  final MoneyModel price;
 
   const CreditPackOutModel({
     required this.credits,
@@ -1547,7 +1761,7 @@ class CreditPackOutModel {
   factory CreditPackOutModel.fromJson(Map<String, dynamic> json) => CreditPackOutModel(
         credits: (json['credits'] as num).toInt(),
         id: json['id'] as String,
-        price: app__schemas__identity__MoneyModel.fromJson(json['price'] as Map<String, dynamic>),
+        price: MoneyModel.fromJson(json['price'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toJson() => {
@@ -1897,7 +2111,7 @@ class DashboardModel {
   final Map<String, dynamic> today;
   /// Messages not read yet (the bell's dot)
   final int? unread;
-  final List<app__schemas__work__DayCountModel> week;
+  final List<DayCountModel> week;
 
   const DashboardModel({
     required this.date,
@@ -1920,7 +2134,7 @@ class DashboardModel {
         toReview: (json['to_review'] as num).toInt(),
         today: Map<String, dynamic>.from(json['today'] as Map),
         unread: json['unread'] == null ? null : (json['unread'] as num).toInt(),
-        week: (json['week'] as List).map((e) => app__schemas__work__DayCountModel.fromJson(e as Map<String, dynamic>)).toList(),
+        week: (json['week'] as List).map((e) => DayCountModel.fromJson(e as Map<String, dynamic>)).toList(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -1936,72 +2150,31 @@ class DashboardModel {
       };
 }
 
-DashboardOutModel dashboardOutModelFromJson(String str) => DashboardOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+DayCountModel dayCountModelFromJson(String str) => DayCountModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
-String dashboardOutModelToJson(DashboardOutModel data) => json.encode(data.toJson());
+String dayCountModelToJson(DayCountModel data) => json.encode(data.toJson());
 
-class DashboardOutModel {
-  final StatModel activeCompanies;
-  final List<ActivityRowModel> activity;
-  final double? aiCostPerReportUsd;
-  final StatModel aiCostUsd;
-  final List<AttentionRowModel> attention;
-  final int days;
-  /// From the plans of paying companies (status active); no payments are taken yet
-  final List<app__schemas__staff__MoneyModel> monthlyRevenue;
-  final List<PlanMixRowModel> planMix;
-  final List<app__schemas__staff__DayCountModel> reportsPerDay;
-  final StatModel reportsSent;
-  final DateTime since;
-  final StatModel technicians;
-  final List<TopCompanyModel> topCompanies;
+class DayCountModel {
+  final int completed;
+  final String date;
+  final int reportsSent;
 
-  const DashboardOutModel({
-    required this.activeCompanies,
-    required this.activity,
-    this.aiCostPerReportUsd,
-    required this.aiCostUsd,
-    required this.attention,
-    required this.days,
-    required this.monthlyRevenue,
-    required this.planMix,
-    required this.reportsPerDay,
+  const DayCountModel({
+    required this.completed,
+    required this.date,
     required this.reportsSent,
-    required this.since,
-    required this.technicians,
-    required this.topCompanies,
   });
 
-  factory DashboardOutModel.fromJson(Map<String, dynamic> json) => DashboardOutModel(
-        activeCompanies: StatModel.fromJson(json['active_companies'] as Map<String, dynamic>),
-        activity: (json['activity'] as List).map((e) => ActivityRowModel.fromJson(e as Map<String, dynamic>)).toList(),
-        aiCostPerReportUsd: json['ai_cost_per_report_usd'] == null ? null : (json['ai_cost_per_report_usd'] as num).toDouble(),
-        aiCostUsd: StatModel.fromJson(json['ai_cost_usd'] as Map<String, dynamic>),
-        attention: (json['attention'] as List).map((e) => AttentionRowModel.fromJson(e as Map<String, dynamic>)).toList(),
-        days: (json['days'] as num).toInt(),
-        monthlyRevenue: (json['monthly_revenue'] as List).map((e) => app__schemas__staff__MoneyModel.fromJson(e as Map<String, dynamic>)).toList(),
-        planMix: (json['plan_mix'] as List).map((e) => PlanMixRowModel.fromJson(e as Map<String, dynamic>)).toList(),
-        reportsPerDay: (json['reports_per_day'] as List).map((e) => app__schemas__staff__DayCountModel.fromJson(e as Map<String, dynamic>)).toList(),
-        reportsSent: StatModel.fromJson(json['reports_sent'] as Map<String, dynamic>),
-        since: DateTime.parse(json['since'] as String),
-        technicians: StatModel.fromJson(json['technicians'] as Map<String, dynamic>),
-        topCompanies: (json['top_companies'] as List).map((e) => TopCompanyModel.fromJson(e as Map<String, dynamic>)).toList(),
+  factory DayCountModel.fromJson(Map<String, dynamic> json) => DayCountModel(
+        completed: (json['completed'] as num).toInt(),
+        date: json['date'] as String,
+        reportsSent: (json['reports_sent'] as num).toInt(),
       );
 
   Map<String, dynamic> toJson() => {
-        'active_companies': activeCompanies.toJson(),
-        'activity': activity.map((e) => e.toJson()).toList(),
-        'ai_cost_per_report_usd': aiCostPerReportUsd,
-        'ai_cost_usd': aiCostUsd.toJson(),
-        'attention': attention.map((e) => e.toJson()).toList(),
-        'days': days,
-        'monthly_revenue': monthlyRevenue.map((e) => e.toJson()).toList(),
-        'plan_mix': planMix.map((e) => e.toJson()).toList(),
-        'reports_per_day': reportsPerDay.map((e) => e.toJson()).toList(),
-        'reports_sent': reportsSent.toJson(),
-        'since': since.toIso8601String(),
-        'technicians': technicians.toJson(),
-        'top_companies': topCompanies.map((e) => e.toJson()).toList(),
+        'completed': completed,
+        'date': date,
+        'reports_sent': reportsSent,
       };
 }
 
@@ -4087,6 +4260,32 @@ class MessageOutModel {
       };
 }
 
+MoneyModel moneyModelFromJson(String str) => MoneyModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String moneyModelToJson(MoneyModel data) => json.encode(data.toJson());
+
+class MoneyModel {
+  /// Minor units: paise or cents
+  final int amount;
+  /// One of: INR, USD
+  final String currency;
+
+  const MoneyModel({
+    required this.amount,
+    required this.currency,
+  });
+
+  factory MoneyModel.fromJson(Map<String, dynamic> json) => MoneyModel(
+        amount: (json['amount'] as num).toInt(),
+        currency: json['currency'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'amount': amount,
+        'currency': currency,
+      };
+}
+
 MyCompaniesModel myCompaniesModelFromJson(String str) => MyCompaniesModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String myCompaniesModelToJson(MyCompaniesModel data) => json.encode(data.toJson());
@@ -4783,38 +4982,6 @@ class PersonRefModel {
       };
 }
 
-PlanMixRowModel planMixRowModelFromJson(String str) => PlanMixRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
-
-String planMixRowModelToJson(PlanMixRowModel data) => json.encode(data.toJson());
-
-class PlanMixRowModel {
-  final String code;
-  final int companies;
-  final String name;
-  final Map<String, dynamic> prices;
-
-  const PlanMixRowModel({
-    required this.code,
-    required this.companies,
-    required this.name,
-    required this.prices,
-  });
-
-  factory PlanMixRowModel.fromJson(Map<String, dynamic> json) => PlanMixRowModel(
-        code: json['code'] as String,
-        companies: (json['companies'] as num).toInt(),
-        name: json['name'] as String,
-        prices: Map<String, dynamic>.from(json['prices'] as Map),
-      );
-
-  Map<String, dynamic> toJson() => {
-        'code': code,
-        'companies': companies,
-        'name': name,
-        'prices': prices,
-      };
-}
-
 PlanOutModel planOutModelFromJson(String str) => PlanOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String planOutModelToJson(PlanOutModel data) => json.encode(data.toJson());
@@ -4822,7 +4989,7 @@ String planOutModelToJson(PlanOutModel data) => json.encode(data.toJson());
 class PlanOutModel {
   final int? aiQuestionsMonthly;
   /// a year = 10 months' price
-  final app__schemas__identity__MoneyModel? annualPrice;
+  final MoneyModel? annualPrice;
   final String code;
   /// what the plan includes, e.g. branded_pdf, manager_approvals
   final List<String> features;
@@ -4830,7 +4997,7 @@ class PlanOutModel {
   final bool mostPopular;
   final String name;
   /// null = contact us
-  final app__schemas__identity__MoneyModel? price;
+  final MoneyModel? price;
   /// null = fair use
   final int? reportLimitMonthly;
   /// email | email_chat | priority | dedicated
@@ -4853,13 +5020,13 @@ class PlanOutModel {
 
   factory PlanOutModel.fromJson(Map<String, dynamic> json) => PlanOutModel(
         aiQuestionsMonthly: json['ai_questions_monthly'] == null ? null : (json['ai_questions_monthly'] as num).toInt(),
-        annualPrice: json['annual_price'] == null ? null : app__schemas__identity__MoneyModel.fromJson(json['annual_price'] as Map<String, dynamic>),
+        annualPrice: json['annual_price'] == null ? null : MoneyModel.fromJson(json['annual_price'] as Map<String, dynamic>),
         code: json['code'] as String,
         features: (json['features'] as List).map((e) => e as String).toList(),
         monthlyCredits: json['monthly_credits'] == null ? null : (json['monthly_credits'] as num).toInt(),
         mostPopular: json['most_popular'] as bool,
         name: json['name'] as String,
-        price: json['price'] == null ? null : app__schemas__identity__MoneyModel.fromJson(json['price'] as Map<String, dynamic>),
+        price: json['price'] == null ? null : MoneyModel.fromJson(json['price'] as Map<String, dynamic>),
         reportLimitMonthly: json['report_limit_monthly'] == null ? null : (json['report_limit_monthly'] as num).toInt(),
         support: json['support'] as String?,
         technicianLimit: json['technician_limit'] == null ? null : (json['technician_limit'] as num).toInt(),
@@ -7692,31 +7859,6 @@ class StartBodyModel {
       };
 }
 
-StatModel statModelFromJson(String str) => StatModel.fromJson(json.decode(str) as Map<String, dynamic>);
-
-String statModelToJson(StatModel data) => json.encode(data.toJson());
-
-class StatModel {
-  /// Same length of time just before
-  final double previous;
-  final double value;
-
-  const StatModel({
-    required this.previous,
-    required this.value,
-  });
-
-  factory StatModel.fromJson(Map<String, dynamic> json) => StatModel(
-        previous: (json['previous'] as num).toDouble(),
-        value: (json['value'] as num).toDouble(),
-      );
-
-  Map<String, dynamic> toJson() => {
-        'previous': previous,
-        'value': value,
-      };
-}
-
 SubmissionOutModel submissionOutModelFromJson(String str) => SubmissionOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String submissionOutModelToJson(SubmissionOutModel data) => json.encode(data.toJson());
@@ -8534,42 +8676,6 @@ class TokenBodyModel {
       };
 }
 
-TopCompanyModel topCompanyModelFromJson(String str) => TopCompanyModel.fromJson(json.decode(str) as Map<String, dynamic>);
-
-String topCompanyModelToJson(TopCompanyModel data) => json.encode(data.toJson());
-
-class TopCompanyModel {
-  final String id;
-  final String name;
-  final String plan;
-  final int reports;
-  final String? trade;
-
-  const TopCompanyModel({
-    required this.id,
-    required this.name,
-    required this.plan,
-    required this.reports,
-    this.trade,
-  });
-
-  factory TopCompanyModel.fromJson(Map<String, dynamic> json) => TopCompanyModel(
-        id: json['id'] as String,
-        name: json['name'] as String,
-        plan: json['plan'] as String,
-        reports: (json['reports'] as num).toInt(),
-        trade: json['trade'] as String?,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'plan': plan,
-        'reports': reports,
-        'trade': trade,
-      };
-}
-
 TradeOutModel tradeOutModelFromJson(String str) => TradeOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String tradeOutModelToJson(TradeOutModel data) => json.encode(data.toJson());
@@ -9051,111 +9157,5 @@ class VoiceNotePatchModel {
 
   Map<String, dynamic> toJson() => {
         'transcript_edited': transcriptEdited,
-      };
-}
-
-app__schemas__identity__MoneyModel app__schemas__identity__MoneyModelFromJson(String str) => app__schemas__identity__MoneyModel.fromJson(json.decode(str) as Map<String, dynamic>);
-
-String app__schemas__identity__MoneyModelToJson(app__schemas__identity__MoneyModel data) => json.encode(data.toJson());
-
-class app__schemas__identity__MoneyModel {
-  /// Minor units: paise or cents
-  final int amount;
-  /// One of: INR, USD
-  final String currency;
-
-  const app__schemas__identity__MoneyModel({
-    required this.amount,
-    required this.currency,
-  });
-
-  factory app__schemas__identity__MoneyModel.fromJson(Map<String, dynamic> json) => app__schemas__identity__MoneyModel(
-        amount: (json['amount'] as num).toInt(),
-        currency: json['currency'] as String,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'amount': amount,
-        'currency': currency,
-      };
-}
-
-app__schemas__staff__DayCountModel app__schemas__staff__DayCountModelFromJson(String str) => app__schemas__staff__DayCountModel.fromJson(json.decode(str) as Map<String, dynamic>);
-
-String app__schemas__staff__DayCountModelToJson(app__schemas__staff__DayCountModel data) => json.encode(data.toJson());
-
-class app__schemas__staff__DayCountModel {
-  final int aiDrafts;
-  final int approved;
-  final String day;
-
-  const app__schemas__staff__DayCountModel({
-    required this.aiDrafts,
-    required this.approved,
-    required this.day,
-  });
-
-  factory app__schemas__staff__DayCountModel.fromJson(Map<String, dynamic> json) => app__schemas__staff__DayCountModel(
-        aiDrafts: (json['ai_drafts'] as num).toInt(),
-        approved: (json['approved'] as num).toInt(),
-        day: json['day'] as String,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'ai_drafts': aiDrafts,
-        'approved': approved,
-        'day': day,
-      };
-}
-
-app__schemas__staff__MoneyModel app__schemas__staff__MoneyModelFromJson(String str) => app__schemas__staff__MoneyModel.fromJson(json.decode(str) as Map<String, dynamic>);
-
-String app__schemas__staff__MoneyModelToJson(app__schemas__staff__MoneyModel data) => json.encode(data.toJson());
-
-class app__schemas__staff__MoneyModel {
-  final int amountMinor;
-  final String currency;
-
-  const app__schemas__staff__MoneyModel({
-    required this.amountMinor,
-    required this.currency,
-  });
-
-  factory app__schemas__staff__MoneyModel.fromJson(Map<String, dynamic> json) => app__schemas__staff__MoneyModel(
-        amountMinor: (json['amount_minor'] as num).toInt(),
-        currency: json['currency'] as String,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'amount_minor': amountMinor,
-        'currency': currency,
-      };
-}
-
-app__schemas__work__DayCountModel app__schemas__work__DayCountModelFromJson(String str) => app__schemas__work__DayCountModel.fromJson(json.decode(str) as Map<String, dynamic>);
-
-String app__schemas__work__DayCountModelToJson(app__schemas__work__DayCountModel data) => json.encode(data.toJson());
-
-class app__schemas__work__DayCountModel {
-  final int completed;
-  final String date;
-  final int reportsSent;
-
-  const app__schemas__work__DayCountModel({
-    required this.completed,
-    required this.date,
-    required this.reportsSent,
-  });
-
-  factory app__schemas__work__DayCountModel.fromJson(Map<String, dynamic> json) => app__schemas__work__DayCountModel(
-        completed: (json['completed'] as num).toInt(),
-        date: json['date'] as String,
-        reportsSent: (json['reports_sent'] as num).toInt(),
-      );
-
-  Map<String, dynamic> toJson() => {
-        'completed': completed,
-        'date': date,
-        'reports_sent': reportsSent,
       };
 }
