@@ -40,7 +40,7 @@ export const NAV: { section: string; items: NavItem[] }[] = [
     section: 'customers',
     items: [
       { key: 'companies', path: '/companies', icon: Briefcase, ready: true },
-      { key: 'users', path: '/users', icon: User },
+      { key: 'users', path: '/users', icon: User, ready: true },
       { key: 'reviews', path: '/reviews', icon: CheckCheck },
       { key: 'ai_calls', path: '/ai-review-calls', icon: Phone },
       { key: 'templates', path: '/message-templates', icon: MessageSquareText },

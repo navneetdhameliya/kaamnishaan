@@ -227,7 +227,12 @@ export function CompanyDetail({ t, lang, id, onName }: { t: T; lang: Lang; id: s
         <section className="kn-in rounded-xl border border-border-default bg-bg-surface p-20 sm:p-24" style={stagger(5)}>
           <div className="flex items-baseline justify-between gap-12">
             <h2 className="text-[20px] font-semibold">{t('admin.co.team')}</h2>
-            <p className="text-[13px] text-text-secondary">{plural(t, 'admin.co.people', d.members, { n: num(d.members, lang) })}</p>
+            <p className="flex items-baseline gap-12 text-[13px] text-text-secondary">
+              {plural(t, 'admin.co.people', d.members, { n: num(d.members, lang) })}
+              <Link to={`/users?company=${d.id}`} className="kn-link text-[14px] font-semibold text-mocha-700">
+                {t('admin.co.view_all')}
+              </Link>
+            </p>
           </div>
           {d.team.length ? (
             <ul className="mt-12 divide-y divide-border-default">
@@ -235,7 +240,9 @@ export function CompanyDetail({ t, lang, id, onName }: { t: T; lang: Lang; id: s
                 <li key={m.id} className="kn-row -mx-8 flex items-center gap-12 rounded-md px-8 py-12">
                   <Initials name={m.name ?? '?'} className="h-[36px] w-[36px] rounded-full bg-cream-300 text-[13px] text-mocha-700" />
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-[14px] font-semibold">{m.name ?? '—'}</p>
+                    <Link to={`/users/${m.id}`} className="kn-link block truncate text-[14px] font-semibold">
+                      {m.name ?? '—'}
+                    </Link>
                     <p className="truncate text-[13px] text-text-secondary">
                       {t(`admin.co.role.${m.role}`)} · {t(`admin.co.login.${m.login}`)} · {t(`lang.${m.language}`)}
                     </p>

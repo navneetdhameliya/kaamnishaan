@@ -40,7 +40,7 @@ function query(f: Filters, lang: Lang, withPage = true): string {
 }
 
 /** 1 … 4 5 6 … 12 */
-function pages(current: number, last: number): (number | '…')[] {
+export function pages(current: number, last: number): (number | '…')[] {
   const keep = new Set([1, last, current - 1, current, current + 1].filter((n) => n >= 1 && n <= last));
   const out: (number | '…')[] = [];
   [...keep].sort((a, b) => a - b).forEach((n, i, arr) => {
