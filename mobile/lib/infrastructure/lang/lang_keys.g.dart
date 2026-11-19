@@ -5198,4 +5198,270 @@ abstract final class LangKeys {
   static const siteLegalQTerms = 'site.legal.q_terms';
   /// Our team answers within one working day.
   static const siteLegalQBody = 'site.legal.q_body';
+  /// Admin console
+  static const adminConsole = 'admin.console';
+  /// Run the platform with confidence.
+  static const adminLoginHero = 'admin.login.hero';
+  /// Only KaamNishaan staff. Every login is recorded in the audit log.
+  static const adminLoginStaffOnly = 'admin.login.staff_only';
+  /// Admin log in
+  static const adminLoginTitle = 'admin.login.title';
+  /// Use your staff account and the code from your authenticator app.
+  static const adminLoginBody = 'admin.login.body';
+  /// Email
+  static const adminLoginEmail = 'admin.login.email';
+  /// Password
+  static const adminLoginPassword = 'admin.login.password';
+  /// Show password
+  static const adminLoginShowPw = 'admin.login.show_pw';
+  /// Hide password
+  static const adminLoginHidePw = 'admin.login.hide_pw';
+  /// One-time code (from your authenticator app)
+  static const adminLoginCode = 'admin.login.code';
+  /// Digit {n} of 6
+  static const adminLoginDigit = 'admin.login.digit';
+  /// Recovery code
+  static const adminLoginRecovery = 'admin.login.recovery';
+  /// One of the 8 codes you saved when you set up. Each works once.
+  static const adminLoginRecoveryHint = 'admin.login.recovery_hint';
+  /// Lost your authenticator?
+  static const adminLoginUseRecovery = 'admin.login.use_recovery';
+  /// Use the authenticator code
+  static const adminLoginUseCode = 'admin.login.use_code';
+  /// Log in
+  static const adminLoginSubmit = 'admin.login.submit';
+  /// Forgot password?
+  static const adminLoginForgot = 'admin.login.forgot';
+  /// Email, password or code is wrong. {n} tries left before a 15-minute lock.
+  static const adminLoginErrInvalid = 'admin.login.err_invalid';
+  /// Email, password or code is wrong. 1 try left before a 15-minute lock.
+  static const adminLoginErrInvalidOne = 'admin.login.err_invalid_one';
+  /// Too many wrong tries. Try again after {time}.
+  static const adminLoginErrLocked = 'admin.login.err_locked';
+  /// Fill in your email, password and the 6-digit code.
+  static const adminLoginErrFill = 'admin.login.err_fill';
+  /// Fill in your email, password and a recovery code.
+  static const adminLoginErrFillRecovery = 'admin.login.err_fill_recovery';
+  /// Back to log in
+  static const adminForgotBack = 'admin.forgot.back';
+  /// Reset password
+  static const adminForgotTitle = 'admin.forgot.title';
+  /// Email isn’t switched on yet, so we can’t send you a reset link. Ask a super admin for a new setup link: you will choose a new password and connect your authenticator again.
+  static const adminForgotBody = 'admin.forgot.body';
+  /// The only super admin? Run the reset command on the server: python scripts/staff.py reset --email you@example.com
+  static const adminForgotOnlySuper = 'admin.forgot.only_super';
+  /// Set up your admin account
+  static const adminSetupTitle = 'admin.setup.title';
+  /// Set up your account again
+  static const adminSetupTitleReset = 'admin.setup.title_reset';
+  /// Hi {name}. Choose a password, then connect an authenticator app such as Google Authenticator or Microsoft Authenticator.
+  static const adminSetupBody = 'admin.setup.body';
+  /// 1. Choose a password
+  static const adminSetupStep1 = 'admin.setup.step1';
+  /// At least 8 characters, with letters and numbers.
+  static const adminSetupPwRule = 'admin.setup.pw_rule';
+  /// 2. Scan this code with your authenticator app
+  static const adminSetupStep2 = 'admin.setup.step2';
+  /// QR code for your authenticator app
+  static const adminSetupQrAlt = 'admin.setup.qr_alt';
+  /// Can’t scan? Type this key in the app:
+  static const adminSetupManual = 'admin.setup.manual';
+  /// Copy key
+  static const adminSetupCopy = 'admin.setup.copy';
+  /// Copied
+  static const adminSetupCopied = 'admin.setup.copied';
+  /// 3. Type the 6-digit code the app shows
+  static const adminSetupStep3 = 'admin.setup.step3';
+  /// Finish setup
+  static const adminSetupSubmit = 'admin.setup.submit';
+  /// This link doesn’t work any more. Ask a super admin for a new one.
+  static const adminSetupErrLink = 'admin.setup.err_link';
+  /// This code is wrong or expired. Open your app for a new one.
+  static const adminSetupErrCode = 'admin.setup.err_code';
+  /// Too many wrong codes. Try again in 15 minutes.
+  static const adminSetupErrTries = 'admin.setup.err_tries';
+  /// Save your recovery codes
+  static const adminSetupCodesTitle = 'admin.setup.codes_title';
+  /// If you lose your phone, each code lets you log in once. They are shown only now, so keep them somewhere safe, like a password manager.
+  static const adminSetupCodesBody = 'admin.setup.codes_body';
+  /// Copy all codes
+  static const adminSetupCodesCopy = 'admin.setup.codes_copy';
+  /// Download as a file
+  static const adminSetupCodesDownload = 'admin.setup.codes_download';
+  /// I have saved these codes
+  static const adminSetupCodesSaved = 'admin.setup.codes_saved';
+  /// Go to the dashboard
+  static const adminSetupContinue = 'admin.setup.continue';
+  /// Overview
+  static const adminNavOverview = 'admin.nav.overview';
+  /// Customers
+  static const adminNavCustomers = 'admin.nav.customers';
+  /// Content
+  static const adminNavContent = 'admin.nav.content';
+  /// System
+  static const adminNavSystem = 'admin.nav.system';
+  /// Dashboard
+  static const adminNavDashboard = 'admin.nav.dashboard';
+  /// AI usage & cost
+  static const adminNavAiUsage = 'admin.nav.ai_usage';
+  /// Companies
+  static const adminNavCompanies = 'admin.nav.companies';
+  /// Users
+  static const adminNavUsers = 'admin.nav.users';
+  /// Reviews & ratings
+  static const adminNavReviews = 'admin.nav.reviews';
+  /// AI review calls
+  static const adminNavAiCalls = 'admin.nav.ai_calls';
+  /// Message templates
+  static const adminNavTemplates = 'admin.nav.templates';
+  /// Usage & credits
+  static const adminNavUsage = 'admin.nav.usage';
+  /// Checklist templates
+  static const adminNavChecklists = 'admin.nav.checklists';
+  /// Audit logs
+  static const adminNavAudit = 'admin.nav.audit';
+  /// Platform settings
+  static const adminNavSettings = 'admin.nav.settings';
+  /// Email settings
+  static const adminNavEmail = 'admin.nav.email';
+  /// Open menu
+  static const adminNavOpen = 'admin.nav.open';
+  /// Close menu
+  static const adminNavClose = 'admin.nav.close';
+  /// Super admin
+  static const adminRoleSuperAdmin = 'admin.role.super_admin';
+  /// Admin
+  static const adminRoleAdmin = 'admin.role.admin';
+  /// Support
+  static const adminRoleSupport = 'admin.role.support';
+  /// Log out
+  static const adminLogout = 'admin.logout';
+  /// Language
+  static const adminLanguage = 'admin.language';
+  /// {page} is coming soon
+  static const adminSoonTitle = 'admin.soon.title';
+  /// This page comes in a later step of the admin panel.
+  static const adminSoonBody = 'admin.soon.body';
+  /// Back to the dashboard
+  static const adminSoonBack = 'admin.soon.back';
+  /// You have {n} recovery codes left. Ask a super admin to reset your authenticator for new ones.
+  static const adminRecoveryLow = 'admin.recovery_low';
+  /// Your session ended. Please log in again.
+  static const adminSessionEnded = 'admin.session_ended';
+  /// Couldn’t load this. Check your connection and try again.
+  static const adminErrLoad = 'admin.err.load';
+  /// No internet connection. Check it and try again.
+  static const adminErrOffline = 'admin.err.offline';
+  /// Something went wrong. Please try again.
+  static const adminErrGeneric = 'admin.err.generic';
+  /// Try again
+  static const adminRetry = 'admin.retry';
+  /// Dashboard
+  static const adminDashTitle = 'admin.dash.title';
+  /// Time period
+  static const adminRangeLabel = 'admin.range.label';
+  /// Last 7 days
+  static const adminRange7 = 'admin.range.7';
+  /// Last 30 days
+  static const adminRange30 = 'admin.range.30';
+  /// Last 90 days
+  static const adminRange90 = 'admin.range.90';
+  /// Active companies
+  static const adminDashCompanies = 'admin.dash.companies';
+  /// Technicians
+  static const adminDashTechnicians = 'admin.dash.technicians';
+  /// Reports sent
+  static const adminDashReports = 'admin.dash.reports';
+  /// Monthly revenue
+  static const adminDashRevenue = 'admin.dash.revenue';
+  /// AI cost
+  static const adminDashAiCost = 'admin.dash.ai_cost';
+  /// +{n} in the last {days} days
+  static const adminDashNewIn = 'admin.dash.new_in';
+  /// None new in the last {days} days
+  static const adminDashNoneNew = 'admin.dash.none_new';
+  /// {change} vs the {days} days before
+  static const adminDashVs = 'admin.dash.vs';
+  /// None in the {days} days before
+  static const adminDashVsNone = 'admin.dash.vs_none';
+  /// {cost} per report
+  static const adminDashPerReport = 'admin.dash.per_report';
+  /// From the plans of paying companies
+  static const adminDashRevenueNote = 'admin.dash.revenue_note';
+  /// No paying companies yet
+  static const adminDashRevenueNone = 'admin.dash.revenue_none';
+  /// Reports per day
+  static const adminDashPerDay = 'admin.dash.per_day';
+  /// Approved reports and AI drafts across all companies
+  static const adminDashPerDayBody = 'admin.dash.per_day_body';
+  /// Approved
+  static const adminDashApproved = 'admin.dash.approved';
+  /// AI drafts
+  static const adminDashDrafts = 'admin.dash.drafts';
+  /// {date}: {approved} approved, {drafts} AI drafts
+  static const adminDashBar = 'admin.dash.bar';
+  /// No reports in this period yet.
+  static const adminDashNoReports = 'admin.dash.no_reports';
+  /// Plan mix
+  static const adminDashPlanMix = 'admin.dash.plan_mix';
+  /// {n} companies
+  static const adminDashNCompanies = 'admin.dash.n_companies';
+  /// 1 company
+  static const adminDashNCompaniesOne = 'admin.dash.n_companies_one';
+  /// Free
+  static const adminDashFree = 'admin.dash.free';
+  /// Needs attention
+  static const adminDashAttention = 'admin.dash.attention';
+  /// Nothing needs attention right now.
+  static const adminDashAllClear = 'admin.dash.all_clear';
+  /// {n} companies near report limit
+  static const adminDashNearLimit = 'admin.dash.near_limit';
+  /// 1 company near report limit
+  static const adminDashNearLimitOne = 'admin.dash.near_limit_one';
+  /// {name} · {used} of {limit}
+  static const adminDashOf = 'admin.dash.of';
+  /// {n} payments failed
+  static const adminDashPastDue = 'admin.dash.past_due';
+  /// 1 payment failed
+  static const adminDashPastDueOne = 'admin.dash.past_due_one';
+  /// {n} trials end this week
+  static const adminDashTrials = 'admin.dash.trials';
+  /// 1 trial ends this week
+  static const adminDashTrialsOne = 'admin.dash.trials_one';
+  /// First: {name}. Convert or remind owners.
+  static const adminDashTrialsDetail = 'admin.dash.trials_detail';
+  /// {n} new demo requests and messages
+  static const adminDashLeads = 'admin.dash.leads';
+  /// 1 new demo request or message
+  static const adminDashLeadsOne = 'admin.dash.leads_one';
+  /// Latest: {name}
+  static const adminDashLatest = 'admin.dash.latest';
+  /// Top companies by reports
+  static const adminDashTop = 'admin.dash.top';
+  /// {n} reports
+  static const adminDashNReports = 'admin.dash.n_reports';
+  /// 1 report
+  static const adminDashNReportsOne = 'admin.dash.n_reports_one';
+  /// Recent activity
+  static const adminDashActivity = 'admin.dash.activity';
+  /// Nothing has happened yet.
+  static const adminDashNoActivity = 'admin.dash.no_activity';
+  /// New company: {title}
+  static const adminActCompanyCreated = 'admin.act.company_created';
+  /// Demo requested: {title}
+  static const adminActLeadDemo = 'admin.act.lead_demo';
+  /// New message: {title}
+  static const adminActLeadContact = 'admin.act.lead_contact';
+  /// Newsletter sign-up: {title}
+  static const adminActLeadNewsletter = 'admin.act.lead_newsletter';
+  /// {title} set up an admin account
+  static const adminActStaffJoined = 'admin.act.staff_joined';
+  /// sign-up
+  static const adminTagSignup = 'admin.tag.signup';
+  /// website
+  static const adminTagWebsite = 'admin.tag.website';
+  /// staff
+  static const adminTagStaff = 'admin.tag.staff';
+  /// Yesterday
+  static const adminYesterday = 'admin.yesterday';
 }

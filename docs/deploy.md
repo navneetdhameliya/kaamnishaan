@@ -96,6 +96,33 @@ The links in report SMS and emails open the website at `/r/<code>`. About 5 minu
 If Vercel gives a different address, set it in Render → `kaamnishaan-api` → **Environment**:
 `KN_WEB_URL` = that address, and add it to `KN_CORS_ORIGINS`. Every merge to `main` deploys again.
 
+## 5. Vercel — the admin panel
+
+KaamNishaan's own staff log in here with a password and an authenticator app (Google Authenticator,
+Microsoft Authenticator, 1Password …). About 10 minutes.
+
+1. Vercel → **Add New… → Project** → import `navneetdhameliya/kaamnishaan` again.
+2. **Root Directory**: `admin`. Framework: **Vite**.
+3. **Environment Variables**: `VITE_API_URL` = `https://kaamnishaan-api.onrender.com`
+4. **Project name**: `kaamnishaan-admin`, so the address is **https://kaamnishaan-admin.vercel.app** (the
+   API already allows it). → **Deploy**.
+5. Render → `kaamnishaan-api` → **Environment**: add `KN_ADMIN_EMAIL` = your email (and `KN_ADMIN_NAME` =
+   your name). `KN_ADMIN_URL` is already `https://kaamnishaan-admin.vercel.app`. Save; the API restarts.
+6. Render → `kaamnishaan-api` → **Logs**: find the line **Admin panel setup link for …** and open the link
+   (it works for 72 hours, once; every restart writes it again until you finish).
+7. Choose a password, scan the QR code with your authenticator app, type its 6-digit code, and **save the
+   8 recovery codes** (each logs you in once if you lose your phone). You are the first super admin.
+
+`KN_ADMIN_EMAIL` only creates the first super admin; once one exists it does nothing, so it can stay set.
+More staff, or a new password / authenticator for someone (also you):
+`python scripts/staff.py invite --email … --name "…"` or `python scripts/staff.py reset --email …`
+in Render → `kaamnishaan-api` → **Shell** (paid plans), or on your computer from `backend/` with
+`KN_DATABASE_URL` = Render's **External Database URL** (with `postgresql+asyncpg://` at the start) and
+`KN_SECRET_KEY` = the same value as on Render. It prints the setup link. A reset ends that person's
+sessions and makes their old password, authenticator and recovery codes stop working.
+Keep `KN_SECRET_KEY` unchanged: the authenticator keys are stored encrypted with it, so changing it
+means every staff member sets up again.
+
 ## After it is live
 
 - Every merge to `main` deploys automatically (about 5 minutes).

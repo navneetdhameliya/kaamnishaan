@@ -40,6 +40,10 @@ services:
         value: https://kaamnishaan-api.onrender.com
       - key: KN_WEB_URL  # customer report links and invites point here (website comes later)
         value: https://kaamnishaan-web.vercel.app
+      - key: KN_ADMIN_URL  # staff setup links point here
+        value: https://kaamnishaan-admin.vercel.app
+      - key: KN_ADMIN_EMAIL  # the first super admin; their setup link is written to the Logs
+        sync: false
       - key: KN_CORS_ORIGINS
         value: '["https://kaamnishaan-web.vercel.app","https://kaamnishaan-admin.vercel.app","http://localhost:5173","http://localhost:5174"]'
       # Files: Cloudflare R2 (photos, voice notes, PDFs)

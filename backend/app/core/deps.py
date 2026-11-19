@@ -13,7 +13,8 @@ from app.core.db import SessionLocal
 from app.core.errors import Forbidden, Unauthorized
 from app.core.permissions import permissions_for
 from app.core.security import decode_access_token, now
-from app.models import AuthSession, Company, Membership, User
+from app.core.staff_security import decode_staff_token
+from app.models import AuthSession, Company, Membership, StaffSession, StaffUser, User
 
 # Shows the "Authorize" button on /docs; we raise our own error shape when the token is missing.
 bearer = HTTPBearer(
@@ -100,3 +101,30 @@ def requires(permission: str) -> Callable:
 def client_ip(request: Request) -> str | None:
     fwd = request.headers.get("x-forwarded-for")
     return fwd.split(",")[0].strip() if fwd else (request.client.host if request.client else None)
+
+
+# ---- admin panel (staff) ----------------------------------------------------------------------------
+@dataclass
+class Staff:
+    staff: StaffUser
+    session_id: uuid.UUID
+
+    def require_super(self) -> None:
+        if self.staff.role != "super_admin":
+            raise Forbidden("forbidden", "Only a super admin can do this.")
+
+
+async def get_staff(
+    creds: HTTPAuthorizationCredentials | None = Depends(bearer),
+    db: AsyncSession = Depends(get_db),
+) -> Staff:
+    if not creds or creds.scheme.lower() != "bearer":
+        raise Unauthorized("not_signed_in", "Please log in.")
+    claims = decode_staff_token(creds.credentials)
+    sess = await db.get(StaffSession, uuid.UUID(claims["sid"]))
+    if not sess or sess.revoked_at or sess.expires_at < now():
+        raise Unauthorized("session_ended", "Please log in again.")
+    staff = await db.get(StaffUser, uuid.UUID(claims["sub"]))
+    if not staff or staff.status != "active":
+        raise Unauthorized("account_disabled", "This account is turned off.")
+    return Staff(staff=staff, session_id=sess.id)
