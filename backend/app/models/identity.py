@@ -191,6 +191,8 @@ class AuditLog(IdMixin, Base):
         ForeignKey("companies.id", ondelete="SET NULL"), index=True
     )
     actor_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+    # set instead of actor_id when KaamNishaan staff did it in the admin panel
+    staff_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("staff_users.id", ondelete="SET NULL"))
     actor_role: Mapped[str | None] = mapped_column(String(32))
     action: Mapped[str] = mapped_column(String(64))
     target_type: Mapped[str | None] = mapped_column(String(32))

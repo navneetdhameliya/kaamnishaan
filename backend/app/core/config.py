@@ -56,6 +56,13 @@ class Settings(BaseSettings):
     support_whatsapp: str | None = None  # digits with country code, e.g. 919876543210
     help_url: str | None = None
     office: str = "Ahmedabad, Gujarat, India"
+    # Admin panel. Setup links for staff point at admin_url. With admin_email set, the API makes that
+    # person the first super admin on start-up (only while there is no super admin yet) and, until they
+    # finish setting up, writes a fresh setup link to the server log (Render → Logs) on every start,
+    # because there is no email service yet.
+    admin_url: str = "http://localhost:5174"
+    admin_email: str | None = None
+    admin_name: str = "Admin"
     # Privacy policy and Terms (W06/W07). Until name, address and city are set the pages say "draft".
     legal_name: str | None = None  # the registered company name
     legal_address: str | None = None  # registered address, one line

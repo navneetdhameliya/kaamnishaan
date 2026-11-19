@@ -25,6 +25,7 @@ dependencies = [
   "arq>=0.26",
   "fpdf2>=2.8",
   "uharfbuzz>=0.40",
+  "cryptography>=43",
 ]
 
 [project.optional-dependencies]

@@ -1,4 +1,6 @@
 import logging
+from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,9 +11,22 @@ from app.core import errors
 from app.core.config import get_settings
 
 
+@asynccontextmanager
+async def lifespan(_: FastAPI) -> AsyncIterator[None]:
+    if get_settings().admin_email:
+        from app.services.staff import bootstrap
+
+        try:
+            await bootstrap()  # first super admin's setup link goes to the log
+        except Exception:  # never stop the API from starting
+            logging.getLogger("kn.staff").exception("admin bootstrap failed")
+    yield
+
+
 def create_app() -> FastAPI:
     s = get_settings()
     app = FastAPI(
+        lifespan=lifespan,
         title=s.api_name,
         version="0.1.0",
         docs_url=None if s.is_production else "/docs",

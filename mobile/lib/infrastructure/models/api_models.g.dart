@@ -53,6 +53,288 @@ class AcknowledgementModel {
       };
 }
 
+AdminActivityRowModel adminActivityRowModelFromJson(String str) => AdminActivityRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminActivityRowModelToJson(AdminActivityRowModel data) => json.encode(data.toJson());
+
+class AdminActivityRowModel {
+  final DateTime at;
+  /// One of: company_created, lead_demo, lead_contact, lead_newsletter, staff_joined
+  final String kind;
+  /// Company, person or ticket the event is about
+  final String title;
+
+  const AdminActivityRowModel({
+    required this.at,
+    required this.kind,
+    required this.title,
+  });
+
+  factory AdminActivityRowModel.fromJson(Map<String, dynamic> json) => AdminActivityRowModel(
+        at: DateTime.parse(json['at'] as String),
+        kind: json['kind'] as String,
+        title: json['title'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'at': at.toIso8601String(),
+        'kind': kind,
+        'title': title,
+      };
+}
+
+AdminAttentionRowModel adminAttentionRowModelFromJson(String str) => AdminAttentionRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAttentionRowModelToJson(AdminAttentionRowModel data) => json.encode(data.toJson());
+
+class AdminAttentionRowModel {
+  final int count;
+  /// One company or lead to name
+  final String? example;
+  /// One of: near_limit, past_due, trial_ending, new_leads
+  final String kind;
+  final int? limit;
+  final int? used;
+
+  const AdminAttentionRowModel({
+    required this.count,
+    this.example,
+    required this.kind,
+    this.limit,
+    this.used,
+  });
+
+  factory AdminAttentionRowModel.fromJson(Map<String, dynamic> json) => AdminAttentionRowModel(
+        count: (json['count'] as num).toInt(),
+        example: json['example'] as String?,
+        kind: json['kind'] as String,
+        limit: json['limit'] == null ? null : (json['limit'] as num).toInt(),
+        used: json['used'] == null ? null : (json['used'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'count': count,
+        'example': example,
+        'kind': kind,
+        'limit': limit,
+        'used': used,
+      };
+}
+
+AdminDashboardOutModel adminDashboardOutModelFromJson(String str) => AdminDashboardOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminDashboardOutModelToJson(AdminDashboardOutModel data) => json.encode(data.toJson());
+
+class AdminDashboardOutModel {
+  final AdminStatModel activeCompanies;
+  final List<AdminActivityRowModel> activity;
+  final double? aiCostPerReportUsd;
+  final AdminStatModel aiCostUsd;
+  final List<AdminAttentionRowModel> attention;
+  final int days;
+  /// From the plans of paying companies (status active); no payments are taken yet
+  final List<AdminMoneyModel> monthlyRevenue;
+  final List<AdminPlanMixRowModel> planMix;
+  final List<AdminDayCountModel> reportsPerDay;
+  final AdminStatModel reportsSent;
+  final DateTime since;
+  final AdminStatModel technicians;
+  final List<AdminTopCompanyModel> topCompanies;
+
+  const AdminDashboardOutModel({
+    required this.activeCompanies,
+    required this.activity,
+    this.aiCostPerReportUsd,
+    required this.aiCostUsd,
+    required this.attention,
+    required this.days,
+    required this.monthlyRevenue,
+    required this.planMix,
+    required this.reportsPerDay,
+    required this.reportsSent,
+    required this.since,
+    required this.technicians,
+    required this.topCompanies,
+  });
+
+  factory AdminDashboardOutModel.fromJson(Map<String, dynamic> json) => AdminDashboardOutModel(
+        activeCompanies: AdminStatModel.fromJson(json['active_companies'] as Map<String, dynamic>),
+        activity: (json['activity'] as List).map((e) => AdminActivityRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        aiCostPerReportUsd: json['ai_cost_per_report_usd'] == null ? null : (json['ai_cost_per_report_usd'] as num).toDouble(),
+        aiCostUsd: AdminStatModel.fromJson(json['ai_cost_usd'] as Map<String, dynamic>),
+        attention: (json['attention'] as List).map((e) => AdminAttentionRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        days: (json['days'] as num).toInt(),
+        monthlyRevenue: (json['monthly_revenue'] as List).map((e) => AdminMoneyModel.fromJson(e as Map<String, dynamic>)).toList(),
+        planMix: (json['plan_mix'] as List).map((e) => AdminPlanMixRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        reportsPerDay: (json['reports_per_day'] as List).map((e) => AdminDayCountModel.fromJson(e as Map<String, dynamic>)).toList(),
+        reportsSent: AdminStatModel.fromJson(json['reports_sent'] as Map<String, dynamic>),
+        since: DateTime.parse(json['since'] as String),
+        technicians: AdminStatModel.fromJson(json['technicians'] as Map<String, dynamic>),
+        topCompanies: (json['top_companies'] as List).map((e) => AdminTopCompanyModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'active_companies': activeCompanies.toJson(),
+        'activity': activity.map((e) => e.toJson()).toList(),
+        'ai_cost_per_report_usd': aiCostPerReportUsd,
+        'ai_cost_usd': aiCostUsd.toJson(),
+        'attention': attention.map((e) => e.toJson()).toList(),
+        'days': days,
+        'monthly_revenue': monthlyRevenue.map((e) => e.toJson()).toList(),
+        'plan_mix': planMix.map((e) => e.toJson()).toList(),
+        'reports_per_day': reportsPerDay.map((e) => e.toJson()).toList(),
+        'reports_sent': reportsSent.toJson(),
+        'since': since.toIso8601String(),
+        'technicians': technicians.toJson(),
+        'top_companies': topCompanies.map((e) => e.toJson()).toList(),
+      };
+}
+
+AdminDayCountModel adminDayCountModelFromJson(String str) => AdminDayCountModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminDayCountModelToJson(AdminDayCountModel data) => json.encode(data.toJson());
+
+class AdminDayCountModel {
+  final int aiDrafts;
+  final int approved;
+  final String day;
+
+  const AdminDayCountModel({
+    required this.aiDrafts,
+    required this.approved,
+    required this.day,
+  });
+
+  factory AdminDayCountModel.fromJson(Map<String, dynamic> json) => AdminDayCountModel(
+        aiDrafts: (json['ai_drafts'] as num).toInt(),
+        approved: (json['approved'] as num).toInt(),
+        day: json['day'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ai_drafts': aiDrafts,
+        'approved': approved,
+        'day': day,
+      };
+}
+
+AdminMoneyModel adminMoneyModelFromJson(String str) => AdminMoneyModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminMoneyModelToJson(AdminMoneyModel data) => json.encode(data.toJson());
+
+class AdminMoneyModel {
+  final int amountMinor;
+  final String currency;
+
+  const AdminMoneyModel({
+    required this.amountMinor,
+    required this.currency,
+  });
+
+  factory AdminMoneyModel.fromJson(Map<String, dynamic> json) => AdminMoneyModel(
+        amountMinor: (json['amount_minor'] as num).toInt(),
+        currency: json['currency'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'amount_minor': amountMinor,
+        'currency': currency,
+      };
+}
+
+AdminPlanMixRowModel adminPlanMixRowModelFromJson(String str) => AdminPlanMixRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPlanMixRowModelToJson(AdminPlanMixRowModel data) => json.encode(data.toJson());
+
+class AdminPlanMixRowModel {
+  final String code;
+  final int companies;
+  final String name;
+  final Map<String, dynamic> prices;
+
+  const AdminPlanMixRowModel({
+    required this.code,
+    required this.companies,
+    required this.name,
+    required this.prices,
+  });
+
+  factory AdminPlanMixRowModel.fromJson(Map<String, dynamic> json) => AdminPlanMixRowModel(
+        code: json['code'] as String,
+        companies: (json['companies'] as num).toInt(),
+        name: json['name'] as String,
+        prices: Map<String, dynamic>.from(json['prices'] as Map),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'code': code,
+        'companies': companies,
+        'name': name,
+        'prices': prices,
+      };
+}
+
+AdminStatModel adminStatModelFromJson(String str) => AdminStatModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminStatModelToJson(AdminStatModel data) => json.encode(data.toJson());
+
+class AdminStatModel {
+  /// Same length of time just before
+  final double previous;
+  final double value;
+
+  const AdminStatModel({
+    required this.previous,
+    required this.value,
+  });
+
+  factory AdminStatModel.fromJson(Map<String, dynamic> json) => AdminStatModel(
+        previous: (json['previous'] as num).toDouble(),
+        value: (json['value'] as num).toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'previous': previous,
+        'value': value,
+      };
+}
+
+AdminTopCompanyModel adminTopCompanyModelFromJson(String str) => AdminTopCompanyModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTopCompanyModelToJson(AdminTopCompanyModel data) => json.encode(data.toJson());
+
+class AdminTopCompanyModel {
+  final String id;
+  final String name;
+  final String plan;
+  final int reports;
+  final String? trade;
+
+  const AdminTopCompanyModel({
+    required this.id,
+    required this.name,
+    required this.plan,
+    required this.reports,
+    this.trade,
+  });
+
+  factory AdminTopCompanyModel.fromJson(Map<String, dynamic> json) => AdminTopCompanyModel(
+        id: json['id'] as String,
+        name: json['name'] as String,
+        plan: json['plan'] as String,
+        reports: (json['reports'] as num).toInt(),
+        trade: json['trade'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'name': name,
+        'plan': plan,
+        'reports': reports,
+        'trade': trade,
+      };
+}
+
 AnswerInModel answerInModelFromJson(String str) => AnswerInModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String answerInModelToJson(AnswerInModel data) => json.encode(data.toJson());
@@ -7311,6 +7593,245 @@ class SourceReportModel {
         'job_id': jobId,
         'number': number,
         'status': status,
+      };
+}
+
+StaffLoginInModel staffLoginInModelFromJson(String str) => StaffLoginInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String staffLoginInModelToJson(StaffLoginInModel data) => json.encode(data.toJson());
+
+class StaffLoginInModel {
+  /// 6 digits from the authenticator app
+  final String? code;
+  final String email;
+  final String password;
+  /// Instead of code: e.g. 7f3a-91c0
+  final String? recoveryCode;
+
+  const StaffLoginInModel({
+    this.code,
+    required this.email,
+    required this.password,
+    this.recoveryCode,
+  });
+
+  factory StaffLoginInModel.fromJson(Map<String, dynamic> json) => StaffLoginInModel(
+        code: json['code'] as String?,
+        email: json['email'] as String,
+        password: json['password'] as String,
+        recoveryCode: json['recovery_code'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'code': code,
+        'email': email,
+        'password': password,
+        'recovery_code': recoveryCode,
+      };
+}
+
+StaffOutModel staffOutModelFromJson(String str) => StaffOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String staffOutModelToJson(StaffOutModel data) => json.encode(data.toJson());
+
+class StaffOutModel {
+  final String email;
+  final String id;
+  final String name;
+  final int recoveryCodesLeft;
+  /// One of: super_admin, admin, support
+  final String role;
+
+  const StaffOutModel({
+    required this.email,
+    required this.id,
+    required this.name,
+    required this.recoveryCodesLeft,
+    required this.role,
+  });
+
+  factory StaffOutModel.fromJson(Map<String, dynamic> json) => StaffOutModel(
+        email: json['email'] as String,
+        id: json['id'] as String,
+        name: json['name'] as String,
+        recoveryCodesLeft: (json['recovery_codes_left'] as num).toInt(),
+        role: json['role'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'id': id,
+        'name': name,
+        'recovery_codes_left': recoveryCodesLeft,
+        'role': role,
+      };
+}
+
+StaffRefreshInModel staffRefreshInModelFromJson(String str) => StaffRefreshInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String staffRefreshInModelToJson(StaffRefreshInModel data) => json.encode(data.toJson());
+
+class StaffRefreshInModel {
+  final String refreshToken;
+
+  const StaffRefreshInModel({
+    required this.refreshToken,
+  });
+
+  factory StaffRefreshInModel.fromJson(Map<String, dynamic> json) => StaffRefreshInModel(
+        refreshToken: json['refresh_token'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'refresh_token': refreshToken,
+      };
+}
+
+StaffSessionOutModel staffSessionOutModelFromJson(String str) => StaffSessionOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String staffSessionOutModelToJson(StaffSessionOutModel data) => json.encode(data.toJson());
+
+class StaffSessionOutModel {
+  final String accessToken;
+  /// Seconds the access token works
+  final int expiresIn;
+  final String refreshToken;
+  /// Log in again after this, even when active
+  final DateTime sessionEndsAt;
+  final StaffOutModel staff;
+
+  const StaffSessionOutModel({
+    required this.accessToken,
+    required this.expiresIn,
+    required this.refreshToken,
+    required this.sessionEndsAt,
+    required this.staff,
+  });
+
+  factory StaffSessionOutModel.fromJson(Map<String, dynamic> json) => StaffSessionOutModel(
+        accessToken: json['access_token'] as String,
+        expiresIn: (json['expires_in'] as num).toInt(),
+        refreshToken: json['refresh_token'] as String,
+        sessionEndsAt: DateTime.parse(json['session_ends_at'] as String),
+        staff: StaffOutModel.fromJson(json['staff'] as Map<String, dynamic>),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'access_token': accessToken,
+        'expires_in': expiresIn,
+        'refresh_token': refreshToken,
+        'session_ends_at': sessionEndsAt.toIso8601String(),
+        'staff': staff.toJson(),
+      };
+}
+
+StaffSetupInModel staffSetupInModelFromJson(String str) => StaffSetupInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String staffSetupInModelToJson(StaffSetupInModel data) => json.encode(data.toJson());
+
+class StaffSetupInModel {
+  final String code;
+  final String password;
+  final String token;
+
+  const StaffSetupInModel({
+    required this.code,
+    required this.password,
+    required this.token,
+  });
+
+  factory StaffSetupInModel.fromJson(Map<String, dynamic> json) => StaffSetupInModel(
+        code: json['code'] as String,
+        password: json['password'] as String,
+        token: json['token'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'code': code,
+        'password': password,
+        'token': token,
+      };
+}
+
+StaffSetupInfoModel staffSetupInfoModelFromJson(String str) => StaffSetupInfoModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String staffSetupInfoModelToJson(StaffSetupInfoModel data) => json.encode(data.toJson());
+
+class StaffSetupInfoModel {
+  final String email;
+  /// True when this account was set up before (new password and phone)
+  final bool isReset;
+  final String name;
+  /// Show as a QR code
+  final String otpauthUri;
+  /// For typing into the authenticator by hand
+  final String secret;
+
+  const StaffSetupInfoModel({
+    required this.email,
+    required this.isReset,
+    required this.name,
+    required this.otpauthUri,
+    required this.secret,
+  });
+
+  factory StaffSetupInfoModel.fromJson(Map<String, dynamic> json) => StaffSetupInfoModel(
+        email: json['email'] as String,
+        isReset: json['is_reset'] as bool,
+        name: json['name'] as String,
+        otpauthUri: json['otpauth_uri'] as String,
+        secret: json['secret'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'is_reset': isReset,
+        'name': name,
+        'otpauth_uri': otpauthUri,
+        'secret': secret,
+      };
+}
+
+StaffSetupOutModel staffSetupOutModelFromJson(String str) => StaffSetupOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String staffSetupOutModelToJson(StaffSetupOutModel data) => json.encode(data.toJson());
+
+class StaffSetupOutModel {
+  final String accessToken;
+  /// Seconds the access token works
+  final int expiresIn;
+  /// Shown once. Each works one time instead of a code.
+  final List<String> recoveryCodes;
+  final String refreshToken;
+  /// Log in again after this, even when active
+  final DateTime sessionEndsAt;
+  final StaffOutModel staff;
+
+  const StaffSetupOutModel({
+    required this.accessToken,
+    required this.expiresIn,
+    required this.recoveryCodes,
+    required this.refreshToken,
+    required this.sessionEndsAt,
+    required this.staff,
+  });
+
+  factory StaffSetupOutModel.fromJson(Map<String, dynamic> json) => StaffSetupOutModel(
+        accessToken: json['access_token'] as String,
+        expiresIn: (json['expires_in'] as num).toInt(),
+        recoveryCodes: (json['recovery_codes'] as List).map((e) => e as String).toList(),
+        refreshToken: json['refresh_token'] as String,
+        sessionEndsAt: DateTime.parse(json['session_ends_at'] as String),
+        staff: StaffOutModel.fromJson(json['staff'] as Map<String, dynamic>),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'access_token': accessToken,
+        'expires_in': expiresIn,
+        'recovery_codes': recoveryCodes,
+        'refresh_token': refreshToken,
+        'session_ends_at': sessionEndsAt.toIso8601String(),
+        'staff': staff.toJson(),
       };
 }
 

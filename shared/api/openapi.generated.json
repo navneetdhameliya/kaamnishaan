@@ -60,6 +60,325 @@
         "title": "Acknowledgement",
         "type": "object"
       },
+      "AdminActivityRow": {
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "company_created",
+              "lead_demo",
+              "lead_contact",
+              "lead_newsletter",
+              "staff_joined"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "title": {
+            "description": "Company, person or ticket the event is about",
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "title",
+          "at"
+        ],
+        "title": "AdminActivityRow",
+        "type": "object"
+      },
+      "AdminAttentionRow": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "example": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "One company or lead to name",
+            "title": "Example"
+          },
+          "kind": {
+            "enum": [
+              "near_limit",
+              "past_due",
+              "trial_ending",
+              "new_leads"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "limit": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Limit"
+          },
+          "used": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Used"
+          }
+        },
+        "required": [
+          "kind",
+          "count"
+        ],
+        "title": "AdminAttentionRow",
+        "type": "object"
+      },
+      "AdminDashboardOut": {
+        "properties": {
+          "active_companies": {
+            "$ref": "#/components/schemas/AdminStat"
+          },
+          "activity": {
+            "items": {
+              "$ref": "#/components/schemas/AdminActivityRow"
+            },
+            "title": "Activity",
+            "type": "array"
+          },
+          "ai_cost_per_report_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ai Cost Per Report Usd"
+          },
+          "ai_cost_usd": {
+            "$ref": "#/components/schemas/AdminStat"
+          },
+          "attention": {
+            "items": {
+              "$ref": "#/components/schemas/AdminAttentionRow"
+            },
+            "title": "Attention",
+            "type": "array"
+          },
+          "days": {
+            "title": "Days",
+            "type": "integer"
+          },
+          "monthly_revenue": {
+            "description": "From the plans of paying companies (status active); no payments are taken yet",
+            "items": {
+              "$ref": "#/components/schemas/AdminMoney"
+            },
+            "title": "Monthly Revenue",
+            "type": "array"
+          },
+          "plan_mix": {
+            "items": {
+              "$ref": "#/components/schemas/AdminPlanMixRow"
+            },
+            "title": "Plan Mix",
+            "type": "array"
+          },
+          "reports_per_day": {
+            "items": {
+              "$ref": "#/components/schemas/AdminDayCount"
+            },
+            "title": "Reports Per Day",
+            "type": "array"
+          },
+          "reports_sent": {
+            "$ref": "#/components/schemas/AdminStat"
+          },
+          "since": {
+            "format": "date-time",
+            "title": "Since",
+            "type": "string"
+          },
+          "technicians": {
+            "$ref": "#/components/schemas/AdminStat"
+          },
+          "top_companies": {
+            "items": {
+              "$ref": "#/components/schemas/AdminTopCompany"
+            },
+            "title": "Top Companies",
+            "type": "array"
+          }
+        },
+        "required": [
+          "days",
+          "since",
+          "active_companies",
+          "technicians",
+          "reports_sent",
+          "ai_cost_usd",
+          "ai_cost_per_report_usd",
+          "monthly_revenue",
+          "reports_per_day",
+          "plan_mix",
+          "top_companies",
+          "attention",
+          "activity"
+        ],
+        "title": "AdminDashboardOut",
+        "type": "object"
+      },
+      "AdminDayCount": {
+        "properties": {
+          "ai_drafts": {
+            "title": "Ai Drafts",
+            "type": "integer"
+          },
+          "approved": {
+            "title": "Approved",
+            "type": "integer"
+          },
+          "day": {
+            "format": "date",
+            "title": "Day",
+            "type": "string"
+          }
+        },
+        "required": [
+          "day",
+          "approved",
+          "ai_drafts"
+        ],
+        "title": "AdminDayCount",
+        "type": "object"
+      },
+      "AdminMoney": {
+        "properties": {
+          "amount_minor": {
+            "title": "Amount Minor",
+            "type": "integer"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          }
+        },
+        "required": [
+          "currency",
+          "amount_minor"
+        ],
+        "title": "AdminMoney",
+        "type": "object"
+      },
+      "AdminPlanMixRow": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "companies": {
+            "title": "Companies",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "prices": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Prices",
+            "type": "object"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "prices",
+          "companies"
+        ],
+        "title": "AdminPlanMixRow",
+        "type": "object"
+      },
+      "AdminStat": {
+        "properties": {
+          "previous": {
+            "description": "Same length of time just before",
+            "title": "Previous",
+            "type": "number"
+          },
+          "value": {
+            "title": "Value",
+            "type": "number"
+          }
+        },
+        "required": [
+          "value",
+          "previous"
+        ],
+        "title": "AdminStat",
+        "type": "object"
+      },
+      "AdminTopCompany": {
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "plan": {
+            "title": "Plan",
+            "type": "string"
+          },
+          "reports": {
+            "title": "Reports",
+            "type": "integer"
+          },
+          "trade": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trade"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "trade",
+          "plan",
+          "reports"
+        ],
+        "title": "AdminTopCompany",
+        "type": "object"
+      },
       "AnswerIn": {
         "additionalProperties": false,
         "properties": {
@@ -10493,6 +10812,249 @@
         "title": "SourceReport",
         "type": "object"
       },
+      "StaffLoginIn": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "anyOf": [
+              {
+                "maxLength": 12,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "6 digits from the authenticator app",
+            "title": "Code"
+          },
+          "email": {
+            "format": "email",
+            "title": "Email",
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 256,
+            "title": "Password",
+            "type": "string"
+          },
+          "recovery_code": {
+            "anyOf": [
+              {
+                "maxLength": 16,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Instead of code: e.g. 7f3a-91c0",
+            "title": "Recovery Code"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "StaffLoginIn",
+        "type": "object"
+      },
+      "StaffOut": {
+        "properties": {
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "recovery_codes_left": {
+            "title": "Recovery Codes Left",
+            "type": "integer"
+          },
+          "role": {
+            "enum": [
+              "super_admin",
+              "admin",
+              "support"
+            ],
+            "title": "Role",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email",
+          "role",
+          "recovery_codes_left"
+        ],
+        "title": "StaffOut",
+        "type": "object"
+      },
+      "StaffRefreshIn": {
+        "additionalProperties": false,
+        "properties": {
+          "refresh_token": {
+            "maxLength": 200,
+            "title": "Refresh Token",
+            "type": "string"
+          }
+        },
+        "required": [
+          "refresh_token"
+        ],
+        "title": "StaffRefreshIn",
+        "type": "object"
+      },
+      "StaffSessionOut": {
+        "properties": {
+          "access_token": {
+            "title": "Access Token",
+            "type": "string"
+          },
+          "expires_in": {
+            "description": "Seconds the access token works",
+            "title": "Expires In",
+            "type": "integer"
+          },
+          "refresh_token": {
+            "title": "Refresh Token",
+            "type": "string"
+          },
+          "session_ends_at": {
+            "description": "Log in again after this, even when active",
+            "format": "date-time",
+            "title": "Session Ends At",
+            "type": "string"
+          },
+          "staff": {
+            "$ref": "#/components/schemas/StaffOut"
+          }
+        },
+        "required": [
+          "access_token",
+          "refresh_token",
+          "expires_in",
+          "session_ends_at",
+          "staff"
+        ],
+        "title": "StaffSessionOut",
+        "type": "object"
+      },
+      "StaffSetupIn": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "maxLength": 12,
+            "title": "Code",
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 256,
+            "title": "Password",
+            "type": "string"
+          },
+          "token": {
+            "maxLength": 1000,
+            "title": "Token",
+            "type": "string"
+          }
+        },
+        "required": [
+          "token",
+          "password",
+          "code"
+        ],
+        "title": "StaffSetupIn",
+        "type": "object"
+      },
+      "StaffSetupInfo": {
+        "properties": {
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "is_reset": {
+            "description": "True when this account was set up before (new password and phone)",
+            "title": "Is Reset",
+            "type": "boolean"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "otpauth_uri": {
+            "description": "Show as a QR code",
+            "title": "Otpauth Uri",
+            "type": "string"
+          },
+          "secret": {
+            "description": "For typing into the authenticator by hand",
+            "title": "Secret",
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "name",
+          "is_reset",
+          "secret",
+          "otpauth_uri"
+        ],
+        "title": "StaffSetupInfo",
+        "type": "object"
+      },
+      "StaffSetupOut": {
+        "properties": {
+          "access_token": {
+            "title": "Access Token",
+            "type": "string"
+          },
+          "expires_in": {
+            "description": "Seconds the access token works",
+            "title": "Expires In",
+            "type": "integer"
+          },
+          "recovery_codes": {
+            "description": "Shown once. Each works one time instead of a code.",
+            "items": {
+              "type": "string"
+            },
+            "title": "Recovery Codes",
+            "type": "array"
+          },
+          "refresh_token": {
+            "title": "Refresh Token",
+            "type": "string"
+          },
+          "session_ends_at": {
+            "description": "Log in again after this, even when active",
+            "format": "date-time",
+            "title": "Session Ends At",
+            "type": "string"
+          },
+          "staff": {
+            "$ref": "#/components/schemas/StaffOut"
+          }
+        },
+        "required": [
+          "access_token",
+          "refresh_token",
+          "expires_in",
+          "session_ends_at",
+          "staff",
+          "recovery_codes"
+        ],
+        "title": "StaffSetupOut",
+        "type": "object"
+      },
       "StartBody": {
         "additionalProperties": false,
         "properties": {
@@ -12372,6 +12934,285 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/v1/admin/auth/login": {
+      "post": {
+        "description": "Email, password and the 6-digit code from the authenticator app (or one recovery code).\nFive wrong tries lock the email for 15 minutes; the error never says which part was wrong.",
+        "operationId": "login_api_v1_admin_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StaffLoginIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffSessionOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Login",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/auth/logout": {
+      "post": {
+        "operationId": "logout_api_v1_admin_auth_logout_post",
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Logout",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/auth/refresh": {
+      "post": {
+        "description": "New tokens; the old refresh token stops working. A staff session ends 12 hours after log in.",
+        "operationId": "refresh_api_v1_admin_auth_refresh_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StaffRefreshIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffSessionOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Refresh",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/auth/setup": {
+      "get": {
+        "description": "What the setup page needs: the authenticator secret (and QR text) for this link.",
+        "operationId": "setup_info_api_v1_admin_auth_setup_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "title": "Token",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffSetupInfo"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Setup Info",
+        "tags": [
+          "admin"
+        ]
+      },
+      "post": {
+        "description": "Choose a password and confirm the first code. Returns 8 recovery codes, shown only once.",
+        "operationId": "setup_api_v1_admin_auth_setup_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StaffSetupIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffSetupOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Setup",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/dashboard": {
+      "get": {
+        "operationId": "dashboard_api_v1_admin_dashboard_get",
+        "parameters": [
+          {
+            "description": "7, 30 or 90",
+            "in": "query",
+            "name": "days",
+            "required": false,
+            "schema": {
+              "default": 30,
+              "description": "7, 30 or 90",
+              "title": "Days",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminDashboardOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Dashboard",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/me": {
+      "get": {
+        "operationId": "me_api_v1_admin_me_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Me",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/api/v1/assistant": {
       "get": {
         "description": "My recent questions and answers, and how many of this month's questions are used.",

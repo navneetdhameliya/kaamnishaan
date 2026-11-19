@@ -43,9 +43,12 @@ from app.models.reviews import (
     ReviewSettings,
 )
 from app.models.sharing import Message, ReportIssue, ShareLink
+from app.models.staff import StaffSession, StaffUser
 from app.models.work import Customer, CustomerContact, Equipment, Job, JobEvent, Site
 
 __all__ = [
+    "StaffSession",
+    "StaffUser",
     "AssistantMessage",
     "Lead",
     "AIUsage",

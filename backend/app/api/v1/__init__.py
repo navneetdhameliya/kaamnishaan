@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 
 from app.api.v1.routes import (
+    admin,
     assistant,
     auth,
     billing,
@@ -26,6 +27,7 @@ from app.api.v1.routes import (
 router = APIRouter(prefix="/api/v1")
 for r in (
     health,
+    admin,
     public,
     public_reports,
     leads,
