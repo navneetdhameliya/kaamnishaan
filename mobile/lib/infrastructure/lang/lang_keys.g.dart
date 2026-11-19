@@ -5806,4 +5806,86 @@ abstract final class LangKeys {
   static const adminUsNotFound = 'admin.us.not_found';
   /// View all
   static const adminCoViewAll = 'admin.co.view_all';
+  /// Website leads
+  static const adminNavLeads = 'admin.nav.leads';
+  /// New
+  static const adminLdTabNew = 'admin.ld.tab.new';
+  /// Demos
+  static const adminLdTabDemo = 'admin.ld.tab.demo';
+  /// Messages
+  static const adminLdTabContact = 'admin.ld.tab.contact';
+  /// Newsletter
+  static const adminLdTabNewsletter = 'admin.ld.tab.newsletter';
+  /// Handled
+  static const adminLdTabDone = 'admin.ld.tab.done';
+  /// Leads
+  static const adminLdTabs = 'admin.ld.tabs';
+  /// Search name, email, company, message or KN number
+  static const adminLdSearch = 'admin.ld.search';
+  /// Demo
+  static const adminLdKindDemo = 'admin.ld.kind.demo';
+  /// Message
+  static const adminLdKindContact = 'admin.ld.kind.contact';
+  /// Newsletter
+  static const adminLdKindNewsletter = 'admin.ld.kind.newsletter';
+  /// New
+  static const adminLdStNew = 'admin.ld.st.new';
+  /// Contacted
+  static const adminLdStContacted = 'admin.ld.st.contacted';
+  /// Done
+  static const adminLdStDone = 'admin.ld.st.done';
+  /// Spam
+  static const adminLdStSpam = 'admin.ld.st.spam';
+  /// Demo {when}
+  static const adminLdDemoAt = 'admin.ld.demo_at';
+  /// Export emails (CSV)
+  static const adminLdExport = 'admin.ld.export';
+  /// Nothing here.
+  static const adminLdEmpty = 'admin.ld.empty';
+  /// All caught up. New demo bookings and messages from the website appear here.
+  static const adminLdEmptyNew = 'admin.ld.empty_new';
+  /// Choose a lead to see it here.
+  static const adminLdPick = 'admin.ld.pick';
+  /// All leads
+  static const adminLdBack = 'admin.ld.back';
+  /// Email
+  static const adminLdEmail = 'admin.ld.email';
+  /// Phone
+  static const adminLdPhone = 'admin.ld.phone';
+  /// Company
+  static const adminLdCompany = 'admin.ld.company';
+  /// Team size
+  static const adminLdTeam = 'admin.ld.team';
+  /// Trade
+  static const adminLdTrade = 'admin.ld.trade';
+  /// Topic
+  static const adminLdTopic = 'admin.ld.topic';
+  /// Demo time
+  static const adminLdWhen = 'admin.ld.when';
+  /// Website language
+  static const adminLdLang = 'admin.ld.lang';
+  /// Received
+  static const adminLdReceived = 'admin.ld.received';
+  /// {n} people
+  static const adminLdPeople = 'admin.ld.people';
+  /// Already signed up: {name}
+  static const adminLdSignedUp = 'admin.ld.signed_up';
+  /// Message
+  static const adminLdMessage = 'admin.ld.message';
+  /// Status
+  static const adminLdStatus = 'admin.ld.status';
+  /// Team note (only staff see this)
+  static const adminLdNote = 'admin.ld.note';
+  /// Save
+  static const adminLdSave = 'admin.ld.save';
+  /// Saved
+  static const adminLdSaved = 'admin.ld.saved';
+  /// Last changed by {name} · {when}
+  static const adminLdHandled = 'admin.ld.handled';
+  /// Reply by email
+  static const adminLdReply = 'admin.ld.reply';
+  /// Call
+  static const adminLdCall = 'admin.ld.call';
+  /// This lead doesn’t exist any more.
+  static const adminLdNotFound = 'admin.ld.not_found';
 }

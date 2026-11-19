@@ -523,6 +523,279 @@ class AdminDayCountModel {
       };
 }
 
+AdminLeadCountsModel adminLeadCountsModelFromJson(String str) => AdminLeadCountsModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminLeadCountsModelToJson(AdminLeadCountsModel data) => json.encode(data.toJson());
+
+class AdminLeadCountsModel {
+  final int contact;
+  final int demo;
+  /// Contacted, done or spam
+  final int done;
+  /// Demos and messages not handled yet
+  final int newValue;
+  final int newsletter;
+
+  const AdminLeadCountsModel({
+    required this.contact,
+    required this.demo,
+    required this.done,
+    required this.newValue,
+    required this.newsletter,
+  });
+
+  factory AdminLeadCountsModel.fromJson(Map<String, dynamic> json) => AdminLeadCountsModel(
+        contact: (json['contact'] as num).toInt(),
+        demo: (json['demo'] as num).toInt(),
+        done: (json['done'] as num).toInt(),
+        newValue: (json['new'] as num).toInt(),
+        newsletter: (json['newsletter'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'contact': contact,
+        'demo': demo,
+        'done': done,
+        'new': newValue,
+        'newsletter': newsletter,
+      };
+}
+
+AdminLeadDetailModel adminLeadDetailModelFromJson(String str) => AdminLeadDetailModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminLeadDetailModelToJson(AdminLeadDetailModel data) => json.encode(data.toJson());
+
+class AdminLeadDetailModel {
+  final String? company;
+  /// A KaamNishaan company whose owner has this email, if any
+  final String? companyId;
+  final String? companyName;
+  final DateTime createdAt;
+  final String email;
+  final DateTime? handledAt;
+  /// Staff name
+  final String? handledBy;
+  final String id;
+  /// One of: demo, contact, newsletter
+  final String kind;
+  final String lang;
+  final String? message;
+  final String name;
+  final String? note;
+  /// Shown as KN-20001
+  final int number;
+  final String? phone;
+  /// Start of the message
+  final String? preview;
+  /// Demo time
+  final DateTime? startsAt;
+  /// One of: new, contacted, done, spam
+  final String status;
+  final String? teamSize;
+  final String? topic;
+  /// Industry name in the asked language
+  final String? trade;
+
+  const AdminLeadDetailModel({
+    this.company,
+    this.companyId,
+    this.companyName,
+    required this.createdAt,
+    required this.email,
+    this.handledAt,
+    this.handledBy,
+    required this.id,
+    required this.kind,
+    required this.lang,
+    this.message,
+    required this.name,
+    this.note,
+    required this.number,
+    this.phone,
+    this.preview,
+    this.startsAt,
+    required this.status,
+    this.teamSize,
+    this.topic,
+    this.trade,
+  });
+
+  factory AdminLeadDetailModel.fromJson(Map<String, dynamic> json) => AdminLeadDetailModel(
+        company: json['company'] as String?,
+        companyId: json['company_id'] as String?,
+        companyName: json['company_name'] as String?,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        email: json['email'] as String,
+        handledAt: json['handled_at'] == null ? null : DateTime.parse(json['handled_at'] as String),
+        handledBy: json['handled_by'] as String?,
+        id: json['id'] as String,
+        kind: json['kind'] as String,
+        lang: json['lang'] as String,
+        message: json['message'] as String?,
+        name: json['name'] as String,
+        note: json['note'] as String?,
+        number: (json['number'] as num).toInt(),
+        phone: json['phone'] as String?,
+        preview: json['preview'] as String?,
+        startsAt: json['starts_at'] == null ? null : DateTime.parse(json['starts_at'] as String),
+        status: json['status'] as String,
+        teamSize: json['team_size'] as String?,
+        topic: json['topic'] as String?,
+        trade: json['trade'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'company': company,
+        'company_id': companyId,
+        'company_name': companyName,
+        'created_at': createdAt.toIso8601String(),
+        'email': email,
+        'handled_at': handledAt?.toIso8601String(),
+        'handled_by': handledBy,
+        'id': id,
+        'kind': kind,
+        'lang': lang,
+        'message': message,
+        'name': name,
+        'note': note,
+        'number': number,
+        'phone': phone,
+        'preview': preview,
+        'starts_at': startsAt?.toIso8601String(),
+        'status': status,
+        'team_size': teamSize,
+        'topic': topic,
+        'trade': trade,
+      };
+}
+
+AdminLeadListModel adminLeadListModelFromJson(String str) => AdminLeadListModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminLeadListModelToJson(AdminLeadListModel data) => json.encode(data.toJson());
+
+class AdminLeadListModel {
+  final AdminLeadCountsModel counts;
+  final List<AdminLeadRowModel> items;
+  final int page;
+  final int pageSize;
+  final int total;
+
+  const AdminLeadListModel({
+    required this.counts,
+    required this.items,
+    required this.page,
+    required this.pageSize,
+    required this.total,
+  });
+
+  factory AdminLeadListModel.fromJson(Map<String, dynamic> json) => AdminLeadListModel(
+        counts: AdminLeadCountsModel.fromJson(json['counts'] as Map<String, dynamic>),
+        items: (json['items'] as List).map((e) => AdminLeadRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        page: (json['page'] as num).toInt(),
+        pageSize: (json['page_size'] as num).toInt(),
+        total: (json['total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'counts': counts.toJson(),
+        'items': items.map((e) => e.toJson()).toList(),
+        'page': page,
+        'page_size': pageSize,
+        'total': total,
+      };
+}
+
+AdminLeadRowModel adminLeadRowModelFromJson(String str) => AdminLeadRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminLeadRowModelToJson(AdminLeadRowModel data) => json.encode(data.toJson());
+
+class AdminLeadRowModel {
+  final String? company;
+  final DateTime createdAt;
+  final String email;
+  final String id;
+  /// One of: demo, contact, newsletter
+  final String kind;
+  final String name;
+  /// Shown as KN-20001
+  final int number;
+  /// Start of the message
+  final String? preview;
+  /// Demo time
+  final DateTime? startsAt;
+  /// One of: new, contacted, done, spam
+  final String status;
+  final String? topic;
+
+  const AdminLeadRowModel({
+    this.company,
+    required this.createdAt,
+    required this.email,
+    required this.id,
+    required this.kind,
+    required this.name,
+    required this.number,
+    this.preview,
+    this.startsAt,
+    required this.status,
+    this.topic,
+  });
+
+  factory AdminLeadRowModel.fromJson(Map<String, dynamic> json) => AdminLeadRowModel(
+        company: json['company'] as String?,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        email: json['email'] as String,
+        id: json['id'] as String,
+        kind: json['kind'] as String,
+        name: json['name'] as String,
+        number: (json['number'] as num).toInt(),
+        preview: json['preview'] as String?,
+        startsAt: json['starts_at'] == null ? null : DateTime.parse(json['starts_at'] as String),
+        status: json['status'] as String,
+        topic: json['topic'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'company': company,
+        'created_at': createdAt.toIso8601String(),
+        'email': email,
+        'id': id,
+        'kind': kind,
+        'name': name,
+        'number': number,
+        'preview': preview,
+        'starts_at': startsAt?.toIso8601String(),
+        'status': status,
+        'topic': topic,
+      };
+}
+
+AdminLeadUpdateModel adminLeadUpdateModelFromJson(String str) => AdminLeadUpdateModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminLeadUpdateModelToJson(AdminLeadUpdateModel data) => json.encode(data.toJson());
+
+class AdminLeadUpdateModel {
+  /// Replaces the note; empty clears it
+  final String? note;
+  /// One of: new, contacted, done, spam
+  final String? status;
+
+  const AdminLeadUpdateModel({
+    this.note,
+    this.status,
+  });
+
+  factory AdminLeadUpdateModel.fromJson(Map<String, dynamic> json) => AdminLeadUpdateModel(
+        note: json['note'] as String?,
+        status: json['status'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'note': note,
+        'status': status,
+      };
+}
+
 AdminMoneyModel adminMoneyModelFromJson(String str) => AdminMoneyModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminMoneyModelToJson(AdminMoneyModel data) => json.encode(data.toJson());

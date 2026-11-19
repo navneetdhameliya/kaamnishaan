@@ -1,8 +1,9 @@
 """Website leads before anyone has an account: W03 demos, W05 contact messages, W25 newsletter emails."""
 
+import uuid
 from datetime import datetime
 
-from sqlalchemy import DateTime, Identity, Integer, String, Text
+from sqlalchemy import DateTime, ForeignKey, Identity, Integer, String, Text
 from sqlalchemy import text as sql
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -27,4 +28,8 @@ class Lead(IdMixin, TimestampMixin, Base):
     starts_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), index=True)
     lang: Mapped[str] = mapped_column(String(5), default="en", server_default="en")
     ip: Mapped[str | None] = mapped_column(String(64))
-    status: Mapped[str] = mapped_column(String(16), default="new", server_default=sql("'new'"))  # new, done
+    # new, contacted, done, spam (A-leads; staff change it in the admin panel)
+    status: Mapped[str] = mapped_column(String(16), default="new", server_default=sql("'new'"))
+    note: Mapped[str | None] = mapped_column(Text)  # staff only, never shown to the person
+    handled_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("staff_users.id", ondelete="SET NULL"))
+    handled_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
