@@ -5888,4 +5888,190 @@ abstract final class LangKeys {
   static const adminLdCall = 'admin.ld.call';
   /// This lead doesn’t exist any more.
   static const adminLdNotFound = 'admin.ld.not_found';
+  /// Company created
+  static const adminAuACompanyCreated = 'admin.au.a.company.created';
+  /// Company edited
+  static const adminAuACompanyUpdated = 'admin.au.a.company.updated';
+  /// Settings changed
+  static const adminAuACompanySettingsChanged = 'admin.au.a.company.settings_changed';
+  /// Customer added
+  static const adminAuACustomerCreated = 'admin.au.a.customer.created';
+  /// Customer edited
+  static const adminAuACustomerUpdated = 'admin.au.a.customer.updated';
+  /// Email check sent
+  static const adminAuAEmailVerifySent = 'admin.au.a.email.verify_sent';
+  /// Password reset sent
+  static const adminAuAPasswordResetSent = 'admin.au.a.password.reset_sent';
+  /// Password changed
+  static const adminAuAPasswordReset = 'admin.au.a.password.reset';
+  /// Old sign-in reused
+  static const adminAuASessionReuseDetected = 'admin.au.a.session.reuse_detected';
+  /// Photo deleted
+  static const adminAuAEvidenceDeleted = 'admin.au.a.evidence.deleted';
+  /// Voice note deleted
+  static const adminAuAVoiceNoteDeleted = 'admin.au.a.voice_note.deleted';
+  /// Checklist created
+  static const adminAuAChecklistCreated = 'admin.au.a.checklist.created';
+  /// Job created
+  static const adminAuAJobCreated = 'admin.au.a.job.created';
+  /// Job edited
+  static const adminAuAJobUpdated = 'admin.au.a.job.updated';
+  /// Job assigned
+  static const adminAuAJobAssigned = 'admin.au.a.job.assigned';
+  /// Job cancelled
+  static const adminAuAJobCancelled = 'admin.au.a.job.cancelled';
+  /// Job deleted
+  static const adminAuAJobDeleted = 'admin.au.a.job.deleted';
+  /// Report sent for review
+  static const adminAuAReportSubmitted = 'admin.au.a.report.submitted';
+  /// Report approved
+  static const adminAuAReportApproved = 'admin.au.a.report.approved';
+  /// Changes asked
+  static const adminAuAReportChangesRequested = 'admin.au.a.report.changes_requested';
+  /// Report sent
+  static const adminAuAReportSent = 'admin.au.a.report.sent';
+  /// Customer confirmed report
+  static const adminAuAReportAcknowledged = 'admin.au.a.report.acknowledged';
+  /// Report link made
+  static const adminAuAShareLinkCreated = 'admin.au.a.share_link.created';
+  /// Report link stopped
+  static const adminAuAShareLinkRevoked = 'admin.au.a.share_link.revoked';
+  /// Review asked
+  static const adminAuAReviewRequested = 'admin.au.a.review.requested';
+  /// Review replied
+  static const adminAuAReviewReplied = 'admin.au.a.review.replied';
+  /// Review settings changed
+  static const adminAuAReviewSettingsUpdated = 'admin.au.a.review_settings.updated';
+  /// Person invited
+  static const adminAuATeamInvited = 'admin.au.a.team.invited';
+  /// Joined the team
+  static const adminAuATeamJoined = 'admin.au.a.team.joined';
+  /// Invite declined
+  static const adminAuATeamInviteDeclined = 'admin.au.a.team.invite_declined';
+  /// Invite cancelled
+  static const adminAuATeamInviteRevoked = 'admin.au.a.team.invite_revoked';
+  /// Removed from team
+  static const adminAuATeamRemoved = 'admin.au.a.team.removed';
+  /// Role changed
+  static const adminAuATeamRoleChanged = 'admin.au.a.team.role_changed';
+  /// Admin logged in
+  static const adminAuAStaffLogin = 'admin.au.a.staff.login';
+  /// Admin log in failed
+  static const adminAuAStaffLoginFailed = 'admin.au.a.staff.login_failed';
+  /// Admin logged out
+  static const adminAuAStaffLogout = 'admin.au.a.staff.logout';
+  /// Staff invited
+  static const adminAuAStaffInvited = 'admin.au.a.staff.invited';
+  /// Staff set up account
+  static const adminAuAStaffSetupDone = 'admin.au.a.staff.setup_done';
+  /// Staff account reset
+  static const adminAuAStaffReset = 'admin.au.a.staff.reset';
+  /// Old admin sign-in reused
+  static const adminAuAStaffSessionReuse = 'admin.au.a.staff.session_reuse';
+  /// Data exported
+  static const adminAuAStaffExport = 'admin.au.a.staff.export';
+  /// Person turned off
+  static const adminAuAStaffUserDisabled = 'admin.au.a.staff.user_disabled';
+  /// Person turned back on
+  static const adminAuAStaffUserEnabled = 'admin.au.a.staff.user_enabled';
+  /// Signed out everywhere
+  static const adminAuAStaffUserSignedOut = 'admin.au.a.staff.user_signed_out';
+  /// Lead updated
+  static const adminAuAStaffLeadUpdated = 'admin.au.a.staff.lead_updated';
+  /// Search person, action, target or IP
+  static const adminAuSearch = 'admin.au.search';
+  /// Actor
+  static const adminAuFActor = 'admin.au.f_actor';
+  /// Action
+  static const adminAuFAction = 'admin.au.f_action';
+  /// Date
+  static const adminAuFDate = 'admin.au.f_date';
+  /// KaamNishaan staff
+  static const adminAuActorStaff = 'admin.au.actor.staff';
+  /// App users
+  static const adminAuActorUser = 'admin.au.actor.user';
+  /// System
+  static const adminAuActorSystem = 'admin.au.actor.system';
+  /// Log in and security
+  static const adminAuGSecurity = 'admin.au.g.security';
+  /// Admin actions
+  static const adminAuGAdmin = 'admin.au.g.admin';
+  /// Companies
+  static const adminAuGCompany = 'admin.au.g.company';
+  /// Teams
+  static const adminAuGTeam = 'admin.au.g.team';
+  /// Jobs and customers
+  static const adminAuGJobs = 'admin.au.g.jobs';
+  /// Reports and reviews
+  static const adminAuGReports = 'admin.au.g.reports';
+  /// Last 24 hours
+  static const adminAuD1 = 'admin.au.d.1';
+  /// Last 7 days
+  static const adminAuD7 = 'admin.au.d.7';
+  /// Last 30 days
+  static const adminAuD30 = 'admin.au.d.30';
+  /// Last 90 days
+  static const adminAuD90 = 'admin.au.d.90';
+  /// Last 12 months
+  static const adminAuD365 = 'admin.au.d.365';
+  /// Export CSV
+  static const adminAuExport = 'admin.au.export';
+  /// Time
+  static const adminAuCTime = 'admin.au.c_time';
+  /// Actor
+  static const adminAuCActor = 'admin.au.c_actor';
+  /// Action
+  static const adminAuCAction = 'admin.au.c_action';
+  /// Target
+  static const adminAuCTarget = 'admin.au.c_target';
+  /// Company
+  static const adminAuCCompany = 'admin.au.c_company';
+  /// IP
+  static const adminAuCIp = 'admin.au.c_ip';
+  /// System
+  static const adminAuSystem = 'admin.au.system';
+  /// Automatic
+  static const adminAuSystemSub = 'admin.au.system_sub';
+  /// Unknown
+  static const adminAuUnknown = 'admin.au.unknown';
+  /// No account with this email
+  static const adminAuUnknownSub = 'admin.au.unknown_sub';
+  /// Platform
+  static const adminAuPlatform = 'admin.au.platform';
+  /// Details
+  static const adminAuDetails = 'admin.au.details';
+  /// Show details
+  static const adminAuShow = 'admin.au.show';
+  /// No more details were saved.
+  static const adminAuNoDetails = 'admin.au.no_details';
+  /// Full IP
+  static const adminAuFullIp = 'admin.au.full_ip';
+  /// Nothing was recorded for these filters.
+  static const adminAuEmpty = 'admin.au.empty';
+  /// Entries can’t be changed or deleted.
+  static const adminAuNote = 'admin.au.note';
+  /// Companies list
+  static const adminAuTCompanies = 'admin.au.t.companies';
+  /// Audit log
+  static const adminAuTAuditLogs = 'admin.au.t.audit_logs';
+  /// Newsletter list
+  static const adminAuTNewsletter = 'admin.au.t.newsletter';
+  /// Sign-in
+  static const adminAuTSession = 'admin.au.t.session';
+  /// Admin sign-in
+  static const adminAuTStaffSession = 'admin.au.t.staff_session';
+  /// Photo
+  static const adminAuTEvidence = 'admin.au.t.evidence';
+  /// Voice note
+  static const adminAuTVoiceNote = 'admin.au.t.voice_note';
+  /// Review
+  static const adminAuTReview = 'admin.au.t.review';
+  /// Checklist
+  static const adminAuTChecklistTemplate = 'admin.au.t.checklist_template';
+  /// Audit log
+  static const adminAuAuditLink = 'admin.au.audit_link';
+  /// Command line
+  static const adminAuViaCommandLine = 'admin.au.via.command_line';
+  /// Server start
+  static const adminAuViaStartUp = 'admin.au.via.start_up';
 }

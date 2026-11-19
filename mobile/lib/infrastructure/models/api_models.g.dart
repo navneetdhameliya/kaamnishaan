@@ -121,6 +121,148 @@ class AdminAttentionRowModel {
       };
 }
 
+AdminAuditActorModel adminAuditActorModelFromJson(String str) => AdminAuditActorModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAuditActorModelToJson(AdminAuditActorModel data) => json.encode(data.toJson());
+
+class AdminAuditActorModel {
+  final String? id;
+  /// unknown: a failed staff log in with an email that has no account
+  /// One of: staff, user, system, unknown
+  final String kind;
+  final String? name;
+  /// Staff role, or the app role at the time (owner, manager, technician)
+  final String? role;
+
+  const AdminAuditActorModel({
+    this.id,
+    required this.kind,
+    this.name,
+    this.role,
+  });
+
+  factory AdminAuditActorModel.fromJson(Map<String, dynamic> json) => AdminAuditActorModel(
+        id: json['id'] as String?,
+        kind: json['kind'] as String,
+        name: json['name'] as String?,
+        role: json['role'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'kind': kind,
+        'name': name,
+        'role': role,
+      };
+}
+
+AdminAuditListModel adminAuditListModelFromJson(String str) => AdminAuditListModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAuditListModelToJson(AdminAuditListModel data) => json.encode(data.toJson());
+
+class AdminAuditListModel {
+  final AdminOptionModel? company;
+  final List<AdminAuditRowModel> items;
+  final int page;
+  final int pageSize;
+  final int total;
+
+  const AdminAuditListModel({
+    this.company,
+    required this.items,
+    required this.page,
+    required this.pageSize,
+    required this.total,
+  });
+
+  factory AdminAuditListModel.fromJson(Map<String, dynamic> json) => AdminAuditListModel(
+        company: json['company'] == null ? null : AdminOptionModel.fromJson(json['company'] as Map<String, dynamic>),
+        items: (json['items'] as List).map((e) => AdminAuditRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        page: (json['page'] as num).toInt(),
+        pageSize: (json['page_size'] as num).toInt(),
+        total: (json['total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'company': company?.toJson(),
+        'items': items.map((e) => e.toJson()).toList(),
+        'page': page,
+        'page_size': pageSize,
+        'total': total,
+      };
+}
+
+AdminAuditRowModel adminAuditRowModelFromJson(String str) => AdminAuditRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAuditRowModelToJson(AdminAuditRowModel data) => json.encode(data.toJson());
+
+class AdminAuditRowModel {
+  final String action;
+  final AdminAuditActorModel actor;
+  final DateTime at;
+  /// e.g. new → contacted, when the entry has one
+  final String? change;
+  final String? company;
+  final String? companyId;
+  final Map<String, dynamic> data;
+  /// One of: security, admin, company, team, jobs, reports, other
+  final String group;
+  final String id;
+  final String? ip;
+  /// Readable: a name, KN-20004, J-2231, R-1042 …
+  final String? target;
+  final String? targetId;
+  final String? targetType;
+
+  const AdminAuditRowModel({
+    required this.action,
+    required this.actor,
+    required this.at,
+    this.change,
+    this.company,
+    this.companyId,
+    required this.data,
+    required this.group,
+    required this.id,
+    this.ip,
+    this.target,
+    this.targetId,
+    this.targetType,
+  });
+
+  factory AdminAuditRowModel.fromJson(Map<String, dynamic> json) => AdminAuditRowModel(
+        action: json['action'] as String,
+        actor: AdminAuditActorModel.fromJson(json['actor'] as Map<String, dynamic>),
+        at: DateTime.parse(json['at'] as String),
+        change: json['change'] as String?,
+        company: json['company'] as String?,
+        companyId: json['company_id'] as String?,
+        data: Map<String, dynamic>.from(json['data'] as Map),
+        group: json['group'] as String,
+        id: json['id'] as String,
+        ip: json['ip'] as String?,
+        target: json['target'] as String?,
+        targetId: json['target_id'] as String?,
+        targetType: json['target_type'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'action': action,
+        'actor': actor.toJson(),
+        'at': at.toIso8601String(),
+        'change': change,
+        'company': company,
+        'company_id': companyId,
+        'data': data,
+        'group': group,
+        'id': id,
+        'ip': ip,
+        'target': target,
+        'target_id': targetId,
+        'target_type': targetType,
+      };
+}
+
 AdminCompanyCountsModel adminCompanyCountsModelFromJson(String str) => AdminCompanyCountsModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminCompanyCountsModelToJson(AdminCompanyCountsModel data) => json.encode(data.toJson());

@@ -24,11 +24,13 @@ from app.services import staff  # noqa: E402
 async def main(args: argparse.Namespace) -> None:
     async with SessionLocal() as db:
         if args.cmd == "invite":
-            person, link = await staff.invite(db, email=args.email, name=args.name, role=args.role)
+            person, link = await staff.invite(
+                db, email=args.email, name=args.name, role=args.role, via="command_line"
+            )
         else:
             person = await staff.get_by_email(db, args.email)
             if args.cmd == "reset":
-                link = await staff.issue_setup_link(db, person)
+                link = await staff.issue_setup_link(db, person, via="command_line")
             elif person.status != "invited":
                 sys.exit(
                     f"{person.email} has already set up. Use reset for a new password and authenticator."

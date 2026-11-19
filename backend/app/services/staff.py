@@ -52,7 +52,9 @@ def staff_out(s: StaffUser) -> StaffOut:
 
 
 # ---- setup links ------------------------------------------------------------------------------------
-async def issue_setup_link(db: AsyncSession, staff: StaffUser, *, by: uuid.UUID | None = None) -> str:
+async def issue_setup_link(
+    db: AsyncSession, staff: StaffUser, *, by: uuid.UUID | None = None, via: str | None = None
+) -> str:
     """Start (or restart) setting up: clears the password, the authenticator and the recovery codes,
     ends every session, and makes older setup links stop working."""
     reset = staff.password_hash is not None
@@ -68,7 +70,12 @@ async def issue_setup_link(db: AsyncSession, staff: StaffUser, *, by: uuid.UUID 
         .values(revoked_at=now())
     )
     await audit.record(
-        db, "staff.reset" if reset else "staff.invited", staff_id=by, target_type="staff", target_id=staff.id
+        db,
+        "staff.reset" if reset else "staff.invited",
+        staff_id=by,
+        target_type="staff",
+        target_id=staff.id,
+        data={"via": via} if via else None,
     )
     await db.flush()
     return setup_link(staff)
@@ -82,14 +89,16 @@ def setup_link(staff: StaffUser) -> str:
     return f"{get_settings().admin_url.rstrip('/')}/setup?token={token}"
 
 
-async def invite(db: AsyncSession, *, email: str, name: str, role: str = "admin") -> tuple[StaffUser, str]:
+async def invite(
+    db: AsyncSession, *, email: str, name: str, role: str = "admin", via: str | None = None
+) -> tuple[StaffUser, str]:
     email = email.strip().lower()
     staff = (await db.execute(select(StaffUser).where(StaffUser.email == email))).scalar_one_or_none()
     if staff is None:
         staff = StaffUser(email=email, name=name.strip(), role=role, status="invited")
         db.add(staff)
         await db.flush()
-    link = await issue_setup_link(db, staff)
+    link = await issue_setup_link(db, staff, via=via)
     return staff, link
 
 
@@ -305,7 +314,7 @@ async def bootstrap() -> None:
             supers = await db.scalar(select(func.count()).where(StaffUser.role == "super_admin"))
             if supers:
                 return
-            staff, link = await invite(db, email=email, name=s.admin_name, role="super_admin")
+            staff, link = await invite(db, email=email, name=s.admin_name, role="super_admin", via="start_up")
         elif staff.status == "invited" and staff.role == "super_admin":
             link = setup_link(staff)  # the API sleeps and restarts; earlier links keep working
         else:

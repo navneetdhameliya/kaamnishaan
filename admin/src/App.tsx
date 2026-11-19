@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { rememberLang, startLang, translator, type Lang } from './lib/i18n';
 import { session } from './lib/session';
 import type { StaffSession } from './lib/types';
+import { AuditLogs } from './pages/AuditLogs';
 import { Companies } from './pages/Companies';
 import { CompanyDetail } from './pages/CompanyDetail';
 import { Dashboard, RangeSelect, RANGES, type Range } from './pages/Dashboard';
@@ -64,6 +65,7 @@ export default function App() {
   else if (nav.key === 'dashboard') page = <Dashboard t={t} lang={lang} days={days} />;
   else if (companyId) page = <CompanyDetail key={companyId} t={t} lang={lang} id={companyId} onName={onName} />;
   else if (nav.key === 'companies') page = <Companies key={path} t={t} lang={lang} />;
+  else if (nav.key === 'audit') page = <AuditLogs key="audit" t={t} lang={lang} />;
   else if (nav.key === 'leads') page = <Leads key="leads" t={t} lang={lang} id={sub} />;
   else if (userId) page = <UserDetail key={userId} t={t} lang={lang} id={userId} onName={onName} />;
   else page = <Users key={path} t={t} lang={lang} />;

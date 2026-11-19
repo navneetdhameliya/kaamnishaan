@@ -217,3 +217,27 @@ export interface LeadDetail extends LeadRow {
   company_id: string | null;
   company_name: string | null;
 }
+
+export type AuditGroup = 'security' | 'admin' | 'company' | 'team' | 'jobs' | 'reports' | 'other';
+export interface AuditRow {
+  id: string;
+  at: string;
+  actor: { kind: 'staff' | 'user' | 'system' | 'unknown'; id: string | null; name: string | null; role: string | null };
+  action: string;
+  group: AuditGroup;
+  target_type: string | null;
+  target_id: string | null;
+  target: string | null;
+  change: string | null;
+  company_id: string | null;
+  company: string | null;
+  ip: string | null;
+  data: Record<string, unknown>;
+}
+export interface AuditList {
+  items: AuditRow[];
+  total: number;
+  page: number;
+  page_size: number;
+  company: Option | null;
+}

@@ -199,4 +199,6 @@ class AuditLog(IdMixin, Base):
     target_id: Mapped[str | None] = mapped_column(String(64))
     data: Mapped[dict] = mapped_column(JSONB, default=dict, server_default=text("'{}'::jsonb"))
     ip: Mapped[str | None] = mapped_column(INET)
-    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=text("now()"))
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True), server_default=text("now()"), index=True
+    )  # A31 sorts and filters by time
