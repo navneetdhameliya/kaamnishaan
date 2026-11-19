@@ -8,9 +8,10 @@ from fastapi import APIRouter, Depends, Query, Request, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import Staff, client_ip, get_db, get_staff
-from app.core.errors import AppError
+from app.core.errors import AppError, Forbidden
 from app.core.security import now
 from app.schemas.admin_companies import AdminCompanyDetail, AdminCompanyList
+from app.schemas.admin_users import AdminUserAction, AdminUserDetail, AdminUserList
 from app.schemas.identity import Locale
 from app.schemas.staff import (
     AdminDashboardOut,
@@ -22,7 +23,7 @@ from app.schemas.staff import (
     StaffSetupInfo,
     StaffSetupOut,
 )
-from app.services import admin_companies, admin_dashboard, audit, staff
+from app.services import admin_companies, admin_dashboard, admin_users, audit, staff
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -152,3 +153,76 @@ async def company(
     db: AsyncSession = Depends(get_db),
 ) -> AdminCompanyDetail:
     return await admin_companies.company(db, company_id, lang=locale)
+
+
+# ---- A08 / A09 users ------------------------------------------------------------------------------------
+@router.get("/users", response_model=AdminUserList)
+async def users(
+    q: str | None = Query(None, max_length=120, description="Name, phone, email or company"),
+    role: Literal["owner", "manager", "technician"] | None = None,
+    status: Literal["active", "invited", "removed", "disabled"] | None = None,
+    language: Locale | None = None,
+    company: uuid.UUID | None = None,
+    page: int = Query(1, ge=1, le=10_000),
+    page_size: int = Query(20, ge=5, le=100),
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminUserList:
+    """One row per person per company, latest active first. Without a status, removed people are hidden."""
+    return await admin_users.users(
+        db,
+        q=q,
+        role=role,
+        status=status,
+        language=language,
+        company_id=company,
+        page=page,
+        page_size=page_size,
+    )
+
+
+@router.get("/users/{user_id}", response_model=AdminUserDetail)
+async def user(
+    user_id: uuid.UUID, _: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminUserDetail:
+    return await admin_users.user(db, user_id)
+
+
+def _can_act(me: Staff) -> None:
+    if me.staff.role not in ("super_admin", "admin"):
+        raise Forbidden("forbidden", "Support staff can look but not change accounts.")
+
+
+@router.post("/users/{user_id}/deactivate", response_model=AdminUserDetail)
+async def deactivate(
+    user_id: uuid.UUID, body: AdminUserAction, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminUserDetail:  # fmt: skip
+    """Turn the person off for every company: they can't log in and every session ends."""
+    _can_act(me)
+    return await admin_users.set_active(
+        db, user_id, active=False, reason=body.reason, staff_id=me.staff.id, ip=client_ip(request)
+    )
+
+
+@router.post("/users/{user_id}/reactivate", response_model=AdminUserDetail)
+async def reactivate(
+    user_id: uuid.UUID, body: AdminUserAction, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminUserDetail:  # fmt: skip
+    _can_act(me)
+    return await admin_users.set_active(
+        db, user_id, active=True, reason=body.reason, staff_id=me.staff.id, ip=client_ip(request)
+    )
+
+
+@router.post("/users/{user_id}/sign-out", response_model=AdminUserDetail)
+async def sign_out(
+    user_id: uuid.UUID, body: AdminUserAction, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminUserDetail:  # fmt: skip
+    """End every session (lost phone, shared device). The person can log in again."""
+    _can_act(me)
+    return await admin_users.sign_out(
+        db, user_id, reason=body.reason, staff_id=me.staff.id, ip=client_ip(request)
+    )

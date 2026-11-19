@@ -8,6 +8,8 @@ import { CompanyDetail } from './pages/CompanyDetail';
 import { Dashboard, RangeSelect, RANGES, type Range } from './pages/Dashboard';
 import { Forgot, Login } from './pages/Login';
 import { Setup } from './pages/Setup';
+import { UserDetail } from './pages/UserDetail';
+import { Users } from './pages/Users';
 import { findNav, Shell, Soon } from './Shell';
 import { navigate, SplitLayout, useLocation } from './ui';
 
@@ -53,12 +55,16 @@ export default function App() {
   if (!nav) return null;
 
   const name = t(`admin.nav.${nav.key}`);
-  const companyId = nav.key === 'companies' && path.startsWith('/companies/') ? path.slice('/companies/'.length) : null;
+  const sub = path.startsWith(`${nav.path}/`) ? path.slice(nav.path.length + 1) : null;
+  const companyId = nav.key === 'companies' ? sub : null;
+  const userId = nav.key === 'users' ? sub : null;
   let page;
   if (!nav.ready) page = <Soon t={t} name={name} />;
   else if (nav.key === 'dashboard') page = <Dashboard t={t} lang={lang} days={days} />;
   else if (companyId) page = <CompanyDetail key={companyId} t={t} lang={lang} id={companyId} onName={onName} />;
-  else page = <Companies key={path} t={t} lang={lang} />;
+  else if (nav.key === 'companies') page = <Companies key={path} t={t} lang={lang} />;
+  else if (userId) page = <UserDetail key={userId} t={t} lang={lang} id={userId} onName={onName} />;
+  else page = <Users key={path} t={t} lang={lang} />;
   return (
     <Shell
       t={t}
@@ -66,8 +72,8 @@ export default function App() {
       onLang={setLang}
       path={path}
       staff={sess.staff}
-      crumb={companyId ? `${t(`admin.nav.${nav.section}`)} / ${name}` : t(`admin.nav.${nav.section}`)}
-      title={companyId ? pageName || name : name}
+      crumb={sub ? `${t(`admin.nav.${nav.section}`)} / ${name}` : t(`admin.nav.${nav.section}`)}
+      title={sub ? pageName || name : name}
       actions={nav.key === 'dashboard' ? <RangeSelect t={t} days={days} onChange={setDays} /> : undefined}
     >
       {page}

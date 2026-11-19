@@ -5640,4 +5640,170 @@ abstract final class LangKeys {
   static const adminCoTopPlan = 'admin.co.top_plan';
   /// This company doesn’t exist any more.
   static const adminCoNotFound = 'admin.co.not_found';
+  /// Technicians
+  static const adminUsTabTechnician = 'admin.us.tab.technician';
+  /// Managers
+  static const adminUsTabManager = 'admin.us.tab.manager';
+  /// Owners
+  static const adminUsTabOwner = 'admin.us.tab.owner';
+  /// Invited
+  static const adminUsTabInvited = 'admin.us.tab.invited';
+  /// People by role
+  static const adminUsTabs = 'admin.us.tabs';
+  /// Search name, phone, email or company
+  static const adminUsSearch = 'admin.us.search';
+  /// Status
+  static const adminUsFStatus = 'admin.us.f_status';
+  /// Language
+  static const adminUsFLanguage = 'admin.us.f_language';
+  /// Active
+  static const adminUsStActive = 'admin.us.st.active';
+  /// Invited
+  static const adminUsStInvited = 'admin.us.st.invited';
+  /// Removed from team
+  static const adminUsStRemoved = 'admin.us.st.removed';
+  /// Turned off
+  static const adminUsStDisabled = 'admin.us.st.disabled';
+  /// Company: {name}
+  static const adminUsCompanyChip = 'admin.us.company_chip';
+  /// Show all companies
+  static const adminUsClearCompany = 'admin.us.clear_company';
+  /// Name
+  static const adminUsCName = 'admin.us.c_name';
+  /// Company
+  static const adminUsCCompany = 'admin.us.c_company';
+  /// Role
+  static const adminUsCRole = 'admin.us.c_role';
+  /// Login
+  static const adminUsCLogin = 'admin.us.c_login';
+  /// Language
+  static const adminUsCLanguage = 'admin.us.c_language';
+  /// Last active
+  static const adminUsCActive = 'admin.us.c_active';
+  /// Email + password
+  static const adminUsLoginEmail = 'admin.us.login.email';
+  /// Phone + OTP
+  static const adminUsLoginPhone = 'admin.us.login.phone';
+  /// Invite sent
+  static const adminUsLoginInvited = 'admin.us.login.invited';
+  /// On a job
+  static const adminUsOnJob = 'admin.us.on_job';
+  /// Invited {when}
+  static const adminUsInvitedAgo = 'admin.us.invited_ago';
+  /// No people match
+  static const adminUsEmptyTitle = 'admin.us.empty_title';
+  /// Nobody yet. People appear here when they sign up or join a team.
+  static const adminUsNoneYet = 'admin.us.none_yet';
+  /// No name yet
+  static const adminUsNoName = 'admin.us.no_name';
+  /// Users
+  static const adminUsBack = 'admin.us.back';
+  /// joined {date}
+  static const adminUsJoined = 'admin.us.joined';
+  /// Active
+  static const adminUsStatusActive = 'admin.us.status_active';
+  /// Active · on a job
+  static const adminUsStatusOnJob = 'admin.us.status_on_job';
+  /// Profile
+  static const adminUsProfile = 'admin.us.profile';
+  /// Phone
+  static const adminUsPhone = 'admin.us.phone';
+  /// Email
+  static const adminUsEmail = 'admin.us.email';
+  /// verified
+  static const adminUsVerified = 'admin.us.verified';
+  /// not verified
+  static const adminUsNotVerified = 'admin.us.not_verified';
+  /// Login
+  static const adminUsLogin = 'admin.us.login';
+  /// Phone + OTP (no password)
+  static const adminUsLoginPhoneLong = 'admin.us.login_phone_long';
+  /// App language
+  static const adminUsAppLanguage = 'admin.us.app_language';
+  /// Report language
+  static const adminUsReportLanguage = 'admin.us.report_language';
+  /// Device
+  static const adminUsDevice = 'admin.us.device';
+  /// Signed in on
+  static const adminUsSessions = 'admin.us.sessions';
+  /// {n} devices
+  static const adminUsNDevices = 'admin.us.n_devices';
+  /// 1 device
+  static const adminUsNDevicesOne = 'admin.us.n_devices_one';
+  /// Account since
+  static const adminUsSince = 'admin.us.since';
+  /// Companies
+  static const adminUsCompanies = 'admin.us.companies';
+  /// Last 30 days
+  static const adminUsLast30 = 'admin.us.last30';
+  /// Jobs
+  static const adminUsJobs = 'admin.us.jobs';
+  /// Reports
+  static const adminUsReports = 'admin.us.reports';
+  /// Changes asked
+  static const adminUsChanges = 'admin.us.changes';
+  /// No activity in the last 30 days.
+  static const adminUsNoActivity = 'admin.us.no_activity';
+  /// Created a job
+  static const adminUsAJobCreated = 'admin.us.a.job.created';
+  /// Assigned a job
+  static const adminUsAJobAssigned = 'admin.us.a.job.assigned';
+  /// Cancelled a job
+  static const adminUsAJobCancelled = 'admin.us.a.job.cancelled';
+  /// Sent a report for review
+  static const adminUsAReportSubmitted = 'admin.us.a.report.submitted';
+  /// Approved a report
+  static const adminUsAReportApproved = 'admin.us.a.report.approved';
+  /// Asked for changes
+  static const adminUsAReportChangesRequested = 'admin.us.a.report.changes_requested';
+  /// Sent a report to a customer
+  static const adminUsAReportSent = 'admin.us.a.report.sent';
+  /// Added a customer
+  static const adminUsACustomerCreated = 'admin.us.a.customer.created';
+  /// Invited someone to the team
+  static const adminUsATeamInvited = 'admin.us.a.team.invited';
+  /// Joined the team
+  static const adminUsATeamJoined = 'admin.us.a.team.joined';
+  /// Replied to a review
+  static const adminUsAReviewReplied = 'admin.us.a.review.replied';
+  /// Changed their password
+  static const adminUsAPasswordReset = 'admin.us.a.password.reset';
+  /// Sign out everywhere
+  static const adminUsSignOut = 'admin.us.sign_out';
+  /// Turn off
+  static const adminUsDeactivate = 'admin.us.deactivate';
+  /// Turn back on
+  static const adminUsReactivate = 'admin.us.reactivate';
+  /// This person is turned off: they can’t log in to any company.
+  static const adminUsDisabledNote = 'admin.us.disabled_note';
+  /// Sign {name} out everywhere?
+  static const adminUsConfirmSignOut = 'admin.us.confirm_sign_out';
+  /// Every phone and browser is signed out. They can log in again (for example after a lost phone).
+  static const adminUsConfirmSignOutBody = 'admin.us.confirm_sign_out_body';
+  /// Turn off {name}?
+  static const adminUsConfirmOff = 'admin.us.confirm_off';
+  /// They are signed out and can’t log in to any company until you turn them back on. Their jobs and reports stay.
+  static const adminUsConfirmOffBody = 'admin.us.confirm_off_body';
+  /// Turn {name} back on?
+  static const adminUsConfirmOn = 'admin.us.confirm_on';
+  /// They can log in again to the companies they belong to.
+  static const adminUsConfirmOnBody = 'admin.us.confirm_on_body';
+  /// Reason (saved in the audit log)
+  static const adminUsReason = 'admin.us.reason';
+  /// Write a short reason (at least 3 characters).
+  static const adminUsReasonShort = 'admin.us.reason_short';
+  /// Cancel
+  static const adminUsCancel = 'admin.us.cancel';
+  /// Signed out everywhere.
+  static const adminUsDoneSignOut = 'admin.us.done_sign_out';
+  /// Turned off.
+  static const adminUsDoneOff = 'admin.us.done_off';
+  /// Turned back on.
+  static const adminUsDoneOn = 'admin.us.done_on';
+  /// Support staff can look but not change accounts.
+  static const adminUsNotAllowed = 'admin.us.not_allowed';
+  /// This person doesn’t exist any more.
+  static const adminUsNotFound = 'admin.us.not_found';
+  /// View all
+  static const adminCoViewAll = 'admin.co.view_all';
 }

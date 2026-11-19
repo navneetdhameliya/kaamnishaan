@@ -134,3 +134,51 @@ export interface CompanyDetail {
   team: { id: string; name: string | null; role: string; login: 'email' | 'phone'; language: string; status: string; last_seen_at: string | null }[];
   upgrade_to: PlanInfo | null;
 }
+
+export type Role = 'owner' | 'manager' | 'technician';
+export interface UserRow {
+  membership_id: string;
+  user_id: string;
+  name: string | null;
+  phone: string | null;
+  email: string | null;
+  company_id: string;
+  company: string;
+  role: Role;
+  login: 'email' | 'phone' | 'invited';
+  language: string | null;
+  status: 'active' | 'invited' | 'removed' | 'disabled';
+  on_job: boolean;
+  last_seen_at: string | null;
+  invited_at: string | null;
+}
+
+export interface UserList {
+  items: UserRow[];
+  total: number;
+  page: number;
+  page_size: number;
+  counts: Record<'all' | Role | 'invited', number>;
+  company: Option | null;
+}
+
+export interface UserDetail {
+  id: string;
+  name: string | null;
+  phone: string | null;
+  email: string | null;
+  email_verified: boolean;
+  login: 'email' | 'phone' | 'invited';
+  status: 'active' | 'invited' | 'disabled';
+  app_language: string;
+  created_at: string;
+  last_seen_at: string | null;
+  on_job: boolean;
+  device: string | null;
+  active_sessions: number;
+  companies: { membership_id: string; company_id: string; company: string; role: Role; status: string; joined_at: string | null; report_language: string }[];
+  jobs_30d: number;
+  reports_30d: number;
+  changes_asked_30d: number;
+  activity: { action: string; at: string }[];
+}

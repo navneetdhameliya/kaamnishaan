@@ -745,6 +745,344 @@ class AdminTopCompanyModel {
       };
 }
 
+AdminUserActionModel adminUserActionModelFromJson(String str) => AdminUserActionModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminUserActionModelToJson(AdminUserActionModel data) => json.encode(data.toJson());
+
+class AdminUserActionModel {
+  /// Written to the audit log
+  final String reason;
+
+  const AdminUserActionModel({
+    required this.reason,
+  });
+
+  factory AdminUserActionModel.fromJson(Map<String, dynamic> json) => AdminUserActionModel(
+        reason: json['reason'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'reason': reason,
+      };
+}
+
+AdminUserActivityModel adminUserActivityModelFromJson(String str) => AdminUserActivityModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminUserActivityModelToJson(AdminUserActivityModel data) => json.encode(data.toJson());
+
+class AdminUserActivityModel {
+  /// Audit action, e.g. report.sent
+  final String action;
+  final DateTime at;
+
+  const AdminUserActivityModel({
+    required this.action,
+    required this.at,
+  });
+
+  factory AdminUserActivityModel.fromJson(Map<String, dynamic> json) => AdminUserActivityModel(
+        action: json['action'] as String,
+        at: DateTime.parse(json['at'] as String),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'action': action,
+        'at': at.toIso8601String(),
+      };
+}
+
+AdminUserCompanyModel adminUserCompanyModelFromJson(String str) => AdminUserCompanyModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminUserCompanyModelToJson(AdminUserCompanyModel data) => json.encode(data.toJson());
+
+class AdminUserCompanyModel {
+  final String company;
+  final String companyId;
+  final DateTime? joinedAt;
+  final String membershipId;
+  final String reportLanguage;
+  /// One of: owner, manager, technician
+  final String role;
+  final String status;
+
+  const AdminUserCompanyModel({
+    required this.company,
+    required this.companyId,
+    this.joinedAt,
+    required this.membershipId,
+    required this.reportLanguage,
+    required this.role,
+    required this.status,
+  });
+
+  factory AdminUserCompanyModel.fromJson(Map<String, dynamic> json) => AdminUserCompanyModel(
+        company: json['company'] as String,
+        companyId: json['company_id'] as String,
+        joinedAt: json['joined_at'] == null ? null : DateTime.parse(json['joined_at'] as String),
+        membershipId: json['membership_id'] as String,
+        reportLanguage: json['report_language'] as String,
+        role: json['role'] as String,
+        status: json['status'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'company': company,
+        'company_id': companyId,
+        'joined_at': joinedAt?.toIso8601String(),
+        'membership_id': membershipId,
+        'report_language': reportLanguage,
+        'role': role,
+        'status': status,
+      };
+}
+
+AdminUserCountsModel adminUserCountsModelFromJson(String str) => AdminUserCountsModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminUserCountsModelToJson(AdminUserCountsModel data) => json.encode(data.toJson());
+
+class AdminUserCountsModel {
+  final int all;
+  final int invited;
+  final int manager;
+  final int owner;
+  final int technician;
+
+  const AdminUserCountsModel({
+    required this.all,
+    required this.invited,
+    required this.manager,
+    required this.owner,
+    required this.technician,
+  });
+
+  factory AdminUserCountsModel.fromJson(Map<String, dynamic> json) => AdminUserCountsModel(
+        all: (json['all'] as num).toInt(),
+        invited: (json['invited'] as num).toInt(),
+        manager: (json['manager'] as num).toInt(),
+        owner: (json['owner'] as num).toInt(),
+        technician: (json['technician'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'all': all,
+        'invited': invited,
+        'manager': manager,
+        'owner': owner,
+        'technician': technician,
+      };
+}
+
+AdminUserDetailModel adminUserDetailModelFromJson(String str) => AdminUserDetailModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminUserDetailModelToJson(AdminUserDetailModel data) => json.encode(data.toJson());
+
+class AdminUserDetailModel {
+  final int activeSessions;
+  final List<AdminUserActivityModel> activity;
+  final String appLanguage;
+  final int changesAsked30d;
+  final List<AdminUserCompanyModel> companies;
+  final DateTime createdAt;
+  /// Latest signed-in device, e.g. android · app 1.0.4
+  final String? device;
+  final String? email;
+  final bool emailVerified;
+  final String id;
+  final int jobs30d;
+  final DateTime? lastSeenAt;
+  /// One of: email, phone, invited
+  final String login;
+  final String? name;
+  final bool onJob;
+  final String? phone;
+  final int reports30d;
+  /// One of: active, invited, disabled
+  final String status;
+
+  const AdminUserDetailModel({
+    required this.activeSessions,
+    required this.activity,
+    required this.appLanguage,
+    required this.changesAsked30d,
+    required this.companies,
+    required this.createdAt,
+    this.device,
+    this.email,
+    required this.emailVerified,
+    required this.id,
+    required this.jobs30d,
+    this.lastSeenAt,
+    required this.login,
+    this.name,
+    required this.onJob,
+    this.phone,
+    required this.reports30d,
+    required this.status,
+  });
+
+  factory AdminUserDetailModel.fromJson(Map<String, dynamic> json) => AdminUserDetailModel(
+        activeSessions: (json['active_sessions'] as num).toInt(),
+        activity: (json['activity'] as List).map((e) => AdminUserActivityModel.fromJson(e as Map<String, dynamic>)).toList(),
+        appLanguage: json['app_language'] as String,
+        changesAsked30d: (json['changes_asked_30d'] as num).toInt(),
+        companies: (json['companies'] as List).map((e) => AdminUserCompanyModel.fromJson(e as Map<String, dynamic>)).toList(),
+        createdAt: DateTime.parse(json['created_at'] as String),
+        device: json['device'] as String?,
+        email: json['email'] as String?,
+        emailVerified: json['email_verified'] as bool,
+        id: json['id'] as String,
+        jobs30d: (json['jobs_30d'] as num).toInt(),
+        lastSeenAt: json['last_seen_at'] == null ? null : DateTime.parse(json['last_seen_at'] as String),
+        login: json['login'] as String,
+        name: json['name'] as String?,
+        onJob: json['on_job'] as bool,
+        phone: json['phone'] as String?,
+        reports30d: (json['reports_30d'] as num).toInt(),
+        status: json['status'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'active_sessions': activeSessions,
+        'activity': activity.map((e) => e.toJson()).toList(),
+        'app_language': appLanguage,
+        'changes_asked_30d': changesAsked30d,
+        'companies': companies.map((e) => e.toJson()).toList(),
+        'created_at': createdAt.toIso8601String(),
+        'device': device,
+        'email': email,
+        'email_verified': emailVerified,
+        'id': id,
+        'jobs_30d': jobs30d,
+        'last_seen_at': lastSeenAt?.toIso8601String(),
+        'login': login,
+        'name': name,
+        'on_job': onJob,
+        'phone': phone,
+        'reports_30d': reports30d,
+        'status': status,
+      };
+}
+
+AdminUserListModel adminUserListModelFromJson(String str) => AdminUserListModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminUserListModelToJson(AdminUserListModel data) => json.encode(data.toJson());
+
+class AdminUserListModel {
+  /// The company filter, when one is set
+  final AdminOptionModel? company;
+  final AdminUserCountsModel counts;
+  final List<AdminUserRowModel> items;
+  final int page;
+  final int pageSize;
+  final int total;
+
+  const AdminUserListModel({
+    this.company,
+    required this.counts,
+    required this.items,
+    required this.page,
+    required this.pageSize,
+    required this.total,
+  });
+
+  factory AdminUserListModel.fromJson(Map<String, dynamic> json) => AdminUserListModel(
+        company: json['company'] == null ? null : AdminOptionModel.fromJson(json['company'] as Map<String, dynamic>),
+        counts: AdminUserCountsModel.fromJson(json['counts'] as Map<String, dynamic>),
+        items: (json['items'] as List).map((e) => AdminUserRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        page: (json['page'] as num).toInt(),
+        pageSize: (json['page_size'] as num).toInt(),
+        total: (json['total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'company': company?.toJson(),
+        'counts': counts.toJson(),
+        'items': items.map((e) => e.toJson()).toList(),
+        'page': page,
+        'page_size': pageSize,
+        'total': total,
+      };
+}
+
+AdminUserRowModel adminUserRowModelFromJson(String str) => AdminUserRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminUserRowModelToJson(AdminUserRowModel data) => json.encode(data.toJson());
+
+class AdminUserRowModel {
+  final String company;
+  final String companyId;
+  final String? email;
+  final DateTime? invitedAt;
+  /// App language; None while invited
+  final String? language;
+  final DateTime? lastSeenAt;
+  /// email: email + password; phone: phone + OTP; invited: not joined yet
+  /// One of: email, phone, invited
+  final String login;
+  final String membershipId;
+  final String? name;
+  /// Has a job in progress now
+  final bool onJob;
+  final String? phone;
+  /// One of: owner, manager, technician
+  final String role;
+  /// disabled: turned off by KaamNishaan staff (for every company)
+  /// One of: active, invited, removed, disabled
+  final String status;
+  final String userId;
+
+  const AdminUserRowModel({
+    required this.company,
+    required this.companyId,
+    this.email,
+    this.invitedAt,
+    this.language,
+    this.lastSeenAt,
+    required this.login,
+    required this.membershipId,
+    this.name,
+    required this.onJob,
+    this.phone,
+    required this.role,
+    required this.status,
+    required this.userId,
+  });
+
+  factory AdminUserRowModel.fromJson(Map<String, dynamic> json) => AdminUserRowModel(
+        company: json['company'] as String,
+        companyId: json['company_id'] as String,
+        email: json['email'] as String?,
+        invitedAt: json['invited_at'] == null ? null : DateTime.parse(json['invited_at'] as String),
+        language: json['language'] as String?,
+        lastSeenAt: json['last_seen_at'] == null ? null : DateTime.parse(json['last_seen_at'] as String),
+        login: json['login'] as String,
+        membershipId: json['membership_id'] as String,
+        name: json['name'] as String?,
+        onJob: json['on_job'] as bool,
+        phone: json['phone'] as String?,
+        role: json['role'] as String,
+        status: json['status'] as String,
+        userId: json['user_id'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'company': company,
+        'company_id': companyId,
+        'email': email,
+        'invited_at': invitedAt?.toIso8601String(),
+        'language': language,
+        'last_seen_at': lastSeenAt?.toIso8601String(),
+        'login': login,
+        'membership_id': membershipId,
+        'name': name,
+        'on_job': onJob,
+        'phone': phone,
+        'role': role,
+        'status': status,
+        'user_id': userId,
+      };
+}
+
 AnswerInModel answerInModelFromJson(String str) => AnswerInModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String answerInModelToJson(AnswerInModel data) => json.encode(data.toJson());
