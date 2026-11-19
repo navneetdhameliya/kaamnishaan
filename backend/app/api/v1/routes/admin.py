@@ -11,6 +11,7 @@ from app.core.deps import Staff, client_ip, get_db, get_staff
 from app.core.errors import AppError, Forbidden
 from app.core.security import now
 from app.schemas.admin_companies import AdminCompanyDetail, AdminCompanyList
+from app.schemas.admin_leads import AdminLeadDetail, AdminLeadList, AdminLeadUpdate
 from app.schemas.admin_users import AdminUserAction, AdminUserDetail, AdminUserList
 from app.schemas.identity import Locale
 from app.schemas.staff import (
@@ -23,7 +24,7 @@ from app.schemas.staff import (
     StaffSetupInfo,
     StaffSetupOut,
 )
-from app.services import admin_companies, admin_dashboard, admin_users, audit, staff
+from app.services import admin_companies, admin_dashboard, admin_leads, admin_users, audit, staff
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -225,4 +226,58 @@ async def sign_out(
     _can_act(me)
     return await admin_users.sign_out(
         db, user_id, reason=body.reason, staff_id=me.staff.id, ip=client_ip(request)
+    )
+
+
+# ---- website leads (demo bookings, contact messages, newsletter) ------------------------------------
+@router.get("/leads", response_model=AdminLeadList)
+async def leads(
+    tab: Literal["new", "demo", "contact", "newsletter", "done"] = "new",
+    q: str | None = Query(None, max_length=120, description="Name, email, company, message or KN-number"),
+    page: int = Query(1, ge=1, le=10_000),
+    page_size: int = Query(20, ge=5, le=100),
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminLeadList:
+    """new: demos and messages nobody has handled yet; done: contacted, done or spam."""
+    return await admin_leads.leads(db, tab=tab, q=q, page=page, page_size=page_size)
+
+
+@router.get("/leads/newsletter.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
+async def newsletter_csv(me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)) -> Response:
+    """Every newsletter email, for a mailing tool. Each export is written to the audit log."""
+    body = await admin_leads.newsletter_csv(db)
+    await audit.record(db, "staff.export", staff_id=me.staff.id, target_type="newsletter")
+    return Response(
+        body,
+        media_type="text/csv; charset=utf-8",
+        headers={
+            "Content-Disposition": f'attachment; filename="kaamnishaan-newsletter-{now():%Y-%m-%d}.csv"',
+            "Cache-Control": "no-store",
+        },
+    )
+
+
+@router.get("/leads/{lead_id}", response_model=AdminLeadDetail)
+async def lead(
+    lead_id: uuid.UUID,
+    locale: Locale = "en",
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminLeadDetail:
+    return await admin_leads.lead(db, lead_id, lang=locale)
+
+
+@router.patch("/leads/{lead_id}", response_model=AdminLeadDetail)
+async def update_lead(
+    lead_id: uuid.UUID,
+    body: AdminLeadUpdate,
+    request: Request,
+    locale: Locale = "en",
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminLeadDetail:
+    """Change the status and / or the staff note. Support staff can do this too."""
+    return await admin_leads.update(
+        db, lead_id, body, staff_id=me.staff.id, ip=client_ip(request), lang=locale
     )

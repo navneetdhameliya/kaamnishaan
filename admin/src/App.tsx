@@ -6,6 +6,7 @@ import type { StaffSession } from './lib/types';
 import { Companies } from './pages/Companies';
 import { CompanyDetail } from './pages/CompanyDetail';
 import { Dashboard, RangeSelect, RANGES, type Range } from './pages/Dashboard';
+import { Leads } from './pages/Leads';
 import { Forgot, Login } from './pages/Login';
 import { Setup } from './pages/Setup';
 import { UserDetail } from './pages/UserDetail';
@@ -63,6 +64,7 @@ export default function App() {
   else if (nav.key === 'dashboard') page = <Dashboard t={t} lang={lang} days={days} />;
   else if (companyId) page = <CompanyDetail key={companyId} t={t} lang={lang} id={companyId} onName={onName} />;
   else if (nav.key === 'companies') page = <Companies key={path} t={t} lang={lang} />;
+  else if (nav.key === 'leads') page = <Leads key="leads" t={t} lang={lang} id={sub} />;
   else if (userId) page = <UserDetail key={userId} t={t} lang={lang} id={userId} onName={onName} />;
   else page = <Users key={path} t={t} lang={lang} />;
   return (
@@ -72,8 +74,8 @@ export default function App() {
       onLang={setLang}
       path={path}
       staff={sess.staff}
-      crumb={sub ? `${t(`admin.nav.${nav.section}`)} / ${name}` : t(`admin.nav.${nav.section}`)}
-      title={sub ? pageName || name : name}
+      crumb={sub && nav.key !== 'leads' ? `${t(`admin.nav.${nav.section}`)} / ${name}` : t(`admin.nav.${nav.section}`)}
+      title={sub && nav.key !== 'leads' ? pageName || name : name}
       actions={nav.key === 'dashboard' ? <RangeSelect t={t} days={days} onChange={setDays} /> : undefined}
     >
       {page}

@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState, type ReactNode } from 'react';
 import { api, ApiError } from '../lib/api';
 import { clock, day, money, num, plural, type Lang, type T } from '../lib/i18n';
 import type { DashboardOut, Stat } from '../lib/types';
-import { cx, Initials } from '../ui';
+import { cx, Initials, Link } from '../ui';
 
 export const RANGES = [7, 30, 90] as const;
 export type Range = (typeof RANGES)[number];
@@ -187,7 +187,23 @@ function Attention({ t, lang, data }: { t: T; lang: Lang; data: DashboardOut }) 
           <li key={a.kind} className={cx('kn-in flex items-start gap-12 rounded-lg px-12 py-12', l.bg)} style={stagger(i + 2)}>
             <Icon width={18} height={18} className={cx('mt-[2px] shrink-0', l.fg)} aria-hidden />
             <div className="min-w-0">
-              <p className="text-[14px] font-semibold">{title}</p>
+              <p className="text-[14px] font-semibold">
+                {a.kind === 'new_leads' ? (
+                  <Link to="/leads" className="kn-link">
+                    {title}
+                  </Link>
+                ) : a.kind === 'past_due' ? (
+                  <Link to="/companies?status=past_due" className="kn-link">
+                    {title}
+                  </Link>
+                ) : a.kind === 'trial_ending' ? (
+                  <Link to="/companies?status=trial" className="kn-link">
+                    {title}
+                  </Link>
+                ) : (
+                  title
+                )}
+              </p>
               {detail && <p className="mt-2 text-[13px] text-text-secondary">{detail}</p>}
             </div>
           </li>

@@ -182,3 +182,38 @@ export interface UserDetail {
   changes_asked_30d: number;
   activity: { action: string; at: string }[];
 }
+
+export type LeadKind = 'demo' | 'contact' | 'newsletter';
+export type LeadStatus = 'new' | 'contacted' | 'done' | 'spam';
+export interface LeadRow {
+  id: string;
+  number: number;
+  kind: LeadKind;
+  status: LeadStatus;
+  name: string;
+  email: string;
+  company: string | null;
+  topic: string | null;
+  starts_at: string | null;
+  preview: string | null;
+  created_at: string;
+}
+export interface LeadList {
+  items: LeadRow[];
+  total: number;
+  page: number;
+  page_size: number;
+  counts: Record<'new' | 'demo' | 'contact' | 'newsletter' | 'done', number>;
+}
+export interface LeadDetail extends LeadRow {
+  phone: string | null;
+  team_size: string | null;
+  trade: string | null;
+  message: string | null;
+  lang: string;
+  note: string | null;
+  handled_by: string | null;
+  handled_at: string | null;
+  company_id: string | null;
+  company_name: string | null;
+}
