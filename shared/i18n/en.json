@@ -2585,5 +2585,16 @@
   "site.blog.keep": "Keep reading",
   "site.blog.related": "Related guides",
   "site.blog.all_posts": "All guides",
-  "site.blog.missing": "This guide doesn’t exist"
+  "site.blog.missing": "This guide doesn’t exist",
+  "site.legal.eyebrow": "Legal",
+  "site.legal.updated": "Last updated {date}",
+  "site.legal.minutes": "About {n} min read",
+  "site.legal.print": "Print or save as PDF",
+  "site.legal.toc": "On this page",
+  "site.legal.top": "Back to top",
+  "site.legal.draft": "Draft: the company details on this page have not been filled in yet, and the text is still being checked. It is not in force yet.",
+  "site.legal.translation": "This is a translation for your convenience. If it differs from the English version, the English version applies.",
+  "site.legal.q_privacy": "Questions about this policy?",
+  "site.legal.q_terms": "Questions about these terms?",
+  "site.legal.q_body": "Our team answers within one working day."
 }

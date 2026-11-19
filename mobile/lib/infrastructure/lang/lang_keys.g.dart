@@ -5176,4 +5176,26 @@ abstract final class LangKeys {
   static const siteBlogAllPosts = 'site.blog.all_posts';
   /// This guide doesn’t exist
   static const siteBlogMissing = 'site.blog.missing';
+  /// Legal
+  static const siteLegalEyebrow = 'site.legal.eyebrow';
+  /// Last updated {date}
+  static const siteLegalUpdated = 'site.legal.updated';
+  /// About {n} min read
+  static const siteLegalMinutes = 'site.legal.minutes';
+  /// Print or save as PDF
+  static const siteLegalPrint = 'site.legal.print';
+  /// On this page
+  static const siteLegalToc = 'site.legal.toc';
+  /// Back to top
+  static const siteLegalTop = 'site.legal.top';
+  /// Draft: the company details on this page have not been filled in yet, and the text is still being checked. It is not in force yet.
+  static const siteLegalDraft = 'site.legal.draft';
+  /// This is a translation for your convenience. If it differs from the English version, the English version applies.
+  static const siteLegalTranslation = 'site.legal.translation';
+  /// Questions about this policy?
+  static const siteLegalQPrivacy = 'site.legal.q_privacy';
+  /// Questions about these terms?
+  static const siteLegalQTerms = 'site.legal.q_terms';
+  /// Our team answers within one working day.
+  static const siteLegalQBody = 'site.legal.q_body';
 }

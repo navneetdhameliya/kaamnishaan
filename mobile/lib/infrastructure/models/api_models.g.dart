@@ -3417,6 +3417,114 @@ class LanguageOutModel {
       };
 }
 
+LegalBlockModel legalBlockModelFromJson(String str) => LegalBlockModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String legalBlockModelToJson(LegalBlockModel data) => json.encode(data.toJson());
+
+class LegalBlockModel {
+  final List<String>? items;
+  final String? text;
+  /// One of: p, list
+  final String type;
+
+  const LegalBlockModel({
+    this.items,
+    this.text,
+    required this.type,
+  });
+
+  factory LegalBlockModel.fromJson(Map<String, dynamic> json) => LegalBlockModel(
+        items: json['items'] == null ? null : (json['items'] as List).map((e) => e as String).toList(),
+        text: json['text'] as String?,
+        type: json['type'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'items': items,
+        'text': text,
+        'type': type,
+      };
+}
+
+LegalOutModel legalOutModelFromJson(String str) => LegalOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String legalOutModelToJson(LegalOutModel data) => json.encode(data.toJson());
+
+class LegalOutModel {
+  /// false (a draft) while the legal name, address or city is not set
+  final bool complete;
+  /// One of: privacy, terms
+  final String doc;
+  final String intro;
+  /// One of: en, hi, gu, es, fr
+  final String language;
+  final int readMinutes;
+  final List<LegalSectionModel> sections;
+  final String title;
+  final String updatedOn;
+
+  const LegalOutModel({
+    required this.complete,
+    required this.doc,
+    required this.intro,
+    required this.language,
+    required this.readMinutes,
+    required this.sections,
+    required this.title,
+    required this.updatedOn,
+  });
+
+  factory LegalOutModel.fromJson(Map<String, dynamic> json) => LegalOutModel(
+        complete: json['complete'] as bool,
+        doc: json['doc'] as String,
+        intro: json['intro'] as String,
+        language: json['language'] as String,
+        readMinutes: (json['read_minutes'] as num).toInt(),
+        sections: (json['sections'] as List).map((e) => LegalSectionModel.fromJson(e as Map<String, dynamic>)).toList(),
+        title: json['title'] as String,
+        updatedOn: json['updated_on'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'complete': complete,
+        'doc': doc,
+        'intro': intro,
+        'language': language,
+        'read_minutes': readMinutes,
+        'sections': sections.map((e) => e.toJson()).toList(),
+        'title': title,
+        'updated_on': updatedOn,
+      };
+}
+
+LegalSectionModel legalSectionModelFromJson(String str) => LegalSectionModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String legalSectionModelToJson(LegalSectionModel data) => json.encode(data.toJson());
+
+class LegalSectionModel {
+  final List<LegalBlockModel> blocks;
+  final String heading;
+  final String id;
+
+  const LegalSectionModel({
+    required this.blocks,
+    required this.heading,
+    required this.id,
+  });
+
+  factory LegalSectionModel.fromJson(Map<String, dynamic> json) => LegalSectionModel(
+        blocks: (json['blocks'] as List).map((e) => LegalBlockModel.fromJson(e as Map<String, dynamic>)).toList(),
+        heading: json['heading'] as String,
+        id: json['id'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'blocks': blocks.map((e) => e.toJson()).toList(),
+        'heading': heading,
+        'id': id,
+      };
+}
+
 ListMetaModel listMetaModelFromJson(String str) => ListMetaModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String listMetaModelToJson(ListMetaModel data) => json.encode(data.toJson());

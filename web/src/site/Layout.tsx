@@ -69,7 +69,7 @@ export function Logo({ dark = true }: { dark?: boolean }) {
 
 function AnnouncementBar({ t }: { t: T }) {
   return (
-    <div {...rv('down')} className="flex items-center justify-center gap-8 bg-mocha-900 px-16 py-[8px] text-center md:py-12">
+    <div {...rv('down')} data-site-chrome className="flex items-center justify-center gap-8 bg-mocha-900 px-16 py-[8px] text-center md:py-12">
       <Sparkles width={16} height={16} className="hidden shrink-0 animate-pulse text-cream-400 sm:block" aria-hidden />
       <p className="text-[13px] font-semibold leading-[18px] text-cream-100 md:text-latin-label-sm">{t('site.ann.text')}</p>
       <span className="hidden h-[14px] w-px bg-cream-100/30 md:block" aria-hidden />

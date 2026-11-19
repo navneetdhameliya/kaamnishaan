@@ -68,6 +68,12 @@ have to confirm their email, and reports and review requests go by SMS, WhatsApp
 and `KN_HELP_URL`. The office line is `KN_OFFICE` (default "Ahmedabad, Gujarat, India"); support hours are
 `KN_SUPPORT_OPEN` / `KN_SUPPORT_CLOSE` (default 09:00–19:00, Monday–Saturday, India time).
 
+**Privacy policy and Terms (website /privacy, /terms):** set `KN_LEGAL_NAME` (the registered company name),
+`KN_LEGAL_ADDRESS` (registered address, one line) and `KN_LEGAL_CITY` (the city whose courts hear disputes) on
+Render. Privacy questions go to `KN_LEGAL_EMAIL`, or `KN_SUPPORT_EMAIL` when that is empty. Until the name, address,
+city and an email are set, both pages show "Draft … not in force yet". The text itself is in
+`backend/app/content/legal/` (all 5 languages) and should be checked by a lawyer before launch.
+
 **Book a demo (website /book-demo):** 30-minute calls on weekdays at `KN_DEMO_TIMES` (default
 ["10:00","11:30","14:00","16:30"], India time), up to `KN_DEMO_DAYS_AHEAD` days ahead (default 14). A booked time
 disappears for the next person. Demo bookings and contact messages are saved in the `leads` table (ticket KN-…);

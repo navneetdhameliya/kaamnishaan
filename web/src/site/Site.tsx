@@ -4,6 +4,7 @@ import About from './About';
 import Blog from './blog/Blog';
 import BlogPost from './blog/BlogPost';
 import Contact from './Contact';
+import Legal from './Legal';
 import { featureBySlug, page as featurePage } from './features/catalog';
 import FeaturePage from './features/FeaturePage';
 import Overview from './features/Overview';
@@ -19,7 +20,7 @@ import StartTrial from './StartTrial';
 
 /**
  * The marketing website: / (W01), /pricing (W02), /start-trial (W04), /login (W28), /book-demo (W03), /contact (W05),
- * /features (W08), /features/<slug> (W09–W17, W31) and /industries/<trade> (W18–W23) /about (W24), /blog and /blog/<slug> (W25/W26); other paths show "coming soon".
+ * /features (W08), /features/<slug> (W09–W17, W31) and /industries/<trade> (W18–W23) /about (W24), /blog and /blog/<slug> (W25/W26), /privacy and /terms (W06/W07); other paths show "coming soon".
  */
 export default function Site({ path }: { path: string }) {
   const { lang, t, setLang } = useLang();
@@ -52,6 +53,8 @@ export default function Site({ path }: { path: string }) {
         <Blog t={t} lang={lang} plans={planData} />
       ) : page.startsWith(`${ROUTES.blog}/`) && page.length > ROUTES.blog.length + 1 ? (
         <BlogPost key={page} t={t} lang={lang} slug={page.slice(ROUTES.blog.length + 1)} plans={planData} />
+      ) : page === ROUTES.privacy || page === ROUTES.terms ? (
+        <Legal key={page} t={t} lang={lang} doc={page === ROUTES.privacy ? 'privacy' : 'terms'} />
       ) : page === ROUTES.about ? (
         <About t={t} lang={lang} config={cfg} plans={planData} />
       ) : page === ROUTES.features ? (
