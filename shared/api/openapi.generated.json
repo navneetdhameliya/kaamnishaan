@@ -150,6 +150,484 @@
         "title": "AdminAttentionRow",
         "type": "object"
       },
+      "AdminCompanyCounts": {
+        "properties": {
+          "active": {
+            "title": "Active",
+            "type": "integer"
+          },
+          "all": {
+            "title": "All",
+            "type": "integer"
+          },
+          "cancelled": {
+            "title": "Cancelled",
+            "type": "integer"
+          },
+          "past_due": {
+            "title": "Past Due",
+            "type": "integer"
+          },
+          "suspended": {
+            "title": "Suspended",
+            "type": "integer"
+          },
+          "trial": {
+            "title": "Trial",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "all",
+          "trial",
+          "active",
+          "past_due",
+          "suspended",
+          "cancelled"
+        ],
+        "title": "AdminCompanyCounts",
+        "type": "object"
+      },
+      "AdminCompanyDetail": {
+        "properties": {
+          "ai_cost_30d_usd": {
+            "title": "Ai Cost 30D Usd",
+            "type": "number"
+          },
+          "ai_cost_per_report_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ai Cost Per Report Usd"
+          },
+          "approval_minutes_median": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Job completed → report approved, last 30 days",
+            "title": "Approval Minutes Median"
+          },
+          "badge": {
+            "enum": [
+              "trial",
+              "active",
+              "past_due",
+              "suspended",
+              "cancelled",
+              "near_limit"
+            ],
+            "title": "Badge",
+            "type": "string"
+          },
+          "country": {
+            "title": "Country",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "currency": {
+            "title": "Currency",
+            "type": "string"
+          },
+          "cycle_end": {
+            "format": "date-time",
+            "title": "Cycle End",
+            "type": "string"
+          },
+          "cycle_start": {
+            "format": "date-time",
+            "title": "Cycle Start",
+            "type": "string"
+          },
+          "health": {
+            "description": "at_risk: past due or suspended; quiet: nobody active for 14 days; else good",
+            "enum": [
+              "good",
+              "quiet",
+              "at_risk"
+            ],
+            "title": "Health",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "industry": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Industry"
+          },
+          "jobs_this_cycle": {
+            "title": "Jobs This Cycle",
+            "type": "integer"
+          },
+          "last_active_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Active At"
+          },
+          "members": {
+            "title": "Members",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "owner_email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Email"
+          },
+          "owner_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Name"
+          },
+          "owner_phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Phone"
+          },
+          "plan": {
+            "$ref": "#/components/schemas/AdminPlanInfo"
+          },
+          "report_language": {
+            "title": "Report Language",
+            "type": "string"
+          },
+          "reports_this_cycle": {
+            "title": "Reports This Cycle",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "trial",
+              "active",
+              "past_due",
+              "suspended",
+              "cancelled"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "team": {
+            "description": "Owner, managers, then technicians; first 5",
+            "items": {
+              "$ref": "#/components/schemas/AdminTeamMember"
+            },
+            "title": "Team",
+            "type": "array"
+          },
+          "technicians": {
+            "title": "Technicians",
+            "type": "integer"
+          },
+          "timezone": {
+            "title": "Timezone",
+            "type": "string"
+          },
+          "trial_ends_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trial Ends At"
+          },
+          "upgrade_to": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AdminPlanInfo"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The next plan when this one's reports or seats are used up, else None"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "status",
+          "badge",
+          "trial_ends_at",
+          "created_at",
+          "country",
+          "currency",
+          "timezone",
+          "report_language",
+          "industry",
+          "plan",
+          "owner_name",
+          "owner_email",
+          "owner_phone",
+          "health",
+          "last_active_at",
+          "cycle_start",
+          "cycle_end",
+          "jobs_this_cycle",
+          "reports_this_cycle",
+          "technicians",
+          "members",
+          "approval_minutes_median",
+          "ai_cost_30d_usd",
+          "ai_cost_per_report_usd",
+          "team",
+          "upgrade_to"
+        ],
+        "title": "AdminCompanyDetail",
+        "type": "object"
+      },
+      "AdminCompanyList": {
+        "properties": {
+          "countries": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Countries",
+            "type": "array"
+          },
+          "counts": {
+            "$ref": "#/components/schemas/AdminCompanyCounts",
+            "description": "Per status, for the tabs (search and other filters applied)"
+          },
+          "industries": {
+            "items": {
+              "$ref": "#/components/schemas/AdminOption"
+            },
+            "title": "Industries",
+            "type": "array"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AdminCompanyRow"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "plans": {
+            "items": {
+              "$ref": "#/components/schemas/AdminOption"
+            },
+            "title": "Plans",
+            "type": "array"
+          },
+          "total": {
+            "description": "Matching the search and filters",
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "page_size",
+          "counts",
+          "plans",
+          "industries",
+          "countries"
+        ],
+        "title": "AdminCompanyList",
+        "type": "object"
+      },
+      "AdminCompanyRow": {
+        "properties": {
+          "badge": {
+            "enum": [
+              "trial",
+              "active",
+              "past_due",
+              "suspended",
+              "cancelled",
+              "near_limit"
+            ],
+            "title": "Badge",
+            "type": "string"
+          },
+          "country": {
+            "title": "Country",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "industry": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Industry"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "owner_email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Email"
+          },
+          "owner_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Name"
+          },
+          "plan": {
+            "title": "Plan",
+            "type": "string"
+          },
+          "plan_code": {
+            "title": "Plan Code",
+            "type": "string"
+          },
+          "reports_30d": {
+            "title": "Reports 30D",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "trial",
+              "active",
+              "past_due",
+              "suspended",
+              "cancelled"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "technician_limit": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Seats in the plan; None = no limit",
+            "title": "Technician Limit"
+          },
+          "technicians": {
+            "description": "Active technicians",
+            "title": "Technicians",
+            "type": "integer"
+          },
+          "trial_days_left": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trial Days Left"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "owner_name",
+          "owner_email",
+          "country",
+          "industry",
+          "plan_code",
+          "plan",
+          "technicians",
+          "technician_limit",
+          "reports_30d",
+          "status",
+          "badge",
+          "trial_days_left",
+          "created_at"
+        ],
+        "title": "AdminCompanyRow",
+        "type": "object"
+      },
       "AdminDashboardOut": {
         "properties": {
           "active_companies": {
@@ -288,6 +766,74 @@
         "title": "AdminMoney",
         "type": "object"
       },
+      "AdminOption": {
+        "properties": {
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "value",
+          "label"
+        ],
+        "title": "AdminOption",
+        "type": "object"
+      },
+      "AdminPlanInfo": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "prices": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Prices",
+            "type": "object"
+          },
+          "report_limit_monthly": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Report Limit Monthly"
+          },
+          "technician_limit": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Technician Limit"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "prices",
+          "technician_limit",
+          "report_limit_monthly"
+        ],
+        "title": "AdminPlanInfo",
+        "type": "object"
+      },
       "AdminPlanMixRow": {
         "properties": {
           "code": {
@@ -336,6 +882,69 @@
           "previous"
         ],
         "title": "AdminStat",
+        "type": "object"
+      },
+      "AdminTeamMember": {
+        "properties": {
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "language": {
+            "title": "Language",
+            "type": "string"
+          },
+          "last_seen_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Seen At"
+          },
+          "login": {
+            "enum": [
+              "email",
+              "phone"
+            ],
+            "title": "Login",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "role": {
+            "title": "Role",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "role",
+          "login",
+          "language",
+          "status",
+          "last_seen_at"
+        ],
+        "title": "AdminTeamMember",
         "type": "object"
       },
       "AdminTopCompany": {
@@ -13115,6 +13724,420 @@
           }
         },
         "summary": "Setup",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/companies": {
+      "get": {
+        "operationId": "companies_api_v1_admin_companies_get",
+        "parameters": [
+          {
+            "description": "Company, owner name, email or phone",
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 120,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Company, owner name, email or phone",
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "trial",
+                    "active",
+                    "past_due",
+                    "suspended",
+                    "cancelled"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "plan",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 24,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Plan"
+            }
+          },
+          {
+            "in": "query",
+            "name": "industry",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 40,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Industry"
+            }
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 2,
+                  "minLength": 2,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Country"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "reports",
+              "enum": [
+                "reports",
+                "name",
+                "newest",
+                "technicians"
+              ],
+              "title": "Sort",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "maximum": 10000,
+              "minimum": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "minimum": 5,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminCompanyList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Companies",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/companies.csv": {
+      "get": {
+        "description": "Every matching company (not just one page), for a spreadsheet. Exports are written to the audit log.",
+        "operationId": "companies_csv_api_v1_admin_companies_csv_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 120,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "trial",
+                    "active",
+                    "past_due",
+                    "suspended",
+                    "cancelled"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "plan",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 24,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Plan"
+            }
+          },
+          {
+            "in": "query",
+            "name": "industry",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 40,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Industry"
+            }
+          },
+          {
+            "in": "query",
+            "name": "country",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 2,
+                  "minLength": 2,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Country"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort",
+            "required": false,
+            "schema": {
+              "default": "reports",
+              "enum": [
+                "reports",
+                "name",
+                "newest",
+                "technicians"
+              ],
+              "title": "Sort",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/csv": {}
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Companies Csv",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/companies/{company_id}": {
+      "get": {
+        "operationId": "company_api_v1_admin_companies__company_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Company Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminCompanyDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Company",
         "tags": [
           "admin"
         ]

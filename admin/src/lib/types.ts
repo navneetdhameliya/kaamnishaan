@@ -59,3 +59,78 @@ export interface DashboardOut {
     at: string;
   }[];
 }
+
+export type CompanyStatus = 'trial' | 'active' | 'past_due' | 'suspended' | 'cancelled';
+export type CompanyBadge = CompanyStatus | 'near_limit';
+export interface Option {
+  value: string;
+  label: string;
+}
+
+export interface CompanyRow {
+  id: string;
+  name: string;
+  owner_name: string | null;
+  owner_email: string | null;
+  country: string;
+  industry: string | null;
+  plan_code: string;
+  plan: string;
+  technicians: number;
+  technician_limit: number | null;
+  reports_30d: number;
+  status: CompanyStatus;
+  badge: CompanyBadge;
+  trial_days_left: number | null;
+  created_at: string;
+}
+
+export interface CompanyList {
+  items: CompanyRow[];
+  total: number;
+  page: number;
+  page_size: number;
+  counts: Record<'all' | CompanyStatus, number>;
+  plans: Option[];
+  industries: Option[];
+  countries: string[];
+}
+
+export interface PlanInfo {
+  code: string;
+  name: string;
+  prices: Record<string, number>;
+  technician_limit: number | null;
+  report_limit_monthly: number | null;
+}
+
+export interface CompanyDetail {
+  id: string;
+  name: string;
+  status: CompanyStatus;
+  badge: CompanyBadge;
+  trial_ends_at: string | null;
+  created_at: string;
+  country: string;
+  currency: string;
+  timezone: string;
+  report_language: string;
+  industry: string | null;
+  plan: PlanInfo;
+  owner_name: string | null;
+  owner_email: string | null;
+  owner_phone: string | null;
+  health: 'good' | 'quiet' | 'at_risk';
+  last_active_at: string | null;
+  cycle_start: string;
+  cycle_end: string;
+  jobs_this_cycle: number;
+  reports_this_cycle: number;
+  technicians: number;
+  members: number;
+  approval_minutes_median: number | null;
+  ai_cost_30d_usd: number;
+  ai_cost_per_report_usd: number | null;
+  team: { id: string; name: string | null; role: string; login: 'email' | 'phone'; language: string; status: string; last_seen_at: string | null }[];
+  upgrade_to: PlanInfo | null;
+}

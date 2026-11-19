@@ -121,6 +121,311 @@ class AdminAttentionRowModel {
       };
 }
 
+AdminCompanyCountsModel adminCompanyCountsModelFromJson(String str) => AdminCompanyCountsModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminCompanyCountsModelToJson(AdminCompanyCountsModel data) => json.encode(data.toJson());
+
+class AdminCompanyCountsModel {
+  final int active;
+  final int all;
+  final int cancelled;
+  final int pastDue;
+  final int suspended;
+  final int trial;
+
+  const AdminCompanyCountsModel({
+    required this.active,
+    required this.all,
+    required this.cancelled,
+    required this.pastDue,
+    required this.suspended,
+    required this.trial,
+  });
+
+  factory AdminCompanyCountsModel.fromJson(Map<String, dynamic> json) => AdminCompanyCountsModel(
+        active: (json['active'] as num).toInt(),
+        all: (json['all'] as num).toInt(),
+        cancelled: (json['cancelled'] as num).toInt(),
+        pastDue: (json['past_due'] as num).toInt(),
+        suspended: (json['suspended'] as num).toInt(),
+        trial: (json['trial'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'active': active,
+        'all': all,
+        'cancelled': cancelled,
+        'past_due': pastDue,
+        'suspended': suspended,
+        'trial': trial,
+      };
+}
+
+AdminCompanyDetailModel adminCompanyDetailModelFromJson(String str) => AdminCompanyDetailModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminCompanyDetailModelToJson(AdminCompanyDetailModel data) => json.encode(data.toJson());
+
+class AdminCompanyDetailModel {
+  final double aiCost30dUsd;
+  final double? aiCostPerReportUsd;
+  /// Job completed → report approved, last 30 days
+  final double? approvalMinutesMedian;
+  /// One of: trial, active, past_due, suspended, cancelled, near_limit
+  final String badge;
+  final String country;
+  final DateTime createdAt;
+  final String currency;
+  final DateTime cycleEnd;
+  final DateTime cycleStart;
+  /// at_risk: past due or suspended; quiet: nobody active for 14 days; else good
+  /// One of: good, quiet, at_risk
+  final String health;
+  final String id;
+  final String? industry;
+  final int jobsThisCycle;
+  final DateTime? lastActiveAt;
+  final int members;
+  final String name;
+  final String? ownerEmail;
+  final String? ownerName;
+  final String? ownerPhone;
+  final AdminPlanInfoModel plan;
+  final String reportLanguage;
+  final int reportsThisCycle;
+  /// One of: trial, active, past_due, suspended, cancelled
+  final String status;
+  /// Owner, managers, then technicians; first 5
+  final List<AdminTeamMemberModel> team;
+  final int technicians;
+  final String timezone;
+  final DateTime? trialEndsAt;
+  /// The next plan when this one's reports or seats are used up, else None
+  final AdminPlanInfoModel? upgradeTo;
+
+  const AdminCompanyDetailModel({
+    required this.aiCost30dUsd,
+    this.aiCostPerReportUsd,
+    this.approvalMinutesMedian,
+    required this.badge,
+    required this.country,
+    required this.createdAt,
+    required this.currency,
+    required this.cycleEnd,
+    required this.cycleStart,
+    required this.health,
+    required this.id,
+    this.industry,
+    required this.jobsThisCycle,
+    this.lastActiveAt,
+    required this.members,
+    required this.name,
+    this.ownerEmail,
+    this.ownerName,
+    this.ownerPhone,
+    required this.plan,
+    required this.reportLanguage,
+    required this.reportsThisCycle,
+    required this.status,
+    required this.team,
+    required this.technicians,
+    required this.timezone,
+    this.trialEndsAt,
+    this.upgradeTo,
+  });
+
+  factory AdminCompanyDetailModel.fromJson(Map<String, dynamic> json) => AdminCompanyDetailModel(
+        aiCost30dUsd: (json['ai_cost_30d_usd'] as num).toDouble(),
+        aiCostPerReportUsd: json['ai_cost_per_report_usd'] == null ? null : (json['ai_cost_per_report_usd'] as num).toDouble(),
+        approvalMinutesMedian: json['approval_minutes_median'] == null ? null : (json['approval_minutes_median'] as num).toDouble(),
+        badge: json['badge'] as String,
+        country: json['country'] as String,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        currency: json['currency'] as String,
+        cycleEnd: DateTime.parse(json['cycle_end'] as String),
+        cycleStart: DateTime.parse(json['cycle_start'] as String),
+        health: json['health'] as String,
+        id: json['id'] as String,
+        industry: json['industry'] as String?,
+        jobsThisCycle: (json['jobs_this_cycle'] as num).toInt(),
+        lastActiveAt: json['last_active_at'] == null ? null : DateTime.parse(json['last_active_at'] as String),
+        members: (json['members'] as num).toInt(),
+        name: json['name'] as String,
+        ownerEmail: json['owner_email'] as String?,
+        ownerName: json['owner_name'] as String?,
+        ownerPhone: json['owner_phone'] as String?,
+        plan: AdminPlanInfoModel.fromJson(json['plan'] as Map<String, dynamic>),
+        reportLanguage: json['report_language'] as String,
+        reportsThisCycle: (json['reports_this_cycle'] as num).toInt(),
+        status: json['status'] as String,
+        team: (json['team'] as List).map((e) => AdminTeamMemberModel.fromJson(e as Map<String, dynamic>)).toList(),
+        technicians: (json['technicians'] as num).toInt(),
+        timezone: json['timezone'] as String,
+        trialEndsAt: json['trial_ends_at'] == null ? null : DateTime.parse(json['trial_ends_at'] as String),
+        upgradeTo: json['upgrade_to'] == null ? null : AdminPlanInfoModel.fromJson(json['upgrade_to'] as Map<String, dynamic>),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ai_cost_30d_usd': aiCost30dUsd,
+        'ai_cost_per_report_usd': aiCostPerReportUsd,
+        'approval_minutes_median': approvalMinutesMedian,
+        'badge': badge,
+        'country': country,
+        'created_at': createdAt.toIso8601String(),
+        'currency': currency,
+        'cycle_end': cycleEnd.toIso8601String(),
+        'cycle_start': cycleStart.toIso8601String(),
+        'health': health,
+        'id': id,
+        'industry': industry,
+        'jobs_this_cycle': jobsThisCycle,
+        'last_active_at': lastActiveAt?.toIso8601String(),
+        'members': members,
+        'name': name,
+        'owner_email': ownerEmail,
+        'owner_name': ownerName,
+        'owner_phone': ownerPhone,
+        'plan': plan.toJson(),
+        'report_language': reportLanguage,
+        'reports_this_cycle': reportsThisCycle,
+        'status': status,
+        'team': team.map((e) => e.toJson()).toList(),
+        'technicians': technicians,
+        'timezone': timezone,
+        'trial_ends_at': trialEndsAt?.toIso8601String(),
+        'upgrade_to': upgradeTo?.toJson(),
+      };
+}
+
+AdminCompanyListModel adminCompanyListModelFromJson(String str) => AdminCompanyListModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminCompanyListModelToJson(AdminCompanyListModel data) => json.encode(data.toJson());
+
+class AdminCompanyListModel {
+  final List<String> countries;
+  /// Per status, for the tabs (search and other filters applied)
+  final AdminCompanyCountsModel counts;
+  final List<AdminOptionModel> industries;
+  final List<AdminCompanyRowModel> items;
+  final int page;
+  final int pageSize;
+  final List<AdminOptionModel> plans;
+  /// Matching the search and filters
+  final int total;
+
+  const AdminCompanyListModel({
+    required this.countries,
+    required this.counts,
+    required this.industries,
+    required this.items,
+    required this.page,
+    required this.pageSize,
+    required this.plans,
+    required this.total,
+  });
+
+  factory AdminCompanyListModel.fromJson(Map<String, dynamic> json) => AdminCompanyListModel(
+        countries: (json['countries'] as List).map((e) => e as String).toList(),
+        counts: AdminCompanyCountsModel.fromJson(json['counts'] as Map<String, dynamic>),
+        industries: (json['industries'] as List).map((e) => AdminOptionModel.fromJson(e as Map<String, dynamic>)).toList(),
+        items: (json['items'] as List).map((e) => AdminCompanyRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        page: (json['page'] as num).toInt(),
+        pageSize: (json['page_size'] as num).toInt(),
+        plans: (json['plans'] as List).map((e) => AdminOptionModel.fromJson(e as Map<String, dynamic>)).toList(),
+        total: (json['total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'countries': countries,
+        'counts': counts.toJson(),
+        'industries': industries.map((e) => e.toJson()).toList(),
+        'items': items.map((e) => e.toJson()).toList(),
+        'page': page,
+        'page_size': pageSize,
+        'plans': plans.map((e) => e.toJson()).toList(),
+        'total': total,
+      };
+}
+
+AdminCompanyRowModel adminCompanyRowModelFromJson(String str) => AdminCompanyRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminCompanyRowModelToJson(AdminCompanyRowModel data) => json.encode(data.toJson());
+
+class AdminCompanyRowModel {
+  /// One of: trial, active, past_due, suspended, cancelled, near_limit
+  final String badge;
+  final String country;
+  final DateTime createdAt;
+  final String id;
+  final String? industry;
+  final String name;
+  final String? ownerEmail;
+  final String? ownerName;
+  final String plan;
+  final String planCode;
+  final int reports30d;
+  /// One of: trial, active, past_due, suspended, cancelled
+  final String status;
+  /// Seats in the plan; None = no limit
+  final int? technicianLimit;
+  /// Active technicians
+  final int technicians;
+  final int? trialDaysLeft;
+
+  const AdminCompanyRowModel({
+    required this.badge,
+    required this.country,
+    required this.createdAt,
+    required this.id,
+    this.industry,
+    required this.name,
+    this.ownerEmail,
+    this.ownerName,
+    required this.plan,
+    required this.planCode,
+    required this.reports30d,
+    required this.status,
+    this.technicianLimit,
+    required this.technicians,
+    this.trialDaysLeft,
+  });
+
+  factory AdminCompanyRowModel.fromJson(Map<String, dynamic> json) => AdminCompanyRowModel(
+        badge: json['badge'] as String,
+        country: json['country'] as String,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        id: json['id'] as String,
+        industry: json['industry'] as String?,
+        name: json['name'] as String,
+        ownerEmail: json['owner_email'] as String?,
+        ownerName: json['owner_name'] as String?,
+        plan: json['plan'] as String,
+        planCode: json['plan_code'] as String,
+        reports30d: (json['reports_30d'] as num).toInt(),
+        status: json['status'] as String,
+        technicianLimit: json['technician_limit'] == null ? null : (json['technician_limit'] as num).toInt(),
+        technicians: (json['technicians'] as num).toInt(),
+        trialDaysLeft: json['trial_days_left'] == null ? null : (json['trial_days_left'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'badge': badge,
+        'country': country,
+        'created_at': createdAt.toIso8601String(),
+        'id': id,
+        'industry': industry,
+        'name': name,
+        'owner_email': ownerEmail,
+        'owner_name': ownerName,
+        'plan': plan,
+        'plan_code': planCode,
+        'reports_30d': reports30d,
+        'status': status,
+        'technician_limit': technicianLimit,
+        'technicians': technicians,
+        'trial_days_left': trialDaysLeft,
+      };
+}
+
 AdminDashboardOutModel adminDashboardOutModelFromJson(String str) => AdminDashboardOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminDashboardOutModelToJson(AdminDashboardOutModel data) => json.encode(data.toJson());
@@ -242,6 +547,66 @@ class AdminMoneyModel {
       };
 }
 
+AdminOptionModel adminOptionModelFromJson(String str) => AdminOptionModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminOptionModelToJson(AdminOptionModel data) => json.encode(data.toJson());
+
+class AdminOptionModel {
+  final String label;
+  final String value;
+
+  const AdminOptionModel({
+    required this.label,
+    required this.value,
+  });
+
+  factory AdminOptionModel.fromJson(Map<String, dynamic> json) => AdminOptionModel(
+        label: json['label'] as String,
+        value: json['value'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'label': label,
+        'value': value,
+      };
+}
+
+AdminPlanInfoModel adminPlanInfoModelFromJson(String str) => AdminPlanInfoModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPlanInfoModelToJson(AdminPlanInfoModel data) => json.encode(data.toJson());
+
+class AdminPlanInfoModel {
+  final String code;
+  final String name;
+  final Map<String, dynamic> prices;
+  final int? reportLimitMonthly;
+  final int? technicianLimit;
+
+  const AdminPlanInfoModel({
+    required this.code,
+    required this.name,
+    required this.prices,
+    this.reportLimitMonthly,
+    this.technicianLimit,
+  });
+
+  factory AdminPlanInfoModel.fromJson(Map<String, dynamic> json) => AdminPlanInfoModel(
+        code: json['code'] as String,
+        name: json['name'] as String,
+        prices: Map<String, dynamic>.from(json['prices'] as Map),
+        reportLimitMonthly: json['report_limit_monthly'] == null ? null : (json['report_limit_monthly'] as num).toInt(),
+        technicianLimit: json['technician_limit'] == null ? null : (json['technician_limit'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'code': code,
+        'name': name,
+        'prices': prices,
+        'report_limit_monthly': reportLimitMonthly,
+        'technician_limit': technicianLimit,
+      };
+}
+
 AdminPlanMixRowModel adminPlanMixRowModelFromJson(String str) => AdminPlanMixRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminPlanMixRowModelToJson(AdminPlanMixRowModel data) => json.encode(data.toJson());
@@ -296,6 +661,51 @@ class AdminStatModel {
   Map<String, dynamic> toJson() => {
         'previous': previous,
         'value': value,
+      };
+}
+
+AdminTeamMemberModel adminTeamMemberModelFromJson(String str) => AdminTeamMemberModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTeamMemberModelToJson(AdminTeamMemberModel data) => json.encode(data.toJson());
+
+class AdminTeamMemberModel {
+  final String id;
+  final String language;
+  final DateTime? lastSeenAt;
+  /// One of: email, phone
+  final String login;
+  final String? name;
+  final String role;
+  final String status;
+
+  const AdminTeamMemberModel({
+    required this.id,
+    required this.language,
+    this.lastSeenAt,
+    required this.login,
+    this.name,
+    required this.role,
+    required this.status,
+  });
+
+  factory AdminTeamMemberModel.fromJson(Map<String, dynamic> json) => AdminTeamMemberModel(
+        id: json['id'] as String,
+        language: json['language'] as String,
+        lastSeenAt: json['last_seen_at'] == null ? null : DateTime.parse(json['last_seen_at'] as String),
+        login: json['login'] as String,
+        name: json['name'] as String?,
+        role: json['role'] as String,
+        status: json['status'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'language': language,
+        'last_seen_at': lastSeenAt?.toIso8601String(),
+        'login': login,
+        'name': name,
+        'role': role,
+        'status': status,
       };
 }
 

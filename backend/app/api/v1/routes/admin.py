@@ -1,11 +1,16 @@
 """Admin panel API (A01 log in, setup, A03 dashboard). Only staff tokens work here; an app user's
 token is refused. Every log in, failed log in and setup is written to the audit log (A31)."""
 
+import uuid
+from typing import Literal
+
 from fastapi import APIRouter, Depends, Query, Request, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import Staff, client_ip, get_db, get_staff
 from app.core.errors import AppError
+from app.core.security import now
+from app.schemas.admin_companies import AdminCompanyDetail, AdminCompanyList
 from app.schemas.identity import Locale
 from app.schemas.staff import (
     AdminDashboardOut,
@@ -17,7 +22,7 @@ from app.schemas.staff import (
     StaffSetupInfo,
     StaffSetupOut,
 )
-from app.services import admin_dashboard, staff
+from app.services import admin_companies, admin_dashboard, audit, staff
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -86,3 +91,64 @@ async def dashboard(
             "validation_error", "Some fields are not valid.", fields={"days": "choose_7_30_90"}, status=422
         )
     return await admin_dashboard.dashboard(db, days=days, lang=locale)
+
+
+# ---- A04 / A05 companies ------------------------------------------------------------------------------
+Status = Literal["trial", "active", "past_due", "suspended", "cancelled"]
+Sort = Literal["reports", "name", "newest", "technicians"]
+
+
+@router.get("/companies", response_model=AdminCompanyList)
+async def companies(
+    q: str | None = Query(None, max_length=120, description="Company, owner name, email or phone"),
+    status: Status | None = None,
+    plan: str | None = Query(None, max_length=24),
+    industry: str | None = Query(None, max_length=40),
+    country: str | None = Query(None, min_length=2, max_length=2),
+    sort: Sort = "reports",
+    page: int = Query(1, ge=1, le=10_000),
+    page_size: int = Query(20, ge=5, le=100),
+    locale: Locale = "en",
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminCompanyList:
+    return await admin_companies.companies(
+        db, lang=locale, q=q, status=status, plan=plan, industry=industry, country=country, sort=sort,
+        page=page, page_size=page_size,
+    )  # fmt: skip
+
+
+@router.get("/companies.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
+async def companies_csv(
+    q: str | None = Query(None, max_length=120),
+    status: Status | None = None,
+    plan: str | None = Query(None, max_length=24),
+    industry: str | None = Query(None, max_length=40),
+    country: str | None = Query(None, min_length=2, max_length=2),
+    sort: Sort = "reports",
+    locale: Locale = "en",
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> Response:
+    """Every matching company (not just one page), for a spreadsheet. Exports are written to the audit log."""
+    filters = {"q": q, "status": status, "plan": plan, "industry": industry, "country": country}
+    body = await admin_companies.companies_csv(db, lang=locale, sort=sort, **filters)
+    await audit.record(db, "staff.export", staff_id=me.staff.id, target_type="companies",
+                       data={k: v for k, v in filters.items() if v})  # fmt: skip
+    stamp = now().strftime("%Y-%m-%d")
+    return Response(
+        "".join(body),
+        media_type="text/csv; charset=utf-8",
+        headers={"Content-Disposition": f'attachment; filename="kaamnishaan-companies-{stamp}.csv"',
+                 "Cache-Control": "no-store"},
+    )  # fmt: skip
+
+
+@router.get("/companies/{company_id}", response_model=AdminCompanyDetail)
+async def company(
+    company_id: uuid.UUID,
+    locale: Locale = "en",
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminCompanyDetail:
+    return await admin_companies.company(db, company_id, lang=locale)

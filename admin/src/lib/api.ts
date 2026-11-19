@@ -65,3 +65,32 @@ export async function api<T>(path: string, init: Init = {}): Promise<T> {
     return send<T>(path, init, renewed);
   }
 }
+
+/** Downloads a file the API makes (CSV export) with the staff token, and saves it. */
+export async function download(path: string, fallbackName: string): Promise<void> {
+  const go = (token?: string) =>
+    fetch(`${API_URL}/api/v1${path}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
+  let res: Response;
+  try {
+    res = await go(session.get()?.access_token);
+    if (res.status === 401) {
+      const t = await session.renew();
+      if (!t) {
+        session.end(true);
+        throw new ApiError(401, 'session_ended', 'Please log in again.');
+      }
+      res = await go(t);
+    }
+  } catch (e) {
+    if (e instanceof ApiError) throw e;
+    throw new ApiError(0, 'no_internet', 'No connection');
+  }
+  if (!res.ok) throw new ApiError(res.status, 'download_failed', 'Download failed');
+  const name = /filename="([^"]+)"/.exec(res.headers.get('content-disposition') ?? '')?.[1] ?? fallbackName;
+  const url = URL.createObjectURL(await res.blob());
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = name;
+  a.click();
+  URL.revokeObjectURL(url);
+}

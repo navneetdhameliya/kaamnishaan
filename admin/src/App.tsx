@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { rememberLang, startLang, translator, type Lang } from './lib/i18n';
 import { session } from './lib/session';
 import type { StaffSession } from './lib/types';
+import { Companies } from './pages/Companies';
+import { CompanyDetail } from './pages/CompanyDetail';
 import { Dashboard, RangeSelect, RANGES, type Range } from './pages/Dashboard';
 import { Forgot, Login } from './pages/Login';
 import { Setup } from './pages/Setup';
@@ -22,7 +24,10 @@ export default function App() {
     return (RANGES as readonly number[]).includes(d) ? (d as Range) : 30;
   });
 
+  const [pageName, setPageName] = useState('');
+  const onName = useCallback((n: string) => setPageName(n), []);
   useEffect(() => session.subscribe(setSess), []);
+  useEffect(() => setPageName(''), [path]);
   useEffect(() => {
     document.documentElement.lang = lang;
     rememberLang(lang);
@@ -48,6 +53,12 @@ export default function App() {
   if (!nav) return null;
 
   const name = t(`admin.nav.${nav.key}`);
+  const companyId = nav.key === 'companies' && path.startsWith('/companies/') ? path.slice('/companies/'.length) : null;
+  let page;
+  if (!nav.ready) page = <Soon t={t} name={name} />;
+  else if (nav.key === 'dashboard') page = <Dashboard t={t} lang={lang} days={days} />;
+  else if (companyId) page = <CompanyDetail key={companyId} t={t} lang={lang} id={companyId} onName={onName} />;
+  else page = <Companies key={path} t={t} lang={lang} />;
   return (
     <Shell
       t={t}
@@ -55,11 +66,11 @@ export default function App() {
       onLang={setLang}
       path={path}
       staff={sess.staff}
-      crumb={t(`admin.nav.${nav.section}`)}
-      title={name}
+      crumb={companyId ? `${t(`admin.nav.${nav.section}`)} / ${name}` : t(`admin.nav.${nav.section}`)}
+      title={companyId ? pageName || name : name}
       actions={nav.key === 'dashboard' ? <RangeSelect t={t} days={days} onChange={setDays} /> : undefined}
     >
-      {nav.ready ? <Dashboard t={t} lang={lang} days={days} /> : <Soon t={t} name={name} />}
+      {page}
     </Shell>
   );
 }
