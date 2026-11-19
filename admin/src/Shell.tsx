@@ -53,7 +53,7 @@ export const NAV: { section: string; items: NavItem[] }[] = [
   {
     section: 'system',
     items: [
-      { key: 'audit', path: '/audit-logs', icon: ScrollText },
+      { key: 'audit', path: '/audit-logs', icon: ScrollText, ready: true },
       { key: 'settings', path: '/settings', icon: Globe },
       { key: 'email', path: '/email-settings', icon: Bell },
     ],

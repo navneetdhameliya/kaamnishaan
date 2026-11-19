@@ -1,4 +1,4 @@
-import { AlertCircle, Briefcase, ChevronLeft, Clock, FileText, Globe, MapPin, SlidersHorizontal, Timer, User } from 'lucide-react';
+import { AlertCircle, Briefcase, ChevronLeft, Clock, FileText, Globe, MapPin, ScrollText, SlidersHorizontal, Timer, User } from 'lucide-react';
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
 
 import { api, ApiError } from '../lib/api';
@@ -64,10 +64,16 @@ export function CompanyDetail({ t, lang, id, onName }: { t: T; lang: Lang; id: s
   useEffect(load, [load]);
 
   const back = (
-    <Link to="/companies" className="group inline-flex w-fit items-center gap-4 text-latin-label-sm font-semibold text-text-secondary hover:text-text-primary">
-      <ChevronLeft width={16} height={16} className="transition-transform group-hover:-translate-x-[3px]" aria-hidden />
-      {t('admin.co.back')}
-    </Link>
+    <div className="flex flex-wrap items-center justify-between gap-12">
+      <Link to="/companies" className="group inline-flex w-fit items-center gap-4 text-latin-label-sm font-semibold text-text-secondary hover:text-text-primary">
+        <ChevronLeft width={16} height={16} className="transition-transform group-hover:-translate-x-[3px]" aria-hidden />
+        {t('admin.co.back')}
+      </Link>
+      <Link to={`/audit-logs?company=${id}&days=90`} className="kn-link inline-flex items-center gap-[6px] text-latin-label-sm font-semibold text-mocha-700">
+        <ScrollText width={16} height={16} aria-hidden />
+        {t('admin.au.audit_link')}
+      </Link>
+    </div>
   );
   if (error)
     return (

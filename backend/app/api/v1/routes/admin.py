@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import Staff, client_ip, get_db, get_staff
 from app.core.errors import AppError, Forbidden
 from app.core.security import now
+from app.schemas.admin_audit import AdminAuditList
 from app.schemas.admin_companies import AdminCompanyDetail, AdminCompanyList
 from app.schemas.admin_leads import AdminLeadDetail, AdminLeadList, AdminLeadUpdate
 from app.schemas.admin_users import AdminUserAction, AdminUserDetail, AdminUserList
@@ -24,7 +25,7 @@ from app.schemas.staff import (
     StaffSetupInfo,
     StaffSetupOut,
 )
-from app.services import admin_companies, admin_dashboard, admin_leads, admin_users, audit, staff
+from app.services import admin_audit, admin_companies, admin_dashboard, admin_leads, admin_users, audit, staff
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -280,4 +281,64 @@ async def update_lead(
     """Change the status and / or the staff note. Support staff can do this too."""
     return await admin_leads.update(
         db, lead_id, body, staff_id=me.staff.id, ip=client_ip(request), lang=locale
+    )
+
+
+# ---- A31 audit logs -------------------------------------------------------------------------------------
+Actor = Literal["staff", "user", "system"]
+Group = Literal["security", "admin", "company", "team", "jobs", "reports"]
+DAYS = (1, 7, 30, 90, 365)
+
+
+def _days(days: int = Query(7, description="1, 7, 30, 90 or 365")) -> int:
+    if days not in DAYS:
+        raise AppError(
+            "validation_error", "Some fields are not valid.", fields={"days": "choose_from_list"}, status=422
+        )
+    return days
+
+
+@router.get("/audit-logs", response_model=AdminAuditList)
+async def audit_logs(
+    q: str | None = Query(
+        None, max_length=120, description="Actor name or email, action, target, IP, details"
+    ),
+    actor: Actor | None = None,
+    group: Group | None = None,
+    company: uuid.UUID | None = None,
+    days: int = Depends(_days),
+    page: int = Query(1, ge=1, le=10_000),
+    page_size: int = Query(25, ge=5, le=100),
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminAuditList:
+    """Newest first. Every staff member can read it; nobody can change or delete entries."""
+    return await admin_audit.logs(
+        db, q=q, actor=actor, group=group, company_id=company, days=days, page=page, page_size=page_size
+    )
+
+
+@router.get("/audit-logs.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
+async def audit_logs_csv(
+    q: str | None = Query(None, max_length=120),
+    actor: Actor | None = None,
+    group: Group | None = None,
+    company: uuid.UUID | None = None,
+    days: int = Depends(_days),
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> Response:
+    """Up to 50,000 matching entries. The export itself is written to the audit log."""
+    body = await admin_audit.logs_csv(db, q=q, actor=actor, group=group, company_id=company, days=days)
+    await audit.record(
+        db, "staff.export", staff_id=me.staff.id, target_type="audit_logs",
+        data={k: v for k, v in {"q": q, "actor": actor, "group": group, "days": days}.items() if v},
+    )  # fmt: skip
+    return Response(
+        body,
+        media_type="text/csv; charset=utf-8",
+        headers={
+            "Content-Disposition": f'attachment; filename="kaamnishaan-audit-{now():%Y-%m-%d}.csv"',
+            "Cache-Control": "no-store",
+        },
     )
