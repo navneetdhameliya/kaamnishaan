@@ -1,0 +1,885 @@
+{
+  "updated": "2026-11-19",
+  "content": {
+    "en": {
+      "title": "Privacy policy",
+      "country": "India",
+      "missing": {
+        "company": "[company legal name]",
+        "address": "[registered address]",
+        "city": "[city]",
+        "email": "[contact email]"
+      },
+      "intro": "This policy explains what personal information KaamNishaan collects through its website, mobile apps and report links, why we collect it, and the choices you have.",
+      "sections": [
+        {
+          "id": "who",
+          "heading": "1. Who we are",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "KaamNishaan is run by {company}, {address} (“we”, “us”). We make proof-of-work software for field-service teams."
+            },
+            {
+              "type": "p",
+              "text": "When a company uses KaamNishaan, that company decides what its team records about its own customers. For that information we act on the company’s behalf."
+            }
+          ]
+        },
+        {
+          "id": "collect",
+          "heading": "2. Information we collect",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "We collect only what we need to run the service:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Account details — name, phone number, work email, role and company",
+                "Job content — photos (with the time and place they were taken), checklist answers, voice recordings and their written text, notes and reports",
+                "Customer details your team adds — names, addresses and contact numbers",
+                "Report link activity — when a link is first opened, and the name a customer gives when they acknowledge or rate a report",
+                "Website forms — what you type when you book a demo, contact us or join the newsletter",
+                "Technical data — app version, device type, error logs and IP address"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "use",
+          "heading": "3. How we use information",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "We use this information to:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Run jobs, store proof and make reports",
+                "Draft reports, written text and translations with AI (see section 4)",
+                "Send the messages you ask for, such as report links and review reminders by SMS, WhatsApp or email",
+                "Keep accounts safe and stop misuse, for example by limiting repeated sign-in attempts",
+                "Answer your questions and improve the service"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "We do not sell personal information and we do not use it for advertising."
+            }
+          ]
+        },
+        {
+          "id": "ai",
+          "heading": "4. AI processing",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "To write down voice notes, draft reports, translate and answer questions in the AI assistant, we send the needed photos, checklist answers, notes and recordings to our AI provider (OpenAI) through its business service."
+            },
+            {
+              "type": "p",
+              "text": "Under that service your content is not used to train the provider’s models. AI drafts are always checked by a person in your team before a customer sees them."
+            }
+          ]
+        },
+        {
+          "id": "sharing",
+          "heading": "5. Who we share it with",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "We share information only with:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Service providers who run parts of KaamNishaan for us: hosting (Render, Singapore), file storage (Cloudflare), AI (OpenAI) and the SMS, WhatsApp, email and payment providers we use when those features are switched on",
+                "The people your team sends a report link to",
+                "Authorities, when the law requires it"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Each provider may use the information only to provide its service to us."
+            }
+          ]
+        },
+        {
+          "id": "storage",
+          "heading": "6. Where we store it and for how long",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Information is stored on servers in Singapore and with Cloudflare, protected by encryption in transit and limited access."
+            },
+            {
+              "type": "p",
+              "text": "We keep job content while your company’s account is active. Report links stop working after 30 days unless your team renews them. When an account is closed, we delete its content within 30 days, except what the law requires us to keep."
+            }
+          ]
+        },
+        {
+          "id": "rights",
+          "heading": "7. Your rights",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "You can ask to see, correct, download or delete your personal information, and you can withdraw consent to optional messages at any time, including under India’s Digital Personal Data Protection Act, 2023."
+            },
+            {
+              "type": "p",
+              "text": "If your information was added by a company that uses KaamNishaan, please contact that company first; we will help them answer. Write to {email} and we will reply within 30 days."
+            }
+          ]
+        },
+        {
+          "id": "cookies",
+          "heading": "8. Cookies and browser storage",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Our website does not use advertising or tracking cookies. It saves your chosen language and a note that the page has already loaded in your browser’s storage. The mobile app keeps your sign-in securely on your phone."
+            }
+          ]
+        },
+        {
+          "id": "children",
+          "heading": "9. Children",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "KaamNishaan is for businesses. It is not meant for anyone under 18, and we do not knowingly collect their information."
+            }
+          ]
+        },
+        {
+          "id": "changes",
+          "heading": "10. Changes to this policy",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "If we change this policy we will update the date at the top. For important changes we will also tell account owners in the app or by email before they take effect."
+            }
+          ]
+        },
+        {
+          "id": "contact",
+          "heading": "11. Contact",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Questions or requests about privacy: {email}, or write to {company}, {address}."
+            }
+          ]
+        }
+      ]
+    },
+    "hi": {
+      "title": "गोपनीयता नीति",
+      "country": "भारत",
+      "missing": {
+        "company": "[कंपनी का क़ानूनी नाम]",
+        "address": "[पंजीकृत पता]",
+        "city": "[शहर]",
+        "email": "[संपर्क ईमेल]"
+      },
+      "intro": "यह नीति बताती है कि KaamNishaan अपनी वेबसाइट, मोबाइल ऐप और रिपोर्ट लिंक से कौन-सी निजी जानकारी लेता है, क्यों लेता है, और आपके पास क्या विकल्प हैं।",
+      "sections": [
+        {
+          "id": "who",
+          "heading": "1. हम कौन हैं",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "KaamNishaan को {company}, {address} (“हम”) चलाते हैं। हम फ़ील्ड सर्विस टीमों के लिए काम का सबूत रखने वाला सॉफ़्टवेयर बनाते हैं।"
+            },
+            {
+              "type": "p",
+              "text": "जब कोई कंपनी KaamNishaan इस्तेमाल करती है, तो वही कंपनी तय करती है कि उसकी टीम अपने ग्राहकों के बारे में क्या दर्ज करे। उस जानकारी के लिए हम उस कंपनी की ओर से काम करते हैं।"
+            }
+          ]
+        },
+        {
+          "id": "collect",
+          "heading": "2. हम कौन-सी जानकारी लेते हैं",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "हम सिर्फ़ उतनी जानकारी लेते हैं जितनी सेवा चलाने के लिए ज़रूरी है:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "अकाउंट की जानकारी — नाम, फ़ोन नंबर, काम का ईमेल, भूमिका और कंपनी",
+                "जॉब की सामग्री — फ़ोटो (लेने के समय और जगह के साथ), चेकलिस्ट के जवाब, आवाज़ की रिकॉर्डिंग और उनका लिखा हुआ रूप, नोट और रिपोर्ट",
+                "आपकी टीम द्वारा जोड़ी गई ग्राहक जानकारी — नाम, पते और संपर्क नंबर",
+                "रिपोर्ट लिंक की गतिविधि — लिंक पहली बार कब खुला, और रिपोर्ट की पुष्टि या रेटिंग करते समय ग्राहक का दिया नाम",
+                "वेबसाइट फ़ॉर्म — डेमो बुक करते, संपर्क करते या न्यूज़लेटर से जुड़ते समय आप जो लिखते हैं",
+                "तकनीकी जानकारी — ऐप वर्ज़न, डिवाइस का प्रकार, एरर लॉग और IP पता"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "use",
+          "heading": "3. हम जानकारी का इस्तेमाल कैसे करते हैं",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "हम इस जानकारी का इस्तेमाल करते हैं:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "जॉब चलाने, सबूत रखने और रिपोर्ट बनाने के लिए",
+                "AI से रिपोर्ट, लिखा हुआ रूप और अनुवाद तैयार करने के लिए (भाग 4 देखें)",
+                "आपके कहे संदेश भेजने के लिए, जैसे SMS, WhatsApp या ईमेल से रिपोर्ट लिंक और रिव्यू रिमाइंडर",
+                "अकाउंट सुरक्षित रखने और ग़लत इस्तेमाल रोकने के लिए, जैसे बार-बार लॉगिन की कोशिश सीमित करना",
+                "आपके सवालों के जवाब देने और सेवा बेहतर करने के लिए"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "हम निजी जानकारी बेचते नहीं हैं और विज्ञापन के लिए इस्तेमाल नहीं करते।"
+            }
+          ]
+        },
+        {
+          "id": "ai",
+          "heading": "4. AI से प्रोसेसिंग",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "वॉइस नोट लिखने, रिपोर्ट बनाने, अनुवाद करने और AI असिस्टेंट के सवालों के जवाब देने के लिए हम ज़रूरी फ़ोटो, चेकलिस्ट जवाब, नोट और रिकॉर्डिंग अपने AI प्रदाता (OpenAI) की बिज़नेस सेवा से भेजते हैं।"
+            },
+            {
+              "type": "p",
+              "text": "उस सेवा में आपकी सामग्री से प्रदाता के मॉडल नहीं सिखाए जाते। ग्राहक के देखने से पहले हर AI ड्राफ़्ट आपकी टीम का कोई व्यक्ति जाँचता है।"
+            }
+          ]
+        },
+        {
+          "id": "sharing",
+          "heading": "5. हम किसके साथ शेयर करते हैं",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "हम जानकारी सिर्फ़ इनके साथ शेयर करते हैं:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "सेवा प्रदाता जो हमारे लिए KaamNishaan के हिस्से चलाते हैं: होस्टिंग (Render, सिंगापुर), फ़ाइल स्टोरेज (Cloudflare), AI (OpenAI) और वे SMS, WhatsApp, ईमेल और भुगतान प्रदाता जो उन फ़ीचर के चालू होने पर इस्तेमाल होते हैं",
+                "वे लोग जिन्हें आपकी टीम रिपोर्ट लिंक भेजती है",
+                "सरकारी अधिकारी, जब क़ानून ऐसा कहे"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "हर प्रदाता जानकारी का इस्तेमाल सिर्फ़ हमें अपनी सेवा देने के लिए कर सकता है।"
+            }
+          ]
+        },
+        {
+          "id": "storage",
+          "heading": "6. हम जानकारी कहाँ और कब तक रखते हैं",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "जानकारी सिंगापुर के सर्वरों पर और Cloudflare पर रखी जाती है, भेजते समय एन्क्रिप्शन और सीमित पहुँच से सुरक्षित।"
+            },
+            {
+              "type": "p",
+              "text": "जब तक आपकी कंपनी का अकाउंट चालू है, हम जॉब की सामग्री रखते हैं। रिपोर्ट लिंक 30 दिन बाद काम करना बंद कर देते हैं, जब तक टीम उन्हें फिर से चालू न करे। अकाउंट बंद होने पर हम उसकी सामग्री 30 दिनों में हटा देते हैं, सिवाय उसके जो क़ानूनन रखना ज़रूरी है।"
+            }
+          ]
+        },
+        {
+          "id": "rights",
+          "heading": "7. आपके अधिकार",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "आप अपनी निजी जानकारी देखने, ठीक करवाने, डाउनलोड करने या हटवाने के लिए कह सकते हैं, और वैकल्पिक संदेशों की सहमति कभी भी वापस ले सकते हैं, जिसमें भारत का डिजिटल व्यक्तिगत डेटा संरक्षण अधिनियम, 2023 भी शामिल है।"
+            },
+            {
+              "type": "p",
+              "text": "अगर आपकी जानकारी किसी ऐसी कंपनी ने जोड़ी है जो KaamNishaan इस्तेमाल करती है, तो पहले उस कंपनी से संपर्क करें; हम उन्हें जवाब देने में मदद करेंगे। {email} पर लिखें, हम 30 दिनों में जवाब देंगे।"
+            }
+          ]
+        },
+        {
+          "id": "cookies",
+          "heading": "8. कुकी और ब्राउज़र स्टोरेज",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "हमारी वेबसाइट विज्ञापन या ट्रैकिंग कुकी इस्तेमाल नहीं करती। वह आपके ब्राउज़र स्टोरेज में आपकी चुनी भाषा और यह नोट रखती है कि पेज पहले लोड हो चुका है। मोबाइल ऐप आपका लॉगिन आपके फ़ोन में सुरक्षित रखता है।"
+            }
+          ]
+        },
+        {
+          "id": "children",
+          "heading": "9. बच्चे",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "KaamNishaan व्यापार के लिए है। यह 18 साल से कम उम्र के लोगों के लिए नहीं है, और हम जानबूझकर उनकी जानकारी नहीं लेते।"
+            }
+          ]
+        },
+        {
+          "id": "changes",
+          "heading": "10. इस नीति में बदलाव",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "अगर हम यह नीति बदलते हैं तो ऊपर की तारीख अपडेट करेंगे। ज़रूरी बदलावों के बारे में हम अकाउंट मालिकों को लागू होने से पहले ऐप में या ईमेल से भी बताएँगे।"
+            }
+          ]
+        },
+        {
+          "id": "contact",
+          "heading": "11. संपर्क",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "गोपनीयता से जुड़े सवाल या अनुरोध: {email}, या {company}, {address} पर लिखें।"
+            }
+          ]
+        }
+      ]
+    },
+    "gu": {
+      "title": "ગોપનીયતા નીતિ",
+      "country": "ભારત",
+      "missing": {
+        "company": "[કંપનીનું કાનૂની નામ]",
+        "address": "[નોંધાયેલું સરનામું]",
+        "city": "[શહેર]",
+        "email": "[સંપર્ક ઈમેલ]"
+      },
+      "intro": "આ નીતિ સમજાવે છે કે KaamNishaan તેની વેબસાઇટ, મોબાઇલ ઍપ અને રિપોર્ટ લિંકથી કઈ અંગત માહિતી લે છે, શા માટે લે છે, અને તમારી પાસે કયા વિકલ્પો છે.",
+      "sections": [
+        {
+          "id": "who",
+          "heading": "1. અમે કોણ છીએ",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "KaamNishaan {company}, {address} (“અમે”) ચલાવે છે. અમે ફીલ્ડ સર્વિસ ટીમો માટે કામનો પુરાવો રાખતું સૉફ્ટવેર બનાવીએ છીએ."
+            },
+            {
+              "type": "p",
+              "text": "જ્યારે કોઈ કંપની KaamNishaan વાપરે છે, ત્યારે એ જ કંપની નક્કી કરે છે કે તેની ટીમ પોતાના ગ્રાહકો વિશે શું નોંધે. એ માહિતી માટે અમે એ કંપની વતી કામ કરીએ છીએ."
+            }
+          ]
+        },
+        {
+          "id": "collect",
+          "heading": "2. અમે કઈ માહિતી લઈએ છીએ",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "અમે ફક્ત એટલી માહિતી લઈએ છીએ જેટલી સેવા ચલાવવા જરૂરી છે:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "એકાઉન્ટની માહિતી — નામ, ફોન નંબર, કામનો ઈમેલ, ભૂમિકા અને કંપની",
+                "જૉબની સામગ્રી — ફોટો (લેવાના સમય અને જગ્યા સાથે), ચેકલિસ્ટના જવાબ, અવાજનાં રેકોર્ડિંગ અને તેનું લખાણ, નોટ અને રિપોર્ટ",
+                "તમારી ટીમે ઉમેરેલી ગ્રાહક માહિતી — નામ, સરનામાં અને સંપર્ક નંબર",
+                "રિપોર્ટ લિંકની પ્રવૃત્તિ — લિંક પહેલી વાર ક્યારે ખૂલી, અને રિપોર્ટની પુષ્ટિ કે રેટિંગ વખતે ગ્રાહકે આપેલું નામ",
+                "વેબસાઇટ ફોર્મ — ડેમો બુક કરતી, સંપર્ક કરતી કે ન્યૂઝલેટરમાં જોડાતી વખતે તમે જે લખો છો",
+                "ટેક્નિકલ માહિતી — ઍપ વર્ઝન, ડિવાઇસનો પ્રકાર, એરર લૉગ અને IP સરનામું"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "use",
+          "heading": "3. અમે માહિતીનો ઉપયોગ કેવી રીતે કરીએ છીએ",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "અમે આ માહિતીનો ઉપયોગ કરીએ છીએ:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "જૉબ ચલાવવા, પુરાવો રાખવા અને રિપોર્ટ બનાવવા",
+                "AIથી રિપોર્ટ, લખાણ અને અનુવાદ તૈયાર કરવા (ભાગ 4 જુઓ)",
+                "તમે કહો તે સંદેશા મોકલવા, જેમ કે SMS, WhatsApp કે ઈમેલથી રિપોર્ટ લિંક અને રિવ્યૂ રિમાઇન્ડર",
+                "એકાઉન્ટ સુરક્ષિત રાખવા અને ખોટો ઉપયોગ રોકવા, જેમ કે વારંવાર લૉગિનના પ્રયાસ મર્યાદિત કરવા",
+                "તમારા પ્રશ્નોના જવાબ આપવા અને સેવા સુધારવા"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "અમે અંગત માહિતી વેચતા નથી અને જાહેરાત માટે વાપરતા નથી."
+            }
+          ]
+        },
+        {
+          "id": "ai",
+          "heading": "4. AIથી પ્રોસેસિંગ",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "વૉઇસ નોટ લખવા, રિપોર્ટ બનાવવા, અનુવાદ કરવા અને AI આસિસ્ટન્ટના પ્રશ્નોના જવાબ આપવા અમે જરૂરી ફોટો, ચેકલિસ્ટ જવાબ, નોટ અને રેકોર્ડિંગ અમારા AI પ્રદાતા (OpenAI)ની બિઝનેસ સેવા દ્વારા મોકલીએ છીએ."
+            },
+            {
+              "type": "p",
+              "text": "એ સેવામાં તમારી સામગ્રીથી પ્રદાતાનાં મૉડલ શીખવવામાં આવતાં નથી. ગ્રાહક જુએ તે પહેલાં દરેક AI ડ્રાફ્ટ તમારી ટીમની કોઈ વ્યક્તિ તપાસે છે."
+            }
+          ]
+        },
+        {
+          "id": "sharing",
+          "heading": "5. અમે કોની સાથે શેર કરીએ છીએ",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "અમે માહિતી ફક્ત આમની સાથે શેર કરીએ છીએ:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "સેવા પ્રદાતાઓ જે અમારા માટે KaamNishaanના ભાગ ચલાવે છે: હોસ્ટિંગ (Render, સિંગાપોર), ફાઇલ સ્ટોરેજ (Cloudflare), AI (OpenAI) અને એ SMS, WhatsApp, ઈમેલ અને પેમેન્ટ પ્રદાતા જે એ ફીચર ચાલુ થાય ત્યારે વપરાય છે",
+                "એ લોકો જેમને તમારી ટીમ રિપોર્ટ લિંક મોકલે છે",
+                "સરકારી અધિકારીઓ, જ્યારે કાયદો કહે"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "દરેક પ્રદાતા માહિતીનો ઉપયોગ ફક્ત અમને પોતાની સેવા આપવા માટે કરી શકે છે."
+            }
+          ]
+        },
+        {
+          "id": "storage",
+          "heading": "6. અમે માહિતી ક્યાં અને ક્યાં સુધી રાખીએ છીએ",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "માહિતી સિંગાપોરના સર્વરો પર અને Cloudflare પર રખાય છે, મોકલતી વખતે એન્ક્રિપ્શન અને મર્યાદિત પહોંચથી સુરક્ષિત."
+            },
+            {
+              "type": "p",
+              "text": "તમારી કંપનીનું એકાઉન્ટ ચાલુ છે ત્યાં સુધી અમે જૉબની સામગ્રી રાખીએ છીએ. રિપોર્ટ લિંક 30 દિવસ પછી કામ કરતી બંધ થાય છે, સિવાય કે ટીમ તેને ફરી ચાલુ કરે. એકાઉન્ટ બંધ થાય ત્યારે અમે તેની સામગ્રી 30 દિવસમાં કાઢી નાખીએ છીએ, સિવાય કે જે કાયદાથી રાખવી જરૂરી હોય."
+            }
+          ]
+        },
+        {
+          "id": "rights",
+          "heading": "7. તમારા અધિકાર",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "તમે તમારી અંગત માહિતી જોવા, સુધારવા, ડાઉનલોડ કરવા કે કાઢવા કહી શકો છો, અને વૈકલ્પિક સંદેશાની સંમતિ ગમે ત્યારે પાછી ખેંચી શકો છો, જેમાં ભારતનો ડિજિટલ પર્સનલ ડેટા પ્રોટેક્શન કાયદો, 2023 પણ સામેલ છે."
+            },
+            {
+              "type": "p",
+              "text": "જો તમારી માહિતી KaamNishaan વાપરતી કોઈ કંપનીએ ઉમેરી હોય, તો પહેલાં એ કંપનીનો સંપર્ક કરો; અમે તેમને જવાબ આપવામાં મદદ કરીશું. {email} પર લખો, અમે 30 દિવસમાં જવાબ આપીશું."
+            }
+          ]
+        },
+        {
+          "id": "cookies",
+          "heading": "8. કૂકી અને બ્રાઉઝર સ્ટોરેજ",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "અમારી વેબસાઇટ જાહેરાત કે ટ્રૅકિંગ કૂકી વાપરતી નથી. તે તમારા બ્રાઉઝર સ્ટોરેજમાં તમે પસંદ કરેલી ભાષા અને પેજ પહેલેથી લોડ થયાની નોંધ રાખે છે. મોબાઇલ ઍપ તમારું લૉગિન તમારા ફોનમાં સુરક્ષિત રાખે છે."
+            }
+          ]
+        },
+        {
+          "id": "children",
+          "heading": "9. બાળકો",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "KaamNishaan વ્યવસાય માટે છે. તે 18 વર્ષથી ઓછી ઉંમરના લોકો માટે નથી, અને અમે જાણીજોઈને તેમની માહિતી લેતા નથી."
+            }
+          ]
+        },
+        {
+          "id": "changes",
+          "heading": "10. આ નીતિમાં ફેરફાર",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "જો અમે આ નીતિ બદલીએ તો ઉપરની તારીખ અપડેટ કરીશું. મહત્વના ફેરફારો વિશે અમે એકાઉન્ટ માલિકોને લાગુ થતાં પહેલાં ઍપમાં કે ઈમેલથી પણ જણાવીશું."
+            }
+          ]
+        },
+        {
+          "id": "contact",
+          "heading": "11. સંપર્ક",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "ગોપનીયતા વિશે પ્રશ્નો કે વિનંતી: {email}, કે {company}, {address} પર લખો."
+            }
+          ]
+        }
+      ]
+    },
+    "es": {
+      "title": "Política de privacidad",
+      "country": "India",
+      "missing": {
+        "company": "[nombre legal de la empresa]",
+        "address": "[domicilio social]",
+        "city": "[ciudad]",
+        "email": "[email de contacto]"
+      },
+      "intro": "Esta política explica qué información personal recoge KaamNishaan a través de su web, sus apps y los enlaces de informes, por qué la recoge y qué opciones tienes.",
+      "sections": [
+        {
+          "id": "who",
+          "heading": "1. Quiénes somos",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "KaamNishaan lo gestiona {company}, {address} (“nosotros”). Creamos software de pruebas de trabajo para equipos de servicio en campo."
+            },
+            {
+              "type": "p",
+              "text": "Cuando una empresa usa KaamNishaan, es esa empresa quien decide qué registra su equipo sobre sus propios clientes. Para esa información actuamos en nombre de la empresa."
+            }
+          ]
+        },
+        {
+          "id": "collect",
+          "heading": "2. Información que recogemos",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Solo recogemos lo necesario para prestar el servicio:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Datos de la cuenta: nombre, teléfono, email de trabajo, función y empresa",
+                "Contenido de los trabajos: fotos (con la hora y el lugar en que se hicieron), respuestas de las listas, grabaciones de voz y su texto, notas e informes",
+                "Datos de clientes que añade tu equipo: nombres, direcciones y teléfonos",
+                "Actividad de los enlaces de informes: cuándo se abre un enlace por primera vez y el nombre que da el cliente al confirmar o valorar un informe",
+                "Formularios de la web: lo que escribes al reservar una demo, contactarnos o suscribirte al boletín",
+                "Datos técnicos: versión de la app, tipo de dispositivo, registros de errores y dirección IP"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "use",
+          "heading": "3. Cómo usamos la información",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Usamos esta información para:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Gestionar trabajos, guardar pruebas y crear informes",
+                "Redactar informes, textos y traducciones con IA (ver sección 4)",
+                "Enviar los mensajes que pides, como enlaces de informes y recordatorios de reseñas por SMS, WhatsApp o email",
+                "Proteger las cuentas y evitar abusos, por ejemplo limitando los intentos repetidos de acceso",
+                "Responder a tus preguntas y mejorar el servicio"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "No vendemos información personal ni la usamos para publicidad."
+            }
+          ]
+        },
+        {
+          "id": "ai",
+          "heading": "4. Tratamiento con IA",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Para transcribir notas de voz, redactar informes, traducir y responder en el asistente de IA, enviamos las fotos, respuestas, notas y grabaciones necesarias a nuestro proveedor de IA (OpenAI) mediante su servicio para empresas."
+            },
+            {
+              "type": "p",
+              "text": "Con ese servicio tu contenido no se usa para entrenar los modelos del proveedor. Una persona de tu equipo revisa siempre cada borrador de IA antes de que lo vea un cliente."
+            }
+          ]
+        },
+        {
+          "id": "sharing",
+          "heading": "5. Con quién la compartimos",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Solo compartimos información con:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Proveedores que gestionan partes de KaamNishaan para nosotros: alojamiento (Render, Singapur), almacenamiento de archivos (Cloudflare), IA (OpenAI) y los proveedores de SMS, WhatsApp, email y pagos que usamos cuando esas funciones están activas",
+                "Las personas a las que tu equipo envía un enlace de informe",
+                "Las autoridades, cuando la ley lo exige"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Cada proveedor solo puede usar la información para prestarnos su servicio."
+            }
+          ]
+        },
+        {
+          "id": "storage",
+          "heading": "6. Dónde la guardamos y durante cuánto tiempo",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "La información se guarda en servidores de Singapur y en Cloudflare, protegida con cifrado en tránsito y acceso limitado."
+            },
+            {
+              "type": "p",
+              "text": "Guardamos el contenido de los trabajos mientras la cuenta de tu empresa esté activa. Los enlaces de informes dejan de funcionar a los 30 días salvo que tu equipo los renueve. Cuando se cierra una cuenta, borramos su contenido en 30 días, salvo lo que la ley nos obligue a conservar."
+            }
+          ]
+        },
+        {
+          "id": "rights",
+          "heading": "7. Tus derechos",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Puedes pedir ver, corregir, descargar o borrar tu información personal, y retirar en cualquier momento tu consentimiento a mensajes opcionales, incluso conforme a la Ley de Protección de Datos Personales Digitales de la India de 2023."
+            },
+            {
+              "type": "p",
+              "text": "Si tu información la añadió una empresa que usa KaamNishaan, contacta primero con esa empresa; la ayudaremos a responder. Escribe a {email} y responderemos en 30 días."
+            }
+          ]
+        },
+        {
+          "id": "cookies",
+          "heading": "8. Cookies y almacenamiento del navegador",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Nuestra web no usa cookies publicitarias ni de seguimiento. Guarda en el almacenamiento de tu navegador el idioma elegido y una nota de que la página ya se ha cargado. La app guarda tu sesión de forma segura en tu teléfono."
+            }
+          ]
+        },
+        {
+          "id": "children",
+          "heading": "9. Menores",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "KaamNishaan es para empresas. No está pensado para menores de 18 años y no recogemos su información a sabiendas."
+            }
+          ]
+        },
+        {
+          "id": "changes",
+          "heading": "10. Cambios en esta política",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Si cambiamos esta política, actualizaremos la fecha de arriba. Si el cambio es importante, también avisaremos a los dueños de las cuentas en la app o por email antes de que se aplique."
+            }
+          ]
+        },
+        {
+          "id": "contact",
+          "heading": "11. Contacto",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Preguntas o solicitudes sobre privacidad: {email}, o escribe a {company}, {address}."
+            }
+          ]
+        }
+      ]
+    },
+    "fr": {
+      "title": "Politique de confidentialité",
+      "country": "l’Inde",
+      "missing": {
+        "company": "[raison sociale]",
+        "address": "[adresse du siège]",
+        "city": "[ville]",
+        "email": "[e-mail de contact]"
+      },
+      "intro": "Cette politique explique quelles données personnelles KaamNishaan collecte via son site, ses applications et ses liens de rapport, pourquoi, et quels choix vous avez.",
+      "sections": [
+        {
+          "id": "who",
+          "heading": "1. Qui sommes-nous",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "KaamNishaan est exploité par {company}, {address} (« nous »). Nous créons un logiciel de preuve de travail pour les équipes d’intervention sur le terrain."
+            },
+            {
+              "type": "p",
+              "text": "Quand une entreprise utilise KaamNishaan, c’est elle qui décide de ce que son équipe enregistre sur ses propres clients. Pour ces informations, nous agissons pour le compte de cette entreprise."
+            }
+          ]
+        },
+        {
+          "id": "collect",
+          "heading": "2. Les informations que nous collectons",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Nous ne collectons que ce qui est nécessaire au service :"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Données du compte : nom, téléphone, e-mail professionnel, rôle et entreprise",
+                "Contenu des interventions : photos (avec l’heure et le lieu de prise), réponses aux checklists, enregistrements vocaux et leur texte, notes et rapports",
+                "Données clients ajoutées par votre équipe : noms, adresses et numéros",
+                "Activité des liens de rapport : première ouverture d’un lien et nom donné par le client lorsqu’il accuse réception ou note un rapport",
+                "Formulaires du site : ce que vous saisissez pour réserver une démo, nous contacter ou vous abonner à la newsletter",
+                "Données techniques : version de l’app, type d’appareil, journaux d’erreurs et adresse IP"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "use",
+          "heading": "3. Comment nous utilisons ces informations",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Nous utilisons ces informations pour :"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Gérer les interventions, conserver les preuves et produire les rapports",
+                "Rédiger rapports, textes et traductions avec l’IA (voir section 4)",
+                "Envoyer les messages que vous demandez, comme les liens de rapport et les rappels d’avis par SMS, WhatsApp ou e-mail",
+                "Protéger les comptes et empêcher les abus, par exemple en limitant les tentatives de connexion répétées",
+                "Répondre à vos questions et améliorer le service"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Nous ne vendons pas les données personnelles et ne les utilisons pas à des fins publicitaires."
+            }
+          ]
+        },
+        {
+          "id": "ai",
+          "heading": "4. Traitement par l’IA",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Pour transcrire les notes vocales, rédiger les rapports, traduire et répondre dans l’assistant IA, nous envoyons les photos, réponses, notes et enregistrements nécessaires à notre fournisseur d’IA (OpenAI) via son service pour entreprises."
+            },
+            {
+              "type": "p",
+              "text": "Dans ce service, votre contenu n’est pas utilisé pour entraîner les modèles du fournisseur. Chaque brouillon IA est toujours relu par une personne de votre équipe avant qu’un client ne le voie."
+            }
+          ]
+        },
+        {
+          "id": "sharing",
+          "heading": "5. Avec qui nous les partageons",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Nous ne partageons les informations qu’avec :"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Les prestataires qui font fonctionner une partie de KaamNishaan pour nous : hébergement (Render, Singapour), stockage de fichiers (Cloudflare), IA (OpenAI) et les prestataires SMS, WhatsApp, e-mail et paiement utilisés lorsque ces fonctions sont activées",
+                "Les personnes à qui votre équipe envoie un lien de rapport",
+                "Les autorités, lorsque la loi l’exige"
+              ]
+            },
+            {
+              "type": "p",
+              "text": "Chaque prestataire ne peut utiliser les informations que pour nous fournir son service."
+            }
+          ]
+        },
+        {
+          "id": "storage",
+          "heading": "6. Où et combien de temps nous les conservons",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Les informations sont stockées sur des serveurs à Singapour et chez Cloudflare, protégées par le chiffrement en transit et un accès limité."
+            },
+            {
+              "type": "p",
+              "text": "Nous conservons le contenu des interventions tant que le compte de votre entreprise est actif. Les liens de rapport cessent de fonctionner après 30 jours sauf si votre équipe les renouvelle. À la fermeture d’un compte, nous supprimons son contenu sous 30 jours, sauf ce que la loi nous oblige à conserver."
+            }
+          ]
+        },
+        {
+          "id": "rights",
+          "heading": "7. Vos droits",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Vous pouvez demander à consulter, corriger, télécharger ou supprimer vos données personnelles, et retirer à tout moment votre consentement aux messages facultatifs, y compris au titre de la loi indienne de 2023 sur la protection des données personnelles numériques."
+            },
+            {
+              "type": "p",
+              "text": "Si vos informations ont été ajoutées par une entreprise qui utilise KaamNishaan, contactez d’abord cette entreprise ; nous l’aiderons à répondre. Écrivez à {email}, nous répondrons sous 30 jours."
+            }
+          ]
+        },
+        {
+          "id": "cookies",
+          "heading": "8. Cookies et stockage du navigateur",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Notre site n’utilise pas de cookies publicitaires ni de suivi. Il garde dans le stockage de votre navigateur la langue choisie et une note indiquant que la page a déjà été chargée. L’application conserve votre connexion de façon sécurisée sur votre téléphone."
+            }
+          ]
+        },
+        {
+          "id": "children",
+          "heading": "9. Mineurs",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "KaamNishaan s’adresse aux entreprises. Il n’est pas destiné aux moins de 18 ans et nous ne collectons pas sciemment leurs données."
+            }
+          ]
+        },
+        {
+          "id": "changes",
+          "heading": "10. Modifications de cette politique",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Si nous modifions cette politique, nous mettrons à jour la date en haut. Pour les changements importants, nous préviendrons aussi les propriétaires de compte dans l’app ou par e-mail avant leur entrée en vigueur."
+            }
+          ]
+        },
+        {
+          "id": "contact",
+          "heading": "11. Contact",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Questions ou demandes sur la confidentialité : {email}, ou écrivez à {company}, {address}."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

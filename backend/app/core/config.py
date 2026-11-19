@@ -56,6 +56,11 @@ class Settings(BaseSettings):
     support_whatsapp: str | None = None  # digits with country code, e.g. 919876543210
     help_url: str | None = None
     office: str = "Ahmedabad, Gujarat, India"
+    # Privacy policy and Terms (W06/W07). Until name, address and city are set the pages say "draft".
+    legal_name: str | None = None  # the registered company name
+    legal_address: str | None = None  # registered address, one line
+    legal_city: str | None = None  # city whose courts hear disputes, e.g. "Ahmedabad"
+    legal_email: str | None = None  # privacy questions; falls back to support_email
     support_open: str = "09:00"
     support_close: str = "19:00"
     support_days: list[int] = [1, 2, 3, 4, 5, 6]  # ISO weekdays, Monday = 1

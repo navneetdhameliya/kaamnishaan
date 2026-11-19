@@ -2585,5 +2585,16 @@
   "site.blog.keep": "વાંચતા રહો",
   "site.blog.related": "જોડાયેલી ગાઇડ",
   "site.blog.all_posts": "બધી ગાઇડ",
-  "site.blog.missing": "આ ગાઇડ અસ્તિત્વમાં નથી"
+  "site.blog.missing": "આ ગાઇડ અસ્તિત્વમાં નથી",
+  "site.legal.eyebrow": "કાનૂની",
+  "site.legal.updated": "છેલ્લો ફેરફાર {date}",
+  "site.legal.minutes": "આશરે {n} મિનિટ વાંચન",
+  "site.legal.print": "પ્રિન્ટ કરો કે PDF સેવ કરો",
+  "site.legal.toc": "આ પેજ પર",
+  "site.legal.top": "ઉપર જાઓ",
+  "site.legal.draft": "ડ્રાફ્ટ: આ પેજ પર કંપનીની માહિતી હજી ભરાઈ નથી, અને લખાણની તપાસ ચાલુ છે. તે હજી લાગુ નથી.",
+  "site.legal.translation": "આ તમારી સુવિધા માટે અનુવાદ છે. જો તે અંગ્રેજી સંસ્કરણથી અલગ હોય, તો અંગ્રેજી સંસ્કરણ લાગુ થશે.",
+  "site.legal.q_privacy": "આ નીતિ વિશે પ્રશ્નો?",
+  "site.legal.q_terms": "આ શરતો વિશે પ્રશ્નો?",
+  "site.legal.q_body": "અમારી ટીમ એક કામકાજી દિવસમાં જવાબ આપે છે."
 }

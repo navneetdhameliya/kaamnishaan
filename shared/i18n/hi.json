@@ -2585,5 +2585,16 @@
   "site.blog.keep": "पढ़ते रहें",
   "site.blog.related": "जुड़ी हुई गाइड",
   "site.blog.all_posts": "सभी गाइड",
-  "site.blog.missing": "यह गाइड मौजूद नहीं है"
+  "site.blog.missing": "यह गाइड मौजूद नहीं है",
+  "site.legal.eyebrow": "क़ानूनी",
+  "site.legal.updated": "आख़िरी बदलाव {date}",
+  "site.legal.minutes": "लगभग {n} मिनट पढ़ने में",
+  "site.legal.print": "प्रिंट करें या PDF सेव करें",
+  "site.legal.toc": "इस पेज पर",
+  "site.legal.top": "ऊपर जाएँ",
+  "site.legal.draft": "ड्राफ़्ट: इस पेज पर कंपनी की जानकारी अभी भरी नहीं गई है, और लेख की जाँच चल रही है। यह अभी लागू नहीं है।",
+  "site.legal.translation": "यह आपकी सुविधा के लिए अनुवाद है। अगर यह अंग्रेज़ी संस्करण से अलग हो, तो अंग्रेज़ी संस्करण लागू होगा।",
+  "site.legal.q_privacy": "इस नीति के बारे में सवाल?",
+  "site.legal.q_terms": "इन शर्तों के बारे में सवाल?",
+  "site.legal.q_body": "हमारी टीम एक कामकाजी दिन में जवाब देती है।"
 }

@@ -219,3 +219,15 @@ export interface BlogPostOut extends BlogPostCard {
   blocks: BlogBlock[];
   related: BlogPostCard[];
 }
+
+/** GET /public/legal/{privacy|terms} (W06/W07). complete=false while the company's legal details aren't set. */
+export interface LegalOut {
+  doc: 'privacy' | 'terms';
+  title: string;
+  intro: string;
+  updated_on: string;
+  read_minutes: number;
+  language: string;
+  complete: boolean;
+  sections: { id: string; heading: string; blocks: { type: 'p' | 'list'; text: string | null; items: string[] }[] }[];
+}

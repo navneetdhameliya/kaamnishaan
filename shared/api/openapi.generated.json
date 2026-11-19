@@ -4861,6 +4861,132 @@
         "title": "LanguageOut",
         "type": "object"
       },
+      "LegalBlock": {
+        "properties": {
+          "items": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          },
+          "type": {
+            "enum": [
+              "p",
+              "list"
+            ],
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "title": "LegalBlock",
+        "type": "object"
+      },
+      "LegalOut": {
+        "properties": {
+          "complete": {
+            "description": "false (a draft) while the legal name, address or city is not set",
+            "title": "Complete",
+            "type": "boolean"
+          },
+          "doc": {
+            "enum": [
+              "privacy",
+              "terms"
+            ],
+            "title": "Doc",
+            "type": "string"
+          },
+          "intro": {
+            "title": "Intro",
+            "type": "string"
+          },
+          "language": {
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Language",
+            "type": "string"
+          },
+          "read_minutes": {
+            "title": "Read Minutes",
+            "type": "integer"
+          },
+          "sections": {
+            "items": {
+              "$ref": "#/components/schemas/LegalSection"
+            },
+            "title": "Sections",
+            "type": "array"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "updated_on": {
+            "format": "date",
+            "title": "Updated On",
+            "type": "string"
+          }
+        },
+        "required": [
+          "doc",
+          "title",
+          "intro",
+          "updated_on",
+          "read_minutes",
+          "language",
+          "complete",
+          "sections"
+        ],
+        "title": "LegalOut",
+        "type": "object"
+      },
+      "LegalSection": {
+        "properties": {
+          "blocks": {
+            "items": {
+              "$ref": "#/components/schemas/LegalBlock"
+            },
+            "title": "Blocks",
+            "type": "array"
+          },
+          "heading": {
+            "title": "Heading",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "heading",
+          "blocks"
+        ],
+        "title": "LegalSection",
+        "type": "object"
+      },
       "ListMeta": {
         "properties": {
           "counts": {
@@ -17297,6 +17423,69 @@
           }
         },
         "summary": "Demo Slots",
+        "tags": [
+          "website"
+        ]
+      }
+    },
+    "/api/v1/public/legal/{doc}": {
+      "get": {
+        "operationId": "legal_doc_api_v1_public_legal__doc__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "doc",
+            "required": true,
+            "schema": {
+              "enum": [
+                "privacy",
+                "terms"
+              ],
+              "title": "Doc",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LegalOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Legal Doc",
         "tags": [
           "website"
         ]

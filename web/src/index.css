@@ -163,3 +163,10 @@ html { scroll-behavior: smooth; }
   40% { transform: rotate(-24deg); }
   60% { transform: rotate(8deg); }
 }
+
+/* Printing a page (Privacy / Terms "Print or save as PDF"): only the page itself, no site chrome or motion. */
+@media print {
+  header, footer, [data-site-chrome] { display: none !important; }
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  body { background: #fff !important; }
+}

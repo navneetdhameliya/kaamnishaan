@@ -1,0 +1,795 @@
+{
+  "updated": "2026-11-19",
+  "content": {
+    "en": {
+      "title": "Terms and conditions",
+      "country": "India",
+      "missing": {
+        "company": "[company legal name]",
+        "address": "[registered address]",
+        "city": "[city]",
+        "email": "[contact email]"
+      },
+      "intro": "These terms explain your rights and responsibilities when your team uses KaamNishaan. Please read them carefully.",
+      "sections": [
+        {
+          "id": "agreement",
+          "heading": "1. Agreement",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "These terms apply when you or your company use the KaamNishaan website, mobile apps and report links, run by {company}, {address}. By creating a company account you agree to them on behalf of your company."
+            }
+          ]
+        },
+        {
+          "id": "account",
+          "heading": "2. Your account",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The person who creates the company account is its owner and is responsible for:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Keeping sign-in details safe and team access up to date",
+                "Inviting only people who work for or with the company",
+                "The accuracy of the job and customer details the team enters"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "plans",
+          "heading": "3. Plans, trials and payment",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Plans, prices, limits and the free trial are shown on our pricing page. Prices are shown in Indian rupees in India and in US dollars elsewhere; taxes such as GST may be added."
+            },
+            {
+              "type": "p",
+              "text": "The free trial needs no card. When it ends, the company can choose a paid plan or continue on the free plan. Paid plans renew each month or year until cancelled, and a cancelled plan stays active until the end of the period already paid for. Unless the law says otherwise, payments already made are not refunded."
+            }
+          ]
+        },
+        {
+          "id": "credits",
+          "heading": "4. Follow-up credits",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Paid messages, such as SMS and WhatsApp review reminders, use follow-up credits. Each plan includes credits every month; unused monthly credits do not carry over. Credits you buy as top-ups stay until used. Emails do not use credits."
+            }
+          ]
+        },
+        {
+          "id": "content",
+          "heading": "5. Your content",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Your company owns the photos, checklists, voice notes and reports its team creates. You let us store and process that content only to provide KaamNishaan, including AI drafts and translations."
+            },
+            {
+              "type": "p",
+              "text": "You confirm you have the right to record the photos, voice notes and customer details your team adds, and to send messages to the customers you choose."
+            }
+          ]
+        },
+        {
+          "id": "ai",
+          "heading": "6. AI-generated drafts",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "AI drafts, written text and translations can contain mistakes. Your team must review every report before approving and sending it, and you are responsible for what you send to your customers."
+            }
+          ]
+        },
+        {
+          "id": "use",
+          "heading": "7. Acceptable use",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "You agree not to:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Use KaamNishaan for anything illegal or to mislead customers",
+                "Send messages to people who have not agreed to receive them or who asked you to stop",
+                "Upload content you have no right to use",
+                "Try to break, overload or get around the security of the service"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "availability",
+          "heading": "8. Availability and changes",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "We work to keep KaamNishaan available, but we cannot promise it will never be interrupted. We may improve or change features; if a change takes away something important on your plan, we will tell the account owner in advance."
+            }
+          ]
+        },
+        {
+          "id": "liability",
+          "heading": "9. Liability",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "KaamNishaan is provided “as is”. As far as the law allows, we are not liable for indirect losses such as lost profits, and our total liability is limited to what your company paid us in the 12 months before the claim. Nothing in these terms limits liability that cannot be limited by law."
+            }
+          ]
+        },
+        {
+          "id": "ending",
+          "heading": "10. Ending your account",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "The owner can close the company account at any time. We may suspend or close an account that seriously breaks these terms, after warning the owner when we can. Before closing, save any reports you need; we delete the content within 30 days of closing."
+            }
+          ]
+        },
+        {
+          "id": "law",
+          "heading": "11. Governing law",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "These terms are governed by the laws of {country}. The courts of {city} will hear any dispute."
+            }
+          ]
+        },
+        {
+          "id": "contact",
+          "heading": "12. Contact",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Questions about these terms: {email}, or write to {company}, {address}."
+            }
+          ]
+        }
+      ]
+    },
+    "hi": {
+      "title": "नियम और शर्तें",
+      "country": "भारत",
+      "missing": {
+        "company": "[कंपनी का क़ानूनी नाम]",
+        "address": "[पंजीकृत पता]",
+        "city": "[शहर]",
+        "email": "[संपर्क ईमेल]"
+      },
+      "intro": "ये शर्तें बताती हैं कि आपकी टीम के KaamNishaan इस्तेमाल करने पर आपके अधिकार और ज़िम्मेदारियाँ क्या हैं। कृपया ध्यान से पढ़ें।",
+      "sections": [
+        {
+          "id": "agreement",
+          "heading": "1. समझौता",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "ये शर्तें तब लागू होती हैं जब आप या आपकी कंपनी KaamNishaan की वेबसाइट, मोबाइल ऐप और रिपोर्ट लिंक इस्तेमाल करते हैं, जिन्हें {company}, {address} चलाते हैं। कंपनी अकाउंट बनाकर आप अपनी कंपनी की ओर से इन्हें स्वीकार करते हैं।"
+            }
+          ]
+        },
+        {
+          "id": "account",
+          "heading": "2. आपका अकाउंट",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "जो व्यक्ति कंपनी अकाउंट बनाता है वह उसका मालिक है और इनके लिए ज़िम्मेदार है:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "लॉगिन की जानकारी सुरक्षित रखना और टीम की पहुँच अपडेट रखना",
+                "सिर्फ़ उन्हीं लोगों को जोड़ना जो कंपनी के लिए या साथ काम करते हैं",
+                "टीम द्वारा भरी गई जॉब और ग्राहक जानकारी का सही होना"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "plans",
+          "heading": "3. प्लान, ट्रायल और भुगतान",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "प्लान, कीमतें, सीमाएँ और मुफ़्त ट्रायल हमारे कीमत वाले पेज पर दिखते हैं। भारत में कीमतें रुपये में और बाकी जगह US डॉलर में दिखती हैं; GST जैसे टैक्स जुड़ सकते हैं।"
+            },
+            {
+              "type": "p",
+              "text": "मुफ़्त ट्रायल के लिए कार्ड नहीं चाहिए। ट्रायल ख़त्म होने पर कंपनी कोई पेड प्लान चुन सकती है या मुफ़्त प्लान पर रह सकती है। पेड प्लान रद्द होने तक हर महीने या साल नवीनीकृत होते हैं, और रद्द प्लान पहले से चुकाई गई अवधि के अंत तक चालू रहता है। जब तक क़ानून कुछ और न कहे, चुकाया गया पैसा वापस नहीं होता।"
+            }
+          ]
+        },
+        {
+          "id": "credits",
+          "heading": "4. फ़ॉलो-अप क्रेडिट",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "पेड संदेश, जैसे SMS और WhatsApp रिव्यू रिमाइंडर, फ़ॉलो-अप क्रेडिट इस्तेमाल करते हैं। हर प्लान में हर महीने क्रेडिट मिलते हैं; महीने के बचे क्रेडिट आगे नहीं जाते। टॉप-अप में ख़रीदे क्रेडिट इस्तेमाल होने तक रहते हैं। ईमेल में क्रेडिट नहीं लगते।"
+            }
+          ]
+        },
+        {
+          "id": "content",
+          "heading": "5. आपकी सामग्री",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "टीम की बनाई फ़ोटो, चेकलिस्ट, वॉइस नोट और रिपोर्ट की मालिक आपकी कंपनी है। आप हमें यह सामग्री सिर्फ़ KaamNishaan चलाने के लिए रखने और प्रोसेस करने देते हैं, जिसमें AI ड्राफ़्ट और अनुवाद शामिल हैं।"
+            },
+            {
+              "type": "p",
+              "text": "आप पुष्टि करते हैं कि आपकी टीम जो फ़ोटो, वॉइस नोट और ग्राहक जानकारी जोड़ती है उसे दर्ज करने का, और चुने हुए ग्राहकों को संदेश भेजने का आपको अधिकार है।"
+            }
+          ]
+        },
+        {
+          "id": "ai",
+          "heading": "6. AI से बने ड्राफ़्ट",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "AI ड्राफ़्ट, लिखे हुए रूप और अनुवाद में ग़लतियाँ हो सकती हैं। मंज़ूरी देकर भेजने से पहले आपकी टीम को हर रिपोर्ट जाँचनी होगी, और ग्राहकों को आप जो भेजते हैं उसकी ज़िम्मेदारी आपकी है।"
+            }
+          ]
+        },
+        {
+          "id": "use",
+          "heading": "7. सही इस्तेमाल",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "आप सहमत हैं कि आप ये नहीं करेंगे:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "KaamNishaan को किसी ग़ैरक़ानूनी काम या ग्राहकों को गुमराह करने के लिए इस्तेमाल करना",
+                "उन लोगों को संदेश भेजना जिन्होंने सहमति नहीं दी या रोकने को कहा",
+                "ऐसी सामग्री अपलोड करना जिसे इस्तेमाल करने का आपको अधिकार नहीं",
+                "सेवा की सुरक्षा तोड़ने, उस पर ज़्यादा बोझ डालने या उससे बचने की कोशिश करना"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "availability",
+          "heading": "8. उपलब्धता और बदलाव",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "हम KaamNishaan को चालू रखने के लिए काम करते हैं, लेकिन वादा नहीं कर सकते कि यह कभी नहीं रुकेगा। हम फ़ीचर बेहतर कर सकते हैं या बदल सकते हैं; अगर किसी बदलाव से आपके प्लान की कोई ज़रूरी चीज़ हटती है, तो हम अकाउंट मालिक को पहले बताएँगे।"
+            }
+          ]
+        },
+        {
+          "id": "liability",
+          "heading": "9. ज़िम्मेदारी की सीमा",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "KaamNishaan “जैसा है” दिया जाता है। क़ानून जहाँ तक इजाज़त दे, हम मुनाफ़े के नुकसान जैसे अप्रत्यक्ष नुकसान के ज़िम्मेदार नहीं हैं, और हमारी कुल ज़िम्मेदारी उस रकम तक सीमित है जो आपकी कंपनी ने दावे से पहले के 12 महीनों में हमें दी। इन शर्तों में कुछ भी उस ज़िम्मेदारी को सीमित नहीं करता जिसे क़ानूनन सीमित नहीं किया जा सकता।"
+            }
+          ]
+        },
+        {
+          "id": "ending",
+          "heading": "10. अकाउंट बंद करना",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "मालिक कंपनी अकाउंट कभी भी बंद कर सकता है। जो अकाउंट इन शर्तों को गंभीर रूप से तोड़े, उसे हम रोक या बंद कर सकते हैं, जहाँ संभव हो पहले मालिक को चेतावनी देकर। बंद करने से पहले ज़रूरी रिपोर्ट सेव कर लें; बंद होने के 30 दिनों में हम सामग्री हटा देते हैं।"
+            }
+          ]
+        },
+        {
+          "id": "law",
+          "heading": "11. लागू क़ानून",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "ये शर्तें {country} के क़ानूनों के अधीन हैं। किसी भी विवाद की सुनवाई {city} की अदालतें करेंगी।"
+            }
+          ]
+        },
+        {
+          "id": "contact",
+          "heading": "12. संपर्क",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "इन शर्तों के बारे में सवाल: {email}, या {company}, {address} पर लिखें।"
+            }
+          ]
+        }
+      ]
+    },
+    "gu": {
+      "title": "નિયમો અને શરતો",
+      "country": "ભારત",
+      "missing": {
+        "company": "[કંપનીનું કાનૂની નામ]",
+        "address": "[નોંધાયેલું સરનામું]",
+        "city": "[શહેર]",
+        "email": "[સંપર્ક ઈમેલ]"
+      },
+      "intro": "આ શરતો સમજાવે છે કે તમારી ટીમ KaamNishaan વાપરે ત્યારે તમારા અધિકાર અને જવાબદારીઓ શું છે. કૃપા કરીને ધ્યાનથી વાંચો.",
+      "sections": [
+        {
+          "id": "agreement",
+          "heading": "1. કરાર",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "આ શરતો ત્યારે લાગુ થાય છે જ્યારે તમે કે તમારી કંપની KaamNishaanની વેબસાઇટ, મોબાઇલ ઍપ અને રિપોર્ટ લિંક વાપરો છો, જે {company}, {address} ચલાવે છે. કંપની એકાઉન્ટ બનાવીને તમે તમારી કંપની વતી તેને સ્વીકારો છો."
+            }
+          ]
+        },
+        {
+          "id": "account",
+          "heading": "2. તમારું એકાઉન્ટ",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "જે વ્યક્તિ કંપની એકાઉન્ટ બનાવે છે તે તેનો માલિક છે અને આ માટે જવાબદાર છે:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "લૉગિનની માહિતી સુરક્ષિત રાખવી અને ટીમની પહોંચ અપડેટ રાખવી",
+                "ફક્ત એ લોકોને ઉમેરવા જે કંપની માટે કે સાથે કામ કરે છે",
+                "ટીમે ભરેલી જૉબ અને ગ્રાહક માહિતી સાચી હોવી"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "plans",
+          "heading": "3. પ્લાન, ટ્રાયલ અને ચુકવણી",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "પ્લાન, કિંમતો, મર્યાદાઓ અને મફત ટ્રાયલ અમારા કિંમતના પેજ પર દેખાય છે. ભારતમાં કિંમતો રૂપિયામાં અને બાકી જગ્યાએ US ડૉલરમાં દેખાય છે; GST જેવા ટૅક્સ ઉમેરાઈ શકે."
+            },
+            {
+              "type": "p",
+              "text": "મફત ટ્રાયલ માટે કાર્ડ જોઈતું નથી. ટ્રાયલ પૂરી થાય ત્યારે કંપની કોઈ પેઇડ પ્લાન પસંદ કરી શકે કે મફત પ્લાન પર રહી શકે. પેઇડ પ્લાન રદ ન થાય ત્યાં સુધી દર મહિને કે વર્ષે રિન્યૂ થાય છે, અને રદ થયેલો પ્લાન પહેલેથી ચૂકવેલા સમયગાળાના અંત સુધી ચાલુ રહે છે. કાયદો બીજું ન કહે ત્યાં સુધી ચૂકવેલા પૈસા પાછા મળતા નથી."
+            }
+          ]
+        },
+        {
+          "id": "credits",
+          "heading": "4. ફૉલો-અપ ક્રેડિટ",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "પેઇડ સંદેશા, જેમ કે SMS અને WhatsApp રિવ્યૂ રિમાઇન્ડર, ફૉલો-અપ ક્રેડિટ વાપરે છે. દરેક પ્લાનમાં દર મહિને ક્રેડિટ મળે છે; મહિનાની બચેલી ક્રેડિટ આગળ જતી નથી. ટૉપ-અપમાં ખરીદેલી ક્રેડિટ વપરાય ત્યાં સુધી રહે છે. ઈમેલમાં ક્રેડિટ લાગતી નથી."
+            }
+          ]
+        },
+        {
+          "id": "content",
+          "heading": "5. તમારી સામગ્રી",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "ટીમે બનાવેલા ફોટો, ચેકલિસ્ટ, વૉઇસ નોટ અને રિપોર્ટની માલિક તમારી કંપની છે. તમે અમને આ સામગ્રી ફક્ત KaamNishaan ચલાવવા માટે રાખવા અને પ્રોસેસ કરવા દો છો, જેમાં AI ડ્રાફ્ટ અને અનુવાદ સામેલ છે."
+            },
+            {
+              "type": "p",
+              "text": "તમે પુષ્ટિ કરો છો કે તમારી ટીમ જે ફોટો, વૉઇસ નોટ અને ગ્રાહક માહિતી ઉમેરે છે તે નોંધવાનો, અને પસંદ કરેલા ગ્રાહકોને સંદેશા મોકલવાનો તમને અધિકાર છે."
+            }
+          ]
+        },
+        {
+          "id": "ai",
+          "heading": "6. AIથી બનેલા ડ્રાફ્ટ",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "AI ડ્રાફ્ટ, લખાણ અને અનુવાદમાં ભૂલો હોઈ શકે છે. મંજૂરી આપીને મોકલતાં પહેલાં તમારી ટીમે દરેક રિપોર્ટ તપાસવો પડશે, અને ગ્રાહકોને તમે જે મોકલો તેની જવાબદારી તમારી છે."
+            }
+          ]
+        },
+        {
+          "id": "use",
+          "heading": "7. યોગ્ય ઉપયોગ",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "તમે સંમત છો કે તમે આ નહીં કરો:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "KaamNishaanનો કોઈ ગેરકાયદે કામ કે ગ્રાહકોને ગેરમાર્ગે દોરવા ઉપયોગ કરવો",
+                "એવા લોકોને સંદેશા મોકલવા જેમણે સંમતિ નથી આપી કે રોકવા કહ્યું છે",
+                "એવી સામગ્રી અપલોડ કરવી જે વાપરવાનો તમને અધિકાર નથી",
+                "સેવાની સુરક્ષા તોડવાનો, તેના પર વધુ ભાર નાખવાનો કે તેનાથી બચવાનો પ્રયાસ કરવો"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "availability",
+          "heading": "8. ઉપલબ્ધતા અને ફેરફાર",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "અમે KaamNishaanને ચાલુ રાખવા કામ કરીએ છીએ, પણ વચન ન આપી શકીએ કે તે ક્યારેય નહીં અટકે. અમે ફીચર સુધારી કે બદલી શકીએ; જો કોઈ ફેરફારથી તમારા પ્લાનની કોઈ મહત્વની વસ્તુ દૂર થાય, તો અમે એકાઉન્ટ માલિકને પહેલાં જણાવીશું."
+            }
+          ]
+        },
+        {
+          "id": "liability",
+          "heading": "9. જવાબદારીની મર્યાદા",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "KaamNishaan “જેવું છે તેવું” આપવામાં આવે છે. કાયદો મંજૂરી આપે ત્યાં સુધી, અમે નફાના નુકસાન જેવા પરોક્ષ નુકસાન માટે જવાબદાર નથી, અને અમારી કુલ જવાબદારી દાવા પહેલાંના 12 મહિનામાં તમારી કંપનીએ અમને ચૂકવેલી રકમ સુધી મર્યાદિત છે. આ શરતોમાં કંઈ પણ એ જવાબદારીને મર્યાદિત કરતું નથી જેને કાયદાથી મર્યાદિત કરી શકાય નહીં."
+            }
+          ]
+        },
+        {
+          "id": "ending",
+          "heading": "10. એકાઉન્ટ બંધ કરવું",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "માલિક કંપની એકાઉન્ટ ગમે ત્યારે બંધ કરી શકે છે. જે એકાઉન્ટ આ શરતોનો ગંભીર ભંગ કરે, તેને અમે રોકી કે બંધ કરી શકીએ, શક્ય હોય ત્યાં પહેલાં માલિકને ચેતવણી આપીને. બંધ કરતાં પહેલાં જરૂરી રિપોર્ટ સેવ કરી લો; બંધ થયાના 30 દિવસમાં અમે સામગ્રી કાઢી નાખીએ છીએ."
+            }
+          ]
+        },
+        {
+          "id": "law",
+          "heading": "11. લાગુ કાયદો",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "આ શરતો {country}ના કાયદાઓને આધીન છે. કોઈ પણ વિવાદની સુનાવણી {city}ની અદાલતો કરશે."
+            }
+          ]
+        },
+        {
+          "id": "contact",
+          "heading": "12. સંપર્ક",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "આ શરતો વિશે પ્રશ્નો: {email}, કે {company}, {address} પર લખો."
+            }
+          ]
+        }
+      ]
+    },
+    "es": {
+      "title": "Términos y condiciones",
+      "country": "India",
+      "missing": {
+        "company": "[nombre legal de la empresa]",
+        "address": "[domicilio social]",
+        "city": "[ciudad]",
+        "email": "[email de contacto]"
+      },
+      "intro": "Estos términos explican tus derechos y responsabilidades cuando tu equipo usa KaamNishaan. Léelos con atención.",
+      "sections": [
+        {
+          "id": "agreement",
+          "heading": "1. Acuerdo",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Estos términos se aplican cuando tú o tu empresa usáis la web, las apps y los enlaces de informes de KaamNishaan, gestionados por {company}, {address}. Al crear una cuenta de empresa los aceptas en nombre de tu empresa."
+            }
+          ]
+        },
+        {
+          "id": "account",
+          "heading": "2. Tu cuenta",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Quien crea la cuenta de la empresa es su titular y es responsable de:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Mantener seguros los datos de acceso y al día los accesos del equipo",
+                "Invitar solo a personas que trabajan para o con la empresa",
+                "La exactitud de los datos de trabajos y clientes que introduce el equipo"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "plans",
+          "heading": "3. Planes, pruebas y pagos",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Los planes, precios, límites y la prueba gratuita figuran en nuestra página de precios. Los precios se muestran en rupias en la India y en dólares estadounidenses en el resto; pueden añadirse impuestos como el GST."
+            },
+            {
+              "type": "p",
+              "text": "La prueba gratuita no necesita tarjeta. Al terminar, la empresa puede elegir un plan de pago o seguir en el plan gratuito. Los planes de pago se renuevan cada mes o año hasta que se cancelan, y un plan cancelado sigue activo hasta el final del periodo ya pagado. Salvo que la ley diga otra cosa, los pagos realizados no se reembolsan."
+            }
+          ]
+        },
+        {
+          "id": "credits",
+          "heading": "4. Créditos de seguimiento",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Los mensajes de pago, como los recordatorios de reseñas por SMS y WhatsApp, usan créditos de seguimiento. Cada plan incluye créditos cada mes; los créditos mensuales no usados no se acumulan. Los créditos comprados como recarga se mantienen hasta usarse. Los emails no usan créditos."
+            }
+          ]
+        },
+        {
+          "id": "content",
+          "heading": "5. Tu contenido",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Tu empresa es dueña de las fotos, listas, notas de voz e informes que crea su equipo. Nos permites guardar y tratar ese contenido solo para prestar KaamNishaan, incluidos los borradores y traducciones con IA."
+            },
+            {
+              "type": "p",
+              "text": "Confirmas que tienes derecho a registrar las fotos, notas de voz y datos de clientes que añade tu equipo, y a enviar mensajes a los clientes que elijas."
+            }
+          ]
+        },
+        {
+          "id": "ai",
+          "heading": "6. Borradores generados con IA",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Los borradores, textos y traducciones de IA pueden tener errores. Tu equipo debe revisar cada informe antes de aprobarlo y enviarlo, y tú eres responsable de lo que envías a tus clientes."
+            }
+          ]
+        },
+        {
+          "id": "use",
+          "heading": "7. Uso aceptable",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Te comprometes a no:"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Usar KaamNishaan para fines ilegales o para engañar a clientes",
+                "Enviar mensajes a quien no ha aceptado recibirlos o ha pedido que paréis",
+                "Subir contenido que no tienes derecho a usar",
+                "Intentar romper, sobrecargar o eludir la seguridad del servicio"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "availability",
+          "heading": "8. Disponibilidad y cambios",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Trabajamos para que KaamNishaan esté disponible, pero no podemos prometer que nunca se interrumpa. Podemos mejorar o cambiar funciones; si un cambio elimina algo importante de tu plan, avisaremos antes al titular de la cuenta."
+            }
+          ]
+        },
+        {
+          "id": "liability",
+          "heading": "9. Responsabilidad",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "KaamNishaan se ofrece “tal cual”. En la medida que la ley lo permita, no respondemos de pérdidas indirectas como el lucro cesante, y nuestra responsabilidad total se limita a lo que tu empresa nos pagó en los 12 meses anteriores a la reclamación. Nada de estos términos limita la responsabilidad que la ley no permite limitar."
+            }
+          ]
+        },
+        {
+          "id": "ending",
+          "heading": "10. Cierre de la cuenta",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "El titular puede cerrar la cuenta de la empresa en cualquier momento. Podemos suspender o cerrar una cuenta que incumpla gravemente estos términos, avisando antes al titular cuando sea posible. Antes de cerrar, guarda los informes que necesites; borramos el contenido en los 30 días siguientes al cierre."
+            }
+          ]
+        },
+        {
+          "id": "law",
+          "heading": "11. Ley aplicable",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Estos términos se rigen por las leyes de {country}. Los tribunales de {city} resolverán cualquier disputa."
+            }
+          ]
+        },
+        {
+          "id": "contact",
+          "heading": "12. Contacto",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Preguntas sobre estos términos: {email}, o escribe a {company}, {address}."
+            }
+          ]
+        }
+      ]
+    },
+    "fr": {
+      "title": "Conditions générales",
+      "country": "l’Inde",
+      "missing": {
+        "company": "[raison sociale]",
+        "address": "[adresse du siège]",
+        "city": "[ville]",
+        "email": "[e-mail de contact]"
+      },
+      "intro": "Ces conditions expliquent vos droits et responsabilités lorsque votre équipe utilise KaamNishaan. Merci de les lire attentivement.",
+      "sections": [
+        {
+          "id": "agreement",
+          "heading": "1. Accord",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ces conditions s’appliquent lorsque vous ou votre entreprise utilisez le site, les applications et les liens de rapport KaamNishaan, exploités par {company}, {address}. En créant un compte d’entreprise, vous les acceptez au nom de votre entreprise."
+            }
+          ]
+        },
+        {
+          "id": "account",
+          "heading": "2. Votre compte",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "La personne qui crée le compte de l’entreprise en est le propriétaire et elle est responsable :"
+            },
+            {
+              "type": "list",
+              "items": [
+                "De la sécurité des identifiants et de la mise à jour des accès de l’équipe",
+                "De n’inviter que des personnes qui travaillent pour ou avec l’entreprise",
+                "De l’exactitude des informations d’intervention et clients saisies par l’équipe"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "plans",
+          "heading": "3. Offres, essai et paiement",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Les offres, prix, limites et l’essai gratuit figurent sur notre page de tarifs. Les prix sont affichés en roupies en Inde et en dollars américains ailleurs ; des taxes comme la GST peuvent s’ajouter."
+            },
+            {
+              "type": "p",
+              "text": "L’essai gratuit ne demande pas de carte. À la fin, l’entreprise peut choisir une offre payante ou rester sur l’offre gratuite. Les offres payantes se renouvellent chaque mois ou chaque année jusqu’à résiliation, et une offre résiliée reste active jusqu’à la fin de la période déjà payée. Sauf disposition légale contraire, les sommes payées ne sont pas remboursées."
+            }
+          ]
+        },
+        {
+          "id": "credits",
+          "heading": "4. Crédits de relance",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Les messages payants, comme les rappels d’avis par SMS et WhatsApp, utilisent des crédits de relance. Chaque offre inclut des crédits chaque mois ; les crédits mensuels non utilisés ne sont pas reportés. Les crédits achetés en recharge restent valables jusqu’à leur utilisation. Les e-mails n’utilisent pas de crédits."
+            }
+          ]
+        },
+        {
+          "id": "content",
+          "heading": "5. Votre contenu",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Votre entreprise est propriétaire des photos, checklists, notes vocales et rapports créés par son équipe. Vous nous autorisez à stocker et traiter ce contenu uniquement pour fournir KaamNishaan, y compris les brouillons et traductions par IA."
+            },
+            {
+              "type": "p",
+              "text": "Vous confirmez avoir le droit d’enregistrer les photos, notes vocales et données clients ajoutées par votre équipe, et d’envoyer des messages aux clients que vous choisissez."
+            }
+          ]
+        },
+        {
+          "id": "ai",
+          "heading": "6. Brouillons générés par l’IA",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Les brouillons, textes et traductions de l’IA peuvent contenir des erreurs. Votre équipe doit relire chaque rapport avant de le valider et de l’envoyer, et vous êtes responsable de ce que vous envoyez à vos clients."
+            }
+          ]
+        },
+        {
+          "id": "use",
+          "heading": "7. Utilisation acceptable",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Vous vous engagez à ne pas :"
+            },
+            {
+              "type": "list",
+              "items": [
+                "Utiliser KaamNishaan à des fins illégales ou pour tromper des clients",
+                "Envoyer des messages à des personnes qui ne l’ont pas accepté ou qui ont demandé d’arrêter",
+                "Mettre en ligne un contenu que vous n’avez pas le droit d’utiliser",
+                "Tenter de casser, surcharger ou contourner la sécurité du service"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "availability",
+          "heading": "8. Disponibilité et évolutions",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Nous faisons en sorte que KaamNishaan reste disponible, sans pouvoir promettre qu’il ne sera jamais interrompu. Nous pouvons améliorer ou modifier des fonctions ; si un changement retire un élément important de votre offre, nous préviendrons le propriétaire du compte à l’avance."
+            }
+          ]
+        },
+        {
+          "id": "liability",
+          "heading": "9. Responsabilité",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "KaamNishaan est fourni « en l’état ». Dans la mesure permise par la loi, nous ne sommes pas responsables des pertes indirectes comme le manque à gagner, et notre responsabilité totale est limitée aux sommes payées par votre entreprise au cours des 12 mois précédant la réclamation. Rien dans ces conditions ne limite une responsabilité que la loi interdit de limiter."
+            }
+          ]
+        },
+        {
+          "id": "ending",
+          "heading": "10. Fermeture du compte",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Le propriétaire peut fermer le compte de l’entreprise à tout moment. Nous pouvons suspendre ou fermer un compte qui enfreint gravement ces conditions, en prévenant le propriétaire lorsque c’est possible. Avant la fermeture, enregistrez les rapports dont vous avez besoin ; nous supprimons le contenu dans les 30 jours suivant la fermeture."
+            }
+          ]
+        },
+        {
+          "id": "law",
+          "heading": "11. Droit applicable",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Ces conditions sont régies par le droit de {country}. Les tribunaux de {city} sont compétents pour tout litige."
+            }
+          ]
+        },
+        {
+          "id": "contact",
+          "heading": "12. Contact",
+          "blocks": [
+            {
+              "type": "p",
+              "text": "Questions sur ces conditions : {email}, ou écrivez à {company}, {address}."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
