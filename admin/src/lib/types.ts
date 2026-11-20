@@ -647,3 +647,55 @@ export interface AdminReportDetail {
   pdf_url: string | null;
   created_at: string;
 }
+
+/** A16 Subscriptions, A17 Plans and pricing, A18 Payments. */
+export type Money = { currency: string; amount_minor: number };
+export type CompanyBadgeKey = 'trial' | 'active' | 'past_due' | 'suspended' | 'cancelled' | 'near_limit';
+export interface AdminSubRow {
+  id: string;
+  name: string;
+  plan_code: string;
+  plan: string;
+  price: Money | null;
+  status: Exclude<CompanyBadgeKey, 'near_limit'>;
+  badge: CompanyBadgeKey;
+  trial_days_left: number | null;
+  renews_at: string | null;
+  seats: number;
+  seat_limit: number | null;
+}
+export interface AdminSubList {
+  kpis: { mrr: Money[]; paying: number; on_free: number; trials: number; trials_ending_7d: number; past_due: number; cancelled_30d: number };
+  items: AdminSubRow[];
+  total: number;
+  page: number;
+  page_size: number;
+}
+export interface AdminPlan {
+  code: string;
+  name: Record<string, string>;
+  prices: Record<string, number>;
+  technician_limit: number | null;
+  report_limit_monthly: number | null;
+  monthly_credits: number | null;
+  ai_questions_monthly: number | null;
+  most_popular: boolean;
+  is_public: boolean;
+  features: string[];
+  support: string | null;
+  companies: number;
+  trials: number;
+}
+export interface AdminPlansOut {
+  plans: AdminPlan[];
+  packs: { id: string; credits: number; prices: Record<string, number>; active: boolean }[];
+  trial: { plan_code: string; days: number };
+  currencies: string[];
+  can_act: boolean;
+  pricing_url: string;
+}
+export interface AdminPaymentsOut {
+  connected: boolean;
+  provider: string | null;
+  items: unknown[];
+}

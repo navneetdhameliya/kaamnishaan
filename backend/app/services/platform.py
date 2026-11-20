@@ -3,9 +3,10 @@
 import uuid
 from typing import Literal
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.config import get_settings
 from app.models import PlatformSetting
 
 
@@ -203,4 +204,21 @@ async def email_config(db: AsyncSession) -> EmailConfig:
 
 async def set_email_config(db: AsyncSession, c: EmailConfig, *, staff_id: uuid.UUID) -> EmailConfig:
     await _put(db, "email", c.model_dump(), staff_id)
+    return c
+
+
+# ---- free trial (A17) -----------------------------------------------------------------------------
+class TrialConfig(BaseModel):
+    """New companies start on this plan for this many days. No card is asked for (no payments yet)."""
+
+    plan_code: str = "professional"
+    days: int = Field(default_factory=lambda: get_settings().trial_days, ge=3, le=60)
+
+
+async def trial(db: AsyncSession) -> TrialConfig:
+    return TrialConfig(**await _get(db, "trial"))
+
+
+async def set_trial(db: AsyncSession, c: TrialConfig, *, staff_id: uuid.UUID) -> TrialConfig:
+    await _put(db, "trial", c.model_dump(), staff_id)
     return c

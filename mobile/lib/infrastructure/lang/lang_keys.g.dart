@@ -7758,4 +7758,188 @@ abstract final class LangKeys {
   static const adminRpNotOpened = 'admin.rp.not_opened';
   /// Download PDF
   static const adminRpPdf = 'admin.rp.pdf';
+  /// Revenue
+  static const adminNavRevenue = 'admin.nav.revenue';
+  /// Subscriptions
+  static const adminNavSubscriptions = 'admin.nav.subscriptions';
+  /// Plans & pricing
+  static const adminNavPlans = 'admin.nav.plans';
+  /// Payments
+  static const adminNavPayments = 'admin.nav.payments';
+  /// Monthly revenue
+  static const adminSbMrr = 'admin.sb.mrr';
+  /// Plan price of every active company
+  static const adminSbMrrNote = 'admin.sb.mrr_note';
+  /// Paying companies
+  static const adminSbPaying = 'admin.sb.paying';
+  /// {n} on Free
+  static const adminSbOnFree = 'admin.sb.on_free';
+  /// Trials
+  static const adminSbTrials = 'admin.sb.trials';
+  /// {n} end this week
+  static const adminSbTrialsEnd = 'admin.sb.trials_end';
+  /// Cancelled (30 days)
+  static const adminSbChurn = 'admin.sb.churn';
+  /// {n} past due
+  static const adminSbPastDue = 'admin.sb.past_due';
+  /// Search company or owner
+  static const adminSbSearch = 'admin.sb.search';
+  /// Plan
+  static const adminSbFPlan = 'admin.sb.f_plan';
+  /// Free
+  static const adminSbPlanFree = 'admin.sb.plan.free';
+  /// Starter
+  static const adminSbPlanStarter = 'admin.sb.plan.starter';
+  /// Professional
+  static const adminSbPlanProfessional = 'admin.sb.plan.professional';
+  /// Business
+  static const adminSbPlanBusiness = 'admin.sb.plan.business';
+  /// Enterprise
+  static const adminSbPlanEnterprise = 'admin.sb.plan.enterprise';
+  /// No subscriptions match
+  static const adminSbEmptyTitle = 'admin.sb.empty_title';
+  /// Company
+  static const adminSbCCompany = 'admin.sb.c_company';
+  /// Plan
+  static const adminSbCPlan = 'admin.sb.c_plan';
+  /// Price
+  static const adminSbCPrice = 'admin.sb.c_price';
+  /// Status
+  static const adminSbCStatus = 'admin.sb.c_status';
+  /// Renews
+  static const adminSbCRenews = 'admin.sb.c_renews';
+  /// Seats
+  static const adminSbCSeats = 'admin.sb.c_seats';
+  /// {plan} trial
+  static const adminSbPlanTrial = 'admin.sb.plan_trial';
+  /// {price}/mo
+  static const adminSbPerMonth = 'admin.sb.per_month';
+  /// Trial · {n} days
+  static const adminSbTrialDays = 'admin.sb.trial_days';
+  /// No money is taken yet: revenue is the plan price of active companies. Online payments come in the testing phase.
+  static const adminSbNote = 'admin.sb.note';
+  /// Custom
+  static const adminPlCustom = 'admin.pl.custom';
+  /// New companies start on this plan's trial. Pick another trial plan first.
+  static const adminPlErrTrialPlan = 'admin.pl.err.trial_plan';
+  /// A free plan is free in every currency.
+  static const adminPlErrFreeMismatch = 'admin.pl.err.free_mismatch';
+  /// The trial must be a paid plan shown on the website.
+  static const adminPlErrBadTrialPlan = 'admin.pl.err.bad_trial_plan';
+  /// Check the numbers — something isn't valid.
+  static const adminPlErrInvalid = 'admin.pl.err.invalid';
+  /// An English name is needed.
+  static const adminPlErrName = 'admin.pl.err.name';
+  /// Give a price in every currency, or leave all empty for a custom price.
+  static const adminPlErrPrices = 'admin.pl.err.prices';
+  /// Edit {plan}
+  static const adminPlEditTitle = 'admin.pl.edit_title';
+  /// Changes are live at once: the website, sign-up and every company on this plan.
+  static const adminPlEditBody = 'admin.pl.edit_body';
+  /// Plan name
+  static const adminPlFName = 'admin.pl.f_name';
+  /// Monthly price
+  static const adminPlFPrice = 'admin.pl.f_price';
+  /// Leave all empty for "Custom" (talk to us).
+  static const adminPlFPriceHint = 'admin.pl.f_price_hint';
+  /// Limits
+  static const adminPlFLimits = 'admin.pl.f_limits';
+  /// Leave empty for no limit.
+  static const adminPlFLimitsHint = 'admin.pl.f_limits_hint';
+  /// Technicians
+  static const adminPlLimTechnicianLimit = 'admin.pl.lim.technician_limit';
+  /// Reports per month
+  static const adminPlLimReportLimitMonthly = 'admin.pl.lim.report_limit_monthly';
+  /// Credits per month
+  static const adminPlLimMonthlyCredits = 'admin.pl.lim.monthly_credits';
+  /// AI questions per month
+  static const adminPlLimAiQuestionsMonthly = 'admin.pl.lim.ai_questions_monthly';
+  /// No limit
+  static const adminPlNoLimit = 'admin.pl.no_limit';
+  /// Most popular
+  static const adminPlFPopular = 'admin.pl.f_popular';
+  /// Highlighted on the website. Only one plan can be.
+  static const adminPlFPopularHint = 'admin.pl.f_popular_hint';
+  /// Shown on the website
+  static const adminPlFPublic = 'admin.pl.f_public';
+  /// Hidden plans stay for companies already on them.
+  static const adminPlFPublicHint = 'admin.pl.f_public_hint';
+  /// Save
+  static const adminPlSave = 'admin.pl.save';
+  /// {price} / month
+  static const adminPlMonth = 'admin.pl.month';
+  /// Technicians: {n}
+  static const adminPlLTechs = 'admin.pl.l.techs';
+  /// Unlimited technicians
+  static const adminPlLTechsAny = 'admin.pl.l.techs_any';
+  /// Reports: {n} / month
+  static const adminPlLReports = 'admin.pl.l.reports';
+  /// Fair use reports
+  static const adminPlLFair = 'admin.pl.l.fair';
+  /// AI questions: {n} / month
+  static const adminPlLAi = 'admin.pl.l.ai';
+  /// Unlimited AI questions
+  static const adminPlLAiAny = 'admin.pl.l.ai_any';
+  /// Credits: {n} / month
+  static const adminPlLCredits = 'admin.pl.l.credits';
+  /// Custom credits
+  static const adminPlLCreditsAny = 'admin.pl.l.credits_any';
+  /// Most popular
+  static const adminPlPopular = 'admin.pl.popular';
+  /// {n} companies · {trials} on trial
+  static const adminPlCompanies = 'admin.pl.companies';
+  /// On the website
+  static const adminPlOnSite = 'admin.pl.on_site';
+  /// Edit plan
+  static const adminPlEdit = 'admin.pl.edit';
+  /// Saved
+  static const adminPlSaved = 'admin.pl.saved';
+  /// Preview pricing page
+  static const adminPlPreview = 'admin.pl.preview';
+  /// Prices are in INR and USD. Changes are live at once for the website, sign-up and every company on the plan. No money is charged yet.
+  static const adminPlBanner = 'admin.pl.banner';
+  /// Only a super admin can change plans and prices.
+  static const adminPlBannerView = 'admin.pl.banner_view';
+  /// Free trial
+  static const adminPlTrial = 'admin.pl.trial';
+  /// New companies start here.
+  static const adminPlTrialSub = 'admin.pl.trial_sub';
+  /// Trial plan
+  static const adminPlTrialPlan = 'admin.pl.trial_plan';
+  /// Trial length
+  static const adminPlTrialDays = 'admin.pl.trial_days';
+  /// {n} days
+  static const adminPlDays = 'admin.pl.days';
+  /// Card needed
+  static const adminPlCard = 'admin.pl.card';
+  /// No
+  static const adminPlCardNo = 'admin.pl.card_no';
+  /// No card is asked for until online payments are set up.
+  static const adminPlCardHint = 'admin.pl.card_hint';
+  /// Top-up credit packs
+  static const adminPlPacks = 'admin.pl.packs';
+  /// Extra credits companies can buy (once online payments are on).
+  static const adminPlPacksSub = 'admin.pl.packs_sub';
+  /// {n} credits
+  static const adminPlPack = 'admin.pl.pack';
+  /// Price of {n} credits in {c}
+  static const adminPlPackPrice = 'admin.pl.pack_price';
+  /// On sale
+  static const adminPlPackOn = 'admin.pl.pack_on';
+  /// Online payments aren't connected yet
+  static const adminPmTitle = 'admin.pm.title';
+  /// Payments will run through {provider} once it's set up in the testing phase. Until then nothing is charged, and companies stay on their plan for free.
+  static const adminPmBody = 'admin.pm.body';
+  /// Razorpay (UPI, cards)
+  static const adminPmProviderRazorpay = 'admin.pm.provider.razorpay';
+  /// Every invoice with its company, amount and date
+  static const adminPmWillInvoices = 'admin.pm.will.invoices';
+  /// How each company pays (card, UPI, bank transfer)
+  static const adminPmWillMethods = 'admin.pm.will.methods';
+  /// Failed payments and when they'll be tried again
+  static const adminPmWillFailed = 'admin.pm.will.failed';
+  /// Refunds
+  static const adminPmWillRefunds = 'admin.pm.will.refunds';
+  /// Card details are held by the payment provider. KaamNishaan never stores card numbers.
+  static const adminPmCards = 'admin.pm.cards';
 }

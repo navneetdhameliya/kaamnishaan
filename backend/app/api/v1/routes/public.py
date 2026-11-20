@@ -104,5 +104,5 @@ async def plans(
             if currency in c.prices
         ],
         credit_rules=await credits.rules(db),
-        trial_days=get_settings().trial_days,
+        trial_days=(await platform.trial(db)).days,
     )
