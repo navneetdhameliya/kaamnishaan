@@ -29,9 +29,17 @@ from app.models import (
 )
 from app.schemas.billing import BillingOut, CreditsOut, CreditUse, PlanStatus, UsageTile
 from app.schemas.identity import CreditPackOut, CreditRules, Money, PlanOut
+from app.services import platform
 
-RULES = CreditRules()
-COST = {"sms": RULES.sms, "whatsapp": RULES.whatsapp, "email": RULES.email, "ai_call": RULES.ai_call}
+
+async def rules(db: AsyncSession) -> CreditRules:
+    """What each message or call costs in credits; set by KaamNishaan staff in the admin panel (A40)."""
+    c = await platform.credit_costs(db)
+    return CreditRules(sms=c.sms, whatsapp=c.whatsapp, ai_call=c.ai_call, email=0)
+
+
+async def cost(db: AsyncSession, channel: str) -> int:
+    return getattr(await rules(db), channel, 0) if channel in ("sms", "whatsapp", "ai_call") else 0
 
 
 def _add_months(t: datetime, n: int) -> datetime:
@@ -87,30 +95,30 @@ def balance(w: CreditWallet) -> int:
 
 
 async def can_spend(db: AsyncSession, company: Company, channel: str) -> bool:
-    cost = COST.get(channel, 0)
-    if cost == 0:
+    need = await cost(db, channel)
+    if need == 0:
         return True
     w, plan = await wallet(db, company, lock=True)
-    return unlimited(plan) or balance(w) >= cost
+    return unlimited(plan) or balance(w) >= need
 
 
 async def spend(
     db: AsyncSession, company: Company, channel: str, kind: str, request_id: uuid.UUID | None = None
 ) -> bool:
     """Take the credits for one message or call. False (and nothing taken) when there aren't enough."""
-    cost = COST.get(channel, 0)
-    if cost == 0:
+    need = await cost(db, channel)
+    if need == 0:
         return True
     w, plan = await wallet(db, company, lock=True)
     if not unlimited(plan):
-        if balance(w) < cost:
+        if balance(w) < need:
             return False
-        from_plan = min(cost, max(w.plan_credits - w.plan_used, 0))
+        from_plan = min(need, max(w.plan_credits - w.plan_used, 0))
         w.plan_used += from_plan
-        w.topup_credits -= cost - from_plan
+        w.topup_credits -= need - from_plan
     db.add(
         CreditEntry(
-            company_id=company.id, kind=kind, channel=channel, credits=-cost, review_request_id=request_id
+            company_id=company.id, kind=kind, channel=channel, credits=-need, review_request_id=request_id
         )
     )
     return True
@@ -270,7 +278,7 @@ async def credits(db: AsyncSession, p: Principal) -> CreditsOut:
             for c in packs
             if cur in c.prices and (c.plan_code is None or c.plan_code == plan.code)
         ],
-        rules=RULES,
+        rules=await rules(db),
         payments_ready=False,
     )
 

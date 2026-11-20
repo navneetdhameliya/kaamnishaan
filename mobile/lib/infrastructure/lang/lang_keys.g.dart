@@ -6888,4 +6888,130 @@ abstract final class LangKeys {
   static const adminAuAStaffTemplateReset = 'admin.au.a.staff.template_reset';
   /// Message template
   static const adminAuTMessageTemplate = 'admin.au.t.message_template';
+  /// Export
+  static const adminCrExport = 'admin.cr.export';
+  /// Save rules
+  static const adminCrSave = 'admin.cr.save';
+  /// Saved. Message and call prices apply from the next one; plan credits from each company’s next month.
+  static const adminCrSaved = 'admin.cr.saved';
+  /// Fix the highlighted numbers to save.
+  static const adminCrFix = 'admin.cr.fix';
+  /// Credits used (30 d)
+  static const adminCrKUsed = 'admin.cr.k_used';
+  /// {pct} of included
+  static const adminCrKUsedSub = 'admin.cr.k_used_sub';
+  /// Extra credits added (30 d)
+  static const adminCrKTopups = 'admin.cr.k_topups';
+  /// {n} packs bought · no payments yet
+  static const adminCrKTopupsSub = 'admin.cr.k_topups_sub';
+  /// Messages and calls (30 d)
+  static const adminCrKSent = 'admin.cr.k_sent';
+  /// {sms} SMS · {wa} WhatsApp · {calls} calls
+  static const adminCrKSentSub = 'admin.cr.k_sent_sub';
+  /// Companies out of credits
+  static const adminCrKOut = 'admin.cr.k_out';
+  /// {n} reminders paused
+  static const adminCrKOutSub = 'admin.cr.k_out_sub';
+  /// Credit rules
+  static const adminCrRules = 'admin.cr.rules';
+  /// SMS message
+  static const adminCrRuleSms = 'admin.cr.rule.sms';
+  /// WhatsApp message
+  static const adminCrRuleWhatsapp = 'admin.cr.rule.whatsapp';
+  /// AI review call (up to 3 min)
+  static const adminCrRuleAiCall = 'admin.cr.rule.ai_call';
+  /// Email
+  static const adminCrRuleEmail = 'admin.cr.rule.email';
+  /// credits
+  static const adminCrCreditsUnit = 'admin.cr.credits_unit';
+  /// Free
+  static const adminCrFree = 'admin.cr.free';
+  /// Credits roll over
+  static const adminCrRollover = 'admin.cr.rollover';
+  /// No · reset monthly (extra credits stay)
+  static const adminCrRolloverV = 'admin.cr.rollover_v';
+  /// At 0 credits
+  static const adminCrAtZero = 'admin.cr.at_zero';
+  /// Pause reminders and AI calls
+  static const adminCrZPause = 'admin.cr.z.pause';
+  /// They go when credits are back. Always on.
+  static const adminCrZPauseHint = 'admin.cr.z.pause_hint';
+  /// Keep rating links in emails
+  static const adminCrZEmail = 'admin.cr.z.email';
+  /// Email is free. Always on.
+  static const adminCrZEmailHint = 'admin.cr.z.email_hint';
+  /// Email owner at 80% and 100%
+  static const adminCrZWarn = 'admin.cr.z.warn';
+  /// Needs an email service, which isn’t set up yet. Owners see it in the app.
+  static const adminCrZWarnHint = 'admin.cr.z.warn_hint';
+  /// Included per plan
+  static const adminCrPerPlan = 'admin.cr.per_plan';
+  /// {n} companies
+  static const adminCrCompanies = 'admin.cr.companies';
+  /// 1 company
+  static const adminCrCompaniesOne = 'admin.cr.companies_one';
+  /// No limit
+  static const adminCrNoLimit = 'admin.cr.no_limit';
+  /// / month
+  static const adminCrPerMonth = 'admin.cr.per_month';
+  /// Leave empty for no limit. A new amount applies from each company’s next month.
+  static const adminCrPlanNote = 'admin.cr.plan_note';
+  /// Top-up packs
+  static const adminCrPacks = 'admin.cr.packs';
+  /// {n} for {price}
+  static const adminCrPack = 'admin.cr.pack';
+  /// Search company
+  static const adminCrSearch = 'admin.cr.search';
+  /// No companies yet.
+  static const adminCrNone = 'admin.cr.none';
+  /// No company matches.
+  static const adminCrNoneMatch = 'admin.cr.none_match';
+  /// Company
+  static const adminCrCCompany = 'admin.cr.c_company';
+  /// Plan
+  static const adminCrCPlan = 'admin.cr.c_plan';
+  /// Included
+  static const adminCrCIncluded = 'admin.cr.c_included';
+  /// Used this month
+  static const adminCrCUsed = 'admin.cr.c_used';
+  /// Extra credits
+  static const adminCrCTopups = 'admin.cr.c_topups';
+  /// Status
+  static const adminCrCStatus = 'admin.cr.c_status';
+  /// {n} top-ups
+  static const adminCrTopups = 'admin.cr.topups';
+  /// 1 top-up
+  static const adminCrTopupsOne = 'admin.cr.topups_one';
+  /// {n} left
+  static const adminCrLeft = 'admin.cr.left';
+  /// OK
+  static const adminCrStOk = 'admin.cr.st.ok';
+  /// {pct} used
+  static const adminCrStLow = 'admin.cr.st.low';
+  /// Out of credits · paused
+  static const adminCrStOut = 'admin.cr.st.out';
+  /// No limit
+  static const adminCrStUnlimited = 'admin.cr.st.unlimited';
+  /// Adjust
+  static const adminCrAdjust = 'admin.cr.adjust';
+  /// Adjust credits · {company}
+  static const adminCrAdjustTitle = 'admin.cr.adjust_title';
+  /// Add extra credits (for example as a goodwill gift), or take some back with a minus sign. Extra credits stay until used. It has {n} now.
+  static const adminCrAdjustBody = 'admin.cr.adjust_body';
+  /// Credits (+ or −)
+  static const adminCrAdjustCredits = 'admin.cr.adjust_credits';
+  /// Save
+  static const adminCrAdjustGo = 'admin.cr.adjust_go';
+  /// Credits changed for {company}.
+  static const adminCrAdjusted = 'admin.cr.adjusted';
+  /// Enter a whole number other than 0, e.g. 500 or -100.
+  static const adminCrENumber = 'admin.cr.e.number';
+  /// It only has {n} extra credits to take back.
+  static const adminCrENotEnough = 'admin.cr.e.not_enough';
+  /// Changed the credit rules
+  static const adminAuAStaffCreditRulesUpdated = 'admin.au.a.staff.credit_rules_updated';
+  /// Adjusted a company’s credits
+  static const adminAuAStaffCreditsAdjusted = 'admin.au.a.staff.credits_adjusted';
+  /// Credits list
+  static const adminAuTCredits = 'admin.au.t.credits';
 }

@@ -147,8 +147,9 @@ async def _record(db, req, company, r: CallResult, lang, provider, version, ps, 
     charged = r.outcome not in ("dnd",)
     if charged:
         await credits.spend(db, company, "ai_call", "ai_call", req.id)
+    used = await credits.cost(db, "ai_call") if charged else 0
     db.add(ReviewRequestEvent(request_id=req.id, step="ai_call", channel="voice", status=outcome,
-                              credits_used=credits.COST["ai_call"] if charged else 0))  # fmt: skip
+                              credits_used=used))  # fmt: skip
     callback_at = None
     req.status = "ai_call_done"
     if r.outcome == "rated" and r.rating:

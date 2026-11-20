@@ -122,3 +122,21 @@ async def voice_status(db: AsyncSession) -> dict:
 
 async def set_voice_down(db: AsyncSession, since: str | None) -> None:
     await _put(db, "voice_status", {"down_since": since}, None)
+
+
+# ---- A40 credit rules ------------------------------------------------------------------------------------
+class CreditCosts(BaseModel):
+    """Credits one message or call uses. Email is always free."""
+
+    sms: int = 1
+    whatsapp: int = 1
+    ai_call: int = 10
+
+
+async def credit_costs(db: AsyncSession) -> CreditCosts:
+    return CreditCosts(**await _get(db, "credit_rules"))
+
+
+async def set_credit_costs(db: AsyncSession, c: CreditCosts, *, staff_id: uuid.UUID) -> CreditCosts:
+    await _put(db, "credit_rules", c.model_dump(), staff_id)
+    return c

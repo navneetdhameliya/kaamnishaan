@@ -421,3 +421,26 @@ export interface TemplatesOut {
   email_live: boolean;
   can_act: boolean;
 }
+
+// ---- A40 Usage and credits ------------------------------------------------------------------------
+export interface CreditRow {
+  company_id: string;
+  company: string;
+  plan: string;
+  included: number | null;
+  used: number;
+  topup_left: number;
+  topups: number;
+  status: 'unlimited' | 'ok' | 'low' | 'out';
+}
+export interface CreditsOut {
+  kpis: { used_30d: number; included_30d: number; topup_credits_30d: number; topups_30d: number; sms_30d: number; whatsapp_30d: number; calls_30d: number; out_of_credits: number; paused_requests: number };
+  rules: { sms: number; whatsapp: number; ai_call: number };
+  plans: { code: string; name: string; monthly_credits: number | null; companies: number }[];
+  packs: { credits: number; prices: { amount: number; currency: string }[] }[];
+  items: CreditRow[];
+  total: number;
+  page: number;
+  page_size: number;
+  can_act: boolean;
+}
