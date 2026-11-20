@@ -4,7 +4,6 @@ from datetime import timedelta
 
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.core.config import get_settings
 from app.core.errors import AppError, Forbidden
 from app.core.security import now
 from app.models import AuthSession, Company, Industry, Membership, User
@@ -30,6 +29,7 @@ async def create_company(
         )
     await check_trade(db, body.trade)
     t = now()
+    tr = await platform.trial(db)
     company = Company(
         name=body.name,
         industry_slug=body.trade,
@@ -37,9 +37,9 @@ async def create_company(
         timezone=body.timezone,
         currency=CURRENCY_BY_COUNTRY.get(body.country, "USD"),
         report_language="en",
-        plan_code="professional",
+        plan_code=tr.plan_code,
         status="trial",
-        trial_ends_at=t + timedelta(days=get_settings().trial_days),
+        trial_ends_at=t + timedelta(days=tr.days),
         settings=CompanySettings().model_dump(),
         created_by=user.id,
     )

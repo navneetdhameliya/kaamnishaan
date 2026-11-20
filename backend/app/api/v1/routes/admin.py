@@ -21,6 +21,14 @@ from app.schemas.admin_ai_calls import (
     AdminTestCallOut,
 )
 from app.schemas.admin_audit import AdminAuditList
+from app.schemas.admin_billing import (
+    AdminPackIn,
+    AdminPaymentsOut,
+    AdminPlanIn,
+    AdminPlansOut,
+    AdminSubList,
+    AdminTrial,
+)  # fmt: skip
 from app.schemas.admin_checklists import (
     AdminChecklistApprove,
     AdminChecklistCreate,
@@ -36,6 +44,7 @@ from app.schemas.admin_companies import (
     AdminCompanyReason,
     AdminCompanyUpdate,
     AdminOwnerInvite,
+    CompanyStatus,
 )
 from app.schemas.admin_credits import AdminCreditAdjust, AdminCreditRulesIn, AdminCreditsOut
 from app.schemas.admin_email import AdminEmailIn, AdminEmailOut, AdminEmailTest, AdminEmailTestOut
@@ -86,6 +95,7 @@ from app.services import (
     admin_ai,
     admin_ai_calls,
     admin_audit,
+    admin_billing,
     admin_checklists,
     admin_companies,
     admin_credits,
@@ -948,7 +958,7 @@ async def save_platform_settings(
 # ---- A33 Email settings ------------------------------------------------------------------------------
 def _super(me: Staff) -> None:
     if me.staff.role != "super_admin":
-        raise Forbidden("forbidden", "Only a super admin can change email settings.")
+        raise Forbidden("forbidden", "Only a super admin can change this.")
 
 
 @router.get("/email-settings", response_model=AdminEmailOut)
@@ -1182,3 +1192,89 @@ async def report(
 ) -> AdminReportDetail:
     """One report: its text and photos, what the AI checks found, who changed it, and the customer links."""
     return await admin_reports.detail(db, report_id)
+
+
+# ---- A16 Subscriptions, A17 Plans and pricing, A18 Payments -------------------------------------------
+@router.get("/subscriptions", response_model=AdminSubList)
+async def subscriptions(
+    q: str | None = Query(None, max_length=120),
+    status: CompanyStatus | None = None,
+    plan: str | None = Query(None, max_length=24),
+    locale: Locale = "en",
+    page: int = Query(1, ge=1, le=10_000),
+    page_size: int = Query(25, ge=5, le=100),
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminSubList:
+    """Every company's plan, price, status and renewal (past due first, then trials ending soonest)."""
+    return await admin_billing.subscriptions(db, lang=locale, q=q, status=status, plan=plan, page=page,
+                                             page_size=page_size)  # fmt: skip
+
+
+@router.get("/subscriptions.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
+async def subscriptions_csv(
+    q: str | None = Query(None, max_length=120),
+    status: CompanyStatus | None = None,
+    plan: str | None = Query(None, max_length=24),
+    locale: Locale = "en",
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> Response:
+    """Every matching subscription, for a spreadsheet. Exports are written to the audit log."""
+    body = await admin_billing.subscriptions_csv(db, lang=locale, q=q, status=status, plan=plan)
+    filters = {"q": q, "status": status, "plan": plan}
+    await audit.record(db, "staff.export", staff_id=me.staff.id, target_type="subscriptions",
+                       data={k: v for k, v in filters.items() if v})  # fmt: skip
+    return Response(
+        body,
+        media_type="text/csv; charset=utf-8",
+        headers={
+            "Content-Disposition": f'attachment; filename="kaamnishaan-subscriptions-{now():%Y-%m-%d}.csv"',
+            "Cache-Control": "no-store",
+        },
+    )
+
+
+@router.get("/plans", response_model=AdminPlansOut)
+async def admin_plans(me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)) -> AdminPlansOut:
+    """Every plan (also hidden ones) with how many companies use it, the credit packs and the free trial."""
+    return await admin_billing.plans(db, can_act=me.staff.role == "super_admin")
+
+
+@router.put("/plans/{code}", response_model=AdminPlansOut)
+async def save_plan(
+    code: str,
+    body: AdminPlanIn,
+    request: Request,
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminPlansOut:
+    """Super admins only. Names, prices and limits change at once for the website, sign-up and every company
+    on the plan (no money is charged yet). Audited."""
+    _super(me)
+    return await admin_billing.save_plan(db, code, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.put("/credit-packs/{pack_id}", response_model=AdminPlansOut)
+async def save_pack(
+    pack_id: uuid.UUID, body: AdminPackIn, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminPlansOut:  # fmt: skip
+    """Super admins only: a top-up pack's prices, or hide it. Audited."""
+    _super(me)
+    return await admin_billing.save_pack(db, pack_id, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.put("/trial", response_model=AdminPlansOut)
+async def save_trial(
+    body: AdminTrial, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminPlansOut:
+    """Super admins only: the plan and length of the free trial for new companies. Audited."""
+    _super(me)
+    return await admin_billing.save_trial(db, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.get("/payments", response_model=AdminPaymentsOut)
+async def payments(_: Staff = Depends(get_staff)) -> AdminPaymentsOut:
+    """Online payments are set up in the testing phase; until then there is nothing to list."""
+    return AdminPaymentsOut(connected=False, provider="razorpay")

@@ -2807,6 +2807,92 @@ class AdminOwnerInviteModel {
       };
 }
 
+AdminPackModel adminPackModelFromJson(String str) => AdminPackModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPackModelToJson(AdminPackModel data) => json.encode(data.toJson());
+
+class AdminPackModel {
+  final bool active;
+  final int credits;
+  final String id;
+  final Map<String, dynamic> prices;
+
+  const AdminPackModel({
+    required this.active,
+    required this.credits,
+    required this.id,
+    required this.prices,
+  });
+
+  factory AdminPackModel.fromJson(Map<String, dynamic> json) => AdminPackModel(
+        active: json['active'] as bool,
+        credits: (json['credits'] as num).toInt(),
+        id: json['id'] as String,
+        prices: Map<String, dynamic>.from(json['prices'] as Map),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'active': active,
+        'credits': credits,
+        'id': id,
+        'prices': prices,
+      };
+}
+
+AdminPackInModel adminPackInModelFromJson(String str) => AdminPackInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPackInModelToJson(AdminPackInModel data) => json.encode(data.toJson());
+
+class AdminPackInModel {
+  final bool active;
+  final Map<String, dynamic> prices;
+
+  const AdminPackInModel({
+    required this.active,
+    required this.prices,
+  });
+
+  factory AdminPackInModel.fromJson(Map<String, dynamic> json) => AdminPackInModel(
+        active: json['active'] as bool,
+        prices: Map<String, dynamic>.from(json['prices'] as Map),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'active': active,
+        'prices': prices,
+      };
+}
+
+AdminPaymentsOutModel adminPaymentsOutModelFromJson(String str) => AdminPaymentsOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPaymentsOutModelToJson(AdminPaymentsOutModel data) => json.encode(data.toJson());
+
+class AdminPaymentsOutModel {
+  /// False until online payments are set up (testing phase)
+  final bool connected;
+  final List<Map<String, dynamic>>? items;
+  /// The planned provider
+  final String? provider;
+
+  const AdminPaymentsOutModel({
+    required this.connected,
+    this.items,
+    this.provider,
+  });
+
+  factory AdminPaymentsOutModel.fromJson(Map<String, dynamic> json) => AdminPaymentsOutModel(
+        connected: json['connected'] as bool,
+        items: json['items'] == null ? null : (json['items'] as List).map((e) => Map<String, dynamic>.from(e as Map)).toList(),
+        provider: json['provider'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'connected': connected,
+        'items': items,
+        'provider': provider,
+      };
+}
+
 AdminPhotoModel adminPhotoModelFromJson(String str) => AdminPhotoModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminPhotoModelToJson(AdminPhotoModel data) => json.encode(data.toJson());
@@ -3094,6 +3180,78 @@ class AdminPhotoTwinModel {
       };
 }
 
+AdminPlanModel adminPlanModelFromJson(String str) => AdminPlanModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPlanModelToJson(AdminPlanModel data) => json.encode(data.toJson());
+
+class AdminPlanModel {
+  final int? aiQuestionsMonthly;
+  final String code;
+  /// Companies on this plan (not cancelled)
+  final int companies;
+  final List<String> features;
+  /// Shown on the website and at sign-up
+  final bool isPublic;
+  final int? monthlyCredits;
+  final bool mostPopular;
+  /// Per language
+  final Map<String, dynamic> name;
+  /// Monthly price in minor units per currency; empty = custom
+  final Map<String, dynamic> prices;
+  final int? reportLimitMonthly;
+  final String? support;
+  final int? technicianLimit;
+  final int trials;
+
+  const AdminPlanModel({
+    this.aiQuestionsMonthly,
+    required this.code,
+    required this.companies,
+    required this.features,
+    required this.isPublic,
+    this.monthlyCredits,
+    required this.mostPopular,
+    required this.name,
+    required this.prices,
+    this.reportLimitMonthly,
+    this.support,
+    this.technicianLimit,
+    required this.trials,
+  });
+
+  factory AdminPlanModel.fromJson(Map<String, dynamic> json) => AdminPlanModel(
+        aiQuestionsMonthly: json['ai_questions_monthly'] == null ? null : (json['ai_questions_monthly'] as num).toInt(),
+        code: json['code'] as String,
+        companies: (json['companies'] as num).toInt(),
+        features: (json['features'] as List).map((e) => e as String).toList(),
+        isPublic: json['is_public'] as bool,
+        monthlyCredits: json['monthly_credits'] == null ? null : (json['monthly_credits'] as num).toInt(),
+        mostPopular: json['most_popular'] as bool,
+        name: Map<String, dynamic>.from(json['name'] as Map),
+        prices: Map<String, dynamic>.from(json['prices'] as Map),
+        reportLimitMonthly: json['report_limit_monthly'] == null ? null : (json['report_limit_monthly'] as num).toInt(),
+        support: json['support'] as String?,
+        technicianLimit: json['technician_limit'] == null ? null : (json['technician_limit'] as num).toInt(),
+        trials: (json['trials'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ai_questions_monthly': aiQuestionsMonthly,
+        'code': code,
+        'companies': companies,
+        'features': features,
+        'is_public': isPublic,
+        'monthly_credits': monthlyCredits,
+        'most_popular': mostPopular,
+        'name': name,
+        'prices': prices,
+        'report_limit_monthly': reportLimitMonthly,
+        'support': support,
+        'technician_limit': technicianLimit,
+        'trials': trials,
+      };
+}
+
 AdminPlanCreditsModel adminPlanCreditsModelFromJson(String str) => AdminPlanCreditsModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminPlanCreditsModelToJson(AdminPlanCreditsModel data) => json.encode(data.toJson());
@@ -3124,6 +3282,55 @@ class AdminPlanCreditsModel {
         'companies': companies,
         'monthly_credits': monthlyCredits,
         'name': name,
+      };
+}
+
+AdminPlanInModel adminPlanInModelFromJson(String str) => AdminPlanInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPlanInModelToJson(AdminPlanInModel data) => json.encode(data.toJson());
+
+class AdminPlanInModel {
+  final int? aiQuestionsMonthly;
+  final bool isPublic;
+  final int? monthlyCredits;
+  final bool mostPopular;
+  final Map<String, dynamic> name;
+  /// Empty = custom price (talk to us)
+  final Map<String, dynamic> prices;
+  final int? reportLimitMonthly;
+  final int? technicianLimit;
+
+  const AdminPlanInModel({
+    this.aiQuestionsMonthly,
+    required this.isPublic,
+    this.monthlyCredits,
+    required this.mostPopular,
+    required this.name,
+    required this.prices,
+    this.reportLimitMonthly,
+    this.technicianLimit,
+  });
+
+  factory AdminPlanInModel.fromJson(Map<String, dynamic> json) => AdminPlanInModel(
+        aiQuestionsMonthly: json['ai_questions_monthly'] == null ? null : (json['ai_questions_monthly'] as num).toInt(),
+        isPublic: json['is_public'] as bool,
+        monthlyCredits: json['monthly_credits'] == null ? null : (json['monthly_credits'] as num).toInt(),
+        mostPopular: json['most_popular'] as bool,
+        name: Map<String, dynamic>.from(json['name'] as Map),
+        prices: Map<String, dynamic>.from(json['prices'] as Map),
+        reportLimitMonthly: json['report_limit_monthly'] == null ? null : (json['report_limit_monthly'] as num).toInt(),
+        technicianLimit: json['technician_limit'] == null ? null : (json['technician_limit'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ai_questions_monthly': aiQuestionsMonthly,
+        'is_public': isPublic,
+        'monthly_credits': monthlyCredits,
+        'most_popular': mostPopular,
+        'name': name,
+        'prices': prices,
+        'report_limit_monthly': reportLimitMonthly,
+        'technician_limit': technicianLimit,
       };
 }
 
@@ -3192,6 +3399,47 @@ class AdminPlanMixRowModel {
         'companies': companies,
         'name': name,
         'prices': prices,
+      };
+}
+
+AdminPlansOutModel adminPlansOutModelFromJson(String str) => AdminPlansOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPlansOutModelToJson(AdminPlansOutModel data) => json.encode(data.toJson());
+
+class AdminPlansOutModel {
+  final bool canAct;
+  final List<String> currencies;
+  final List<AdminPackModel> packs;
+  final List<AdminPlanModel> plans;
+  /// The website pricing page
+  final String pricingUrl;
+  final AdminTrialModel trial;
+
+  const AdminPlansOutModel({
+    required this.canAct,
+    required this.currencies,
+    required this.packs,
+    required this.plans,
+    required this.pricingUrl,
+    required this.trial,
+  });
+
+  factory AdminPlansOutModel.fromJson(Map<String, dynamic> json) => AdminPlansOutModel(
+        canAct: json['can_act'] as bool,
+        currencies: (json['currencies'] as List).map((e) => e as String).toList(),
+        packs: (json['packs'] as List).map((e) => AdminPackModel.fromJson(e as Map<String, dynamic>)).toList(),
+        plans: (json['plans'] as List).map((e) => AdminPlanModel.fromJson(e as Map<String, dynamic>)).toList(),
+        pricingUrl: json['pricing_url'] as String,
+        trial: AdminTrialModel.fromJson(json['trial'] as Map<String, dynamic>),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'currencies': currencies,
+        'packs': packs.map((e) => e.toJson()).toList(),
+        'plans': plans.map((e) => e.toJson()).toList(),
+        'pricing_url': pricingUrl,
+        'trial': trial.toJson(),
       };
 }
 
@@ -4452,6 +4700,153 @@ class AdminStatModel {
       };
 }
 
+AdminSubKpisModel adminSubKpisModelFromJson(String str) => AdminSubKpisModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminSubKpisModelToJson(AdminSubKpisModel data) => json.encode(data.toJson());
+
+class AdminSubKpisModel {
+  final int cancelled30d;
+  /// Plan price of every active company, per currency
+  final List<AdminMoneyModel> mrr;
+  /// Active companies on a free plan
+  final int onFree;
+  final int pastDue;
+  /// Active companies on a paid plan
+  final int paying;
+  final int trials;
+  final int trialsEnding7d;
+
+  const AdminSubKpisModel({
+    required this.cancelled30d,
+    required this.mrr,
+    required this.onFree,
+    required this.pastDue,
+    required this.paying,
+    required this.trials,
+    required this.trialsEnding7d,
+  });
+
+  factory AdminSubKpisModel.fromJson(Map<String, dynamic> json) => AdminSubKpisModel(
+        cancelled30d: (json['cancelled_30d'] as num).toInt(),
+        mrr: (json['mrr'] as List).map((e) => AdminMoneyModel.fromJson(e as Map<String, dynamic>)).toList(),
+        onFree: (json['on_free'] as num).toInt(),
+        pastDue: (json['past_due'] as num).toInt(),
+        paying: (json['paying'] as num).toInt(),
+        trials: (json['trials'] as num).toInt(),
+        trialsEnding7d: (json['trials_ending_7d'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'cancelled_30d': cancelled30d,
+        'mrr': mrr.map((e) => e.toJson()).toList(),
+        'on_free': onFree,
+        'past_due': pastDue,
+        'paying': paying,
+        'trials': trials,
+        'trials_ending_7d': trialsEnding7d,
+      };
+}
+
+AdminSubListModel adminSubListModelFromJson(String str) => AdminSubListModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminSubListModelToJson(AdminSubListModel data) => json.encode(data.toJson());
+
+class AdminSubListModel {
+  final List<AdminSubRowModel> items;
+  final AdminSubKpisModel kpis;
+  final int page;
+  final int pageSize;
+  final int total;
+
+  const AdminSubListModel({
+    required this.items,
+    required this.kpis,
+    required this.page,
+    required this.pageSize,
+    required this.total,
+  });
+
+  factory AdminSubListModel.fromJson(Map<String, dynamic> json) => AdminSubListModel(
+        items: (json['items'] as List).map((e) => AdminSubRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        kpis: AdminSubKpisModel.fromJson(json['kpis'] as Map<String, dynamic>),
+        page: (json['page'] as num).toInt(),
+        pageSize: (json['page_size'] as num).toInt(),
+        total: (json['total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'items': items.map((e) => e.toJson()).toList(),
+        'kpis': kpis.toJson(),
+        'page': page,
+        'page_size': pageSize,
+        'total': total,
+      };
+}
+
+AdminSubRowModel adminSubRowModelFromJson(String str) => AdminSubRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminSubRowModelToJson(AdminSubRowModel data) => json.encode(data.toJson());
+
+class AdminSubRowModel {
+  /// One of: trial, active, past_due, suspended, cancelled, near_limit
+  final String badge;
+  final String id;
+  final String name;
+  final String plan;
+  final String planCode;
+  /// Monthly price in the company's currency; None = custom
+  final AdminMoneyModel? price;
+  /// Trial end, or when the next month starts
+  final DateTime? renewsAt;
+  final int? seatLimit;
+  final int seats;
+  /// One of: trial, active, past_due, suspended, cancelled
+  final String status;
+  final int? trialDaysLeft;
+
+  const AdminSubRowModel({
+    required this.badge,
+    required this.id,
+    required this.name,
+    required this.plan,
+    required this.planCode,
+    this.price,
+    this.renewsAt,
+    this.seatLimit,
+    required this.seats,
+    required this.status,
+    this.trialDaysLeft,
+  });
+
+  factory AdminSubRowModel.fromJson(Map<String, dynamic> json) => AdminSubRowModel(
+        badge: json['badge'] as String,
+        id: json['id'] as String,
+        name: json['name'] as String,
+        plan: json['plan'] as String,
+        planCode: json['plan_code'] as String,
+        price: json['price'] == null ? null : AdminMoneyModel.fromJson(json['price'] as Map<String, dynamic>),
+        renewsAt: json['renews_at'] == null ? null : DateTime.parse(json['renews_at'] as String),
+        seatLimit: json['seat_limit'] == null ? null : (json['seat_limit'] as num).toInt(),
+        seats: (json['seats'] as num).toInt(),
+        status: json['status'] as String,
+        trialDaysLeft: json['trial_days_left'] == null ? null : (json['trial_days_left'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'badge': badge,
+        'id': id,
+        'name': name,
+        'plan': plan,
+        'plan_code': planCode,
+        'price': price?.toJson(),
+        'renews_at': renewsAt?.toIso8601String(),
+        'seat_limit': seatLimit,
+        'seats': seats,
+        'status': status,
+        'trial_days_left': trialDaysLeft,
+      };
+}
+
 AdminTeamMemberModel adminTeamMemberModelFromJson(String str) => AdminTeamMemberModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminTeamMemberModelToJson(AdminTeamMemberModel data) => json.encode(data.toJson());
@@ -4886,6 +5281,30 @@ class AdminTranslateOutModel {
   Map<String, dynamic> toJson() => {
         'ai_available': aiAvailable,
         'queued': queued,
+      };
+}
+
+AdminTrialModel adminTrialModelFromJson(String str) => AdminTrialModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTrialModelToJson(AdminTrialModel data) => json.encode(data.toJson());
+
+class AdminTrialModel {
+  final int days;
+  final String planCode;
+
+  const AdminTrialModel({
+    required this.days,
+    required this.planCode,
+  });
+
+  factory AdminTrialModel.fromJson(Map<String, dynamic> json) => AdminTrialModel(
+        days: (json['days'] as num).toInt(),
+        planCode: json['plan_code'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'days': days,
+        'plan_code': planCode,
       };
 }
 

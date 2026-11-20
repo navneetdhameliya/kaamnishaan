@@ -3957,6 +3957,95 @@
         "title": "AdminOwnerInvite",
         "type": "object"
       },
+      "AdminPack": {
+        "properties": {
+          "active": {
+            "title": "Active",
+            "type": "boolean"
+          },
+          "credits": {
+            "title": "Credits",
+            "type": "integer"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "prices": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Prices",
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "credits",
+          "prices",
+          "active"
+        ],
+        "title": "AdminPack",
+        "type": "object"
+      },
+      "AdminPackIn": {
+        "additionalProperties": false,
+        "properties": {
+          "active": {
+            "title": "Active",
+            "type": "boolean"
+          },
+          "prices": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Prices",
+            "type": "object"
+          }
+        },
+        "required": [
+          "prices",
+          "active"
+        ],
+        "title": "AdminPackIn",
+        "type": "object"
+      },
+      "AdminPaymentsOut": {
+        "properties": {
+          "connected": {
+            "description": "False until online payments are set up (testing phase)",
+            "title": "Connected",
+            "type": "boolean"
+          },
+          "items": {
+            "items": {
+              "additionalProperties": true,
+              "type": "object"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "provider": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The planned provider",
+            "title": "Provider"
+          }
+        },
+        "required": [
+          "connected",
+          "provider"
+        ],
+        "title": "AdminPaymentsOut",
+        "type": "object"
+      },
       "AdminPhoto": {
         "properties": {
           "checks": {
@@ -4342,6 +4431,127 @@
         "title": "AdminPhotoTwin",
         "type": "object"
       },
+      "AdminPlan": {
+        "properties": {
+          "ai_questions_monthly": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ai Questions Monthly"
+          },
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "companies": {
+            "description": "Companies on this plan (not cancelled)",
+            "title": "Companies",
+            "type": "integer"
+          },
+          "features": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Features",
+            "type": "array"
+          },
+          "is_public": {
+            "description": "Shown on the website and at sign-up",
+            "title": "Is Public",
+            "type": "boolean"
+          },
+          "monthly_credits": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Credits"
+          },
+          "most_popular": {
+            "title": "Most Popular",
+            "type": "boolean"
+          },
+          "name": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Per language",
+            "title": "Name",
+            "type": "object"
+          },
+          "prices": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "description": "Monthly price in minor units per currency; empty = custom",
+            "title": "Prices",
+            "type": "object"
+          },
+          "report_limit_monthly": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Report Limit Monthly"
+          },
+          "support": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Support"
+          },
+          "technician_limit": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Technician Limit"
+          },
+          "trials": {
+            "title": "Trials",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "prices",
+          "technician_limit",
+          "report_limit_monthly",
+          "monthly_credits",
+          "ai_questions_monthly",
+          "most_popular",
+          "is_public",
+          "features",
+          "support",
+          "companies",
+          "trials"
+        ],
+        "title": "AdminPlan",
+        "type": "object"
+      },
       "AdminPlanCredits": {
         "properties": {
           "code": {
@@ -4376,6 +4586,103 @@
           "companies"
         ],
         "title": "AdminPlanCredits",
+        "type": "object"
+      },
+      "AdminPlanIn": {
+        "additionalProperties": false,
+        "properties": {
+          "ai_questions_monthly": {
+            "anyOf": [
+              {
+                "maximum": 1000000.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ai Questions Monthly"
+          },
+          "is_public": {
+            "title": "Is Public",
+            "type": "boolean"
+          },
+          "monthly_credits": {
+            "anyOf": [
+              {
+                "maximum": 1000000.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Monthly Credits"
+          },
+          "most_popular": {
+            "title": "Most Popular",
+            "type": "boolean"
+          },
+          "name": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "propertyNames": {
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ]
+            },
+            "title": "Name",
+            "type": "object"
+          },
+          "prices": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "description": "Empty = custom price (talk to us)",
+            "title": "Prices",
+            "type": "object"
+          },
+          "report_limit_monthly": {
+            "anyOf": [
+              {
+                "maximum": 1000000.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Report Limit Monthly"
+          },
+          "technician_limit": {
+            "anyOf": [
+              {
+                "maximum": 100000.0,
+                "minimum": 1.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Technician Limit"
+          }
+        },
+        "required": [
+          "name",
+          "prices",
+          "most_popular",
+          "is_public"
+        ],
+        "title": "AdminPlanIn",
         "type": "object"
       },
       "AdminPlanInfo": {
@@ -4457,6 +4764,53 @@
           "companies"
         ],
         "title": "AdminPlanMixRow",
+        "type": "object"
+      },
+      "AdminPlansOut": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "currencies": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Currencies",
+            "type": "array"
+          },
+          "packs": {
+            "items": {
+              "$ref": "#/components/schemas/AdminPack"
+            },
+            "title": "Packs",
+            "type": "array"
+          },
+          "plans": {
+            "items": {
+              "$ref": "#/components/schemas/AdminPlan"
+            },
+            "title": "Plans",
+            "type": "array"
+          },
+          "pricing_url": {
+            "description": "The website pricing page",
+            "title": "Pricing Url",
+            "type": "string"
+          },
+          "trial": {
+            "$ref": "#/components/schemas/AdminTrial"
+          }
+        },
+        "required": [
+          "plans",
+          "packs",
+          "trial",
+          "currencies",
+          "can_act",
+          "pricing_url"
+        ],
+        "title": "AdminPlansOut",
         "type": "object"
       },
       "AdminPlatformOut": {
@@ -6176,6 +6530,199 @@
         "title": "AdminStat",
         "type": "object"
       },
+      "AdminSubKpis": {
+        "properties": {
+          "cancelled_30d": {
+            "title": "Cancelled 30D",
+            "type": "integer"
+          },
+          "mrr": {
+            "description": "Plan price of every active company, per currency",
+            "items": {
+              "$ref": "#/components/schemas/AdminMoney"
+            },
+            "title": "Mrr",
+            "type": "array"
+          },
+          "on_free": {
+            "description": "Active companies on a free plan",
+            "title": "On Free",
+            "type": "integer"
+          },
+          "past_due": {
+            "title": "Past Due",
+            "type": "integer"
+          },
+          "paying": {
+            "description": "Active companies on a paid plan",
+            "title": "Paying",
+            "type": "integer"
+          },
+          "trials": {
+            "title": "Trials",
+            "type": "integer"
+          },
+          "trials_ending_7d": {
+            "title": "Trials Ending 7D",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "mrr",
+          "paying",
+          "on_free",
+          "trials",
+          "trials_ending_7d",
+          "past_due",
+          "cancelled_30d"
+        ],
+        "title": "AdminSubKpis",
+        "type": "object"
+      },
+      "AdminSubList": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AdminSubRow"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "kpis": {
+            "$ref": "#/components/schemas/AdminSubKpis"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "kpis",
+          "items",
+          "total",
+          "page",
+          "page_size"
+        ],
+        "title": "AdminSubList",
+        "type": "object"
+      },
+      "AdminSubRow": {
+        "properties": {
+          "badge": {
+            "enum": [
+              "trial",
+              "active",
+              "past_due",
+              "suspended",
+              "cancelled",
+              "near_limit"
+            ],
+            "title": "Badge",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "plan": {
+            "title": "Plan",
+            "type": "string"
+          },
+          "plan_code": {
+            "title": "Plan Code",
+            "type": "string"
+          },
+          "price": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AdminMoney"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Monthly price in the company's currency; None = custom"
+          },
+          "renews_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Trial end, or when the next month starts",
+            "title": "Renews At"
+          },
+          "seat_limit": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Seat Limit"
+          },
+          "seats": {
+            "title": "Seats",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "trial",
+              "active",
+              "past_due",
+              "suspended",
+              "cancelled"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "trial_days_left": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trial Days Left"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "plan_code",
+          "plan",
+          "price",
+          "status",
+          "badge",
+          "trial_days_left",
+          "renews_at",
+          "seats",
+          "seat_limit"
+        ],
+        "title": "AdminSubRow",
+        "type": "object"
+      },
       "AdminTeamMember": {
         "properties": {
           "id": {
@@ -6757,6 +7304,27 @@
           "ai_available"
         ],
         "title": "AdminTranslateOut",
+        "type": "object"
+      },
+      "AdminTrial": {
+        "additionalProperties": false,
+        "properties": {
+          "days": {
+            "maximum": 60.0,
+            "minimum": 3.0,
+            "title": "Days",
+            "type": "integer"
+          },
+          "plan_code": {
+            "title": "Plan Code",
+            "type": "string"
+          }
+        },
+        "required": [
+          "plan_code",
+          "days"
+        ],
+        "title": "AdminTrial",
         "type": "object"
       },
       "AdminUserAction": {
@@ -22107,6 +22675,65 @@
         ]
       }
     },
+    "/api/v1/admin/credit-packs/{pack_id}": {
+      "put": {
+        "description": "Super admins only: a top-up pack's prices, or hide it. Audited.",
+        "operationId": "save_pack_api_v1_admin_credit_packs__pack_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "pack_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Pack Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminPackIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPlansOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Save Pack",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/api/v1/admin/credits": {
       "get": {
         "description": "Credits used, the credit rules, plan credits and every company's credits (out of credits first).",
@@ -23787,6 +24414,118 @@
         ]
       }
     },
+    "/api/v1/admin/payments": {
+      "get": {
+        "description": "Online payments are set up in the testing phase; until then there is nothing to list.",
+        "operationId": "payments_api_v1_admin_payments_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPaymentsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Payments",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/plans": {
+      "get": {
+        "description": "Every plan (also hidden ones) with how many companies use it, the credit packs and the free trial.",
+        "operationId": "admin_plans_api_v1_admin_plans_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPlansOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Admin Plans",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/plans/{code}": {
+      "put": {
+        "description": "Super admins only. Names, prices and limits change at once for the website, sign-up and every company\non the plan (no money is charged yet). Audited.",
+        "operationId": "save_plan_api_v1_admin_plans__code__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "title": "Code",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminPlanIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPlansOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Save Plan",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/api/v1/admin/platform-settings": {
       "get": {
         "operationId": "platform_settings_api_v1_admin_platform_settings_get",
@@ -24955,6 +25694,299 @@
           }
         ],
         "summary": "Staff Setup Link",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/subscriptions": {
+      "get": {
+        "description": "Every company's plan, price, status and renewal (past due first, then trials ending soonest).",
+        "operationId": "subscriptions_api_v1_admin_subscriptions_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 120,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "trial",
+                    "active",
+                    "past_due",
+                    "suspended",
+                    "cancelled"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "plan",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 24,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Plan"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "maximum": 10000,
+              "minimum": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 25,
+              "maximum": 100,
+              "minimum": 5,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminSubList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Subscriptions",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/subscriptions.csv": {
+      "get": {
+        "description": "Every matching subscription, for a spreadsheet. Exports are written to the audit log.",
+        "operationId": "subscriptions_csv_api_v1_admin_subscriptions_csv_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 120,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "trial",
+                    "active",
+                    "past_due",
+                    "suspended",
+                    "cancelled"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "plan",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 24,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Plan"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/csv": {}
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Subscriptions Csv",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/trial": {
+      "put": {
+        "description": "Super admins only: the plan and length of the free trial for new companies. Audited.",
+        "operationId": "save_trial_api_v1_admin_trial_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTrial"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPlansOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Save Trial",
         "tags": [
           "admin"
         ]

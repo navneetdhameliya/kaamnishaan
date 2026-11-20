@@ -29,7 +29,7 @@ from app.schemas.admin_companies import (
     AdminTeamMember,
 )
 from app.schemas.identity import CompanySettings
-from app.services import audit
+from app.services import audit, platform
 from app.services.checklists import pick
 from app.services.companies import CURRENCY_BY_COUNTRY, check_trade
 from app.services.credits import cycle
@@ -507,11 +507,12 @@ async def create_company(
     elif email and not user.email:
         user.email = email
     t = now()
+    trial_days = (await platform.trial(db)).days
     c = Company(
         name=body.name.strip(), industry_slug=body.trade, country=body.country,
         timezone=TIMEZONE_BY_COUNTRY.get(body.country, "UTC"),
         currency=CURRENCY_BY_COUNTRY.get(body.country, "USD"), report_language=body.report_language,
-        plan_code=plan.code, status="trial", trial_ends_at=t + timedelta(days=get_settings().trial_days),
+        plan_code=plan.code, status="trial", trial_ends_at=t + timedelta(days=trial_days),
         settings=CompanySettings().model_dump(), created_by=None,
     )  # fmt: skip
     db.add(c)
