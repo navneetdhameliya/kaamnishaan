@@ -20,7 +20,7 @@ from app.core.security import now
 from app.models import AssistantMessage, Customer, Evidence, Job, Plan, Report, Site, User
 from app.providers.ai import LANGUAGE_NAMES, get_ai
 from app.schemas.assistant import AskOut, AssistantMessageOut, AssistantOut, SourceJob, SourceReport
-from app.services import credits
+from app.services import ai_usage, credits
 from app.services.evidence import photo_counts, thumbs_for
 from app.services.jobs import CLOSED
 from app.services.jobs import label as jlabel
@@ -340,11 +340,16 @@ async def ask(db: AsyncSession, p: Principal, text: str) -> AskOut:
         answer = str(result.data.get("answer") or "").strip()
     except Exception:  # noqa: BLE001 - any AI failure: nothing is counted, the person can ask again
         log.exception("assistant answer failed")
+        await ai_usage.record_failure("assistant", company_id=p.company_id)
         raise AppError(
             "assistant_failed", "The assistant couldn't answer. Please try again.", status=502
         ) from None
     if not answer:
         raise AppError("assistant_failed", "The assistant couldn't answer. Please try again.", status=502)
+    ai_usage.record(
+        db, "assistant", company_id=p.company_id, model=result.model,
+        tokens_in=result.tokens_in, tokens_out=result.tokens_out,
+    )  # fmt: skip
     known_reports = {j["report"]["report_id"] for j in context["jobs"] if j["report"]}
     known_jobs = {j["job_id"] for j in context["jobs"]}
     sources = {

@@ -9,10 +9,18 @@ from app.core.db import SessionLocal
 from app.models import ChecklistQuestion, ChecklistTemplate, Company, Job, VoiceNote
 from app.providers.ai import get_ai
 from app.providers.storage import get_storage, sha256
+from app.services import ai_usage
 from app.tasks import task
 
 LANGS = ("en", "hi", "gu", "es", "fr")
 MIN_CONFIDENCE = 0.45
+
+
+def _translated(db, out, *, company_id) -> None:
+    ai_usage.record(
+        db, "translation", company_id=company_id, model=getattr(out, "model", ""),
+        tokens_in=getattr(out, "tokens_in", 0), tokens_out=getattr(out, "tokens_out", 0),
+    )  # fmt: skip
 
 
 async def _report_language(db, job_id) -> str:
@@ -33,12 +41,13 @@ async def transcribe_voice_note(ctx, note_id: str) -> str:
         if v.kind == "typed":  # only a translation is needed
             if ai and v.transcript_original and v.detected_language != target and not v.transcript_translated:
                 try:
-                    (v.transcript_translated,) = await ai.translate(
-                        [v.transcript_original], target, v.detected_language
-                    )
+                    out = await ai.translate([v.transcript_original], target, v.detected_language)
+                    (v.transcript_translated,) = out
                     v.translated_to = target
+                    _translated(db, out, company_id=v.company_id)
                 except Exception as e:  # noqa: BLE001 - the note itself is fine; translation can be retried
                     v.error = f"translation failed: {type(e).__name__}"[:300]
+                    ai_usage.record(db, "translation", company_id=v.company_id, related_id=v.id, ok=False)
                 await db.commit()
             return "typed"
 
@@ -48,12 +57,19 @@ async def transcribe_voice_note(ctx, note_id: str) -> str:
             return "waiting"  # stays "uploaded"; app shows "waiting for transcription"
         v.status = "transcribing"
         await db.commit()
+        failed_task = None
         try:
             data = await get_storage().read(v.audio_key)
             if not v.sha256:
                 v.sha256 = sha256(data)
             filename = v.audio_key.rsplit("/", 1)[-1]
+            failed_task = "transcription"
             result = await ai.transcribe(data, filename, v.content_type or "audio/mp4", v.language_hint)
+            failed_task = None
+            ai_usage.record(
+                db, "transcription", company_id=v.company_id, model=result.model,
+                seconds=result.seconds, related_id=v.id,
+            )  # fmt: skip
             v.transcript_original = result.text or None
             v.detected_language = result.language or v.language_hint
             v.confidence = result.confidence
@@ -62,15 +78,19 @@ async def transcribe_voice_note(ctx, note_id: str) -> str:
                 v.status = "unclear"  # M29 "couldn't understand": record again or retry
             else:
                 if v.detected_language and v.detected_language != target:
-                    (v.transcript_translated,) = await ai.translate(
-                        [result.text], target, v.detected_language
-                    )
+                    failed_task = "translation"
+                    out = await ai.translate([result.text], target, v.detected_language)
+                    failed_task = None
+                    (v.transcript_translated,) = out
                     v.translated_to = target
+                    _translated(db, out, company_id=v.company_id)
                 v.status = "transcribed"
             v.error = None
         except Exception as e:  # noqa: BLE001
             v.status = "failed"
             v.error = f"{type(e).__name__}: {e}"[:300]
+            if failed_task:
+                ai_usage.record(db, failed_task, company_id=v.company_id, related_id=v.id, ok=False)
         await db.commit()
         return v.status
 
@@ -95,7 +115,12 @@ async def translate_checklist_question(ctx, question_id: str) -> str:
             items = (
                 [texts[src]] + ([helps[src]] if helps.get(src) else []) + [o["label"][src] for o in options]
             )
-            out = await ai.translate(items, lang, src)
+            try:
+                out = await ai.translate(items, lang, src)
+            except Exception:
+                await ai_usage.record_failure("translation", company_id=t.company_id, related_id=q.id)
+                raise
+            _translated(db, out, company_id=t.company_id)
             texts[lang] = out[0]
             i = 1
             if helps.get(src):

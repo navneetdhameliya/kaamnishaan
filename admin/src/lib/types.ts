@@ -305,3 +305,23 @@ export interface OwnerInvite {
   invite_link: string;
   sms_text: string;
 }
+
+// ---- A20 AI usage and cost ------------------------------------------------------------------------
+export type AiTask = 'report_draft' | 'transcription' | 'translation' | 'assistant';
+export type AiDay = { day: string } & Record<AiTask, number>;
+export interface AiUsageOut {
+  days: number;
+  configured: boolean;
+  total_cost_usd: number;
+  budget_usd: number | null;
+  cost_per_report_usd: number | null;
+  target_per_report_usd: number | null;
+  reports_drafted: number;
+  draft_success: number | null;
+  voice_minutes: number;
+  per_day: AiDay[];
+  companies: { id: string; name: string; cost_usd: number }[];
+  others_cost_usd: number;
+  others_count: number;
+  models: { task: AiTask; model: string; calls: number; avg_cost_usd: number | null; per_minute: boolean; error_rate: number | null }[];
+}

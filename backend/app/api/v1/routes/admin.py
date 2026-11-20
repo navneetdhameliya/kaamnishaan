@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import Staff, client_ip, get_db, get_staff
 from app.core.errors import AppError, Forbidden
 from app.core.security import now
+from app.schemas.admin_ai import AdminAiUsageOut
 from app.schemas.admin_audit import AdminAuditList
 from app.schemas.admin_checklists import (
     AdminChecklistApprove,
@@ -42,6 +43,7 @@ from app.schemas.staff import (
     StaffSetupOut,
 )
 from app.services import (
+    admin_ai,
     admin_audit,
     admin_checklists,
     admin_companies,
@@ -107,6 +109,20 @@ async def setup(body: StaffSetupIn, request: Request, db: AsyncSession = Depends
 @router.get("/me", response_model=StaffOut)
 async def me(s: Staff = Depends(get_staff)) -> StaffOut:
     return staff.staff_out(s.staff)
+
+
+@router.get("/ai-usage", response_model=AdminAiUsageOut)
+async def ai_usage(
+    days: int = Query(30, description="7, 30 or 90"),
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminAiUsageOut:
+    """A20: AI cost and use over the period. Every staff member can look."""
+    if days not in (7, 30, 90):
+        raise AppError(
+            "validation_error", "Some fields are not valid.", fields={"days": "choose_7_30_90"}, status=422
+        )
+    return await admin_ai.usage(db, days=days)
 
 
 @router.get("/dashboard", response_model=AdminDashboardOut)

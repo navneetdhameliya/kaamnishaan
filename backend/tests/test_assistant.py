@@ -113,6 +113,8 @@ async def test_failures_are_not_counted_and_only_the_office_may_ask(client, read
     r = await client.post("/api/v1/assistant/ask", json={"text": "Hi"}, headers=auth(owner))
     assert r.status_code == 502 and r.json()["error"]["code"] == "assistant_failed"
     assert (await client.get("/api/v1/assistant", headers=auth(owner))).json()["used"] == 0
+    async with engine.begin() as c:  # but A20 shows the failed call
+        assert tuple((await c.execute(text("SELECT task, ok FROM ai_usage"))).one()) == ("assistant", False)
     assert (await client.get("/api/v1/assistant", headers=auth(ready["tech"]))).status_code == 403
     tech2 = await invite_and_join(client, owner, "+919898989898")
     assert (

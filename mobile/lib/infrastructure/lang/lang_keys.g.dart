@@ -6370,4 +6370,62 @@ abstract final class LangKeys {
   static const companyPausedOwner = 'company.paused_owner';
   /// Switch company
   static const companyPausedSwitch = 'company.paused_switch';
+  /// Total AI cost
+  static const adminAiTotal = 'admin.ai.total';
+  /// Cost per report
+  static const adminAiPerReport = 'admin.ai.per_report';
+  /// Reports drafted
+  static const adminAiDrafted = 'admin.ai.drafted';
+  /// Voice minutes
+  static const adminAiVoice = 'admin.ai.voice';
+  /// Last {days} days
+  static const adminAiLastDays = 'admin.ai.last_days';
+  /// Last {days} days · budget {budget}
+  static const adminAiLastDaysBudget = 'admin.ai.last_days_budget';
+  /// Target under {cost}
+  static const adminAiTarget = 'admin.ai.target';
+  /// Above the {cost} target
+  static const adminAiOverTarget = 'admin.ai.over_target';
+  /// All AI cost ÷ reports drafted
+  static const adminAiPerReportHow = 'admin.ai.per_report_how';
+  /// {pct} success
+  static const adminAiSuccess = 'admin.ai.success';
+  /// No AI report drafts yet
+  static const adminAiNoDrafts = 'admin.ai.no_drafts';
+  /// Cost per day by task
+  static const adminAiPerDay = 'admin.ai.per_day';
+  /// Estimated from OpenAI’s prices per token and per audio minute.
+  static const adminAiEstimate = 'admin.ai.estimate';
+  /// Cost by company
+  static const adminAiByCompany = 'admin.ai.by_company';
+  /// All others ({n})
+  static const adminAiOthers = 'admin.ai.others';
+  /// No AI use in this period.
+  static const adminAiNoUse = 'admin.ai.no_use';
+  /// Model usage
+  static const adminAiModels = 'admin.ai.models';
+  /// Task
+  static const adminAiColTask = 'admin.ai.col_task';
+  /// Model
+  static const adminAiColModel = 'admin.ai.col_model';
+  /// Calls ({days} d)
+  static const adminAiColCalls = 'admin.ai.col_calls';
+  /// Avg. cost
+  static const adminAiColAvg = 'admin.ai.col_avg';
+  /// Errors
+  static const adminAiColErrors = 'admin.ai.col_errors';
+  /// {cost} / min
+  static const adminAiPerMin = 'admin.ai.per_min';
+  /// Report drafts
+  static const adminAiTaskReportDraft = 'admin.ai.task.report_draft';
+  /// Transcription
+  static const adminAiTaskTranscription = 'admin.ai.task.transcription';
+  /// Translation
+  static const adminAiTaskTranslation = 'admin.ai.task.translation';
+  /// Assistant
+  static const adminAiTaskAssistant = 'admin.ai.task.assistant';
+  /// AI is off.
+  static const adminAiOffTitle = 'admin.ai.off_title';
+  /// No OpenAI key is set, so nothing is sent to AI. Voice notes wait for transcription and reports use the plain template.
+  static const adminAiOffBody = 'admin.ai.off_body';
 }

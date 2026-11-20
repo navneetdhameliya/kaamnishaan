@@ -37,6 +37,8 @@ Free plan limits (fine for testing):
    | `KN_STORAGE_ACCESS_KEY` | the Access Key ID |
    | `KN_STORAGE_SECRET_KEY` | the Secret Access Key |
    | `KN_OPENAI_API_KEY` | your OpenAI key, or leave empty for now |
+   | `KN_AI_MONTHLY_BUDGET_USD` | optional: monthly AI budget in dollars, shown on the admin AI usage page (e.g. `600`) |
+   | `KN_AI_COST_PER_REPORT_TARGET_USD` | optional: AI cost goal per report, default `0.25` |
 5. **Deploy Blueprint**. The first build takes about 5–10 minutes. When the API shows **Live**, open
    https://kaamnishaan-api.onrender.com/api/v1/health — it should say `"status":"ok"`.
 
