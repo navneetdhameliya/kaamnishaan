@@ -2,6 +2,7 @@
 token is refused. Every log in, failed log in and setup is written to the audit log (A31)."""
 
 import uuid
+from datetime import datetime
 from typing import Literal
 
 from fastapi import APIRouter, Depends, Query, Request, Response
@@ -38,6 +39,7 @@ from app.schemas.admin_companies import (
 )
 from app.schemas.admin_credits import AdminCreditAdjust, AdminCreditRulesIn, AdminCreditsOut
 from app.schemas.admin_email import AdminEmailIn, AdminEmailOut, AdminEmailTest, AdminEmailTestOut
+from app.schemas.admin_jobs import AdminJobDetail, AdminJobList, JobStatus
 from app.schemas.admin_leads import AdminLeadDetail, AdminLeadList, AdminLeadUpdate
 from app.schemas.admin_messages import (
     AdminTemplate,
@@ -86,6 +88,7 @@ from app.services import (
     admin_credits,
     admin_dashboard,
     admin_email,
+    admin_jobs,
     admin_leads,
     admin_messages,
     admin_platform,
@@ -1014,3 +1017,58 @@ async def staff_setup_link(
     _super_only(me)
     row, link = await admin_staff.new_link(db, staff_id, by=me.staff.id)
     return AdminStaffLink(staff=row, setup_link=link)
+
+
+# ---- A11 Jobs, A12 Job details (read-only) -----------------------------------------------------------
+@router.get("/jobs", response_model=AdminJobList)
+async def jobs(
+    q: str | None = Query(None, max_length=120),
+    status: JobStatus | None = None,
+    company: uuid.UUID | None = None,
+    start: datetime | None = Query(None, alias="from", description="Scheduled (or created) from"),
+    end: datetime | None = Query(None, alias="to", description="...and before"),
+    page: int = Query(1, ge=1, le=10_000),
+    page_size: int = Query(25, ge=5, le=100),
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminJobList:
+    """Every company's jobs, newest first by scheduled time. The browser sends its own day as from/to."""
+    return await admin_jobs.jobs(db, q=q, status=status, company_id=company, start=start, end=end, page=page,
+                                 page_size=page_size)  # fmt: skip
+
+
+@router.get("/jobs.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
+async def jobs_csv(
+    q: str | None = Query(None, max_length=120),
+    status: JobStatus | None = None,
+    company: uuid.UUID | None = None,
+    start: datetime | None = Query(None, alias="from"),
+    end: datetime | None = Query(None, alias="to"),
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> Response:
+    """Every matching job (up to 50,000), for a spreadsheet. Exports are written to the audit log."""
+    filters = {
+        "q": q, "status": status, "company": str(company) if company else None,
+        "from": start.isoformat() if start else None, "to": end.isoformat() if end else None,
+    }  # fmt: skip
+    body = await admin_jobs.jobs_csv(db, q=q, status=status, company_id=company, start=start, end=end)
+    await audit.record(db, "staff.export", staff_id=me.staff.id, target_type="jobs",
+                       data={k: v for k, v in filters.items() if v})  # fmt: skip
+    return Response(
+        "".join(body),
+        media_type="text/csv; charset=utf-8",
+        headers={"Content-Disposition": f'attachment; filename="kaamnishaan-jobs-{now():%Y-%m-%d}.csv"',
+                 "Cache-Control": "no-store"},
+    )  # fmt: skip
+
+
+@router.get("/jobs/{job_id}", response_model=AdminJobDetail)
+async def job(
+    job_id: uuid.UUID,
+    locale: Locale = "en",
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminJobDetail:
+    """One job: details, where it was started, proof so far, the report and the full timeline."""
+    return await admin_jobs.detail(db, job_id, locale)

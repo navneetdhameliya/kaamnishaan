@@ -7362,4 +7362,186 @@ abstract final class LangKeys {
   static const adminRoAskRoleBody = 'admin.ro.ask.role.body';
   /// Change role
   static const adminRoAskRoleConfirm = 'admin.ro.ask.role.confirm';
+  /// Operations
+  static const adminNavOperations = 'admin.nav.operations';
+  /// Jobs
+  static const adminNavJobs = 'admin.nav.jobs';
+  /// Search job, customer, technician or J-number
+  static const adminJbSearch = 'admin.jb.search';
+  /// Date
+  static const adminJbFDate = 'admin.jb.f_date';
+  /// Any day
+  static const adminJbDAny = 'admin.jb.d.any';
+  /// Today
+  static const adminJbDToday = 'admin.jb.d.today';
+  /// Yesterday
+  static const adminJbDYesterday = 'admin.jb.d.yesterday';
+  /// Tomorrow
+  static const adminJbDTomorrow = 'admin.jb.d.tomorrow';
+  /// Last 7 days
+  static const adminJbDLast7 = 'admin.jb.d.last7';
+  /// Next 7 days
+  static const adminJbDNext7 = 'admin.jb.d.next7';
+  /// Not assigned
+  static const adminJbStUnassigned = 'admin.jb.st.unassigned';
+  /// Assigned
+  static const adminJbStAssigned = 'admin.jb.st.assigned';
+  /// In progress
+  static const adminJbStInProgress = 'admin.jb.st.in_progress';
+  /// Pending review
+  static const adminJbStInReview = 'admin.jb.st.in_review';
+  /// Changes asked
+  static const adminJbStChangesRequested = 'admin.jb.st.changes_requested';
+  /// Completed
+  static const adminJbStCompleted = 'admin.jb.st.completed';
+  /// Cancelled
+  static const adminJbStCancelled = 'admin.jb.st.cancelled';
+  /// Today {time}
+  static const adminJbTodayAt = 'admin.jb.today_at';
+  /// Yesterday
+  static const adminJbYesterday = 'admin.jb.yesterday';
+  /// Tomorrow
+  static const adminJbTomorrow = 'admin.jb.tomorrow';
+  /// No jobs match
+  static const adminJbEmptyTitle = 'admin.jb.empty_title';
+  /// No jobs yet
+  static const adminJbNoneTitle = 'admin.jb.none_title';
+  /// Jobs appear here as soon as any company creates one.
+  static const adminJbNoneBody = 'admin.jb.none_body';
+  /// Job
+  static const adminJbCJob = 'admin.jb.c_job';
+  /// Company
+  static const adminJbCCompany = 'admin.jb.c_company';
+  /// Technician
+  static const adminJbCTech = 'admin.jb.c_tech';
+  /// Status
+  static const adminJbCStatus = 'admin.jb.c_status';
+  /// Proof
+  static const adminJbCProof = 'admin.jb.c_proof';
+  /// When
+  static const adminJbCWhen = 'admin.jb.c_when';
+  /// Quick job
+  static const adminJbQuick = 'admin.jb.quick';
+  /// Not assigned
+  static const adminJbNobody = 'admin.jb.nobody';
+  /// {done} of {total}
+  static const adminJbProofOf = 'admin.jb.proof_of';
+  /// Someone
+  static const adminJbSomeone = 'admin.jb.someone';
+  /// Job created by {who}
+  static const adminJbTlCreated = 'admin.jb.tl.created';
+  /// Quick job started by {who}
+  static const adminJbTlCreatedQuick = 'admin.jb.tl.created_quick';
+  /// Assigned to {name}
+  static const adminJbTlAssigned = 'admin.jb.tl.assigned';
+  /// Unassigned by {who}
+  static const adminJbTlUnassigned = 'admin.jb.tl.unassigned';
+  /// Started on site by {who}
+  static const adminJbTlStarted = 'admin.jb.tl.started';
+  /// Job details changed by {who}
+  static const adminJbTlEdited = 'admin.jb.tl.edited';
+  /// Cancelled by {who}
+  static const adminJbTlCancelled = 'admin.jb.tl.cancelled';
+  /// Cancelled by {who}: {why}
+  static const adminJbTlCancelledWhy = 'admin.jb.tl.cancelled_why';
+  /// Before photos ({n})
+  static const adminJbTlPhotosBefore = 'admin.jb.tl.photos_before';
+  /// During photos ({n})
+  static const adminJbTlPhotosDuring = 'admin.jb.tl.photos_during';
+  /// After photos ({n})
+  static const adminJbTlPhotosAfter = 'admin.jb.tl.photos_after';
+  /// Voice notes ({n})
+  static const adminJbTlVoice = 'admin.jb.tl.voice';
+  /// Report sent for review by {who}
+  static const adminJbTlSubmitted = 'admin.jb.tl.submitted';
+  /// Changes asked by {who}
+  static const adminJbTlChanges = 'admin.jb.tl.changes';
+  /// Report approved by {who}
+  static const adminJbTlApproved = 'admin.jb.tl.approved';
+  /// Report sent to the customer
+  static const adminJbTlShared = 'admin.jb.tl.shared';
+  /// Customer confirmed the report ({who})
+  static const adminJbTlAcknowledged = 'admin.jb.tl.acknowledged';
+  /// All jobs
+  static const adminJbBack = 'admin.jb.back';
+  /// This job doesn't exist or was deleted.
+  static const adminJbNotFound = 'admin.jb.not_found';
+  /// Customer
+  static const adminJbCustomer = 'admin.jb.customer';
+  /// Address
+  static const adminJbAddress = 'admin.jb.address';
+  /// Technician
+  static const adminJbTechnician = 'admin.jb.technician';
+  /// Scheduled
+  static const adminJbScheduled = 'admin.jb.scheduled';
+  /// Not scheduled
+  static const adminJbNotScheduled = 'admin.jb.not_scheduled';
+  /// {n} min
+  static const adminJbMinutes = 'admin.jb.minutes';
+  /// Checklist
+  static const adminJbChecklist = 'admin.jb.checklist';
+  /// {name} · {done} of {total}
+  static const adminJbClLine = 'admin.jb.cl_line';
+  /// No checklist
+  static const adminJbNoChecklist = 'admin.jb.no_checklist';
+  /// Completed
+  static const adminJbCompleted = 'admin.jb.completed';
+  /// Why cancelled
+  static const adminJbCancelReason = 'admin.jb.cancel_reason';
+  /// Where
+  static const adminJbWhere = 'admin.jb.where';
+  /// No address
+  static const adminJbNoAddress = 'admin.jb.no_address';
+  /// Not started yet.
+  static const adminJbNotStarted = 'admin.jb.not_started';
+  /// Started, but the phone didn't share its location.
+  static const adminJbNoStartGps = 'admin.jb.no_start_gps';
+  /// Started with location on.
+  static const adminJbStartedGps = 'admin.jb.started_gps';
+  /// Started {m} m from the site.
+  static const adminJbStartedNear = 'admin.jb.started_near';
+  /// Started {m} m from the site — check this.
+  static const adminJbStartedFar = 'admin.jb.started_far';
+  /// Open site in Maps
+  static const adminJbMapSite = 'admin.jb.map_site';
+  /// Open start point in Maps
+  static const adminJbMapStart = 'admin.jb.map_start';
+  /// Proof
+  static const adminJbProof = 'admin.jb.proof';
+  /// Before {n}
+  static const adminJbPhBefore = 'admin.jb.ph.before';
+  /// During {n}
+  static const adminJbPhDuring = 'admin.jb.ph.during';
+  /// After {n}
+  static const adminJbPhAfter = 'admin.jb.ph.after';
+  /// Voice notes {n}
+  static const adminJbPhVoice = 'admin.jb.ph.voice';
+  /// Report
+  static const adminJbReport = 'admin.jb.report';
+  /// No report yet.
+  static const adminJbNoReport = 'admin.jb.no_report';
+  /// Being written
+  static const adminJbRsGenerating = 'admin.jb.rs.generating';
+  /// Writing failed
+  static const adminJbRsGenerationFailed = 'admin.jb.rs.generation_failed';
+  /// Draft
+  static const adminJbRsDraft = 'admin.jb.rs.draft';
+  /// Waiting for approval
+  static const adminJbRsPendingReview = 'admin.jb.rs.pending_review';
+  /// Changes asked
+  static const adminJbRsChangesRequested = 'admin.jb.rs.changes_requested';
+  /// Approved
+  static const adminJbRsApproved = 'admin.jb.rs.approved';
+  /// Sent to customer
+  static const adminJbRsShared = 'admin.jb.rs.shared';
+  /// Confirmed by customer
+  static const adminJbRsAcknowledged = 'admin.jb.rs.acknowledged';
+  /// {n} change requests
+  static const adminJbChangesN = 'admin.jb.changes_n';
+  /// Opened {n} times
+  static const adminJbOpenedN = 'admin.jb.opened_n';
+  /// Customer confirmed
+  static const adminJbAcked = 'admin.jb.acked';
+  /// Timeline
+  static const adminJbTimeline = 'admin.jb.timeline';
 }

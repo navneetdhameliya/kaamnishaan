@@ -2,6 +2,7 @@ import {
   Bell,
   Briefcase,
   CheckCheck,
+  ClipboardList,
   FileText,
   Globe,
   Home,
@@ -50,6 +51,7 @@ export const NAV: { section: string; items: NavItem[] }[] = [
       { key: 'usage', path: '/usage', icon: SlidersHorizontal, ready: true },
     ],
   },
+  { section: 'operations', items: [{ key: 'jobs', path: '/jobs', icon: ClipboardList, ready: true }] },
   { section: 'content', items: [{ key: 'checklists', path: '/checklist-templates', icon: ListChecks, ready: true }] },
   {
     section: 'system',

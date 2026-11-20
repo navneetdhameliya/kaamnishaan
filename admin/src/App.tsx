@@ -12,6 +12,8 @@ import { Credits } from './pages/Credits';
 import { PlatformSettings } from './pages/PlatformSettings';
 import { EmailSettings } from './pages/EmailSettings';
 import { Roles } from './pages/Roles';
+import { ExportJobs, Jobs } from './pages/Jobs';
+import { JobDetail } from './pages/JobDetail';
 import { CompanyForm } from './pages/CompanyForm';
 import { Dashboard, RangeSelect, RANGES, type Range } from './pages/Dashboard';
 import { AiCalls } from './pages/AiCalls';
@@ -77,6 +79,7 @@ export default function App() {
   else if (nav.key === 'dashboard') page = <Dashboard t={t} lang={lang} days={days} />;
   else if (nav.key === 'ai_usage') page = <AiUsage t={t} lang={lang} days={days} />;
   else if (nav.key === 'ai_calls') page = <AiCalls key="ai-calls" t={t} lang={lang} />;
+  else if (nav.key === 'jobs') page = sub ? <JobDetail key={sub} t={t} lang={lang} id={sub} onName={onName} /> : <Jobs key="jobs" t={t} lang={lang} />;
   else if (nav.key === 'roles') page = <Roles key="roles" t={t} lang={lang} />;
   else if (nav.key === 'email') page = <EmailSettings key="email" t={t} />;
   else if (nav.key === 'settings') page = <PlatformSettings key="settings" t={t} />;
@@ -101,7 +104,7 @@ export default function App() {
       staff={sess.staff}
       crumb={sub && nav.key !== 'leads' ? `${t(`admin.nav.${nav.section}`)} / ${name}` : t(`admin.nav.${nav.section}`)}
       title={sub && nav.key !== 'leads' ? pageName || name : name}
-      actions={nav.key === 'dashboard' || nav.key === 'ai_usage' ? <RangeSelect t={t} days={days} onChange={setDays} /> : nav.key === 'reviews' ? <ExportReviews t={t} /> : undefined}
+      actions={nav.key === 'dashboard' || nav.key === 'ai_usage' ? <RangeSelect t={t} days={days} onChange={setDays} /> : nav.key === 'reviews' ? <ExportReviews t={t} /> : nav.key === 'jobs' && !sub ? <ExportJobs t={t} /> : undefined}
     >
       {page}
     </Shell>
