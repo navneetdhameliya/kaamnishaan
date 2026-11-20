@@ -136,9 +136,9 @@ async def test_cron_with_the_key(client, ready, monkeypatch):
         async with engine.begin() as c:
             await c.execute(text("update review_requests set reminder_at = now() - interval '1 minute'"))
         r = await client.post("/api/v1/cron/review-followups", headers={"X-Cron-Key": "k" * 32})
-        assert r.status_code == 200 and r.json() == {"reminders_sent": 1}
+        assert r.status_code == 200 and r.json() == {"reminders_sent": 1, "calls_handled": 0}
         r = await client.post("/api/v1/cron/review-followups", headers={"X-Cron-Key": "k" * 32})
-        assert r.json() == {"reminders_sent": 0}  # once only
+        assert r.json() == {"reminders_sent": 0, "calls_handled": 0}  # once only
     finally:
         monkeypatch.delenv("KN_CRON_KEY")
         get_settings.cache_clear()

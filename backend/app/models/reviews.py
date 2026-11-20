@@ -12,7 +12,17 @@ Review request: queued -> link_sent -> reminded -> ai_call_scheduled -> ai_call_
 import uuid
 from datetime import datetime
 
-from sqlalchemy import Boolean, DateTime, ForeignKey, Integer, SmallInteger, String, Text, UniqueConstraint
+from sqlalchemy import (
+    Boolean,
+    DateTime,
+    Float,
+    ForeignKey,
+    Integer,
+    SmallInteger,
+    String,
+    Text,
+    UniqueConstraint,
+)
 from sqlalchemy import text as sql
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column
@@ -143,3 +153,35 @@ class ReviewFollowup(TimestampMixin, Base):
     private_note: Mapped[str | None] = mapped_column(Text)
     resolved_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     resolved_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
+
+
+class AiCall(IdMixin, Base):
+    """One Day 5 AI review call (A38 call log), or what happened instead of it.
+
+    Outcomes: rated, voicemail_sms, call_back, no_answer, opted_out, wrong_person, skipped_dnd,
+    failed_sms (the provider failed, the link went by SMS), no_provider_sms (no voice provider is
+    connected, the link went by SMS), not_sent (nothing could go: no credits or no phone).
+    """
+
+    __tablename__ = "ai_calls"
+
+    company_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("companies.id", ondelete="CASCADE"), index=True)
+    request_id: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("review_requests.id", ondelete="CASCADE"), index=True
+    )
+    contact_name: Mapped[str | None] = mapped_column(String(160))
+    place: Mapped[str | None] = mapped_column(String(160))  # the customer or site, shown under the name
+    phone: Mapped[str | None] = mapped_column(String(20))
+    language: Mapped[str | None] = mapped_column(String(8))  # the language spoken on the call
+    outcome: Mapped[str] = mapped_column(String(24))
+    rating: Mapped[int | None] = mapped_column(SmallInteger)
+    wants_call_back: Mapped[bool] = mapped_column(Boolean, default=False, server_default=sql("false"))
+    callback_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    seconds: Mapped[int] = mapped_column(Integer, default=0, server_default=sql("0"))
+    cost_usd: Mapped[float] = mapped_column(Float, default=0, server_default=sql("0"))
+    provider: Mapped[str | None] = mapped_column(String(24))
+    provider_call_id: Mapped[str | None] = mapped_column(String(80))
+    transcript: Mapped[str | None] = mapped_column(Text)
+    script_version: Mapped[int | None] = mapped_column(Integer)
+    error: Mapped[str | None] = mapped_column(String(300))
+    at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=sql("now()"), index=True)

@@ -368,3 +368,26 @@ export interface ReviewRules {
   flag_abuse: boolean;
   block_repeats: boolean;
 }
+
+// ---- A38 AI review calls --------------------------------------------------------------------------
+export type CallOutcome = 'rated' | 'voicemail_sms' | 'call_back' | 'no_answer' | 'opted_out' | 'wrong_person' | 'skipped_dnd' | 'failed_sms' | 'no_provider_sms' | 'no_credits_sms' | 'not_sent';
+export interface AiCallSettings {
+  voice: 'warm' | 'bright' | 'formal';
+  language: 'report' | 'en';
+  hours: '10-19' | '9-20' | '11-18';
+  attempts: 'call_voicemail' | 'two_calls' | 'call_only';
+  record: boolean;
+  skip_dnd: boolean;
+  only_if_no_rating: boolean;
+}
+export interface AiCallsOut {
+  provider: { connected: boolean; name: string | null; down_since: string | null; waiting: number };
+  kpis: { calls: number; answered: number | null; rated: number | null; opted_out: number | null; cost_per_call_usd: number | null; sms_instead: number };
+  settings: AiCallSettings;
+  script: { version: number; opening: string; steps: { key: string; text: string }[] };
+  calls: { id: string; at: string; company: { value: string; label: string }; contact_name: string | null; place: string | null; language: string | null; seconds: number; outcome: CallOutcome; rating: number | null; wants_call_back: boolean; callback_at: string | null; cost_usd: number }[];
+  total: number;
+  page: number;
+  page_size: number;
+  can_act: boolean;
+}

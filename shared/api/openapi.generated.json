@@ -92,6 +92,312 @@
         "title": "AdminActivityRow",
         "type": "object"
       },
+      "AdminAiCallKpis": {
+        "properties": {
+          "answered": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "0–1 of calls placed",
+            "title": "Answered"
+          },
+          "calls": {
+            "description": "Calls placed, last 30 days",
+            "title": "Calls",
+            "type": "integer"
+          },
+          "cost_per_call_usd": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cost Per Call Usd"
+          },
+          "opted_out": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "0–1 of calls placed",
+            "title": "Opted Out"
+          },
+          "rated": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "0–1 of answered calls",
+            "title": "Rated"
+          },
+          "sms_instead": {
+            "description": "Due calls that sent the rating link by SMS instead, last 30 days",
+            "title": "Sms Instead",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "calls",
+          "answered",
+          "rated",
+          "opted_out",
+          "cost_per_call_usd",
+          "sms_instead"
+        ],
+        "title": "AdminAiCallKpis",
+        "type": "object"
+      },
+      "AdminAiCallRow": {
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "callback_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Callback At"
+          },
+          "company": {
+            "$ref": "#/components/schemas/AdminOption"
+          },
+          "contact_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact Name"
+          },
+          "cost_usd": {
+            "title": "Cost Usd",
+            "type": "number"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language"
+          },
+          "outcome": {
+            "enum": [
+              "rated",
+              "voicemail_sms",
+              "call_back",
+              "no_answer",
+              "opted_out",
+              "wrong_person",
+              "skipped_dnd",
+              "failed_sms",
+              "no_provider_sms",
+              "no_credits_sms",
+              "not_sent"
+            ],
+            "title": "Outcome",
+            "type": "string"
+          },
+          "place": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Place"
+          },
+          "rating": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rating"
+          },
+          "seconds": {
+            "title": "Seconds",
+            "type": "integer"
+          },
+          "wants_call_back": {
+            "title": "Wants Call Back",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "at",
+          "company",
+          "contact_name",
+          "place",
+          "language",
+          "seconds",
+          "outcome",
+          "rating",
+          "wants_call_back",
+          "callback_at",
+          "cost_usd"
+        ],
+        "title": "AdminAiCallRow",
+        "type": "object"
+      },
+      "AdminAiCallSettings": {
+        "additionalProperties": false,
+        "properties": {
+          "attempts": {
+            "enum": [
+              "call_voicemail",
+              "two_calls",
+              "call_only"
+            ],
+            "title": "Attempts",
+            "type": "string"
+          },
+          "hours": {
+            "enum": [
+              "10-19",
+              "9-20",
+              "11-18"
+            ],
+            "title": "Hours",
+            "type": "string"
+          },
+          "language": {
+            "enum": [
+              "report",
+              "en"
+            ],
+            "title": "Language",
+            "type": "string"
+          },
+          "only_if_no_rating": {
+            "default": true,
+            "description": "Always on",
+            "title": "Only If No Rating",
+            "type": "boolean"
+          },
+          "record": {
+            "title": "Record",
+            "type": "boolean"
+          },
+          "skip_dnd": {
+            "default": true,
+            "description": "Always on",
+            "title": "Skip Dnd",
+            "type": "boolean"
+          },
+          "voice": {
+            "enum": [
+              "warm",
+              "bright",
+              "formal"
+            ],
+            "title": "Voice",
+            "type": "string"
+          }
+        },
+        "required": [
+          "voice",
+          "language",
+          "hours",
+          "attempts",
+          "record"
+        ],
+        "title": "AdminAiCallSettings",
+        "type": "object"
+      },
+      "AdminAiCallsOut": {
+        "properties": {
+          "calls": {
+            "items": {
+              "$ref": "#/components/schemas/AdminAiCallRow"
+            },
+            "title": "Calls",
+            "type": "array"
+          },
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "kpis": {
+            "$ref": "#/components/schemas/AdminAiCallKpis"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "provider": {
+            "$ref": "#/components/schemas/AdminVoiceProvider"
+          },
+          "script": {
+            "$ref": "#/components/schemas/AdminCallScript"
+          },
+          "settings": {
+            "$ref": "#/components/schemas/AdminAiCallSettings"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "provider",
+          "kpis",
+          "settings",
+          "script",
+          "calls",
+          "total",
+          "page",
+          "page_size",
+          "can_act"
+        ],
+        "title": "AdminAiCallsOut",
+        "type": "object"
+      },
       "AdminAiCompany": {
         "properties": {
           "cost_usd": {
@@ -624,6 +930,33 @@
           "data"
         ],
         "title": "AdminAuditRow",
+        "type": "object"
+      },
+      "AdminCallScript": {
+        "properties": {
+          "opening": {
+            "description": "Said first on every call; can't be changed",
+            "title": "Opening",
+            "type": "string"
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/AdminScriptStep"
+            },
+            "title": "Steps",
+            "type": "array"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "version",
+          "opening",
+          "steps"
+        ],
+        "title": "AdminCallScript",
         "type": "object"
       },
       "AdminChecklistApprove": {
@@ -3112,6 +3445,40 @@
         "title": "AdminReviewRules",
         "type": "object"
       },
+      "AdminScriptStep": {
+        "properties": {
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "text"
+        ],
+        "title": "AdminScriptStep",
+        "type": "object"
+      },
+      "AdminScriptStepIn": {
+        "additionalProperties": false,
+        "properties": {
+          "text": {
+            "maxLength": 600,
+            "minLength": 10,
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "AdminScriptStepIn",
+        "type": "object"
+      },
       "AdminStat": {
         "properties": {
           "previous": {
@@ -3192,6 +3559,40 @@
           "last_seen_at"
         ],
         "title": "AdminTeamMember",
+        "type": "object"
+      },
+      "AdminTestCall": {
+        "additionalProperties": false,
+        "properties": {
+          "phone": {
+            "maxLength": 20,
+            "minLength": 8,
+            "title": "Phone",
+            "type": "string"
+          }
+        },
+        "required": [
+          "phone"
+        ],
+        "title": "AdminTestCall",
+        "type": "object"
+      },
+      "AdminTestCallOut": {
+        "properties": {
+          "outcome": {
+            "title": "Outcome",
+            "type": "string"
+          },
+          "seconds": {
+            "title": "Seconds",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "outcome",
+          "seconds"
+        ],
+        "title": "AdminTestCallOut",
         "type": "object"
       },
       "AdminTopCompany": {
@@ -3725,6 +4126,52 @@
           "invited_at"
         ],
         "title": "AdminUserRow",
+        "type": "object"
+      },
+      "AdminVoiceProvider": {
+        "properties": {
+          "connected": {
+            "description": "False until a voice provider is added (D-115)",
+            "title": "Connected",
+            "type": "boolean"
+          },
+          "down_since": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The provider has been failing since then",
+            "title": "Down Since"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "waiting": {
+            "description": "Calls due now and not placed yet",
+            "title": "Waiting",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "connected",
+          "name",
+          "down_since",
+          "waiting"
+        ],
+        "title": "AdminVoiceProvider",
         "type": "object"
       },
       "AnswerIn": {
@@ -16282,6 +16729,250 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/v1/admin/ai-calls": {
+      "get": {
+        "description": "The voice provider's health, the numbers, settings, call script and call log (newest first).",
+        "operationId": "ai_call_page_api_v1_admin_ai_calls_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "maximum": 10000,
+              "minimum": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "minimum": 5,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminAiCallsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ai Call Page",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/ai-calls/retry": {
+      "post": {
+        "description": "Runs every due call now (after the provider is back), instead of waiting for the scheduler.",
+        "operationId": "ai_call_retry_api_v1_admin_ai_calls_retry_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Ai Call Retry Api V1 Admin Ai Calls Retry Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ai Call Retry",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/ai-calls/script/{step}": {
+      "put": {
+        "description": "Changes one step of the call script; the script gets a new version, used from the next call.",
+        "operationId": "ai_call_script_step_api_v1_admin_ai_calls_script__step__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "step",
+            "required": true,
+            "schema": {
+              "title": "Step",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminScriptStepIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminCallScript"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ai Call Script Step",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/ai-calls/settings": {
+      "put": {
+        "description": "Skipping do-not-call numbers and calling only jobs still without a rating are always on.",
+        "operationId": "ai_call_settings_api_v1_admin_ai_calls_settings_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminAiCallSettings"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminAiCallSettings"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ai Call Settings",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/ai-calls/test": {
+      "post": {
+        "description": "Calls your own phone with the live script. 409 no_voice_provider until a provider is connected.",
+        "operationId": "ai_call_test_api_v1_admin_ai_calls_test_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTestCall"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTestCallOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ai Call Test",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/api/v1/admin/ai-usage": {
       "get": {
         "description": "A20: AI cost and use over the period. Every staff member can look.",
@@ -20960,7 +21651,7 @@
     },
     "/api/v1/cron/review-followups": {
       "post": {
-        "description": "Send every Day 2 review reminder that is due (all companies). For a scheduler, with X-Cron-Key.",
+        "description": "Send every Day 2 review reminder and run every Day 5 AI call that is due (all companies). For a\nscheduler, with X-Cron-Key.",
         "operationId": "run_followups_api_v1_cron_review_followups_post",
         "parameters": [
           {

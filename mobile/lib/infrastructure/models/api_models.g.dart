@@ -83,6 +83,218 @@ class AdminActivityRowModel {
       };
 }
 
+AdminAiCallKpisModel adminAiCallKpisModelFromJson(String str) => AdminAiCallKpisModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAiCallKpisModelToJson(AdminAiCallKpisModel data) => json.encode(data.toJson());
+
+class AdminAiCallKpisModel {
+  /// 0–1 of calls placed
+  final double? answered;
+  /// Calls placed, last 30 days
+  final int calls;
+  final double? costPerCallUsd;
+  /// 0–1 of calls placed
+  final double? optedOut;
+  /// 0–1 of answered calls
+  final double? rated;
+  /// Due calls that sent the rating link by SMS instead, last 30 days
+  final int smsInstead;
+
+  const AdminAiCallKpisModel({
+    this.answered,
+    required this.calls,
+    this.costPerCallUsd,
+    this.optedOut,
+    this.rated,
+    required this.smsInstead,
+  });
+
+  factory AdminAiCallKpisModel.fromJson(Map<String, dynamic> json) => AdminAiCallKpisModel(
+        answered: json['answered'] == null ? null : (json['answered'] as num).toDouble(),
+        calls: (json['calls'] as num).toInt(),
+        costPerCallUsd: json['cost_per_call_usd'] == null ? null : (json['cost_per_call_usd'] as num).toDouble(),
+        optedOut: json['opted_out'] == null ? null : (json['opted_out'] as num).toDouble(),
+        rated: json['rated'] == null ? null : (json['rated'] as num).toDouble(),
+        smsInstead: (json['sms_instead'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'answered': answered,
+        'calls': calls,
+        'cost_per_call_usd': costPerCallUsd,
+        'opted_out': optedOut,
+        'rated': rated,
+        'sms_instead': smsInstead,
+      };
+}
+
+AdminAiCallRowModel adminAiCallRowModelFromJson(String str) => AdminAiCallRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAiCallRowModelToJson(AdminAiCallRowModel data) => json.encode(data.toJson());
+
+class AdminAiCallRowModel {
+  final DateTime at;
+  final DateTime? callbackAt;
+  final AdminOptionModel company;
+  final String? contactName;
+  final double costUsd;
+  final String id;
+  final String? language;
+  /// One of: rated, voicemail_sms, call_back, no_answer, opted_out, wrong_person, skipped_dnd, failed_sms, no_provider_sms, no_credits_sms, not_sent
+  final String outcome;
+  final String? place;
+  final int? rating;
+  final int seconds;
+  final bool wantsCallBack;
+
+  const AdminAiCallRowModel({
+    required this.at,
+    this.callbackAt,
+    required this.company,
+    this.contactName,
+    required this.costUsd,
+    required this.id,
+    this.language,
+    required this.outcome,
+    this.place,
+    this.rating,
+    required this.seconds,
+    required this.wantsCallBack,
+  });
+
+  factory AdminAiCallRowModel.fromJson(Map<String, dynamic> json) => AdminAiCallRowModel(
+        at: DateTime.parse(json['at'] as String),
+        callbackAt: json['callback_at'] == null ? null : DateTime.parse(json['callback_at'] as String),
+        company: AdminOptionModel.fromJson(json['company'] as Map<String, dynamic>),
+        contactName: json['contact_name'] as String?,
+        costUsd: (json['cost_usd'] as num).toDouble(),
+        id: json['id'] as String,
+        language: json['language'] as String?,
+        outcome: json['outcome'] as String,
+        place: json['place'] as String?,
+        rating: json['rating'] == null ? null : (json['rating'] as num).toInt(),
+        seconds: (json['seconds'] as num).toInt(),
+        wantsCallBack: json['wants_call_back'] as bool,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'at': at.toIso8601String(),
+        'callback_at': callbackAt?.toIso8601String(),
+        'company': company.toJson(),
+        'contact_name': contactName,
+        'cost_usd': costUsd,
+        'id': id,
+        'language': language,
+        'outcome': outcome,
+        'place': place,
+        'rating': rating,
+        'seconds': seconds,
+        'wants_call_back': wantsCallBack,
+      };
+}
+
+AdminAiCallSettingsModel adminAiCallSettingsModelFromJson(String str) => AdminAiCallSettingsModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAiCallSettingsModelToJson(AdminAiCallSettingsModel data) => json.encode(data.toJson());
+
+class AdminAiCallSettingsModel {
+  /// One of: call_voicemail, two_calls, call_only
+  final String attempts;
+  /// One of: 10-19, 9-20, 11-18
+  final String hours;
+  /// One of: report, en
+  final String language;
+  /// Always on
+  final bool? onlyIfNoRating;
+  final bool record;
+  /// Always on
+  final bool? skipDnd;
+  /// One of: warm, bright, formal
+  final String voice;
+
+  const AdminAiCallSettingsModel({
+    required this.attempts,
+    required this.hours,
+    required this.language,
+    this.onlyIfNoRating,
+    required this.record,
+    this.skipDnd,
+    required this.voice,
+  });
+
+  factory AdminAiCallSettingsModel.fromJson(Map<String, dynamic> json) => AdminAiCallSettingsModel(
+        attempts: json['attempts'] as String,
+        hours: json['hours'] as String,
+        language: json['language'] as String,
+        onlyIfNoRating: json['only_if_no_rating'] as bool?,
+        record: json['record'] as bool,
+        skipDnd: json['skip_dnd'] as bool?,
+        voice: json['voice'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'attempts': attempts,
+        'hours': hours,
+        'language': language,
+        'only_if_no_rating': onlyIfNoRating,
+        'record': record,
+        'skip_dnd': skipDnd,
+        'voice': voice,
+      };
+}
+
+AdminAiCallsOutModel adminAiCallsOutModelFromJson(String str) => AdminAiCallsOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAiCallsOutModelToJson(AdminAiCallsOutModel data) => json.encode(data.toJson());
+
+class AdminAiCallsOutModel {
+  final List<AdminAiCallRowModel> calls;
+  final bool canAct;
+  final AdminAiCallKpisModel kpis;
+  final int page;
+  final int pageSize;
+  final AdminVoiceProviderModel provider;
+  final AdminCallScriptModel script;
+  final AdminAiCallSettingsModel settings;
+  final int total;
+
+  const AdminAiCallsOutModel({
+    required this.calls,
+    required this.canAct,
+    required this.kpis,
+    required this.page,
+    required this.pageSize,
+    required this.provider,
+    required this.script,
+    required this.settings,
+    required this.total,
+  });
+
+  factory AdminAiCallsOutModel.fromJson(Map<String, dynamic> json) => AdminAiCallsOutModel(
+        calls: (json['calls'] as List).map((e) => AdminAiCallRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        canAct: json['can_act'] as bool,
+        kpis: AdminAiCallKpisModel.fromJson(json['kpis'] as Map<String, dynamic>),
+        page: (json['page'] as num).toInt(),
+        pageSize: (json['page_size'] as num).toInt(),
+        provider: AdminVoiceProviderModel.fromJson(json['provider'] as Map<String, dynamic>),
+        script: AdminCallScriptModel.fromJson(json['script'] as Map<String, dynamic>),
+        settings: AdminAiCallSettingsModel.fromJson(json['settings'] as Map<String, dynamic>),
+        total: (json['total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'calls': calls.map((e) => e.toJson()).toList(),
+        'can_act': canAct,
+        'kpis': kpis.toJson(),
+        'page': page,
+        'page_size': pageSize,
+        'provider': provider.toJson(),
+        'script': script.toJson(),
+        'settings': settings.toJson(),
+        'total': total,
+      };
+}
+
 AdminAiCompanyModel adminAiCompanyModelFromJson(String str) => AdminAiCompanyModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminAiCompanyModelToJson(AdminAiCompanyModel data) => json.encode(data.toJson());
@@ -446,6 +658,35 @@ class AdminAuditRowModel {
         'target': target,
         'target_id': targetId,
         'target_type': targetType,
+      };
+}
+
+AdminCallScriptModel adminCallScriptModelFromJson(String str) => AdminCallScriptModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminCallScriptModelToJson(AdminCallScriptModel data) => json.encode(data.toJson());
+
+class AdminCallScriptModel {
+  /// Said first on every call; can't be changed
+  final String opening;
+  final List<AdminScriptStepModel> steps;
+  final int version;
+
+  const AdminCallScriptModel({
+    required this.opening,
+    required this.steps,
+    required this.version,
+  });
+
+  factory AdminCallScriptModel.fromJson(Map<String, dynamic> json) => AdminCallScriptModel(
+        opening: json['opening'] as String,
+        steps: (json['steps'] as List).map((e) => AdminScriptStepModel.fromJson(e as Map<String, dynamic>)).toList(),
+        version: (json['version'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'opening': opening,
+        'steps': steps.map((e) => e.toJson()).toList(),
+        'version': version,
       };
 }
 
@@ -2123,6 +2364,50 @@ class AdminReviewRulesModel {
       };
 }
 
+AdminScriptStepModel adminScriptStepModelFromJson(String str) => AdminScriptStepModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminScriptStepModelToJson(AdminScriptStepModel data) => json.encode(data.toJson());
+
+class AdminScriptStepModel {
+  final String key;
+  final String text;
+
+  const AdminScriptStepModel({
+    required this.key,
+    required this.text,
+  });
+
+  factory AdminScriptStepModel.fromJson(Map<String, dynamic> json) => AdminScriptStepModel(
+        key: json['key'] as String,
+        text: json['text'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'key': key,
+        'text': text,
+      };
+}
+
+AdminScriptStepInModel adminScriptStepInModelFromJson(String str) => AdminScriptStepInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminScriptStepInModelToJson(AdminScriptStepInModel data) => json.encode(data.toJson());
+
+class AdminScriptStepInModel {
+  final String text;
+
+  const AdminScriptStepInModel({
+    required this.text,
+  });
+
+  factory AdminScriptStepInModel.fromJson(Map<String, dynamic> json) => AdminScriptStepInModel(
+        text: json['text'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'text': text,
+      };
+}
+
 AdminStatModel adminStatModelFromJson(String str) => AdminStatModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminStatModelToJson(AdminStatModel data) => json.encode(data.toJson());
@@ -2190,6 +2475,50 @@ class AdminTeamMemberModel {
         'name': name,
         'role': role,
         'status': status,
+      };
+}
+
+AdminTestCallModel adminTestCallModelFromJson(String str) => AdminTestCallModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTestCallModelToJson(AdminTestCallModel data) => json.encode(data.toJson());
+
+class AdminTestCallModel {
+  final String phone;
+
+  const AdminTestCallModel({
+    required this.phone,
+  });
+
+  factory AdminTestCallModel.fromJson(Map<String, dynamic> json) => AdminTestCallModel(
+        phone: json['phone'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'phone': phone,
+      };
+}
+
+AdminTestCallOutModel adminTestCallOutModelFromJson(String str) => AdminTestCallOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTestCallOutModelToJson(AdminTestCallOutModel data) => json.encode(data.toJson());
+
+class AdminTestCallOutModel {
+  final String outcome;
+  final int seconds;
+
+  const AdminTestCallOutModel({
+    required this.outcome,
+    required this.seconds,
+  });
+
+  factory AdminTestCallOutModel.fromJson(Map<String, dynamic> json) => AdminTestCallOutModel(
+        outcome: json['outcome'] as String,
+        seconds: (json['seconds'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'outcome': outcome,
+        'seconds': seconds,
       };
 }
 
@@ -2589,6 +2918,41 @@ class AdminUserRowModel {
         'role': role,
         'status': status,
         'user_id': userId,
+      };
+}
+
+AdminVoiceProviderModel adminVoiceProviderModelFromJson(String str) => AdminVoiceProviderModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminVoiceProviderModelToJson(AdminVoiceProviderModel data) => json.encode(data.toJson());
+
+class AdminVoiceProviderModel {
+  /// False until a voice provider is added (D-115)
+  final bool connected;
+  /// The provider has been failing since then
+  final DateTime? downSince;
+  final String? name;
+  /// Calls due now and not placed yet
+  final int waiting;
+
+  const AdminVoiceProviderModel({
+    required this.connected,
+    this.downSince,
+    this.name,
+    required this.waiting,
+  });
+
+  factory AdminVoiceProviderModel.fromJson(Map<String, dynamic> json) => AdminVoiceProviderModel(
+        connected: json['connected'] as bool,
+        downSince: json['down_since'] == null ? null : DateTime.parse(json['down_since'] as String),
+        name: json['name'] as String?,
+        waiting: (json['waiting'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'connected': connected,
+        'down_since': downSince?.toIso8601String(),
+        'name': name,
+        'waiting': waiting,
       };
 }
 

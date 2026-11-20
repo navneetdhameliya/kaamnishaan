@@ -36,6 +36,7 @@ from app.models.reports import (
     ReportVersion,
 )
 from app.models.reviews import (
+    AiCall,
     Review,
     ReviewFollowup,
     ReviewReply,
@@ -48,6 +49,7 @@ from app.models.staff import StaffSession, StaffUser
 from app.models.work import Customer, CustomerContact, Equipment, Job, JobEvent, Site
 
 __all__ = [
+    "AiCall",
     "PlatformSetting",
     "StaffSession",
     "StaffUser",

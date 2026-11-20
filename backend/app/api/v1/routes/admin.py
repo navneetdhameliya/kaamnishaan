@@ -9,8 +9,16 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import Staff, client_ip, get_db, get_staff
 from app.core.errors import AppError, Forbidden
-from app.core.security import now
+from app.core.security import normalize_phone, now
 from app.schemas.admin_ai import AdminAiUsageOut
+from app.schemas.admin_ai_calls import (
+    AdminAiCallSettings,
+    AdminAiCallsOut,
+    AdminCallScript,
+    AdminScriptStepIn,
+    AdminTestCall,
+    AdminTestCallOut,
+)
 from app.schemas.admin_audit import AdminAuditList
 from app.schemas.admin_checklists import (
     AdminChecklistApprove,
@@ -51,6 +59,7 @@ from app.schemas.staff import (
 )
 from app.services import (
     admin_ai,
+    admin_ai_calls,
     admin_audit,
     admin_checklists,
     admin_companies,
@@ -58,6 +67,7 @@ from app.services import (
     admin_leads,
     admin_reviews,
     admin_users,
+    ai_calls,
     audit,
     staff,
 )
@@ -708,3 +718,59 @@ async def set_review_rules(
     """Checks run on every new review from now on; reviews already in are not checked again."""
     _can_moderate(me)
     return await admin_reviews.set_rules(db, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+# ---- A38 AI review calls ----------------------------------------------------------------------------
+@router.get("/ai-calls", response_model=AdminAiCallsOut)
+async def ai_call_page(
+    page: int = Query(1, ge=1, le=10_000),
+    page_size: int = Query(20, ge=5, le=100),
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminAiCallsOut:
+    """The voice provider's health, the numbers, settings, call script and call log (newest first)."""
+    can_act = me.staff.role in ("super_admin", "admin")
+    return await admin_ai_calls.page(db, page=page, page_size=page_size, can_act=can_act)
+
+
+@router.put("/ai-calls/settings", response_model=AdminAiCallSettings)
+async def ai_call_settings(
+    body: AdminAiCallSettings,
+    request: Request,
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminAiCallSettings:
+    """Skipping do-not-call numbers and calling only jobs still without a rating are always on."""
+    _can_moderate(me)
+    return await admin_ai_calls.save_settings(db, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.put("/ai-calls/script/{step}", response_model=AdminCallScript)
+async def ai_call_script_step(
+    step: str, body: AdminScriptStepIn, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminCallScript:  # fmt: skip
+    """Changes one step of the call script; the script gets a new version, used from the next call."""
+    _can_moderate(me)
+    return await admin_ai_calls.save_step(db, step, body.text, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.post("/ai-calls/test", response_model=AdminTestCallOut)
+async def ai_call_test(
+    body: AdminTestCall, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminTestCallOut:
+    """Calls your own phone with the live script. 409 no_voice_provider until a provider is connected."""
+    _can_moderate(me)
+    try:
+        phone = normalize_phone(body.phone, "IN")
+    except AppError:
+        raise AppError("validation_error", "Some fields are not valid.", fields={"phone": "invalid"},
+                       status=422) from None  # fmt: skip
+    return await admin_ai_calls.test(db, phone, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.post("/ai-calls/retry")
+async def ai_call_retry(me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)) -> dict:
+    """Runs every due call now (after the provider is back), instead of waiting for the scheduler."""
+    _can_moderate(me)
+    return {"handled": await ai_calls.call_due(db)}

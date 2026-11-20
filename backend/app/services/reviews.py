@@ -349,6 +349,29 @@ async def rate(db: AsyncSession, token: str, body: ReviewIn) -> RatedOut:
     return RatedOut(review_id=review.id, google_review_url=s.google_review_url if body.rating >= 4 else None)
 
 
+async def from_call(
+    db: AsyncSession, req: ReviewRequest, *, rating: int, comment: str | None, wants_call_back: bool,
+    public_allowed: bool,
+) -> Review:  # fmt: skip
+    """A38: the customer rated on the Day 5 AI call. Same review rules as the link (A37)."""
+    job = await db.get(Job, req.job_id)
+    contact = await db.get(CustomerContact, req.contact_id) if req.contact_id else None
+    text, original, reason = await _checked(db, comment or None, job.company_id, contact)
+    review = Review(
+        company_id=job.company_id, request_id=req.id, job_id=job.id, technician_id=job.assigned_to,
+        rating=rating, tags=[], comment=text, comment_original=original,
+        reviewer_name=contact.name if contact else None, source="ai_call", public_allowed=public_allowed,
+        wants_call_back=wants_call_back, status="flagged" if reason else "published", flag_reason=reason,
+    )  # fmt: skip
+    db.add(review)
+    req.status = "rated"
+    db.add(ReviewRequestEvent(request_id=req.id, step="rated", channel="ai_call"))
+    await db.flush()
+    if not reason:
+        await tell(db, review)
+    return review
+
+
 async def _checked(
     db: AsyncSession, comment: str | None, company_id: uuid.UUID, contact: CustomerContact | None
 ) -> tuple[str | None, str | None, str | None]:

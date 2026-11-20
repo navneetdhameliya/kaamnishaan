@@ -343,6 +343,23 @@ async def send_due(db: AsyncSession, company_id: uuid.UUID | None = None, at: da
 
 
 async def _remind(db: AsyncSession, s: ReviewSettings, req: ReviewRequest, t: datetime) -> int:
+    done, broke = await send_link(db, req, list(s.reminder_channels or ["sms", "email"]), "reminder")
+    if done is None:
+        return 0
+    if done:
+        req.status = "reminded"
+    elif broke:
+        req.status = "paused_no_credits"  # stays due: it goes when credits are back
+    else:
+        req.reminder_at = None  # nothing could go; don't try every time
+    return 1 if done else 0
+
+
+async def send_link(
+    db: AsyncSession, req: ReviewRequest, channels: list[str], step: str
+) -> tuple[list[str] | None, bool]:
+    """Sends the rating link again (Day 2 reminder, or instead of the Day 5 call). Returns the channels
+    it went on (None when the link is gone: the request is stopped) and whether credits ran out."""
     job = await db.get(Job, req.job_id)
     rep = await db.get(Report, req.report_id)
     company = await db.get(Company, req.company_id)
@@ -350,7 +367,7 @@ async def _remind(db: AsyncSession, s: ReviewSettings, req: ReviewRequest, t: da
     link = await db.get(ShareLink, req.share_link_id) if req.share_link_id else None
     if not (job and rep and contact and link) or sharing.link_state(link) != "active":
         req.status, req.stopped_reason = "stopped", "link_gone"
-        return 0
+        return None, False
     url = f"{sharing.link_url(link)}?rate=1"
     lang = rep.language
     ask = label(lang, "review_reminder", company=company.name, job=job.title, link=url)
@@ -359,26 +376,20 @@ async def _remind(db: AsyncSession, s: ReviewSettings, req: ReviewRequest, t: da
     texts.sms = texts.whatsapp = text
     texts.email_body = f"{text}\n"
     done, broke = [], False
-    for ch in s.reminder_channels or ["sms", "email"]:
+    for ch in channels:
         to = contact.email if ch == "email" else contact.phone
         if not to or (ch == "email" and not sharing.email_on()):
             continue
         if not await credits.can_spend(db, company, ch):
             broke = True  # SMS and WhatsApp need credits; email is free
-            db.add(ReviewRequestEvent(request_id=req.id, step="reminder", channel=ch, status="no_credits"))
+            db.add(ReviewRequestEvent(request_id=req.id, step=step, channel=ch, status="no_credits"))
             continue
         msg = await sharing._deliver(db, rep, link, ch, to, texts, None, template="review_reminder")
-        db.add(ReviewRequestEvent(request_id=req.id, step="reminder", channel=ch, status=msg.status))
+        db.add(ReviewRequestEvent(request_id=req.id, step=step, channel=ch, status=msg.status))
         if msg.status == "sent":
-            await credits.spend(db, company, ch, "reminder", req.id)
+            await credits.spend(db, company, ch, step, req.id)
             done.append(ch)
-    if done:
-        req.status = "reminded"
-    elif broke:
-        req.status = "paused_no_credits"  # stays due: it goes when credits are back
-    else:
-        req.reminder_at = None  # nothing could go; don't try every time
-    return 1 if done else 0
+    return done, broke
 
 
 async def count_waiting(db: AsyncSession, company_id: uuid.UUID) -> int:
