@@ -21,6 +21,7 @@ from app.api.v1.routes import (
     public_reports,
     reports,
     reviews,
+    support,
     voice,
 )
 
@@ -47,5 +48,6 @@ for r in (
     billing,
     assistant,
     notifications,
+    support,
 ):
     router.include_router(r.router)

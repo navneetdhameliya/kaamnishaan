@@ -243,3 +243,28 @@ async def ai_config(db: AsyncSession) -> AiConfig:
 async def set_ai_config(db: AsyncSession, c: AiConfig, *, staff_id: uuid.UUID) -> AiConfig:
     await _put(db, "ai_config", c.model_dump(), staff_id)
     return c
+
+
+# ---- A29 automatic messages ----------------------------------------------------------------------------
+IN_APP_KINDS = (
+    "job_assigned", "report_submitted", "changes_requested", "report_approved", "report_shared",
+    "review_received", "low_rating", "support_reply",
+)  # fmt: skip
+
+
+class NotificationRules(BaseModel):
+    """Which in-app messages are made, for every company. Off = not made at all."""
+
+    on: dict[str, bool] = Field(default_factory=lambda: dict.fromkeys(IN_APP_KINDS, True))
+
+    def allows(self, kind: str) -> bool:
+        return self.on.get(kind, True)
+
+
+async def notification_rules(db: AsyncSession) -> NotificationRules:
+    saved = NotificationRules(**await _get(db, "notification_rules"))
+    return NotificationRules(on={k: saved.on.get(k, True) for k in IN_APP_KINDS})
+
+
+async def set_notification_rules(db: AsyncSession, r: NotificationRules, *, staff_id: uuid.UUID) -> None:
+    await _put(db, "notification_rules", r.model_dump(), staff_id)

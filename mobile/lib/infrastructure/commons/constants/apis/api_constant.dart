@@ -20,6 +20,9 @@ abstract final class APIConstant {
   static const String mePreferencesAPIEP = '/me/preferences';
   static const String notificationsAPIEP = '/notifications';
   static const String notificationsReadAPIEP = '/notifications/read';
+
+  // M47 Help
+  static const String supportTicketsAPIEP = '/support/tickets';
   static const String myCompaniesAPIEP = '/me/companies';
   static const String myInvitesAPIEP = '/invites/mine';
   static const String invitesAPIEP = '/invites';

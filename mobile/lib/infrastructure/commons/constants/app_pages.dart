@@ -64,6 +64,12 @@ import '../../../UI/screens/me_section/credits_section/credits_binding.dart';
 import '../../../UI/screens/me_section/credits_section/credits_screen.dart';
 import '../../../UI/screens/me_section/language_settings_section/language_settings_binding.dart';
 import '../../../UI/screens/me_section/language_settings_section/language_settings_screen.dart';
+import '../../../UI/screens/me_section/help_new_section/help_new_binding.dart';
+import '../../../UI/screens/me_section/help_new_section/help_new_screen.dart';
+import '../../../UI/screens/me_section/help_section/help_binding.dart';
+import '../../../UI/screens/me_section/help_section/help_screen.dart';
+import '../../../UI/screens/me_section/help_ticket_section/help_ticket_binding.dart';
+import '../../../UI/screens/me_section/help_ticket_section/help_ticket_screen.dart';
 import '../../../UI/screens/me_section/messages_section/messages_binding.dart';
 import '../../../UI/screens/me_section/messages_section/messages_screen.dart';
 import '../../../UI/screens/me_section/my_reports_section/my_reports_binding.dart';
@@ -281,6 +287,9 @@ abstract final class AppPages {
     GetPage(name: RoutesConstants.teamScreen, page: () => const TeamScreen(), binding: TeamBinding()),
     GetPage(name: RoutesConstants.inviteScreen, page: () => const InviteScreen(), binding: InviteBinding()),
     GetPage(name: RoutesConstants.messagesScreen, page: () => const MessagesScreen(), binding: MessagesBinding()),
+    GetPage(name: RoutesConstants.helpScreen, page: () => const HelpScreen(), binding: HelpBinding()),
+    GetPage(name: RoutesConstants.helpNewScreen, page: () => const HelpNewScreen(), binding: HelpNewBinding()),
+    GetPage(name: RoutesConstants.helpTicketScreen, page: () => const HelpTicketScreen(), binding: HelpTicketBinding()),
     GetPage(name: RoutesConstants.myReportsScreen, page: () => const MyReportsScreen(), binding: MyReportsBinding()),
     GetPage(
       name: RoutesConstants.waitingToSendScreen,

@@ -188,6 +188,11 @@ class MeController extends GetxController {
   /// Help comes with its own step.
   void onComingSoonTap() => KnToast.info(LangKeys.commonComingSoon.tr);
 
+  /// M47 Help: requests to KaamNishaan support.
+  Future<void> onHelpTap() async {
+    await Get.toNamed(RoutesConstants.helpScreen);
+  }
+
   /// Log out now; the screen asks first when things are still waiting to send.
   Future<void> logout() async {
     await session.logout();

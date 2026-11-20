@@ -123,10 +123,18 @@ def _cron(x_cron_key: str | None = Header(default=None)) -> None:
 
 @router.post("/cron/review-followups", dependencies=[Depends(_cron)])
 async def run_followups(db: AsyncSession = Depends(get_db)) -> dict:
-    """Send every Day 2 review reminder and run every Day 5 AI call that is due (all companies). For a
-    scheduler, with X-Cron-Key."""
+    """Send every Day 2 review reminder, run every Day 5 AI call and send every announcement that is due
+    (all companies). For a scheduler, with X-Cron-Key."""
+    from app.services import admin_support
+
     reminders = await review_office.send_due(db)
-    return {"reminders_sent": reminders, "calls_handled": await ai_calls.call_due(db)}
+    calls = await ai_calls.call_due(db)
+    # A29 scheduled announcements ride on the same scheduler
+    return {
+        "reminders_sent": reminders,
+        "calls_handled": calls,
+        "announcements_sent": await admin_support.send_due(db),
+    }
 
 
 @router.get("/reviews/{review_id}", response_model=ReviewOut)

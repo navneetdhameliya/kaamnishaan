@@ -39,6 +39,7 @@ class MessageCard extends StatelessWidget {
       MessageTone.review => (kn.statusWarning, LucideIcons.clock),
       MessageTone.problem => (kn.statusDanger, LucideIcons.circleAlert),
       MessageTone.done => (kn.statusSuccess, LucideIcons.check),
+      MessageTone.news => (kn.statusInfo, LucideIcons.bell),
     };
     return CustomInkWell(
       onTap: onTap,

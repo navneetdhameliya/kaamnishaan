@@ -1,5 +1,7 @@
 import {
   Bell,
+  BellRing,
+  LifeBuoy,
   Briefcase,
   CheckCheck,
   ClipboardList,
@@ -76,6 +78,13 @@ export const NAV: { section: string; items: NavItem[] }[] = [
       { key: 'subscriptions', path: '/subscriptions', icon: Repeat, ready: true },
       { key: 'plans', path: '/plans', icon: Tags, ready: true },
       { key: 'payments', path: '/payments', icon: CreditCard, ready: true },
+    ],
+  },
+  {
+    section: 'help',
+    items: [
+      { key: 'support', path: '/support', icon: LifeBuoy, ready: true },
+      { key: 'notifications', path: '/notifications', icon: BellRing, ready: true },
     ],
   },
   {

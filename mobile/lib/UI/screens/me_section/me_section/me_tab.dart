@@ -247,7 +247,7 @@ class MeTab extends GetView<MeController> {
                             key: const ValueKey('me-help'),
                             icon: LucideIcons.phone,
                             label: LangKeys.meHelp.tr,
-                            onTap: controller.onComingSoonTap,
+                            onTap: controller.onHelpTap,
                           ),
                           MeRow(
                             key: const ValueKey('log-out'),

@@ -757,3 +757,57 @@ export interface AdminIndustriesOut {
   items: AdminIndustry[];
   can_act: boolean;
 }
+
+/** A28 Support tickets, A29 Notifications. */
+export type TicketStatus = 'open' | 'waiting' | 'solved';
+export interface AdminTicketRow {
+  id: string;
+  number: string;
+  subject: string;
+  category: 'problem' | 'question' | 'billing' | 'feature';
+  status: TicketStatus;
+  priority: 'normal' | 'high';
+  company: string | null;
+  company_id: string | null;
+  person: string | null;
+  created_at: string;
+  last_message_at: string;
+  last_from: 'user' | 'staff';
+}
+export interface AdminTicketList {
+  items: AdminTicketRow[];
+  total: number;
+  page: number;
+  page_size: number;
+  counts: { open: number; waiting: number; solved: number; high: number };
+}
+export interface AdminTicketDetail extends AdminTicketRow {
+  plan: string | null;
+  company_status: string | null;
+  person_role: string | null;
+  person_phone: string | null;
+  lang: string;
+  app_version: string | null;
+  job_id: string | null;
+  job_number: string | null;
+  messages: { id: string; from_support: boolean; internal: boolean; author: string | null; body: string; created_at: string }[];
+}
+export type Audience = 'everyone' | 'owners_managers' | 'owners' | 'company';
+export interface AdminAnnouncement {
+  id: string;
+  audience: Audience;
+  company: string | null;
+  title: Record<string, string>;
+  body: Record<string, string>;
+  send_at: string;
+  sent_at: string | null;
+  cancelled_at: string | null;
+  recipients: number;
+  by: string | null;
+}
+export interface AdminNotificationsOut {
+  rules: { kind: string; on: boolean; to: string; channel: 'in_app' | 'email'; available: boolean }[];
+  announcements: AdminAnnouncement[];
+  audience_sizes: Record<string, number>;
+  can_act: boolean;
+}
