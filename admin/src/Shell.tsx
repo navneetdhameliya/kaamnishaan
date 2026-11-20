@@ -8,6 +8,7 @@ import {
   Home,
   Inbox,
   KeyRound,
+  Images,
   ListChecks,
   Lock,
   LogOut,
@@ -51,7 +52,10 @@ export const NAV: { section: string; items: NavItem[] }[] = [
       { key: 'usage', path: '/usage', icon: SlidersHorizontal, ready: true },
     ],
   },
-  { section: 'operations', items: [{ key: 'jobs', path: '/jobs', icon: ClipboardList, ready: true }] },
+  { section: 'operations', items: [
+      { key: 'jobs', path: '/jobs', icon: ClipboardList, ready: true },
+      { key: 'evidence', path: '/evidence', icon: Images, ready: true },
+    ] },
   { section: 'content', items: [{ key: 'checklists', path: '/checklist-templates', icon: ListChecks, ready: true }] },
   {
     section: 'system',

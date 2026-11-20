@@ -3951,6 +3951,391 @@
         "title": "AdminOwnerInvite",
         "type": "object"
       },
+      "AdminPhoto": {
+        "properties": {
+          "checks": {
+            "description": "duplicate: the same file is on another photo; no_gps; far: over 500 m from the site; early: taken before the job existed",
+            "items": {
+              "enum": [
+                "duplicate",
+                "no_gps",
+                "far",
+                "early"
+              ],
+              "type": "string"
+            },
+            "title": "Checks",
+            "type": "array"
+          },
+          "company": {
+            "$ref": "#/components/schemas/AdminOption"
+          },
+          "gps": {
+            "title": "Gps",
+            "type": "boolean"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job": {
+            "$ref": "#/components/schemas/AdminPhotoJob"
+          },
+          "locked": {
+            "title": "Locked",
+            "type": "boolean"
+          },
+          "staff_flag": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AdminStaffFlag"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stage": {
+            "enum": [
+              "before",
+              "during",
+              "after"
+            ],
+            "title": "Stage",
+            "type": "string"
+          },
+          "taken_at": {
+            "format": "date-time",
+            "title": "Taken At",
+            "type": "string"
+          },
+          "thumb_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Small copy; None while it is still being processed",
+            "title": "Thumb Url"
+          }
+        },
+        "required": [
+          "id",
+          "thumb_url",
+          "stage",
+          "job",
+          "company",
+          "taken_at",
+          "gps",
+          "locked",
+          "checks",
+          "staff_flag"
+        ],
+        "title": "AdminPhoto",
+        "type": "object"
+      },
+      "AdminPhotoDetail": {
+        "properties": {
+          "checks": {
+            "description": "duplicate: the same file is on another photo; no_gps; far: over 500 m from the site; early: taken before the job existed",
+            "items": {
+              "enum": [
+                "duplicate",
+                "no_gps",
+                "far",
+                "early"
+              ],
+              "type": "string"
+            },
+            "title": "Checks",
+            "type": "array"
+          },
+          "company": {
+            "$ref": "#/components/schemas/AdminOption"
+          },
+          "distance_m": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "From the site, when both places are known",
+            "title": "Distance M"
+          },
+          "fingerprint": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "SHA-256 of the original file",
+            "title": "Fingerprint"
+          },
+          "gps": {
+            "title": "Gps",
+            "type": "boolean"
+          },
+          "height": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Height"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "image_url": {
+            "description": "Full-size copy (short-lived link)",
+            "title": "Image Url",
+            "type": "string"
+          },
+          "job": {
+            "$ref": "#/components/schemas/AdminPhotoJob"
+          },
+          "job_created_at": {
+            "format": "date-time",
+            "title": "Job Created At",
+            "type": "string"
+          },
+          "locked": {
+            "title": "Locked",
+            "type": "boolean"
+          },
+          "size": {
+            "title": "Size",
+            "type": "integer"
+          },
+          "staff_flag": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AdminStaffFlag"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "stage": {
+            "enum": [
+              "before",
+              "during",
+              "after"
+            ],
+            "title": "Stage",
+            "type": "string"
+          },
+          "taken_at": {
+            "format": "date-time",
+            "title": "Taken At",
+            "type": "string"
+          },
+          "taken_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Taken By"
+          },
+          "thumb_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Small copy; None while it is still being processed",
+            "title": "Thumb Url"
+          },
+          "twins": {
+            "description": "Other photos with the same file",
+            "items": {
+              "$ref": "#/components/schemas/AdminPhotoTwin"
+            },
+            "title": "Twins",
+            "type": "array"
+          },
+          "width": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Width"
+          }
+        },
+        "required": [
+          "id",
+          "thumb_url",
+          "stage",
+          "job",
+          "company",
+          "taken_at",
+          "gps",
+          "locked",
+          "checks",
+          "staff_flag",
+          "image_url",
+          "taken_by",
+          "distance_m",
+          "width",
+          "height",
+          "size",
+          "fingerprint",
+          "job_created_at",
+          "twins"
+        ],
+        "title": "AdminPhotoDetail",
+        "type": "object"
+      },
+      "AdminPhotoFlagIn": {
+        "additionalProperties": false,
+        "properties": {
+          "note": {
+            "maxLength": 300,
+            "minLength": 3,
+            "title": "Note",
+            "type": "string"
+          }
+        },
+        "required": [
+          "note"
+        ],
+        "title": "AdminPhotoFlagIn",
+        "type": "object"
+      },
+      "AdminPhotoJob": {
+        "properties": {
+          "customer": {
+            "title": "Customer",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "number": {
+            "title": "Number",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "title",
+          "customer"
+        ],
+        "title": "AdminPhotoJob",
+        "type": "object"
+      },
+      "AdminPhotoList": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "companies": {
+            "items": {
+              "$ref": "#/components/schemas/AdminOption"
+            },
+            "title": "Companies",
+            "type": "array"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AdminPhoto"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "needs_look": {
+            "description": "Photos with a check or a staff flag, across all companies",
+            "title": "Needs Look",
+            "type": "integer"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "page_size",
+          "needs_look",
+          "companies",
+          "can_act"
+        ],
+        "title": "AdminPhotoList",
+        "type": "object"
+      },
+      "AdminPhotoTwin": {
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/AdminOption"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job": {
+            "$ref": "#/components/schemas/AdminPhotoJob"
+          },
+          "taken_at": {
+            "format": "date-time",
+            "title": "Taken At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "job",
+          "company",
+          "taken_at"
+        ],
+        "title": "AdminPhotoTwin",
+        "type": "object"
+      },
       "AdminPlanCredits": {
         "properties": {
           "code": {
@@ -4883,6 +5268,37 @@
           "text"
         ],
         "title": "AdminScriptStepIn",
+        "type": "object"
+      },
+      "AdminStaffFlag": {
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "By"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          }
+        },
+        "required": [
+          "note",
+          "by",
+          "at"
+        ],
+        "title": "AdminStaffFlag",
         "type": "object"
       },
       "AdminStaffInvite": {
@@ -21372,6 +21788,321 @@
           }
         ],
         "summary": "Test Email Settings",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/evidence": {
+      "get": {
+        "description": "Every company's photos (staff-flagged first, then newest), with the server's own checks.",
+        "operationId": "evidence_api_v1_admin_evidence_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 120,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "stage",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "before",
+                    "during",
+                    "after"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Stage"
+            }
+          },
+          {
+            "in": "query",
+            "name": "flag",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "needs_look",
+                    "staff",
+                    "duplicate",
+                    "no_gps",
+                    "far",
+                    "early",
+                    "clean"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Flag"
+            }
+          },
+          {
+            "in": "query",
+            "name": "company",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Company"
+            }
+          },
+          {
+            "in": "query",
+            "name": "job",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Job"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "maximum": 10000,
+              "minimum": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 24,
+              "maximum": 96,
+              "minimum": 8,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPhotoList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Evidence",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/evidence/{photo_id}": {
+      "get": {
+        "description": "One photo, full size, with where and when it was taken and any other photo with the same file.",
+        "operationId": "evidence_one_api_v1_admin_evidence__photo_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "photo_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Photo Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPhotoDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Evidence One",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/evidence/{photo_id}/flag": {
+      "delete": {
+        "description": "Clear the staff flag. Audited.",
+        "operationId": "unflag_evidence_api_v1_admin_evidence__photo_id__flag_delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "photo_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Photo Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPhotoDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Unflag Evidence",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "description": "Flag a photo for support with a note (only staff see it). Audited.",
+        "operationId": "flag_evidence_api_v1_admin_evidence__photo_id__flag_put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "photo_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Photo Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminPhotoFlagIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPhotoDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Flag Evidence",
         "tags": [
           "admin"
         ]

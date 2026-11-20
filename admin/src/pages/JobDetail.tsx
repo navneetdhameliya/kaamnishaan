@@ -162,13 +162,13 @@ export function JobDetail({ t, lang, id, onName }: { t: T; lang: Lang; id: strin
             </div>
             <div className="mt-12 flex flex-wrap gap-8">
               {p.site_lat !== null && p.site_lng !== null && (
-                <a href={mapUrl(p.site_lat, p.site_lng)} target="_blank" rel="noreferrer" className="kn-btn inline-flex h-[36px] items-center gap-6 rounded-lg border border-border-default px-12 text-[13px] font-semibold hover:border-mocha-500">
+                <a href={mapUrl(p.site_lat, p.site_lng)} target="_blank" rel="noreferrer" className="kn-btn inline-flex h-[36px] items-center gap-8 rounded-lg border border-border-default px-12 text-[13px] font-semibold hover:border-mocha-500">
                   <ExternalLink width={14} height={14} aria-hidden />
                   {t('admin.jb.map_site')}
                 </a>
               )}
               {p.start_lat !== null && p.start_lng !== null && (
-                <a href={mapUrl(p.start_lat, p.start_lng)} target="_blank" rel="noreferrer" className="kn-btn inline-flex h-[36px] items-center gap-6 rounded-lg border border-border-default px-12 text-[13px] font-semibold hover:border-mocha-500">
+                <a href={mapUrl(p.start_lat, p.start_lng)} target="_blank" rel="noreferrer" className="kn-btn inline-flex h-[36px] items-center gap-8 rounded-lg border border-border-default px-12 text-[13px] font-semibold hover:border-mocha-500">
                   <ExternalLink width={14} height={14} aria-hidden />
                   {t('admin.jb.map_start')}
                 </a>
@@ -185,6 +185,11 @@ export function JobDetail({ t, lang, id, onName }: { t: T; lang: Lang; id: strin
             </div>
             <p className="mt-8 flex items-center gap-8 text-[14px]"><Camera width={14} height={14} aria-hidden className="text-text-secondary" />{photosLine}</p>
             <p className="mt-4 flex items-center gap-8 text-[14px]"><Mic width={14} height={14} aria-hidden className="text-text-secondary" />{t('admin.jb.ph.voice', { n: num(d.photos.voice_notes, lang) })}</p>
+            {d.photos.before + d.photos.during + d.photos.after > 0 && (
+              <Link to={`/evidence?job=${d.id}`} className="mt-12 inline-flex items-center gap-4 text-[14px] font-semibold underline-offset-2 hover:underline">
+                {t('admin.jb.see_photos')}
+              </Link>
+            )}
           </Card>
         </div>
       </div>
@@ -206,7 +211,7 @@ export function JobDetail({ t, lang, id, onName }: { t: T; lang: Lang; id: strin
       <Card i={4} title={t('admin.jb.timeline')}>
         <ol className="flex flex-col">
           {d.timeline.map((e, i) => (
-            <li key={i} className="kn-in flex flex-wrap items-baseline justify-between gap-x-16 gap-y-2 py-6" style={{ ['--d' as string]: `${320 + Math.min(i * 40, 400)}ms` }}>
+            <li key={i} className="kn-in flex flex-wrap items-baseline justify-between gap-x-16 gap-y-2 py-8" style={{ ['--d' as string]: `${320 + Math.min(i * 40, 400)}ms` }}>
               <span className="flex min-w-0 items-baseline gap-12 text-[14px] font-semibold">
                 <span aria-hidden className={cx('relative top-[-1px] inline-block h-[10px] w-[10px] shrink-0 rounded-full', dot(e.type))} />
                 <span className="break-words">{line(e, t)}</span>

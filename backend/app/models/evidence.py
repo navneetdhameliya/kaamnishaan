@@ -60,7 +60,7 @@ class Evidence(IdMixin, TimestampMixin, Base):
     web_key: Mapped[str | None] = mapped_column(String(255))  # 1,600 px copy without EXIF/GPS, for customers
     content_type: Mapped[str] = mapped_column(String(80))
     size: Mapped[int] = mapped_column(BigInteger)
-    sha256: Mapped[str | None] = mapped_column(String(64))  # fingerprint: proves the photo never changed
+    sha256: Mapped[str | None] = mapped_column(String(64), index=True)  # fingerprint: proves it never changed
     width: Mapped[int | None] = mapped_column(Integer)
     height: Mapped[int | None] = mapped_column(Integer)
     processing: Mapped[str] = mapped_column(
@@ -74,6 +74,12 @@ class Evidence(IdMixin, TimestampMixin, Base):
     lng: Mapped[float | None] = mapped_column(Float)
     locked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # KaamNishaan staff marked this photo for a closer look (A13); never shown to the company
+    staff_flag: Mapped[str | None] = mapped_column(String(300))
+    staff_flagged_by: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("staff_users.id", ondelete="SET NULL")
+    )
+    staff_flagged_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
 
 class EvidenceNote(IdMixin, Base):

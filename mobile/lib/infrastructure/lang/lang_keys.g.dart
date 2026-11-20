@@ -7544,4 +7544,106 @@ abstract final class LangKeys {
   static const adminJbAcked = 'admin.jb.acked';
   /// Timeline
   static const adminJbTimeline = 'admin.jb.timeline';
+  /// Evidence review
+  static const adminNavEvidence = 'admin.nav.evidence';
+  /// See all photos
+  static const adminJbSeePhotos = 'admin.jb.see_photos';
+  /// Before
+  static const adminEvStageBefore = 'admin.ev.stage.before';
+  /// During
+  static const adminEvStageDuring = 'admin.ev.stage.during';
+  /// After
+  static const adminEvStageAfter = 'admin.ev.stage.after';
+  /// Flagged
+  static const adminEvFlagged = 'admin.ev.flagged';
+  /// Same photo used twice
+  static const adminEvCkDuplicate = 'admin.ev.ck.duplicate';
+  /// No GPS
+  static const adminEvCkNoGps = 'admin.ev.ck.no_gps';
+  /// Far from site
+  static const adminEvCkFar = 'admin.ev.ck.far';
+  /// Taken before the job
+  static const adminEvCkEarly = 'admin.ev.ck.early';
+  /// Photo
+  static const adminEvPhoto = 'admin.ev.photo';
+  /// Close
+  static const adminEvClose = 'admin.ev.close';
+  /// {stage} photo for {job}
+  static const adminEvAlt = 'admin.ev.alt';
+  /// Flagged by {who} · {when}
+  static const adminEvFlagBy = 'admin.ev.flag_by';
+  /// Job
+  static const adminEvJob = 'admin.ev.job';
+  /// Company
+  static const adminEvCompany = 'admin.ev.company';
+  /// Taken
+  static const adminEvTaken = 'admin.ev.taken';
+  /// Job created
+  static const adminEvJobCreated = 'admin.ev.job_created';
+  /// Location
+  static const adminEvPlace = 'admin.ev.place';
+  /// The phone didn't share its location
+  static const adminEvNoGps = 'admin.ev.no_gps';
+  /// GPS on
+  static const adminEvGpsOn = 'admin.ev.gps_on';
+  /// {m} m from the site
+  static const adminEvFromSite = 'admin.ev.from_site';
+  /// File
+  static const adminEvFile = 'admin.ev.file';
+  /// locked
+  static const adminEvLocked = 'admin.ev.locked';
+  /// Fingerprint
+  static const adminEvFingerprint = 'admin.ev.fingerprint';
+  /// The same file is on {n} other photo(s)
+  static const adminEvTwins = 'admin.ev.twins';
+  /// Remove flag
+  static const adminEvUnflag = 'admin.ev.unflag';
+  /// Flag for support
+  static const adminEvFlag = 'admin.ev.flag';
+  /// Flag this photo for support
+  static const adminEvFlagTitle = 'admin.ev.flag_title';
+  /// Only KaamNishaan staff see this flag. Say what looks wrong.
+  static const adminEvFlagBody = 'admin.ev.flag_body';
+  /// What looks wrong?
+  static const adminEvFlagNote = 'admin.ev.flag_note';
+  /// {n} photos need a look
+  static const adminEvNeeds = 'admin.ev.needs';
+  /// Show them
+  static const adminEvShow = 'admin.ev.show';
+  /// Photos from one job:
+  static const adminEvOneJob = 'admin.ev.one_job';
+  /// Search job, customer, company or J-number
+  static const adminEvSearch = 'admin.ev.search';
+  /// Stage
+  static const adminEvFStage = 'admin.ev.f_stage';
+  /// Checks
+  static const adminEvFFlag = 'admin.ev.f_flag';
+  /// Any
+  static const adminEvFAny = 'admin.ev.f_any';
+  /// Needs a look
+  static const adminEvFNeedsLook = 'admin.ev.f.needs_look';
+  /// Flagged by staff
+  static const adminEvFStaff = 'admin.ev.f.staff';
+  /// Same photo used twice
+  static const adminEvFDuplicate = 'admin.ev.f.duplicate';
+  /// No GPS
+  static const adminEvFNoGps = 'admin.ev.f.no_gps';
+  /// Far from site (over 500 m)
+  static const adminEvFFar = 'admin.ev.f.far';
+  /// Taken before the job
+  static const adminEvFEarly = 'admin.ev.f.early';
+  /// No problems found
+  static const adminEvFClean = 'admin.ev.f.clean';
+  /// No photos match
+  static const adminEvEmptyTitle = 'admin.ev.empty_title';
+  /// No photos yet
+  static const adminEvNoneTitle = 'admin.ev.none_title';
+  /// Photos appear here as soon as technicians take them.
+  static const adminEvNoneBody = 'admin.ev.none_body';
+  /// Still processing
+  static const adminEvProcessing = 'admin.ev.processing';
+  /// GPS ✓
+  static const adminEvGpsYes = 'admin.ev.gps_yes';
+  /// No GPS
+  static const adminEvGpsNo = 'admin.ev.gps_no';
 }

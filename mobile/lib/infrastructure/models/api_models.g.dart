@@ -2803,6 +2803,293 @@ class AdminOwnerInviteModel {
       };
 }
 
+AdminPhotoModel adminPhotoModelFromJson(String str) => AdminPhotoModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPhotoModelToJson(AdminPhotoModel data) => json.encode(data.toJson());
+
+class AdminPhotoModel {
+  /// duplicate: the same file is on another photo; no_gps; far: over 500 m from the site; early: taken before the job existed
+  final List<String> checks;
+  final AdminOptionModel company;
+  final bool gps;
+  final String id;
+  final AdminPhotoJobModel job;
+  final bool locked;
+  final AdminStaffFlagModel? staffFlag;
+  /// One of: before, during, after
+  final String stage;
+  final DateTime takenAt;
+  /// Small copy; None while it is still being processed
+  final String? thumbUrl;
+
+  const AdminPhotoModel({
+    required this.checks,
+    required this.company,
+    required this.gps,
+    required this.id,
+    required this.job,
+    required this.locked,
+    this.staffFlag,
+    required this.stage,
+    required this.takenAt,
+    this.thumbUrl,
+  });
+
+  factory AdminPhotoModel.fromJson(Map<String, dynamic> json) => AdminPhotoModel(
+        checks: (json['checks'] as List).map((e) => e as String).toList(),
+        company: AdminOptionModel.fromJson(json['company'] as Map<String, dynamic>),
+        gps: json['gps'] as bool,
+        id: json['id'] as String,
+        job: AdminPhotoJobModel.fromJson(json['job'] as Map<String, dynamic>),
+        locked: json['locked'] as bool,
+        staffFlag: json['staff_flag'] == null ? null : AdminStaffFlagModel.fromJson(json['staff_flag'] as Map<String, dynamic>),
+        stage: json['stage'] as String,
+        takenAt: DateTime.parse(json['taken_at'] as String),
+        thumbUrl: json['thumb_url'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'checks': checks,
+        'company': company.toJson(),
+        'gps': gps,
+        'id': id,
+        'job': job.toJson(),
+        'locked': locked,
+        'staff_flag': staffFlag?.toJson(),
+        'stage': stage,
+        'taken_at': takenAt.toIso8601String(),
+        'thumb_url': thumbUrl,
+      };
+}
+
+AdminPhotoDetailModel adminPhotoDetailModelFromJson(String str) => AdminPhotoDetailModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPhotoDetailModelToJson(AdminPhotoDetailModel data) => json.encode(data.toJson());
+
+class AdminPhotoDetailModel {
+  /// duplicate: the same file is on another photo; no_gps; far: over 500 m from the site; early: taken before the job existed
+  final List<String> checks;
+  final AdminOptionModel company;
+  /// From the site, when both places are known
+  final int? distanceM;
+  /// SHA-256 of the original file
+  final String? fingerprint;
+  final bool gps;
+  final int? height;
+  final String id;
+  /// Full-size copy (short-lived link)
+  final String imageUrl;
+  final AdminPhotoJobModel job;
+  final DateTime jobCreatedAt;
+  final bool locked;
+  final int size;
+  final AdminStaffFlagModel? staffFlag;
+  /// One of: before, during, after
+  final String stage;
+  final DateTime takenAt;
+  final String? takenBy;
+  /// Small copy; None while it is still being processed
+  final String? thumbUrl;
+  /// Other photos with the same file
+  final List<AdminPhotoTwinModel> twins;
+  final int? width;
+
+  const AdminPhotoDetailModel({
+    required this.checks,
+    required this.company,
+    this.distanceM,
+    this.fingerprint,
+    required this.gps,
+    this.height,
+    required this.id,
+    required this.imageUrl,
+    required this.job,
+    required this.jobCreatedAt,
+    required this.locked,
+    required this.size,
+    this.staffFlag,
+    required this.stage,
+    required this.takenAt,
+    this.takenBy,
+    this.thumbUrl,
+    required this.twins,
+    this.width,
+  });
+
+  factory AdminPhotoDetailModel.fromJson(Map<String, dynamic> json) => AdminPhotoDetailModel(
+        checks: (json['checks'] as List).map((e) => e as String).toList(),
+        company: AdminOptionModel.fromJson(json['company'] as Map<String, dynamic>),
+        distanceM: json['distance_m'] == null ? null : (json['distance_m'] as num).toInt(),
+        fingerprint: json['fingerprint'] as String?,
+        gps: json['gps'] as bool,
+        height: json['height'] == null ? null : (json['height'] as num).toInt(),
+        id: json['id'] as String,
+        imageUrl: json['image_url'] as String,
+        job: AdminPhotoJobModel.fromJson(json['job'] as Map<String, dynamic>),
+        jobCreatedAt: DateTime.parse(json['job_created_at'] as String),
+        locked: json['locked'] as bool,
+        size: (json['size'] as num).toInt(),
+        staffFlag: json['staff_flag'] == null ? null : AdminStaffFlagModel.fromJson(json['staff_flag'] as Map<String, dynamic>),
+        stage: json['stage'] as String,
+        takenAt: DateTime.parse(json['taken_at'] as String),
+        takenBy: json['taken_by'] as String?,
+        thumbUrl: json['thumb_url'] as String?,
+        twins: (json['twins'] as List).map((e) => AdminPhotoTwinModel.fromJson(e as Map<String, dynamic>)).toList(),
+        width: json['width'] == null ? null : (json['width'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'checks': checks,
+        'company': company.toJson(),
+        'distance_m': distanceM,
+        'fingerprint': fingerprint,
+        'gps': gps,
+        'height': height,
+        'id': id,
+        'image_url': imageUrl,
+        'job': job.toJson(),
+        'job_created_at': jobCreatedAt.toIso8601String(),
+        'locked': locked,
+        'size': size,
+        'staff_flag': staffFlag?.toJson(),
+        'stage': stage,
+        'taken_at': takenAt.toIso8601String(),
+        'taken_by': takenBy,
+        'thumb_url': thumbUrl,
+        'twins': twins.map((e) => e.toJson()).toList(),
+        'width': width,
+      };
+}
+
+AdminPhotoFlagInModel adminPhotoFlagInModelFromJson(String str) => AdminPhotoFlagInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPhotoFlagInModelToJson(AdminPhotoFlagInModel data) => json.encode(data.toJson());
+
+class AdminPhotoFlagInModel {
+  final String note;
+
+  const AdminPhotoFlagInModel({
+    required this.note,
+  });
+
+  factory AdminPhotoFlagInModel.fromJson(Map<String, dynamic> json) => AdminPhotoFlagInModel(
+        note: json['note'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'note': note,
+      };
+}
+
+AdminPhotoJobModel adminPhotoJobModelFromJson(String str) => AdminPhotoJobModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPhotoJobModelToJson(AdminPhotoJobModel data) => json.encode(data.toJson());
+
+class AdminPhotoJobModel {
+  final String customer;
+  final String id;
+  final String number;
+  final String title;
+
+  const AdminPhotoJobModel({
+    required this.customer,
+    required this.id,
+    required this.number,
+    required this.title,
+  });
+
+  factory AdminPhotoJobModel.fromJson(Map<String, dynamic> json) => AdminPhotoJobModel(
+        customer: json['customer'] as String,
+        id: json['id'] as String,
+        number: json['number'] as String,
+        title: json['title'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'customer': customer,
+        'id': id,
+        'number': number,
+        'title': title,
+      };
+}
+
+AdminPhotoListModel adminPhotoListModelFromJson(String str) => AdminPhotoListModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPhotoListModelToJson(AdminPhotoListModel data) => json.encode(data.toJson());
+
+class AdminPhotoListModel {
+  final bool canAct;
+  final List<AdminOptionModel> companies;
+  final List<AdminPhotoModel> items;
+  /// Photos with a check or a staff flag, across all companies
+  final int needsLook;
+  final int page;
+  final int pageSize;
+  final int total;
+
+  const AdminPhotoListModel({
+    required this.canAct,
+    required this.companies,
+    required this.items,
+    required this.needsLook,
+    required this.page,
+    required this.pageSize,
+    required this.total,
+  });
+
+  factory AdminPhotoListModel.fromJson(Map<String, dynamic> json) => AdminPhotoListModel(
+        canAct: json['can_act'] as bool,
+        companies: (json['companies'] as List).map((e) => AdminOptionModel.fromJson(e as Map<String, dynamic>)).toList(),
+        items: (json['items'] as List).map((e) => AdminPhotoModel.fromJson(e as Map<String, dynamic>)).toList(),
+        needsLook: (json['needs_look'] as num).toInt(),
+        page: (json['page'] as num).toInt(),
+        pageSize: (json['page_size'] as num).toInt(),
+        total: (json['total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'companies': companies.map((e) => e.toJson()).toList(),
+        'items': items.map((e) => e.toJson()).toList(),
+        'needs_look': needsLook,
+        'page': page,
+        'page_size': pageSize,
+        'total': total,
+      };
+}
+
+AdminPhotoTwinModel adminPhotoTwinModelFromJson(String str) => AdminPhotoTwinModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPhotoTwinModelToJson(AdminPhotoTwinModel data) => json.encode(data.toJson());
+
+class AdminPhotoTwinModel {
+  final AdminOptionModel company;
+  final String id;
+  final AdminPhotoJobModel job;
+  final DateTime takenAt;
+
+  const AdminPhotoTwinModel({
+    required this.company,
+    required this.id,
+    required this.job,
+    required this.takenAt,
+  });
+
+  factory AdminPhotoTwinModel.fromJson(Map<String, dynamic> json) => AdminPhotoTwinModel(
+        company: AdminOptionModel.fromJson(json['company'] as Map<String, dynamic>),
+        id: json['id'] as String,
+        job: AdminPhotoJobModel.fromJson(json['job'] as Map<String, dynamic>),
+        takenAt: DateTime.parse(json['taken_at'] as String),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'company': company.toJson(),
+        'id': id,
+        'job': job.toJson(),
+        'taken_at': takenAt.toIso8601String(),
+      };
+}
+
 AdminPlanCreditsModel adminPlanCreditsModelFromJson(String str) => AdminPlanCreditsModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminPlanCreditsModelToJson(AdminPlanCreditsModel data) => json.encode(data.toJson());
@@ -3516,6 +3803,34 @@ class AdminScriptStepInModel {
 
   Map<String, dynamic> toJson() => {
         'text': text,
+      };
+}
+
+AdminStaffFlagModel adminStaffFlagModelFromJson(String str) => AdminStaffFlagModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminStaffFlagModelToJson(AdminStaffFlagModel data) => json.encode(data.toJson());
+
+class AdminStaffFlagModel {
+  final DateTime at;
+  final String? by;
+  final String note;
+
+  const AdminStaffFlagModel({
+    required this.at,
+    this.by,
+    required this.note,
+  });
+
+  factory AdminStaffFlagModel.fromJson(Map<String, dynamic> json) => AdminStaffFlagModel(
+        at: DateTime.parse(json['at'] as String),
+        by: json['by'] as String?,
+        note: json['note'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'at': at.toIso8601String(),
+        'by': by,
+        'note': note,
       };
 }
 

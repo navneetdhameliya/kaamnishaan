@@ -8,7 +8,7 @@
  *  - loading: .kn-shimmer skeletons, .kn-spin spinners;
  *  - enter: .kn-in (cards and rows fade up once, staggered with --d);
  *  - hover: .kn-lift (cards rise), .kn-btn (buttons rise + shine), .kn-row (rows highlight), .kn-link;
- *  - feedback: .kn-pop (success), .kn-shake (errors), .kn-menu (menus), .kn-drawer (phone menu).
+ *  - feedback: .kn-pop (success), .kn-shake (errors), .kn-menu (menus), .kn-drawer (phone menu), .kn-slide (side panel).
  * Everything is switched off for people who ask their device for less motion.
  */
 :root {
@@ -87,6 +87,7 @@
 .kn-shake { animation: kn-shake 0.45s var(--kn-ease); }
 .kn-menu { animation: kn-menu 0.22s var(--kn-ease) both; transform-origin: top center; }
 .kn-drawer { animation: kn-drawer 0.35s var(--kn-ease) both; }
+.kn-slide { animation: kn-slide 0.35s var(--kn-ease) both; }
 .kn-glow { animation: kn-glow 2.6s ease-in-out infinite; }
 
 @keyframes kn-shimmer { to { background-position: -150% 0; } }
@@ -115,6 +116,10 @@
 @keyframes kn-menu {
   from { opacity: 0; transform: translate(-50%, -6px) scale(0.97); }
   to { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+@keyframes kn-slide {
+  from { opacity: 0.6; transform: translateX(40px); }
+  to { opacity: 1; transform: none; }
 }
 @keyframes kn-drawer {
   from { opacity: 0; transform: translateY(-12px); }
