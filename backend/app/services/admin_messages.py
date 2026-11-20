@@ -59,7 +59,7 @@ async def templates(db: AsyncSession, *, can_act: bool) -> AdminTemplatesOut:
         templates=[_entry(store, k) for k in messages.TEMPLATES],
         stop={lang: messages.stop_line(lang) for lang in messages.LANGS},
         sms_live=s.sms_provider != "console", whatsapp_live=s.whatsapp_provider != "console",
-        email_live=email_on(), can_act=can_act,
+        email_live=await email_on(db), can_act=can_act,
     )  # fmt: skip
 
 
@@ -115,7 +115,7 @@ async def test(db: AsyncSession, body: AdminTemplateTest, *, staff_id: uuid.UUID
             raise AppError(
                 "validation_error", "Some fields are not valid.", fields={"to": "invalid"}, status=422
             )
-        live = email_on()
+        live = await email_on(db)
         if live:
             await messaging.send_email_text(to, "template_test", f"[Test] {out['subject']}", out["body"])
     else:

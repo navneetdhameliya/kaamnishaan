@@ -90,9 +90,11 @@ async def _request(db: AsyncSession, job_id: uuid.UUID, lock: bool = False) -> R
     return (await db.execute(q)).scalar_one_or_none()
 
 
-def _reachable(contact: CustomerContact | None) -> bool:
+async def _reachable(db: AsyncSession, contact: CustomerContact | None) -> bool:
     """A phone, or an email while email is on."""
-    return contact is not None and bool(contact.phone or (contact.email and sharing.email_on()))
+    if contact is None:
+        return False
+    return bool(contact.phone or (contact.email and await sharing.email_on(db)))
 
 
 def _manager(p: Principal) -> bool:
@@ -121,7 +123,7 @@ async def job_review(db: AsyncSession, p: Principal, job: Job) -> JobReview | No
             reason = "not_assigned"
         elif not _manager(p) and not s.techs_can_request:
             reason = "not_allowed"
-        elif not _reachable(contact):
+        elif not await _reachable(db, contact):
             reason = "no_contact"
         return JobReview(
             status="not_requested", can_request=reason is None, blocked_reason=reason,
@@ -169,7 +171,7 @@ async def request_review(db: AsyncSession, p: Principal, job: Job) -> JobReview:
     if await _request(db, job.id, lock=True):
         raise Conflict("already_requested", "A review was already asked for this job.")
     contact = await sharing._contact(db, job)
-    if not _reachable(contact):
+    if not await _reachable(db, contact):
         raise AppError(
             "contact_missing", "Add the customer's phone or email first.", fields={"contact": "missing"}
         )
@@ -247,7 +249,7 @@ async def on_report_approved(db: AsyncSession, p: Principal, rep: Report, job: J
     contact = (
         await db.get(CustomerContact, req.contact_id) if req.contact_id else await sharing._contact(db, job)
     )
-    if not _reachable(contact):
+    if not await _reachable(db, contact):
         req.status, req.stopped_reason = "stopped", "no_contact"
         return
     await _send(db, p, req, rep, job, contact)
@@ -260,7 +262,8 @@ async def _send(
     company = await db.get(Company, job.company_id)
     s = await settings_for(db, job.company_id)
     channels = [c for c, to in (("sms", contact.phone), ("email", contact.email)) if to]
-    channels = [c for c in channels if c != "email" or sharing.email_on()]
+    mail_on = await sharing.email_on(db)
+    channels = [c for c in channels if c != "email" or mail_on]
     if not channels:
         req.status, req.stopped_reason = "stopped", "no_contact"
         return

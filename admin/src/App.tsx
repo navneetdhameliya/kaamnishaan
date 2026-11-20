@@ -10,6 +10,7 @@ import { Companies } from './pages/Companies';
 import { CompanyDetail } from './pages/CompanyDetail';
 import { Credits } from './pages/Credits';
 import { PlatformSettings } from './pages/PlatformSettings';
+import { EmailSettings } from './pages/EmailSettings';
 import { CompanyForm } from './pages/CompanyForm';
 import { Dashboard, RangeSelect, RANGES, type Range } from './pages/Dashboard';
 import { AiCalls } from './pages/AiCalls';
@@ -75,6 +76,7 @@ export default function App() {
   else if (nav.key === 'dashboard') page = <Dashboard t={t} lang={lang} days={days} />;
   else if (nav.key === 'ai_usage') page = <AiUsage t={t} lang={lang} days={days} />;
   else if (nav.key === 'ai_calls') page = <AiCalls key="ai-calls" t={t} lang={lang} />;
+  else if (nav.key === 'email') page = <EmailSettings key="email" t={t} />;
   else if (nav.key === 'settings') page = <PlatformSettings key="settings" t={t} />;
   else if (nav.key === 'usage') page = <Credits key="credits" t={t} lang={lang} />;
   else if (nav.key === 'templates') page = <Templates key="templates" t={t} lang={lang} />;

@@ -23,7 +23,7 @@ async def get(db: AsyncSession, *, can_act: bool) -> AdminPlatformOut:
         settings=AdminPlatformSettings(**cfg.model_dump()),
         server=AdminPlatformServer(
             support_email=s.support_email, support_whatsapp=s.support_whatsapp,
-            default_country=s.default_country, ai_key=get_ai() is not None, email_on=email_on(),
+            default_country=s.default_country, ai_key=get_ai() is not None, email_on=await email_on(db),
         ),
         countries=[AdminOption(value=c, label=n) for c, n, *_ in COUNTRIES],
         can_act=can_act,

@@ -173,3 +173,34 @@ async def check_open(db: AsyncSession) -> None:
         raise AppError(
             "maintenance", "KaamNishaan is down for a short update. Please try again soon.", status=503
         )
+
+
+# ---- A33 Email settings -------------------------------------------------------------------------------
+EMAIL_GROUPS = ("account", "reports", "reminders", "team")
+
+
+class EmailConfig(BaseModel):
+    """The email service (any SMTP provider). Off until staff fill it in and switch it on (D-96)."""
+
+    enabled: bool = False
+    from_name: str = "KaamNishaan"
+    from_email: str | None = None
+    host: str | None = None
+    port: int = 587
+    security: Literal["starttls", "ssl"] = "starttls"
+    username: str | None = None
+    password_sealed: str | None = None  # encrypted with the server's secret, never sent back
+    groups: dict[str, bool] = {g: True for g in EMAIL_GROUPS}
+
+    @property
+    def ready(self) -> bool:
+        return bool(self.host and self.from_email and self.port)
+
+
+async def email_config(db: AsyncSession) -> EmailConfig:
+    return EmailConfig(**await _get(db, "email"))
+
+
+async def set_email_config(db: AsyncSession, c: EmailConfig, *, staff_id: uuid.UUID) -> EmailConfig:
+    await _put(db, "email", c.model_dump(), staff_id)
+    return c

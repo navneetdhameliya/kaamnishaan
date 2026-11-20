@@ -37,6 +37,7 @@ from app.schemas.admin_companies import (
     AdminOwnerInvite,
 )
 from app.schemas.admin_credits import AdminCreditAdjust, AdminCreditRulesIn, AdminCreditsOut
+from app.schemas.admin_email import AdminEmailIn, AdminEmailOut, AdminEmailTest, AdminEmailTestOut
 from app.schemas.admin_leads import AdminLeadDetail, AdminLeadList, AdminLeadUpdate
 from app.schemas.admin_messages import (
     AdminTemplate,
@@ -77,6 +78,7 @@ from app.services import (
     admin_companies,
     admin_credits,
     admin_dashboard,
+    admin_email,
     admin_leads,
     admin_messages,
     admin_platform,
@@ -925,3 +927,34 @@ async def save_platform_settings(
     if me.staff.role != "super_admin":
         raise Forbidden("forbidden", "Only a super admin can change platform settings.")
     return await admin_platform.save(db, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+# ---- A33 Email settings ------------------------------------------------------------------------------
+def _super(me: Staff) -> None:
+    if me.staff.role != "super_admin":
+        raise Forbidden("forbidden", "Only a super admin can change email settings.")
+
+
+@router.get("/email-settings", response_model=AdminEmailOut)
+async def email_settings(me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)) -> AdminEmailOut:
+    """The password is never sent back; `password_set` says whether one is saved."""
+    return await admin_email.get(db, can_act=me.staff.role == "super_admin")
+
+
+@router.put("/email-settings", response_model=AdminEmailOut)
+async def save_email_settings(
+    body: AdminEmailIn, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminEmailOut:
+    _super(me)
+    return await admin_email.save(db, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.post("/email-settings/test", response_model=AdminEmailTestOut)
+async def test_email_settings(
+    body: AdminEmailTest, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminEmailTestOut:
+    """Sends a test with the saved settings. 409 email_not_set, or 502 smtp_failed with the reason."""
+    _super(me)
+    return AdminEmailTestOut(
+        to=await admin_email.test(db, str(body.to), staff_id=me.staff.id, ip=client_ip(request))
+    )

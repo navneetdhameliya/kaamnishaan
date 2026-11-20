@@ -50,6 +50,7 @@ from app.schemas.sharing import (
     ShareLinkOut,
 )
 from app.services import audit, messages, notifications
+from app.services import email as email_svc
 from app.services.report_labels import LABELS, fmt_date, label
 from app.services.report_view import customer_view
 from app.services.reports import DONE, get_report, rlabel
@@ -85,9 +86,9 @@ def parse_token(token: str) -> uuid.UUID | None:
     return link_id if hmac.compare_digest(raw[16:], _mac(link_id)) else None
 
 
-def email_on() -> bool:
-    """False until an email service is chosen (D-96)."""
-    return get_settings().email_enabled
+async def email_on(db: AsyncSession, group: str = "reports") -> bool:
+    """False until an email service is connected in the admin panel (A33; D-96)."""
+    return await email_svc.email_on(db, group)
 
 
 def link_url(link: ShareLink) -> str:
@@ -218,14 +219,15 @@ async def share_info(db: AsyncSession, p: Principal, report_id: uuid.UUID) -> Sh
     link = await current_link(db, rep)
     company = await db.get(Company, rep.company_id)
     phone, email = (contact.phone, contact.email) if contact else (None, None)
+    mail_on = await email_on(db)
     channels = [
         ChannelOut(key="sms", available=bool(phone), to=phone, reason=None if phone else "no_phone"),
         ChannelOut(key="whatsapp", available=bool(phone), to=phone, reason=None if phone else "no_phone"),
         ChannelOut(
             key="email",
-            available=bool(email) and email_on(),
+            available=bool(email) and mail_on,
             to=email,
-            reason="email_off" if not email_on() else (None if email else "no_email"),
+            reason="email_off" if not mail_on else (None if email else "no_email"),
         ),
     ]
     approved = rep.status in DONE
@@ -424,7 +426,7 @@ async def send(db: AsyncSession, p: Principal, report_id: uuid.UUID, body: SendI
     )
     email = str(body.email) if body.email else (contact.email if contact else None)
     channels = list(dict.fromkeys(body.channels))
-    if "email" in channels and not email_on():
+    if "email" in channels and not await email_on(db):
         raise AppError("email_off", "Email isn't switched on yet. Send by SMS or WhatsApp, or copy the link.")
     missing = {}
     if {"sms", "whatsapp"} & set(channels) and not phone:
@@ -610,7 +612,7 @@ async def _tell_team(db: AsyncSession, company_id: uuid.UUID, subject: str, body
             )
         )
     ).scalars()
-    if not email_on():
+    if not await email_on(db, "team"):
         return
     for e in emails:
         await messaging.send_email_text(e, "team_notice", subject, body)

@@ -7100,4 +7100,100 @@ abstract final class LangKeys {
   static const siteNoticeMaintenance = 'site.notice.maintenance';
   /// New sign-ups are paused right now. Please contact KaamNishaan support and we’ll set up your company.
   static const siteNoticeSignupsClosed = 'site.notice.signups_closed';
+  /// Save changes
+  static const adminEmSave = 'admin.em.save';
+  /// Saved. Email is still off.
+  static const adminEmSaved = 'admin.em.saved';
+  /// Saved. Emails now go out with these settings. Send a test to check.
+  static const adminEmSavedLive = 'admin.em.saved_live';
+  /// Fix the highlighted fields to save.
+  static const adminEmFix = 'admin.em.fix';
+  /// Only a super admin can change email settings.
+  static const adminEmSuperOnly = 'admin.em.super_only';
+  /// Email is on. Emails go out from {from}.
+  static const adminEmLive = 'admin.em.live';
+  /// Email is off.
+  static const adminEmOffTitle = 'admin.em.off_title';
+  /// Everything still works without it: logins use phone codes, reports go by SMS, WhatsApp or link. Connect an email service below and switch it on when you’re ready.
+  static const adminEmOffBody = 'admin.em.off_body';
+  /// Sender
+  static const adminEmSender = 'admin.em.sender';
+  /// Who customers and teams see emails from.
+  static const adminEmSenderSub = 'admin.em.sender_sub';
+  /// From name
+  static const adminEmFromName = 'admin.em.from_name';
+  /// From email
+  static const adminEmFromEmail = 'admin.em.from_email';
+  /// Email service (SMTP)
+  static const adminEmSmtp = 'admin.em.smtp';
+  /// Any provider works (Brevo, SendGrid, Zoho, Amazon SES…). The password is stored encrypted.
+  static const adminEmSmtpSub = 'admin.em.smtp_sub';
+  /// SMTP host
+  static const adminEmHost = 'admin.em.host';
+  /// Port
+  static const adminEmPort = 'admin.em.port';
+  /// Security
+  static const adminEmSecurity = 'admin.em.security';
+  /// Username
+  static const adminEmUsername = 'admin.em.username';
+  /// Password
+  static const adminEmPassword = 'admin.em.password';
+  /// •••••••• (saved, type to change)
+  static const adminEmPasswordSet = 'admin.em.password_set';
+  /// Remove the saved password
+  static const adminEmPasswordClear = 'admin.em.password_clear';
+  /// Your provider shows these details. Port 587 uses STARTTLS; port 465 uses SSL/TLS.
+  static const adminEmSmtpNote = 'admin.em.smtp_note';
+  /// Emails
+  static const adminEmEmails = 'admin.em.emails';
+  /// What the platform sends by email, in the 5 languages.
+  static const adminEmEmailsSub = 'admin.em.emails_sub';
+  /// Send emails
+  static const adminEmEnabled = 'admin.em.enabled';
+  /// Needs the host and from email above.
+  static const adminEmEnabledHint = 'admin.em.enabled_hint';
+  /// Account emails
+  static const adminEmGAccount = 'admin.em.g.account';
+  /// Confirm email and password reset (link works for 30 minutes).
+  static const adminEmGAccountHint = 'admin.em.g.account_hint';
+  /// Reports to customers
+  static const adminEmGReports = 'admin.em.g.reports';
+  /// The report link, and the rating link with it.
+  static const adminEmGReportsHint = 'admin.em.g.reports_hint';
+  /// Review reminders
+  static const adminEmGReminders = 'admin.em.g.reminders';
+  /// Day 2 reminder when a customer hasn’t rated.
+  static const adminEmGRemindersHint = 'admin.em.g.reminders_hint';
+  /// Team notices
+  static const adminEmGTeam = 'admin.em.g.team';
+  /// To owners and managers, e.g. a customer asked for a new link.
+  static const adminEmGTeamHint = 'admin.em.g.team_hint';
+  /// Fill this in.
+  static const adminEmERequired = 'admin.em.e.required';
+  /// Enter a port from 1 to 65535.
+  static const adminEmEInvalid = 'admin.em.e.invalid';
+  /// Enter a valid email.
+  static const adminEmEValueError = 'admin.em.e.value_error';
+  /// Enter a valid email.
+  static const adminEmEEmail = 'admin.em.e.email';
+  /// Send test email
+  static const adminEmTest = 'admin.em.test';
+  /// Save the settings first.
+  static const adminEmSaveFirst = 'admin.em.save_first';
+  /// Send a test email
+  static const adminEmTestTitle = 'admin.em.test_title';
+  /// Uses the saved settings, even while sending is off, so you can check them first.
+  static const adminEmTestBody = 'admin.em.test_body';
+  /// Send to
+  static const adminEmTestTo = 'admin.em.test_to';
+  /// Send
+  static const adminEmTestGo = 'admin.em.test_go';
+  /// Test email sent to {to}. Check the inbox (and spam).
+  static const adminEmTestSent = 'admin.em.test_sent';
+  /// It didn’t send. The email service said: {reason}
+  static const adminEmTestFailed = 'admin.em.test_failed';
+  /// Changed email settings
+  static const adminAuAStaffEmailSettingsUpdated = 'admin.au.a.staff.email_settings_updated';
+  /// Sent a test email
+  static const adminAuAStaffEmailTest = 'admin.au.a.staff.email_test';
 }
