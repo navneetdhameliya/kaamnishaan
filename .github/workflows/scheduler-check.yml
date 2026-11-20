@@ -1,7 +1,8 @@
 # Temporary: shows where the scheduler settings were saved (set/empty only, never the values).
 name: scheduler secrets check (temporary)
 on:
-  workflow_dispatch:
+  push:
+    branches: [check/scheduler-secrets]
 permissions: {}
 jobs:
   check:
