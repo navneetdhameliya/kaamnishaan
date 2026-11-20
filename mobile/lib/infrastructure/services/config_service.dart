@@ -9,10 +9,11 @@ import 'preferences_service.dart';
 
 /// Server settings used before login (countries for the phone field, trades for the profile).
 class ConfigService extends GetxService {
-  ConfigService(this._repository, {PreferencesService? prefs}) : _prefs = prefs;
+  ConfigService(this._repository, {this.prefs});
 
   final IConfigApiRepository _repository;
-  final PreferencesService? _prefs;
+  /// Keeps the changed texts for offline starts (not needed in tests).
+  final PreferencesService? prefs;
   final Rxn<ConfigOutModel> config = Rxn<ConfigOutModel>();
 
   /// Used when the server can't be reached yet; the full list arrives with the config.
@@ -33,7 +34,7 @@ class ConfigService extends GetxService {
   void onInit() {
     super.onInit();
     // the texts from the last time the server was reached, so an offline start still shows them
-    final saved = _prefs?.changedTexts;
+    final saved = prefs?.changedTexts;
     if (saved == null) return;
     try {
       ChangedTexts.apply(Map<String, dynamic>.from(jsonDecode(saved) as Map));
@@ -53,6 +54,6 @@ class ConfigService extends GetxService {
     final texts = (await _repository.getTexts()).dataOrNull?.texts;
     if (texts == null) return;
     ChangedTexts.apply(texts);
-    await _prefs?.setChangedTexts(jsonEncode(texts));
+    await prefs?.setChangedTexts(jsonEncode(texts));
   }
 }
