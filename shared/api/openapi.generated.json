@@ -422,6 +422,50 @@
         "title": "AdminAiCompany",
         "type": "object"
       },
+      "AdminAiConfigOut": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "config": {
+            "$ref": "#/components/schemas/AiConfig"
+          },
+          "key_set": {
+            "description": "The AI key is set on the server",
+            "title": "Key Set",
+            "type": "boolean"
+          },
+          "month_spend_usd": {
+            "title": "Month Spend Usd",
+            "type": "number"
+          },
+          "text_models": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Text Models",
+            "type": "array"
+          },
+          "transcribe_models": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Transcribe Models",
+            "type": "array"
+          }
+        },
+        "required": [
+          "config",
+          "text_models",
+          "transcribe_models",
+          "key_set",
+          "month_spend_usd",
+          "can_act"
+        ],
+        "title": "AdminAiConfigOut",
+        "type": "object"
+      },
       "AdminAiDay": {
         "properties": {
           "assistant": {
@@ -2898,6 +2942,152 @@
         "title": "AdminEmailTestOut",
         "type": "object"
       },
+      "AdminIndustriesOut": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AdminIndustry"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "can_act"
+        ],
+        "title": "AdminIndustriesOut",
+        "type": "object"
+      },
+      "AdminIndustry": {
+        "properties": {
+          "checklists": {
+            "description": "Ready-made checklists for this trade",
+            "title": "Checklists",
+            "type": "integer"
+          },
+          "companies": {
+            "title": "Companies",
+            "type": "integer"
+          },
+          "default_checklist": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Default Checklist"
+          },
+          "default_questions": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Default Questions"
+          },
+          "name": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Name",
+            "type": "object"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "sort": {
+            "title": "Sort",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "live",
+              "draft"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "name",
+          "status",
+          "sort",
+          "companies",
+          "checklists",
+          "default_checklist",
+          "default_questions"
+        ],
+        "title": "AdminIndustry",
+        "type": "object"
+      },
+      "AdminIndustryIn": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "propertyNames": {
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ]
+            },
+            "title": "Name",
+            "type": "object"
+          },
+          "slug": {
+            "anyOf": [
+              {
+                "pattern": "^[a-z][a-z0-9-]{1,46}[a-z0-9]$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "New industries only",
+            "title": "Slug"
+          },
+          "sort": {
+            "maximum": 999.0,
+            "minimum": 0.0,
+            "title": "Sort",
+            "type": "integer"
+          },
+          "status": {
+            "enum": [
+              "live",
+              "draft"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "status",
+          "sort"
+        ],
+        "title": "AdminIndustryIn",
+        "type": "object"
+      },
       "AdminJobChecklist": {
         "properties": {
           "answered": {
@@ -4964,6 +5154,260 @@
           "max_photo_mb"
         ],
         "title": "AdminPlatformSettings",
+        "type": "object"
+      },
+      "AdminPrompt": {
+        "properties": {
+          "draft": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Draft"
+          },
+          "live": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Live"
+          },
+          "stats": {
+            "$ref": "#/components/schemas/AdminPromptStats"
+          },
+          "task": {
+            "enum": [
+              "report_draft",
+              "assistant",
+              "translation"
+            ],
+            "title": "Task",
+            "type": "string"
+          },
+          "variables": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Variables",
+            "type": "array"
+          },
+          "versions": {
+            "description": "Newest first",
+            "items": {
+              "$ref": "#/components/schemas/AdminPromptVersion"
+            },
+            "title": "Versions",
+            "type": "array"
+          }
+        },
+        "required": [
+          "task",
+          "live",
+          "draft",
+          "variables",
+          "versions",
+          "stats"
+        ],
+        "title": "AdminPrompt",
+        "type": "object"
+      },
+      "AdminPromptDraftIn": {
+        "additionalProperties": false,
+        "properties": {
+          "note": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "system_prompt": {
+            "maxLength": 12000,
+            "minLength": 40,
+            "title": "System Prompt",
+            "type": "string"
+          }
+        },
+        "required": [
+          "system_prompt"
+        ],
+        "title": "AdminPromptDraftIn",
+        "type": "object"
+      },
+      "AdminPromptStats": {
+        "properties": {
+          "avg_cost_usd": {
+            "title": "Avg Cost Usd",
+            "type": "number"
+          },
+          "avg_tokens": {
+            "title": "Avg Tokens",
+            "type": "integer"
+          },
+          "failed": {
+            "title": "Failed",
+            "type": "integer"
+          },
+          "runs": {
+            "description": "Calls in the last 30 days",
+            "title": "Runs",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "runs",
+          "failed",
+          "avg_tokens",
+          "avg_cost_usd"
+        ],
+        "title": "AdminPromptStats",
+        "type": "object"
+      },
+      "AdminPromptVersion": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "edited_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Edited By"
+          },
+          "flagged": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "report_draft: of those, with invented-work flags",
+            "title": "Flagged"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "published_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published At"
+          },
+          "published_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published By"
+          },
+          "reports": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "report_draft: reports written with this version",
+            "title": "Reports"
+          },
+          "status": {
+            "enum": [
+              "draft",
+              "live",
+              "retired"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "system_prompt": {
+            "title": "System Prompt",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "version",
+          "status",
+          "system_prompt",
+          "note",
+          "edited_by",
+          "published_by",
+          "published_at",
+          "created_at",
+          "updated_at"
+        ],
+        "title": "AdminPromptVersion",
+        "type": "object"
+      },
+      "AdminPromptsOut": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "prompts": {
+            "items": {
+              "$ref": "#/components/schemas/AdminPrompt"
+            },
+            "title": "Prompts",
+            "type": "array"
+          }
+        },
+        "required": [
+          "prompts",
+          "can_act"
+        ],
+        "title": "AdminPromptsOut",
         "type": "object"
       },
       "AdminProof": {
@@ -7844,6 +8288,47 @@
           "waiting"
         ],
         "title": "AdminVoiceProvider",
+        "type": "object"
+      },
+      "AiConfig": {
+        "description": "Which models are used and the limits around them. The API key itself stays on the server (Render).",
+        "properties": {
+          "fallback": {
+            "default": "error",
+            "enum": [
+              "template",
+              "error"
+            ],
+            "title": "Fallback",
+            "type": "string"
+          },
+          "mask_contacts": {
+            "default": true,
+            "title": "Mask Contacts",
+            "type": "boolean"
+          },
+          "max_tokens_report": {
+            "default": 3000,
+            "maximum": 16000.0,
+            "minimum": 500.0,
+            "title": "Max Tokens Report",
+            "type": "integer"
+          },
+          "monthly_budget_usd": {
+            "minimum": 0.0,
+            "title": "Monthly Budget Usd",
+            "type": "number"
+          },
+          "text_model": {
+            "title": "Text Model",
+            "type": "string"
+          },
+          "transcribe_model": {
+            "title": "Transcribe Model",
+            "type": "string"
+          }
+        },
+        "title": "AiConfig",
         "type": "object"
       },
       "AnswerIn": {
@@ -20645,6 +21130,78 @@
         ]
       }
     },
+    "/api/v1/admin/ai-config": {
+      "get": {
+        "description": "Models, monthly budget, tokens per report, fallback and personal-data masking.",
+        "operationId": "ai_config_api_v1_admin_ai_config_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminAiConfigOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ai Config",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "description": "Super admins only. Used from the next AI call. Audited.",
+        "operationId": "save_ai_config_api_v1_admin_ai_config_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AiConfig"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminAiConfigOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Save Ai Config",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/api/v1/admin/ai-usage": {
       "get": {
         "description": "A20: AI cost and use over the period. Every staff member can look.",
@@ -23439,6 +23996,135 @@
         ]
       }
     },
+    "/api/v1/admin/industries": {
+      "get": {
+        "description": "Every trade with its companies and ready-made checklists. Live ones are offered at sign-up.",
+        "operationId": "admin_industries_api_v1_admin_industries_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminIndustriesOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Admin Industries",
+        "tags": [
+          "admin"
+        ]
+      },
+      "post": {
+        "operationId": "add_industry_api_v1_admin_industries_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminIndustryIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminIndustriesOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Add Industry",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/industries/{slug}": {
+      "put": {
+        "description": "Names, sign-up visibility (draft = hidden; companies already in it keep it) and order. Audited.",
+        "operationId": "save_industry_api_v1_admin_industries__slug__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "slug",
+            "required": true,
+            "schema": {
+              "title": "Slug",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminIndustryIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminIndustriesOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Save Industry",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/api/v1/admin/jobs": {
       "get": {
         "description": "Every company's jobs, newest first by scheduled time. The browser sends its own day as from/to.",
@@ -24592,6 +25278,208 @@
           }
         ],
         "summary": "Save Platform Settings",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/prompts": {
+      "get": {
+        "description": "Each AI prompt with its versions (live, draft, retired) and how it did in the last 30 days.",
+        "operationId": "admin_prompts_api_v1_admin_prompts_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPromptsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Admin Prompts",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/prompts/{task}/draft": {
+      "delete": {
+        "operationId": "discard_prompt_draft_api_v1_admin_prompts__task__draft_delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "task",
+            "required": true,
+            "schema": {
+              "enum": [
+                "report_draft",
+                "assistant",
+                "translation"
+              ],
+              "title": "Task",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPromptsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Discard Prompt Draft",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "description": "Super admins only: edit the draft (or start the next version). Nothing changes until it's published.",
+        "operationId": "save_prompt_draft_api_v1_admin_prompts__task__draft_put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "task",
+            "required": true,
+            "schema": {
+              "enum": [
+                "report_draft",
+                "assistant",
+                "translation"
+              ],
+              "title": "Task",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminPromptDraftIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPromptsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Save Prompt Draft",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/prompts/{task}/versions/{version}/publish": {
+      "post": {
+        "description": "Super admins only: make the draft live, or go back to an older version. Used from the next AI call.",
+        "operationId": "publish_prompt_api_v1_admin_prompts__task__versions__version__publish_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "task",
+            "required": true,
+            "schema": {
+              "enum": [
+                "report_draft",
+                "assistant",
+                "translation"
+              ],
+              "title": "Task",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "version",
+            "required": true,
+            "schema": {
+              "title": "Version",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPromptsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Publish Prompt",
         "tags": [
           "admin"
         ]

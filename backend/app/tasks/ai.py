@@ -10,6 +10,7 @@ from app.models import ChecklistQuestion, ChecklistTemplate, Company, Job, Voice
 from app.providers.ai import get_ai
 from app.providers.storage import get_storage, sha256
 from app.services import ai_usage
+from app.services.ai_config import ai_for
 from app.tasks import task
 
 LANGS = ("en", "hi", "gu", "es", "fr")
@@ -31,8 +32,8 @@ async def _report_language(db, job_id) -> str:
 
 @task
 async def transcribe_voice_note(ctx, note_id: str) -> str:
-    ai = get_ai()
     async with SessionLocal() as db:
+        ai = await ai_for(db, budgeted=False)  # A19 models
         v = await db.get(VoiceNote, uuid.UUID(note_id))
         if not v or v.deleted_at:
             return "skipped"
@@ -101,6 +102,7 @@ async def translate_checklist_question(ctx, question_id: str) -> str:
     if not ai:
         return "waiting"  # other languages stay "missing"; the app shows the source language
     async with SessionLocal() as db:
+        ai = await ai_for(db, budgeted=False)  # A19 models, A21 translation prompt
         q = await db.get(ChecklistQuestion, uuid.UUID(question_id))
         if not q or q.deleted_at:
             return "skipped"

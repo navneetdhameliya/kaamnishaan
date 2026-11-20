@@ -11,8 +11,9 @@ from sqlalchemy import select
 from app.core.db import SessionLocal
 from app.core.security import now
 from app.models import BackgroundTask, Job, PromptVersion, Report, ReportVersion
-from app.providers.ai import LANGUAGE_NAMES, get_ai
+from app.providers.ai import LANGUAGE_NAMES
 from app.services import ai_usage, platform
+from app.services.ai_config import ai_for, masked
 from app.services.report_draft import collect, merge_flags, parse_ai, server_flags, template_draft
 from app.tasks import task
 
@@ -56,15 +57,29 @@ async def draft_report(ctx, report_id: str, task_id: str, section: str | None = 
             bt.steps = _steps(1, running=1)
             await db.commit()
 
-            ai = get_ai() if (await platform.config(db)).ai_drafting else None  # A32 switch
+            # A32 switch; A19 models, monthly budget, contact masking and fallback
+            ai = await ai_for(db, budgeted=True) if (await platform.config(db)).ai_drafting else None
+            cfg = await platform.ai_config(db)
             links, ai_flags = [], []
+            draft = None
             if ai:
                 prompt = await _live_prompt(db, "report_draft")
-                system = prompt.system_prompt.format(language=LANGUAGE_NAMES.get(rep.language, rep.language))
-                evidence = {k: v for k, v in bundle.items() if not k.startswith("_")}
+                system = prompt.system_prompt.replace(
+                    "{language}", LANGUAGE_NAMES.get(rep.language, rep.language)
+                )
+                evidence = masked(
+                    {k: v for k, v in bundle.items() if not k.startswith("_")}, cfg.mask_contacts
+                )
                 asked_ai = True
-                draft = await ai.draft_report(system, evidence)
+                try:
+                    draft = await ai.draft_report(system, evidence)
+                except Exception:
+                    if cfg.fallback != "template":
+                        raise
+                    # A19 fallback: the report is written from the template instead; the failure is counted
+                    await ai_usage.record_failure("report_draft", company_id=company_id, related_id=rep.id)
                 asked_ai = False
+            if draft is not None:
                 sections, links, ai_flags = parse_ai(draft.data, bundle)
                 cost = ai_usage.record(
                     db, "report_draft", company_id=rep.company_id, model=draft.model,

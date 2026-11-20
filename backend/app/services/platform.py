@@ -222,3 +222,24 @@ async def trial(db: AsyncSession) -> TrialConfig:
 async def set_trial(db: AsyncSession, c: TrialConfig, *, staff_id: uuid.UUID) -> TrialConfig:
     await _put(db, "trial", c.model_dump(), staff_id)
     return c
+
+
+# ---- A19 AI configuration ------------------------------------------------------------------------------
+class AiConfig(BaseModel):
+    """Which models are used and the limits around them. The API key itself stays on the server (Render)."""
+
+    text_model: str = Field(default_factory=lambda: get_settings().openai_text_model)
+    transcribe_model: str = Field(default_factory=lambda: get_settings().openai_transcribe_model)
+    fallback: Literal["template", "error"] = "error"  # when the AI fails while writing a report
+    monthly_budget_usd: float = Field(default_factory=lambda: get_settings().ai_monthly_budget_usd, ge=0)
+    max_tokens_report: int = Field(3000, ge=500, le=16000)
+    mask_contacts: bool = True  # phone numbers and emails in notes are hidden before sending
+
+
+async def ai_config(db: AsyncSession) -> AiConfig:
+    return AiConfig(**await _get(db, "ai_config"))
+
+
+async def set_ai_config(db: AsyncSession, c: AiConfig, *, staff_id: uuid.UUID) -> AiConfig:
+    await _put(db, "ai_config", c.model_dump(), staff_id)
+    return c

@@ -1,3 +1,5 @@
+from zoneinfo import ZoneInfo
+
 from sqlalchemy import update
 
 from app.core.db import SessionLocal
@@ -175,9 +177,11 @@ async def test_team_screen_shows_today_and_waiting_invites(client):
             headers=auth(owner),
         )
     ).json()
-    from datetime import UTC, datetime, timedelta
+    from datetime import datetime
 
-    soon = (datetime.now(UTC) + timedelta(minutes=5)).isoformat()
+    # a time today in the company's time zone (India), whatever the hour the tests run
+    noon = datetime.now(ZoneInfo("Asia/Kolkata")).replace(hour=12, minute=0, second=0, microsecond=0)
+    soon = noon.isoformat()
     j = (
         await client.post(
             "/api/v1/jobs",

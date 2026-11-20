@@ -158,3 +158,8 @@ class PromptVersion(IdMixin, TimestampMixin, Base):
         str_enum("draft", "live", "retired", name="prompt_status"), default="draft"
     )
     live: Mapped[bool] = mapped_column(Boolean, default=False, server_default=sql("false"))
+    note: Mapped[str | None] = mapped_column(String(200))  # what changed, from the editor (A21)
+    # staff ids, kept without a foreign key: prompts are seed data and must outlive staff accounts
+    edited_by: Mapped[uuid.UUID | None] = mapped_column()
+    published_by: Mapped[uuid.UUID | None] = mapped_column()
+    published_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))

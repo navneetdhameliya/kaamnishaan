@@ -8,7 +8,10 @@ import {
   Home,
   Inbox,
   KeyRound,
+  Bot,
   CreditCard,
+  Factory,
+  FileCode,
   Images,
   Repeat,
   Tags,
@@ -61,6 +64,13 @@ export const NAV: { section: string; items: NavItem[] }[] = [
       { key: 'reports', path: '/reports', icon: FileText, ready: true },
     ] },
   {
+    section: 'ai',
+    items: [
+      { key: 'ai_config', path: '/ai-config', icon: Bot, ready: true },
+      { key: 'prompts', path: '/prompts', icon: FileCode, ready: true },
+    ],
+  },
+  {
     section: 'revenue',
     items: [
       { key: 'subscriptions', path: '/subscriptions', icon: Repeat, ready: true },
@@ -68,7 +78,13 @@ export const NAV: { section: string; items: NavItem[] }[] = [
       { key: 'payments', path: '/payments', icon: CreditCard, ready: true },
     ],
   },
-  { section: 'content', items: [{ key: 'checklists', path: '/checklist-templates', icon: ListChecks, ready: true }] },
+  {
+    section: 'content',
+    items: [
+      { key: 'checklists', path: '/checklist-templates', icon: ListChecks, ready: true },
+      { key: 'industries', path: '/industries', icon: Factory, ready: true },
+    ],
+  },
   {
     section: 'system',
     items: [

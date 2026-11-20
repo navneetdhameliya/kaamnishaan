@@ -699,3 +699,61 @@ export interface AdminPaymentsOut {
   provider: string | null;
   items: unknown[];
 }
+
+/** A19 AI configuration, A21 Prompts, A22 Industries. */
+export interface AiConfig {
+  text_model: string;
+  transcribe_model: string;
+  fallback: 'template' | 'error';
+  monthly_budget_usd: number;
+  max_tokens_report: number;
+  mask_contacts: boolean;
+}
+export interface AdminAiConfigOut {
+  config: AiConfig;
+  text_models: string[];
+  transcribe_models: string[];
+  key_set: boolean;
+  month_spend_usd: number;
+  can_act: boolean;
+}
+export type PromptTask = 'report_draft' | 'assistant' | 'translation';
+export interface AdminPromptVersion {
+  version: number;
+  status: 'draft' | 'live' | 'retired';
+  system_prompt: string;
+  note: string | null;
+  edited_by: string | null;
+  published_by: string | null;
+  published_at: string | null;
+  created_at: string;
+  updated_at: string;
+  reports: number | null;
+  flagged: number | null;
+}
+export interface AdminPrompt {
+  task: PromptTask;
+  live: number | null;
+  draft: number | null;
+  variables: string[];
+  versions: AdminPromptVersion[];
+  stats: { runs: number; failed: number; avg_tokens: number; avg_cost_usd: number };
+}
+export interface AdminPromptsOut {
+  prompts: AdminPrompt[];
+  can_act: boolean;
+}
+export interface AdminIndustry {
+  slug: string;
+  name: Record<string, string>;
+  status: 'live' | 'draft';
+  sort: number;
+  companies: number;
+  checklists: number;
+  default_checklist: string | null;
+  default_questions: number | null;
+}
+export interface AdminIndustriesOut {
+  items: AdminIndustry[];
+  can_act: boolean;
+}
