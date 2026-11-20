@@ -23,6 +23,7 @@ from app.schemas.identity import (
 from app.services import credits, platform
 from app.services.auth import PASSWORD_MIN
 from app.services.credits import plan_out
+from app.services.email import email_on
 from app.services.leads import support
 
 router = APIRouter(tags=["config"])
@@ -73,7 +74,7 @@ async def config(response: Response, locale: Locale = "en", db: AsyncSession = D
             "signups": cfg.signups,
             "ai_drafting": cfg.ai_drafting and get_ai() is not None,
             "ai_assistant": cfg.ai_assistant and get_ai() is not None,
-            "email": get_settings().email_enabled,
+            "email": await email_on(db),
         },
         app_links=AppLinks(android=s.android_app_url, ios=s.ios_app_url),
         support=support(cfg),

@@ -2647,6 +2647,257 @@
         "title": "AdminDayCount",
         "type": "object"
       },
+      "AdminEmailGroups": {
+        "additionalProperties": false,
+        "properties": {
+          "account": {
+            "description": "Email confirmation and password reset",
+            "title": "Account",
+            "type": "boolean"
+          },
+          "reminders": {
+            "description": "Day 2 review reminders",
+            "title": "Reminders",
+            "type": "boolean"
+          },
+          "reports": {
+            "description": "Report and rating links to customers",
+            "title": "Reports",
+            "type": "boolean"
+          },
+          "team": {
+            "description": "Notices to owners and managers",
+            "title": "Team",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "account",
+          "reports",
+          "reminders",
+          "team"
+        ],
+        "title": "AdminEmailGroups",
+        "type": "object"
+      },
+      "AdminEmailIn": {
+        "additionalProperties": false,
+        "properties": {
+          "enabled": {
+            "title": "Enabled",
+            "type": "boolean"
+          },
+          "from_email": {
+            "anyOf": [
+              {
+                "format": "email",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "From Email"
+          },
+          "from_name": {
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "From Name",
+            "type": "string"
+          },
+          "groups": {
+            "$ref": "#/components/schemas/AdminEmailGroups"
+          },
+          "host": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Host"
+          },
+          "password": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "None = keep the saved one; '' = remove it",
+            "title": "Password"
+          },
+          "port": {
+            "default": 587,
+            "maximum": 65535.0,
+            "minimum": 1.0,
+            "title": "Port",
+            "type": "integer"
+          },
+          "security": {
+            "default": "starttls",
+            "enum": [
+              "starttls",
+              "ssl"
+            ],
+            "title": "Security",
+            "type": "string"
+          },
+          "username": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Username"
+          }
+        },
+        "required": [
+          "enabled",
+          "from_name",
+          "groups"
+        ],
+        "title": "AdminEmailIn",
+        "type": "object"
+      },
+      "AdminEmailOut": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "live": {
+            "description": "Emails really go out now",
+            "title": "Live",
+            "type": "boolean"
+          },
+          "settings": {
+            "$ref": "#/components/schemas/AdminEmailSettings"
+          }
+        },
+        "required": [
+          "settings",
+          "live",
+          "can_act"
+        ],
+        "title": "AdminEmailOut",
+        "type": "object"
+      },
+      "AdminEmailSettings": {
+        "properties": {
+          "enabled": {
+            "title": "Enabled",
+            "type": "boolean"
+          },
+          "from_email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "From Email"
+          },
+          "from_name": {
+            "title": "From Name",
+            "type": "string"
+          },
+          "groups": {
+            "$ref": "#/components/schemas/AdminEmailGroups"
+          },
+          "host": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Host"
+          },
+          "password_set": {
+            "title": "Password Set",
+            "type": "boolean"
+          },
+          "port": {
+            "title": "Port",
+            "type": "integer"
+          },
+          "security": {
+            "enum": [
+              "starttls",
+              "ssl"
+            ],
+            "title": "Security",
+            "type": "string"
+          },
+          "username": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Username"
+          }
+        },
+        "required": [
+          "enabled",
+          "from_name",
+          "from_email",
+          "host",
+          "port",
+          "security",
+          "username",
+          "password_set",
+          "groups"
+        ],
+        "title": "AdminEmailSettings",
+        "type": "object"
+      },
+      "AdminEmailTest": {
+        "additionalProperties": false,
+        "properties": {
+          "to": {
+            "format": "email",
+            "title": "To",
+            "type": "string"
+          }
+        },
+        "required": [
+          "to"
+        ],
+        "title": "AdminEmailTest",
+        "type": "object"
+      },
+      "AdminEmailTestOut": {
+        "properties": {
+          "to": {
+            "title": "To",
+            "type": "string"
+          }
+        },
+        "required": [
+          "to"
+        ],
+        "title": "AdminEmailTestOut",
+        "type": "object"
+      },
       "AdminLeadCounts": {
         "properties": {
           "contact": {
@@ -20139,6 +20390,124 @@
           }
         ],
         "summary": "Dashboard",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/email-settings": {
+      "get": {
+        "description": "The password is never sent back; `password_set` says whether one is saved.",
+        "operationId": "email_settings_api_v1_admin_email_settings_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminEmailOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Email Settings",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "operationId": "save_email_settings_api_v1_admin_email_settings_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminEmailIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminEmailOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Save Email Settings",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/email-settings/test": {
+      "post": {
+        "description": "Sends a test with the saved settings. 409 email_not_set, or 502 smtp_failed with the reason.",
+        "operationId": "test_email_settings_api_v1_admin_email_settings_test_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminEmailTest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminEmailTestOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Test Email Settings",
         "tags": [
           "admin"
         ]

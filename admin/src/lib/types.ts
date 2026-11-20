@@ -462,3 +462,11 @@ export interface PlatformOut {
   countries: { value: string; label: string }[];
   can_act: boolean;
 }
+
+// ---- A33 Email settings ---------------------------------------------------------------------------
+export type EmailGroups = { account: boolean; reports: boolean; reminders: boolean; team: boolean };
+export interface EmailSettingsOut {
+  settings: { enabled: boolean; from_name: string; from_email: string | null; host: string | null; port: number; security: 'starttls' | 'ssl'; username: string | null; password_set: boolean; groups: EmailGroups };
+  live: boolean;
+  can_act: boolean;
+}

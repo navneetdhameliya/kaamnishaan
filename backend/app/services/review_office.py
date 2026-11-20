@@ -375,7 +375,7 @@ async def send_link(
     done, broke = [], False
     for ch in channels:
         to = contact.email if ch == "email" else contact.phone
-        if not to or (ch == "email" and not sharing.email_on()):
+        if not to or (ch == "email" and not await sharing.email_on(db, "reminders")):
             continue
         if not await credits.can_spend(db, company, ch):
             broke = True  # SMS and WhatsApp need credits; email is free

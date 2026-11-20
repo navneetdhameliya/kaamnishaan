@@ -55,7 +55,7 @@ export const NAV: { section: string; items: NavItem[] }[] = [
     items: [
       { key: 'audit', path: '/audit-logs', icon: ScrollText, ready: true },
       { key: 'settings', path: '/settings', icon: Globe, ready: true },
-      { key: 'email', path: '/email-settings', icon: Bell },
+      { key: 'email', path: '/email-settings', icon: Bell, ready: true },
     ],
   },
 ];

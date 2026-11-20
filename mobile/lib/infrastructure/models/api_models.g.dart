@@ -1875,6 +1875,218 @@ class AdminDayCountModel {
       };
 }
 
+AdminEmailGroupsModel adminEmailGroupsModelFromJson(String str) => AdminEmailGroupsModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminEmailGroupsModelToJson(AdminEmailGroupsModel data) => json.encode(data.toJson());
+
+class AdminEmailGroupsModel {
+  /// Email confirmation and password reset
+  final bool account;
+  /// Day 2 review reminders
+  final bool reminders;
+  /// Report and rating links to customers
+  final bool reports;
+  /// Notices to owners and managers
+  final bool team;
+
+  const AdminEmailGroupsModel({
+    required this.account,
+    required this.reminders,
+    required this.reports,
+    required this.team,
+  });
+
+  factory AdminEmailGroupsModel.fromJson(Map<String, dynamic> json) => AdminEmailGroupsModel(
+        account: json['account'] as bool,
+        reminders: json['reminders'] as bool,
+        reports: json['reports'] as bool,
+        team: json['team'] as bool,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'account': account,
+        'reminders': reminders,
+        'reports': reports,
+        'team': team,
+      };
+}
+
+AdminEmailInModel adminEmailInModelFromJson(String str) => AdminEmailInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminEmailInModelToJson(AdminEmailInModel data) => json.encode(data.toJson());
+
+class AdminEmailInModel {
+  final bool enabled;
+  final String? fromEmail;
+  final String fromName;
+  final AdminEmailGroupsModel groups;
+  final String? host;
+  /// None = keep the saved one; '' = remove it
+  final String? password;
+  final int? port;
+  /// One of: starttls, ssl
+  final String? security;
+  final String? username;
+
+  const AdminEmailInModel({
+    required this.enabled,
+    this.fromEmail,
+    required this.fromName,
+    required this.groups,
+    this.host,
+    this.password,
+    this.port,
+    this.security,
+    this.username,
+  });
+
+  factory AdminEmailInModel.fromJson(Map<String, dynamic> json) => AdminEmailInModel(
+        enabled: json['enabled'] as bool,
+        fromEmail: json['from_email'] as String?,
+        fromName: json['from_name'] as String,
+        groups: AdminEmailGroupsModel.fromJson(json['groups'] as Map<String, dynamic>),
+        host: json['host'] as String?,
+        password: json['password'] as String?,
+        port: json['port'] == null ? null : (json['port'] as num).toInt(),
+        security: json['security'] as String?,
+        username: json['username'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'enabled': enabled,
+        'from_email': fromEmail,
+        'from_name': fromName,
+        'groups': groups.toJson(),
+        'host': host,
+        'password': password,
+        'port': port,
+        'security': security,
+        'username': username,
+      };
+}
+
+AdminEmailOutModel adminEmailOutModelFromJson(String str) => AdminEmailOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminEmailOutModelToJson(AdminEmailOutModel data) => json.encode(data.toJson());
+
+class AdminEmailOutModel {
+  final bool canAct;
+  /// Emails really go out now
+  final bool live;
+  final AdminEmailSettingsModel settings;
+
+  const AdminEmailOutModel({
+    required this.canAct,
+    required this.live,
+    required this.settings,
+  });
+
+  factory AdminEmailOutModel.fromJson(Map<String, dynamic> json) => AdminEmailOutModel(
+        canAct: json['can_act'] as bool,
+        live: json['live'] as bool,
+        settings: AdminEmailSettingsModel.fromJson(json['settings'] as Map<String, dynamic>),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'live': live,
+        'settings': settings.toJson(),
+      };
+}
+
+AdminEmailSettingsModel adminEmailSettingsModelFromJson(String str) => AdminEmailSettingsModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminEmailSettingsModelToJson(AdminEmailSettingsModel data) => json.encode(data.toJson());
+
+class AdminEmailSettingsModel {
+  final bool enabled;
+  final String? fromEmail;
+  final String fromName;
+  final AdminEmailGroupsModel groups;
+  final String? host;
+  final bool passwordSet;
+  final int port;
+  /// One of: starttls, ssl
+  final String security;
+  final String? username;
+
+  const AdminEmailSettingsModel({
+    required this.enabled,
+    this.fromEmail,
+    required this.fromName,
+    required this.groups,
+    this.host,
+    required this.passwordSet,
+    required this.port,
+    required this.security,
+    this.username,
+  });
+
+  factory AdminEmailSettingsModel.fromJson(Map<String, dynamic> json) => AdminEmailSettingsModel(
+        enabled: json['enabled'] as bool,
+        fromEmail: json['from_email'] as String?,
+        fromName: json['from_name'] as String,
+        groups: AdminEmailGroupsModel.fromJson(json['groups'] as Map<String, dynamic>),
+        host: json['host'] as String?,
+        passwordSet: json['password_set'] as bool,
+        port: (json['port'] as num).toInt(),
+        security: json['security'] as String,
+        username: json['username'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'enabled': enabled,
+        'from_email': fromEmail,
+        'from_name': fromName,
+        'groups': groups.toJson(),
+        'host': host,
+        'password_set': passwordSet,
+        'port': port,
+        'security': security,
+        'username': username,
+      };
+}
+
+AdminEmailTestModel adminEmailTestModelFromJson(String str) => AdminEmailTestModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminEmailTestModelToJson(AdminEmailTestModel data) => json.encode(data.toJson());
+
+class AdminEmailTestModel {
+  final String to;
+
+  const AdminEmailTestModel({
+    required this.to,
+  });
+
+  factory AdminEmailTestModel.fromJson(Map<String, dynamic> json) => AdminEmailTestModel(
+        to: json['to'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'to': to,
+      };
+}
+
+AdminEmailTestOutModel adminEmailTestOutModelFromJson(String str) => AdminEmailTestOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminEmailTestOutModelToJson(AdminEmailTestOutModel data) => json.encode(data.toJson());
+
+class AdminEmailTestOutModel {
+  final String to;
+
+  const AdminEmailTestOutModel({
+    required this.to,
+  });
+
+  factory AdminEmailTestOutModel.fromJson(Map<String, dynamic> json) => AdminEmailTestOutModel(
+        to: json['to'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'to': to,
+      };
+}
+
 AdminLeadCountsModel adminLeadCountsModelFromJson(String str) => AdminLeadCountsModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminLeadCountsModelToJson(AdminLeadCountsModel data) => json.encode(data.toJson());

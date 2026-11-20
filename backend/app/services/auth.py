@@ -33,6 +33,7 @@ from app.models import AuthSession, Company, LoginAttempt, Membership, OtpChalle
 from app.providers.messaging import send_email, send_sms
 from app.schemas.identity import SessionOut
 from app.services import audit, platform, team
+from app.services import email as email_svc
 from app.services.views import active_memberships, choices, me_out
 
 OTP_TTL = timedelta(minutes=10)
@@ -220,12 +221,8 @@ async def register_owner(
     return await start_session(db, user)
 
 
-def _email_off() -> bool:
-    return not get_settings().email_enabled
-
-
 async def _send_verification(db: AsyncSession, user: User) -> None:
-    if _email_off():
+    if not await email_svc.email_on(db, "account"):
         # no email service yet: nothing can be confirmed, so it counts as confirmed (D-96)
         user.email_verified_at = user.email_verified_at or now()
         return
@@ -277,6 +274,8 @@ async def forgot_password(db: AsyncSession, email: str) -> None:
         return
     if await audit.count_recent(db, "password.reset_sent", user.id, timedelta(hours=1)) >= EMAILS_PER_HOUR:
         return
+    if not await email_svc.email_on(db, "account"):
+        return  # the email couldn't go; the login page tells people to ask support (D-96)
     token = create_link_token(
         "password_reset", str(user.id), RESET_TTL, fingerprint=password_fingerprint(user.password_hash)
     )
