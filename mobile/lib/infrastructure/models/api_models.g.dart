@@ -1781,6 +1781,348 @@ class AdminPlanMixRowModel {
       };
 }
 
+AdminReviewDetailModel adminReviewDetailModelFromJson(String str) => AdminReviewDetailModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReviewDetailModelToJson(AdminReviewDetailModel data) => json.encode(data.toJson());
+
+class AdminReviewDetailModel {
+  /// False for support staff
+  final bool canAct;
+  /// As shown, with phone numbers and emails hidden
+  final String? comment;
+  /// Before contact details were hidden (staff only)
+  final String? commentOriginal;
+  final AdminOptionModel company;
+  final DateTime createdAt;
+  /// One of: personal_data, abuse, spam
+  final String? flagReason;
+  /// The company's manager is following up
+  /// One of: open, resolved
+  final String? followup;
+  final String id;
+  final String jobNumber;
+  final String jobTitle;
+  final DateTime? moderatedAt;
+  final String? moderatedBy;
+  final String? moderationNote;
+  final int rating;
+  final bool replied;
+  final AdminReviewReplyModel? reply;
+  final String? reviewerName;
+  /// One of: link, reply, ai_call
+  final String source;
+  /// One of: published, flagged, hidden
+  final String status;
+  final List<String> tags;
+  final String? technician;
+  final int? technicianRating;
+
+  const AdminReviewDetailModel({
+    required this.canAct,
+    this.comment,
+    this.commentOriginal,
+    required this.company,
+    required this.createdAt,
+    this.flagReason,
+    this.followup,
+    required this.id,
+    required this.jobNumber,
+    required this.jobTitle,
+    this.moderatedAt,
+    this.moderatedBy,
+    this.moderationNote,
+    required this.rating,
+    required this.replied,
+    this.reply,
+    this.reviewerName,
+    required this.source,
+    required this.status,
+    required this.tags,
+    this.technician,
+    this.technicianRating,
+  });
+
+  factory AdminReviewDetailModel.fromJson(Map<String, dynamic> json) => AdminReviewDetailModel(
+        canAct: json['can_act'] as bool,
+        comment: json['comment'] as String?,
+        commentOriginal: json['comment_original'] as String?,
+        company: AdminOptionModel.fromJson(json['company'] as Map<String, dynamic>),
+        createdAt: DateTime.parse(json['created_at'] as String),
+        flagReason: json['flag_reason'] as String?,
+        followup: json['followup'] as String?,
+        id: json['id'] as String,
+        jobNumber: json['job_number'] as String,
+        jobTitle: json['job_title'] as String,
+        moderatedAt: json['moderated_at'] == null ? null : DateTime.parse(json['moderated_at'] as String),
+        moderatedBy: json['moderated_by'] as String?,
+        moderationNote: json['moderation_note'] as String?,
+        rating: (json['rating'] as num).toInt(),
+        replied: json['replied'] as bool,
+        reply: json['reply'] == null ? null : AdminReviewReplyModel.fromJson(json['reply'] as Map<String, dynamic>),
+        reviewerName: json['reviewer_name'] as String?,
+        source: json['source'] as String,
+        status: json['status'] as String,
+        tags: (json['tags'] as List).map((e) => e as String).toList(),
+        technician: json['technician'] as String?,
+        technicianRating: json['technician_rating'] == null ? null : (json['technician_rating'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'comment': comment,
+        'comment_original': commentOriginal,
+        'company': company.toJson(),
+        'created_at': createdAt.toIso8601String(),
+        'flag_reason': flagReason,
+        'followup': followup,
+        'id': id,
+        'job_number': jobNumber,
+        'job_title': jobTitle,
+        'moderated_at': moderatedAt?.toIso8601String(),
+        'moderated_by': moderatedBy,
+        'moderation_note': moderationNote,
+        'rating': rating,
+        'replied': replied,
+        'reply': reply?.toJson(),
+        'reviewer_name': reviewerName,
+        'source': source,
+        'status': status,
+        'tags': tags,
+        'technician': technician,
+        'technician_rating': technicianRating,
+      };
+}
+
+AdminReviewHideModel adminReviewHideModelFromJson(String str) => AdminReviewHideModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReviewHideModelToJson(AdminReviewHideModel data) => json.encode(data.toJson());
+
+class AdminReviewHideModel {
+  final String reason;
+
+  const AdminReviewHideModel({
+    required this.reason,
+  });
+
+  factory AdminReviewHideModel.fromJson(Map<String, dynamic> json) => AdminReviewHideModel(
+        reason: json['reason'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'reason': reason,
+      };
+}
+
+AdminReviewKpisModel adminReviewKpisModelFromJson(String str) => AdminReviewKpisModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReviewKpisModelToJson(AdminReviewKpisModel data) => json.encode(data.toJson());
+
+class AdminReviewKpisModel {
+  /// Last 30 days, all companies (hidden ones left out)
+  final double? averageRating;
+  /// Waiting for KaamNishaan to check, any age
+  final int flagged;
+  /// 2 stars or less
+  final int low30d;
+  final double? lowRate;
+  final int reviews30d;
+  /// 0–1, reviews ÷ reports shared in the last 30 days
+  final double? shareRate;
+
+  const AdminReviewKpisModel({
+    this.averageRating,
+    required this.flagged,
+    required this.low30d,
+    this.lowRate,
+    required this.reviews30d,
+    this.shareRate,
+  });
+
+  factory AdminReviewKpisModel.fromJson(Map<String, dynamic> json) => AdminReviewKpisModel(
+        averageRating: json['average_rating'] == null ? null : (json['average_rating'] as num).toDouble(),
+        flagged: (json['flagged'] as num).toInt(),
+        low30d: (json['low_30d'] as num).toInt(),
+        lowRate: json['low_rate'] == null ? null : (json['low_rate'] as num).toDouble(),
+        reviews30d: (json['reviews_30d'] as num).toInt(),
+        shareRate: json['share_rate'] == null ? null : (json['share_rate'] as num).toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'average_rating': averageRating,
+        'flagged': flagged,
+        'low_30d': low30d,
+        'low_rate': lowRate,
+        'reviews_30d': reviews30d,
+        'share_rate': shareRate,
+      };
+}
+
+AdminReviewListModel adminReviewListModelFromJson(String str) => AdminReviewListModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReviewListModelToJson(AdminReviewListModel data) => json.encode(data.toJson());
+
+class AdminReviewListModel {
+  /// Companies with reviews, for the filter
+  final List<AdminOptionModel> companies;
+  final List<AdminReviewRowModel> items;
+  final AdminReviewKpisModel kpis;
+  final int page;
+  final int pageSize;
+  final int total;
+
+  const AdminReviewListModel({
+    required this.companies,
+    required this.items,
+    required this.kpis,
+    required this.page,
+    required this.pageSize,
+    required this.total,
+  });
+
+  factory AdminReviewListModel.fromJson(Map<String, dynamic> json) => AdminReviewListModel(
+        companies: (json['companies'] as List).map((e) => AdminOptionModel.fromJson(e as Map<String, dynamic>)).toList(),
+        items: (json['items'] as List).map((e) => AdminReviewRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        kpis: AdminReviewKpisModel.fromJson(json['kpis'] as Map<String, dynamic>),
+        page: (json['page'] as num).toInt(),
+        pageSize: (json['page_size'] as num).toInt(),
+        total: (json['total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'companies': companies.map((e) => e.toJson()).toList(),
+        'items': items.map((e) => e.toJson()).toList(),
+        'kpis': kpis.toJson(),
+        'page': page,
+        'page_size': pageSize,
+        'total': total,
+      };
+}
+
+AdminReviewReplyModel adminReviewReplyModelFromJson(String str) => AdminReviewReplyModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReviewReplyModelToJson(AdminReviewReplyModel data) => json.encode(data.toJson());
+
+class AdminReviewReplyModel {
+  final DateTime at;
+  final String? by;
+  final String text;
+
+  const AdminReviewReplyModel({
+    required this.at,
+    this.by,
+    required this.text,
+  });
+
+  factory AdminReviewReplyModel.fromJson(Map<String, dynamic> json) => AdminReviewReplyModel(
+        at: DateTime.parse(json['at'] as String),
+        by: json['by'] as String?,
+        text: json['text'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'at': at.toIso8601String(),
+        'by': by,
+        'text': text,
+      };
+}
+
+AdminReviewRowModel adminReviewRowModelFromJson(String str) => AdminReviewRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReviewRowModelToJson(AdminReviewRowModel data) => json.encode(data.toJson());
+
+class AdminReviewRowModel {
+  /// As shown, with phone numbers and emails hidden
+  final String? comment;
+  final AdminOptionModel company;
+  final DateTime createdAt;
+  /// One of: personal_data, abuse, spam
+  final String? flagReason;
+  /// The company's manager is following up
+  /// One of: open, resolved
+  final String? followup;
+  final String id;
+  final String jobTitle;
+  final int rating;
+  final bool replied;
+  final String? reviewerName;
+  /// One of: published, flagged, hidden
+  final String status;
+  final String? technician;
+
+  const AdminReviewRowModel({
+    this.comment,
+    required this.company,
+    required this.createdAt,
+    this.flagReason,
+    this.followup,
+    required this.id,
+    required this.jobTitle,
+    required this.rating,
+    required this.replied,
+    this.reviewerName,
+    required this.status,
+    this.technician,
+  });
+
+  factory AdminReviewRowModel.fromJson(Map<String, dynamic> json) => AdminReviewRowModel(
+        comment: json['comment'] as String?,
+        company: AdminOptionModel.fromJson(json['company'] as Map<String, dynamic>),
+        createdAt: DateTime.parse(json['created_at'] as String),
+        flagReason: json['flag_reason'] as String?,
+        followup: json['followup'] as String?,
+        id: json['id'] as String,
+        jobTitle: json['job_title'] as String,
+        rating: (json['rating'] as num).toInt(),
+        replied: json['replied'] as bool,
+        reviewerName: json['reviewer_name'] as String?,
+        status: json['status'] as String,
+        technician: json['technician'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'comment': comment,
+        'company': company.toJson(),
+        'created_at': createdAt.toIso8601String(),
+        'flag_reason': flagReason,
+        'followup': followup,
+        'id': id,
+        'job_title': jobTitle,
+        'rating': rating,
+        'replied': replied,
+        'reviewer_name': reviewerName,
+        'status': status,
+        'technician': technician,
+      };
+}
+
+AdminReviewRulesModel adminReviewRulesModelFromJson(String str) => AdminReviewRulesModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReviewRulesModelToJson(AdminReviewRulesModel data) => json.encode(data.toJson());
+
+class AdminReviewRulesModel {
+  final bool blockRepeats;
+  final bool flagAbuse;
+  final bool hideContact;
+
+  const AdminReviewRulesModel({
+    required this.blockRepeats,
+    required this.flagAbuse,
+    required this.hideContact,
+  });
+
+  factory AdminReviewRulesModel.fromJson(Map<String, dynamic> json) => AdminReviewRulesModel(
+        blockRepeats: json['block_repeats'] as bool,
+        flagAbuse: json['flag_abuse'] as bool,
+        hideContact: json['hide_contact'] as bool,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'block_repeats': blockRepeats,
+        'flag_abuse': flagAbuse,
+        'hide_contact': hideContact,
+      };
+}
+
 AdminStatModel adminStatModelFromJson(String str) => AdminStatModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminStatModelToJson(AdminStatModel data) => json.encode(data.toJson());

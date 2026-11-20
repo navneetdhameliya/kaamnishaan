@@ -158,7 +158,7 @@ async def reviews_page(db: AsyncSession, p: Principal, filter_: str) -> ReviewsP
 async def _review(db: AsyncSession, p: Principal, review_id: uuid.UUID) -> Review:
     _office(p)
     r = await db.get(Review, review_id)
-    if not r or r.company_id != p.company_id:
+    if not r or r.company_id != p.company_id or r.status != "published":
         raise NotFound("not_found", "Review not found.")
     return r
 

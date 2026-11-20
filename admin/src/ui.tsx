@@ -269,3 +269,22 @@ export function ReasonDialog({ t, title, body, confirm, danger, onClose, onConfi
     </div>
   );
 }
+
+/** An on/off switch (Figma "Toggle"). The label sits on its left and the whole row can be clicked. */
+export function Switch({ label, checked, disabled, onChange }: { label: string; checked: boolean; disabled?: boolean; onChange: (on: boolean) => void }) {
+  return (
+    <label className={cx('flex min-h-[44px] items-center justify-between gap-16', disabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer')}>
+      <span className="text-latin-label-sm font-semibold">{label}</span>
+      <button
+        type="button"
+        role="switch"
+        aria-checked={checked}
+        disabled={disabled}
+        onClick={() => onChange(!checked)}
+        className={cx('relative inline-flex h-[24px] w-[44px] shrink-0 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring', checked ? 'bg-espresso-950' : 'bg-taupe-400')}
+      >
+        <span aria-hidden className={cx('inline-block h-[18px] w-[18px] rounded-full bg-cream-50 shadow transition-transform', checked ? 'translate-x-[23px]' : 'translate-x-[3px]')} />
+      </button>
+    </label>
+  );
+}

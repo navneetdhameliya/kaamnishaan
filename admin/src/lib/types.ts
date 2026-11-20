@@ -325,3 +325,46 @@ export interface AiUsageOut {
   others_count: number;
   models: { task: AiTask; model: string; calls: number; avg_cost_usd: number | null; per_minute: boolean; error_rate: number | null }[];
 }
+
+// ---- A37 Reviews and ratings ----------------------------------------------------------------------
+export type ReviewState = 'published' | 'flagged' | 'hidden';
+export type FlagReason = 'personal_data' | 'abuse' | 'spam';
+export interface AdminReviewRow {
+  id: string;
+  comment: string | null;
+  reviewer_name: string | null;
+  job_title: string;
+  company: { value: string; label: string };
+  technician: string | null;
+  rating: number;
+  status: ReviewState;
+  flag_reason: FlagReason | null;
+  followup: 'open' | 'resolved' | null;
+  replied: boolean;
+  created_at: string;
+}
+export interface AdminReviewList {
+  items: AdminReviewRow[];
+  total: number;
+  page: number;
+  page_size: number;
+  kpis: { average_rating: number | null; reviews_30d: number; share_rate: number | null; low_30d: number; low_rate: number | null; flagged: number };
+  companies: { value: string; label: string }[];
+}
+export interface AdminReviewDetail extends AdminReviewRow {
+  comment_original: string | null;
+  technician_rating: number | null;
+  tags: string[];
+  source: 'link' | 'reply' | 'ai_call';
+  job_number: string;
+  reply: { text: string; by: string | null; at: string } | null;
+  moderated_by: string | null;
+  moderated_at: string | null;
+  moderation_note: string | null;
+  can_act: boolean;
+}
+export interface ReviewRules {
+  hide_contact: boolean;
+  flag_abuse: boolean;
+  block_repeats: boolean;
+}

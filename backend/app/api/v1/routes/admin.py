@@ -29,6 +29,13 @@ from app.schemas.admin_companies import (
     AdminOwnerInvite,
 )
 from app.schemas.admin_leads import AdminLeadDetail, AdminLeadList, AdminLeadUpdate
+from app.schemas.admin_reviews import (
+    AdminReviewDetail,
+    AdminReviewHide,
+    AdminReviewList,
+    AdminReviewRules,
+    ReviewStatusFilter,
+)
 from app.schemas.admin_users import AdminUserAction, AdminUserDetail, AdminUserList
 from app.schemas.checklists import QuestionIn, QuestionPatch
 from app.schemas.identity import Locale
@@ -49,6 +56,7 @@ from app.services import (
     admin_companies,
     admin_dashboard,
     admin_leads,
+    admin_reviews,
     admin_users,
     audit,
     staff,
@@ -598,3 +606,105 @@ async def translate_checklist(
         for qid in ids:
             await enqueue("translate_checklist_question", question_id=str(qid))
     return AdminTranslateOut(queued=len(ids) if ai else 0, ai_available=ai)
+
+
+# ---- A37 Reviews and ratings ------------------------------------------------------------------------
+RatingFilter = Literal["1", "2", "3", "4", "5", "low"]
+
+
+def _can_moderate(me: Staff) -> None:
+    if me.staff.role not in ("super_admin", "admin"):
+        raise Forbidden("forbidden", "Support staff can look but not change reviews.")
+
+
+@router.get("/reviews", response_model=AdminReviewList)
+async def reviews(
+    q: str | None = Query(None, max_length=120),
+    rating: RatingFilter | None = None,
+    status: ReviewStatusFilter | None = None,
+    company: uuid.UUID | None = None,
+    page: int = Query(1, ge=1, le=10_000),
+    page_size: int = Query(25, ge=5, le=100),
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminReviewList:
+    """Every company's reviews; reviews held by the review rules come first, then newest first."""
+    return await admin_reviews.reviews(
+        db, q=q, rating=rating, status=status, company_id=company, page=page, page_size=page_size
+    )
+
+
+@router.get("/reviews.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
+async def reviews_csv(
+    q: str | None = Query(None, max_length=120),
+    rating: RatingFilter | None = None,
+    status: ReviewStatusFilter | None = None,
+    company: uuid.UUID | None = None,
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> Response:
+    """Every matching review (up to 50,000), for a spreadsheet. Exports are written to the audit log."""
+    filters = {"q": q, "rating": rating, "status": status, "company": str(company) if company else None}
+    body = await admin_reviews.reviews_csv(db, q=q, rating=rating, status=status, company_id=company)
+    await audit.record(db, "staff.export", staff_id=me.staff.id, target_type="reviews",
+                       data={k: v for k, v in filters.items() if v})  # fmt: skip
+    return Response(
+        "".join(body),
+        media_type="text/csv; charset=utf-8",
+        headers={"Content-Disposition": f'attachment; filename="kaamnishaan-reviews-{now():%Y-%m-%d}.csv"',
+                 "Cache-Control": "no-store"},
+    )  # fmt: skip
+
+
+@router.get("/reviews/{review_id}", response_model=AdminReviewDetail)
+async def review(
+    review_id: uuid.UUID, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminReviewDetail:
+    return await admin_reviews.detail(db, review_id, can_act=me.staff.role in ("super_admin", "admin"))
+
+
+@router.post("/reviews/{review_id}/publish", response_model=AdminReviewDetail)
+async def publish_review(
+    review_id: uuid.UUID, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminReviewDetail:
+    """A held review goes to the company, with phone numbers and emails still hidden."""
+    _can_moderate(me)
+    await admin_reviews.publish(db, review_id, staff_id=me.staff.id, ip=client_ip(request))
+    return await admin_reviews.detail(db, review_id, can_act=True)
+
+
+@router.post("/reviews/{review_id}/hide", response_model=AdminReviewDetail)
+async def hide_review(
+    review_id: uuid.UUID, body: AdminReviewHide, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminReviewDetail:  # fmt: skip
+    """Nobody but KaamNishaan staff sees it any more. It is kept and can be put back."""
+    _can_moderate(me)
+    await admin_reviews.hide(db, review_id, body.reason, staff_id=me.staff.id, ip=client_ip(request))
+    return await admin_reviews.detail(db, review_id, can_act=True)
+
+
+@router.post("/reviews/{review_id}/restore", response_model=AdminReviewDetail)
+async def restore_review(
+    review_id: uuid.UUID, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminReviewDetail:
+    _can_moderate(me)
+    await admin_reviews.restore(db, review_id, staff_id=me.staff.id, ip=client_ip(request))
+    return await admin_reviews.detail(db, review_id, can_act=True)
+
+
+@router.get("/review-rules", response_model=AdminReviewRules)
+async def review_rules(_: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)) -> AdminReviewRules:
+    return await admin_reviews.rules(db)
+
+
+@router.put("/review-rules", response_model=AdminReviewRules)
+async def set_review_rules(
+    body: AdminReviewRules,
+    request: Request,
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminReviewRules:
+    """Checks run on every new review from now on; reviews already in are not checked again."""
+    _can_moderate(me)
+    return await admin_reviews.set_rules(db, body, staff_id=me.staff.id, ip=client_ip(request))
