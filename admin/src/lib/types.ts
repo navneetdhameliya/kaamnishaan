@@ -549,3 +549,39 @@ export interface AdminJobDetail {
   report: { number: string; status: string; submitted_at: string | null; approved_at: string | null; shared_at: string | null; acknowledged_at: string | null; change_requests: number; open_count: number } | null;
   timeline: AdminTimelineItem[];
 }
+
+/** A13 Evidence review (GET /admin/evidence). */
+export type PhotoCheck = 'duplicate' | 'no_gps' | 'far' | 'early';
+export type PhotoStage = 'before' | 'during' | 'after';
+export interface AdminPhoto {
+  id: string;
+  thumb_url: string | null;
+  stage: PhotoStage;
+  job: { id: string; number: string; title: string; customer: string };
+  company: Option;
+  taken_at: string;
+  gps: boolean;
+  locked: boolean;
+  checks: PhotoCheck[];
+  staff_flag: { note: string; by: string | null; at: string } | null;
+}
+export interface AdminPhotoList {
+  items: AdminPhoto[];
+  total: number;
+  page: number;
+  page_size: number;
+  needs_look: number;
+  companies: Option[];
+  can_act: boolean;
+}
+export interface AdminPhotoDetail extends AdminPhoto {
+  image_url: string;
+  taken_by: string | null;
+  distance_m: number | null;
+  width: number | null;
+  height: number | null;
+  size: number;
+  fingerprint: string | null;
+  job_created_at: string;
+  twins: { id: string; job: AdminPhoto['job']; company: Option; taken_at: string }[];
+}

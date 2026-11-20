@@ -14,6 +14,7 @@ import { EmailSettings } from './pages/EmailSettings';
 import { Roles } from './pages/Roles';
 import { ExportJobs, Jobs } from './pages/Jobs';
 import { JobDetail } from './pages/JobDetail';
+import { Evidence } from './pages/Evidence';
 import { CompanyForm } from './pages/CompanyForm';
 import { Dashboard, RangeSelect, RANGES, type Range } from './pages/Dashboard';
 import { AiCalls } from './pages/AiCalls';
@@ -80,6 +81,7 @@ export default function App() {
   else if (nav.key === 'ai_usage') page = <AiUsage t={t} lang={lang} days={days} />;
   else if (nav.key === 'ai_calls') page = <AiCalls key="ai-calls" t={t} lang={lang} />;
   else if (nav.key === 'jobs') page = sub ? <JobDetail key={sub} t={t} lang={lang} id={sub} onName={onName} /> : <Jobs key="jobs" t={t} lang={lang} />;
+  else if (nav.key === 'evidence') page = <Evidence key="evidence" t={t} lang={lang} />;
   else if (nav.key === 'roles') page = <Roles key="roles" t={t} lang={lang} />;
   else if (nav.key === 'email') page = <EmailSettings key="email" t={t} />;
   else if (nav.key === 'settings') page = <PlatformSettings key="settings" t={t} />;

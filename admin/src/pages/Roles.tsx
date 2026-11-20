@@ -8,7 +8,7 @@ import { cx, ErrorBanner, Initials, inputCls, PageActions, Spinner } from '../ui
 
 const ROLES: StaffRole[] = ['super_admin', 'admin', 'support'];
 const pill = 'inline-flex whitespace-nowrap rounded-full px-[10px] py-[3px] text-[13px] font-semibold';
-const ghostBtn = 'kn-btn inline-flex h-[36px] items-center gap-6 rounded-lg border border-border-default px-12 text-[13px] font-semibold hover:border-mocha-500 disabled:opacity-50';
+const ghostBtn = 'kn-btn inline-flex h-[36px] items-center gap-8 rounded-lg border border-border-default px-12 text-[13px] font-semibold hover:border-mocha-500 disabled:opacity-50';
 
 /** A tick, a dash, or a short "only if…" note. */
 function Cell({ t, cell }: { t: T; cell: RoleRow['cells'][string] }) {

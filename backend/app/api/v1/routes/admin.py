@@ -39,6 +39,7 @@ from app.schemas.admin_companies import (
 )
 from app.schemas.admin_credits import AdminCreditAdjust, AdminCreditRulesIn, AdminCreditsOut
 from app.schemas.admin_email import AdminEmailIn, AdminEmailOut, AdminEmailTest, AdminEmailTestOut
+from app.schemas.admin_evidence import AdminPhotoDetail, AdminPhotoFlagIn, AdminPhotoList, PhotoFilter
 from app.schemas.admin_jobs import AdminJobDetail, AdminJobList, JobStatus
 from app.schemas.admin_leads import AdminLeadDetail, AdminLeadList, AdminLeadUpdate
 from app.schemas.admin_messages import (
@@ -88,6 +89,7 @@ from app.services import (
     admin_credits,
     admin_dashboard,
     admin_email,
+    admin_evidence,
     admin_jobs,
     admin_leads,
     admin_messages,
@@ -1072,3 +1074,50 @@ async def job(
 ) -> AdminJobDetail:
     """One job: details, where it was started, proof so far, the report and the full timeline."""
     return await admin_jobs.detail(db, job_id, locale)
+
+
+# ---- A13 Evidence review -----------------------------------------------------------------------------
+@router.get("/evidence", response_model=AdminPhotoList)
+async def evidence(
+    q: str | None = Query(None, max_length=120),
+    stage: Literal["before", "during", "after"] | None = None,
+    flag: PhotoFilter | None = None,
+    company: uuid.UUID | None = None,
+    job: uuid.UUID | None = None,
+    page: int = Query(1, ge=1, le=10_000),
+    page_size: int = Query(24, ge=8, le=96),
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminPhotoList:
+    """Every company's photos (staff-flagged first, then newest), with the server's own checks."""
+    return await admin_evidence.photos(
+        db, q=q, stage=stage, flag=flag, company_id=company, job_id=job, page=page, page_size=page_size,
+        can_act=me.staff.role in ("super_admin", "admin"),
+    )  # fmt: skip
+
+
+@router.get("/evidence/{photo_id}", response_model=AdminPhotoDetail)
+async def evidence_one(
+    photo_id: uuid.UUID, _: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminPhotoDetail:
+    """One photo, full size, with where and when it was taken and any other photo with the same file."""
+    return await admin_evidence.detail(db, photo_id)
+
+
+@router.put("/evidence/{photo_id}/flag", response_model=AdminPhotoDetail)
+async def flag_evidence(
+    photo_id: uuid.UUID, body: AdminPhotoFlagIn, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminPhotoDetail:  # fmt: skip
+    """Flag a photo for support with a note (only staff see it). Audited."""
+    _can_moderate(me)
+    return await admin_evidence.flag(db, photo_id, body.note, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.delete("/evidence/{photo_id}/flag", response_model=AdminPhotoDetail)
+async def unflag_evidence(
+    photo_id: uuid.UUID, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminPhotoDetail:
+    """Clear the staff flag. Audited."""
+    _can_moderate(me)
+    return await admin_evidence.flag(db, photo_id, None, staff_id=me.staff.id, ip=client_ip(request))
