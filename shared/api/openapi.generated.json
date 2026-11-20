@@ -3264,6 +3264,159 @@
         "title": "AdminPlanMixRow",
         "type": "object"
       },
+      "AdminPlatformOut": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "countries": {
+            "items": {
+              "$ref": "#/components/schemas/AdminOption"
+            },
+            "title": "Countries",
+            "type": "array"
+          },
+          "server": {
+            "$ref": "#/components/schemas/AdminPlatformServer"
+          },
+          "settings": {
+            "$ref": "#/components/schemas/AdminPlatformSettings"
+          }
+        },
+        "required": [
+          "settings",
+          "server",
+          "countries",
+          "can_act"
+        ],
+        "title": "AdminPlatformOut",
+        "type": "object"
+      },
+      "AdminPlatformServer": {
+        "description": "What the server is set to (Render), used when a field above is empty.",
+        "properties": {
+          "ai_key": {
+            "description": "An OpenAI key is set; without it AI switches have no effect",
+            "title": "Ai Key",
+            "type": "boolean"
+          },
+          "default_country": {
+            "title": "Default Country",
+            "type": "string"
+          },
+          "email_on": {
+            "title": "Email On",
+            "type": "boolean"
+          },
+          "support_email": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Support Email"
+          },
+          "support_whatsapp": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Support Whatsapp"
+          }
+        },
+        "required": [
+          "support_email",
+          "support_whatsapp",
+          "default_country",
+          "ai_key",
+          "email_on"
+        ],
+        "title": "AdminPlatformServer",
+        "type": "object"
+      },
+      "AdminPlatformSettings": {
+        "additionalProperties": false,
+        "properties": {
+          "ai_assistant": {
+            "title": "Ai Assistant",
+            "type": "boolean"
+          },
+          "ai_drafting": {
+            "title": "Ai Drafting",
+            "type": "boolean"
+          },
+          "default_country": {
+            "anyOf": [
+              {
+                "maxLength": 2,
+                "minLength": 2,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Default Country"
+          },
+          "maintenance": {
+            "title": "Maintenance",
+            "type": "boolean"
+          },
+          "max_photo_mb": {
+            "maximum": 25.0,
+            "minimum": 2.0,
+            "title": "Max Photo Mb",
+            "type": "integer"
+          },
+          "signups": {
+            "title": "Signups",
+            "type": "boolean"
+          },
+          "support_email": {
+            "anyOf": [
+              {
+                "format": "email",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Empty = the server setting",
+            "title": "Support Email"
+          },
+          "support_whatsapp": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Empty = the server setting",
+            "title": "Support Whatsapp"
+          }
+        },
+        "required": [
+          "signups",
+          "ai_drafting",
+          "ai_assistant",
+          "maintenance",
+          "max_photo_mb"
+        ],
+        "title": "AdminPlatformSettings",
+        "type": "object"
+      },
       "AdminReviewDetail": {
         "properties": {
           "can_act": {
@@ -20607,6 +20760,77 @@
           }
         ],
         "summary": "Check Message Template",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/platform-settings": {
+      "get": {
+        "operationId": "platform_settings_api_v1_admin_platform_settings_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPlatformOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Platform Settings",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "description": "Only super admins: these switches change things for every company at once.",
+        "operationId": "save_platform_settings_api_v1_admin_platform_settings_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminPlatformSettings"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPlatformOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Save Platform Settings",
         "tags": [
           "admin"
         ]

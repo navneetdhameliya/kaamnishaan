@@ -140,3 +140,36 @@ async def credit_costs(db: AsyncSession) -> CreditCosts:
 async def set_credit_costs(db: AsyncSession, c: CreditCosts, *, staff_id: uuid.UUID) -> CreditCosts:
     await _put(db, "credit_rules", c.model_dump(), staff_id)
     return c
+
+
+# ---- A32 Platform settings -----------------------------------------------------------------------------
+class PlatformConfig(BaseModel):
+    """Switches and values for every company. Empty contact fields fall back to the server settings."""
+
+    support_email: str | None = None
+    support_whatsapp: str | None = None
+    default_country: str | None = None
+    signups: bool = True  # owners can start a company (and its trial) themselves
+    ai_drafting: bool = True  # AI writes report drafts; off = the plain template
+    ai_assistant: bool = True  # the AI assistant in the apps
+    maintenance: bool = False  # blocks new logins and sign-ups; the apps show a notice
+    max_photo_mb: int = 12
+
+
+async def config(db: AsyncSession) -> PlatformConfig:
+    return PlatformConfig(**await _get(db, "platform"))
+
+
+async def set_config(db: AsyncSession, c: PlatformConfig, *, staff_id: uuid.UUID) -> PlatformConfig:
+    await _put(db, "platform", c.model_dump(), staff_id)
+    return c
+
+
+async def check_open(db: AsyncSession) -> None:
+    """Maintenance mode: no new logins or sign-ups (KaamNishaan staff can still use the admin panel)."""
+    if (await config(db)).maintenance:
+        from app.core.errors import AppError
+
+        raise AppError(
+            "maintenance", "KaamNishaan is down for a short update. Please try again soon.", status=503
+        )

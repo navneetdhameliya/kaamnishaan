@@ -444,3 +444,21 @@ export interface CreditsOut {
   page_size: number;
   can_act: boolean;
 }
+
+// ---- A32 Platform settings ------------------------------------------------------------------------
+export interface PlatformSettings {
+  support_email: string | null;
+  support_whatsapp: string | null;
+  default_country: string | null;
+  signups: boolean;
+  ai_drafting: boolean;
+  ai_assistant: boolean;
+  maintenance: boolean;
+  max_photo_mb: number;
+}
+export interface PlatformOut {
+  settings: PlatformSettings;
+  server: { support_email: string | null; support_whatsapp: string | null; default_country: string; ai_key: boolean; email_on: boolean };
+  countries: { value: string; label: string }[];
+  can_act: boolean;
+}

@@ -106,6 +106,7 @@ export interface ConfigOut {
   countries: { code: string; name: string; dial_code: string; flag: string }[];
   default_country: string;
   password_min_length: number;
+  maintenance: boolean;
   features: Record<string, boolean>;
   app_links: { android: string | null; ios: string | null };
   support: SupportOut | null;

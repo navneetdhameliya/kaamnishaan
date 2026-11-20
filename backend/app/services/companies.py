@@ -5,11 +5,11 @@ from datetime import timedelta
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
-from app.core.errors import AppError
+from app.core.errors import AppError, Forbidden
 from app.core.security import now
 from app.models import AuthSession, Company, Industry, Membership, User
 from app.schemas.identity import CompanyCreate, CompanySettings, CompanySettingsUpdate, CompanyUpdate
-from app.services import audit
+from app.services import audit, platform
 from app.services.evidence import take_upload_for
 
 CURRENCY_BY_COUNTRY = {"IN": "INR"}
@@ -24,6 +24,10 @@ async def check_trade(db: AsyncSession, slug: str) -> None:
 async def create_company(
     db: AsyncSession, user: User, session_id, body: CompanyCreate, ip: str | None
 ) -> tuple[Company, Membership]:
+    if not (await platform.config(db)).signups:
+        raise Forbidden(
+            "signups_closed", "New companies can't be started right now. Please contact KaamNishaan support."
+        )
     await check_trade(db, body.trade)
     t = now()
     company = Company(

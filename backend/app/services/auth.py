@@ -32,7 +32,7 @@ from app.core.security import (
 from app.models import AuthSession, Company, LoginAttempt, Membership, OtpChallenge, User
 from app.providers.messaging import send_email, send_sms
 from app.schemas.identity import SessionOut
-from app.services import audit, team
+from app.services import audit, platform, team
 from app.services.views import active_memberships, choices, me_out
 
 OTP_TTL = timedelta(minutes=10)
@@ -60,6 +60,7 @@ def check_password(pw: str) -> None:
 
 # ---- phone codes ----------------------------------------------------------------------
 async def send_otp(db: AsyncSession, raw_phone: str, purpose: str, ip: str | None) -> OtpChallenge:
+    await platform.check_open(db)
     phone = normalize_phone(raw_phone, get_settings().default_country)
     t = now()
     last = (
@@ -162,6 +163,7 @@ async def _lock_state(db: AsyncSession, ident: str) -> tuple[int, object]:
 
 
 async def login_email(db: AsyncSession, email: str, password: str, ip: str | None) -> SessionOut:
+    await platform.check_open(db)
     ident = email.lower()
     fails, locked_until = await _lock_state(db, ident)
     if locked_until:
@@ -193,6 +195,7 @@ async def login_email(db: AsyncSession, email: str, password: str, ip: str | Non
 async def register_owner(
     db: AsyncSession, *, name: str, email: str, password: str, phone: str | None
 ) -> SessionOut:
+    await platform.check_open(db)
     email = email.lower()
     check_password(password)
     if (await db.execute(select(User.id).where(func.lower(User.email) == email))).first():

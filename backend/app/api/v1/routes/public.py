@@ -20,7 +20,7 @@ from app.schemas.identity import (
     PlansOut,
     TradeOut,
 )
-from app.services import credits
+from app.services import credits, platform
 from app.services.auth import PASSWORD_MIN
 from app.services.credits import plan_out
 from app.services.leads import support
@@ -56,26 +56,27 @@ async def config(response: Response, locale: Locale = "en", db: AsyncSession = D
             )
         ).all()
     )
-    response.headers["Cache-Control"] = "public, max-age=300"
+    response.headers["Cache-Control"] = "public, max-age=60"
     s = get_settings()
+    cfg = await platform.config(db)
     return ConfigOut(
         languages=[LanguageOut(code=c, native_name=n) for c, n in LANGUAGES],
         countries=[CountryOut(code=c, name=n, dial_code=d, flag=f) for c, n, d, f in COUNTRIES],
         trades=[
             TradeOut(key=i.slug, name=_t(i.name, locale), checklists=ready.get(i.slug, 0)) for i in trades
         ],
-        default_country=s.default_country,
+        default_country=cfg.default_country or s.default_country,
         password_min_length=PASSWORD_MIN,
         min_app_version="1.0.0",
-        maintenance=False,
+        maintenance=cfg.maintenance,
         features={
-            "signups": True,
-            "ai_drafting": True,
-            "ai_assistant": get_ai() is not None,
+            "signups": cfg.signups,
+            "ai_drafting": cfg.ai_drafting and get_ai() is not None,
+            "ai_assistant": cfg.ai_assistant and get_ai() is not None,
             "email": get_settings().email_enabled,
         },
         app_links=AppLinks(android=s.android_app_url, ios=s.ios_app_url),
-        support=support(),
+        support=support(cfg),
     )
 
 

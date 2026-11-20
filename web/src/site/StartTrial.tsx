@@ -6,7 +6,7 @@ import { api, ApiError } from '../lib/api';
 import { day, type Lang, type T } from '../lib/i18n';
 import type { CompanyOut, ConfigOut, PlansOut, SessionOut } from '../lib/types';
 import { Container } from './parts';
-import { EMAIL_RE, ErrorSummary, Field, PasswordInput, Rule, SelectInput, StoreBadges, TextInput, TrialAside } from './form';
+import { EMAIL_RE, ErrorSummary, Field, PasswordInput, PlatformNotice, Rule, SelectInput, StoreBadges, TextInput, TrialAside } from './form';
 import { rv, Spinner } from './motion';
 import { ROUTES } from './site';
 
@@ -268,6 +268,7 @@ export default function StartTrial({ t, lang, plans, config }: { t: T; lang: Lan
               </p>
             </div>
             <form noValidate onSubmit={(e) => void submit(e)} {...rv('up', 3)} className="flex flex-col gap-20 rounded-xl border border-border-default bg-bg-surface p-24 md:p-32">
+              <PlatformNotice t={t} config={config} signup />
               {count > 0 && (
                 <ErrorSummary>{count === 1 ? t('site.trial.fix_one') : t('site.trial.fix_many', { n: count })}</ErrorSummary>
               )}

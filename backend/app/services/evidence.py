@@ -34,7 +34,7 @@ from app.schemas.evidence import (
 )
 from app.schemas.identity import ListMeta
 from app.schemas.work import PersonRef, ProofCount
-from app.services import audit
+from app.services import audit, platform
 from app.services.jobs import get_job
 
 MB = 1024 * 1024
@@ -64,6 +64,8 @@ CAPTURE_STATUSES = ("in_progress", "changes_requested")
 # ---- uploads ---------------------------------------------------------------------------------
 async def create_upload(db: AsyncSession, p: Principal, body: UploadCreate) -> UploadOut:
     types, max_bytes = UPLOAD_RULES[body.kind]
+    if body.kind == "photo":
+        max_bytes = (await platform.config(db)).max_photo_mb * MB  # A32 "Max photo size"
     ct = body.content_type.lower().split(";")[0].strip()
     if ct not in types:
         raise AppError(

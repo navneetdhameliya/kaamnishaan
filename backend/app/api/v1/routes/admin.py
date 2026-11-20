@@ -48,6 +48,7 @@ from app.schemas.admin_messages import (
     Lang,
     TemplateKey,
 )
+from app.schemas.admin_platform import AdminPlatformOut, AdminPlatformSettings
 from app.schemas.admin_reviews import (
     AdminReviewDetail,
     AdminReviewHide,
@@ -78,6 +79,7 @@ from app.services import (
     admin_dashboard,
     admin_leads,
     admin_messages,
+    admin_platform,
     admin_reviews,
     admin_users,
     ai_calls,
@@ -902,3 +904,24 @@ async def adjust_credits(
     await admin_credits.adjust(db, company_id, body.credits, body.reason, staff_id=me.staff.id,
                                ip=client_ip(request))  # fmt: skip
     return Response(status_code=204)
+
+
+# ---- A32 Platform settings --------------------------------------------------------------------------
+@router.get("/platform-settings", response_model=AdminPlatformOut)
+async def platform_settings(
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminPlatformOut:
+    return await admin_platform.get(db, can_act=me.staff.role == "super_admin")
+
+
+@router.put("/platform-settings", response_model=AdminPlatformOut)
+async def save_platform_settings(
+    body: AdminPlatformSettings,
+    request: Request,
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminPlatformOut:
+    """Only super admins: these switches change things for every company at once."""
+    if me.staff.role != "super_admin":
+        raise Forbidden("forbidden", "Only a super admin can change platform settings.")
+    return await admin_platform.save(db, body, staff_id=me.staff.id, ip=client_ip(request))

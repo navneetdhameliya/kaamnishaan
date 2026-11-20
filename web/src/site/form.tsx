@@ -1,4 +1,4 @@
-import { Check, ChevronDown, CircleAlert, Eye, EyeOff, Smartphone, X } from 'lucide-react';
+import { Check, ChevronDown, CircleAlert, Eye, EyeOff, Smartphone, TriangleAlert, X } from 'lucide-react';
 import { useId, useState, type InputHTMLAttributes, type ReactNode } from 'react';
 
 import { cx } from '../components/ui';
@@ -238,5 +238,18 @@ export function TrialAside({ t, plans, config }: { t: T; plans: PlansOut | null;
         />
       </div>
     </aside>
+  );
+}
+
+/** Shown above the login and sign-up forms when KaamNishaan is in maintenance or new sign-ups are paused
+ *  (admin Platform settings, A32). The server refuses them too; this says so before anyone types. */
+export function PlatformNotice({ t, config, signup }: { t: T; config: ConfigOut | null; signup?: boolean }) {
+  const key = config?.maintenance ? 'site.notice.maintenance' : signup && config?.features.signups === false ? 'site.notice.signups_closed' : null;
+  if (!key) return null;
+  return (
+    <p role="status" className="flex items-start gap-8 rounded-lg bg-status-warning-bg px-16 py-12 text-latin-label-sm font-semibold text-status-warning">
+      <TriangleAlert width={18} height={18} className="mt-[1px] shrink-0" aria-hidden />
+      <span>{t(key, { email: config?.support?.email ?? '' })}</span>
+    </p>
   );
 }

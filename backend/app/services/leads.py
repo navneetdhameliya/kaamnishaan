@@ -33,11 +33,12 @@ def ticket(lead: Lead) -> str:
     return f"KN-{lead.number}"
 
 
-def support() -> SupportOut:
+def support(cfg=None) -> SupportOut:
+    """Support contacts; the admin panel's Platform settings (A32) override the server settings."""
     s = get_settings()
     return SupportOut(
-        email=s.support_email,
-        whatsapp=s.support_whatsapp,
+        email=(cfg and cfg.support_email) or s.support_email,
+        whatsapp=(cfg and cfg.support_whatsapp) or s.support_whatsapp,
         help_url=s.help_url,
         office=s.office,
         open=s.support_open,
