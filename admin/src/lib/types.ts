@@ -1,4 +1,5 @@
 /** API shapes used by the admin panel (from shared/api/openapi.generated.json). */
+import type { Lang } from './i18n';
 export type StaffRole = 'super_admin' | 'admin' | 'support';
 
 export interface StaffOut {
@@ -389,5 +390,34 @@ export interface AiCallsOut {
   total: number;
   page: number;
   page_size: number;
+  can_act: boolean;
+}
+
+// ---- A39 Message templates ------------------------------------------------------------------------
+export type MsgChannel = 'sms' | 'whatsapp' | 'email';
+export type TemplateKey = 'report_review' | 'review_reminder' | 'day5_sms' | 'report_link';
+export interface TemplateText {
+  channel: MsgChannel;
+  language: Lang;
+  text: string | null;
+  subject: string | null;
+  body: string | null;
+  edited: boolean;
+  checked: boolean;
+}
+export interface MessageTemplate {
+  key: TemplateKey;
+  channels: MsgChannel[];
+  placeholders: string[];
+  sample: Record<string, string>;
+  email_only: string[];
+  texts: TemplateText[];
+}
+export interface TemplatesOut {
+  templates: MessageTemplate[];
+  stop: Record<string, string>;
+  sms_live: boolean;
+  whatsapp_live: boolean;
+  email_live: boolean;
   can_act: boolean;
 }

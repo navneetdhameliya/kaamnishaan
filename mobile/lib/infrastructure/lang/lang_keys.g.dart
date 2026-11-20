@@ -6766,4 +6766,126 @@ abstract final class LangKeys {
   static const adminAuAStaffAiCallScriptUpdated = 'admin.au.a.staff.ai_call_script_updated';
   /// Made a test AI call
   static const adminAuAStaffAiCallTest = 'admin.au.a.staff.ai_call_test';
+  /// Day 0 · Report + rating link
+  static const adminMtTReportReview = 'admin.mt.t.report_review';
+  /// Day 2 · Review reminder
+  static const adminMtTReviewReminder = 'admin.mt.t.review_reminder';
+  /// Day 5 · SMS instead of the call
+  static const adminMtTDay5Sms = 'admin.mt.t.day5_sms';
+  /// Report link (no rating)
+  static const adminMtTReportLink = 'admin.mt.t.report_link';
+  /// Sent when a manager approves a report and asks for a rating.
+  static const adminMtWhenReportReview = 'admin.mt.when.report_review';
+  /// Sent on Day 2 when the customer hasn’t rated yet.
+  static const adminMtWhenReviewReminder = 'admin.mt.when.review_reminder';
+  /// Sent on Day 5 instead of the AI call (no voice provider, or after a voicemail).
+  static const adminMtWhenDay5Sms = 'admin.mt.when.day5_sms';
+  /// Sent when a report is shared without asking for a rating, and when a customer asks for a new link.
+  static const adminMtWhenReportLink = 'admin.mt.when.report_link';
+  /// SMS
+  static const adminMtChSms = 'admin.mt.ch.sms';
+  /// WhatsApp
+  static const adminMtChWhatsapp = 'admin.mt.ch.whatsapp';
+  /// Email
+  static const adminMtChEmail = 'admin.mt.ch.email';
+  /// Some languages need a check
+  static const adminMtSomeReview = 'admin.mt.some_review';
+  /// Edits apply to every company from the next message.
+  static const adminMtListNote = 'admin.mt.list_note';
+  /// Checked
+  static const adminMtStChecked = 'admin.mt.st.checked';
+  /// Edited by KaamNishaan
+  static const adminMtStEdited = 'admin.mt.st.edited';
+  /// Needs a native speaker’s check
+  static const adminMtStReview = 'admin.mt.st.review';
+  /// Channel
+  static const adminMtChannel = 'admin.mt.channel';
+  /// Language
+  static const adminMtLanguage = 'admin.mt.language';
+  /// Languages
+  static const adminMtLanguages = 'admin.mt.languages';
+  /// Not published yet
+  static const adminMtUnsaved = 'admin.mt.unsaved';
+  /// In India every SMS must match a template registered on the DLT portal. Register a changed text there first, or the SMS won’t be delivered.
+  static const adminMtDlt = 'admin.mt.dlt';
+  /// WhatsApp texts must be approved by Meta as a template before they can be sent. Submit a changed text for approval first.
+  static const adminMtMeta = 'admin.mt.meta';
+  /// SMS isn’t connected yet: messages are only logged, not delivered.
+  static const adminMtNotLiveSms = 'admin.mt.not_live.sms';
+  /// WhatsApp isn’t connected yet: messages are only logged, not delivered.
+  static const adminMtNotLiveWhatsapp = 'admin.mt.not_live.whatsapp';
+  /// Email isn’t switched on yet: emails are only logged, not delivered.
+  static const adminMtNotLiveEmail = 'admin.mt.not_live.email';
+  /// Subject
+  static const adminMtSubject = 'admin.mt.subject';
+  /// Message
+  static const adminMtMessage = 'admin.mt.message';
+  /// {n} of {max} characters with a real link · 1 SMS · the STOP line is added for you
+  static const adminMtCountOne = 'admin.mt.count_one';
+  /// {n} characters with a real link · {parts} SMS (costs {parts}×) · the STOP line is added for you
+  static const adminMtCount = 'admin.mt.count';
+  /// {n} characters · the STOP line is added for you
+  static const adminMtCountWa = 'admin.mt.count_wa';
+  /// Plain text. Empty lines start a new paragraph.
+  static const adminMtEmailNote = 'admin.mt.email_note';
+  /// Insert at the cursor
+  static const adminMtInsert = 'admin.mt.insert';
+  /// Preview · {company} → {customer}
+  static const adminMtPreview = 'admin.mt.preview';
+  /// {lang} ✓
+  static const adminMtLangOk = 'admin.mt.lang_ok';
+  /// {lang} · review
+  static const adminMtLangReview = 'admin.mt.lang_review';
+  /// Publish
+  static const adminMtPublish = 'admin.mt.publish';
+  /// Published. The next messages use this text.
+  static const adminMtPublished = 'admin.mt.published';
+  /// Fix the message to publish it.
+  static const adminMtFix = 'admin.mt.fix';
+  /// Discard changes
+  static const adminMtDiscard = 'admin.mt.discard';
+  /// Mark as checked
+  static const adminMtMarkChecked = 'admin.mt.mark_checked';
+  /// Marked as checked.
+  static const adminMtCheckedDone = 'admin.mt.checked_done';
+  /// Back to the built-in text
+  static const adminMtReset = 'admin.mt.reset';
+  /// Back to the built-in text.
+  static const adminMtResetDone = 'admin.mt.reset_done';
+  /// Write the message.
+  static const adminMtERequired = 'admin.mt.e.required';
+  /// Too long.
+  static const adminMtETooLong = 'admin.mt.e.too_long';
+  /// Use only the placeholders below.
+  static const adminMtEUnknownPlaceholder = 'admin.mt.e.unknown_placeholder';
+  /// Keep {{link}} so the customer can open it.
+  static const adminMtENeedsLink = 'admin.mt.e.needs_link';
+  /// Leave out the STOP line; it is added for you.
+  static const adminMtEStopAddedAutomatically = 'admin.mt.e.stop_added_automatically';
+  /// Send test
+  static const adminMtTest = 'admin.mt.test';
+  /// Send a test
+  static const adminMtTestTitle = 'admin.mt.test_title';
+  /// The text on screen, filled with sample values, goes to you.
+  static const adminMtTestBody = 'admin.mt.test_body';
+  /// Your phone number
+  static const adminMtTestPhone = 'admin.mt.test_phone';
+  /// Your email
+  static const adminMtTestEmail = 'admin.mt.test_email';
+  /// Send
+  static const adminMtTestGo = 'admin.mt.test_go';
+  /// Test sent to {to}.
+  static const adminMtTestSent = 'admin.mt.test_sent';
+  /// Not really sent to {to}: this channel isn’t connected yet. It was logged on the server.
+  static const adminMtTestLogged = 'admin.mt.test_logged';
+  /// Enter a full phone number or email.
+  static const adminMtTestBadTo = 'admin.mt.test_bad_to';
+  /// Published a message template
+  static const adminAuAStaffTemplateUpdated = 'admin.au.a.staff.template_updated';
+  /// Marked a message template as checked
+  static const adminAuAStaffTemplateChecked = 'admin.au.a.staff.template_checked';
+  /// Reset a message template
+  static const adminAuAStaffTemplateReset = 'admin.au.a.staff.template_reset';
+  /// Message template
+  static const adminAuTMessageTemplate = 'admin.au.t.message_template';
 }

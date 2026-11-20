@@ -37,6 +37,16 @@ from app.schemas.admin_companies import (
     AdminOwnerInvite,
 )
 from app.schemas.admin_leads import AdminLeadDetail, AdminLeadList, AdminLeadUpdate
+from app.schemas.admin_messages import (
+    AdminTemplate,
+    AdminTemplateIn,
+    AdminTemplatesOut,
+    AdminTemplateTest,
+    AdminTemplateTestOut,
+    Channel,
+    Lang,
+    TemplateKey,
+)
 from app.schemas.admin_reviews import (
     AdminReviewDetail,
     AdminReviewHide,
@@ -65,6 +75,7 @@ from app.services import (
     admin_companies,
     admin_dashboard,
     admin_leads,
+    admin_messages,
     admin_reviews,
     admin_users,
     ai_calls,
@@ -774,3 +785,54 @@ async def ai_call_retry(me: Staff = Depends(get_staff), db: AsyncSession = Depen
     """Runs every due call now (after the provider is back), instead of waiting for the scheduler."""
     _can_moderate(me)
     return {"handled": await ai_calls.call_due(db)}
+
+
+# ---- A39 Message templates --------------------------------------------------------------------------
+@router.get("/message-templates", response_model=AdminTemplatesOut)
+async def message_templates(
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminTemplatesOut:
+    """The texts customers get with report and rating links, per channel and language."""
+    return await admin_messages.templates(db, can_act=me.staff.role in ("super_admin", "admin"))
+
+
+@router.put("/message-templates/{template}/{channel}/{language}", response_model=AdminTemplate)
+async def save_message_template(
+    template: TemplateKey, channel: Channel, language: Lang, body: AdminTemplateIn, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminTemplate:  # fmt: skip
+    """Publishes a new text, used from the next message. It counts as checked for that language."""
+    _can_moderate(me)
+    return await admin_messages.save(db, template, channel, language, body, staff_id=me.staff.id,
+                                     ip=client_ip(request))  # fmt: skip
+
+
+@router.post("/message-templates/{template}/{channel}/{language}/check", response_model=AdminTemplate)
+async def check_message_template(
+    template: TemplateKey, channel: Channel, language: Lang, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminTemplate:  # fmt: skip
+    """A person read this language's text and it's fine as it is."""
+    _can_moderate(me)
+    return await admin_messages.mark(db, template, channel, language, reset=False, staff_id=me.staff.id,
+                                     ip=client_ip(request))  # fmt: skip
+
+
+@router.delete("/message-templates/{template}/{channel}/{language}", response_model=AdminTemplate)
+async def reset_message_template(
+    template: TemplateKey, channel: Channel, language: Lang, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminTemplate:  # fmt: skip
+    """Back to the built-in text."""
+    _can_moderate(me)
+    return await admin_messages.mark(db, template, channel, language, reset=True, staff_id=me.staff.id,
+                                     ip=client_ip(request))  # fmt: skip
+
+
+@router.post("/message-templates/test", response_model=AdminTemplateTestOut)
+async def test_message_template(
+    body: AdminTemplateTest, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminTemplateTestOut:
+    """Sends the text (as being edited, or as saved) with sample values to your own phone or email."""
+    _can_moderate(me)
+    return await admin_messages.test(db, body, staff_id=me.staff.id)

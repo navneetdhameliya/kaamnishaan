@@ -49,7 +49,7 @@ from app.schemas.sharing import (
     ShareInfo,
     ShareLinkOut,
 )
-from app.services import audit, notifications
+from app.services import audit, messages, notifications
 from app.services.report_labels import LABELS, fmt_date, label
 from app.services.report_view import customer_view
 from app.services.reports import DONE, get_report, rlabel
@@ -179,24 +179,35 @@ async def current_link(db: AsyncSession, rep: Report) -> ShareLink | None:
     ).scalar_one_or_none()
 
 
-def _texts(view_company: str, rep: Report, job: Job, url: str, name: str | None, expires) -> Preview:
+def _texts(
+    view_company: str, rep: Report, job: Job, url: str, name: str | None, expires,
+    store: dict | None = None, template: str = "report_link",
+) -> Preview:  # fmt: skip
+    """The messages for one send, from the A39 message templates (staff's edits, else the defaults)."""
     lang = rep.language
-    sms = label(lang, "sms", company=view_company, number=rlabel(rep.number), link=url)
-    sms = f"{sms} {label(lang, 'stop')}"
+    store = store or {}
+    values = {
+        "company": view_company, "customer": name or "", "job": job.title,
+        "report_number": rlabel(rep.number), "link": url, "expires": fmt_date(expires, lang),
+    }  # fmt: skip
+    channels = messages.TEMPLATES[template]["channels"]
+    sms = messages.render(store, template, "sms", lang, **values)["text"]
+    wa = (
+        messages.render(store, template, "whatsapp", lang, **values)["text"]
+        if "whatsapp" in channels
+        else sms
+    )
+    email = (
+        messages.render(store, template, "email", lang, **values)
+        if "email" in channels
+        else {"subject": "", "body": sms}
+    )
     return Preview(
         language=lang,
         sms=sms,
-        whatsapp=sms,
-        email_subject=label(lang, "email_subject", number=rlabel(rep.number), company=view_company),
-        email_body=label(
-            lang,
-            "email_body",
-            name=name or "",
-            company=view_company,
-            job=job.title,
-            link=url,
-            expires=fmt_date(expires, lang),
-        ).replace(" ,", ","),
+        whatsapp=wa,
+        email_subject=email["subject"],
+        email_body=email["body"],
     )
 
 
@@ -222,7 +233,8 @@ async def share_info(db: AsyncSession, p: Principal, report_id: uuid.UUID) -> Sh
     if approved:
         url = link_url(link) if link and link_state(link) == "active" else "{link}"
         expires = (link.expires_at if link else now() + timedelta(days=LINK_DAYS)).astimezone()
-        preview = _texts(company.name, rep, job, url, contact.name if contact else None, expires)
+        store = await messages.load(db)
+        preview = _texts(company.name, rep, job, url, contact.name if contact else None, expires, store)
     sent = (
         await db.execute(
             select(Message).where(Message.report_id == rep.id).order_by(Message.created_at.desc())
@@ -424,7 +436,9 @@ async def send(db: AsyncSession, p: Principal, report_id: uuid.UUID, body: SendI
             "contact_missing", "Add the customer's phone or email to send the report.", fields=missing
         )
     link = await _ensure_link(db, rep, channels[0], p.user.id, name, phone, email)
-    texts = _texts(company.name, rep, job, link_url(link), name, link.expires_at.astimezone())
+    texts = _texts(
+        company.name, rep, job, link_url(link), name, link.expires_at.astimezone(), await messages.load(db)
+    )
     msgs = [
         await _deliver(db, rep, link, ch, email if ch == "email" else phone, texts, p.user.id)
         for ch in channels
@@ -624,8 +638,9 @@ async def request_new_link(db: AsyncSession, token: str) -> NewLinkOut:
     if channel and to:
         link.expires_at = t + timedelta(days=LINK_DAYS)
         texts = _texts(
-            company.name, rep, job, link_url(link), link.recipient_name, link.expires_at.astimezone()
-        )
+            company.name, rep, job, link_url(link), link.recipient_name, link.expires_at.astimezone(),
+            await messages.load(db),
+        )  # fmt: skip
         await _deliver(db, rep, link, channel, to, texts, None, template="report_new_link")
         await db.flush()
         return NewLinkOut(sent_to=mask(to), channel=channel, company_notified=False)

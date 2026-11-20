@@ -2478,6 +2478,255 @@ class AdminTeamMemberModel {
       };
 }
 
+AdminTemplateModel adminTemplateModelFromJson(String str) => AdminTemplateModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTemplateModelToJson(AdminTemplateModel data) => json.encode(data.toJson());
+
+class AdminTemplateModel {
+  final List<String> channels;
+  /// Placeholders that only work in emails
+  final List<String> emailOnly;
+  /// One of: report_review, review_reminder, day5_sms, report_link
+  final String key;
+  final List<String> placeholders;
+  /// Values for the preview; the link is as long as a real one
+  final Map<String, dynamic> sample;
+  final List<AdminTemplateTextModel> texts;
+
+  const AdminTemplateModel({
+    required this.channels,
+    required this.emailOnly,
+    required this.key,
+    required this.placeholders,
+    required this.sample,
+    required this.texts,
+  });
+
+  factory AdminTemplateModel.fromJson(Map<String, dynamic> json) => AdminTemplateModel(
+        channels: (json['channels'] as List).map((e) => e as String).toList(),
+        emailOnly: (json['email_only'] as List).map((e) => e as String).toList(),
+        key: json['key'] as String,
+        placeholders: (json['placeholders'] as List).map((e) => e as String).toList(),
+        sample: Map<String, dynamic>.from(json['sample'] as Map),
+        texts: (json['texts'] as List).map((e) => AdminTemplateTextModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'channels': channels,
+        'email_only': emailOnly,
+        'key': key,
+        'placeholders': placeholders,
+        'sample': sample,
+        'texts': texts.map((e) => e.toJson()).toList(),
+      };
+}
+
+AdminTemplateInModel adminTemplateInModelFromJson(String str) => AdminTemplateInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTemplateInModelToJson(AdminTemplateInModel data) => json.encode(data.toJson());
+
+class AdminTemplateInModel {
+  final String? body;
+  final String? subject;
+  final String? text;
+
+  const AdminTemplateInModel({
+    this.body,
+    this.subject,
+    this.text,
+  });
+
+  factory AdminTemplateInModel.fromJson(Map<String, dynamic> json) => AdminTemplateInModel(
+        body: json['body'] as String?,
+        subject: json['subject'] as String?,
+        text: json['text'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'body': body,
+        'subject': subject,
+        'text': text,
+      };
+}
+
+AdminTemplateTestModel adminTemplateTestModelFromJson(String str) => AdminTemplateTestModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTemplateTestModelToJson(AdminTemplateTestModel data) => json.encode(data.toJson());
+
+class AdminTemplateTestModel {
+  final String? body;
+  /// One of: sms, whatsapp, email
+  final String channel;
+  /// One of: en, hi, gu, es, fr
+  final String language;
+  final String? subject;
+  /// One of: report_review, review_reminder, day5_sms, report_link
+  final String template;
+  final String? text;
+  /// A phone number, or an email for email
+  final String to;
+
+  const AdminTemplateTestModel({
+    this.body,
+    required this.channel,
+    required this.language,
+    this.subject,
+    required this.template,
+    this.text,
+    required this.to,
+  });
+
+  factory AdminTemplateTestModel.fromJson(Map<String, dynamic> json) => AdminTemplateTestModel(
+        body: json['body'] as String?,
+        channel: json['channel'] as String,
+        language: json['language'] as String,
+        subject: json['subject'] as String?,
+        template: json['template'] as String,
+        text: json['text'] as String?,
+        to: json['to'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'body': body,
+        'channel': channel,
+        'language': language,
+        'subject': subject,
+        'template': template,
+        'text': text,
+        'to': to,
+      };
+}
+
+AdminTemplateTestOutModel adminTemplateTestOutModelFromJson(String str) => AdminTemplateTestOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTemplateTestOutModelToJson(AdminTemplateTestOutModel data) => json.encode(data.toJson());
+
+class AdminTemplateTestOutModel {
+  final String? body;
+  /// False when the channel isn't connected yet; nothing really went out
+  final bool sent;
+  final String? subject;
+  final String? text;
+  final String to;
+
+  const AdminTemplateTestOutModel({
+    this.body,
+    required this.sent,
+    this.subject,
+    this.text,
+    required this.to,
+  });
+
+  factory AdminTemplateTestOutModel.fromJson(Map<String, dynamic> json) => AdminTemplateTestOutModel(
+        body: json['body'] as String?,
+        sent: json['sent'] as bool,
+        subject: json['subject'] as String?,
+        text: json['text'] as String?,
+        to: json['to'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'body': body,
+        'sent': sent,
+        'subject': subject,
+        'text': text,
+        'to': to,
+      };
+}
+
+AdminTemplateTextModel adminTemplateTextModelFromJson(String str) => AdminTemplateTextModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTemplateTextModelToJson(AdminTemplateTextModel data) => json.encode(data.toJson());
+
+class AdminTemplateTextModel {
+  /// Email
+  final String? body;
+  /// One of: sms, whatsapp, email
+  final String channel;
+  /// Checked by a person; other languages start as 'needs review'
+  final bool checked;
+  /// Changed by KaamNishaan staff (else the built-in text)
+  final bool edited;
+  /// One of: en, hi, gu, es, fr
+  final String language;
+  /// Email
+  final String? subject;
+  /// SMS and WhatsApp, without the STOP line (added on send)
+  final String? text;
+
+  const AdminTemplateTextModel({
+    this.body,
+    required this.channel,
+    required this.checked,
+    required this.edited,
+    required this.language,
+    this.subject,
+    this.text,
+  });
+
+  factory AdminTemplateTextModel.fromJson(Map<String, dynamic> json) => AdminTemplateTextModel(
+        body: json['body'] as String?,
+        channel: json['channel'] as String,
+        checked: json['checked'] as bool,
+        edited: json['edited'] as bool,
+        language: json['language'] as String,
+        subject: json['subject'] as String?,
+        text: json['text'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'body': body,
+        'channel': channel,
+        'checked': checked,
+        'edited': edited,
+        'language': language,
+        'subject': subject,
+        'text': text,
+      };
+}
+
+AdminTemplatesOutModel adminTemplatesOutModelFromJson(String str) => AdminTemplatesOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTemplatesOutModelToJson(AdminTemplatesOutModel data) => json.encode(data.toJson());
+
+class AdminTemplatesOutModel {
+  final bool canAct;
+  final bool emailLive;
+  /// False while SMS is console-only (not really sent)
+  final bool smsLive;
+  /// The STOP line added to SMS and WhatsApp, per language
+  final Map<String, dynamic> stop;
+  final List<AdminTemplateModel> templates;
+  final bool whatsappLive;
+
+  const AdminTemplatesOutModel({
+    required this.canAct,
+    required this.emailLive,
+    required this.smsLive,
+    required this.stop,
+    required this.templates,
+    required this.whatsappLive,
+  });
+
+  factory AdminTemplatesOutModel.fromJson(Map<String, dynamic> json) => AdminTemplatesOutModel(
+        canAct: json['can_act'] as bool,
+        emailLive: json['email_live'] as bool,
+        smsLive: json['sms_live'] as bool,
+        stop: Map<String, dynamic>.from(json['stop'] as Map),
+        templates: (json['templates'] as List).map((e) => AdminTemplateModel.fromJson(e as Map<String, dynamic>)).toList(),
+        whatsappLive: json['whatsapp_live'] as bool,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'email_live': emailLive,
+        'sms_live': smsLive,
+        'stop': stop,
+        'templates': templates.map((e) => e.toJson()).toList(),
+        'whatsapp_live': whatsappLive,
+      };
+}
+
 AdminTestCallModel adminTestCallModelFromJson(String str) => AdminTestCallModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminTestCallModelToJson(AdminTestCallModel data) => json.encode(data.toJson());

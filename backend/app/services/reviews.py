@@ -44,8 +44,7 @@ from app.schemas.reviews import (
     TagCount,
 )
 from app.schemas.work import PersonRef
-from app.services import audit, moderation, platform, sharing
-from app.services.report_labels import label
+from app.services import audit, messages, moderation, platform, sharing
 from app.services.reports import DONE, rlabel
 
 REPEAT_WINDOW = timedelta(hours=24)  # A37: a second review from one phone within a day is held
@@ -269,12 +268,10 @@ async def _send(
         db, rep, channels[0], p.user.id, contact.name, contact.phone, contact.email
     )
     url = f"{sharing.link_url(link)}?rate=1"
-    texts = sharing._texts(company.name, rep, job, url, contact.name, link.expires_at.astimezone())
-    lang = rep.language
-    ask = label(lang, "review_sms", company=company.name, number=rlabel(rep.number), link=url)
-    texts.sms = f"{ask} {label(lang, 'stop')}"
-    texts.whatsapp = texts.sms
-    texts.email_body = f"{texts.email_body}\n\n{label(lang, 'review_email')}"
+    texts = sharing._texts(
+        company.name, rep, job, url, contact.name, link.expires_at.astimezone(),
+        await messages.load(db), "report_review",
+    )  # fmt: skip
     sent = []
     for ch in channels:
         to = contact.email if ch == "email" else contact.phone

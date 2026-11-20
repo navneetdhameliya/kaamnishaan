@@ -3561,6 +3561,383 @@
         "title": "AdminTeamMember",
         "type": "object"
       },
+      "AdminTemplate": {
+        "properties": {
+          "channels": {
+            "items": {
+              "enum": [
+                "sms",
+                "whatsapp",
+                "email"
+              ],
+              "type": "string"
+            },
+            "title": "Channels",
+            "type": "array"
+          },
+          "email_only": {
+            "description": "Placeholders that only work in emails",
+            "items": {
+              "type": "string"
+            },
+            "title": "Email Only",
+            "type": "array"
+          },
+          "key": {
+            "enum": [
+              "report_review",
+              "review_reminder",
+              "day5_sms",
+              "report_link"
+            ],
+            "title": "Key",
+            "type": "string"
+          },
+          "placeholders": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Placeholders",
+            "type": "array"
+          },
+          "sample": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "Values for the preview; the link is as long as a real one",
+            "title": "Sample",
+            "type": "object"
+          },
+          "texts": {
+            "items": {
+              "$ref": "#/components/schemas/AdminTemplateText"
+            },
+            "title": "Texts",
+            "type": "array"
+          }
+        },
+        "required": [
+          "key",
+          "channels",
+          "placeholders",
+          "sample",
+          "email_only",
+          "texts"
+        ],
+        "title": "AdminTemplate",
+        "type": "object"
+      },
+      "AdminTemplateIn": {
+        "additionalProperties": false,
+        "properties": {
+          "body": {
+            "anyOf": [
+              {
+                "maxLength": 5000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body"
+          },
+          "subject": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subject"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          }
+        },
+        "title": "AdminTemplateIn",
+        "type": "object"
+      },
+      "AdminTemplateTest": {
+        "additionalProperties": false,
+        "properties": {
+          "body": {
+            "anyOf": [
+              {
+                "maxLength": 5000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body"
+          },
+          "channel": {
+            "enum": [
+              "sms",
+              "whatsapp",
+              "email"
+            ],
+            "title": "Channel",
+            "type": "string"
+          },
+          "language": {
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Language",
+            "type": "string"
+          },
+          "subject": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subject"
+          },
+          "template": {
+            "enum": [
+              "report_review",
+              "review_reminder",
+              "day5_sms",
+              "report_link"
+            ],
+            "title": "Template",
+            "type": "string"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          },
+          "to": {
+            "description": "A phone number, or an email for email",
+            "maxLength": 200,
+            "minLength": 5,
+            "title": "To",
+            "type": "string"
+          }
+        },
+        "required": [
+          "template",
+          "channel",
+          "language",
+          "to"
+        ],
+        "title": "AdminTemplateTest",
+        "type": "object"
+      },
+      "AdminTemplateTestOut": {
+        "properties": {
+          "body": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Body"
+          },
+          "sent": {
+            "description": "False when the channel isn't connected yet; nothing really went out",
+            "title": "Sent",
+            "type": "boolean"
+          },
+          "subject": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Subject"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          },
+          "to": {
+            "title": "To",
+            "type": "string"
+          }
+        },
+        "required": [
+          "sent",
+          "to",
+          "text",
+          "subject",
+          "body"
+        ],
+        "title": "AdminTemplateTestOut",
+        "type": "object"
+      },
+      "AdminTemplateText": {
+        "properties": {
+          "body": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Email",
+            "title": "Body"
+          },
+          "channel": {
+            "enum": [
+              "sms",
+              "whatsapp",
+              "email"
+            ],
+            "title": "Channel",
+            "type": "string"
+          },
+          "checked": {
+            "description": "Checked by a person; other languages start as 'needs review'",
+            "title": "Checked",
+            "type": "boolean"
+          },
+          "edited": {
+            "description": "Changed by KaamNishaan staff (else the built-in text)",
+            "title": "Edited",
+            "type": "boolean"
+          },
+          "language": {
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Language",
+            "type": "string"
+          },
+          "subject": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Email",
+            "title": "Subject"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "SMS and WhatsApp, without the STOP line (added on send)",
+            "title": "Text"
+          }
+        },
+        "required": [
+          "channel",
+          "language",
+          "text",
+          "subject",
+          "body",
+          "edited",
+          "checked"
+        ],
+        "title": "AdminTemplateText",
+        "type": "object"
+      },
+      "AdminTemplatesOut": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "email_live": {
+            "title": "Email Live",
+            "type": "boolean"
+          },
+          "sms_live": {
+            "description": "False while SMS is console-only (not really sent)",
+            "title": "Sms Live",
+            "type": "boolean"
+          },
+          "stop": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "The STOP line added to SMS and WhatsApp, per language",
+            "title": "Stop",
+            "type": "object"
+          },
+          "templates": {
+            "items": {
+              "$ref": "#/components/schemas/AdminTemplate"
+            },
+            "title": "Templates",
+            "type": "array"
+          },
+          "whatsapp_live": {
+            "title": "Whatsapp Live",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "templates",
+          "stop",
+          "sms_live",
+          "whatsapp_live",
+          "email_live",
+          "can_act"
+        ],
+        "title": "AdminTemplatesOut",
+        "type": "object"
+      },
       "AdminTestCall": {
         "additionalProperties": false,
         "properties": {
@@ -19300,6 +19677,340 @@
           }
         ],
         "summary": "Me",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/message-templates": {
+      "get": {
+        "description": "The texts customers get with report and rating links, per channel and language.",
+        "operationId": "message_templates_api_v1_admin_message_templates_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplatesOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Message Templates",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/message-templates/test": {
+      "post": {
+        "description": "Sends the text (as being edited, or as saved) with sample values to your own phone or email.",
+        "operationId": "test_message_template_api_v1_admin_message_templates_test_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTemplateTest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplateTestOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Test Message Template",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/message-templates/{template}/{channel}/{language}": {
+      "delete": {
+        "description": "Back to the built-in text.",
+        "operationId": "reset_message_template_api_v1_admin_message_templates__template___channel___language__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "template",
+            "required": true,
+            "schema": {
+              "enum": [
+                "report_review",
+                "review_reminder",
+                "day5_sms",
+                "report_link"
+              ],
+              "title": "Template",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "channel",
+            "required": true,
+            "schema": {
+              "enum": [
+                "sms",
+                "whatsapp",
+                "email"
+              ],
+              "title": "Channel",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "language",
+            "required": true,
+            "schema": {
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Language",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplate"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reset Message Template",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "description": "Publishes a new text, used from the next message. It counts as checked for that language.",
+        "operationId": "save_message_template_api_v1_admin_message_templates__template___channel___language__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "template",
+            "required": true,
+            "schema": {
+              "enum": [
+                "report_review",
+                "review_reminder",
+                "day5_sms",
+                "report_link"
+              ],
+              "title": "Template",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "channel",
+            "required": true,
+            "schema": {
+              "enum": [
+                "sms",
+                "whatsapp",
+                "email"
+              ],
+              "title": "Channel",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "language",
+            "required": true,
+            "schema": {
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Language",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTemplateIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplate"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Save Message Template",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/message-templates/{template}/{channel}/{language}/check": {
+      "post": {
+        "description": "A person read this language's text and it's fine as it is.",
+        "operationId": "check_message_template_api_v1_admin_message_templates__template___channel___language__check_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "template",
+            "required": true,
+            "schema": {
+              "enum": [
+                "report_review",
+                "review_reminder",
+                "day5_sms",
+                "report_link"
+              ],
+              "title": "Template",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "channel",
+            "required": true,
+            "schema": {
+              "enum": [
+                "sms",
+                "whatsapp",
+                "email"
+              ],
+              "title": "Channel",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "language",
+            "required": true,
+            "schema": {
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Language",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTemplate"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Check Message Template",
         "tags": [
           "admin"
         ]

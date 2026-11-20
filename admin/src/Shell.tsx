@@ -45,7 +45,7 @@ export const NAV: { section: string; items: NavItem[] }[] = [
       { key: 'leads', path: '/leads', icon: Inbox, ready: true },
       { key: 'reviews', path: '/reviews', icon: CheckCheck, ready: true },
       { key: 'ai_calls', path: '/ai-review-calls', icon: Phone, ready: true },
-      { key: 'templates', path: '/message-templates', icon: MessageSquareText },
+      { key: 'templates', path: '/message-templates', icon: MessageSquareText, ready: true },
       { key: 'usage', path: '/usage', icon: SlidersHorizontal },
     ],
   },

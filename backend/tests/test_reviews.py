@@ -43,7 +43,7 @@ async def test_asked_before_approval_waits_then_goes_with_the_report(client, rea
     r = await client.post(f"/api/v1/reports/{rep['id']}/approve", headers=auth(owner))
     assert r.status_code == 200 and r.json()["status"] == "shared"  # the link went with the report
     sms = outbox.sms[-1]
-    assert sms["to"] == "+919825011111" and "Please rate the job" in sms["body"] and "?rate=1" in sms["body"]
+    assert sms["to"] == "+919825011111" and "Rate the job here" in sms["body"] and "?rate=1" in sms["body"]
     assert "How did we do?" in outbox.email[-1]["body"]
     card = (await job(client, tech, job_id))["review"]
     assert card["status"] == "link_sent" and card["channels"] == ["sms", "email"] and not card["can_cancel"]
