@@ -522,6 +522,101 @@ class AdminAiUsageOutModel {
       };
 }
 
+AdminAnnouncementInModel adminAnnouncementInModelFromJson(String str) => AdminAnnouncementInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAnnouncementInModelToJson(AdminAnnouncementInModel data) => json.encode(data.toJson());
+
+class AdminAnnouncementInModel {
+  /// One of: everyone, owners_managers, owners, company
+  final String audience;
+  final Map<String, dynamic> body;
+  final String? companyId;
+  /// Empty = now
+  final DateTime? sendAt;
+  final Map<String, dynamic> title;
+
+  const AdminAnnouncementInModel({
+    required this.audience,
+    required this.body,
+    this.companyId,
+    this.sendAt,
+    required this.title,
+  });
+
+  factory AdminAnnouncementInModel.fromJson(Map<String, dynamic> json) => AdminAnnouncementInModel(
+        audience: json['audience'] as String,
+        body: Map<String, dynamic>.from(json['body'] as Map),
+        companyId: json['company_id'] as String?,
+        sendAt: json['send_at'] == null ? null : DateTime.parse(json['send_at'] as String),
+        title: Map<String, dynamic>.from(json['title'] as Map),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'audience': audience,
+        'body': body,
+        'company_id': companyId,
+        'send_at': sendAt?.toIso8601String(),
+        'title': title,
+      };
+}
+
+AdminAnnouncementOutModel adminAnnouncementOutModelFromJson(String str) => AdminAnnouncementOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAnnouncementOutModelToJson(AdminAnnouncementOutModel data) => json.encode(data.toJson());
+
+class AdminAnnouncementOutModel {
+  /// One of: everyone, owners_managers, owners, company
+  final String audience;
+  final Map<String, dynamic> body;
+  final String? by;
+  final DateTime? cancelledAt;
+  final String? company;
+  final String id;
+  final int recipients;
+  final DateTime sendAt;
+  final DateTime? sentAt;
+  final Map<String, dynamic> title;
+
+  const AdminAnnouncementOutModel({
+    required this.audience,
+    required this.body,
+    this.by,
+    this.cancelledAt,
+    this.company,
+    required this.id,
+    required this.recipients,
+    required this.sendAt,
+    this.sentAt,
+    required this.title,
+  });
+
+  factory AdminAnnouncementOutModel.fromJson(Map<String, dynamic> json) => AdminAnnouncementOutModel(
+        audience: json['audience'] as String,
+        body: Map<String, dynamic>.from(json['body'] as Map),
+        by: json['by'] as String?,
+        cancelledAt: json['cancelled_at'] == null ? null : DateTime.parse(json['cancelled_at'] as String),
+        company: json['company'] as String?,
+        id: json['id'] as String,
+        recipients: (json['recipients'] as num).toInt(),
+        sendAt: DateTime.parse(json['send_at'] as String),
+        sentAt: json['sent_at'] == null ? null : DateTime.parse(json['sent_at'] as String),
+        title: Map<String, dynamic>.from(json['title'] as Map),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'audience': audience,
+        'body': body,
+        'by': by,
+        'cancelled_at': cancelledAt?.toIso8601String(),
+        'company': company,
+        'id': id,
+        'recipients': recipients,
+        'send_at': sendAt.toIso8601String(),
+        'sent_at': sentAt?.toIso8601String(),
+        'title': title,
+      };
+}
+
 AdminAttentionRowModel adminAttentionRowModelFromJson(String str) => AdminAttentionRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminAttentionRowModelToJson(AdminAttentionRowModel data) => json.encode(data.toJson());
@@ -2903,6 +2998,39 @@ class AdminMoneyModel {
       };
 }
 
+AdminNotificationsOutModel adminNotificationsOutModelFromJson(String str) => AdminNotificationsOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminNotificationsOutModelToJson(AdminNotificationsOutModel data) => json.encode(data.toJson());
+
+class AdminNotificationsOutModel {
+  final List<AdminAnnouncementOutModel> announcements;
+  /// People each audience reaches now
+  final Map<String, dynamic> audienceSizes;
+  final bool canAct;
+  final List<AdminRuleModel> rules;
+
+  const AdminNotificationsOutModel({
+    required this.announcements,
+    required this.audienceSizes,
+    required this.canAct,
+    required this.rules,
+  });
+
+  factory AdminNotificationsOutModel.fromJson(Map<String, dynamic> json) => AdminNotificationsOutModel(
+        announcements: (json['announcements'] as List).map((e) => AdminAnnouncementOutModel.fromJson(e as Map<String, dynamic>)).toList(),
+        audienceSizes: Map<String, dynamic>.from(json['audience_sizes'] as Map),
+        canAct: json['can_act'] as bool,
+        rules: (json['rules'] as List).map((e) => AdminRuleModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'announcements': announcements.map((e) => e.toJson()).toList(),
+        'audience_sizes': audienceSizes,
+        'can_act': canAct,
+        'rules': rules.map((e) => e.toJson()).toList(),
+      };
+}
+
 AdminOptionModel adminOptionModelFromJson(String str) => AdminOptionModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminOptionModelToJson(AdminOptionModel data) => json.encode(data.toJson());
@@ -4809,6 +4937,65 @@ class AdminRolesOutModel {
       };
 }
 
+AdminRuleModel adminRuleModelFromJson(String str) => AdminRuleModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminRuleModelToJson(AdminRuleModel data) => json.encode(data.toJson());
+
+class AdminRuleModel {
+  /// False when it needs a service that isn't set up (email)
+  final bool available;
+  /// One of: in_app, email
+  final String channel;
+  final String kind;
+  final bool on;
+  /// owner, manager, technician, office (owners and managers)
+  final String to;
+
+  const AdminRuleModel({
+    required this.available,
+    required this.channel,
+    required this.kind,
+    required this.on,
+    required this.to,
+  });
+
+  factory AdminRuleModel.fromJson(Map<String, dynamic> json) => AdminRuleModel(
+        available: json['available'] as bool,
+        channel: json['channel'] as String,
+        kind: json['kind'] as String,
+        on: json['on'] as bool,
+        to: json['to'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'available': available,
+        'channel': channel,
+        'kind': kind,
+        'on': on,
+        'to': to,
+      };
+}
+
+AdminRulesInModel adminRulesInModelFromJson(String str) => AdminRulesInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminRulesInModelToJson(AdminRulesInModel data) => json.encode(data.toJson());
+
+class AdminRulesInModel {
+  final Map<String, dynamic> on;
+
+  const AdminRulesInModel({
+    required this.on,
+  });
+
+  factory AdminRulesInModel.fromJson(Map<String, dynamic> json) => AdminRulesInModel(
+        on: Map<String, dynamic>.from(json['on'] as Map),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'on': on,
+      };
+}
+
 AdminScriptStepModel adminScriptStepModelFromJson(String str) => AdminScriptStepModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminScriptStepModelToJson(AdminScriptStepModel data) => json.encode(data.toJson());
@@ -5517,6 +5704,310 @@ class AdminTestCallOutModel {
   Map<String, dynamic> toJson() => {
         'outcome': outcome,
         'seconds': seconds,
+      };
+}
+
+AdminTicketDetailModel adminTicketDetailModelFromJson(String str) => AdminTicketDetailModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTicketDetailModelToJson(AdminTicketDetailModel data) => json.encode(data.toJson());
+
+class AdminTicketDetailModel {
+  final String? appVersion;
+  /// One of: problem, question, billing, feature
+  final String category;
+  final String? company;
+  final String? companyId;
+  final String? companyStatus;
+  final DateTime createdAt;
+  final String id;
+  final String? jobId;
+  final String? jobNumber;
+  final String lang;
+  /// One of: user, staff
+  final String lastFrom;
+  final DateTime lastMessageAt;
+  final List<AdminTicketMessageModel> messages;
+  final String number;
+  final String? person;
+  final String? personPhone;
+  final String? personRole;
+  final String? plan;
+  /// One of: normal, high
+  final String priority;
+  /// One of: open, waiting, solved
+  final String status;
+  final String subject;
+
+  const AdminTicketDetailModel({
+    this.appVersion,
+    required this.category,
+    this.company,
+    this.companyId,
+    this.companyStatus,
+    required this.createdAt,
+    required this.id,
+    this.jobId,
+    this.jobNumber,
+    required this.lang,
+    required this.lastFrom,
+    required this.lastMessageAt,
+    required this.messages,
+    required this.number,
+    this.person,
+    this.personPhone,
+    this.personRole,
+    this.plan,
+    required this.priority,
+    required this.status,
+    required this.subject,
+  });
+
+  factory AdminTicketDetailModel.fromJson(Map<String, dynamic> json) => AdminTicketDetailModel(
+        appVersion: json['app_version'] as String?,
+        category: json['category'] as String,
+        company: json['company'] as String?,
+        companyId: json['company_id'] as String?,
+        companyStatus: json['company_status'] as String?,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        id: json['id'] as String,
+        jobId: json['job_id'] as String?,
+        jobNumber: json['job_number'] as String?,
+        lang: json['lang'] as String,
+        lastFrom: json['last_from'] as String,
+        lastMessageAt: DateTime.parse(json['last_message_at'] as String),
+        messages: (json['messages'] as List).map((e) => AdminTicketMessageModel.fromJson(e as Map<String, dynamic>)).toList(),
+        number: json['number'] as String,
+        person: json['person'] as String?,
+        personPhone: json['person_phone'] as String?,
+        personRole: json['person_role'] as String?,
+        plan: json['plan'] as String?,
+        priority: json['priority'] as String,
+        status: json['status'] as String,
+        subject: json['subject'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'app_version': appVersion,
+        'category': category,
+        'company': company,
+        'company_id': companyId,
+        'company_status': companyStatus,
+        'created_at': createdAt.toIso8601String(),
+        'id': id,
+        'job_id': jobId,
+        'job_number': jobNumber,
+        'lang': lang,
+        'last_from': lastFrom,
+        'last_message_at': lastMessageAt.toIso8601String(),
+        'messages': messages.map((e) => e.toJson()).toList(),
+        'number': number,
+        'person': person,
+        'person_phone': personPhone,
+        'person_role': personRole,
+        'plan': plan,
+        'priority': priority,
+        'status': status,
+        'subject': subject,
+      };
+}
+
+AdminTicketListModel adminTicketListModelFromJson(String str) => AdminTicketListModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTicketListModelToJson(AdminTicketListModel data) => json.encode(data.toJson());
+
+class AdminTicketListModel {
+  /// open, waiting, solved, high (open or waiting)
+  final Map<String, dynamic> counts;
+  final List<AdminTicketRowModel> items;
+  final int page;
+  final int pageSize;
+  final int total;
+
+  const AdminTicketListModel({
+    required this.counts,
+    required this.items,
+    required this.page,
+    required this.pageSize,
+    required this.total,
+  });
+
+  factory AdminTicketListModel.fromJson(Map<String, dynamic> json) => AdminTicketListModel(
+        counts: Map<String, dynamic>.from(json['counts'] as Map),
+        items: (json['items'] as List).map((e) => AdminTicketRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        page: (json['page'] as num).toInt(),
+        pageSize: (json['page_size'] as num).toInt(),
+        total: (json['total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'counts': counts,
+        'items': items.map((e) => e.toJson()).toList(),
+        'page': page,
+        'page_size': pageSize,
+        'total': total,
+      };
+}
+
+AdminTicketMessageModel adminTicketMessageModelFromJson(String str) => AdminTicketMessageModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTicketMessageModelToJson(AdminTicketMessageModel data) => json.encode(data.toJson());
+
+class AdminTicketMessageModel {
+  final String? author;
+  final String body;
+  final DateTime createdAt;
+  final bool fromSupport;
+  final String id;
+  final bool internal;
+
+  const AdminTicketMessageModel({
+    this.author,
+    required this.body,
+    required this.createdAt,
+    required this.fromSupport,
+    required this.id,
+    required this.internal,
+  });
+
+  factory AdminTicketMessageModel.fromJson(Map<String, dynamic> json) => AdminTicketMessageModel(
+        author: json['author'] as String?,
+        body: json['body'] as String,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        fromSupport: json['from_support'] as bool,
+        id: json['id'] as String,
+        internal: json['internal'] as bool,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'author': author,
+        'body': body,
+        'created_at': createdAt.toIso8601String(),
+        'from_support': fromSupport,
+        'id': id,
+        'internal': internal,
+      };
+}
+
+AdminTicketPatchModel adminTicketPatchModelFromJson(String str) => AdminTicketPatchModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTicketPatchModelToJson(AdminTicketPatchModel data) => json.encode(data.toJson());
+
+class AdminTicketPatchModel {
+  /// One of: normal, high
+  final String? priority;
+  /// One of: open, waiting, solved
+  final String? status;
+
+  const AdminTicketPatchModel({
+    this.priority,
+    this.status,
+  });
+
+  factory AdminTicketPatchModel.fromJson(Map<String, dynamic> json) => AdminTicketPatchModel(
+        priority: json['priority'] as String?,
+        status: json['status'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'priority': priority,
+        'status': status,
+      };
+}
+
+AdminTicketReplyModel adminTicketReplyModelFromJson(String str) => AdminTicketReplyModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTicketReplyModelToJson(AdminTicketReplyModel data) => json.encode(data.toJson());
+
+class AdminTicketReplyModel {
+  final String body;
+  final bool? internal;
+  /// Send and mark solved
+  final bool? solve;
+
+  const AdminTicketReplyModel({
+    required this.body,
+    this.internal,
+    this.solve,
+  });
+
+  factory AdminTicketReplyModel.fromJson(Map<String, dynamic> json) => AdminTicketReplyModel(
+        body: json['body'] as String,
+        internal: json['internal'] as bool?,
+        solve: json['solve'] as bool?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'body': body,
+        'internal': internal,
+        'solve': solve,
+      };
+}
+
+AdminTicketRowModel adminTicketRowModelFromJson(String str) => AdminTicketRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTicketRowModelToJson(AdminTicketRowModel data) => json.encode(data.toJson());
+
+class AdminTicketRowModel {
+  /// One of: problem, question, billing, feature
+  final String category;
+  final String? company;
+  final String? companyId;
+  final DateTime createdAt;
+  final String id;
+  /// One of: user, staff
+  final String lastFrom;
+  final DateTime lastMessageAt;
+  final String number;
+  final String? person;
+  /// One of: normal, high
+  final String priority;
+  /// One of: open, waiting, solved
+  final String status;
+  final String subject;
+
+  const AdminTicketRowModel({
+    required this.category,
+    this.company,
+    this.companyId,
+    required this.createdAt,
+    required this.id,
+    required this.lastFrom,
+    required this.lastMessageAt,
+    required this.number,
+    this.person,
+    required this.priority,
+    required this.status,
+    required this.subject,
+  });
+
+  factory AdminTicketRowModel.fromJson(Map<String, dynamic> json) => AdminTicketRowModel(
+        category: json['category'] as String,
+        company: json['company'] as String?,
+        companyId: json['company_id'] as String?,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        id: json['id'] as String,
+        lastFrom: json['last_from'] as String,
+        lastMessageAt: DateTime.parse(json['last_message_at'] as String),
+        number: json['number'] as String,
+        person: json['person'] as String?,
+        priority: json['priority'] as String,
+        status: json['status'] as String,
+        subject: json['subject'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'category': category,
+        'company': company,
+        'company_id': companyId,
+        'created_at': createdAt.toIso8601String(),
+        'id': id,
+        'last_from': lastFrom,
+        'last_message_at': lastMessageAt.toIso8601String(),
+        'number': number,
+        'person': person,
+        'priority': priority,
+        'status': status,
+        'subject': subject,
       };
 }
 
@@ -10307,7 +10798,7 @@ class NotificationOutModel {
   final DateTime createdAt;
   final String id;
   final String? jobId;
-  /// One of: job_assigned, report_submitted, changes_requested, report_approved, report_shared, review_received, low_rating
+  /// One of: job_assigned, report_submitted, changes_requested, report_approved, report_shared, review_received, low_rating, support_reply, announcement
   final String kind;
   /// Names for the sentence the app writes in its own language: customer, job, report, note, scheduled_at (ISO), technician
   final Map<String, dynamic> params;
@@ -14230,6 +14721,181 @@ class TemplateQuestionOutModel {
         'text_status': textStatus,
         'type': type,
         'unit': unit,
+      };
+}
+
+TicketCreateModel ticketCreateModelFromJson(String str) => TicketCreateModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String ticketCreateModelToJson(TicketCreateModel data) => json.encode(data.toJson());
+
+class TicketCreateModel {
+  final String? appVersion;
+  final String body;
+  /// One of: problem, question, billing, feature
+  final String category;
+  final String? jobId;
+  final String subject;
+
+  const TicketCreateModel({
+    this.appVersion,
+    required this.body,
+    required this.category,
+    this.jobId,
+    required this.subject,
+  });
+
+  factory TicketCreateModel.fromJson(Map<String, dynamic> json) => TicketCreateModel(
+        appVersion: json['app_version'] as String?,
+        body: json['body'] as String,
+        category: json['category'] as String,
+        jobId: json['job_id'] as String?,
+        subject: json['subject'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'app_version': appVersion,
+        'body': body,
+        'category': category,
+        'job_id': jobId,
+        'subject': subject,
+      };
+}
+
+TicketListModel ticketListModelFromJson(String str) => TicketListModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String ticketListModelToJson(TicketListModel data) => json.encode(data.toJson());
+
+class TicketListModel {
+  final List<TicketOutModel> data;
+
+  const TicketListModel({
+    required this.data,
+  });
+
+  factory TicketListModel.fromJson(Map<String, dynamic> json) => TicketListModel(
+        data: (json['data'] as List).map((e) => TicketOutModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'data': data.map((e) => e.toJson()).toList(),
+      };
+}
+
+TicketMessageOutModel ticketMessageOutModelFromJson(String str) => TicketMessageOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String ticketMessageOutModelToJson(TicketMessageOutModel data) => json.encode(data.toJson());
+
+class TicketMessageOutModel {
+  /// The person's name; None for KaamNishaan support
+  final String? author;
+  final String body;
+  final DateTime createdAt;
+  final bool fromSupport;
+  final String id;
+
+  const TicketMessageOutModel({
+    this.author,
+    required this.body,
+    required this.createdAt,
+    required this.fromSupport,
+    required this.id,
+  });
+
+  factory TicketMessageOutModel.fromJson(Map<String, dynamic> json) => TicketMessageOutModel(
+        author: json['author'] as String?,
+        body: json['body'] as String,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        fromSupport: json['from_support'] as bool,
+        id: json['id'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'author': author,
+        'body': body,
+        'created_at': createdAt.toIso8601String(),
+        'from_support': fromSupport,
+        'id': id,
+      };
+}
+
+TicketOutModel ticketOutModelFromJson(String str) => TicketOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String ticketOutModelToJson(TicketOutModel data) => json.encode(data.toJson());
+
+class TicketOutModel {
+  /// One of: problem, question, billing, feature
+  final String category;
+  final DateTime createdAt;
+  final String id;
+  final String? jobId;
+  /// One of: user, staff
+  final String lastFrom;
+  final DateTime lastMessageAt;
+  /// Only on GET one
+  final List<TicketMessageOutModel>? messages;
+  /// T-1042
+  final String number;
+  /// One of: open, waiting, solved
+  final String status;
+  final String subject;
+
+  const TicketOutModel({
+    required this.category,
+    required this.createdAt,
+    required this.id,
+    this.jobId,
+    required this.lastFrom,
+    required this.lastMessageAt,
+    this.messages,
+    required this.number,
+    required this.status,
+    required this.subject,
+  });
+
+  factory TicketOutModel.fromJson(Map<String, dynamic> json) => TicketOutModel(
+        category: json['category'] as String,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        id: json['id'] as String,
+        jobId: json['job_id'] as String?,
+        lastFrom: json['last_from'] as String,
+        lastMessageAt: DateTime.parse(json['last_message_at'] as String),
+        messages: json['messages'] == null ? null : (json['messages'] as List).map((e) => TicketMessageOutModel.fromJson(e as Map<String, dynamic>)).toList(),
+        number: json['number'] as String,
+        status: json['status'] as String,
+        subject: json['subject'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'category': category,
+        'created_at': createdAt.toIso8601String(),
+        'id': id,
+        'job_id': jobId,
+        'last_from': lastFrom,
+        'last_message_at': lastMessageAt.toIso8601String(),
+        'messages': messages?.map((e) => e.toJson()).toList(),
+        'number': number,
+        'status': status,
+        'subject': subject,
+      };
+}
+
+TicketReplyModel ticketReplyModelFromJson(String str) => TicketReplyModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String ticketReplyModelToJson(TicketReplyModel data) => json.encode(data.toJson());
+
+class TicketReplyModel {
+  final String body;
+
+  const TicketReplyModel({
+    required this.body,
+  });
+
+  factory TicketReplyModel.fromJson(Map<String, dynamic> json) => TicketReplyModel(
+        body: json['body'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'body': body,
       };
 }
 

@@ -682,6 +682,187 @@
         "title": "AdminAiUsageOut",
         "type": "object"
       },
+      "AdminAnnouncementIn": {
+        "additionalProperties": false,
+        "properties": {
+          "audience": {
+            "enum": [
+              "everyone",
+              "owners_managers",
+              "owners",
+              "company"
+            ],
+            "title": "Audience",
+            "type": "string"
+          },
+          "body": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "propertyNames": {
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ]
+            },
+            "title": "Body",
+            "type": "object"
+          },
+          "company_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Id"
+          },
+          "send_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Empty = now",
+            "title": "Send At"
+          },
+          "title": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "propertyNames": {
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ]
+            },
+            "title": "Title",
+            "type": "object"
+          }
+        },
+        "required": [
+          "audience",
+          "title",
+          "body"
+        ],
+        "title": "AdminAnnouncementIn",
+        "type": "object"
+      },
+      "AdminAnnouncementOut": {
+        "properties": {
+          "audience": {
+            "enum": [
+              "everyone",
+              "owners_managers",
+              "owners",
+              "company"
+            ],
+            "title": "Audience",
+            "type": "string"
+          },
+          "body": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Body",
+            "type": "object"
+          },
+          "by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "By"
+          },
+          "cancelled_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cancelled At"
+          },
+          "company": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "recipients": {
+            "title": "Recipients",
+            "type": "integer"
+          },
+          "send_at": {
+            "format": "date-time",
+            "title": "Send At",
+            "type": "string"
+          },
+          "sent_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sent At"
+          },
+          "title": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Title",
+            "type": "object"
+          }
+        },
+        "required": [
+          "id",
+          "audience",
+          "company",
+          "title",
+          "body",
+          "send_at",
+          "sent_at",
+          "cancelled_at",
+          "recipients",
+          "by"
+        ],
+        "title": "AdminAnnouncementOut",
+        "type": "object"
+      },
       "AdminAttentionRow": {
         "properties": {
           "count": {
@@ -4106,6 +4287,44 @@
         "title": "AdminMoney",
         "type": "object"
       },
+      "AdminNotificationsOut": {
+        "properties": {
+          "announcements": {
+            "items": {
+              "$ref": "#/components/schemas/AdminAnnouncementOut"
+            },
+            "title": "Announcements",
+            "type": "array"
+          },
+          "audience_sizes": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "description": "People each audience reaches now",
+            "title": "Audience Sizes",
+            "type": "object"
+          },
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "rules": {
+            "items": {
+              "$ref": "#/components/schemas/AdminRule"
+            },
+            "title": "Rules",
+            "type": "array"
+          }
+        },
+        "required": [
+          "rules",
+          "announcements",
+          "audience_sizes",
+          "can_act"
+        ],
+        "title": "AdminNotificationsOut",
+        "type": "object"
+      },
       "AdminOption": {
         "properties": {
           "label": {
@@ -6738,6 +6957,62 @@
         "title": "AdminRolesOut",
         "type": "object"
       },
+      "AdminRule": {
+        "properties": {
+          "available": {
+            "description": "False when it needs a service that isn't set up (email)",
+            "title": "Available",
+            "type": "boolean"
+          },
+          "channel": {
+            "enum": [
+              "in_app",
+              "email"
+            ],
+            "title": "Channel",
+            "type": "string"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "on": {
+            "title": "On",
+            "type": "boolean"
+          },
+          "to": {
+            "description": "owner, manager, technician, office (owners and managers)",
+            "title": "To",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "on",
+          "to",
+          "channel",
+          "available"
+        ],
+        "title": "AdminRule",
+        "type": "object"
+      },
+      "AdminRulesIn": {
+        "additionalProperties": false,
+        "properties": {
+          "on": {
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "title": "On",
+            "type": "object"
+          }
+        },
+        "required": [
+          "on"
+        ],
+        "title": "AdminRulesIn",
+        "type": "object"
+      },
       "AdminScriptStep": {
         "properties": {
           "key": {
@@ -7639,6 +7914,480 @@
           "seconds"
         ],
         "title": "AdminTestCallOut",
+        "type": "object"
+      },
+      "AdminTicketDetail": {
+        "properties": {
+          "app_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "App Version"
+          },
+          "category": {
+            "enum": [
+              "problem",
+              "question",
+              "billing",
+              "feature"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "company": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company"
+          },
+          "company_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Id"
+          },
+          "company_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Status"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "job_number": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Number"
+          },
+          "lang": {
+            "title": "Lang",
+            "type": "string"
+          },
+          "last_from": {
+            "enum": [
+              "user",
+              "staff"
+            ],
+            "title": "Last From",
+            "type": "string"
+          },
+          "last_message_at": {
+            "format": "date-time",
+            "title": "Last Message At",
+            "type": "string"
+          },
+          "messages": {
+            "items": {
+              "$ref": "#/components/schemas/AdminTicketMessage"
+            },
+            "title": "Messages",
+            "type": "array"
+          },
+          "number": {
+            "title": "Number",
+            "type": "string"
+          },
+          "person": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Person"
+          },
+          "person_phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Person Phone"
+          },
+          "person_role": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Person Role"
+          },
+          "plan": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Plan"
+          },
+          "priority": {
+            "enum": [
+              "normal",
+              "high"
+            ],
+            "title": "Priority",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "open",
+              "waiting",
+              "solved"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "subject",
+          "category",
+          "status",
+          "priority",
+          "company",
+          "company_id",
+          "person",
+          "created_at",
+          "last_message_at",
+          "last_from",
+          "plan",
+          "company_status",
+          "person_role",
+          "person_phone",
+          "lang",
+          "app_version",
+          "job_id",
+          "job_number",
+          "messages"
+        ],
+        "title": "AdminTicketDetail",
+        "type": "object"
+      },
+      "AdminTicketList": {
+        "properties": {
+          "counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "description": "open, waiting, solved, high (open or waiting)",
+            "title": "Counts",
+            "type": "object"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AdminTicketRow"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "page_size",
+          "counts"
+        ],
+        "title": "AdminTicketList",
+        "type": "object"
+      },
+      "AdminTicketMessage": {
+        "properties": {
+          "author": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Author"
+          },
+          "body": {
+            "title": "Body",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "from_support": {
+            "title": "From Support",
+            "type": "boolean"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "internal": {
+            "title": "Internal",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "from_support",
+          "internal",
+          "author",
+          "body",
+          "created_at"
+        ],
+        "title": "AdminTicketMessage",
+        "type": "object"
+      },
+      "AdminTicketPatch": {
+        "additionalProperties": false,
+        "properties": {
+          "priority": {
+            "anyOf": [
+              {
+                "enum": [
+                  "normal",
+                  "high"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Priority"
+          },
+          "status": {
+            "anyOf": [
+              {
+                "enum": [
+                  "open",
+                  "waiting",
+                  "solved"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Status"
+          }
+        },
+        "title": "AdminTicketPatch",
+        "type": "object"
+      },
+      "AdminTicketReply": {
+        "additionalProperties": false,
+        "properties": {
+          "body": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Body",
+            "type": "string"
+          },
+          "internal": {
+            "default": false,
+            "title": "Internal",
+            "type": "boolean"
+          },
+          "solve": {
+            "default": false,
+            "description": "Send and mark solved",
+            "title": "Solve",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "body"
+        ],
+        "title": "AdminTicketReply",
+        "type": "object"
+      },
+      "AdminTicketRow": {
+        "properties": {
+          "category": {
+            "enum": [
+              "problem",
+              "question",
+              "billing",
+              "feature"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "company": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company"
+          },
+          "company_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Company Id"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "last_from": {
+            "enum": [
+              "user",
+              "staff"
+            ],
+            "title": "Last From",
+            "type": "string"
+          },
+          "last_message_at": {
+            "format": "date-time",
+            "title": "Last Message At",
+            "type": "string"
+          },
+          "number": {
+            "title": "Number",
+            "type": "string"
+          },
+          "person": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Person"
+          },
+          "priority": {
+            "enum": [
+              "normal",
+              "high"
+            ],
+            "title": "Priority",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "open",
+              "waiting",
+              "solved"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "subject",
+          "category",
+          "status",
+          "priority",
+          "company",
+          "company_id",
+          "person",
+          "created_at",
+          "last_message_at",
+          "last_from"
+        ],
+        "title": "AdminTicketRow",
         "type": "object"
       },
       "AdminTimelineItem": {
@@ -14294,7 +15043,9 @@
               "report_approved",
               "report_shared",
               "review_received",
-              "low_rating"
+              "low_rating",
+              "support_reply",
+              "announcement"
             ],
             "title": "Kind",
             "type": "string"
@@ -19957,6 +20708,227 @@
         "title": "TemplateQuestionOut",
         "type": "object"
       },
+      "TicketCreate": {
+        "additionalProperties": false,
+        "properties": {
+          "app_version": {
+            "anyOf": [
+              {
+                "maxLength": 40,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "App Version"
+          },
+          "body": {
+            "maxLength": 4000,
+            "minLength": 10,
+            "title": "Body",
+            "type": "string"
+          },
+          "category": {
+            "enum": [
+              "problem",
+              "question",
+              "billing",
+              "feature"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "subject": {
+            "maxLength": 140,
+            "minLength": 3,
+            "title": "Subject",
+            "type": "string"
+          }
+        },
+        "required": [
+          "category",
+          "subject",
+          "body"
+        ],
+        "title": "TicketCreate",
+        "type": "object"
+      },
+      "TicketList": {
+        "properties": {
+          "data": {
+            "items": {
+              "$ref": "#/components/schemas/TicketOut"
+            },
+            "title": "Data",
+            "type": "array"
+          }
+        },
+        "required": [
+          "data"
+        ],
+        "title": "TicketList",
+        "type": "object"
+      },
+      "TicketMessageOut": {
+        "properties": {
+          "author": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The person's name; None for KaamNishaan support",
+            "title": "Author"
+          },
+          "body": {
+            "title": "Body",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "from_support": {
+            "title": "From Support",
+            "type": "boolean"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "from_support",
+          "author",
+          "body",
+          "created_at"
+        ],
+        "title": "TicketMessageOut",
+        "type": "object"
+      },
+      "TicketOut": {
+        "properties": {
+          "category": {
+            "enum": [
+              "problem",
+              "question",
+              "billing",
+              "feature"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Job Id"
+          },
+          "last_from": {
+            "enum": [
+              "user",
+              "staff"
+            ],
+            "title": "Last From",
+            "type": "string"
+          },
+          "last_message_at": {
+            "format": "date-time",
+            "title": "Last Message At",
+            "type": "string"
+          },
+          "messages": {
+            "description": "Only on GET one",
+            "items": {
+              "$ref": "#/components/schemas/TicketMessageOut"
+            },
+            "title": "Messages",
+            "type": "array"
+          },
+          "number": {
+            "description": "T-1042",
+            "title": "Number",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "open",
+              "waiting",
+              "solved"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "subject",
+          "category",
+          "status",
+          "job_id",
+          "created_at",
+          "last_message_at",
+          "last_from"
+        ],
+        "title": "TicketOut",
+        "type": "object"
+      },
+      "TicketReply": {
+        "additionalProperties": false,
+        "properties": {
+          "body": {
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Body",
+            "type": "string"
+          }
+        },
+        "required": [
+          "body"
+        ],
+        "title": "TicketReply",
+        "type": "object"
+      },
       "Timeline": {
         "properties": {
           "data": {
@@ -21248,6 +22220,102 @@
           }
         ],
         "summary": "Ai Usage",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/announcements": {
+      "post": {
+        "description": "Sends now (empty send_at) or at a time; it lands in each person's Messages in their language.",
+        "operationId": "announce_api_v1_admin_announcements_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminAnnouncementIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminNotificationsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Announce",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/announcements/{announcement_id}": {
+      "delete": {
+        "description": "Cancel a scheduled announcement before it goes.",
+        "operationId": "cancel_announcement_api_v1_admin_announcements__announcement_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "announcement_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Announcement Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminNotificationsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Cancel Announcement",
         "tags": [
           "admin"
         ]
@@ -25100,6 +26168,79 @@
         ]
       }
     },
+    "/api/v1/admin/notifications": {
+      "get": {
+        "description": "Automatic messages (on/off for everyone) and announcements.",
+        "operationId": "admin_notifications_api_v1_admin_notifications_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminNotificationsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Admin Notifications",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/notifications/rules": {
+      "put": {
+        "operationId": "notification_rules_api_v1_admin_notifications_rules_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminRulesIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminNotificationsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Notification Rules",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/api/v1/admin/payments": {
       "get": {
         "description": "Online payments are set up in the testing phase; until then there is nothing to list.",
@@ -26828,6 +27969,385 @@
           }
         ],
         "summary": "Subscriptions Csv",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/support": {
+      "get": {
+        "description": "Help requests from the app: high priority first, then the ones waiting longest for us.",
+        "operationId": "support_tickets_api_v1_admin_support_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "tab",
+            "required": false,
+            "schema": {
+              "default": "open",
+              "enum": [
+                "open",
+                "waiting",
+                "solved",
+                "all"
+              ],
+              "title": "Tab",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 120,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "maximum": 10000,
+              "minimum": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 25,
+              "maximum": 100,
+              "minimum": 5,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTicketList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Support Tickets",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/support.csv": {
+      "get": {
+        "operationId": "support_csv_api_v1_admin_support_csv_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "tab",
+            "required": false,
+            "schema": {
+              "default": "all",
+              "enum": [
+                "open",
+                "waiting",
+                "solved",
+                "all"
+              ],
+              "title": "Tab",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 120,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/csv": {}
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Support Csv",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/support/{ticket_id}": {
+      "get": {
+        "description": "The ticket, the person and company, and every message (staff notes included).",
+        "operationId": "support_ticket_api_v1_admin_support__ticket_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ticket_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Ticket Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTicketDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Support Ticket",
+        "tags": [
+          "admin"
+        ]
+      },
+      "patch": {
+        "description": "Status (open, waiting, solved) and priority. Audited.",
+        "operationId": "support_change_api_v1_admin_support__ticket_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ticket_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Ticket Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTicketPatch"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTicketDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Support Change",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/support/{ticket_id}/messages": {
+      "post": {
+        "description": "Reply (the person sees it in the app; the ticket then waits on them) or add a staff-only note.",
+        "operationId": "support_reply_api_v1_admin_support__ticket_id__messages_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ticket_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Ticket Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTicketReply"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTicketDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Support Reply",
         "tags": [
           "admin"
         ]
@@ -28691,7 +30211,7 @@
     },
     "/api/v1/cron/review-followups": {
       "post": {
-        "description": "Send every Day 2 review reminder and run every Day 5 AI call that is due (all companies). For a\nscheduler, with X-Cron-Key.",
+        "description": "Send every Day 2 review reminder, run every Day 5 AI call and send every announcement that is due\n(all companies). For a scheduler, with X-Cron-Key.",
         "operationId": "run_followups_api_v1_cron_review_followups_post",
         "parameters": [
           {
@@ -34005,6 +35525,235 @@
         "tags": [
           "reports",
           "sharing"
+        ]
+      }
+    },
+    "/api/v1/support/tickets": {
+      "get": {
+        "description": "M47 Help: this person's help requests in this company, latest activity first.",
+        "operationId": "my_tickets_api_v1_support_tickets_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My Tickets",
+        "tags": [
+          "support"
+        ]
+      },
+      "post": {
+        "description": "Open a help request (also while the company is paused). Ten a day at most.",
+        "operationId": "new_ticket_api_v1_support_tickets_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "New Ticket",
+        "tags": [
+          "support"
+        ]
+      }
+    },
+    "/api/v1/support/tickets/{ticket_id}": {
+      "get": {
+        "description": "The request and every message, oldest first. Staff-only notes are never included.",
+        "operationId": "ticket_api_v1_support_tickets__ticket_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ticket_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Ticket Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ticket",
+        "tags": [
+          "support"
+        ]
+      }
+    },
+    "/api/v1/support/tickets/{ticket_id}/messages": {
+      "post": {
+        "description": "Write again; a solved request opens again.",
+        "operationId": "reply_api_v1_support_tickets__ticket_id__messages_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ticket_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Ticket Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketReply"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reply",
+        "tags": [
+          "support"
+        ]
+      }
+    },
+    "/api/v1/support/tickets/{ticket_id}/solve": {
+      "post": {
+        "description": "The person says it's sorted.",
+        "operationId": "solve_api_v1_support_tickets__ticket_id__solve_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "ticket_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Ticket Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Solve",
+        "tags": [
+          "support"
         ]
       }
     },

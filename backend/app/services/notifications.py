@@ -26,6 +26,10 @@ async def notify(
     report_id: uuid.UUID | None = None,
     params: dict[str, str | None] | None = None,
 ) -> None:
+    from app.services import platform  # A29: messages switched off for everyone aren't made
+
+    if kind != "announcement" and not (await platform.notification_rules(db)).allows(kind):
+        return
     clean = {k: str(v) for k, v in (params or {}).items() if v not in (None, "")}
     for user_id in dict.fromkeys(u for u in to if u and u != actor_id):
         db.add(

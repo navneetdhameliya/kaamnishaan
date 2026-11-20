@@ -8130,4 +8130,296 @@ abstract final class LangKeys {
   static const adminInStDraft = 'admin.in.st.draft';
   /// Industry pages on the website come later. Ready-made checklists are managed in Checklist templates.
   static const adminInNote = 'admin.in.note';
+  /// Help
+  static const helpTitle = 'help.title';
+  /// Ask KaamNishaan support
+  static const helpSubtitle = 'help.subtitle';
+  /// New help request
+  static const helpNew = 'help.new';
+  /// No help requests yet
+  static const helpEmpty = 'help.empty';
+  /// Something not working, or a question? Send us a message and we'll reply here.
+  static const helpEmptyBody = 'help.empty_body';
+  /// Your requests
+  static const helpYourRequests = 'help.your_requests';
+  /// Open
+  static const helpStatusOpen = 'help.status_open';
+  /// Support replied
+  static const helpStatusWaiting = 'help.status_waiting';
+  /// Solved
+  static const helpStatusSolved = 'help.status_solved';
+  /// You
+  static const helpYou = 'help.you';
+  /// KaamNishaan support
+  static const helpSupport = 'help.support';
+  /// Something isn't working
+  static const helpCatProblem = 'help.cat_problem';
+  /// A screen, photo, report or message that doesn't work.
+  static const helpCatProblemHint = 'help.cat_problem_hint';
+  /// A question
+  static const helpCatQuestion = 'help.cat_question';
+  /// How to do something in the app.
+  static const helpCatQuestionHint = 'help.cat_question_hint';
+  /// Plan or billing
+  static const helpCatBilling = 'help.cat_billing';
+  /// Your plan, credits or a payment.
+  static const helpCatBillingHint = 'help.cat_billing_hint';
+  /// An idea
+  static const helpCatFeature = 'help.cat_feature';
+  /// Something you'd like the app to do.
+  static const helpCatFeatureHint = 'help.cat_feature_hint';
+  /// New help request
+  static const helpNewTitle = 'help.new_title';
+  /// Our team reads every message and replies here, usually within one working day.
+  static const helpNewBody = 'help.new_body';
+  /// What is it about?
+  static const helpAbout = 'help.about';
+  /// Subject
+  static const helpSubject = 'help.subject';
+  /// For example: Report stuck on "Making your report"
+  static const helpSubjectHint = 'help.subject_hint';
+  /// Message
+  static const helpMessage = 'help.message';
+  /// What happened? Which job or screen? The more you tell us, the faster we can help.
+  static const helpMessageHint = 'help.message_hint';
+  /// Send
+  static const helpSend = 'help.send';
+  /// Sent. We'll reply here.
+  static const helpSent = 'help.sent';
+  /// Write a short subject (3 letters or more).
+  static const helpErrSubject = 'help.err_subject';
+  /// Tell us a little more (10 letters or more).
+  static const helpErrMessage = 'help.err_message';
+  /// We'll reply here. You'll also get a message in Messages.
+  static const helpNoteOpen = 'help.note_open';
+  /// Support replied. Write back, or tap "It's sorted" if all is well.
+  static const helpNoteWaiting = 'help.note_waiting';
+  /// Marked as sorted. Write again any time to open it.
+  static const helpNoteSolved = 'help.note_solved';
+  /// It's sorted
+  static const helpSolve = 'help.solve';
+  /// Thanks! Marked as sorted.
+  static const helpSolvedToast = 'help.solved_toast';
+  /// Write a reply…
+  static const helpReplyHint = 'help.reply_hint';
+  /// Write to open it again…
+  static const helpReplyReopen = 'help.reply_reopen';
+  /// Send reply
+  static const helpSendReply = 'help.send_reply';
+  /// Support replied
+  static const msgSupportTitle = 'msg.support_title';
+  /// About "{subject}". Tap to read.
+  static const msgSupportBody = 'msg.support_body';
+  /// Help & messages
+  static const adminNavHelp = 'admin.nav.help';
+  /// Support tickets
+  static const adminNavSupport = 'admin.nav.support';
+  /// Notifications
+  static const adminNavNotifications = 'admin.nav.notifications';
+  /// Ticket status
+  static const adminSuTabs = 'admin.su.tabs';
+  /// Open
+  static const adminSuTabOpen = 'admin.su.tab.open';
+  /// Waiting on them
+  static const adminSuTabWaiting = 'admin.su.tab.waiting';
+  /// Solved
+  static const adminSuTabSolved = 'admin.su.tab.solved';
+  /// All
+  static const adminSuTabAll = 'admin.su.tab.all';
+  /// {n} urgent
+  static const adminSuHighN = 'admin.su.high_n';
+  /// Urgent
+  static const adminSuHigh = 'admin.su.high';
+  /// Open · {ago}
+  static const adminSuStOpenFor = 'admin.su.st.open_for';
+  /// Waiting on them
+  static const adminSuStWaiting = 'admin.su.st.waiting';
+  /// Solved
+  static const adminSuStSolved = 'admin.su.st.solved';
+  /// Search ticket, subject or company
+  static const adminSuSearch = 'admin.su.search';
+  /// No open help requests. Nice work.
+  static const adminSuEmptyOpen = 'admin.su.empty_open';
+  /// No tickets match.
+  static const adminSuEmpty = 'admin.su.empty';
+  /// Pick a ticket to read it and reply.
+  static const adminSuPick = 'admin.su.pick';
+  /// All tickets
+  static const adminSuBack = 'admin.su.back';
+  /// Something isn’t working
+  static const adminSuCatProblem = 'admin.su.cat.problem';
+  /// Question
+  static const adminSuCatQuestion = 'admin.su.cat.question';
+  /// Billing
+  static const adminSuCatBilling = 'admin.su.cat.billing';
+  /// Idea
+  static const adminSuCatFeature = 'admin.su.cat.feature';
+  /// Job {n}
+  static const adminSuJob = 'admin.su.job';
+  /// App {v}
+  static const adminSuApp = 'admin.su.app';
+  /// Customer
+  static const adminSuSomeone = 'admin.su.someone';
+  /// Reply from {who}
+  static const adminSuReplyBy = 'admin.su.reply_by';
+  /// Internal note by {who}
+  static const adminSuNoteBy = 'admin.su.note_by';
+  /// Reply
+  static const adminSuReply = 'admin.su.reply';
+  /// Reply
+  static const adminSuTabReply = 'admin.su.tab_reply';
+  /// Internal note
+  static const adminSuTabNote = 'admin.su.tab_note';
+  /// Write your reply…
+  static const adminSuReplyHint = 'admin.su.reply_hint';
+  /// Only staff will see this…
+  static const adminSuNoteHint = 'admin.su.note_hint';
+  /// They’ll see it in the app’s Help and get a message.
+  static const adminSuReplyInfo = 'admin.su.reply_info';
+  /// Not shown to the customer.
+  static const adminSuNoteInfo = 'admin.su.note_info';
+  /// Send reply
+  static const adminSuSend = 'admin.su.send';
+  /// Add note
+  static const adminSuAddNote = 'admin.su.add_note';
+  /// Send and mark solved
+  static const adminSuSendSolve = 'admin.su.send_solve';
+  /// Mark solved
+  static const adminSuMarkSolved = 'admin.su.mark_solved';
+  /// Open again
+  static const adminSuReopen = 'admin.su.reopen';
+  /// Mark urgent
+  static const adminSuMakeHigh = 'admin.su.make_high';
+  /// Not urgent
+  static const adminSuNormal = 'admin.su.normal';
+  /// You can see these settings. An admin can change them.
+  static const adminNoReadOnly = 'admin.no.read_only';
+  /// Automatic messages
+  static const adminNoAuto = 'admin.no.auto';
+  /// Turned off here, a message stops for every company.
+  static const adminNoAutoSub = 'admin.no.auto_sub';
+  /// Saved.
+  static const adminNoSaved = 'admin.no.saved';
+  /// In the app
+  static const adminNoInApp = 'admin.no.in_app';
+  /// Email · needs an email service (not connected)
+  static const adminNoNeedsEmail = 'admin.no.needs_email';
+  /// To the technician
+  static const adminNoToTechnician = 'admin.no.to.technician';
+  /// To owners and managers
+  static const adminNoToOffice = 'admin.no.to.office';
+  /// To the owner
+  static const adminNoToOwner = 'admin.no.to.owner';
+  /// To the person who asked
+  static const adminNoToPerson = 'admin.no.to.person';
+  /// New job given
+  static const adminNoKindJobAssigned = 'admin.no.kind.job_assigned';
+  /// Report waiting for approval
+  static const adminNoKindReportSubmitted = 'admin.no.kind.report_submitted';
+  /// Report needs changes
+  static const adminNoKindChangesRequested = 'admin.no.kind.changes_requested';
+  /// Report approved
+  static const adminNoKindReportApproved = 'admin.no.kind.report_approved';
+  /// Report sent to the customer
+  static const adminNoKindReportShared = 'admin.no.kind.report_shared';
+  /// Customer left a rating
+  static const adminNoKindReviewReceived = 'admin.no.kind.review_received';
+  /// Low rating (1–3 stars)
+  static const adminNoKindLowRating = 'admin.no.kind.low_rating';
+  /// Support replied
+  static const adminNoKindSupportReply = 'admin.no.kind.support_reply';
+  /// Plan limit almost reached
+  static const adminNoKindPlanLimit = 'admin.no.kind.plan_limit';
+  /// Free trial ending
+  static const adminNoKindTrialEnding = 'admin.no.kind.trial_ending';
+  /// Weekly summary
+  static const adminNoKindWeeklySummary = 'admin.no.kind.weekly_summary';
+  /// Send an announcement
+  static const adminNoAnnounce = 'admin.no.announce';
+  /// Shows in the app’s Messages, in each person’s language.
+  static const adminNoAnnounceSub = 'admin.no.announce_sub';
+  /// Who gets it
+  static const adminNoAudience = 'admin.no.audience';
+  /// Everyone
+  static const adminNoAudEveryone = 'admin.no.aud.everyone';
+  /// Owners and managers
+  static const adminNoAudOwnersManagers = 'admin.no.aud.owners_managers';
+  /// Owners only
+  static const adminNoAudOwners = 'admin.no.aud.owners';
+  /// One company
+  static const adminNoAudCompany = 'admin.no.aud.company';
+  /// {who} ({n} people)
+  static const adminNoAudN = 'admin.no.aud_n';
+  /// Company
+  static const adminNoCompany = 'admin.no.company';
+  /// Type at least 2 letters
+  static const adminNoCompanyHint = 'admin.no.company_hint';
+  /// Pick another company
+  static const adminNoChangeCompany = 'admin.no.change_company';
+  /// Language
+  static const adminNoLanguage = 'admin.no.language';
+  /// English is needed. People whose language you leave empty get the English text.
+  static const adminNoLangHint = 'admin.no.lang_hint';
+  /// Title
+  static const adminNoTitle = 'admin.no.title';
+  /// e.g. New: add photos from the gallery
+  static const adminNoTitleHint = 'admin.no.title_hint';
+  /// Message
+  static const adminNoBody = 'admin.no.body';
+  /// Keep it short and clear.
+  static const adminNoBodyHint = 'admin.no.body_hint';
+  /// When
+  static const adminNoWhen = 'admin.no.when';
+  /// Send now
+  static const adminNoNow = 'admin.no.now';
+  /// Schedule
+  static const adminNoLater = 'admin.no.later';
+  /// Send on
+  static const adminNoSendAt = 'admin.no.send_at';
+  /// Reaches {n} people now.
+  static const adminNoReach = 'admin.no.reach';
+  /// Reaches everyone in the company.
+  static const adminNoReachCompany = 'admin.no.reach_company';
+  /// Send
+  static const adminNoSend = 'admin.no.send';
+  /// Schedule
+  static const adminNoSchedule = 'admin.no.schedule';
+  /// Sent to {n} people.
+  static const adminNoSent = 'admin.no.sent';
+  /// Scheduled. It goes out at the time you picked.
+  static const adminNoScheduled = 'admin.no.scheduled';
+  /// Check the title, message and company.
+  static const adminNoCheck = 'admin.no.check';
+  /// Recent announcements
+  static const adminNoRecent = 'admin.no.recent';
+  /// No announcements yet.
+  static const adminNoNone = 'admin.no.none';
+  /// Sent
+  static const adminNoStateSent = 'admin.no.state.sent';
+  /// Scheduled
+  static const adminNoStateScheduled = 'admin.no.state.scheduled';
+  /// Cancelled
+  static const adminNoStateCancelled = 'admin.no.state.cancelled';
+  /// {n} people
+  static const adminNoSentTo = 'admin.no.sent_to';
+  /// {n} languages
+  static const adminNoLangs = 'admin.no.langs';
+  /// Cancel
+  static const adminNoCancel = 'admin.no.cancel';
+  /// Replied to a help request
+  static const adminAuASupportReplied = 'admin.au.a.support.replied';
+  /// Added a note to a help request
+  static const adminAuASupportNote = 'admin.au.a.support.note';
+  /// Changed a help request
+  static const adminAuASupportUpdated = 'admin.au.a.support.updated';
+  /// Changed automatic messages
+  static const adminAuANotificationsRules = 'admin.au.a.notifications.rules';
+  /// Sent an announcement
+  static const adminAuAAnnouncementCreated = 'admin.au.a.announcement.created';
+  /// Cancelled an announcement
+  static const adminAuAAnnouncementCancelled = 'admin.au.a.announcement.cancelled';
+  /// Help request
+  static const adminAuTSupportTicket = 'admin.au.t.support_ticket';
+  /// Announcement
+  static const adminAuTAnnouncement = 'admin.au.t.announcement';
 }

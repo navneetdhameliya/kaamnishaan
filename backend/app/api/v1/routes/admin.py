@@ -99,6 +99,15 @@ from app.schemas.staff import (
     StaffSetupInfo,
     StaffSetupOut,
 )
+from app.schemas.support import (
+    AdminAnnouncementIn,
+    AdminNotificationsOut,
+    AdminRulesIn,
+    AdminTicketDetail,
+    AdminTicketList,
+    AdminTicketPatch,
+    AdminTicketReply,
+)  # fmt: skip
 from app.services import (
     admin_ai,
     admin_ai_calls,
@@ -118,6 +127,7 @@ from app.services import (
     admin_reports,
     admin_reviews,
     admin_staff,
+    admin_support,
     admin_users,
     ai_calls,
     audit,
@@ -1372,3 +1382,112 @@ async def save_industry(
     """Names, sign-up visibility (draft = hidden; companies already in it keep it) and order. Audited."""
     _can_change(me)
     return await admin_ai_config.save_industry(db, slug, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+# ---- A28 Support tickets, A29 Notifications -----------------------------------------------------------
+@router.get("/support", response_model=AdminTicketList)
+async def support_tickets(
+    tab: Literal["open", "waiting", "solved", "all"] = "open",
+    q: str | None = Query(None, max_length=120),
+    page: int = Query(1, ge=1, le=10_000),
+    page_size: int = Query(25, ge=5, le=100),
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminTicketList:
+    """Help requests from the app: high priority first, then the ones waiting longest for us."""
+    return await admin_support.tickets(db, tab=tab, q=q, page=page, page_size=page_size)
+
+
+@router.get("/support.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
+async def support_csv(
+    tab: Literal["open", "waiting", "solved", "all"] = "all",
+    q: str | None = Query(None, max_length=120),
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> Response:
+    body = await admin_support.tickets_csv(db, tab=tab, q=q)
+    await audit.record(db, "staff.export", staff_id=me.staff.id, target_type="support_tickets",
+                       data={k: v for k, v in {"tab": tab, "q": q}.items() if v})  # fmt: skip
+    return Response(
+        body,
+        media_type="text/csv; charset=utf-8",
+        headers={
+            "Content-Disposition": f'attachment; filename="kaamnishaan-support-{now():%Y-%m-%d}.csv"',
+            "Cache-Control": "no-store",
+        },
+    )
+
+
+@router.get("/support/{ticket_id}", response_model=AdminTicketDetail)
+async def support_ticket(
+    ticket_id: uuid.UUID,
+    locale: Locale = "en",
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminTicketDetail:
+    """The ticket, the person and company, and every message (staff notes included)."""
+    return await admin_support.ticket(db, ticket_id, locale)
+
+
+@router.post("/support/{ticket_id}/messages", response_model=AdminTicketDetail)
+async def support_reply(
+    ticket_id: uuid.UUID, body: AdminTicketReply, request: Request, locale: Locale = "en",
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminTicketDetail:  # fmt: skip
+    """Reply (the person sees it in the app; the ticket then waits on them) or add a staff-only note."""
+    return await admin_support.staff_reply(
+        db, ticket_id, body.body, internal=body.internal, solve=body.solve, staff_id=me.staff.id,
+        ip=client_ip(request), lang=locale,
+    )  # fmt: skip
+
+
+@router.patch("/support/{ticket_id}", response_model=AdminTicketDetail)
+async def support_change(
+    ticket_id: uuid.UUID, body: AdminTicketPatch, request: Request, locale: Locale = "en",
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminTicketDetail:  # fmt: skip
+    """Status (open, waiting, solved) and priority. Audited."""
+    return await admin_support.change(
+        db, ticket_id, status=body.status, priority=body.priority, staff_id=me.staff.id,
+        ip=client_ip(request), lang=locale,
+    )  # fmt: skip
+
+
+@router.get("/notifications", response_model=AdminNotificationsOut)
+async def admin_notifications(
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminNotificationsOut:
+    """Automatic messages (on/off for everyone) and announcements."""
+    return await admin_support.overview(db, can_act=me.staff.role in ("super_admin", "admin"))
+
+
+@router.put("/notifications/rules", response_model=AdminNotificationsOut)
+async def notification_rules(
+    body: AdminRulesIn, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminNotificationsOut:
+    _can_change(me)
+    return await admin_support.save_rules(db, body.on, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.post("/announcements", response_model=AdminNotificationsOut, status_code=201)
+async def announce(
+    body: AdminAnnouncementIn,
+    request: Request,
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminNotificationsOut:
+    """Sends now (empty send_at) or at a time; it lands in each person's Messages in their language."""
+    _can_change(me)
+    return await admin_support.announce(db, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.delete("/announcements/{announcement_id}", response_model=AdminNotificationsOut)
+async def cancel_announcement(
+    announcement_id: uuid.UUID,
+    request: Request,
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminNotificationsOut:
+    """Cancel a scheduled announcement before it goes."""
+    _can_change(me)
+    return await admin_support.cancel(db, announcement_id, staff_id=me.staff.id, ip=client_ip(request))

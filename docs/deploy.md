@@ -137,7 +137,7 @@ rating link goes by SMS instead, D-115).
    - `KN_API_URL` = the API address, e.g. `https://kaamnishaan-api.onrender.com`
    - `KN_CRON_KEY` = the same key as on Render
 4. GitHub → **Actions → Scheduler → Run workflow** once to check it. The log ends with
-   `{"reminders_sent": …, "calls_handled": …}`.
+   `{"reminders_sent": …, "calls_handled": …, "announcements_sent": …}` (scheduled announcements, A29, go out on the same run).
 
 Without the two secrets the workflow does nothing (it doesn't fail).
 

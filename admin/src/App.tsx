@@ -30,6 +30,8 @@ import { AiUsage } from './pages/AiUsage';
 import { ExportReviews, Reviews } from './pages/Reviews';
 import { Templates } from './pages/Templates';
 import { Leads } from './pages/Leads';
+import { Notifications } from './pages/Notifications';
+import { ExportSupport, Support } from './pages/Support';
 import { Forgot, Login } from './pages/Login';
 import { Setup } from './pages/Setup';
 import { UserDetail } from './pages/UserDetail';
@@ -110,6 +112,8 @@ export default function App() {
   else if (nav.key === 'checklists') page = sub ? <ChecklistEditor key={sub} t={t} lang={lang} id={sub} onName={onName} /> : <ChecklistTemplates key="cl" t={t} lang={lang} />;
   else if (nav.key === 'audit') page = <AuditLogs key="audit" t={t} lang={lang} />;
   else if (nav.key === 'leads') page = <Leads key="leads" t={t} lang={lang} id={sub} />;
+  else if (nav.key === 'support') page = <Support key="support" t={t} lang={lang} id={sub} />;
+  else if (nav.key === 'notifications') page = <Notifications key="notifications" t={t} lang={lang} />;
   else if (userId) page = <UserDetail key={userId} t={t} lang={lang} id={userId} onName={onName} />;
   else page = <Users key={path} t={t} lang={lang} />;
   return (
@@ -119,9 +123,9 @@ export default function App() {
       onLang={setLang}
       path={path}
       staff={sess.staff}
-      crumb={sub && nav.key !== 'leads' ? `${t(`admin.nav.${nav.section}`)} / ${name}` : t(`admin.nav.${nav.section}`)}
-      title={sub && nav.key !== 'leads' ? pageName || name : name}
-      actions={nav.key === 'dashboard' || nav.key === 'ai_usage' ? <RangeSelect t={t} days={days} onChange={setDays} /> : nav.key === 'reviews' ? <ExportReviews t={t} /> : nav.key === 'jobs' && !sub ? <ExportJobs t={t} /> : nav.key === 'reports' && !sub ? <ExportReports t={t} /> : nav.key === 'subscriptions' ? <ExportSubscriptions t={t} lang={lang} /> : undefined}
+      crumb={sub && nav.key !== 'leads' && nav.key !== 'support' ? `${t(`admin.nav.${nav.section}`)} / ${name}` : t(`admin.nav.${nav.section}`)}
+      title={sub && nav.key !== 'leads' && nav.key !== 'support' ? pageName || name : name}
+      actions={nav.key === 'dashboard' || nav.key === 'ai_usage' ? <RangeSelect t={t} days={days} onChange={setDays} /> : nav.key === 'reviews' ? <ExportReviews t={t} /> : nav.key === 'jobs' && !sub ? <ExportJobs t={t} /> : nav.key === 'reports' && !sub ? <ExportReports t={t} /> : nav.key === 'subscriptions' ? <ExportSubscriptions t={t} lang={lang} /> : nav.key === 'support' ? <ExportSupport t={t} /> : undefined}
     >
       {page}
     </Shell>

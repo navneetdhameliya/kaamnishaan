@@ -10,7 +10,7 @@ import '../../../../infrastructure/shared/job_arguments.dart';
 import '../../../../infrastructure/shared/time_utils.dart';
 import '../../../common_widgets/kn_toast.dart';
 
-enum MessageTone { job, review, problem, done }
+enum MessageTone { job, review, problem, done, news }
 
 /// M42 Messages: new jobs and what happened to reports, newest first, grouped by day. The sentence is
 /// written here, in the app's language, from what the server sends (`kind` and the names in `params`).
@@ -87,8 +87,16 @@ class MessagesController extends GetxController {
         'changes_requested' => LangKeys.msgChangesTitle.tr,
         'review_received' => LangKeys.msgReviewTitle.tr,
         'low_rating' => LangKeys.msgLowTitle.tr,
+        'support_reply' => LangKeys.msgSupportTitle.tr,
+        'announcement' => _inLanguage(n, 'title'),
         _ => LangKeys.msgApprovedTitle.tr,
       };
+
+  /// A29 announcements carry their text in each language ("title_hi"); English when there is none.
+  String _inLanguage(NotificationOutModel n, String part) {
+    final mine = _p(n, '${part}_$_code');
+    return mine.isNotEmpty ? mine : _p(n, '${part}_en');
+  }
 
   DateTime? _scheduled(NotificationOutModel n) => DateTime.tryParse(_p(n, 'scheduled_at'));
 
@@ -120,6 +128,10 @@ class MessagesController extends GetxController {
         return LangKeys.msgReviewBody.trParams({'customer': customer, 'n': _p(n, 'rating')});
       case 'low_rating':
         return LangKeys.msgLowBody.trParams({'customer': customer, 'n': _p(n, 'rating')});
+      case 'support_reply':
+        return LangKeys.msgSupportBody.trParams({'subject': _p(n, 'subject')});
+      case 'announcement':
+        return _inLanguage(n, 'body');
       default:
         return LangKeys.msgApprovedBody.trParams({'customer': customer});
     }
@@ -139,11 +151,17 @@ class MessagesController extends GetxController {
         'job_assigned' => MessageTone.job,
         'report_submitted' => MessageTone.review,
         'changes_requested' || 'low_rating' => MessageTone.problem,
+        'support_reply' || 'announcement' => MessageTone.news,
         _ => MessageTone.done,
       };
 
   /// Opens what the message is about: the job, its proof (to fix it) or the report.
   Future<void> onOpen(NotificationOutModel n) async {
+    if (n.kind == 'support_reply') {
+      final ticket = _p(n, 'ticket_id');
+      if (ticket.isNotEmpty) await Get.toNamed(RoutesConstants.helpTicketScreen, arguments: ticket);
+      return;
+    }
     final job = n.jobId;
     if (job == null) return;
     final customer = _p(n, 'customer');
