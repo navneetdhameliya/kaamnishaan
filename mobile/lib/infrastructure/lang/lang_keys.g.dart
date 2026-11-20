@@ -6074,4 +6074,160 @@ abstract final class LangKeys {
   static const adminAuViaCommandLine = 'admin.au.via.command_line';
   /// Server start
   static const adminAuViaStartUp = 'admin.au.via.start_up';
+  /// New template
+  static const adminClNew = 'admin.cl.new';
+  /// Global templates
+  static const adminClTabAll = 'admin.cl.tab.all';
+  /// By trade
+  static const adminClTabByTrade = 'admin.cl.tab.by_trade';
+  /// Needs translation
+  static const adminClTabNeedsTranslation = 'admin.cl.tab.needs_translation';
+  /// Drafts
+  static const adminClTabDrafts = 'admin.cl.tab.drafts';
+  /// Search templates
+  static const adminClSearch = 'admin.cl.search';
+  /// Trade
+  static const adminClFTrade = 'admin.cl.f_trade';
+  /// Language status
+  static const adminClFLang = 'admin.cl.f_lang';
+  /// A language is missing
+  static const adminClLsMissing = 'admin.cl.ls.missing';
+  /// Needs checking
+  static const adminClLsReview = 'admin.cl.ls.review';
+  /// Has checked languages
+  static const adminClLsReady = 'admin.cl.ls.ready';
+  /// Template
+  static const adminClCTemplate = 'admin.cl.c_template';
+  /// Trade
+  static const adminClCTrade = 'admin.cl.c_trade';
+  /// Questions
+  static const adminClCQuestions = 'admin.cl.c_questions';
+  /// Translations
+  static const adminClCTranslations = 'admin.cl.c_translations';
+  /// Used by
+  static const adminClCUsed = 'admin.cl.c_used';
+  /// Updated
+  static const adminClCUpdated = 'admin.cl.c_updated';
+  /// {n} questions
+  static const adminClNQuestions = 'admin.cl.n_questions';
+  /// 1 question
+  static const adminClNQuestionsOne = 'admin.cl.n_questions_one';
+  /// {n} need photos
+  static const adminClNPhotos = 'admin.cl.n_photos';
+  /// 5 of 5 languages
+  static const adminClLangsAll = 'admin.cl.langs_all';
+  /// {n} of 5 · {missing} missing
+  static const adminClLangsSome = 'admin.cl.langs_some';
+  /// {langs} to check
+  static const adminClLangsReview = 'admin.cl.langs_review';
+  /// Draft
+  static const adminClStDraft = 'admin.cl.st.draft';
+  /// Published
+  static const adminClStPublished = 'admin.cl.st.published';
+  /// Archived
+  static const adminClStArchived = 'admin.cl.st.archived';
+  /// No templates match.
+  static const adminClEmpty = 'admin.cl.empty';
+  /// Checklist templates
+  static const adminClBack = 'admin.cl.back';
+  /// New checklist template
+  static const adminClCreateTitle = 'admin.cl.create_title';
+  /// Write it in English. Other languages are added after.
+  static const adminClCreateBody = 'admin.cl.create_body';
+  /// Name (English)
+  static const adminClName = 'admin.cl.name';
+  /// Name in {lang}
+  static const adminClNameIn = 'admin.cl.name_in';
+  /// Minutes to fill
+  static const adminClMinutes = 'admin.cl.minutes';
+  /// Create draft
+  static const adminClCreate = 'admin.cl.create';
+  /// Used by {n} companies
+  static const adminClUsedBy = 'admin.cl.used_by';
+  /// Publish
+  static const adminClPublish = 'admin.cl.publish';
+  /// Move to draft
+  static const adminClUnpublish = 'admin.cl.unpublish';
+  /// Archive
+  static const adminClArchive = 'admin.cl.archive';
+  /// Draft: companies don’t see it yet. Publish when the questions are ready.
+  static const adminClDraftNote = 'admin.cl.draft_note';
+  /// Published: companies can pick it for new jobs. Changes never touch jobs that already have it.
+  static const adminClLiveNote = 'admin.cl.live_note';
+  /// Translate missing with AI
+  static const adminClTranslate = 'admin.cl.translate';
+  /// {n} questions sent for translation. Refresh in a minute.
+  static const adminClTranslateSent = 'admin.cl.translate_sent';
+  /// Nothing is missing.
+  static const adminClTranslateNone = 'admin.cl.translate_none';
+  /// AI isn’t set up (KN_OPENAI_API_KEY), so translations can only be typed here.
+  static const adminClNoAi = 'admin.cl.no_ai';
+  /// Mark all {lang} as checked
+  static const adminClApprove = 'admin.cl.approve';
+  /// Written in
+  static const adminClSource = 'admin.cl.source';
+  /// Checked
+  static const adminClLstateReady = 'admin.cl.lstate.ready';
+  /// Machine translated · check
+  static const adminClLstateReview = 'admin.cl.lstate.review';
+  /// Missing
+  static const adminClLstateMissing = 'admin.cl.lstate.missing';
+  /// Translation
+  static const adminClTranslation = 'admin.cl.translation';
+  /// Save translation
+  static const adminClSaveTr = 'admin.cl.save_tr';
+  /// Help text (optional)
+  static const adminClHelp = 'admin.cl.help';
+  /// Choices
+  static const adminClOptions = 'admin.cl.options';
+  /// Add choice
+  static const adminClAddOption = 'admin.cl.add_option';
+  /// Remove choice {n}
+  static const adminClRemoveOption = 'admin.cl.remove_option';
+  /// Lowest
+  static const adminClMin = 'admin.cl.min';
+  /// Highest
+  static const adminClMax = 'admin.cl.max';
+  /// Photo
+  static const adminClPhoto = 'admin.cl.photo';
+  /// No photo needed
+  static const adminClPhotoNone = 'admin.cl.photo_none';
+  /// Must be answered
+  static const adminClRequired = 'admin.cl.required';
+  /// Optional
+  static const adminClOptional = 'admin.cl.optional';
+  /// Show only if
+  static const adminClShowIf = 'admin.cl.show_if';
+  /// Always show
+  static const adminClAlways = 'admin.cl.always';
+  /// answer is
+  static const adminClAnswerIs = 'admin.cl.answer_is';
+  /// Shown if Q{n} is “{v}”
+  static const adminClShownIf = 'admin.cl.shown_if';
+  /// Edit
+  static const adminClEdit = 'admin.cl.edit';
+  /// Cancel
+  static const adminClCancel = 'admin.cl.cancel';
+  /// Delete this question? Jobs that already have it keep it.
+  static const adminClDeleteConfirm = 'admin.cl.delete_confirm';
+  /// Yes
+  static const adminClYes = 'admin.cl.yes';
+  /// No
+  static const adminClNo = 'admin.cl.no';
+  /// Pass
+  static const adminClPass = 'admin.cl.pass';
+  /// Fail
+  static const adminClFail = 'admin.cl.fail';
+  /// Questions are written in English. Switch to English to add or change them.
+  static const adminClOnlySource = 'admin.cl.only_source';
+  /// Support staff can look but not change checklists.
+  static const adminClReadOnly = 'admin.cl.read_only';
+  /// This checklist doesn’t exist any more.
+  static const adminClNotFound = 'admin.cl.not_found';
+  /// Saved
+  static const adminClSaved = 'admin.cl.saved';
+  /// Languages
+  static const adminClLanguages = 'admin.cl.languages';
+  /// Mark as checked
+  static const adminClMarkChecked = 'admin.cl.mark_checked';
 }

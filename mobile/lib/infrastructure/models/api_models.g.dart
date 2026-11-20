@@ -263,6 +263,383 @@ class AdminAuditRowModel {
       };
 }
 
+AdminChecklistApproveModel adminChecklistApproveModelFromJson(String str) => AdminChecklistApproveModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminChecklistApproveModelToJson(AdminChecklistApproveModel data) => json.encode(data.toJson());
+
+class AdminChecklistApproveModel {
+  /// One of: en, hi, gu, es, fr
+  final String language;
+
+  const AdminChecklistApproveModel({
+    required this.language,
+  });
+
+  factory AdminChecklistApproveModel.fromJson(Map<String, dynamic> json) => AdminChecklistApproveModel(
+        language: json['language'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'language': language,
+      };
+}
+
+AdminChecklistCountsModel adminChecklistCountsModelFromJson(String str) => AdminChecklistCountsModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminChecklistCountsModelToJson(AdminChecklistCountsModel data) => json.encode(data.toJson());
+
+class AdminChecklistCountsModel {
+  final int all;
+  final int drafts;
+  final int needsTranslation;
+
+  const AdminChecklistCountsModel({
+    required this.all,
+    required this.drafts,
+    required this.needsTranslation,
+  });
+
+  factory AdminChecklistCountsModel.fromJson(Map<String, dynamic> json) => AdminChecklistCountsModel(
+        all: (json['all'] as num).toInt(),
+        drafts: (json['drafts'] as num).toInt(),
+        needsTranslation: (json['needs_translation'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'all': all,
+        'drafts': drafts,
+        'needs_translation': needsTranslation,
+      };
+}
+
+AdminChecklistCreateModel adminChecklistCreateModelFromJson(String str) => AdminChecklistCreateModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminChecklistCreateModelToJson(AdminChecklistCreateModel data) => json.encode(data.toJson());
+
+class AdminChecklistCreateModel {
+  final int? minutes;
+  /// In English (the source language)
+  final String name;
+  final String trade;
+
+  const AdminChecklistCreateModel({
+    this.minutes,
+    required this.name,
+    required this.trade,
+  });
+
+  factory AdminChecklistCreateModel.fromJson(Map<String, dynamic> json) => AdminChecklistCreateModel(
+        minutes: json['minutes'] == null ? null : (json['minutes'] as num).toInt(),
+        name: json['name'] as String,
+        trade: json['trade'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'minutes': minutes,
+        'name': name,
+        'trade': trade,
+      };
+}
+
+AdminChecklistDetailModel adminChecklistDetailModelFromJson(String str) => AdminChecklistDetailModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminChecklistDetailModelToJson(AdminChecklistDetailModel data) => json.encode(data.toJson());
+
+class AdminChecklistDetailModel {
+  /// False when no AI key is set: translations can only be typed
+  final bool aiAvailable;
+  final String id;
+  final String? key;
+  final Map<String, dynamic> languages;
+  final int? minutes;
+  final Map<String, dynamic> name;
+  final List<AdminChecklistQuestionModel> questions;
+  final String sourceLanguage;
+  /// One of: draft, published, archived
+  final String status;
+  final String? trade;
+  final String? tradeName;
+  final List<AdminOptionModel> trades;
+  final DateTime updatedAt;
+  final int usedBy;
+  final int version;
+
+  const AdminChecklistDetailModel({
+    required this.aiAvailable,
+    required this.id,
+    this.key,
+    required this.languages,
+    this.minutes,
+    required this.name,
+    required this.questions,
+    required this.sourceLanguage,
+    required this.status,
+    this.trade,
+    this.tradeName,
+    required this.trades,
+    required this.updatedAt,
+    required this.usedBy,
+    required this.version,
+  });
+
+  factory AdminChecklistDetailModel.fromJson(Map<String, dynamic> json) => AdminChecklistDetailModel(
+        aiAvailable: json['ai_available'] as bool,
+        id: json['id'] as String,
+        key: json['key'] as String?,
+        languages: Map<String, dynamic>.from(json['languages'] as Map),
+        minutes: json['minutes'] == null ? null : (json['minutes'] as num).toInt(),
+        name: Map<String, dynamic>.from(json['name'] as Map),
+        questions: (json['questions'] as List).map((e) => AdminChecklistQuestionModel.fromJson(e as Map<String, dynamic>)).toList(),
+        sourceLanguage: json['source_language'] as String,
+        status: json['status'] as String,
+        trade: json['trade'] as String?,
+        tradeName: json['trade_name'] as String?,
+        trades: (json['trades'] as List).map((e) => AdminOptionModel.fromJson(e as Map<String, dynamic>)).toList(),
+        updatedAt: DateTime.parse(json['updated_at'] as String),
+        usedBy: (json['used_by'] as num).toInt(),
+        version: (json['version'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ai_available': aiAvailable,
+        'id': id,
+        'key': key,
+        'languages': languages,
+        'minutes': minutes,
+        'name': name,
+        'questions': questions.map((e) => e.toJson()).toList(),
+        'source_language': sourceLanguage,
+        'status': status,
+        'trade': trade,
+        'trade_name': tradeName,
+        'trades': trades.map((e) => e.toJson()).toList(),
+        'updated_at': updatedAt.toIso8601String(),
+        'used_by': usedBy,
+        'version': version,
+      };
+}
+
+AdminChecklistListModel adminChecklistListModelFromJson(String str) => AdminChecklistListModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminChecklistListModelToJson(AdminChecklistListModel data) => json.encode(data.toJson());
+
+class AdminChecklistListModel {
+  final AdminChecklistCountsModel counts;
+  final List<AdminChecklistRowModel> items;
+  final int total;
+  final List<AdminOptionModel> trades;
+
+  const AdminChecklistListModel({
+    required this.counts,
+    required this.items,
+    required this.total,
+    required this.trades,
+  });
+
+  factory AdminChecklistListModel.fromJson(Map<String, dynamic> json) => AdminChecklistListModel(
+        counts: AdminChecklistCountsModel.fromJson(json['counts'] as Map<String, dynamic>),
+        items: (json['items'] as List).map((e) => AdminChecklistRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        total: (json['total'] as num).toInt(),
+        trades: (json['trades'] as List).map((e) => AdminOptionModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'counts': counts.toJson(),
+        'items': items.map((e) => e.toJson()).toList(),
+        'total': total,
+        'trades': trades.map((e) => e.toJson()).toList(),
+      };
+}
+
+AdminChecklistOptionModel adminChecklistOptionModelFromJson(String str) => AdminChecklistOptionModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminChecklistOptionModelToJson(AdminChecklistOptionModel data) => json.encode(data.toJson());
+
+class AdminChecklistOptionModel {
+  final String key;
+  final Map<String, dynamic> label;
+
+  const AdminChecklistOptionModel({
+    required this.key,
+    required this.label,
+  });
+
+  factory AdminChecklistOptionModel.fromJson(Map<String, dynamic> json) => AdminChecklistOptionModel(
+        key: json['key'] as String,
+        label: Map<String, dynamic>.from(json['label'] as Map),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'key': key,
+        'label': label,
+      };
+}
+
+AdminChecklistPatchModel adminChecklistPatchModelFromJson(String str) => AdminChecklistPatchModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminChecklistPatchModelToJson(AdminChecklistPatchModel data) => json.encode(data.toJson());
+
+class AdminChecklistPatchModel {
+  final int? minutes;
+  final String? name;
+  /// The name in other languages
+  final Map<String, dynamic>? names;
+  /// One of: draft, published, archived
+  final String? status;
+  final String? trade;
+
+  const AdminChecklistPatchModel({
+    this.minutes,
+    this.name,
+    this.names,
+    this.status,
+    this.trade,
+  });
+
+  factory AdminChecklistPatchModel.fromJson(Map<String, dynamic> json) => AdminChecklistPatchModel(
+        minutes: json['minutes'] == null ? null : (json['minutes'] as num).toInt(),
+        name: json['name'] as String?,
+        names: json['names'] == null ? null : Map<String, dynamic>.from(json['names'] as Map),
+        status: json['status'] as String?,
+        trade: json['trade'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'minutes': minutes,
+        'name': name,
+        'names': names,
+        'status': status,
+        'trade': trade,
+      };
+}
+
+AdminChecklistQuestionModel adminChecklistQuestionModelFromJson(String str) => AdminChecklistQuestionModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminChecklistQuestionModelToJson(AdminChecklistQuestionModel data) => json.encode(data.toJson());
+
+class AdminChecklistQuestionModel {
+  final Map<String, dynamic>? condition;
+  final Map<String, dynamic> help;
+  final String id;
+  final double? maxValue;
+  final double? minValue;
+  final List<AdminChecklistOptionModel> options;
+  final String photoRule;
+  final int position;
+  final bool requiredValue;
+  final Map<String, dynamic> text;
+  final Map<String, dynamic> textStatus;
+  final String type;
+  final String? unit;
+
+  const AdminChecklistQuestionModel({
+    this.condition,
+    required this.help,
+    required this.id,
+    this.maxValue,
+    this.minValue,
+    required this.options,
+    required this.photoRule,
+    required this.position,
+    required this.requiredValue,
+    required this.text,
+    required this.textStatus,
+    required this.type,
+    this.unit,
+  });
+
+  factory AdminChecklistQuestionModel.fromJson(Map<String, dynamic> json) => AdminChecklistQuestionModel(
+        condition: json['condition'] == null ? null : Map<String, dynamic>.from(json['condition'] as Map),
+        help: Map<String, dynamic>.from(json['help'] as Map),
+        id: json['id'] as String,
+        maxValue: json['max_value'] == null ? null : (json['max_value'] as num).toDouble(),
+        minValue: json['min_value'] == null ? null : (json['min_value'] as num).toDouble(),
+        options: (json['options'] as List).map((e) => AdminChecklistOptionModel.fromJson(e as Map<String, dynamic>)).toList(),
+        photoRule: json['photo_rule'] as String,
+        position: (json['position'] as num).toInt(),
+        requiredValue: json['required'] as bool,
+        text: Map<String, dynamic>.from(json['text'] as Map),
+        textStatus: Map<String, dynamic>.from(json['text_status'] as Map),
+        type: json['type'] as String,
+        unit: json['unit'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'condition': condition,
+        'help': help,
+        'id': id,
+        'max_value': maxValue,
+        'min_value': minValue,
+        'options': options.map((e) => e.toJson()).toList(),
+        'photo_rule': photoRule,
+        'position': position,
+        'required': requiredValue,
+        'text': text,
+        'text_status': textStatus,
+        'type': type,
+        'unit': unit,
+      };
+}
+
+AdminChecklistRowModel adminChecklistRowModelFromJson(String str) => AdminChecklistRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminChecklistRowModelToJson(AdminChecklistRowModel data) => json.encode(data.toJson());
+
+class AdminChecklistRowModel {
+  final String id;
+  /// Per language: ready, review (machine translated, not checked yet) or missing
+  final Map<String, dynamic> languages;
+  final String name;
+  final int photoQuestions;
+  final int questionCount;
+  /// One of: draft, published, archived
+  final String status;
+  final String? trade;
+  final String? tradeName;
+  final DateTime updatedAt;
+  /// Companies that used it on a job or copied it
+  final int usedBy;
+
+  const AdminChecklistRowModel({
+    required this.id,
+    required this.languages,
+    required this.name,
+    required this.photoQuestions,
+    required this.questionCount,
+    required this.status,
+    this.trade,
+    this.tradeName,
+    required this.updatedAt,
+    required this.usedBy,
+  });
+
+  factory AdminChecklistRowModel.fromJson(Map<String, dynamic> json) => AdminChecklistRowModel(
+        id: json['id'] as String,
+        languages: Map<String, dynamic>.from(json['languages'] as Map),
+        name: json['name'] as String,
+        photoQuestions: (json['photo_questions'] as num).toInt(),
+        questionCount: (json['question_count'] as num).toInt(),
+        status: json['status'] as String,
+        trade: json['trade'] as String?,
+        tradeName: json['trade_name'] as String?,
+        updatedAt: DateTime.parse(json['updated_at'] as String),
+        usedBy: (json['used_by'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'languages': languages,
+        'name': name,
+        'photo_questions': photoQuestions,
+        'question_count': questionCount,
+        'status': status,
+        'trade': trade,
+        'trade_name': tradeName,
+        'updated_at': updatedAt.toIso8601String(),
+        'used_by': usedBy,
+      };
+}
+
 AdminCompanyCountsModel adminCompanyCountsModelFromJson(String str) => AdminCompanyCountsModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminCompanyCountsModelToJson(AdminCompanyCountsModel data) => json.encode(data.toJson());
@@ -1157,6 +1534,31 @@ class AdminTopCompanyModel {
         'plan': plan,
         'reports': reports,
         'trade': trade,
+      };
+}
+
+AdminTranslateOutModel adminTranslateOutModelFromJson(String str) => AdminTranslateOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTranslateOutModelToJson(AdminTranslateOutModel data) => json.encode(data.toJson());
+
+class AdminTranslateOutModel {
+  final bool aiAvailable;
+  /// Questions sent for machine translation
+  final int queued;
+
+  const AdminTranslateOutModel({
+    required this.aiAvailable,
+    required this.queued,
+  });
+
+  factory AdminTranslateOutModel.fromJson(Map<String, dynamic> json) => AdminTranslateOutModel(
+        aiAvailable: json['ai_available'] as bool,
+        queued: (json['queued'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ai_available': aiAvailable,
+        'queued': queued,
       };
 }
 
