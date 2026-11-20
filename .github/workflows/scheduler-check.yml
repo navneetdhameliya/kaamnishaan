@@ -19,3 +19,7 @@ jobs:
           for n in S_URL S_KEY V_URL V_KEY S_URL2 S_KEY2; do
             v="${!n}"; if [ -n "$v" ]; then echo "$n: set (${#v} characters)"; else echo "$n: empty"; fi
           done
+          echo "host: $(echo "$V_URL" | sed -E 's#^(https?://[^/]+).*#\1#')"
+          code=$(curl -sS -o body.txt -w "%{http_code}" --retry 3 --retry-delay 20 --retry-all-errors --max-time 120 \
+            -X POST "${V_URL%/}/api/v1/cron/review-followups" -H "X-Cron-Key: $V_KEY" || true)
+          echo "status: $code"; echo "answer: $(head -c 300 body.txt)"
