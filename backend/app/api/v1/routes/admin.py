@@ -20,6 +20,14 @@ from app.schemas.admin_ai_calls import (
     AdminTestCall,
     AdminTestCallOut,
 )
+from app.schemas.admin_ai_config import (
+    AdminAiConfigOut,
+    AdminIndustriesOut,
+    AdminIndustryIn,
+    AdminPromptDraftIn,
+    AdminPromptsOut,
+    PromptTask,
+)  # fmt: skip
 from app.schemas.admin_audit import AdminAuditList
 from app.schemas.admin_billing import (
     AdminPackIn,
@@ -94,6 +102,7 @@ from app.schemas.staff import (
 from app.services import (
     admin_ai,
     admin_ai_calls,
+    admin_ai_config,
     admin_audit,
     admin_billing,
     admin_checklists,
@@ -115,6 +124,7 @@ from app.services import (
     staff,
 )
 from app.services import checklists as checklist_svc
+from app.services.platform import AiConfig
 from app.tasks import enqueue
 
 router = APIRouter(prefix="/admin", tags=["admin"])
@@ -1278,3 +1288,87 @@ async def save_trial(
 async def payments(_: Staff = Depends(get_staff)) -> AdminPaymentsOut:
     """Online payments are set up in the testing phase; until then there is nothing to list."""
     return AdminPaymentsOut(connected=False, provider="razorpay")
+
+
+# ---- A19 AI configuration, A21 Prompts, A22 Industries -----------------------------------------------
+@router.get("/ai-config", response_model=AdminAiConfigOut)
+async def ai_config(me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)) -> AdminAiConfigOut:
+    """Models, monthly budget, tokens per report, fallback and personal-data masking."""
+    return await admin_ai_config.ai_config(db, can_act=me.staff.role == "super_admin")
+
+
+@router.put("/ai-config", response_model=AdminAiConfigOut)
+async def save_ai_config(
+    body: AiConfig,
+    request: Request,
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminAiConfigOut:
+    """Super admins only. Used from the next AI call. Audited."""
+    _super(me)
+    return await admin_ai_config.save_ai_config(db, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.get("/prompts", response_model=AdminPromptsOut)
+async def admin_prompts(
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminPromptsOut:
+    """Each AI prompt with its versions (live, draft, retired) and how it did in the last 30 days."""
+    return await admin_ai_config.prompts(db, can_act=me.staff.role == "super_admin")
+
+
+@router.put("/prompts/{task}/draft", response_model=AdminPromptsOut)
+async def save_prompt_draft(
+    task: PromptTask, body: AdminPromptDraftIn, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminPromptsOut:  # fmt: skip
+    """Super admins only: edit the draft (or start the next version). Nothing changes until it's published."""
+    _super(me)
+    return await admin_ai_config.save_draft(db, task, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.delete("/prompts/{task}/draft", response_model=AdminPromptsOut)
+async def discard_prompt_draft(
+    task: PromptTask, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminPromptsOut:
+    _super(me)
+    return await admin_ai_config.discard_draft(db, task, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.post("/prompts/{task}/versions/{version}/publish", response_model=AdminPromptsOut)
+async def publish_prompt(
+    task: PromptTask, version: int, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminPromptsOut:  # fmt: skip
+    """Super admins only: make the draft live, or go back to an older version. Used from the next AI call."""
+    _super(me)
+    return await admin_ai_config.publish(db, task, version, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.get("/industries", response_model=AdminIndustriesOut)
+async def admin_industries(
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminIndustriesOut:
+    """Every trade with its companies and ready-made checklists. Live ones are offered at sign-up."""
+    return await admin_ai_config.industries(db, can_act=me.staff.role in ("super_admin", "admin"))
+
+
+@router.post("/industries", response_model=AdminIndustriesOut, status_code=201)
+async def add_industry(
+    body: AdminIndustryIn,
+    request: Request,
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminIndustriesOut:
+    _can_change(me)
+    return await admin_ai_config.save_industry(db, None, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.put("/industries/{slug}", response_model=AdminIndustriesOut)
+async def save_industry(
+    slug: str, body: AdminIndustryIn, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminIndustriesOut:  # fmt: skip
+    """Names, sign-up visibility (draft = hidden; companies already in it keep it) and order. Audited."""
+    _can_change(me)
+    return await admin_ai_config.save_industry(db, slug, body, staff_id=me.staff.id, ip=client_ip(request))

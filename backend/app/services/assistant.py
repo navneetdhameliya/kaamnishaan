@@ -21,6 +21,7 @@ from app.models import AssistantMessage, Customer, Evidence, Job, Plan, Report, 
 from app.providers.ai import LANGUAGE_NAMES, get_ai
 from app.schemas.assistant import AskOut, AssistantMessageOut, AssistantOut, SourceJob, SourceReport
 from app.services import ai_usage, credits, platform
+from app.services.ai_config import ai_for, live_prompt
 from app.services.evidence import photo_counts, thumbs_for
 from app.services.jobs import CLOSED
 from app.services.jobs import label as jlabel
@@ -28,7 +29,7 @@ from app.services.reports import rlabel
 
 log = logging.getLogger("kn.assistant")
 
-PROMPT = """You help the office of a small HVAC service company with questions about their own jobs.
+PROMPT = """You help the office of a small field service company with questions about their own jobs.
 The second message is JSON with today's date and the company's jobs (customer, address, date, status,
 technician, photos, proof steps still missing, and the report with its summary and work done).
 
@@ -36,7 +37,7 @@ Rules:
 - Answer only from that JSON. If it isn't there, say you couldn't find it in the company's jobs.
 - Answer in {language}, in 1 to 3 short, plain sentences. No lists, no markdown.
 - Write dates like "12 August". Use people's first names.
-- Reply as JSON: {{"answer": "...", "report_ids": [...], "job_ids": [...]}} with the ids (at most 3 each)
+- Reply as JSON: {"answer": "...", "report_ids": [...], "job_ids": [...]} with the ids (at most 3 each)
   of the reports and jobs your answer is about. Use report_ids for finished work, job_ids for open jobs."""
 
 STEPS = ("before", "during", "after")
@@ -310,7 +311,8 @@ async def ask(db: AsyncSession, p: Principal, text: str) -> AskOut:
             "This month's AI questions are used up.",
             {"used": used, "limit": limit, "renews_at": renews.isoformat()},
         )
-    ai = get_ai() if (await platform.config(db)).ai_assistant else None  # A32 switch
+    # A32 switch; A19 models and monthly budget
+    ai = await ai_for(db, budgeted=True) if (await platform.config(db)).ai_assistant else None
     if ai is None:
         raise AppError("assistant_unavailable", "The assistant isn't switched on yet.", status=503)
     history = list(
@@ -331,8 +333,11 @@ async def ask(db: AsyncSession, p: Principal, text: str) -> AskOut:
     context = await _context(db, p, jobs)
     lang = p.user.app_language or "en"
     try:
+        live = await live_prompt(db, "assistant")  # A21
         result = await ai.answer(
-            PROMPT.format(language=LANGUAGE_NAMES.get(lang, "English")),
+            (live.system_prompt if live else PROMPT).replace(
+                "{language}", LANGUAGE_NAMES.get(lang, "English")
+            ),
             context,
             [{"role": m.role, "content": m.text} for m in history],
             text,

@@ -6582,7 +6582,7 @@ abstract final class LangKeys {
   static const adminErrTooShort = 'admin.err.too_short';
   /// Test call to my phone
   static const adminAcTest = 'admin.ac.test';
-  /// Save
+  /// Save changes
   static const adminAcSave = 'admin.ac.save';
   /// Saved. The next calls use these settings.
   static const adminAcSaved = 'admin.ac.saved';
@@ -6636,7 +6636,7 @@ abstract final class LangKeys {
   static const adminAcLangEn = 'admin.ac.lang.en';
   /// Opening line (required)
   static const adminAcOpening = 'admin.ac.opening';
-  /// Can’t be changed
+  /// Locked switches show how KaamNishaan always works.
   static const adminAcLocked = 'admin.ac.locked';
   /// Every call starts with this. It cannot be removed.
   static const adminAcOpeningNote = 'admin.ac.opening_note';
@@ -7942,4 +7942,192 @@ abstract final class LangKeys {
   static const adminPmWillRefunds = 'admin.pm.will.refunds';
   /// Card details are held by the payment provider. KaamNishaan never stores card numbers.
   static const adminPmCards = 'admin.pm.cards';
+  /// AI
+  static const adminNavAi = 'admin.nav.ai';
+  /// AI configuration
+  static const adminNavAiConfig = 'admin.nav.ai_config';
+  /// Prompts
+  static const adminNavPrompts = 'admin.nav.prompts';
+  /// Industries
+  static const adminNavIndustries = 'admin.nav.industries';
+  /// The AI key is set on the server. It is never shown here.
+  static const adminAcKeyOn = 'admin.ac.key_on';
+  /// No AI key on the server yet: reports are written from the template, and voice notes wait.
+  static const adminAcKeyOff = 'admin.ac.key_off';
+  /// Only a super admin can change these.
+  static const adminAcViewOnly = 'admin.ac.view_only';
+  /// Models
+  static const adminAcModels = 'admin.ac.models';
+  /// Report writing model
+  static const adminAcTextModel = 'admin.ac.text_model';
+  /// Also used by the assistant and for translations. Called from the server only.
+  static const adminAcTextModelHint = 'admin.ac.text_model_hint';
+  /// Speech to text
+  static const adminAcSpeechModel = 'admin.ac.speech_model';
+  /// Turns technicians' voice notes into text.
+  static const adminAcSpeechModelHint = 'admin.ac.speech_model_hint';
+  /// Photo check model
+  static const adminAcPhotoModel = 'admin.ac.photo_model';
+  /// Photos aren't checked by AI yet. It comes in a later version.
+  static const adminAcPhotoModelHint = 'admin.ac.photo_model_hint';
+  /// Not used yet
+  static const adminAcNotUsed = 'admin.ac.not_used';
+  /// When the AI fails while writing a report
+  static const adminAcFallback = 'admin.ac.fallback';
+  /// The technician sees an error and can try again. Photos and notes are kept.
+  static const adminAcFallbackHintError = 'admin.ac.fallback_hint.error';
+  /// The report is written from the template instead, so the technician isn't stuck.
+  static const adminAcFallbackHintTemplate = 'admin.ac.fallback_hint.template';
+  /// Show an error, try again
+  static const adminAcFbError = 'admin.ac.fb.error';
+  /// Write from the template
+  static const adminAcFbTemplate = 'admin.ac.fb.template';
+  /// Limits and safety
+  static const adminAcLimits = 'admin.ac.limits';
+  /// Monthly AI budget
+  static const adminAcBudget = 'admin.ac.budget';
+  /// No limit · spent this month {spent}
+  static const adminAcBudgetNone = 'admin.ac.budget_none';
+  /// Spent this month {spent} ({pct}%). At the limit, reports are written from the template and the assistant pauses; voice notes keep working.
+  static const adminAcBudgetNow = 'admin.ac.budget_now';
+  /// The budget is used up: reports are written from the template and the assistant is paused until next month.
+  static const adminAcOver = 'admin.ac.over';
+  /// Over 80% of this month's budget is used.
+  static const adminAcNear = 'admin.ac.near';
+  /// Max tokens per report
+  static const adminAcTokens = 'admin.ac.tokens';
+  /// 500 to 16,000. Longer reports cost more.
+  static const adminAcTokensHint = 'admin.ac.tokens_hint';
+  /// Only use evidence from the job
+  static const adminAcEvidence = 'admin.ac.evidence';
+  /// Every sentence is linked to a photo, note or answer.
+  static const adminAcEvidenceHint = 'admin.ac.evidence_hint';
+  /// Flag invented work
+  static const adminAcInvented = 'admin.ac.invented';
+  /// Sentences with no evidence are flagged for the manager before approval.
+  static const adminAcInventedHint = 'admin.ac.invented_hint';
+  /// Remove personal data from prompts
+  static const adminAcMask = 'admin.ac.mask';
+  /// Phone numbers and emails in notes are hidden before sending.
+  static const adminAcMaskHint = 'admin.ac.mask_hint';
+  /// Use customer data to train models
+  static const adminAcTrain = 'admin.ac.train';
+  /// Never — off for all companies.
+  static const adminAcTrainHint = 'admin.ac.train_hint';
+  /// Publish v{v}
+  static const adminPrPublish = 'admin.pr.publish';
+  /// v{v} live
+  static const adminPrVLive = 'admin.pr.v_live';
+  /// Nothing live
+  static const adminPrNoneLive = 'admin.pr.none_live';
+  /// v{v} draft
+  static const adminPrVDraft = 'admin.pr.v_draft';
+  /// Writes the job report
+  static const adminPrTaskReportDraft = 'admin.pr.task.report_draft';
+  /// Answers questions in the app
+  static const adminPrTaskAssistant = 'admin.pr.task.assistant';
+  /// Translates checklists and notes
+  static const adminPrTaskTranslation = 'admin.pr.task.translation';
+  /// Writes the report from the job's photos, checklist answers and notes. The evidence is sent as a separate message.
+  static const adminPrAboutReportDraft = 'admin.pr.about.report_draft';
+  /// Answers owners' and managers' questions about their own jobs.
+  static const adminPrAboutAssistant = 'admin.pr.about.assistant';
+  /// Translates checklist questions and voice notes into the report language.
+  static const adminPrAboutTranslation = 'admin.pr.about.translation';
+  /// System prompt
+  static const adminPrSystem = 'admin.pr.system';
+  /// showing draft v{v}
+  static const adminPrShowingDraft = 'admin.pr.showing_draft';
+  /// showing live v{v}
+  static const adminPrShowingLive = 'admin.pr.showing_live';
+  /// Keep {language} in the prompt — it's filled with the report language.
+  static const adminPrErrLanguage = 'admin.pr.err.language';
+  /// What changed
+  static const adminPrNote = 'admin.pr.note';
+  /// For example: shorter sentences
+  static const adminPrNoteHint = 'admin.pr.note_hint';
+  /// Change note: {note}
+  static const adminPrNoteWas = 'admin.pr.note_was';
+  /// Variables
+  static const adminPrVars = 'admin.pr.vars';
+  /// Filled in when the AI is called. The job's evidence goes in its own message.
+  static const adminPrVarsHint = 'admin.pr.vars_hint';
+  /// Save draft
+  static const adminPrSaveDraft = 'admin.pr.save_draft';
+  /// Edit draft
+  static const adminPrEditDraft = 'admin.pr.edit_draft';
+  /// Start v{v}
+  static const adminPrNewDraft = 'admin.pr.new_draft';
+  /// Discard draft
+  static const adminPrDiscard = 'admin.pr.discard';
+  /// Calls (30 days)
+  static const adminPrRuns = 'admin.pr.runs';
+  /// {ok} ok · {failed} failed
+  static const adminPrRunsV = 'admin.pr.runs_v';
+  /// Avg tokens
+  static const adminPrAvgTokens = 'admin.pr.avg_tokens';
+  /// Avg cost
+  static const adminPrAvgCost = 'admin.pr.avg_cost';
+  /// Versions
+  static const adminPrHistory = 'admin.pr.history';
+  /// Draft
+  static const adminPrStDraft = 'admin.pr.st.draft';
+  /// Live
+  static const adminPrStLive = 'admin.pr.st.live';
+  /// Retired
+  static const adminPrStRetired = 'admin.pr.st.retired';
+  /// Published by {who} · {when}
+  static const adminPrPublished = 'admin.pr.published';
+  /// Edited by {who} · {when}
+  static const adminPrEdited = 'admin.pr.edited';
+  /// KaamNishaan
+  static const adminPrSeed = 'admin.pr.seed';
+  /// {n} reports · {flagged} with invented work
+  static const adminPrUsed = 'admin.pr.used';
+  /// Make live again
+  static const adminPrGoBack = 'admin.pr.go_back';
+  /// Use 3–48 small letters, numbers or dashes.
+  static const adminInErrSlug = 'admin.in.err.slug';
+  /// That industry already exists.
+  static const adminInErrExists = 'admin.in.err.exists';
+  /// Edit {name}
+  static const adminInEditTitle = 'admin.in.edit_title';
+  /// Add industry
+  static const adminInAddTitle = 'admin.in.add_title';
+  /// Name
+  static const adminInFName = 'admin.in.f_name';
+  /// Web address name
+  static const adminInFSlug = 'admin.in.f_slug';
+  /// Can't be changed: companies and checklists use it.
+  static const adminInSlugFixed = 'admin.in.slug_fixed';
+  /// Small letters, numbers and dashes, e.g. pest-control.
+  static const adminInSlugHint = 'admin.in.slug_hint';
+  /// Order in lists
+  static const adminInFSort = 'admin.in.f_sort';
+  /// Offered at sign-up
+  static const adminInFLive = 'admin.in.f_live';
+  /// Hidden industries stay for companies already in them.
+  static const adminInFLiveHint = 'admin.in.f_live_hint';
+  /// Add industry
+  static const adminInAdd = 'admin.in.add';
+  /// Industry
+  static const adminInCIndustry = 'admin.in.c_industry';
+  /// Default checklist
+  static const adminInCChecklist = 'admin.in.c_checklist';
+  /// Ready checklists
+  static const adminInCReady = 'admin.in.c_ready';
+  /// Companies
+  static const adminInCCompanies = 'admin.in.c_companies';
+  /// Status
+  static const adminInCStatus = 'admin.in.c_status';
+  /// {name} · {n} questions
+  static const adminInChecklist = 'admin.in.checklist';
+  /// Not set
+  static const adminInNotSet = 'admin.in.not_set';
+  /// Live
+  static const adminInStLive = 'admin.in.st.live';
+  /// Draft
+  static const adminInStDraft = 'admin.in.st.draft';
+  /// Industry pages on the website come later. Ready-made checklists are managed in Checklist templates.
+  static const adminInNote = 'admin.in.note';
 }

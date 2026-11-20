@@ -369,15 +369,23 @@ async def test_delete_unstarted_job(client):
 
 
 # ---- home screens and sync -----------------------------------------------------------------------
+def _today(minutes: int) -> str:
+    """A time today in the company's time zone (India), whatever the hour the tests run."""
+    from zoneinfo import ZoneInfo
+
+    noon = datetime.now(ZoneInfo("Asia/Kolkata")).replace(hour=12, minute=0, second=0, microsecond=0)
+    return (noon + timedelta(minutes=minutes)).isoformat()
+
+
 async def test_dashboard_today_and_stats(client):
     owner = await make_owner(client)
     tech = await invite_and_join(client, owner, TECH)
     c = await new_customer(client, owner)
     first = await new_job(
-        client, owner, c, title="First", scheduled_at=at(0.1), assigned_to=tech["user"]["id"]
+        client, owner, c, title="First", scheduled_at=_today(6), assigned_to=tech["user"]["id"]
     )
-    await new_job(client, owner, c, title="Second", scheduled_at=at(0.2), assigned_to=tech["user"]["id"])
-    await new_job(client, owner, c, title="Nobody yet", scheduled_at=at(0.3))
+    await new_job(client, owner, c, title="Second", scheduled_at=_today(12), assigned_to=tech["user"]["id"])
+    await new_job(client, owner, c, title="Nobody yet", scheduled_at=_today(18))
     await client.post(f"/api/v1/jobs/{first['id']}/start", headers=auth(tech))
 
     d = (await client.get("/api/v1/dashboard", headers=auth(owner))).json()

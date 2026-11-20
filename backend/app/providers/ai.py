@@ -37,6 +37,12 @@ class Draft:
     tokens_out: int
 
 
+TRANSLATE_PROMPT = (
+    "Translate each item into {language} for field technicians and their customers. "
+    "Keep it short and plain, keep numbers and units, do not add anything. "
+    'Answer as JSON: {"items": [...]} in the same order.'
+)
+
 # USD per 1M tokens; used to record cost per report (A20). Update when prices or models change.
 PRICES = {"gpt-4o-mini": (0.15, 0.60), "gpt-4o": (2.50, 10.00), "gpt-4.1-mini": (0.40, 1.60)}
 # USD per minute of audio
@@ -96,10 +102,15 @@ class OpenAIProvider(AIProvider):
 
     def __init__(self, key: str):
         self.headers = {"Authorization": f"Bearer {key}"}
+        s = get_settings()
+        # set from the A19 AI configuration by services.ai_config.ai_for()
+        self.text_model: str = s.openai_text_model
+        self.transcribe_model: str = s.openai_transcribe_model
+        self.max_tokens: int | None = None
+        self.translate_prompt: str | None = None
 
     async def transcribe(self, data, filename, content_type, language_hint):
-        s = get_settings()
-        form = {"model": s.openai_transcribe_model, "response_format": "verbose_json"}
+        form = {"model": self.transcribe_model, "response_format": "verbose_json"}
         if language_hint:
             form["language"] = language_hint
         async with httpx.AsyncClient(timeout=120) as c:
@@ -120,26 +131,21 @@ class OpenAIProvider(AIProvider):
             text=(body.get("text") or "").strip(),
             language=WHISPER_CODES.get(str(lang).lower(), lang) if lang else language_hint,
             confidence=round(conf, 3) if conf is not None else None,
-            model=s.openai_transcribe_model,
+            model=self.transcribe_model,
             seconds=float(body.get("duration") or 0),
         )
 
     async def translate(self, texts, target, source=None):
         if not texts:
             return []
-        s = get_settings()
-        prompt = (
-            f"Translate each item into {LANGUAGE_NAMES.get(target, target)} "
-            "for HVAC field technicians and their customers. "
-            "Keep it short and plain, keep numbers and units, do not add anything. "
-            'Answer as JSON: {"items": [...]} in the same order.'
-        )
+        language = LANGUAGE_NAMES.get(target, target)
+        prompt = (self.translate_prompt or TRANSLATE_PROMPT).replace("{language}", language)
         async with httpx.AsyncClient(timeout=60) as c:
             r = await c.post(
                 f"{self.base}/chat/completions",
                 headers=self.headers,
                 json={
-                    "model": s.openai_text_model,
+                    "model": self.text_model,
                     "temperature": 0,
                     "response_format": {"type": "json_object"},
                     "messages": [
@@ -155,19 +161,19 @@ class OpenAIProvider(AIProvider):
             raise ValueError("translation came back with a different number of items")
         out = Texts(str(x) for x in items)
         usage = body.get("usage") or {}
-        out.model = body.get("model", s.openai_text_model)
+        out.model = body.get("model", self.text_model)
         out.tokens_in, out.tokens_out = usage.get("prompt_tokens", 0), usage.get("completion_tokens", 0)
         return out
 
     async def draft_report(self, system_prompt, evidence):
-        s = get_settings()
         async with httpx.AsyncClient(timeout=120) as c:
             r = await c.post(
                 f"{self.base}/chat/completions",
                 headers=self.headers,
                 json={
-                    "model": s.openai_text_model,
+                    "model": self.text_model,
                     "temperature": 0.2,
+                    **({"max_tokens": self.max_tokens} if self.max_tokens else {}),
                     "response_format": {"type": "json_object"},
                     "messages": [
                         {"role": "system", "content": system_prompt},
@@ -180,13 +186,12 @@ class OpenAIProvider(AIProvider):
         usage = body.get("usage") or {}
         return Draft(
             data=json.loads(body["choices"][0]["message"]["content"]),
-            model=body.get("model", s.openai_text_model),
+            model=body.get("model", self.text_model),
             tokens_in=usage.get("prompt_tokens", 0),
             tokens_out=usage.get("completion_tokens", 0),
         )
 
     async def answer(self, system_prompt, context, history, question):
-        s = get_settings()
         messages = [
             {"role": "system", "content": system_prompt},
             {"role": "system", "content": json.dumps(context, ensure_ascii=False, default=str)},
@@ -198,7 +203,7 @@ class OpenAIProvider(AIProvider):
                 f"{self.base}/chat/completions",
                 headers=self.headers,
                 json={
-                    "model": s.openai_text_model,
+                    "model": self.text_model,
                     "temperature": 0.1,
                     "response_format": {"type": "json_object"},
                     "messages": messages,
@@ -209,7 +214,7 @@ class OpenAIProvider(AIProvider):
         usage = body.get("usage") or {}
         return Draft(
             data=json.loads(body["choices"][0]["message"]["content"]),
-            model=body.get("model", s.openai_text_model),
+            model=body.get("model", self.text_model),
             tokens_in=usage.get("prompt_tokens", 0),
             tokens_out=usage.get("completion_tokens", 0),
         )

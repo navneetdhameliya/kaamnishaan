@@ -323,6 +323,47 @@ class AdminAiCompanyModel {
       };
 }
 
+AdminAiConfigOutModel adminAiConfigOutModelFromJson(String str) => AdminAiConfigOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAiConfigOutModelToJson(AdminAiConfigOutModel data) => json.encode(data.toJson());
+
+class AdminAiConfigOutModel {
+  final bool canAct;
+  final AiConfigModel config;
+  /// The AI key is set on the server
+  final bool keySet;
+  final double monthSpendUsd;
+  final List<String> textModels;
+  final List<String> transcribeModels;
+
+  const AdminAiConfigOutModel({
+    required this.canAct,
+    required this.config,
+    required this.keySet,
+    required this.monthSpendUsd,
+    required this.textModels,
+    required this.transcribeModels,
+  });
+
+  factory AdminAiConfigOutModel.fromJson(Map<String, dynamic> json) => AdminAiConfigOutModel(
+        canAct: json['can_act'] as bool,
+        config: AiConfigModel.fromJson(json['config'] as Map<String, dynamic>),
+        keySet: json['key_set'] as bool,
+        monthSpendUsd: (json['month_spend_usd'] as num).toDouble(),
+        textModels: (json['text_models'] as List).map((e) => e as String).toList(),
+        transcribeModels: (json['transcribe_models'] as List).map((e) => e as String).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'config': config.toJson(),
+        'key_set': keySet,
+        'month_spend_usd': monthSpendUsd,
+        'text_models': textModels,
+        'transcribe_models': transcribeModels,
+      };
+}
+
 AdminAiDayModel adminAiDayModelFromJson(String str) => AdminAiDayModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminAiDayModelToJson(AdminAiDayModel data) => json.encode(data.toJson());
@@ -2087,6 +2128,114 @@ class AdminEmailTestOutModel {
       };
 }
 
+AdminIndustriesOutModel adminIndustriesOutModelFromJson(String str) => AdminIndustriesOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminIndustriesOutModelToJson(AdminIndustriesOutModel data) => json.encode(data.toJson());
+
+class AdminIndustriesOutModel {
+  final bool canAct;
+  final List<AdminIndustryModel> items;
+
+  const AdminIndustriesOutModel({
+    required this.canAct,
+    required this.items,
+  });
+
+  factory AdminIndustriesOutModel.fromJson(Map<String, dynamic> json) => AdminIndustriesOutModel(
+        canAct: json['can_act'] as bool,
+        items: (json['items'] as List).map((e) => AdminIndustryModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'items': items.map((e) => e.toJson()).toList(),
+      };
+}
+
+AdminIndustryModel adminIndustryModelFromJson(String str) => AdminIndustryModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminIndustryModelToJson(AdminIndustryModel data) => json.encode(data.toJson());
+
+class AdminIndustryModel {
+  /// Ready-made checklists for this trade
+  final int checklists;
+  final int companies;
+  final String? defaultChecklist;
+  final int? defaultQuestions;
+  final Map<String, dynamic> name;
+  final String slug;
+  final int sort;
+  /// One of: live, draft
+  final String status;
+
+  const AdminIndustryModel({
+    required this.checklists,
+    required this.companies,
+    this.defaultChecklist,
+    this.defaultQuestions,
+    required this.name,
+    required this.slug,
+    required this.sort,
+    required this.status,
+  });
+
+  factory AdminIndustryModel.fromJson(Map<String, dynamic> json) => AdminIndustryModel(
+        checklists: (json['checklists'] as num).toInt(),
+        companies: (json['companies'] as num).toInt(),
+        defaultChecklist: json['default_checklist'] as String?,
+        defaultQuestions: json['default_questions'] == null ? null : (json['default_questions'] as num).toInt(),
+        name: Map<String, dynamic>.from(json['name'] as Map),
+        slug: json['slug'] as String,
+        sort: (json['sort'] as num).toInt(),
+        status: json['status'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'checklists': checklists,
+        'companies': companies,
+        'default_checklist': defaultChecklist,
+        'default_questions': defaultQuestions,
+        'name': name,
+        'slug': slug,
+        'sort': sort,
+        'status': status,
+      };
+}
+
+AdminIndustryInModel adminIndustryInModelFromJson(String str) => AdminIndustryInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminIndustryInModelToJson(AdminIndustryInModel data) => json.encode(data.toJson());
+
+class AdminIndustryInModel {
+  final Map<String, dynamic> name;
+  /// New industries only
+  final String? slug;
+  final int sort;
+  /// One of: live, draft
+  final String status;
+
+  const AdminIndustryInModel({
+    required this.name,
+    this.slug,
+    required this.sort,
+    required this.status,
+  });
+
+  factory AdminIndustryInModel.fromJson(Map<String, dynamic> json) => AdminIndustryInModel(
+        name: Map<String, dynamic>.from(json['name'] as Map),
+        slug: json['slug'] as String?,
+        sort: (json['sort'] as num).toInt(),
+        status: json['status'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'slug': slug,
+        'sort': sort,
+        'status': status,
+      };
+}
+
 AdminJobChecklistModel adminJobChecklistModelFromJson(String str) => AdminJobChecklistModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminJobChecklistModelToJson(AdminJobChecklistModel data) => json.encode(data.toJson());
@@ -3560,6 +3709,192 @@ class AdminPlatformSettingsModel {
         'signups': signups,
         'support_email': supportEmail,
         'support_whatsapp': supportWhatsapp,
+      };
+}
+
+AdminPromptModel adminPromptModelFromJson(String str) => AdminPromptModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPromptModelToJson(AdminPromptModel data) => json.encode(data.toJson());
+
+class AdminPromptModel {
+  final int? draft;
+  final int? live;
+  final AdminPromptStatsModel stats;
+  /// One of: report_draft, assistant, translation
+  final String task;
+  final List<String> variables;
+  /// Newest first
+  final List<AdminPromptVersionModel> versions;
+
+  const AdminPromptModel({
+    this.draft,
+    this.live,
+    required this.stats,
+    required this.task,
+    required this.variables,
+    required this.versions,
+  });
+
+  factory AdminPromptModel.fromJson(Map<String, dynamic> json) => AdminPromptModel(
+        draft: json['draft'] == null ? null : (json['draft'] as num).toInt(),
+        live: json['live'] == null ? null : (json['live'] as num).toInt(),
+        stats: AdminPromptStatsModel.fromJson(json['stats'] as Map<String, dynamic>),
+        task: json['task'] as String,
+        variables: (json['variables'] as List).map((e) => e as String).toList(),
+        versions: (json['versions'] as List).map((e) => AdminPromptVersionModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'draft': draft,
+        'live': live,
+        'stats': stats.toJson(),
+        'task': task,
+        'variables': variables,
+        'versions': versions.map((e) => e.toJson()).toList(),
+      };
+}
+
+AdminPromptDraftInModel adminPromptDraftInModelFromJson(String str) => AdminPromptDraftInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPromptDraftInModelToJson(AdminPromptDraftInModel data) => json.encode(data.toJson());
+
+class AdminPromptDraftInModel {
+  final String? note;
+  final String systemPrompt;
+
+  const AdminPromptDraftInModel({
+    this.note,
+    required this.systemPrompt,
+  });
+
+  factory AdminPromptDraftInModel.fromJson(Map<String, dynamic> json) => AdminPromptDraftInModel(
+        note: json['note'] as String?,
+        systemPrompt: json['system_prompt'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'note': note,
+        'system_prompt': systemPrompt,
+      };
+}
+
+AdminPromptStatsModel adminPromptStatsModelFromJson(String str) => AdminPromptStatsModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPromptStatsModelToJson(AdminPromptStatsModel data) => json.encode(data.toJson());
+
+class AdminPromptStatsModel {
+  final double avgCostUsd;
+  final int avgTokens;
+  final int failed;
+  /// Calls in the last 30 days
+  final int runs;
+
+  const AdminPromptStatsModel({
+    required this.avgCostUsd,
+    required this.avgTokens,
+    required this.failed,
+    required this.runs,
+  });
+
+  factory AdminPromptStatsModel.fromJson(Map<String, dynamic> json) => AdminPromptStatsModel(
+        avgCostUsd: (json['avg_cost_usd'] as num).toDouble(),
+        avgTokens: (json['avg_tokens'] as num).toInt(),
+        failed: (json['failed'] as num).toInt(),
+        runs: (json['runs'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'avg_cost_usd': avgCostUsd,
+        'avg_tokens': avgTokens,
+        'failed': failed,
+        'runs': runs,
+      };
+}
+
+AdminPromptVersionModel adminPromptVersionModelFromJson(String str) => AdminPromptVersionModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPromptVersionModelToJson(AdminPromptVersionModel data) => json.encode(data.toJson());
+
+class AdminPromptVersionModel {
+  final DateTime createdAt;
+  final String? editedBy;
+  /// report_draft: of those, with invented-work flags
+  final int? flagged;
+  final String? note;
+  final DateTime? publishedAt;
+  final String? publishedBy;
+  /// report_draft: reports written with this version
+  final int? reports;
+  /// One of: draft, live, retired
+  final String status;
+  final String systemPrompt;
+  final DateTime updatedAt;
+  final int version;
+
+  const AdminPromptVersionModel({
+    required this.createdAt,
+    this.editedBy,
+    this.flagged,
+    this.note,
+    this.publishedAt,
+    this.publishedBy,
+    this.reports,
+    required this.status,
+    required this.systemPrompt,
+    required this.updatedAt,
+    required this.version,
+  });
+
+  factory AdminPromptVersionModel.fromJson(Map<String, dynamic> json) => AdminPromptVersionModel(
+        createdAt: DateTime.parse(json['created_at'] as String),
+        editedBy: json['edited_by'] as String?,
+        flagged: json['flagged'] == null ? null : (json['flagged'] as num).toInt(),
+        note: json['note'] as String?,
+        publishedAt: json['published_at'] == null ? null : DateTime.parse(json['published_at'] as String),
+        publishedBy: json['published_by'] as String?,
+        reports: json['reports'] == null ? null : (json['reports'] as num).toInt(),
+        status: json['status'] as String,
+        systemPrompt: json['system_prompt'] as String,
+        updatedAt: DateTime.parse(json['updated_at'] as String),
+        version: (json['version'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'created_at': createdAt.toIso8601String(),
+        'edited_by': editedBy,
+        'flagged': flagged,
+        'note': note,
+        'published_at': publishedAt?.toIso8601String(),
+        'published_by': publishedBy,
+        'reports': reports,
+        'status': status,
+        'system_prompt': systemPrompt,
+        'updated_at': updatedAt.toIso8601String(),
+        'version': version,
+      };
+}
+
+AdminPromptsOutModel adminPromptsOutModelFromJson(String str) => AdminPromptsOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPromptsOutModelToJson(AdminPromptsOutModel data) => json.encode(data.toJson());
+
+class AdminPromptsOutModel {
+  final bool canAct;
+  final List<AdminPromptModel> prompts;
+
+  const AdminPromptsOutModel({
+    required this.canAct,
+    required this.prompts,
+  });
+
+  factory AdminPromptsOutModel.fromJson(Map<String, dynamic> json) => AdminPromptsOutModel(
+        canAct: json['can_act'] as bool,
+        prompts: (json['prompts'] as List).map((e) => AdminPromptModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'prompts': prompts.map((e) => e.toJson()).toList(),
       };
 }
 
@@ -5678,6 +6013,48 @@ class AdminVoiceProviderModel {
         'down_since': downSince?.toIso8601String(),
         'name': name,
         'waiting': waiting,
+      };
+}
+
+/// Which models are used and the limits around them. The API key itself stays on the server (Render).
+AiConfigModel aiConfigModelFromJson(String str) => AiConfigModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String aiConfigModelToJson(AiConfigModel data) => json.encode(data.toJson());
+
+class AiConfigModel {
+  /// One of: template, error
+  final String? fallback;
+  final bool? maskContacts;
+  final int? maxTokensReport;
+  final double? monthlyBudgetUsd;
+  final String? textModel;
+  final String? transcribeModel;
+
+  const AiConfigModel({
+    this.fallback,
+    this.maskContacts,
+    this.maxTokensReport,
+    this.monthlyBudgetUsd,
+    this.textModel,
+    this.transcribeModel,
+  });
+
+  factory AiConfigModel.fromJson(Map<String, dynamic> json) => AiConfigModel(
+        fallback: json['fallback'] as String?,
+        maskContacts: json['mask_contacts'] as bool?,
+        maxTokensReport: json['max_tokens_report'] == null ? null : (json['max_tokens_report'] as num).toInt(),
+        monthlyBudgetUsd: json['monthly_budget_usd'] == null ? null : (json['monthly_budget_usd'] as num).toDouble(),
+        textModel: json['text_model'] as String?,
+        transcribeModel: json['transcribe_model'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'fallback': fallback,
+        'mask_contacts': maskContacts,
+        'max_tokens_report': maxTokensReport,
+        'monthly_budget_usd': monthlyBudgetUsd,
+        'text_model': textModel,
+        'transcribe_model': transcribeModel,
       };
 }
 
