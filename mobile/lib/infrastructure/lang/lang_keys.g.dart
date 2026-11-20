@@ -6578,4 +6578,192 @@ abstract final class LangKeys {
   static const adminAuTReviews = 'admin.au.t.reviews';
   /// Platform
   static const adminAuTPlatform = 'admin.au.t.platform';
+  /// Write at least {n} characters.
+  static const adminErrTooShort = 'admin.err.too_short';
+  /// Test call to my phone
+  static const adminAcTest = 'admin.ac.test';
+  /// Save
+  static const adminAcSave = 'admin.ac.save';
+  /// Saved. The next calls use these settings.
+  static const adminAcSaved = 'admin.ac.saved';
+  /// No voice provider is connected yet.
+  static const adminAcOffTitle = 'admin.ac.off_title';
+  /// No calls are placed. When a Day 5 call is due, the customer gets the rating link by SMS instead. Calls start once a provider is added.
+  static const adminAcOffBody = 'admin.ac.off_body';
+  /// Voice provider not responding since {time}
+  static const adminAcDownTitle = 'admin.ac.down_title';
+  /// AI review calls are paused and {n} calls are waiting. Customers get the rating link by SMS instead.
+  static const adminAcDownBody = 'admin.ac.down_body';
+  /// Retry now
+  static const adminAcRetry = 'admin.ac.retry';
+  /// Calls (30 d)
+  static const adminAcKCalls = 'admin.ac.k_calls';
+  /// Only jobs with no rating by Day 5
+  static const adminAcKCallsSub = 'admin.ac.k_calls_sub';
+  /// {n} sent by SMS instead
+  static const adminAcKSms = 'admin.ac.k_sms';
+  /// Answered
+  static const adminAcKAnswered = 'admin.ac.k_answered';
+  /// Voicemail + SMS for the rest
+  static const adminAcKAnsweredSub = 'admin.ac.k_answered_sub';
+  /// Rated on the call
+  static const adminAcKRated = 'admin.ac.k_rated';
+  /// Of answered calls
+  static const adminAcKRatedSub = 'admin.ac.k_rated_sub';
+  /// Opted out
+  static const adminAcKOpted = 'admin.ac.k_opted';
+  /// Never called again
+  static const adminAcKOptedSub = 'admin.ac.k_opted_sub';
+  /// Cost
+  static const adminAcKCost = 'admin.ac.k_cost';
+  /// Per call, average
+  static const adminAcKCostSub = 'admin.ac.k_cost_sub';
+  /// Voice agent
+  static const adminAcAgent = 'admin.ac.agent';
+  /// Voice
+  static const adminAcVoice = 'admin.ac.voice';
+  /// Warm · calm · neutral accent
+  static const adminAcVoiceWarm = 'admin.ac.voice.warm';
+  /// Bright · friendly
+  static const adminAcVoiceBright = 'admin.ac.voice.bright';
+  /// Clear · formal
+  static const adminAcVoiceFormal = 'admin.ac.voice.formal';
+  /// Language
+  static const adminAcLanguage = 'admin.ac.language';
+  /// Customer’s report language
+  static const adminAcLangReport = 'admin.ac.lang.report';
+  /// Always English
+  static const adminAcLangEn = 'admin.ac.lang.en';
+  /// Opening line (required)
+  static const adminAcOpening = 'admin.ac.opening';
+  /// Can’t be changed
+  static const adminAcLocked = 'admin.ac.locked';
+  /// Every call starts with this. It cannot be removed.
+  static const adminAcOpeningNote = 'admin.ac.opening_note';
+  /// Calling hours
+  static const adminAcHours = 'admin.ac.hours';
+  /// {from} – {to}, company time
+  static const adminAcHoursV = 'admin.ac.hours_v';
+  /// Attempts
+  static const adminAcAttempts = 'admin.ac.attempts';
+  /// 1 call + 1 voicemail
+  static const adminAcAttCallVoicemail = 'admin.ac.att.call_voicemail';
+  /// 2 calls, a day apart
+  static const adminAcAttTwoCalls = 'admin.ac.att.two_calls';
+  /// 1 call, no voicemail
+  static const adminAcAttCallOnly = 'admin.ac.att.call_only';
+  /// Skip do-not-call / DND numbers
+  static const adminAcDnd = 'admin.ac.dnd';
+  /// Checked before every call. Always on.
+  static const adminAcDndHint = 'admin.ac.dnd_hint';
+  /// Record calls
+  static const adminAcRecord = 'admin.ac.record';
+  /// Recording and transcript saved with the review
+  static const adminAcRecordHint = 'admin.ac.record_hint';
+  /// Call only if still no rating
+  static const adminAcOnly = 'admin.ac.only';
+  /// Cancelled the moment any rating arrives. Always on.
+  static const adminAcOnlyHint = 'admin.ac.only_hint';
+  /// Call script
+  static const adminAcScript = 'admin.ac.script';
+  /// v{n} live
+  static const adminAcLive = 'admin.ac.live';
+  /// The steps are written in English; the agent speaks the customer’s language.
+  static const adminAcScriptNote = 'admin.ac.script_note';
+  /// Greeting + AI and recording disclosure
+  static const adminAcStepGreeting = 'admin.ac.step.greeting';
+  /// Not a good time → callback or send link
+  static const adminAcStepBadTime = 'admin.ac.step.bad_time';
+  /// "Don’t call" → opt out for good
+  static const adminAcStepDontCall = 'admin.ac.step.dont_call';
+  /// Ask for a 1–5 rating
+  static const adminAcStepAskRating = 'admin.ac.step.ask_rating';
+  /// 3–5 → what went well, public OK?
+  static const adminAcStepGood = 'admin.ac.step.good';
+  /// 1–2 → what went wrong, manager call?
+  static const adminAcStepBad = 'admin.ac.step.bad';
+  /// Read back, save, thank-you SMS
+  static const adminAcStepConfirm = 'admin.ac.step.confirm';
+  /// No answer → voicemail + SMS
+  static const adminAcStepNoAnswer = 'admin.ac.step.no_answer';
+  /// Wrong person → mark contact invalid
+  static const adminAcStepWrongPerson = 'admin.ac.step.wrong_person';
+  /// Edit “{step}”
+  static const adminAcEditStep = 'admin.ac.edit_step';
+  /// What the voice agent should do at this step, in plain English. Saving makes a new script version, used from the next call.
+  static const adminAcEditBody = 'admin.ac.edit_body';
+  /// Instructions for the agent
+  static const adminAcEditLabel = 'admin.ac.edit_label';
+  /// Save step
+  static const adminAcSaveStep = 'admin.ac.save_step';
+  /// Saved. Script v{n} is live.
+  static const adminAcStepSaved = 'admin.ac.step_saved';
+  /// Keep {job} in the greeting so the customer knows which job it is about.
+  static const adminAcNeedsJob = 'admin.ac.needs_job';
+  /// Test call to my phone
+  static const adminAcTestTitle = 'admin.ac.test_title';
+  /// The agent calls you with the live script and a sample job. It isn’t recorded.
+  static const adminAcTestBody = 'admin.ac.test_body';
+  /// No voice provider is connected yet, so test calls can’t be made.
+  static const adminAcTestOff = 'admin.ac.test_off';
+  /// Your phone number
+  static const adminAcTestPhone = 'admin.ac.test_phone';
+  /// Call me
+  static const adminAcTestGo = 'admin.ac.test_go';
+  /// Test call finished ({length}).
+  static const adminAcTestDone = 'admin.ac.test_done';
+  /// Enter a full phone number.
+  static const adminAcTestBadPhone = 'admin.ac.test_bad_phone';
+  /// Time
+  static const adminAcCTime = 'admin.ac.c_time';
+  /// Company
+  static const adminAcCCompany = 'admin.ac.c_company';
+  /// Customer
+  static const adminAcCCustomer = 'admin.ac.c_customer';
+  /// Language
+  static const adminAcCLanguage = 'admin.ac.c_language';
+  /// Length
+  static const adminAcCLength = 'admin.ac.c_length';
+  /// Outcome
+  static const adminAcCOutcome = 'admin.ac.c_outcome';
+  /// Cost
+  static const adminAcCCost = 'admin.ac.c_cost';
+  /// Today {time}
+  static const adminAcToday = 'admin.ac.today';
+  /// No calls yet
+  static const adminAcEmptyTitle = 'admin.ac.empty_title';
+  /// Day 5 calls, and SMS sent instead of them, appear here.
+  static const adminAcEmptyBody = 'admin.ac.empty_body';
+  /// Rated {n}★
+  static const adminAcORated = 'admin.ac.o.rated';
+  /// Rated {n}★ · manager call asked
+  static const adminAcORatedCall = 'admin.ac.o.rated_call';
+  /// Call back later
+  static const adminAcOCallBack = 'admin.ac.o.call_back';
+  /// Call back {time}
+  static const adminAcOCallBackAt = 'admin.ac.o.call_back_at';
+  /// Voicemail + SMS sent
+  static const adminAcOVoicemailSms = 'admin.ac.o.voicemail_sms';
+  /// No answer
+  static const adminAcONoAnswer = 'admin.ac.o.no_answer';
+  /// Opted out
+  static const adminAcOOptedOut = 'admin.ac.o.opted_out';
+  /// Wrong person
+  static const adminAcOWrongPerson = 'admin.ac.o.wrong_person';
+  /// Skipped · do-not-call list
+  static const adminAcOSkippedDnd = 'admin.ac.o.skipped_dnd';
+  /// Failed · provider down → SMS sent
+  static const adminAcOFailedSms = 'admin.ac.o.failed_sms';
+  /// No voice provider → SMS sent
+  static const adminAcONoProviderSms = 'admin.ac.o.no_provider_sms';
+  /// No call credits → SMS sent
+  static const adminAcONoCreditsSms = 'admin.ac.o.no_credits_sms';
+  /// Nothing sent
+  static const adminAcONotSent = 'admin.ac.o.not_sent';
+  /// Changed the AI call settings
+  static const adminAuAStaffAiCallSettingsUpdated = 'admin.au.a.staff.ai_call_settings_updated';
+  /// Changed the AI call script
+  static const adminAuAStaffAiCallScriptUpdated = 'admin.au.a.staff.ai_call_script_updated';
+  /// Made a test AI call
+  static const adminAuAStaffAiCallTest = 'admin.au.a.staff.ai_call_test';
 }

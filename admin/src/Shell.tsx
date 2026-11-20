@@ -44,7 +44,7 @@ export const NAV: { section: string; items: NavItem[] }[] = [
       { key: 'users', path: '/users', icon: User, ready: true },
       { key: 'leads', path: '/leads', icon: Inbox, ready: true },
       { key: 'reviews', path: '/reviews', icon: CheckCheck, ready: true },
-      { key: 'ai_calls', path: '/ai-review-calls', icon: Phone },
+      { key: 'ai_calls', path: '/ai-review-calls', icon: Phone, ready: true },
       { key: 'templates', path: '/message-templates', icon: MessageSquareText },
       { key: 'usage', path: '/usage', icon: SlidersHorizontal },
     ],
@@ -174,6 +174,8 @@ export function Shell({ t, lang, onLang, path, staff, crumb, title, actions, chi
           </div>
           <div className="flex flex-wrap items-center gap-12">
             {actions}
+            {/* pages that keep their own state put their buttons here (see PageActions) */}
+            <div id="kn-page-actions" className="contents" />
             <LangSelect t={t} lang={lang} onChange={onLang} />
           </div>
         </div>

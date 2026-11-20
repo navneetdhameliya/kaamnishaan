@@ -1,6 +1,7 @@
 """Platform-wide settings kept in the database (platform_settings). Each group has defaults in code."""
 
 import uuid
+from typing import Literal
 
 from pydantic import BaseModel
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -29,3 +30,95 @@ async def set_review_rules(db: AsyncSession, rules: ReviewRules, *, staff_id: uu
     row.value, row.updated_by = rules.model_dump(), staff_id
     await db.flush()
     return rules
+
+
+# ---- A38 AI review calls -------------------------------------------------------------------------------
+OPENING = "Hi, this is {company}'s virtual assistant. I'm an AI and this call is recorded."
+HOURS = ("10-19", "9-20", "11-18")  # calling hours, the company's local time
+
+
+class AiCallSettings(BaseModel):
+    voice: Literal["warm", "bright", "formal"] = "warm"
+    language: Literal["report", "en"] = "report"  # the report's language, or always English
+    hours: Literal["10-19", "9-20", "11-18"] = "10-19"
+    attempts: Literal["call_voicemail", "two_calls", "call_only"] = "call_voicemail"
+    record: bool = True
+    # always on (legal and kindness rules), shown locked in the admin panel
+    skip_dnd: Literal[True] = True
+    only_if_no_rating: Literal[True] = True
+
+
+SCRIPT_STEPS = (
+    ("greeting", "Say the opening line word for word. Ask if it's a good time for one minute about the {job} "
+                 "job on {date}."),
+    ("bad_time", "If it's not a good time, offer to call back later today or to send the rating link by SMS. "
+                 "Do what they choose."),
+    ("dont_call", "If they say not to call, apologise, confirm they won't be called again, and end the "
+                  "call."),
+    ("ask_rating", "Ask them to rate the job from 1 to 5, where 5 is excellent."),
+    ("good", "For 3 to 5: ask what went well, then ask if the company may show the review publicly."),
+    ("bad", "For 1 or 2: ask what went wrong, then ask if they'd like a call from the manager."),
+    ("confirm", "Read the rating and their words back, save them, and say a thank-you SMS is on its way."),
+    ("no_answer", "If nobody answers, leave a short voicemail and send the rating link by SMS."),
+    ("wrong_person", "If it's the wrong person, apologise, end the call and mark the contact as wrong."),
+)  # fmt: skip
+
+
+class ScriptStep(BaseModel):
+    key: str
+    text: str
+
+
+class AiCallScript(BaseModel):
+    version: int = 1
+    steps: list[ScriptStep] = [ScriptStep(key=k, text=t) for k, t in SCRIPT_STEPS]
+
+
+async def _get(db: AsyncSession, key: str) -> dict:
+    row = await db.get(PlatformSetting, key)
+    return dict(row.value) if row else {}
+
+
+async def _put(db: AsyncSession, key: str, value: dict, staff_id: uuid.UUID | None) -> None:
+    row = await db.get(PlatformSetting, key)
+    if not row:
+        row = PlatformSetting(key=key)
+        db.add(row)
+    row.value, row.updated_by = value, staff_id
+    await db.flush()
+
+
+async def ai_call_settings(db: AsyncSession) -> AiCallSettings:
+    return AiCallSettings(**await _get(db, "ai_calls"))
+
+
+async def set_ai_call_settings(db: AsyncSession, s: AiCallSettings, *, staff_id: uuid.UUID) -> AiCallSettings:
+    await _put(db, "ai_calls", s.model_dump(), staff_id)
+    return s
+
+
+async def ai_call_script(db: AsyncSession) -> AiCallScript:
+    saved = AiCallScript(**await _get(db, "ai_call_script"))
+    texts = {s.key: s.text for s in saved.steps}
+    # steps added in code later appear with their default text
+    return AiCallScript(
+        version=saved.version, steps=[ScriptStep(key=k, text=texts.get(k, t)) for k, t in SCRIPT_STEPS]
+    )
+
+
+async def set_script_step(db: AsyncSession, key: str, text: str, *, staff_id: uuid.UUID) -> AiCallScript:
+    script = await ai_call_script(db)
+    steps = [ScriptStep(key=s.key, text=text if s.key == key else s.text) for s in script.steps]
+    out = AiCallScript(version=script.version + 1, steps=steps)
+    await _put(db, "ai_call_script", out.model_dump(), staff_id)
+    return out
+
+
+# ---- the voice provider's health (A38 "provider not responding" banner) ---------------------------------
+async def voice_status(db: AsyncSession) -> dict:
+    """{"down_since": iso or None}: set by the first failed call, cleared by the next one that works."""
+    return await _get(db, "voice_status")
+
+
+async def set_voice_down(db: AsyncSession, since: str | None) -> None:
+    await _put(db, "voice_status", {"down_since": since}, None)

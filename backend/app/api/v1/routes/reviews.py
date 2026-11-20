@@ -26,7 +26,7 @@ from app.schemas.reviews import (
     ReviewsPage,
     SuggestionOut,
 )
-from app.services import review_office, reviews
+from app.services import ai_calls, review_office, reviews
 from app.services.jobs import get_job
 
 from .jobs import member
@@ -123,8 +123,10 @@ def _cron(x_cron_key: str | None = Header(default=None)) -> None:
 
 @router.post("/cron/review-followups", dependencies=[Depends(_cron)])
 async def run_followups(db: AsyncSession = Depends(get_db)) -> dict:
-    """Send every Day 2 review reminder that is due (all companies). For a scheduler, with X-Cron-Key."""
-    return {"reminders_sent": await review_office.send_due(db)}
+    """Send every Day 2 review reminder and run every Day 5 AI call that is due (all companies). For a
+    scheduler, with X-Cron-Key."""
+    reminders = await review_office.send_due(db)
+    return {"reminders_sent": reminders, "calls_handled": await ai_calls.call_due(db)}
 
 
 @router.get("/reviews/{review_id}", response_model=ReviewOut)

@@ -1,5 +1,6 @@
 import { AlertCircle, ChevronDown, Globe, Loader2, Lock } from 'lucide-react';
 import { useEffect, useRef, useState, type ClipboardEvent, type KeyboardEvent, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 
 import { LANGS, type Lang, type T } from './lib/i18n';
 
@@ -271,20 +272,89 @@ export function ReasonDialog({ t, title, body, confirm, danger, onClose, onConfi
 }
 
 /** An on/off switch (Figma "Toggle"). The label sits on its left and the whole row can be clicked. */
-export function Switch({ label, checked, disabled, onChange }: { label: string; checked: boolean; disabled?: boolean; onChange: (on: boolean) => void }) {
+export function Switch({ label, hint, checked, disabled, onChange }: { label: string; hint?: string; checked: boolean; disabled?: boolean; onChange: (on: boolean) => void }) {
   return (
-    <label className={cx('flex min-h-[44px] items-center justify-between gap-16', disabled ? 'cursor-not-allowed opacity-60' : 'cursor-pointer')}>
-      <span className="text-latin-label-sm font-semibold">{label}</span>
+    <label className={cx('flex min-h-[44px] items-center justify-between gap-16', disabled ? 'cursor-not-allowed' : 'cursor-pointer')}>
+      <span className={cx('min-w-0', disabled && 'opacity-80')}>
+        <span className="block text-latin-label-sm font-semibold">{label}</span>
+        {hint && <span className="block text-[13px] text-text-secondary">{hint}</span>}
+      </span>
       <button
         type="button"
         role="switch"
         aria-checked={checked}
         disabled={disabled}
         onClick={() => onChange(!checked)}
-        className={cx('relative inline-flex h-[24px] w-[44px] shrink-0 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring', checked ? 'bg-espresso-950' : 'bg-taupe-400')}
+        className={cx('relative inline-flex h-[24px] w-[44px] shrink-0 items-center rounded-full transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-focus-ring', checked ? (disabled ? 'bg-taupe-500' : 'bg-espresso-950') : 'bg-taupe-400')}
       >
         <span aria-hidden className={cx('inline-block h-[18px] w-[18px] rounded-full bg-cream-50 shadow transition-transform', checked ? 'translate-x-[23px]' : 'translate-x-[3px]')} />
       </button>
     </label>
+  );
+}
+
+
+/** Puts buttons in the top bar from inside a page that keeps its own state (e.g. Save). */
+export function PageActions({ children }: { children: ReactNode }) {
+  const [el, setEl] = useState<HTMLElement | null>(null);
+  useEffect(() => setEl(document.getElementById('kn-page-actions')), []);
+  return el ? createPortal(children, el) : null;
+}
+
+/** Asks for one piece of text (a script step, a phone number). Escape or Cancel closes it. */
+export function TextDialog({ t, title, body, label, initial = '', multiline, min = 1, max, type = 'text', confirm, onClose, onConfirm }: { t: T; title: string; body?: string; label: string; initial?: string; multiline?: boolean; min?: number; max: number; type?: string; confirm: string; onClose: () => void; onConfirm: (text: string) => Promise<string | null> }) {
+  const [text, setText] = useState(initial);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const ref = useRef<HTMLTextAreaElement & HTMLInputElement>(null);
+  useEffect(() => {
+    ref.current?.focus();
+    const esc = (e: globalThis.KeyboardEvent) => e.key === 'Escape' && !busy && onClose();
+    window.addEventListener('keydown', esc);
+    return () => window.removeEventListener('keydown', esc);
+  }, [busy, onClose]);
+  const go = async () => {
+    if (text.trim().length < min) return setError(t('admin.err.too_short', { n: min }));
+    setBusy(true);
+    setError(null);
+    const err = await onConfirm(text.trim());
+    if (err) {
+      setError(err);
+      setBusy(false);
+    }
+  };
+  const cls = 'mt-8 w-full rounded-lg border border-border-strong bg-bg-surface p-12 text-latin-body hover:border-mocha-500 focus:outline-none focus:ring-2 focus:ring-focus-ring';
+  return (
+    <div className="fixed inset-0 z-50 flex items-end justify-center p-16 sm:items-center">
+      <button type="button" aria-hidden tabIndex={-1} onClick={() => !busy && onClose()} className="absolute inset-0 cursor-default bg-espresso-950/50" />
+      <div role="dialog" aria-modal="true" aria-labelledby="text-title" className="kn-pop relative w-full max-w-[520px] rounded-xl bg-bg-surface p-24 shadow-lg">
+        <h2 id="text-title" className="text-[22px] font-bold leading-[30px]">
+          {title}
+        </h2>
+        {body && <p className="mt-8 text-latin-body text-text-secondary">{body}</p>}
+        <label htmlFor="text-input" className="mt-20 block text-latin-label-sm font-semibold">
+          {label}
+        </label>
+        {multiline ? (
+          <textarea id="text-input" ref={ref} value={text} onChange={(e) => setText(e.target.value)} maxLength={max} rows={5} className={cls} />
+        ) : (
+          <input id="text-input" ref={ref} type={type} value={text} onChange={(e) => setText(e.target.value)} maxLength={max} onKeyDown={(e) => e.key === 'Enter' && void go()} className={cx(cls, 'h-[48px]')} />
+        )}
+        {error && (
+          <div className="mt-12">
+            <ErrorBanner>{error}</ErrorBanner>
+          </div>
+        )}
+        <div className="mt-20 flex flex-col-reverse gap-12 sm:flex-row sm:justify-end">
+          <button type="button" onClick={onClose} disabled={busy} className="kn-btn inline-flex h-[44px] items-center justify-center rounded-lg bg-bg-subtle px-20 text-latin-label-sm font-semibold hover:bg-cream-300">
+            {t('admin.us.cancel')}
+          </button>
+          <button type="button" onClick={() => void go()} disabled={busy} className="kn-btn inline-flex h-[44px] items-center justify-center gap-8 rounded-lg bg-action-primary px-20 text-latin-label-sm font-semibold text-cream-50 hover:bg-action-primary-pressed disabled:opacity-60">
+            {busy && <Spinner />}
+            {confirm}
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
