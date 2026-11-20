@@ -28,6 +28,7 @@ from app.schemas.admin_ai_config import (
     AdminPromptsOut,
     PromptTask,
 )  # fmt: skip
+from app.schemas.admin_analytics import AdminAnalyticsOut
 from app.schemas.admin_audit import AdminAuditList
 from app.schemas.admin_billing import (
     AdminPackIn,
@@ -85,15 +86,21 @@ from app.schemas.admin_staff import (
     AdminStaffRow,
     AdminStaffUpdate,
 )
+from app.schemas.admin_system import AdminLocalizationIn, AdminLocalizationOut, AdminStorageOut
 from app.schemas.admin_users import AdminUserAction, AdminUserDetail, AdminUserList
 from app.schemas.blog import AdminBlogDetail, AdminBlogList, BlogIn, BlogPublishIn, MediaOut
 from app.schemas.checklists import QuestionIn, QuestionPatch
-from app.schemas.identity import Locale
+from app.schemas.identity import Locale, Ok
 from app.schemas.reports import ReportStatus
 from app.schemas.staff import (
     AdminDashboardOut,
+    StaffCodeIn,
+    StaffDevices,
     StaffLoginIn,
     StaffOut,
+    StaffPasswordIn,
+    StaffProfileIn,
+    StaffRecoveryOut,
     StaffRefreshIn,
     StaffSessionOut,
     StaffSetupIn,
@@ -123,6 +130,7 @@ from app.services import (
     admin_ai,
     admin_ai_calls,
     admin_ai_config,
+    admin_analytics,
     admin_audit,
     admin_billing,
     admin_checklists,
@@ -139,6 +147,7 @@ from app.services import (
     admin_reviews,
     admin_staff,
     admin_support,
+    admin_system,
     admin_users,
     ai_calls,
     audit,
@@ -1686,3 +1695,90 @@ async def delete_testimonial(
 ) -> AdminTestimonials:
     _can_change(me)
     return await testimonials.delete(db, testimonial_id, staff_id=me.staff.id, ip=client_ip(request))
+
+
+# ---- A30 Analytics, A34 Storage, A35 Localization, A36 My profile ---------------------------------------
+@router.get("/analytics", response_model=AdminAnalyticsOut)
+async def analytics(
+    days: int = Query(90, description="7, 30 or 90"), locale: Locale = "en",
+    _: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminAnalyticsOut:  # fmt: skip
+    """Reports sent, review time, approved first time, active technicians, compared with the period before."""
+    if days not in (7, 30, 90):
+        raise AppError("validation_error", "Pick 7, 30 or 90 days.", fields={"days": "range"})
+    return await admin_analytics.overview(db, days, locale)
+
+
+@router.get("/storage", response_model=AdminStorageOut)
+async def storage_settings(
+    _: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminStorageOut:
+    """What is stored and how files are protected (read only)."""
+    return await admin_system.storage(db)
+
+
+@router.get("/localization", response_model=AdminLocalizationOut)
+async def localization_settings(
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminLocalizationOut:
+    return await admin_system.localization(db, can_act=me.staff.role in ("super_admin", "admin"))
+
+
+@router.put("/localization", response_model=AdminLocalizationOut)
+async def save_localization(
+    body: AdminLocalizationIn,
+    request: Request,
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminLocalizationOut:
+    _can_change(me)
+    return await admin_system.set_localization(
+        db, body.report_language, staff_id=me.staff.id, ip=client_ip(request), can_act=True
+    )
+
+
+@router.put("/me", response_model=StaffOut)
+async def update_me(
+    body: StaffProfileIn, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> StaffOut:
+    """Your name and admin panel language. The email can't be changed here (it is your login)."""
+    return await staff.update_profile(db, me.staff, name=body.name, lang=body.lang, ip=client_ip(request))
+
+
+@router.post("/me/password", response_model=Ok)
+async def change_my_password(
+    body: StaffPasswordIn,
+    request: Request,
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> Ok:
+    """Needs the current password and an authenticator code. Other devices are logged out."""
+    n = await staff.change_password(
+        db, me.staff, current=body.current_password, new=body.new_password, code=body.code,
+        session_id=me.session_id, ip=client_ip(request),
+    )  # fmt: skip
+    return Ok(details={"other_sessions_ended": n})
+
+
+@router.post("/me/recovery-codes", response_model=StaffRecoveryOut)
+async def new_recovery_codes(
+    body: StaffCodeIn, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> StaffRecoveryOut:
+    """8 new recovery codes, shown once; the old ones stop working."""
+    return await staff.new_recovery(db, me.staff, code=body.code, ip=client_ip(request))
+
+
+@router.get("/me/sessions", response_model=StaffDevices)
+async def my_sessions(me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)) -> StaffDevices:
+    """Devices where you are logged in (sessions end 12 hours after log in)."""
+    return await staff.devices(db, me.staff, me.session_id)
+
+
+@router.delete("/me/sessions/{session_id}", response_model=StaffDevices)
+async def end_my_session(
+    session_id: uuid.UUID,
+    request: Request,
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> StaffDevices:
+    return await staff.end_device(db, me.staff, session_id, me.session_id, client_ip(request))

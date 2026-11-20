@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import { api } from './lib/api';
 import { rememberLang, startLang, translator, useTextsVersion, type Lang } from './lib/i18n';
 import { session } from './lib/session';
-import type { StaffSession } from './lib/types';
+import type { StaffOut, StaffSession } from './lib/types';
 import { AuditLogs } from './pages/AuditLogs';
 import { ChecklistEditor } from './pages/ChecklistEditor';
 import { ChecklistTemplates } from './pages/ChecklistTemplates';
@@ -32,7 +33,9 @@ import { Templates } from './pages/Templates';
 import { Leads } from './pages/Leads';
 import { Blog, NewPost } from './pages/Blog';
 import { BlogEditor } from './pages/BlogEditor';
+import { Analytics } from './pages/Analytics';
 import { Notifications } from './pages/Notifications';
+import { Localization, Profile, Storage } from './pages/SystemPages';
 import { Testimonials } from './pages/Testimonials';
 import { Texts } from './pages/Texts';
 import { WebsiteContent } from './pages/WebsiteContent';
@@ -63,6 +66,19 @@ export default function App() {
   const onName = useCallback((n: string) => setNamed({ path: location.pathname, name: n }), []);
   const pageName = named.path === path ? named.name : '';
   useEffect(() => session.subscribe(setSess), []);
+  // A36: the language saved on the staff profile follows them to a new device at log in
+  const staffLang = sess?.staff.lang;
+  useEffect(() => {
+    if (staffLang) setLang(staffLang);
+  }, [staffLang]);
+  // a language picked in the top bar is saved to the profile too
+  const pickLang = useCallback((l: Lang) => {
+    setLang(l);
+    const s = session.get();
+    if (!s || s.staff.lang === l) return;
+    session.set({ ...s, staff: { ...s.staff, lang: l } });
+    void api<StaffOut>('/admin/me', { method: 'PUT', body: { name: s.staff.name, lang: l } }).catch(() => undefined);
+  }, []);
   useEffect(() => {
     document.documentElement.lang = lang;
     rememberLang(lang);
@@ -119,6 +135,10 @@ export default function App() {
   else if (nav.key === 'audit') page = <AuditLogs key="audit" t={t} lang={lang} />;
   else if (nav.key === 'leads') page = <Leads key="leads" t={t} lang={lang} id={sub} />;
   else if (nav.key === 'support') page = <Support key="support" t={t} lang={lang} id={sub} />;
+  else if (nav.key === 'analytics') page = <Analytics t={t} lang={lang} days={days} />;
+  else if (nav.key === 'storage') page = <Storage key="storage" t={t} lang={lang} />;
+  else if (nav.key === 'localization') page = <Localization key="localization" t={t} lang={lang} />;
+  else if (nav.key === 'profile') page = <Profile key="profile" t={t} lang={lang} onLang={setLang} />;
   else if (nav.key === 'blog') page = sub ? <BlogEditor key={sub} t={t} lang={lang} id={sub} onName={onName} /> : <Blog key="blog" t={t} lang={lang} />;
   else if (nav.key === 'testimonials') page = <Testimonials key="testimonials" t={t} lang={lang} />;
   else if (nav.key === 'website_content') page = <WebsiteContent key="wc" t={t} lang={lang} page={sub} />;
@@ -130,12 +150,12 @@ export default function App() {
     <Shell
       t={t}
       lang={lang}
-      onLang={setLang}
+      onLang={pickLang}
       path={path}
       staff={sess.staff}
       crumb={sub && nav.key !== 'leads' && nav.key !== 'support' && nav.key !== 'website_content' ? `${t(`admin.nav.${nav.section}`)} / ${name}` : t(`admin.nav.${nav.section}`)}
       title={sub && nav.key !== 'leads' && nav.key !== 'support' && nav.key !== 'website_content' ? pageName || name : name}
-      actions={nav.key === 'dashboard' || nav.key === 'ai_usage' ? <RangeSelect t={t} days={days} onChange={setDays} /> : nav.key === 'reviews' ? <ExportReviews t={t} /> : nav.key === 'jobs' && !sub ? <ExportJobs t={t} /> : nav.key === 'reports' && !sub ? <ExportReports t={t} /> : nav.key === 'subscriptions' ? <ExportSubscriptions t={t} lang={lang} /> : nav.key === 'support' ? <ExportSupport t={t} /> : nav.key === 'blog' && !sub ? <NewPost t={t} /> : undefined}
+      actions={nav.key === 'dashboard' || nav.key === 'ai_usage' || nav.key === 'analytics' ? <RangeSelect t={t} days={days} onChange={setDays} /> : nav.key === 'reviews' ? <ExportReviews t={t} /> : nav.key === 'jobs' && !sub ? <ExportJobs t={t} /> : nav.key === 'reports' && !sub ? <ExportReports t={t} /> : nav.key === 'subscriptions' ? <ExportSubscriptions t={t} lang={lang} /> : nav.key === 'support' ? <ExportSupport t={t} /> : nav.key === 'blog' && !sub ? <NewPost t={t} /> : undefined}
     >
       {page}
     </Shell>

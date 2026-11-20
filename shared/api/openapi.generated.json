@@ -682,6 +682,73 @@
         "title": "AdminAiUsageOut",
         "type": "object"
       },
+      "AdminAnalyticsOut": {
+        "properties": {
+          "active_technicians": {
+            "$ref": "#/components/schemas/Metric",
+            "description": "people who took photos or voice notes"
+          },
+          "days": {
+            "title": "Days",
+            "type": "integer"
+          },
+          "first_time": {
+            "$ref": "#/components/schemas/Metric",
+            "description": "% of approved reports that needed no changes"
+          },
+          "reports_by_industry": {
+            "items": {
+              "$ref": "#/components/schemas/Share"
+            },
+            "title": "Reports By Industry",
+            "type": "array"
+          },
+          "reports_sent": {
+            "$ref": "#/components/schemas/Metric"
+          },
+          "review_minutes": {
+            "$ref": "#/components/schemas/Metric",
+            "description": "median time from submitted to approved"
+          },
+          "sent_by_period": {
+            "items": {
+              "$ref": "#/components/schemas/Bucket"
+            },
+            "title": "Sent By Period",
+            "type": "array"
+          },
+          "step": {
+            "description": "day or week",
+            "title": "Step",
+            "type": "string"
+          },
+          "voice_languages": {
+            "items": {
+              "$ref": "#/components/schemas/Share"
+            },
+            "title": "Voice Languages",
+            "type": "array"
+          },
+          "voice_total": {
+            "title": "Voice Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "days",
+          "reports_sent",
+          "review_minutes",
+          "first_time",
+          "active_technicians",
+          "step",
+          "sent_by_period",
+          "voice_languages",
+          "voice_total",
+          "reports_by_industry"
+        ],
+        "title": "AdminAnalyticsOut",
+        "type": "object"
+      },
       "AdminAnnouncementIn": {
         "additionalProperties": false,
         "properties": {
@@ -4562,6 +4629,61 @@
         "title": "AdminLeadUpdate",
         "type": "object"
       },
+      "AdminLocalizationIn": {
+        "additionalProperties": false,
+        "properties": {
+          "report_language": {
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Report Language",
+            "type": "string"
+          }
+        },
+        "required": [
+          "report_language"
+        ],
+        "title": "AdminLocalizationIn",
+        "type": "object"
+      },
+      "AdminLocalizationOut": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "languages": {
+            "items": {
+              "$ref": "#/components/schemas/LanguageRow"
+            },
+            "title": "Languages",
+            "type": "array"
+          },
+          "report_language": {
+            "description": "Report language a new company starts with",
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Report Language",
+            "type": "string"
+          }
+        },
+        "required": [
+          "languages",
+          "report_language",
+          "can_act"
+        ],
+        "title": "AdminLocalizationOut",
+        "type": "object"
+      },
       "AdminMoney": {
         "properties": {
           "amount_minor": {
@@ -7830,6 +7952,69 @@
         "title": "AdminStat",
         "type": "object"
       },
+      "AdminStorageOut": {
+        "properties": {
+          "bucket": {
+            "title": "Bucket",
+            "type": "string"
+          },
+          "kinds": {
+            "description": "Originals only; small copies and thumbnails are not counted",
+            "items": {
+              "$ref": "#/components/schemas/StorageKind"
+            },
+            "title": "Kinds",
+            "type": "array"
+          },
+          "link_minutes": {
+            "description": "How long a file link works",
+            "title": "Link Minutes",
+            "type": "integer"
+          },
+          "locked_evidence": {
+            "description": "Photos locked because their report was sent for approval",
+            "title": "Locked Evidence",
+            "type": "integer"
+          },
+          "max_photo_mb": {
+            "description": "Changed in Platform settings (A32)",
+            "title": "Max Photo Mb",
+            "type": "integer"
+          },
+          "provider": {
+            "description": "r2 = Cloudflare R2; local = files on the server (testing)",
+            "enum": [
+              "local",
+              "r2"
+            ],
+            "title": "Provider",
+            "type": "string"
+          },
+          "top_companies": {
+            "items": {
+              "$ref": "#/components/schemas/StorageCompany"
+            },
+            "title": "Top Companies",
+            "type": "array"
+          },
+          "total_bytes": {
+            "title": "Total Bytes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "provider",
+          "bucket",
+          "kinds",
+          "total_bytes",
+          "top_companies",
+          "link_minutes",
+          "max_photo_mb",
+          "locked_evidence"
+        ],
+        "title": "AdminStorageOut",
+        "type": "object"
+      },
       "AdminSubKpis": {
         "properties": {
           "cancelled_30d": {
@@ -10984,6 +11169,25 @@
           }
         },
         "title": "BlogPublishIn",
+        "type": "object"
+      },
+      "Bucket": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "start": {
+            "format": "date",
+            "title": "Start",
+            "type": "string"
+          }
+        },
+        "required": [
+          "start",
+          "count"
+        ],
+        "title": "Bucket",
         "type": "object"
       },
       "CancelBody": {
@@ -15004,6 +15208,52 @@
         "title": "LanguageOut",
         "type": "object"
       },
+      "LanguageRow": {
+        "properties": {
+          "app_checked": {
+            "description": "% of app texts a person checked (A25); English is the source = 100",
+            "title": "App Checked",
+            "type": "integer"
+          },
+          "code": {
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Code",
+            "type": "string"
+          },
+          "native_name": {
+            "title": "Native Name",
+            "type": "string"
+          },
+          "reports": {
+            "default": true,
+            "title": "Reports",
+            "type": "boolean"
+          },
+          "site_checked": {
+            "title": "Site Checked",
+            "type": "integer"
+          },
+          "voice": {
+            "default": true,
+            "title": "Voice",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "code",
+          "native_name",
+          "app_checked",
+          "site_checked"
+        ],
+        "title": "LanguageRow",
+        "type": "object"
+      },
       "LegalBlock": {
         "properties": {
           "items": {
@@ -15819,6 +16069,39 @@
         "title": "MessageOut",
         "type": "object"
       },
+      "Metric": {
+        "properties": {
+          "previous": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Previous"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "null when there is nothing to measure yet",
+            "title": "Value"
+          }
+        },
+        "required": [
+          "value",
+          "previous"
+        ],
+        "title": "Metric",
+        "type": "object"
+      },
       "Money": {
         "properties": {
           "amount": {
@@ -16252,6 +16535,22 @@
           }
         },
         "title": "NotificationsRead",
+        "type": "object"
+      },
+      "Ok": {
+        "properties": {
+          "details": {
+            "additionalProperties": true,
+            "title": "Details",
+            "type": "object"
+          },
+          "ok": {
+            "default": true,
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "title": "Ok",
         "type": "object"
       },
       "Onboarding": {
@@ -20030,6 +20329,37 @@
         "title": "SessionOut",
         "type": "object"
       },
+      "Share": {
+        "properties": {
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "key": {
+            "description": "language code or industry slug; 'other' for the rest",
+            "title": "Key",
+            "type": "string"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "industry name in the asked language",
+            "title": "Label"
+          }
+        },
+        "required": [
+          "key",
+          "count"
+        ],
+        "title": "Share",
+        "type": "object"
+      },
       "ShareInfo": {
         "properties": {
           "blocked_by": {
@@ -20771,6 +21101,100 @@
         "title": "SourceReport",
         "type": "object"
       },
+      "StaffCodeIn": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "description": "6 digits from the authenticator app",
+            "maxLength": 12,
+            "title": "Code",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "title": "StaffCodeIn",
+        "type": "object"
+      },
+      "StaffDevice": {
+        "properties": {
+          "current": {
+            "title": "Current",
+            "type": "boolean"
+          },
+          "device": {
+            "description": "e.g. \"Chrome on macOS\"",
+            "title": "Device",
+            "type": "string"
+          },
+          "ends_at": {
+            "format": "date-time",
+            "title": "Ends At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "ip": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ip"
+          },
+          "last_used_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Used At"
+          },
+          "started_at": {
+            "format": "date-time",
+            "title": "Started At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "device",
+          "ip",
+          "started_at",
+          "last_used_at",
+          "ends_at",
+          "current"
+        ],
+        "title": "StaffDevice",
+        "type": "object"
+      },
+      "StaffDevices": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/StaffDevice"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "StaffDevices",
+        "type": "object"
+      },
       "StaffLoginIn": {
         "additionalProperties": false,
         "properties": {
@@ -20829,6 +21253,19 @@
             "title": "Id",
             "type": "string"
           },
+          "lang": {
+            "default": "en",
+            "description": "Admin panel language (A36)",
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Lang",
+            "type": "string"
+          },
           "name": {
             "title": "Name",
             "type": "string"
@@ -20855,6 +21292,79 @@
           "recovery_codes_left"
         ],
         "title": "StaffOut",
+        "type": "object"
+      },
+      "StaffPasswordIn": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "description": "6 digits from the authenticator app",
+            "maxLength": 12,
+            "title": "Code",
+            "type": "string"
+          },
+          "current_password": {
+            "maxLength": 256,
+            "title": "Current Password",
+            "type": "string"
+          },
+          "new_password": {
+            "maxLength": 256,
+            "title": "New Password",
+            "type": "string"
+          }
+        },
+        "required": [
+          "current_password",
+          "new_password",
+          "code"
+        ],
+        "title": "StaffPasswordIn",
+        "type": "object"
+      },
+      "StaffProfileIn": {
+        "additionalProperties": false,
+        "properties": {
+          "lang": {
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Lang",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "lang"
+        ],
+        "title": "StaffProfileIn",
+        "type": "object"
+      },
+      "StaffRecoveryOut": {
+        "properties": {
+          "recovery_codes": {
+            "description": "Shown once; the old codes stop working",
+            "items": {
+              "type": "string"
+            },
+            "title": "Recovery Codes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "recovery_codes"
+        ],
+        "title": "StaffRecoveryOut",
         "type": "object"
       },
       "StaffRefreshIn": {
@@ -21045,6 +21555,57 @@
           }
         },
         "title": "StartBody",
+        "type": "object"
+      },
+      "StorageCompany": {
+        "properties": {
+          "bytes": {
+            "title": "Bytes",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "bytes"
+        ],
+        "title": "StorageCompany",
+        "type": "object"
+      },
+      "StorageKind": {
+        "properties": {
+          "bytes": {
+            "title": "Bytes",
+            "type": "integer"
+          },
+          "files": {
+            "title": "Files",
+            "type": "integer"
+          },
+          "kind": {
+            "enum": [
+              "photos",
+              "voice",
+              "pdfs"
+            ],
+            "title": "Kind",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "files",
+          "bytes"
+        ],
+        "title": "StorageKind",
         "type": "object"
       },
       "SubmissionOut": {
@@ -23572,6 +24133,74 @@
           }
         ],
         "summary": "Ai Usage",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/analytics": {
+      "get": {
+        "description": "Reports sent, review time, approved first time, active technicians, compared with the period before.",
+        "operationId": "analytics_api_v1_admin_analytics_get",
+        "parameters": [
+          {
+            "description": "7, 30 or 90",
+            "in": "query",
+            "name": "days",
+            "required": false,
+            "schema": {
+              "default": 90,
+              "description": "7, 30 or 90",
+              "title": "Days",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminAnalyticsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Analytics",
         "tags": [
           "admin"
         ]
@@ -27556,6 +28185,76 @@
         ]
       }
     },
+    "/api/v1/admin/localization": {
+      "get": {
+        "operationId": "localization_settings_api_v1_admin_localization_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminLocalizationOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Localization Settings",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "operationId": "save_localization_api_v1_admin_localization_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminLocalizationIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminLocalizationOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Save Localization",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/api/v1/admin/me": {
       "get": {
         "operationId": "me_api_v1_admin_me_get",
@@ -27577,6 +28276,220 @@
           }
         ],
         "summary": "Me",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "description": "Your name and admin panel language. The email can't be changed here (it is your login).",
+        "operationId": "update_me_api_v1_admin_me_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StaffProfileIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Update Me",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/me/password": {
+      "post": {
+        "description": "Needs the current password and an authenticator code. Other devices are logged out.",
+        "operationId": "change_my_password_api_v1_admin_me_password_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StaffPasswordIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Ok"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Change My Password",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/me/recovery-codes": {
+      "post": {
+        "description": "8 new recovery codes, shown once; the old ones stop working.",
+        "operationId": "new_recovery_codes_api_v1_admin_me_recovery_codes_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StaffCodeIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffRecoveryOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "New Recovery Codes",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/me/sessions": {
+      "get": {
+        "description": "Devices where you are logged in (sessions end 12 hours after log in).",
+        "operationId": "my_sessions_api_v1_admin_me_sessions_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffDevices"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "My Sessions",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/me/sessions/{session_id}": {
+      "delete": {
+        "operationId": "end_my_session_api_v1_admin_me_sessions__session_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "session_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Session Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StaffDevices"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "End My Session",
         "tags": [
           "admin"
         ]
@@ -29523,6 +30436,33 @@
           }
         ],
         "summary": "Staff Setup Link",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/storage": {
+      "get": {
+        "description": "What is stored and how files are protected (read only).",
+        "operationId": "storage_settings_api_v1_admin_storage_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminStorageOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Storage Settings",
         "tags": [
           "admin"
         ]

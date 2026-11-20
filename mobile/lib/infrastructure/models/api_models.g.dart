@@ -522,6 +522,66 @@ class AdminAiUsageOutModel {
       };
 }
 
+AdminAnalyticsOutModel adminAnalyticsOutModelFromJson(String str) => AdminAnalyticsOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAnalyticsOutModelToJson(AdminAnalyticsOutModel data) => json.encode(data.toJson());
+
+class AdminAnalyticsOutModel {
+  /// people who took photos or voice notes
+  final MetricModel activeTechnicians;
+  final int days;
+  /// % of approved reports that needed no changes
+  final MetricModel firstTime;
+  final List<ShareModel> reportsByIndustry;
+  final MetricModel reportsSent;
+  /// median time from submitted to approved
+  final MetricModel reviewMinutes;
+  final List<BucketModel> sentByPeriod;
+  /// day or week
+  final String step;
+  final List<ShareModel> voiceLanguages;
+  final int voiceTotal;
+
+  const AdminAnalyticsOutModel({
+    required this.activeTechnicians,
+    required this.days,
+    required this.firstTime,
+    required this.reportsByIndustry,
+    required this.reportsSent,
+    required this.reviewMinutes,
+    required this.sentByPeriod,
+    required this.step,
+    required this.voiceLanguages,
+    required this.voiceTotal,
+  });
+
+  factory AdminAnalyticsOutModel.fromJson(Map<String, dynamic> json) => AdminAnalyticsOutModel(
+        activeTechnicians: MetricModel.fromJson(json['active_technicians'] as Map<String, dynamic>),
+        days: (json['days'] as num).toInt(),
+        firstTime: MetricModel.fromJson(json['first_time'] as Map<String, dynamic>),
+        reportsByIndustry: (json['reports_by_industry'] as List).map((e) => ShareModel.fromJson(e as Map<String, dynamic>)).toList(),
+        reportsSent: MetricModel.fromJson(json['reports_sent'] as Map<String, dynamic>),
+        reviewMinutes: MetricModel.fromJson(json['review_minutes'] as Map<String, dynamic>),
+        sentByPeriod: (json['sent_by_period'] as List).map((e) => BucketModel.fromJson(e as Map<String, dynamic>)).toList(),
+        step: json['step'] as String,
+        voiceLanguages: (json['voice_languages'] as List).map((e) => ShareModel.fromJson(e as Map<String, dynamic>)).toList(),
+        voiceTotal: (json['voice_total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'active_technicians': activeTechnicians.toJson(),
+        'days': days,
+        'first_time': firstTime.toJson(),
+        'reports_by_industry': reportsByIndustry.map((e) => e.toJson()).toList(),
+        'reports_sent': reportsSent.toJson(),
+        'review_minutes': reviewMinutes.toJson(),
+        'sent_by_period': sentByPeriod.map((e) => e.toJson()).toList(),
+        'step': step,
+        'voice_languages': voiceLanguages.map((e) => e.toJson()).toList(),
+        'voice_total': voiceTotal,
+      };
+}
+
 AdminAnnouncementInModel adminAnnouncementInModelFromJson(String str) => AdminAnnouncementInModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminAnnouncementInModelToJson(AdminAnnouncementInModel data) => json.encode(data.toJson());
@@ -3181,6 +3241,57 @@ class AdminLeadUpdateModel {
       };
 }
 
+AdminLocalizationInModel adminLocalizationInModelFromJson(String str) => AdminLocalizationInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminLocalizationInModelToJson(AdminLocalizationInModel data) => json.encode(data.toJson());
+
+class AdminLocalizationInModel {
+  /// One of: en, hi, gu, es, fr
+  final String reportLanguage;
+
+  const AdminLocalizationInModel({
+    required this.reportLanguage,
+  });
+
+  factory AdminLocalizationInModel.fromJson(Map<String, dynamic> json) => AdminLocalizationInModel(
+        reportLanguage: json['report_language'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'report_language': reportLanguage,
+      };
+}
+
+AdminLocalizationOutModel adminLocalizationOutModelFromJson(String str) => AdminLocalizationOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminLocalizationOutModelToJson(AdminLocalizationOutModel data) => json.encode(data.toJson());
+
+class AdminLocalizationOutModel {
+  final bool canAct;
+  final List<LanguageRowModel> languages;
+  /// Report language a new company starts with
+  /// One of: en, hi, gu, es, fr
+  final String reportLanguage;
+
+  const AdminLocalizationOutModel({
+    required this.canAct,
+    required this.languages,
+    required this.reportLanguage,
+  });
+
+  factory AdminLocalizationOutModel.fromJson(Map<String, dynamic> json) => AdminLocalizationOutModel(
+        canAct: json['can_act'] as bool,
+        languages: (json['languages'] as List).map((e) => LanguageRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        reportLanguage: json['report_language'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'languages': languages.map((e) => e.toJson()).toList(),
+        'report_language': reportLanguage,
+      };
+}
+
 AdminMoneyModel adminMoneyModelFromJson(String str) => AdminMoneyModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminMoneyModelToJson(AdminMoneyModel data) => json.encode(data.toJson());
@@ -5673,6 +5784,60 @@ class AdminStatModel {
       };
 }
 
+AdminStorageOutModel adminStorageOutModelFromJson(String str) => AdminStorageOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminStorageOutModelToJson(AdminStorageOutModel data) => json.encode(data.toJson());
+
+class AdminStorageOutModel {
+  final String bucket;
+  /// Originals only; small copies and thumbnails are not counted
+  final List<StorageKindModel> kinds;
+  /// How long a file link works
+  final int linkMinutes;
+  /// Photos locked because their report was sent for approval
+  final int lockedEvidence;
+  /// Changed in Platform settings (A32)
+  final int maxPhotoMb;
+  /// r2 = Cloudflare R2; local = files on the server (testing)
+  /// One of: local, r2
+  final String provider;
+  final List<StorageCompanyModel> topCompanies;
+  final int totalBytes;
+
+  const AdminStorageOutModel({
+    required this.bucket,
+    required this.kinds,
+    required this.linkMinutes,
+    required this.lockedEvidence,
+    required this.maxPhotoMb,
+    required this.provider,
+    required this.topCompanies,
+    required this.totalBytes,
+  });
+
+  factory AdminStorageOutModel.fromJson(Map<String, dynamic> json) => AdminStorageOutModel(
+        bucket: json['bucket'] as String,
+        kinds: (json['kinds'] as List).map((e) => StorageKindModel.fromJson(e as Map<String, dynamic>)).toList(),
+        linkMinutes: (json['link_minutes'] as num).toInt(),
+        lockedEvidence: (json['locked_evidence'] as num).toInt(),
+        maxPhotoMb: (json['max_photo_mb'] as num).toInt(),
+        provider: json['provider'] as String,
+        topCompanies: (json['top_companies'] as List).map((e) => StorageCompanyModel.fromJson(e as Map<String, dynamic>)).toList(),
+        totalBytes: (json['total_bytes'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'bucket': bucket,
+        'kinds': kinds.map((e) => e.toJson()).toList(),
+        'link_minutes': linkMinutes,
+        'locked_evidence': lockedEvidence,
+        'max_photo_mb': maxPhotoMb,
+        'provider': provider,
+        'top_companies': topCompanies.map((e) => e.toJson()).toList(),
+        'total_bytes': totalBytes,
+      };
+}
+
 AdminSubKpisModel adminSubKpisModelFromJson(String str) => AdminSubKpisModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminSubKpisModelToJson(AdminSubKpisModel data) => json.encode(data.toJson());
@@ -7973,6 +8138,30 @@ class BlogPublishInModel {
 
   Map<String, dynamic> toJson() => {
         'at': at?.toIso8601String(),
+      };
+}
+
+BucketModel bucketModelFromJson(String str) => BucketModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String bucketModelToJson(BucketModel data) => json.encode(data.toJson());
+
+class BucketModel {
+  final int count;
+  final String start;
+
+  const BucketModel({
+    required this.count,
+    required this.start,
+  });
+
+  factory BucketModel.fromJson(Map<String, dynamic> json) => BucketModel(
+        count: (json['count'] as num).toInt(),
+        start: json['start'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'count': count,
+        'start': start,
       };
 }
 
@@ -10751,6 +10940,48 @@ class LanguageOutModel {
       };
 }
 
+LanguageRowModel languageRowModelFromJson(String str) => LanguageRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String languageRowModelToJson(LanguageRowModel data) => json.encode(data.toJson());
+
+class LanguageRowModel {
+  /// % of app texts a person checked (A25); English is the source = 100
+  final int appChecked;
+  /// One of: en, hi, gu, es, fr
+  final String code;
+  final String nativeName;
+  final bool? reports;
+  final int siteChecked;
+  final bool? voice;
+
+  const LanguageRowModel({
+    required this.appChecked,
+    required this.code,
+    required this.nativeName,
+    this.reports,
+    required this.siteChecked,
+    this.voice,
+  });
+
+  factory LanguageRowModel.fromJson(Map<String, dynamic> json) => LanguageRowModel(
+        appChecked: (json['app_checked'] as num).toInt(),
+        code: json['code'] as String,
+        nativeName: json['native_name'] as String,
+        reports: json['reports'] as bool?,
+        siteChecked: (json['site_checked'] as num).toInt(),
+        voice: json['voice'] as bool?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'app_checked': appChecked,
+        'code': code,
+        'native_name': nativeName,
+        'reports': reports,
+        'site_checked': siteChecked,
+        'voice': voice,
+      };
+}
+
 LegalBlockModel legalBlockModelFromJson(String str) => LegalBlockModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String legalBlockModelToJson(LegalBlockModel data) => json.encode(data.toJson());
@@ -11338,6 +11569,31 @@ class MessageOutModel {
       };
 }
 
+MetricModel metricModelFromJson(String str) => MetricModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String metricModelToJson(MetricModel data) => json.encode(data.toJson());
+
+class MetricModel {
+  final double? previous;
+  /// null when there is nothing to measure yet
+  final double? value;
+
+  const MetricModel({
+    this.previous,
+    this.value,
+  });
+
+  factory MetricModel.fromJson(Map<String, dynamic> json) => MetricModel(
+        previous: json['previous'] == null ? null : (json['previous'] as num).toDouble(),
+        value: json['value'] == null ? null : (json['value'] as num).toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'previous': previous,
+        'value': value,
+      };
+}
+
 MoneyModel moneyModelFromJson(String str) => MoneyModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String moneyModelToJson(MoneyModel data) => json.encode(data.toJson());
@@ -11724,6 +11980,30 @@ class NotificationsReadModel {
 
   Map<String, dynamic> toJson() => {
         'ids': ids,
+      };
+}
+
+OkModel okModelFromJson(String str) => OkModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String okModelToJson(OkModel data) => json.encode(data.toJson());
+
+class OkModel {
+  final Map<String, dynamic>? details;
+  final bool? ok;
+
+  const OkModel({
+    this.details,
+    this.ok,
+  });
+
+  factory OkModel.fromJson(Map<String, dynamic> json) => OkModel(
+        details: json['details'] == null ? null : Map<String, dynamic>.from(json['details'] as Map),
+        ok: json['ok'] as bool?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'details': details,
+        'ok': ok,
       };
 }
 
@@ -14318,6 +14598,36 @@ class SessionOutModel {
       };
 }
 
+ShareModel shareModelFromJson(String str) => ShareModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String shareModelToJson(ShareModel data) => json.encode(data.toJson());
+
+class ShareModel {
+  final int count;
+  /// language code or industry slug; 'other' for the rest
+  final String key;
+  /// industry name in the asked language
+  final String? label;
+
+  const ShareModel({
+    required this.count,
+    required this.key,
+    this.label,
+  });
+
+  factory ShareModel.fromJson(Map<String, dynamic> json) => ShareModel(
+        count: (json['count'] as num).toInt(),
+        key: json['key'] as String,
+        label: json['label'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'count': count,
+        'key': key,
+        'label': label,
+      };
+}
+
 ShareInfoModel shareInfoModelFromJson(String str) => ShareInfoModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String shareInfoModelToJson(ShareInfoModel data) => json.encode(data.toJson());
@@ -14770,6 +15080,92 @@ class SourceReportModel {
       };
 }
 
+StaffCodeInModel staffCodeInModelFromJson(String str) => StaffCodeInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String staffCodeInModelToJson(StaffCodeInModel data) => json.encode(data.toJson());
+
+class StaffCodeInModel {
+  /// 6 digits from the authenticator app
+  final String code;
+
+  const StaffCodeInModel({
+    required this.code,
+  });
+
+  factory StaffCodeInModel.fromJson(Map<String, dynamic> json) => StaffCodeInModel(
+        code: json['code'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'code': code,
+      };
+}
+
+StaffDeviceModel staffDeviceModelFromJson(String str) => StaffDeviceModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String staffDeviceModelToJson(StaffDeviceModel data) => json.encode(data.toJson());
+
+class StaffDeviceModel {
+  final bool current;
+  /// e.g. "Chrome on macOS"
+  final String device;
+  final DateTime endsAt;
+  final String id;
+  final String? ip;
+  final DateTime? lastUsedAt;
+  final DateTime startedAt;
+
+  const StaffDeviceModel({
+    required this.current,
+    required this.device,
+    required this.endsAt,
+    required this.id,
+    this.ip,
+    this.lastUsedAt,
+    required this.startedAt,
+  });
+
+  factory StaffDeviceModel.fromJson(Map<String, dynamic> json) => StaffDeviceModel(
+        current: json['current'] as bool,
+        device: json['device'] as String,
+        endsAt: DateTime.parse(json['ends_at'] as String),
+        id: json['id'] as String,
+        ip: json['ip'] as String?,
+        lastUsedAt: json['last_used_at'] == null ? null : DateTime.parse(json['last_used_at'] as String),
+        startedAt: DateTime.parse(json['started_at'] as String),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'current': current,
+        'device': device,
+        'ends_at': endsAt.toIso8601String(),
+        'id': id,
+        'ip': ip,
+        'last_used_at': lastUsedAt?.toIso8601String(),
+        'started_at': startedAt.toIso8601String(),
+      };
+}
+
+StaffDevicesModel staffDevicesModelFromJson(String str) => StaffDevicesModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String staffDevicesModelToJson(StaffDevicesModel data) => json.encode(data.toJson());
+
+class StaffDevicesModel {
+  final List<StaffDeviceModel> items;
+
+  const StaffDevicesModel({
+    required this.items,
+  });
+
+  factory StaffDevicesModel.fromJson(Map<String, dynamic> json) => StaffDevicesModel(
+        items: (json['items'] as List).map((e) => StaffDeviceModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'items': items.map((e) => e.toJson()).toList(),
+      };
+}
+
 StaffLoginInModel staffLoginInModelFromJson(String str) => StaffLoginInModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String staffLoginInModelToJson(StaffLoginInModel data) => json.encode(data.toJson());
@@ -14811,6 +15207,9 @@ String staffOutModelToJson(StaffOutModel data) => json.encode(data.toJson());
 class StaffOutModel {
   final String email;
   final String id;
+  /// Admin panel language (A36)
+  /// One of: en, hi, gu, es, fr
+  final String? lang;
   final String name;
   final int recoveryCodesLeft;
   /// One of: super_admin, admin, support
@@ -14819,6 +15218,7 @@ class StaffOutModel {
   const StaffOutModel({
     required this.email,
     required this.id,
+    this.lang,
     required this.name,
     required this.recoveryCodesLeft,
     required this.role,
@@ -14827,6 +15227,7 @@ class StaffOutModel {
   factory StaffOutModel.fromJson(Map<String, dynamic> json) => StaffOutModel(
         email: json['email'] as String,
         id: json['id'] as String,
+        lang: json['lang'] as String?,
         name: json['name'] as String,
         recoveryCodesLeft: (json['recovery_codes_left'] as num).toInt(),
         role: json['role'] as String,
@@ -14835,9 +15236,85 @@ class StaffOutModel {
   Map<String, dynamic> toJson() => {
         'email': email,
         'id': id,
+        'lang': lang,
         'name': name,
         'recovery_codes_left': recoveryCodesLeft,
         'role': role,
+      };
+}
+
+StaffPasswordInModel staffPasswordInModelFromJson(String str) => StaffPasswordInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String staffPasswordInModelToJson(StaffPasswordInModel data) => json.encode(data.toJson());
+
+class StaffPasswordInModel {
+  /// 6 digits from the authenticator app
+  final String code;
+  final String currentPassword;
+  final String newPassword;
+
+  const StaffPasswordInModel({
+    required this.code,
+    required this.currentPassword,
+    required this.newPassword,
+  });
+
+  factory StaffPasswordInModel.fromJson(Map<String, dynamic> json) => StaffPasswordInModel(
+        code: json['code'] as String,
+        currentPassword: json['current_password'] as String,
+        newPassword: json['new_password'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'code': code,
+        'current_password': currentPassword,
+        'new_password': newPassword,
+      };
+}
+
+StaffProfileInModel staffProfileInModelFromJson(String str) => StaffProfileInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String staffProfileInModelToJson(StaffProfileInModel data) => json.encode(data.toJson());
+
+class StaffProfileInModel {
+  /// One of: en, hi, gu, es, fr
+  final String lang;
+  final String name;
+
+  const StaffProfileInModel({
+    required this.lang,
+    required this.name,
+  });
+
+  factory StaffProfileInModel.fromJson(Map<String, dynamic> json) => StaffProfileInModel(
+        lang: json['lang'] as String,
+        name: json['name'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'lang': lang,
+        'name': name,
+      };
+}
+
+StaffRecoveryOutModel staffRecoveryOutModelFromJson(String str) => StaffRecoveryOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String staffRecoveryOutModelToJson(StaffRecoveryOutModel data) => json.encode(data.toJson());
+
+class StaffRecoveryOutModel {
+  /// Shown once; the old codes stop working
+  final List<String> recoveryCodes;
+
+  const StaffRecoveryOutModel({
+    required this.recoveryCodes,
+  });
+
+  factory StaffRecoveryOutModel.fromJson(Map<String, dynamic> json) => StaffRecoveryOutModel(
+        recoveryCodes: (json['recovery_codes'] as List).map((e) => e as String).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'recovery_codes': recoveryCodes,
       };
 }
 
@@ -15030,6 +15507,63 @@ class StartBodyModel {
   Map<String, dynamic> toJson() => {
         'lat': lat,
         'lng': lng,
+      };
+}
+
+StorageCompanyModel storageCompanyModelFromJson(String str) => StorageCompanyModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String storageCompanyModelToJson(StorageCompanyModel data) => json.encode(data.toJson());
+
+class StorageCompanyModel {
+  final int bytes;
+  final String id;
+  final String name;
+
+  const StorageCompanyModel({
+    required this.bytes,
+    required this.id,
+    required this.name,
+  });
+
+  factory StorageCompanyModel.fromJson(Map<String, dynamic> json) => StorageCompanyModel(
+        bytes: (json['bytes'] as num).toInt(),
+        id: json['id'] as String,
+        name: json['name'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'bytes': bytes,
+        'id': id,
+        'name': name,
+      };
+}
+
+StorageKindModel storageKindModelFromJson(String str) => StorageKindModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String storageKindModelToJson(StorageKindModel data) => json.encode(data.toJson());
+
+class StorageKindModel {
+  final int bytes;
+  final int files;
+  /// One of: photos, voice, pdfs
+  final String kind;
+
+  const StorageKindModel({
+    required this.bytes,
+    required this.files,
+    required this.kind,
+  });
+
+  factory StorageKindModel.fromJson(Map<String, dynamic> json) => StorageKindModel(
+        bytes: (json['bytes'] as num).toInt(),
+        files: (json['files'] as num).toInt(),
+        kind: json['kind'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'bytes': bytes,
+        'files': files,
+        'kind': kind,
       };
 }
 

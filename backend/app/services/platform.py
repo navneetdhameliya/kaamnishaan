@@ -268,3 +268,18 @@ async def notification_rules(db: AsyncSession) -> NotificationRules:
 
 async def set_notification_rules(db: AsyncSession, r: NotificationRules, *, staff_id: uuid.UUID) -> None:
     await _put(db, "notification_rules", r.model_dump(), staff_id)
+
+
+# ---- A35 Localization ------------------------------------------------------------------------------------
+class Localization(BaseModel):
+    # the language customer reports start in for a new company; owners change it in Company settings
+    report_language: Literal["en", "hi", "gu", "es", "fr"] = "en"
+
+
+async def localization(db: AsyncSession) -> Localization:
+    return Localization(**await _get(db, "localization"))
+
+
+async def set_localization(db: AsyncSession, c: Localization, *, staff_id: uuid.UUID) -> Localization:
+    await _put(db, "localization", c.model_dump(), staff_id)
+    return c

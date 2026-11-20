@@ -8884,4 +8884,270 @@ abstract final class LangKeys {
   static const adminAuTBlogPost = 'admin.au.t.blog_post';
   /// Testimonial
   static const adminAuTTestimonial = 'admin.au.t.testimonial';
+  /// Analytics
+  static const adminNavAnalytics = 'admin.nav.analytics';
+  /// Storage
+  static const adminNavStorage = 'admin.nav.storage';
+  /// Localization
+  static const adminNavLocalization = 'admin.nav.localization';
+  /// Account
+  static const adminNavAccount = 'admin.nav.account';
+  /// My profile
+  static const adminNavProfile = 'admin.nav.profile';
+  /// Reports sent
+  static const adminAnSent = 'admin.an.sent';
+  /// Typical review time
+  static const adminAnReview = 'admin.an.review';
+  /// Approved first time
+  static const adminAnFirst = 'admin.an.first';
+  /// Active technicians
+  static const adminAnActive = 'admin.an.active';
+  /// {change} vs the {days} days before
+  static const adminAnVs = 'admin.an.vs';
+  /// Same as the {days} days before
+  static const adminAnSame = 'admin.an.same';
+  /// Nothing to compare in the {days} days before
+  static const adminAnNoBefore = 'admin.an.no_before';
+  /// No reports in this period yet
+  static const adminAnNoData = 'admin.an.no_data';
+  /// {n} pts
+  static const adminAnPts = 'admin.an.pts';
+  /// {n} min
+  static const adminAnMin = 'admin.an.min';
+  /// {n} h
+  static const adminAnHours = 'admin.an.hours';
+  /// {n} days
+  static const adminAnDays = 'admin.an.days';
+  /// Reports sent per week
+  static const adminAnPerWeek = 'admin.an.per_week';
+  /// Reports sent per day
+  static const adminAnPerDay = 'admin.an.per_day';
+  /// Reports companies sent to their customers.
+  static const adminAnPerSub = 'admin.an.per_sub';
+  /// Bar chart: {n} reports sent in this period
+  static const adminAnChartLabel = 'admin.an.chart_label';
+  /// Week of {day}: {n}
+  static const adminAnTipWeek = 'admin.an.tip_week';
+  /// {day}: {n}
+  static const adminAnTipDay = 'admin.an.tip_day';
+  /// Voice notes by language
+  static const adminAnVoice = 'admin.an.voice';
+  /// {n} voice notes in this period
+  static const adminAnVoiceSub = 'admin.an.voice_sub';
+  /// No voice notes in this period.
+  static const adminAnVoiceNone = 'admin.an.voice_none';
+  /// Other
+  static const adminAnOther = 'admin.an.other';
+  /// Reports sent by industry
+  static const adminAnByIndustry = 'admin.an.by_industry';
+  /// No industry
+  static const adminAnNoIndustry = 'admin.an.no_industry';
+  /// No reports sent in this period.
+  static const adminAnSentNone = 'admin.an.sent_none';
+  /// Review time is the middle value from “sent for approval” to “approved”. Active technicians took at least one photo or voice note. Days are counted in India time.
+  static const adminAnNote = 'admin.an.note';
+  /// Storage used
+  static const adminStUsed = 'admin.st.used';
+  /// Photos
+  static const adminStKPhotos = 'admin.st.k.photos';
+  /// Voice notes
+  static const adminStKVoice = 'admin.st.k.voice';
+  /// PDF reports
+  static const adminStKPdfs = 'admin.st.k.pdfs';
+  /// ({n} files)
+  static const adminStFiles = 'admin.st.files';
+  /// Original files only; small copies, logos and website pictures add a little more.
+  static const adminStUsedNote = 'admin.st.used_note';
+  /// Files
+  static const adminStFilesTitle = 'admin.st.files_title';
+  /// Where files are kept
+  static const adminStWhere = 'admin.st.where';
+  /// Cloudflare R2 · {bucket}
+  static const adminStR2 = 'admin.st.r2';
+  /// On the server (testing only)
+  static const adminStLocal = 'admin.st.local';
+  /// Files are on this server. The live service must use cloud storage (it won’t start without it).
+  static const adminStLocalWarn = 'admin.st.local_warn';
+  /// Max photo size
+  static const adminStMaxPhoto = 'admin.st.max_photo';
+  /// {n} MB
+  static const adminStMaxPhotoV = 'admin.st.max_photo_v';
+  /// change in Platform settings
+  static const adminStChangeThere = 'admin.st.change_there';
+  /// Photos and voice notes are kept
+  static const adminStKeep = 'admin.st.keep';
+  /// As long as the company’s account exists
+  static const adminStKeepV = 'admin.st.keep_v';
+  /// File links work for
+  static const adminStLinks = 'admin.st.links';
+  /// {n} minutes
+  static const adminStLinksV = 'admin.st.links_v';
+  /// Security
+  static const adminStSecurity = 'admin.st.security';
+  /// Always on; built into how KaamNishaan stores proof.
+  static const adminStSecuritySub = 'admin.st.security_sub';
+  /// Files encrypted at rest
+  static const adminStSEncrypt = 'admin.st.s.encrypt';
+  /// Cloudflare R2 encrypts every file (AES-256)
+  static const adminStSEncryptHint = 'admin.st.s.encrypt_hint';
+  /// Signed links only
+  static const adminStSSigned = 'admin.st.s.signed';
+  /// Files open only through links that end after {n} minutes
+  static const adminStSSignedHint = 'admin.st.s.signed_hint';
+  /// Lock evidence when a report is sent for approval
+  static const adminStSLock = 'admin.st.s.lock';
+  /// Photos can no longer be changed or deleted ({n} locked now)
+  static const adminStSLockHint = 'admin.st.s.lock_hint';
+  /// Remove phone GPS from shared photos
+  static const adminStSGps = 'admin.st.s.gps';
+  /// Customers get copies without location data; the original keeps it as proof
+  static const adminStSGpsHint = 'admin.st.s.gps_hint';
+  /// Companies using the most storage
+  static const adminStTop = 'admin.st.top';
+  /// Language
+  static const adminLzCLang = 'admin.lz.c_lang';
+  /// Code
+  static const adminLzCCode = 'admin.lz.c_code';
+  /// App
+  static const adminLzCApp = 'admin.lz.c_app';
+  /// Website
+  static const adminLzCSite = 'admin.lz.c_site';
+  /// Reports
+  static const adminLzCReports = 'admin.lz.c_reports';
+  /// Voice input
+  static const adminLzCVoice = 'admin.lz.c_voice';
+  /// Source language
+  static const adminLzSource = 'admin.lz.source';
+  /// On
+  static const adminLzOn = 'admin.lz.on';
+  /// Checked
+  static const adminLzReady = 'admin.lz.ready';
+  /// Review · {n}% checked
+  static const adminLzReview = 'admin.lz.review';
+  /// All 5 languages are on everywhere. “Checked” is how much of each language a person has reviewed in
+  static const adminLzTableNote = 'admin.lz.table_note';
+  /// Defaults
+  static const adminLzDefaults = 'admin.lz.defaults';
+  /// Report language for new companies
+  static const adminLzReportLang = 'admin.lz.report_lang';
+  /// The language customers get reports in; owners can change it in Company settings.
+  static const adminLzReportLangHint = 'admin.lz.report_lang_hint';
+  /// When a text is missing
+  static const adminLzFallback = 'admin.lz.fallback';
+  /// English is shown
+  static const adminLzFallbackV = 'admin.lz.fallback_v';
+  /// Dates and numbers
+  static const adminLzDates = 'admin.lz.dates';
+  /// Follow each person’s language
+  static const adminLzDatesV = 'admin.lz.dates_v';
+  /// Prices
+  static const adminLzCurrency = 'admin.lz.currency';
+  /// Rupees in India, dollars elsewhere
+  static const adminLzCurrencyV = 'admin.lz.currency_v';
+  /// How languages work
+  static const adminLzRules = 'admin.lz.rules';
+  /// Built into the app; shown so everyone knows.
+  static const adminLzRulesSub = 'admin.lz.rules_sub';
+  /// Each person picks their app language
+  static const adminLzROwn = 'admin.lz.r.own';
+  /// At first launch, and any time in Me
+  static const adminLzROwnHint = 'admin.lz.r.own_hint';
+  /// Report language is set by the company
+  static const adminLzRCompany = 'admin.lz.r.company';
+  /// Notes in any language become one report in that language
+  static const adminLzRCompanyHint = 'admin.lz.r.company_hint';
+  /// Original voice recording is kept
+  static const adminLzRVoice = 'admin.lz.r.voice';
+  /// Next to the written words and their translation
+  static const adminLzRVoiceHint = 'admin.lz.r.voice_hint';
+  /// Machine-translate missing texts
+  static const adminLzRAuto = 'admin.lz.r.auto';
+  /// Off: every text is translated by people
+  static const adminLzRAutoHint = 'admin.lz.r.auto_hint';
+  /// Save changes
+  static const adminLzSave = 'admin.lz.save';
+  /// Saved. New companies start with this report language.
+  static const adminLzSaved = 'admin.lz.saved';
+  /// Save changes
+  static const adminPfSave = 'admin.pf.save';
+  /// Saved.
+  static const adminPfSaved = 'admin.pf.saved';
+  /// Details
+  static const adminPfDetails = 'admin.pf.details';
+  /// Your staff profile.
+  static const adminPfDetailsSub = 'admin.pf.details_sub';
+  /// Name
+  static const adminPfName = 'admin.pf.name';
+  /// Email
+  static const adminPfEmail = 'admin.pf.email';
+  /// Your login; it can’t be changed. For a new email, a super admin invites you again.
+  static const adminPfEmailHint = 'admin.pf.email_hint';
+  /// Language
+  static const adminPfLang = 'admin.pf.lang';
+  /// Role
+  static const adminPfRole = 'admin.pf.role';
+  /// Security
+  static const adminPfSecurity = 'admin.pf.security';
+  /// Protect the admin panel.
+  static const adminPfSecuritySub = 'admin.pf.security_sub';
+  /// 2-step login
+  static const adminPfTwoStep = 'admin.pf.two_step';
+  /// Authenticator app · required for all staff
+  static const adminPfTwoStepHint = 'admin.pf.two_step_hint';
+  /// Login alerts
+  static const adminPfAlerts = 'admin.pf.alerts';
+  /// Email when a new device logs in · needs an email service (not connected)
+  static const adminPfAlertsHint = 'admin.pf.alerts_hint';
+  /// Change password
+  static const adminPfPw = 'admin.pf.pw';
+  /// Current password
+  static const adminPfPwCurrent = 'admin.pf.pw_current';
+  /// New password
+  static const adminPfPwNew = 'admin.pf.pw_new';
+  /// Code from your authenticator app
+  static const adminPfCode = 'admin.pf.code';
+  /// At least 8 characters with a letter and a number. Other devices are logged out.
+  static const adminPfPwHint = 'admin.pf.pw_hint';
+  /// Change password
+  static const adminPfPwSave = 'admin.pf.pw_save';
+  /// Password changed. Other devices were logged out.
+  static const adminPfPwDone = 'admin.pf.pw_done';
+  /// Recovery codes
+  static const adminPfCodes = 'admin.pf.codes';
+  /// {n} unused codes left, for when you don’t have your phone.
+  static const adminPfCodesLeft = 'admin.pf.codes_left';
+  /// Get new codes
+  static const adminPfCodesNew = 'admin.pf.codes_new';
+  /// Save these now; they are shown only once and the old codes no longer work.
+  static const adminPfCodesOnce = 'admin.pf.codes_once';
+  /// Copy
+  static const adminPfCopy = 'admin.pf.copy';
+  /// Copied
+  static const adminPfCopied = 'admin.pf.copied';
+  /// Active sessions
+  static const adminPfSessions = 'admin.pf.sessions';
+  /// Where you are logged in. Sessions end 12 hours after log in.
+  static const adminPfSessionsSub = 'admin.pf.sessions_sub';
+  /// This device
+  static const adminPfThisDevice = 'admin.pf.this_device';
+  /// Last used {ago}
+  static const adminPfLastUsed = 'admin.pf.last_used';
+  /// Current
+  static const adminPfCurrent = 'admin.pf.current';
+  /// Log out
+  static const adminPfEnd = 'admin.pf.end';
+  /// Lost your phone? Another super admin can send you a new setup link from
+  static const adminPfResetNote = 'admin.pf.reset_note';
+  /// Changed the report language for new companies
+  static const adminAuALocalizationUpdated = 'admin.au.a.localization.updated';
+  /// Changed their profile
+  static const adminAuAStaffProfileUpdated = 'admin.au.a.staff.profile_updated';
+  /// Changed their password
+  static const adminAuAStaffPasswordChanged = 'admin.au.a.staff.password_changed';
+  /// Made new recovery codes
+  static const adminAuAStaffRecoveryCodesNew = 'admin.au.a.staff.recovery_codes_new';
+  /// Logged out another device
+  static const adminAuAStaffSessionEnded = 'admin.au.a.staff.session_ended';
+  /// No approved reports with times yet
+  static const adminAnNoReview = 'admin.an.no_review';
 }

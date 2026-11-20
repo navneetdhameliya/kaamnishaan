@@ -30,13 +30,14 @@ async def create_company(
     await check_trade(db, body.trade)
     t = now()
     tr = await platform.trial(db)
+    loc = await platform.localization(db)  # A35
     company = Company(
         name=body.name,
         industry_slug=body.trade,
         country=body.country,
         timezone=body.timezone,
         currency=CURRENCY_BY_COUNTRY.get(body.country, "USD"),
-        report_language="en",
+        report_language=loc.report_language,
         plan_code=tr.plan_code,
         status="trial",
         trial_ends_at=t + timedelta(days=tr.days),
