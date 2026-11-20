@@ -21,12 +21,12 @@ import { useEffect, useState, type ReactNode } from 'react';
 
 import { cx } from '../components/ui';
 import type { Lang, T } from '../lib/i18n';
-import type { PlansOut, TradeOut } from '../lib/types';
+import type { PlansOut, PublicTestimonials, TradeOut } from '../lib/types';
 import { LinkButton } from './Layout';
 import { CountUp, reducedMotion, rv, useInView } from './motion';
 import { Container, Faq, FinalCta, Heading, Section, Tick } from './parts';
 import { FreeStrip, PlanGrid, PriceState } from './plans';
-import { ROUTES } from './site';
+import { ROUTES, useApi } from './site';
 
 type Load<D> = { kind: 'loading' } | { kind: 'ready'; data: D } | { kind: 'error' };
 
@@ -559,6 +559,41 @@ export function HomePricing({ t, lang, plans, retry, title }: { t: T; lang: Lang
 }
 
 /** W01 Home. Prices, the trial length and the trades come from the API; the words from shared/i18n. */
+/** W01 "What owners say": shown only when there are quotes customers approved in writing (A27). */
+function Testimonials({ t, lang }: { t: T; lang: Lang }) {
+  const [data] = useApi<PublicTestimonials>(`/public/testimonials?locale=${lang}`);
+  const items = data.kind === 'ready' ? data.data.items : [];
+  if (!items.length) return null;
+  return (
+    <Section>
+      <Container>
+        <Heading title={t('site.say.title')} body={t('site.say.body')} />
+        <div className="mt-40 grid gap-24 md:mt-[56px] md:grid-cols-2 lg:grid-cols-3">
+          {items.map((x, i) => (
+            <figure key={x.id} {...rv('up', i)} className="flex flex-col gap-24 rounded-xl border border-border-default bg-bg-surface p-24 shadow-sm transition-transform duration-300 hover:-translate-y-4 md:p-32">
+              <span aria-hidden className="text-[48px] font-bold leading-[40px] text-mocha-400">“</span>
+              <blockquote lang={x.language} className="flex-1 text-latin-body-lg md:text-web-body-lg">{x.quote}</blockquote>
+              <figcaption className="flex items-center gap-12">
+                {x.photo_url ? (
+                  <img src={x.photo_url} alt="" loading="lazy" className="h-[48px] w-[48px] shrink-0 rounded-full object-cover" />
+                ) : (
+                  <span aria-hidden className="flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-full bg-cream-300 text-[16px] font-semibold text-mocha-700">
+                    {x.name.split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase()}
+                  </span>
+                )}
+                <span className="min-w-0">
+                  <span className="block text-latin-label font-semibold">{x.name}</span>
+                  <span className="block text-latin-caption text-text-secondary">{[`${x.role}, ${x.company}`, x.city].filter(Boolean).join(' · ')}</span>
+                </span>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </Container>
+    </Section>
+  );
+}
+
 export default function Home({
   t,
   lang,
@@ -585,6 +620,7 @@ export default function Home({
       <ReportDemo t={t} />
       <Assistant t={t} />
       <Benefits t={t} />
+      <Testimonials t={t} lang={lang} />
       <HomePricing t={t} lang={lang} plans={plans} retry={retryPlans} />
       <Faq
         t={t}

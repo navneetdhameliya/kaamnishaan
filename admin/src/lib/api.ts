@@ -15,18 +15,19 @@ export class ApiError extends Error {
   }
 }
 
-type Init = { method?: string; body?: unknown; auth?: boolean };
+type Init = { method?: string; body?: unknown; auth?: boolean; file?: Blob };
 
 async function send<T>(path: string, init: Init, token?: string): Promise<T> {
   const headers: Record<string, string> = {};
   if (init.body !== undefined) headers['Content-Type'] = 'application/json';
+  if (init.file) headers['Content-Type'] = init.file.type || 'application/octet-stream';
   if (token) headers.Authorization = `Bearer ${token}`;
   let res: Response;
   try {
     res = await fetch(`${API_URL}/api/v1${path}`, {
       method: init.method ?? 'GET',
       headers,
-      body: init.body === undefined ? undefined : JSON.stringify(init.body),
+      body: init.file ?? (init.body === undefined ? undefined : JSON.stringify(init.body)),
     });
   } catch {
     throw new ApiError(0, 'no_internet', 'No connection');

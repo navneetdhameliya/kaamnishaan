@@ -861,3 +861,79 @@ export interface AdminTextChange {
   value?: string | null;
   reviewed?: boolean;
 }
+
+/** A26 Blog management, A27 Testimonials. */
+export type BlogState = 'draft' | 'scheduled' | 'published';
+export interface AdminBlogRow {
+  id: string;
+  slug: string;
+  title: string;
+  category: string;
+  cover_url: string;
+  author: string;
+  languages: string[];
+  state: BlogState;
+  publish_at: string | null;
+  read_minutes: number;
+  featured: boolean;
+  updated_at: string;
+}
+export interface AdminBlogList {
+  items: AdminBlogRow[];
+  counts: Record<'all' | BlogState, number>;
+  categories: string[];
+  can_act: boolean;
+}
+export interface BlogBlock {
+  type: 'p' | 'h2' | 'quote' | 'list' | 'image';
+  text?: string | null;
+  by?: string | null;
+  title?: string | null;
+  items?: string[];
+  src?: string | null;
+  caption?: string | null;
+}
+export interface BlogContent {
+  title: string;
+  summary: string;
+  author: string;
+  blocks: BlogBlock[];
+}
+export interface AdminBlogDetail {
+  id: string;
+  slug: string;
+  category: string;
+  featured: boolean;
+  state: BlogState;
+  publish_at: string | null;
+  cover: string;
+  cover_url: string;
+  content: Record<string, BlogContent>;
+  web_url: string;
+  site_url: string;
+  updated_at: string;
+  updated_by: string | null;
+  can_act: boolean;
+}
+export interface MediaOut {
+  key: string;
+  url: string;
+}
+export interface AdminTestimonial {
+  id: string;
+  quote: Record<string, string>;
+  person_name: string;
+  role: string;
+  company_name: string;
+  city: string | null;
+  photo: string | null;
+  photo_url: string | null;
+  approved_in_writing: boolean;
+  approval_note: string | null;
+  on_website: boolean;
+  updated_at: string;
+}
+export interface AdminTestimonials {
+  items: AdminTestimonial[];
+  can_act: boolean;
+}
