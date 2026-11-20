@@ -29,6 +29,9 @@ class Settings(BaseSettings):
     openai_api_key: SecretStr | None = None  # without it, transcription and auto-translate wait
     openai_transcribe_model: str = "whisper-1"
     openai_text_model: str = "gpt-4o-mini"
+    # A20 AI usage: monthly AI budget and the cost-per-report goal, in USD (0 = not set)
+    ai_monthly_budget_usd: float = 0
+    ai_cost_per_report_target_usd: float = 0.25
     # Files: "local" keeps them in a folder (your computer, tests); "r2" uses Cloudflare R2.
     storage_provider: Literal["local", "r2"] = "local"
     storage_local_dir: str = "var/uploads"

@@ -26,9 +26,9 @@ export function RangeSelect({ t, days, onChange }: { t: T; days: Range; onChange
   );
 }
 
-const stagger = (i: number) => ({ ['--d' as string]: `${i * 60}ms` });
+export const stagger = (i: number) => ({ ['--d' as string]: `${i * 60}ms` });
 
-function Panel({ title, sub, right, children, className, i = 0 }: { title: string; sub?: ReactNode; right?: ReactNode; children: ReactNode; className?: string; i?: number }) {
+export function Panel({ title, sub, right, children, className, i = 0 }: { title: string; sub?: ReactNode; right?: ReactNode; children: ReactNode; className?: string; i?: number }) {
   return (
     <section className={cx('kn-in rounded-xl border border-border-default bg-bg-surface p-20 sm:p-24', className)} style={stagger(i)}>
       <div className="flex flex-wrap items-start justify-between gap-12">
@@ -43,9 +43,9 @@ function Panel({ title, sub, right, children, className, i = 0 }: { title: strin
   );
 }
 
-type Trend = { text: string; tone: 'up' | 'down' | 'flat' };
+export type Trend = { text: string; tone: 'up' | 'down' | 'flat' | 'bad' | 'good' };
 
-function StatCard({ label, icon: Icon, value, trend, i }: { label: string; icon: LucideIcon; value: string; trend: Trend; i: number }) {
+export function StatCard({ label, icon: Icon, value, trend, i }: { label: string; icon: LucideIcon; value: string; trend: Trend; i: number }) {
   return (
     <div className="kn-in" style={stagger(i)}>
       <div className="kn-hover h-full rounded-xl border border-border-default bg-bg-surface p-20">
@@ -56,7 +56,7 @@ function StatCard({ label, icon: Icon, value, trend, i }: { label: string; icon:
           </span>
         </div>
         <p className="mt-12 text-[34px] font-bold leading-[44px] tabular-nums sm:text-[40px] sm:leading-[48px]">{value}</p>
-        <p className={cx('mt-8 flex items-center gap-4 text-[13px]', trend.tone === 'up' ? 'text-status-success' : trend.tone === 'down' ? 'text-status-danger' : 'text-text-secondary')}>
+        <p className={cx('mt-8 flex items-center gap-4 text-[13px]', trend.tone === 'up' || trend.tone === 'good' ? 'text-status-success' : trend.tone === 'down' || trend.tone === 'bad' ? 'text-status-danger' : 'text-text-secondary')}>
           {trend.tone === 'up' && <TrendingUp width={14} height={14} aria-hidden />}
           {trend.tone === 'down' && <TrendingDown width={14} height={14} aria-hidden />}
           <span>{trend.text}</span>

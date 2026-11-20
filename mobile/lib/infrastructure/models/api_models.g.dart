@@ -83,6 +83,192 @@ class AdminActivityRowModel {
       };
 }
 
+AdminAiCompanyModel adminAiCompanyModelFromJson(String str) => AdminAiCompanyModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAiCompanyModelToJson(AdminAiCompanyModel data) => json.encode(data.toJson());
+
+class AdminAiCompanyModel {
+  final double costUsd;
+  final String id;
+  final String name;
+
+  const AdminAiCompanyModel({
+    required this.costUsd,
+    required this.id,
+    required this.name,
+  });
+
+  factory AdminAiCompanyModel.fromJson(Map<String, dynamic> json) => AdminAiCompanyModel(
+        costUsd: (json['cost_usd'] as num).toDouble(),
+        id: json['id'] as String,
+        name: json['name'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'cost_usd': costUsd,
+        'id': id,
+        'name': name,
+      };
+}
+
+AdminAiDayModel adminAiDayModelFromJson(String str) => AdminAiDayModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAiDayModelToJson(AdminAiDayModel data) => json.encode(data.toJson());
+
+class AdminAiDayModel {
+  final double assistant;
+  final String day;
+  /// USD
+  final double reportDraft;
+  final double transcription;
+  final double translation;
+
+  const AdminAiDayModel({
+    required this.assistant,
+    required this.day,
+    required this.reportDraft,
+    required this.transcription,
+    required this.translation,
+  });
+
+  factory AdminAiDayModel.fromJson(Map<String, dynamic> json) => AdminAiDayModel(
+        assistant: (json['assistant'] as num).toDouble(),
+        day: json['day'] as String,
+        reportDraft: (json['report_draft'] as num).toDouble(),
+        transcription: (json['transcription'] as num).toDouble(),
+        translation: (json['translation'] as num).toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'assistant': assistant,
+        'day': day,
+        'report_draft': reportDraft,
+        'transcription': transcription,
+        'translation': translation,
+      };
+}
+
+AdminAiModelModel adminAiModelModelFromJson(String str) => AdminAiModelModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAiModelModelToJson(AdminAiModelModel data) => json.encode(data.toJson());
+
+class AdminAiModelModel {
+  /// Per call; per minute of audio for transcription
+  final double? avgCostUsd;
+  final int calls;
+  /// 0–1, failed calls out of all calls
+  final double? errorRate;
+  final String model;
+  final bool perMinute;
+  /// One of: report_draft, transcription, translation, assistant
+  final String task;
+
+  const AdminAiModelModel({
+    this.avgCostUsd,
+    required this.calls,
+    this.errorRate,
+    required this.model,
+    required this.perMinute,
+    required this.task,
+  });
+
+  factory AdminAiModelModel.fromJson(Map<String, dynamic> json) => AdminAiModelModel(
+        avgCostUsd: json['avg_cost_usd'] == null ? null : (json['avg_cost_usd'] as num).toDouble(),
+        calls: (json['calls'] as num).toInt(),
+        errorRate: json['error_rate'] == null ? null : (json['error_rate'] as num).toDouble(),
+        model: json['model'] as String,
+        perMinute: json['per_minute'] as bool,
+        task: json['task'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'avg_cost_usd': avgCostUsd,
+        'calls': calls,
+        'error_rate': errorRate,
+        'model': model,
+        'per_minute': perMinute,
+        'task': task,
+      };
+}
+
+AdminAiUsageOutModel adminAiUsageOutModelFromJson(String str) => AdminAiUsageOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminAiUsageOutModelToJson(AdminAiUsageOutModel data) => json.encode(data.toJson());
+
+class AdminAiUsageOutModel {
+  /// Monthly AI budget; null when not set
+  final double? budgetUsd;
+  /// Most expensive first, up to 4
+  final List<AdminAiCompanyModel> companies;
+  /// False when no OpenAI key is set: nothing is sent to AI
+  final bool configured;
+  /// All AI cost divided by reports drafted
+  final double? costPerReportUsd;
+  final int days;
+  /// 0–1, report drafts that worked
+  final double? draftSuccess;
+  final List<AdminAiModelModel> models;
+  /// Every other company, plus calls not tied to a company
+  final double othersCostUsd;
+  final int othersCount;
+  final List<AdminAiDayModel> perDay;
+  final int reportsDrafted;
+  final double? targetPerReportUsd;
+  final double totalCostUsd;
+  final double voiceMinutes;
+
+  const AdminAiUsageOutModel({
+    this.budgetUsd,
+    required this.companies,
+    required this.configured,
+    this.costPerReportUsd,
+    required this.days,
+    this.draftSuccess,
+    required this.models,
+    required this.othersCostUsd,
+    required this.othersCount,
+    required this.perDay,
+    required this.reportsDrafted,
+    this.targetPerReportUsd,
+    required this.totalCostUsd,
+    required this.voiceMinutes,
+  });
+
+  factory AdminAiUsageOutModel.fromJson(Map<String, dynamic> json) => AdminAiUsageOutModel(
+        budgetUsd: json['budget_usd'] == null ? null : (json['budget_usd'] as num).toDouble(),
+        companies: (json['companies'] as List).map((e) => AdminAiCompanyModel.fromJson(e as Map<String, dynamic>)).toList(),
+        configured: json['configured'] as bool,
+        costPerReportUsd: json['cost_per_report_usd'] == null ? null : (json['cost_per_report_usd'] as num).toDouble(),
+        days: (json['days'] as num).toInt(),
+        draftSuccess: json['draft_success'] == null ? null : (json['draft_success'] as num).toDouble(),
+        models: (json['models'] as List).map((e) => AdminAiModelModel.fromJson(e as Map<String, dynamic>)).toList(),
+        othersCostUsd: (json['others_cost_usd'] as num).toDouble(),
+        othersCount: (json['others_count'] as num).toInt(),
+        perDay: (json['per_day'] as List).map((e) => AdminAiDayModel.fromJson(e as Map<String, dynamic>)).toList(),
+        reportsDrafted: (json['reports_drafted'] as num).toInt(),
+        targetPerReportUsd: json['target_per_report_usd'] == null ? null : (json['target_per_report_usd'] as num).toDouble(),
+        totalCostUsd: (json['total_cost_usd'] as num).toDouble(),
+        voiceMinutes: (json['voice_minutes'] as num).toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'budget_usd': budgetUsd,
+        'companies': companies.map((e) => e.toJson()).toList(),
+        'configured': configured,
+        'cost_per_report_usd': costPerReportUsd,
+        'days': days,
+        'draft_success': draftSuccess,
+        'models': models.map((e) => e.toJson()).toList(),
+        'others_cost_usd': othersCostUsd,
+        'others_count': othersCount,
+        'per_day': perDay.map((e) => e.toJson()).toList(),
+        'reports_drafted': reportsDrafted,
+        'target_per_report_usd': targetPerReportUsd,
+        'total_cost_usd': totalCostUsd,
+        'voice_minutes': voiceMinutes,
+      };
+}
+
 AdminAttentionRowModel adminAttentionRowModelFromJson(String str) => AdminAttentionRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminAttentionRowModelToJson(AdminAttentionRowModel data) => json.encode(data.toJson());

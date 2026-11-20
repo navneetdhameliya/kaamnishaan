@@ -121,6 +121,9 @@ async def test_ai_failure_keeps_evidence_and_allows_retry(client, ready, fake_ai
     started, task, rep = await make_report(client, ready["tech"], ready["job"]["id"])
     assert task["status"] == "failed" and task["steps"][1]["status"] == "failed"
     assert rep["status"] == "generation_failed" and "AI is down" in rep["error"]
+    async with SessionLocal() as db:  # the failed call shows as an error in A20, costing nothing
+        row = (await db.execute(text("SELECT task, ok, cost_usd FROM ai_usage"))).one()
+    assert tuple(row) == ("report_draft", False, 0)
     fake_ai.fail = False
     _, task2, rep2 = await make_report(client, ready["tech"], ready["job"]["id"])
     assert task2["status"] == "done" and rep2["status"] == "draft" and rep2["error"] is None

@@ -34,7 +34,7 @@ export const NAV: { section: string; items: NavItem[] }[] = [
     section: 'overview',
     items: [
       { key: 'dashboard', path: '/', icon: Home, ready: true },
-      { key: 'ai_usage', path: '/ai-usage', icon: SlidersHorizontal },
+      { key: 'ai_usage', path: '/ai-usage', icon: SlidersHorizontal, ready: true },
     ],
   },
   {

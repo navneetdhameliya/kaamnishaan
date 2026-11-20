@@ -10,8 +10,9 @@ from sqlalchemy import select
 
 from app.core.db import SessionLocal
 from app.core.security import now
-from app.models import AIUsage, BackgroundTask, Job, PromptVersion, Report, ReportVersion
-from app.providers.ai import LANGUAGE_NAMES, cost_usd, get_ai
+from app.models import BackgroundTask, Job, PromptVersion, Report, ReportVersion
+from app.providers.ai import LANGUAGE_NAMES, get_ai
+from app.services import ai_usage
 from app.services.report_draft import collect, merge_flags, parse_ai, server_flags, template_draft
 from app.tasks import task
 
@@ -48,6 +49,7 @@ async def draft_report(ctx, report_id: str, task_id: str, section: str | None = 
         await db.commit()
 
         step = 0
+        asked_ai, company_id = False, rep.company_id
         try:
             bundle = await collect(db, job, rep.language)
             step = 1
@@ -60,20 +62,14 @@ async def draft_report(ctx, report_id: str, task_id: str, section: str | None = 
                 prompt = await _live_prompt(db, "report_draft")
                 system = prompt.system_prompt.format(language=LANGUAGE_NAMES.get(rep.language, rep.language))
                 evidence = {k: v for k, v in bundle.items() if not k.startswith("_")}
+                asked_ai = True
                 draft = await ai.draft_report(system, evidence)
+                asked_ai = False
                 sections, links, ai_flags = parse_ai(draft.data, bundle)
-                cost = cost_usd(draft.model, draft.tokens_in, draft.tokens_out)
-                db.add(
-                    AIUsage(
-                        company_id=rep.company_id,
-                        task="report_draft",
-                        model=draft.model,
-                        tokens_in=draft.tokens_in,
-                        tokens_out=draft.tokens_out,
-                        cost_usd=cost,
-                        related_id=rep.id,
-                    )
-                )
+                cost = ai_usage.record(
+                    db, "report_draft", company_id=rep.company_id, model=draft.model,
+                    tokens_in=draft.tokens_in, tokens_out=draft.tokens_out, related_id=rep.id,
+                )  # fmt: skip
                 rep.ai_tokens += draft.tokens_in + draft.tokens_out
                 rep.ai_cost_usd += cost
                 rep.ai_prompt_version = prompt.version
@@ -121,6 +117,10 @@ async def draft_report(ctx, report_id: str, task_id: str, section: str | None = 
             return "done"
         except Exception as e:  # noqa: BLE001 - evidence is untouched; the person can retry
             await db.rollback()
+            if asked_ai:
+                await ai_usage.record_failure(
+                    "report_draft", company_id=company_id, related_id=uuid.UUID(report_id)
+                )
             rep = await db.get(Report, uuid.UUID(report_id))
             bt = await db.get(BackgroundTask, uuid.UUID(task_id))
             if rep.status == "generating":

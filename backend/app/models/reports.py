@@ -140,7 +140,9 @@ class AIUsage(IdMixin, Base):
     audio_seconds: Mapped[float] = mapped_column(Float, default=0)
     cost_usd: Mapped[float] = mapped_column(Float, default=0)
     related_id: Mapped[uuid.UUID | None] = mapped_column()
-    at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=sql("now()"))
+    # False when the AI call failed (A20 "Errors"); a failed call costs nothing
+    ok: Mapped[bool] = mapped_column(Boolean, default=True, server_default=sql("true"))
+    at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=sql("now()"), index=True)
 
 
 class PromptVersion(IdMixin, TimestampMixin, Base):

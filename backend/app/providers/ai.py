@@ -38,12 +38,26 @@ class Draft:
 
 
 # USD per 1M tokens; used to record cost per report (A20). Update when prices or models change.
-PRICES = {"gpt-4o-mini": (0.15, 0.60), "gpt-4o": (2.50, 10.00)}
+PRICES = {"gpt-4o-mini": (0.15, 0.60), "gpt-4o": (2.50, 10.00), "gpt-4.1-mini": (0.40, 1.60)}
+# USD per minute of audio
+AUDIO_PRICES = {"whisper-1": 0.006, "gpt-4o-transcribe": 0.006, "gpt-4o-mini-transcribe": 0.003}
 
 
 def cost_usd(model: str, tokens_in: int, tokens_out: int) -> float:
-    pin, pout = PRICES.get(model, (0.0, 0.0))
+    pin, pout = PRICES.get(_base(model), (0.0, 0.0))
     return round((tokens_in * pin + tokens_out * pout) / 1_000_000, 6)
+
+
+def audio_cost_usd(model: str, seconds: float) -> float:
+    return round(AUDIO_PRICES.get(model, 0.0) * seconds / 60, 6)
+
+
+def _base(model: str) -> str:
+    """OpenAI answers with a dated name ("gpt-4o-mini-2024-07-18"); prices are kept by base name."""
+    for name in sorted(PRICES, key=len, reverse=True):
+        if model == name or model.startswith(name + "-2"):
+            return name
+    return model
 
 
 @dataclass
@@ -51,6 +65,16 @@ class Transcript:
     text: str
     language: str | None
     confidence: float | None
+    model: str = ""
+    seconds: float = 0.0  # length of the audio, for the cost
+
+
+class Texts(list):
+    """Translated texts, plus what the call used (for A20)."""
+
+    model = ""
+    tokens_in = 0
+    tokens_out = 0
 
 
 class AIProvider:
@@ -96,6 +120,8 @@ class OpenAIProvider(AIProvider):
             text=(body.get("text") or "").strip(),
             language=WHISPER_CODES.get(str(lang).lower(), lang) if lang else language_hint,
             confidence=round(conf, 3) if conf is not None else None,
+            model=s.openai_transcribe_model,
+            seconds=float(body.get("duration") or 0),
         )
 
     async def translate(self, texts, target, source=None):
@@ -123,10 +149,15 @@ class OpenAIProvider(AIProvider):
                 },
             )
             r.raise_for_status()
-        items = json.loads(r.json()["choices"][0]["message"]["content"]).get("items", [])
+        body = r.json()
+        items = json.loads(body["choices"][0]["message"]["content"]).get("items", [])
         if len(items) != len(texts):
             raise ValueError("translation came back with a different number of items")
-        return [str(x) for x in items]
+        out = Texts(str(x) for x in items)
+        usage = body.get("usage") or {}
+        out.model = body.get("model", s.openai_text_model)
+        out.tokens_in, out.tokens_out = usage.get("prompt_tokens", 0), usage.get("completion_tokens", 0)
+        return out
 
     async def draft_report(self, system_prompt, evidence):
         s = get_settings()

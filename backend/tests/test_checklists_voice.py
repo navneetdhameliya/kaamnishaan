@@ -452,6 +452,9 @@ async def test_voice_note_transcribed_and_translated(client, setup, fake_ai):
     assert v["status"] == "transcribed" and v["language"] == "hi" and v["translated_to"] == "en"
     assert v["transcript_original"] == "Gas was low, I filled it and cleaned the filter"
     assert v["text_for_report"].startswith("[en]") and v["waiting_for"] is None
+    async with SessionLocal() as db:  # both AI calls are counted for A20
+        used = (await db.execute(text("SELECT task, ok FROM ai_usage ORDER BY at"))).all()
+    assert [tuple(u) for u in used] == [("transcription", True), ("translation", True)]
     r = await client.patch(
         f"/api/v1/voice-notes/{v['id']}",
         json={"transcript_edited": "Gas topped up, filter cleaned."},
