@@ -46,8 +46,7 @@ from app.schemas.reviews import (
     SuggestionOut,
 )
 from app.schemas.work import PersonRef
-from app.services import audit, credits, sharing
-from app.services.report_labels import label
+from app.services import audit, credits, messages, sharing
 from app.services.reports import rlabel
 from app.services.reviews import STARTED, _items, settings_for
 
@@ -356,7 +355,7 @@ async def _remind(db: AsyncSession, s: ReviewSettings, req: ReviewRequest, t: da
 
 
 async def send_link(
-    db: AsyncSession, req: ReviewRequest, channels: list[str], step: str
+    db: AsyncSession, req: ReviewRequest, channels: list[str], step: str, template: str = "review_reminder"
 ) -> tuple[list[str] | None, bool]:
     """Sends the rating link again (Day 2 reminder, or instead of the Day 5 call). Returns the channels
     it went on (None when the link is gone: the request is stopped) and whether credits ran out."""
@@ -369,12 +368,10 @@ async def send_link(
         req.status, req.stopped_reason = "stopped", "link_gone"
         return None, False
     url = f"{sharing.link_url(link)}?rate=1"
-    lang = rep.language
-    ask = label(lang, "review_reminder", company=company.name, job=job.title, link=url)
-    text = f"{ask} {label(lang, 'stop')}"
-    texts = sharing._texts(company.name, rep, job, url, contact.name, link.expires_at.astimezone(UTC))
-    texts.sms = texts.whatsapp = text
-    texts.email_body = f"{text}\n"
+    texts = sharing._texts(
+        company.name, rep, job, url, contact.name, link.expires_at.astimezone(UTC),
+        await messages.load(db), template,
+    )  # fmt: skip
     done, broke = [], False
     for ch in channels:
         to = contact.email if ch == "email" else contact.phone
@@ -384,7 +381,7 @@ async def send_link(
             broke = True  # SMS and WhatsApp need credits; email is free
             db.add(ReviewRequestEvent(request_id=req.id, step=step, channel=ch, status="no_credits"))
             continue
-        msg = await sharing._deliver(db, rep, link, ch, to, texts, None, template="review_reminder")
+        msg = await sharing._deliver(db, rep, link, ch, to, texts, None, template=template)
         db.add(ReviewRequestEvent(request_id=req.id, step=step, channel=ch, status=msg.status))
         if msg.status == "sent":
             await credits.spend(db, company, ch, step, req.id)

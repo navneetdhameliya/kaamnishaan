@@ -13,6 +13,7 @@ import { Dashboard, RangeSelect, RANGES, type Range } from './pages/Dashboard';
 import { AiCalls } from './pages/AiCalls';
 import { AiUsage } from './pages/AiUsage';
 import { ExportReviews, Reviews } from './pages/Reviews';
+import { Templates } from './pages/Templates';
 import { Leads } from './pages/Leads';
 import { Forgot, Login } from './pages/Login';
 import { Setup } from './pages/Setup';
@@ -72,6 +73,7 @@ export default function App() {
   else if (nav.key === 'dashboard') page = <Dashboard t={t} lang={lang} days={days} />;
   else if (nav.key === 'ai_usage') page = <AiUsage t={t} lang={lang} days={days} />;
   else if (nav.key === 'ai_calls') page = <AiCalls key="ai-calls" t={t} lang={lang} />;
+  else if (nav.key === 'templates') page = <Templates key="templates" t={t} lang={lang} />;
   else if (nav.key === 'reviews') page = <Reviews key="reviews" t={t} lang={lang} canAct={sess.staff.role !== 'support'} />;
   else if (companyId === 'new') page = <CompanyForm key="new" t={t} lang={lang} id={null} onName={onName} />;
   else if (companyId?.endsWith('/edit')) page = <CompanyForm key={companyId} t={t} lang={lang} id={companyId.slice(0, -5)} onName={onName} />;

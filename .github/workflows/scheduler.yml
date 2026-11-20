@@ -1,0 +1,33 @@
+# Runs the timed review steps every 30 minutes: Day 2 reminders and Day 5 AI calls (or the SMS sent
+# instead while no voice provider is connected, D-115). The free Render server has no always-on worker,
+# so GitHub calls it. Needs two repository secrets (docs/deploy.md, section 6); without them it skips.
+name: Scheduler
+
+on:
+  schedule:
+    - cron: "7,37 * * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: scheduler
+  cancel-in-progress: false
+
+jobs:
+  review-followups:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Day 2 reminders and Day 5 calls
+        env:
+          API_URL: ${{ secrets.KN_API_URL }}
+          CRON_KEY: ${{ secrets.KN_CRON_KEY }}
+        run: |
+          if [ -z "$API_URL" ] || [ -z "$CRON_KEY" ]; then
+            echo "KN_API_URL or KN_CRON_KEY is not set in the repository secrets; nothing to do."
+            exit 0
+          fi
+          # the free server may be asleep: the first call wakes it (up to a minute)
+          curl -fsS --retry 3 --retry-delay 20 --retry-all-errors --max-time 120 \
+            -X POST "${API_URL%/}/api/v1/cron/review-followups" -H "X-Cron-Key: $CRON_KEY"

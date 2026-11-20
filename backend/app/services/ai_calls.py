@@ -64,7 +64,7 @@ async def _log(db: AsyncSession, req: ReviewRequest, company: Company, outcome: 
 
 
 async def _sms_instead(db: AsyncSession, req: ReviewRequest) -> bool:
-    done, _ = await send_link(db, req, ["sms"], "reminder")
+    done, _ = await send_link(db, req, ["sms"], "reminder", "day5_sms")
     return bool(done)
 
 

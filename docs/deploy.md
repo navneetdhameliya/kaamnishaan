@@ -125,6 +125,22 @@ sessions and makes their old password, authenticator and recovery codes stop wor
 Keep `KN_SECRET_KEY` unchanged: the authenticator keys are stored encrypted with it, so changing it
 means every staff member sets up again.
 
+## 6. Scheduler — Day 2 reminders and Day 5 calls (free)
+
+GitHub runs `.github/workflows/scheduler.yml` every 30 minutes. It calls the server, which sends every
+Day 2 review reminder that is due and runs every Day 5 AI call (while no voice provider is connected, the
+rating link goes by SMS instead, D-115).
+
+1. Make a long random key, e.g. on your computer: `openssl rand -hex 32`.
+2. Render → `kaamnishaan-api` → **Environment** → add `KN_CRON_KEY` = that key → Save.
+3. GitHub → the repository → **Settings → Secrets and variables → Actions → New repository secret**:
+   - `KN_API_URL` = the API address, e.g. `https://kaamnishaan-api.onrender.com`
+   - `KN_CRON_KEY` = the same key as on Render
+4. GitHub → **Actions → Scheduler → Run workflow** once to check it. The log ends with
+   `{"reminders_sent": …, "calls_handled": …}`.
+
+Without the two secrets the workflow does nothing (it doesn't fail).
+
 ## After it is live
 
 - Every merge to `main` deploys automatically (about 5 minutes).
