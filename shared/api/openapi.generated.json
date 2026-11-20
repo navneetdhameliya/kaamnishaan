@@ -1157,6 +1157,299 @@
         "title": "AdminAuditRow",
         "type": "object"
       },
+      "AdminBlogContent": {
+        "properties": {
+          "author": {
+            "title": "Author",
+            "type": "string"
+          },
+          "blocks": {
+            "items": {
+              "$ref": "#/components/schemas/BlogBlock"
+            },
+            "title": "Blocks",
+            "type": "array"
+          },
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "summary",
+          "author",
+          "blocks"
+        ],
+        "title": "AdminBlogContent",
+        "type": "object"
+      },
+      "AdminBlogDetail": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "category": {
+            "enum": [
+              "hvac",
+              "roofing",
+              "solar",
+              "maintenance",
+              "pest",
+              "cleaning",
+              "reports",
+              "tips",
+              "voice"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "content": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/AdminBlogContent"
+            },
+            "title": "Content",
+            "type": "object"
+          },
+          "cover": {
+            "title": "Cover",
+            "type": "string"
+          },
+          "cover_url": {
+            "title": "Cover Url",
+            "type": "string"
+          },
+          "featured": {
+            "title": "Featured",
+            "type": "boolean"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "publish_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Publish At"
+          },
+          "site_url": {
+            "description": "The website's address, for pictures saved as /img/…",
+            "title": "Site Url",
+            "type": "string"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "draft",
+              "scheduled",
+              "published"
+            ],
+            "title": "State",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "updated_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Updated By"
+          },
+          "web_url": {
+            "description": "The article on the website",
+            "title": "Web Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "category",
+          "featured",
+          "state",
+          "publish_at",
+          "cover",
+          "cover_url",
+          "content",
+          "web_url",
+          "site_url",
+          "updated_at",
+          "updated_by",
+          "can_act"
+        ],
+        "title": "AdminBlogDetail",
+        "type": "object"
+      },
+      "AdminBlogList": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "categories": {
+            "items": {
+              "enum": [
+                "hvac",
+                "roofing",
+                "solar",
+                "maintenance",
+                "pest",
+                "cleaning",
+                "reports",
+                "tips",
+                "voice"
+              ],
+              "type": "string"
+            },
+            "title": "Categories",
+            "type": "array"
+          },
+          "counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "description": "all, published, scheduled, draft",
+            "title": "Counts",
+            "type": "object"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AdminBlogRow"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "counts",
+          "categories",
+          "can_act"
+        ],
+        "title": "AdminBlogList",
+        "type": "object"
+      },
+      "AdminBlogRow": {
+        "properties": {
+          "author": {
+            "title": "Author",
+            "type": "string"
+          },
+          "category": {
+            "enum": [
+              "hvac",
+              "roofing",
+              "solar",
+              "maintenance",
+              "pest",
+              "cleaning",
+              "reports",
+              "tips",
+              "voice"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "cover_url": {
+            "title": "Cover Url",
+            "type": "string"
+          },
+          "featured": {
+            "title": "Featured",
+            "type": "boolean"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "languages": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Languages",
+            "type": "array"
+          },
+          "publish_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Publish At"
+          },
+          "read_minutes": {
+            "title": "Read Minutes",
+            "type": "integer"
+          },
+          "slug": {
+            "title": "Slug",
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "draft",
+              "scheduled",
+              "published"
+            ],
+            "title": "State",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "slug",
+          "title",
+          "category",
+          "cover_url",
+          "author",
+          "languages",
+          "state",
+          "publish_at",
+          "read_minutes",
+          "featured",
+          "updated_at"
+        ],
+        "title": "AdminBlogRow",
+        "type": "object"
+      },
       "AdminCallScript": {
         "properties": {
           "opening": {
@@ -8204,6 +8497,128 @@
         "title": "AdminTestCallOut",
         "type": "object"
       },
+      "AdminTestimonial": {
+        "properties": {
+          "approval_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approval Note"
+          },
+          "approved_in_writing": {
+            "title": "Approved In Writing",
+            "type": "boolean"
+          },
+          "city": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "City"
+          },
+          "company_name": {
+            "title": "Company Name",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "on_website": {
+            "title": "On Website",
+            "type": "boolean"
+          },
+          "person_name": {
+            "title": "Person Name",
+            "type": "string"
+          },
+          "photo": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photo"
+          },
+          "photo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photo Url"
+          },
+          "quote": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Quote",
+            "type": "object"
+          },
+          "role": {
+            "title": "Role",
+            "type": "string"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "quote",
+          "person_name",
+          "role",
+          "company_name",
+          "city",
+          "photo",
+          "photo_url",
+          "approved_in_writing",
+          "approval_note",
+          "on_website",
+          "updated_at"
+        ],
+        "title": "AdminTestimonial",
+        "type": "object"
+      },
+      "AdminTestimonials": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AdminTestimonial"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items",
+          "can_act"
+        ],
+        "title": "AdminTestimonials",
+        "type": "object"
+      },
       "AdminTextChange": {
         "additionalProperties": false,
         "properties": {
@@ -10157,6 +10572,191 @@
         "title": "BlogBlock",
         "type": "object"
       },
+      "BlogBlockIn": {
+        "additionalProperties": false,
+        "properties": {
+          "by": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "By"
+          },
+          "caption": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Caption"
+          },
+          "items": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 30,
+            "title": "Items",
+            "type": "array"
+          },
+          "src": {
+            "anyOf": [
+              {
+                "maxLength": 300,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "/img/… on the website or an uploaded site/… key",
+            "title": "Src"
+          },
+          "text": {
+            "anyOf": [
+              {
+                "maxLength": 3000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Text"
+          },
+          "title": {
+            "anyOf": [
+              {
+                "maxLength": 160,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Title"
+          },
+          "type": {
+            "enum": [
+              "p",
+              "h2",
+              "quote",
+              "list",
+              "image"
+            ],
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type"
+        ],
+        "title": "BlogBlockIn",
+        "type": "object"
+      },
+      "BlogContentIn": {
+        "additionalProperties": false,
+        "properties": {
+          "author": {
+            "default": "",
+            "maxLength": 80,
+            "title": "Author",
+            "type": "string"
+          },
+          "blocks": {
+            "items": {
+              "$ref": "#/components/schemas/BlogBlockIn"
+            },
+            "maxItems": 80,
+            "title": "Blocks",
+            "type": "array"
+          },
+          "summary": {
+            "default": "",
+            "maxLength": 300,
+            "title": "Summary",
+            "type": "string"
+          },
+          "title": {
+            "default": "",
+            "maxLength": 120,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "title": "BlogContentIn",
+        "type": "object"
+      },
+      "BlogIn": {
+        "additionalProperties": false,
+        "properties": {
+          "category": {
+            "enum": [
+              "hvac",
+              "roofing",
+              "solar",
+              "maintenance",
+              "pest",
+              "cleaning",
+              "reports",
+              "tips",
+              "voice"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "content": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/BlogContentIn"
+            },
+            "propertyNames": {
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ]
+            },
+            "title": "Content",
+            "type": "object"
+          },
+          "cover": {
+            "maxLength": 300,
+            "minLength": 1,
+            "title": "Cover",
+            "type": "string"
+          },
+          "featured": {
+            "default": false,
+            "title": "Featured",
+            "type": "boolean"
+          },
+          "slug": {
+            "maxLength": 120,
+            "minLength": 3,
+            "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+            "title": "Slug",
+            "type": "string"
+          }
+        },
+        "required": [
+          "slug",
+          "category",
+          "cover",
+          "content"
+        ],
+        "title": "BlogIn",
+        "type": "object"
+      },
       "BlogListOut": {
         "properties": {
           "categories": {
@@ -10364,6 +10964,26 @@
           "related"
         ],
         "title": "BlogPostOut",
+        "type": "object"
+      },
+      "BlogPublishIn": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Empty = now; a later time schedules it",
+            "title": "At"
+          }
+        },
+        "title": "BlogPublishIn",
         "type": "object"
       },
       "CancelBody": {
@@ -14968,6 +15588,26 @@
         "title": "MeUpdate",
         "type": "object"
       },
+      "MediaOut": {
+        "properties": {
+          "key": {
+            "description": "Save this in the post or testimonial",
+            "title": "Key",
+            "type": "string"
+          },
+          "url": {
+            "description": "Where the picture can be seen",
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "url"
+        ],
+        "title": "MediaOut",
+        "type": "object"
+      },
       "MemberList": {
         "properties": {
           "data": {
@@ -17003,6 +17643,93 @@
           "rated"
         ],
         "title": "PublicReviewState",
+        "type": "object"
+      },
+      "PublicTestimonial": {
+        "properties": {
+          "city": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "City"
+          },
+          "company": {
+            "title": "Company",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "language": {
+            "description": "Language of the quote (English when the asked one is missing)",
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Language",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "photo_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Photo Url"
+          },
+          "quote": {
+            "title": "Quote",
+            "type": "string"
+          },
+          "role": {
+            "title": "Role",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "quote",
+          "language",
+          "name",
+          "role",
+          "company",
+          "city",
+          "photo_url"
+        ],
+        "title": "PublicTestimonial",
+        "type": "object"
+      },
+      "PublicTestimonials": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/PublicTestimonial"
+            },
+            "title": "Items",
+            "type": "array"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "PublicTestimonials",
         "type": "object"
       },
       "PublicTextsOut": {
@@ -21237,6 +21964,102 @@
         "title": "TemplateQuestionOut",
         "type": "object"
       },
+      "TestimonialIn": {
+        "additionalProperties": false,
+        "properties": {
+          "approval_note": {
+            "anyOf": [
+              {
+                "maxLength": 200,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "How and when they agreed",
+            "title": "Approval Note"
+          },
+          "approved_in_writing": {
+            "default": false,
+            "title": "Approved In Writing",
+            "type": "boolean"
+          },
+          "city": {
+            "anyOf": [
+              {
+                "maxLength": 80,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "City"
+          },
+          "company_name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Company Name",
+            "type": "string"
+          },
+          "on_website": {
+            "default": false,
+            "title": "On Website",
+            "type": "boolean"
+          },
+          "person_name": {
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Person Name",
+            "type": "string"
+          },
+          "photo": {
+            "anyOf": [
+              {
+                "maxLength": 300,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "An uploaded site/people/… key",
+            "title": "Photo"
+          },
+          "quote": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "description": "English is needed; other languages are optional",
+            "propertyNames": {
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ]
+            },
+            "title": "Quote",
+            "type": "object"
+          },
+          "role": {
+            "maxLength": 80,
+            "minLength": 1,
+            "title": "Role",
+            "type": "string"
+          }
+        },
+        "required": [
+          "quote",
+          "person_name",
+          "role",
+          "company_name"
+        ],
+        "title": "TestimonialIn",
+        "type": "object"
+      },
       "TicketCreate": {
         "additionalProperties": false,
         "properties": {
@@ -23313,6 +24136,402 @@
           }
         },
         "summary": "Setup",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/blog": {
+      "get": {
+        "operationId": "admin_blog_api_v1_admin_blog_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 100,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "state",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "draft",
+                    "scheduled",
+                    "published"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "State"
+            }
+          },
+          {
+            "in": "query",
+            "name": "lang",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "en",
+                    "hi",
+                    "gu",
+                    "es",
+                    "fr"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Lang"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminBlogList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Admin Blog",
+        "tags": [
+          "admin"
+        ]
+      },
+      "post": {
+        "description": "A new post starts as a draft.",
+        "operationId": "create_post_api_v1_admin_blog_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminBlogDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create Post",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/blog/{post_id}": {
+      "delete": {
+        "description": "Drafts and scheduled posts only; unpublish a live post first.",
+        "operationId": "delete_post_api_v1_admin_blog__post_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "post_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Post Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delete Post",
+        "tags": [
+          "admin"
+        ]
+      },
+      "get": {
+        "operationId": "get_post_api_v1_admin_blog__post_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "post_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Post Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminBlogDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Post",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "description": "Changes to a published post are live at once.",
+        "operationId": "save_post_api_v1_admin_blog__post_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "post_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Post Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminBlogDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Save Post",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/blog/{post_id}/publish": {
+      "post": {
+        "description": "Publishes now, or schedules it for a later time.",
+        "operationId": "publish_post_api_v1_admin_blog__post_id__publish_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "post_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Post Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogPublishIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminBlogDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Publish Post",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/blog/{post_id}/unpublish": {
+      "post": {
+        "operationId": "unpublish_post_api_v1_admin_blog__post_id__unpublish_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "post_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Post Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminBlogDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Unpublish Post",
         "tags": [
           "admin"
         ]
@@ -26363,6 +27582,58 @@
         ]
       }
     },
+    "/api/v1/admin/media": {
+      "put": {
+        "description": "A picture for the website: send the file itself as the body (JPG, PNG or WebP, at most 3 MB).",
+        "operationId": "upload_media_api_v1_admin_media_put",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "kind",
+            "required": true,
+            "schema": {
+              "enum": [
+                "blog",
+                "people"
+              ],
+              "title": "Kind",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MediaOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Upload Media",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/api/v1/admin/message-templates": {
       "get": {
         "description": "The texts customers get with report and rating links, per channel and language.",
@@ -28877,6 +30148,181 @@
           }
         ],
         "summary": "Support Reply",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/testimonials": {
+      "get": {
+        "operationId": "admin_testimonials_api_v1_admin_testimonials_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTestimonials"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Admin Testimonials",
+        "tags": [
+          "admin"
+        ]
+      },
+      "post": {
+        "operationId": "add_testimonial_api_v1_admin_testimonials_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TestimonialIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTestimonials"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Add Testimonial",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/testimonials/{testimonial_id}": {
+      "delete": {
+        "operationId": "delete_testimonial_api_v1_admin_testimonials__testimonial_id__delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "testimonial_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Testimonial Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTestimonials"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delete Testimonial",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "description": "Also switches it on or off the website (on needs approved_in_writing).",
+        "operationId": "edit_testimonial_api_v1_admin_testimonials__testimonial_id__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "testimonial_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Testimonial Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TestimonialIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTestimonials"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Edit Testimonial",
         "tags": [
           "admin"
         ]
@@ -34792,6 +36238,42 @@
         ]
       }
     },
+    "/api/v1/public/media/{key}": {
+      "get": {
+        "description": "A picture staff uploaded for the website (blog, testimonials); redirects to the file.",
+        "operationId": "public_media_api_v1_public_media__key__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "key",
+            "required": true,
+            "schema": {
+              "title": "Key",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Public Media",
+        "tags": [
+          "website"
+        ]
+      }
+    },
     "/api/v1/public/newsletter": {
       "post": {
         "operationId": "newsletter_api_v1_public_newsletter_post",
@@ -35180,6 +36662,57 @@
         "summary": "Stop Asking",
         "tags": [
           "customer report page"
+        ]
+      }
+    },
+    "/api/v1/public/testimonials": {
+      "get": {
+        "description": "Quotes customers approved in writing, for the website's Home (W01). Empty = hide the section.",
+        "operationId": "public_testimonials_api_v1_public_testimonials_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicTestimonials"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Public Testimonials",
+        "tags": [
+          "website"
         ]
       }
     },

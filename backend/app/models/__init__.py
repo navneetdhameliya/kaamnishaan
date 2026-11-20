@@ -45,16 +45,19 @@ from app.models.reviews import (
     ReviewSettings,
 )
 from app.models.sharing import Message, ReportIssue, ShareLink
+from app.models.site import BlogPost, Testimonial
 from app.models.staff import StaffSession, StaffUser
 from app.models.support import Announcement, SupportMessage, SupportTicket
 from app.models.texts import TextOverride
 from app.models.work import Customer, CustomerContact, Equipment, Job, JobEvent, Site
 
 __all__ = [
+    "BlogPost",
     "AiCall",
     "Announcement",
     "SupportMessage",
     "SupportTicket",
+    "Testimonial",
     "TextOverride",
     "PlatformSetting",
     "StaffSession",

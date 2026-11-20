@@ -8682,4 +8682,206 @@ abstract final class LangKeys {
   static const adminWcDraftsOne = 'admin.wc.drafts_one';
   /// 1 change waiting to be published
   static const adminWcPendingOne = 'admin.wc.pending_one';
+  /// What owners say
+  static const siteSayTitle = 'site.say.title';
+  /// Field-service owners on running their teams with KaamNishaan.
+  static const siteSayBody = 'site.say.body';
+  /// Blog
+  static const adminNavBlog = 'admin.nav.blog';
+  /// Testimonials
+  static const adminNavTestimonials = 'admin.nav.testimonials';
+  /// New post
+  static const adminBlNew = 'admin.bl.new';
+  /// Search posts
+  static const adminBlSearch = 'admin.bl.search';
+  /// Status
+  static const adminBlFState = 'admin.bl.f_state';
+  /// Language
+  static const adminBlFLang = 'admin.bl.f_lang';
+  /// All
+  static const adminBlAll = 'admin.bl.all';
+  /// Post
+  static const adminBlCPost = 'admin.bl.c_post';
+  /// Author
+  static const adminBlCAuthor = 'admin.bl.c_author';
+  /// Languages
+  static const adminBlCLang = 'admin.bl.c_lang';
+  /// Status
+  static const adminBlCState = 'admin.bl.c_state';
+  /// Date
+  static const adminBlCDate = 'admin.bl.c_date';
+  /// Published
+  static const adminBlStPublished = 'admin.bl.st.published';
+  /// Scheduled
+  static const adminBlStScheduled = 'admin.bl.st.scheduled';
+  /// Scheduled · {day}
+  static const adminBlStScheduledOn = 'admin.bl.st.scheduled_on';
+  /// Draft
+  static const adminBlStDraft = 'admin.bl.st.draft';
+  /// No posts yet.
+  static const adminBlNone = 'admin.bl.none';
+  /// No posts match.
+  static const adminBlNoneMatch = 'admin.bl.none_match';
+  /// Featured post
+  static const adminBlFeatured = 'admin.bl.featured';
+  /// Shown large at the top of the blog. Only one post at a time.
+  static const adminBlFeaturedHint = 'admin.bl.featured_hint';
+  /// English is needed. A language left empty shows the English post, marked “In English”.
+  static const adminBlLangHint = 'admin.bl.lang_hint';
+  /// Title
+  static const adminBlTitle = 'admin.bl.title';
+  /// Summary
+  static const adminBlSummary = 'admin.bl.summary';
+  /// Author
+  static const adminBlAuthor = 'admin.bl.author';
+  /// Article
+  static const adminBlBody = 'admin.bl.body';
+  /// Add the first paragraph below.
+  static const adminBlEmptyBody = 'admin.bl.empty_body';
+  /// Add:
+  static const adminBlAdd = 'admin.bl.add';
+  /// Paragraph
+  static const adminBlBP = 'admin.bl.b.p';
+  /// Heading
+  static const adminBlBH2 = 'admin.bl.b.h2';
+  /// Checklist box
+  static const adminBlBList = 'admin.bl.b.list';
+  /// Quote
+  static const adminBlBQuote = 'admin.bl.b.quote';
+  /// Picture
+  static const adminBlBImage = 'admin.bl.b.image';
+  /// Who said it
+  static const adminBlBy = 'admin.bl.by';
+  /// Box heading
+  static const adminBlListTitle = 'admin.bl.list_title';
+  /// One line per item
+  static const adminBlListItems = 'admin.bl.list_items';
+  /// Caption
+  static const adminBlCaption = 'admin.bl.caption';
+  /// Move up
+  static const adminBlUp = 'admin.bl.up';
+  /// Move down
+  static const adminBlDown = 'admin.bl.down';
+  /// Remove
+  static const adminBlRemove = 'admin.bl.remove';
+  /// Upload picture
+  static const adminBlUpload = 'admin.bl.upload';
+  /// Change picture
+  static const adminBlReplace = 'admin.bl.replace';
+  /// Publishing
+  static const adminBlPublishing = 'admin.bl.publishing';
+  /// Last saved {ago} by {who}
+  static const adminBlLast = 'admin.bl.last';
+  /// Publish now
+  static const adminBlPublishNow = 'admin.bl.publish_now';
+  /// Publish on
+  static const adminBlWhen = 'admin.bl.when';
+  /// Schedule
+  static const adminBlSchedule = 'admin.bl.schedule';
+  /// Every language you started must have a title, summary and article.
+  static const adminBlPublishHint = 'admin.bl.publish_hint';
+  /// Published. It’s on the blog within 5 minutes.
+  static const adminBlPublished = 'admin.bl.published';
+  /// Scheduled. It goes on the blog at the time you picked.
+  static const adminBlScheduled = 'admin.bl.scheduled';
+  /// Unpublish
+  static const adminBlUnpublish = 'admin.bl.unpublish';
+  /// Back to draft. It’s off the website.
+  static const adminBlUnpublished = 'admin.bl.unpublished';
+  /// Delete post
+  static const adminBlDelete = 'admin.bl.delete';
+  /// Delete this post for good?
+  static const adminBlDeleteQ = 'admin.bl.delete_q';
+  /// Delete
+  static const adminBlDeleteYes = 'admin.bl.delete_yes';
+  /// Save draft
+  static const adminBlSave = 'admin.bl.save';
+  /// Save changes
+  static const adminBlSaveLive = 'admin.bl.save_live';
+  /// Saved.
+  static const adminBlSaved = 'admin.bl.saved';
+  /// View on website
+  static const adminBlView = 'admin.bl.view';
+  /// Post settings
+  static const adminBlSettings = 'admin.bl.settings';
+  /// Cover picture
+  static const adminBlCover = 'admin.bl.cover';
+  /// No cover yet
+  static const adminBlNoCover = 'admin.bl.no_cover';
+  /// Topic
+  static const adminBlCategory = 'admin.bl.category';
+  /// Web address
+  static const adminBlSlug = 'admin.bl.slug';
+  /// Unpublish to change the address, so shared links don’t break.
+  static const adminBlSlugLocked = 'admin.bl.slug_locked';
+  /// Add testimonial
+  static const adminTmAdd = 'admin.tm.add';
+  /// Edit testimonial
+  static const adminTmEdit = 'admin.tm.edit';
+  /// Only publish quotes that customers have approved in writing.
+  static const adminTmRule = 'admin.tm.rule';
+  /// No testimonials yet. The website hides this section until one is on.
+  static const adminTmNone = 'admin.tm.none';
+  /// Quote
+  static const adminTmFQuote = 'admin.tm.f.quote';
+  /// Name
+  static const adminTmFPersonName = 'admin.tm.f.person_name';
+  /// Role
+  static const adminTmFRole = 'admin.tm.f.role';
+  /// Company
+  static const adminTmFCompanyName = 'admin.tm.f.company_name';
+  /// City (optional)
+  static const adminTmFCity = 'admin.tm.f.city';
+  /// Their words, as they approved them. Languages left empty show the English quote.
+  static const adminTmQuoteHint = 'admin.tm.quote_hint';
+  /// Add photo
+  static const adminTmPhotoAdd = 'admin.tm.photo_add';
+  /// Change photo
+  static const adminTmPhotoChange = 'admin.tm.photo_change';
+  /// Remove photo
+  static const adminTmPhotoRemove = 'admin.tm.photo_remove';
+  /// The customer approved this in writing
+  static const adminTmApproved = 'admin.tm.approved';
+  /// Their quote, name, photo and company may appear on the website.
+  static const adminTmApprovedHint = 'admin.tm.approved_hint';
+  /// How and when (e.g. email, 3 Nov)
+  static const adminTmNote = 'admin.tm.note';
+  /// Show on the website
+  static const adminTmOnWebsite = 'admin.tm.on_website';
+  /// Appears on the Home page within 5 minutes.
+  static const adminTmOnHint = 'admin.tm.on_hint';
+  /// Needs the customer’s written approval first.
+  static const adminTmNeedsApproval = 'admin.tm.needs_approval';
+  /// Delete
+  static const adminTmDelete = 'admin.tm.delete';
+  /// On website
+  static const adminTmStOn = 'admin.tm.st.on';
+  /// Approved · hidden
+  static const adminTmStHidden = 'admin.tm.st.hidden';
+  /// Waiting for approval
+  static const adminTmStWaiting = 'admin.tm.st.waiting';
+  /// Started a blog post
+  static const adminAuABlogCreated = 'admin.au.a.blog.created';
+  /// Edited a blog post
+  static const adminAuABlogUpdated = 'admin.au.a.blog.updated';
+  /// Published a blog post
+  static const adminAuABlogPublished = 'admin.au.a.blog.published';
+  /// Unpublished a blog post
+  static const adminAuABlogUnpublished = 'admin.au.a.blog.unpublished';
+  /// Deleted a blog post
+  static const adminAuABlogDeleted = 'admin.au.a.blog.deleted';
+  /// Added a testimonial
+  static const adminAuATestimonialCreated = 'admin.au.a.testimonial.created';
+  /// Edited a testimonial
+  static const adminAuATestimonialUpdated = 'admin.au.a.testimonial.updated';
+  /// Put a testimonial on the website
+  static const adminAuATestimonialShown = 'admin.au.a.testimonial.shown';
+  /// Took a testimonial off the website
+  static const adminAuATestimonialHidden = 'admin.au.a.testimonial.hidden';
+  /// Deleted a testimonial
+  static const adminAuATestimonialDeleted = 'admin.au.a.testimonial.deleted';
+  /// Blog post
+  static const adminAuTBlogPost = 'admin.au.t.blog_post';
+  /// Testimonial
+  static const adminAuTTestimonial = 'admin.au.t.testimonial';
 }

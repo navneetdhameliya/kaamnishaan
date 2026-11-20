@@ -20,6 +20,8 @@ import {
   Repeat,
   Tags,
   ListChecks,
+  PenLine,
+  Quote,
   Lock,
   LogOut,
   Menu,
@@ -96,6 +98,8 @@ export const NAV: { section: string; items: NavItem[] }[] = [
       { key: 'industries', path: '/industries', icon: Factory, ready: true },
       { key: 'website_content', path: '/website-content', icon: LayoutTemplate, ready: true },
       { key: 'texts', path: '/localized-content', icon: Languages, ready: true },
+      { key: 'blog', path: '/blog', icon: PenLine, ready: true },
+      { key: 'testimonials', path: '/testimonials', icon: Quote, ready: true },
     ],
   },
   {

@@ -86,6 +86,7 @@ from app.schemas.admin_staff import (
     AdminStaffUpdate,
 )
 from app.schemas.admin_users import AdminUserAction, AdminUserDetail, AdminUserList
+from app.schemas.blog import AdminBlogDetail, AdminBlogList, BlogIn, BlogPublishIn, MediaOut
 from app.schemas.checklists import QuestionIn, QuestionPatch
 from app.schemas.identity import Locale
 from app.schemas.reports import ReportStatus
@@ -108,6 +109,7 @@ from app.schemas.support import (
     AdminTicketPatch,
     AdminTicketReply,
 )  # fmt: skip
+from app.schemas.testimonials import AdminTestimonials, TestimonialIn
 from app.schemas.texts import (
     AdminPageOut,
     AdminPageSave,
@@ -140,7 +142,10 @@ from app.services import (
     admin_users,
     ai_calls,
     audit,
+    blog,
+    media,
     staff,
+    testimonials,
     texts,
 )
 from app.services import checklists as checklist_svc
@@ -1565,3 +1570,119 @@ async def change_texts(
     """Changes go live at once (the app, website and admin panel pick them up when they next start)."""
     _can_change(me)
     return await texts.change_texts(db, body.changes, staff_id=me.staff.id, ip=client_ip(request))
+
+
+# ---- A26 Blog management, A27 Testimonials -------------------------------------------------------------
+def _acts(me: Staff) -> bool:
+    return me.staff.role in ("super_admin", "admin")
+
+
+@router.put("/media", response_model=MediaOut, status_code=201)
+async def upload_media(
+    request: Request, kind: Literal["blog", "people"], me: Staff = Depends(get_staff)
+) -> MediaOut:
+    """A picture for the website: send the file itself as the body (JPG, PNG or WebP, at most 3 MB)."""
+    _can_change(me)
+    key = await media.upload(kind, await request.body())
+    return MediaOut(key=key, url=media.url(key) or "")
+
+
+@router.get("/blog", response_model=AdminBlogList)
+async def admin_blog(
+    q: str | None = Query(None, max_length=100),
+    state: Literal["draft", "scheduled", "published"] | None = None,
+    lang: Locale | None = None,
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminBlogList:
+    return await blog.admin_list(db, q=q, state_filter=state, lang=lang, can_act=_acts(me))
+
+
+@router.post("/blog", response_model=AdminBlogDetail, status_code=201)
+async def create_post(
+    body: BlogIn, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminBlogDetail:
+    """A new post starts as a draft."""
+    _can_change(me)
+    return await blog.create(db, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.get("/blog/{post_id}", response_model=AdminBlogDetail)
+async def get_post(
+    post_id: uuid.UUID, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminBlogDetail:
+    return await blog.detail(db, post_id, can_act=_acts(me))
+
+
+@router.put("/blog/{post_id}", response_model=AdminBlogDetail)
+async def save_post(
+    post_id: uuid.UUID, body: BlogIn, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminBlogDetail:  # fmt: skip
+    """Changes to a published post are live at once."""
+    _can_change(me)
+    return await blog.update(db, post_id, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.post("/blog/{post_id}/publish", response_model=AdminBlogDetail)
+async def publish_post(
+    post_id: uuid.UUID, body: BlogPublishIn, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminBlogDetail:  # fmt: skip
+    """Publishes now, or schedules it for a later time."""
+    _can_change(me)
+    return await blog.publish(db, post_id, body.at, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.post("/blog/{post_id}/unpublish", response_model=AdminBlogDetail)
+async def unpublish_post(
+    post_id: uuid.UUID, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminBlogDetail:
+    _can_change(me)
+    return await blog.unpublish(db, post_id, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.delete("/blog/{post_id}", status_code=204)
+async def delete_post(
+    post_id: uuid.UUID, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> Response:
+    """Drafts and scheduled posts only; unpublish a live post first."""
+    _can_change(me)
+    await blog.delete(db, post_id, staff_id=me.staff.id, ip=client_ip(request))
+    return Response(status_code=204)
+
+
+@router.get("/testimonials", response_model=AdminTestimonials)
+async def admin_testimonials(
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminTestimonials:
+    return await testimonials.admin_list(db, can_act=_acts(me))
+
+
+@router.post("/testimonials", response_model=AdminTestimonials, status_code=201)
+async def add_testimonial(
+    body: TestimonialIn, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminTestimonials:
+    _can_change(me)
+    return await testimonials.create(db, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.put("/testimonials/{testimonial_id}", response_model=AdminTestimonials)
+async def edit_testimonial(
+    testimonial_id: uuid.UUID, body: TestimonialIn, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminTestimonials:  # fmt: skip
+    """Also switches it on or off the website (on needs approved_in_writing)."""
+    _can_change(me)
+    return await testimonials.update(db, testimonial_id, body, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.delete("/testimonials/{testimonial_id}", response_model=AdminTestimonials)
+async def delete_testimonial(
+    testimonial_id: uuid.UUID,
+    request: Request,
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminTestimonials:
+    _can_change(me)
+    return await testimonials.delete(db, testimonial_id, staff_id=me.staff.id, ip=client_ip(request))

@@ -232,3 +232,18 @@ export interface LegalOut {
   complete: boolean;
   sections: { id: string; heading: string; blocks: { type: 'p' | 'list'; text: string | null; items: string[] }[] }[];
 }
+
+/** GET /public/testimonials: quotes customers approved in writing (W01). */
+export interface PublicTestimonial {
+  id: string;
+  quote: string;
+  language: string;
+  name: string;
+  role: string;
+  company: string;
+  city: string | null;
+  photo_url: string | null;
+}
+export interface PublicTestimonials {
+  items: PublicTestimonial[];
+}

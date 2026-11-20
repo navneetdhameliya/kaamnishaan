@@ -38,7 +38,14 @@ from app.core.db import engine  # noqa: E402
 from app.main import create_app  # noqa: E402
 from app.providers.messaging import outbox  # noqa: E402
 
-KEEP = {"alembic_version", "plans", "industries", "credit_packs", "prompt_versions"}  # seeded by migrations
+KEEP = {
+    "alembic_version",
+    "plans",
+    "industries",
+    "credit_packs",
+    "prompt_versions",
+    "blog_posts",
+}  # seeded by migrations
 # Seeded global checklists live in tables that also hold company rows, so they are copied aside once
 # and put back after each wipe.
 _seed_copied = False

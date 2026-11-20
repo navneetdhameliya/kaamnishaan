@@ -797,6 +797,213 @@ class AdminAuditRowModel {
       };
 }
 
+AdminBlogContentModel adminBlogContentModelFromJson(String str) => AdminBlogContentModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminBlogContentModelToJson(AdminBlogContentModel data) => json.encode(data.toJson());
+
+class AdminBlogContentModel {
+  final String author;
+  final List<BlogBlockModel> blocks;
+  final String summary;
+  final String title;
+
+  const AdminBlogContentModel({
+    required this.author,
+    required this.blocks,
+    required this.summary,
+    required this.title,
+  });
+
+  factory AdminBlogContentModel.fromJson(Map<String, dynamic> json) => AdminBlogContentModel(
+        author: json['author'] as String,
+        blocks: (json['blocks'] as List).map((e) => BlogBlockModel.fromJson(e as Map<String, dynamic>)).toList(),
+        summary: json['summary'] as String,
+        title: json['title'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'author': author,
+        'blocks': blocks.map((e) => e.toJson()).toList(),
+        'summary': summary,
+        'title': title,
+      };
+}
+
+AdminBlogDetailModel adminBlogDetailModelFromJson(String str) => AdminBlogDetailModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminBlogDetailModelToJson(AdminBlogDetailModel data) => json.encode(data.toJson());
+
+class AdminBlogDetailModel {
+  final bool canAct;
+  /// One of: hvac, roofing, solar, maintenance, pest, cleaning, reports, tips, voice
+  final String category;
+  final Map<String, dynamic> content;
+  final String cover;
+  final String coverUrl;
+  final bool featured;
+  final String id;
+  final DateTime? publishAt;
+  /// The website's address, for pictures saved as /img/…
+  final String siteUrl;
+  final String slug;
+  /// One of: draft, scheduled, published
+  final String state;
+  final DateTime updatedAt;
+  final String? updatedBy;
+  /// The article on the website
+  final String webUrl;
+
+  const AdminBlogDetailModel({
+    required this.canAct,
+    required this.category,
+    required this.content,
+    required this.cover,
+    required this.coverUrl,
+    required this.featured,
+    required this.id,
+    this.publishAt,
+    required this.siteUrl,
+    required this.slug,
+    required this.state,
+    required this.updatedAt,
+    this.updatedBy,
+    required this.webUrl,
+  });
+
+  factory AdminBlogDetailModel.fromJson(Map<String, dynamic> json) => AdminBlogDetailModel(
+        canAct: json['can_act'] as bool,
+        category: json['category'] as String,
+        content: Map<String, dynamic>.from(json['content'] as Map),
+        cover: json['cover'] as String,
+        coverUrl: json['cover_url'] as String,
+        featured: json['featured'] as bool,
+        id: json['id'] as String,
+        publishAt: json['publish_at'] == null ? null : DateTime.parse(json['publish_at'] as String),
+        siteUrl: json['site_url'] as String,
+        slug: json['slug'] as String,
+        state: json['state'] as String,
+        updatedAt: DateTime.parse(json['updated_at'] as String),
+        updatedBy: json['updated_by'] as String?,
+        webUrl: json['web_url'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'category': category,
+        'content': content,
+        'cover': cover,
+        'cover_url': coverUrl,
+        'featured': featured,
+        'id': id,
+        'publish_at': publishAt?.toIso8601String(),
+        'site_url': siteUrl,
+        'slug': slug,
+        'state': state,
+        'updated_at': updatedAt.toIso8601String(),
+        'updated_by': updatedBy,
+        'web_url': webUrl,
+      };
+}
+
+AdminBlogListModel adminBlogListModelFromJson(String str) => AdminBlogListModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminBlogListModelToJson(AdminBlogListModel data) => json.encode(data.toJson());
+
+class AdminBlogListModel {
+  final bool canAct;
+  final List<String> categories;
+  /// all, published, scheduled, draft
+  final Map<String, dynamic> counts;
+  final List<AdminBlogRowModel> items;
+
+  const AdminBlogListModel({
+    required this.canAct,
+    required this.categories,
+    required this.counts,
+    required this.items,
+  });
+
+  factory AdminBlogListModel.fromJson(Map<String, dynamic> json) => AdminBlogListModel(
+        canAct: json['can_act'] as bool,
+        categories: (json['categories'] as List).map((e) => e as String).toList(),
+        counts: Map<String, dynamic>.from(json['counts'] as Map),
+        items: (json['items'] as List).map((e) => AdminBlogRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'categories': categories,
+        'counts': counts,
+        'items': items.map((e) => e.toJson()).toList(),
+      };
+}
+
+AdminBlogRowModel adminBlogRowModelFromJson(String str) => AdminBlogRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminBlogRowModelToJson(AdminBlogRowModel data) => json.encode(data.toJson());
+
+class AdminBlogRowModel {
+  final String author;
+  /// One of: hvac, roofing, solar, maintenance, pest, cleaning, reports, tips, voice
+  final String category;
+  final String coverUrl;
+  final bool featured;
+  final String id;
+  final List<String> languages;
+  final DateTime? publishAt;
+  final int readMinutes;
+  final String slug;
+  /// One of: draft, scheduled, published
+  final String state;
+  final String title;
+  final DateTime updatedAt;
+
+  const AdminBlogRowModel({
+    required this.author,
+    required this.category,
+    required this.coverUrl,
+    required this.featured,
+    required this.id,
+    required this.languages,
+    this.publishAt,
+    required this.readMinutes,
+    required this.slug,
+    required this.state,
+    required this.title,
+    required this.updatedAt,
+  });
+
+  factory AdminBlogRowModel.fromJson(Map<String, dynamic> json) => AdminBlogRowModel(
+        author: json['author'] as String,
+        category: json['category'] as String,
+        coverUrl: json['cover_url'] as String,
+        featured: json['featured'] as bool,
+        id: json['id'] as String,
+        languages: (json['languages'] as List).map((e) => e as String).toList(),
+        publishAt: json['publish_at'] == null ? null : DateTime.parse(json['publish_at'] as String),
+        readMinutes: (json['read_minutes'] as num).toInt(),
+        slug: json['slug'] as String,
+        state: json['state'] as String,
+        title: json['title'] as String,
+        updatedAt: DateTime.parse(json['updated_at'] as String),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'author': author,
+        'category': category,
+        'cover_url': coverUrl,
+        'featured': featured,
+        'id': id,
+        'languages': languages,
+        'publish_at': publishAt?.toIso8601String(),
+        'read_minutes': readMinutes,
+        'slug': slug,
+        'state': state,
+        'title': title,
+        'updated_at': updatedAt.toIso8601String(),
+      };
+}
+
 AdminCallScriptModel adminCallScriptModelFromJson(String str) => AdminCallScriptModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminCallScriptModelToJson(AdminCallScriptModel data) => json.encode(data.toJson());
@@ -5951,6 +6158,94 @@ class AdminTestCallOutModel {
       };
 }
 
+AdminTestimonialModel adminTestimonialModelFromJson(String str) => AdminTestimonialModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTestimonialModelToJson(AdminTestimonialModel data) => json.encode(data.toJson());
+
+class AdminTestimonialModel {
+  final String? approvalNote;
+  final bool approvedInWriting;
+  final String? city;
+  final String companyName;
+  final String id;
+  final bool onWebsite;
+  final String personName;
+  final String? photo;
+  final String? photoUrl;
+  final Map<String, dynamic> quote;
+  final String role;
+  final DateTime updatedAt;
+
+  const AdminTestimonialModel({
+    this.approvalNote,
+    required this.approvedInWriting,
+    this.city,
+    required this.companyName,
+    required this.id,
+    required this.onWebsite,
+    required this.personName,
+    this.photo,
+    this.photoUrl,
+    required this.quote,
+    required this.role,
+    required this.updatedAt,
+  });
+
+  factory AdminTestimonialModel.fromJson(Map<String, dynamic> json) => AdminTestimonialModel(
+        approvalNote: json['approval_note'] as String?,
+        approvedInWriting: json['approved_in_writing'] as bool,
+        city: json['city'] as String?,
+        companyName: json['company_name'] as String,
+        id: json['id'] as String,
+        onWebsite: json['on_website'] as bool,
+        personName: json['person_name'] as String,
+        photo: json['photo'] as String?,
+        photoUrl: json['photo_url'] as String?,
+        quote: Map<String, dynamic>.from(json['quote'] as Map),
+        role: json['role'] as String,
+        updatedAt: DateTime.parse(json['updated_at'] as String),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'approval_note': approvalNote,
+        'approved_in_writing': approvedInWriting,
+        'city': city,
+        'company_name': companyName,
+        'id': id,
+        'on_website': onWebsite,
+        'person_name': personName,
+        'photo': photo,
+        'photo_url': photoUrl,
+        'quote': quote,
+        'role': role,
+        'updated_at': updatedAt.toIso8601String(),
+      };
+}
+
+AdminTestimonialsModel adminTestimonialsModelFromJson(String str) => AdminTestimonialsModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTestimonialsModelToJson(AdminTestimonialsModel data) => json.encode(data.toJson());
+
+class AdminTestimonialsModel {
+  final bool canAct;
+  final List<AdminTestimonialModel> items;
+
+  const AdminTestimonialsModel({
+    required this.canAct,
+    required this.items,
+  });
+
+  factory AdminTestimonialsModel.fromJson(Map<String, dynamic> json) => AdminTestimonialsModel(
+        canAct: json['can_act'] as bool,
+        items: (json['items'] as List).map((e) => AdminTestimonialModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'items': items.map((e) => e.toJson()).toList(),
+      };
+}
+
 AdminTextChangeModel adminTextChangeModelFromJson(String str) => AdminTextChangeModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminTextChangeModelToJson(AdminTextChangeModel data) => json.encode(data.toJson());
@@ -7398,6 +7693,121 @@ class BlogBlockModel {
       };
 }
 
+BlogBlockInModel blogBlockInModelFromJson(String str) => BlogBlockInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String blogBlockInModelToJson(BlogBlockInModel data) => json.encode(data.toJson());
+
+class BlogBlockInModel {
+  final String? by;
+  final String? caption;
+  final List<String>? items;
+  /// /img/… on the website or an uploaded site/… key
+  final String? src;
+  final String? text;
+  final String? title;
+  /// One of: p, h2, quote, list, image
+  final String type;
+
+  const BlogBlockInModel({
+    this.by,
+    this.caption,
+    this.items,
+    this.src,
+    this.text,
+    this.title,
+    required this.type,
+  });
+
+  factory BlogBlockInModel.fromJson(Map<String, dynamic> json) => BlogBlockInModel(
+        by: json['by'] as String?,
+        caption: json['caption'] as String?,
+        items: json['items'] == null ? null : (json['items'] as List).map((e) => e as String).toList(),
+        src: json['src'] as String?,
+        text: json['text'] as String?,
+        title: json['title'] as String?,
+        type: json['type'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'by': by,
+        'caption': caption,
+        'items': items,
+        'src': src,
+        'text': text,
+        'title': title,
+        'type': type,
+      };
+}
+
+BlogContentInModel blogContentInModelFromJson(String str) => BlogContentInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String blogContentInModelToJson(BlogContentInModel data) => json.encode(data.toJson());
+
+class BlogContentInModel {
+  final String? author;
+  final List<BlogBlockInModel>? blocks;
+  final String? summary;
+  final String? title;
+
+  const BlogContentInModel({
+    this.author,
+    this.blocks,
+    this.summary,
+    this.title,
+  });
+
+  factory BlogContentInModel.fromJson(Map<String, dynamic> json) => BlogContentInModel(
+        author: json['author'] as String?,
+        blocks: json['blocks'] == null ? null : (json['blocks'] as List).map((e) => BlogBlockInModel.fromJson(e as Map<String, dynamic>)).toList(),
+        summary: json['summary'] as String?,
+        title: json['title'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'author': author,
+        'blocks': blocks?.map((e) => e.toJson()).toList(),
+        'summary': summary,
+        'title': title,
+      };
+}
+
+BlogInModel blogInModelFromJson(String str) => BlogInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String blogInModelToJson(BlogInModel data) => json.encode(data.toJson());
+
+class BlogInModel {
+  /// One of: hvac, roofing, solar, maintenance, pest, cleaning, reports, tips, voice
+  final String category;
+  final Map<String, dynamic> content;
+  final String cover;
+  final bool? featured;
+  final String slug;
+
+  const BlogInModel({
+    required this.category,
+    required this.content,
+    required this.cover,
+    this.featured,
+    required this.slug,
+  });
+
+  factory BlogInModel.fromJson(Map<String, dynamic> json) => BlogInModel(
+        category: json['category'] as String,
+        content: Map<String, dynamic>.from(json['content'] as Map),
+        cover: json['cover'] as String,
+        featured: json['featured'] as bool?,
+        slug: json['slug'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'category': category,
+        'content': content,
+        'cover': cover,
+        'featured': featured,
+        'slug': slug,
+      };
+}
+
 BlogListOutModel blogListOutModelFromJson(String str) => BlogListOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String blogListOutModelToJson(BlogListOutModel data) => json.encode(data.toJson());
@@ -7542,6 +7952,27 @@ class BlogPostOutModel {
         'slug': slug,
         'summary': summary,
         'title': title,
+      };
+}
+
+BlogPublishInModel blogPublishInModelFromJson(String str) => BlogPublishInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String blogPublishInModelToJson(BlogPublishInModel data) => json.encode(data.toJson());
+
+class BlogPublishInModel {
+  /// Empty = now; a later time schedules it
+  final DateTime? at;
+
+  const BlogPublishInModel({
+    this.at,
+  });
+
+  factory BlogPublishInModel.fromJson(Map<String, dynamic> json) => BlogPublishInModel(
+        at: json['at'] == null ? null : DateTime.parse(json['at'] as String),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'at': at?.toIso8601String(),
       };
 }
 
@@ -10730,6 +11161,32 @@ class MeUpdateModel {
       };
 }
 
+MediaOutModel mediaOutModelFromJson(String str) => MediaOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String mediaOutModelToJson(MediaOutModel data) => json.encode(data.toJson());
+
+class MediaOutModel {
+  /// Save this in the post or testimonial
+  final String key;
+  /// Where the picture can be seen
+  final String url;
+
+  const MediaOutModel({
+    required this.key,
+    required this.url,
+  });
+
+  factory MediaOutModel.fromJson(Map<String, dynamic> json) => MediaOutModel(
+        key: json['key'] as String,
+        url: json['url'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'key': key,
+        'url': url,
+      };
+}
+
 MemberListModel memberListModelFromJson(String str) => MemberListModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String memberListModelToJson(MemberListModel data) => json.encode(data.toJson());
@@ -12366,6 +12823,76 @@ class PublicReviewStateModel {
         'rated': rated,
         'rating': rating,
         'technician': technician,
+      };
+}
+
+PublicTestimonialModel publicTestimonialModelFromJson(String str) => PublicTestimonialModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String publicTestimonialModelToJson(PublicTestimonialModel data) => json.encode(data.toJson());
+
+class PublicTestimonialModel {
+  final String? city;
+  final String company;
+  final String id;
+  /// Language of the quote (English when the asked one is missing)
+  /// One of: en, hi, gu, es, fr
+  final String language;
+  final String name;
+  final String? photoUrl;
+  final String quote;
+  final String role;
+
+  const PublicTestimonialModel({
+    this.city,
+    required this.company,
+    required this.id,
+    required this.language,
+    required this.name,
+    this.photoUrl,
+    required this.quote,
+    required this.role,
+  });
+
+  factory PublicTestimonialModel.fromJson(Map<String, dynamic> json) => PublicTestimonialModel(
+        city: json['city'] as String?,
+        company: json['company'] as String,
+        id: json['id'] as String,
+        language: json['language'] as String,
+        name: json['name'] as String,
+        photoUrl: json['photo_url'] as String?,
+        quote: json['quote'] as String,
+        role: json['role'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'city': city,
+        'company': company,
+        'id': id,
+        'language': language,
+        'name': name,
+        'photo_url': photoUrl,
+        'quote': quote,
+        'role': role,
+      };
+}
+
+PublicTestimonialsModel publicTestimonialsModelFromJson(String str) => PublicTestimonialsModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String publicTestimonialsModelToJson(PublicTestimonialsModel data) => json.encode(data.toJson());
+
+class PublicTestimonialsModel {
+  final List<PublicTestimonialModel> items;
+
+  const PublicTestimonialsModel({
+    required this.items,
+  });
+
+  factory PublicTestimonialsModel.fromJson(Map<String, dynamic> json) => PublicTestimonialsModel(
+        items: (json['items'] as List).map((e) => PublicTestimonialModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'items': items.map((e) => e.toJson()).toList(),
       };
 }
 
@@ -15154,6 +15681,61 @@ class TemplateQuestionOutModel {
         'text_status': textStatus,
         'type': type,
         'unit': unit,
+      };
+}
+
+TestimonialInModel testimonialInModelFromJson(String str) => TestimonialInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String testimonialInModelToJson(TestimonialInModel data) => json.encode(data.toJson());
+
+class TestimonialInModel {
+  /// How and when they agreed
+  final String? approvalNote;
+  final bool? approvedInWriting;
+  final String? city;
+  final String companyName;
+  final bool? onWebsite;
+  final String personName;
+  /// An uploaded site/people/… key
+  final String? photo;
+  /// English is needed; other languages are optional
+  final Map<String, dynamic> quote;
+  final String role;
+
+  const TestimonialInModel({
+    this.approvalNote,
+    this.approvedInWriting,
+    this.city,
+    required this.companyName,
+    this.onWebsite,
+    required this.personName,
+    this.photo,
+    required this.quote,
+    required this.role,
+  });
+
+  factory TestimonialInModel.fromJson(Map<String, dynamic> json) => TestimonialInModel(
+        approvalNote: json['approval_note'] as String?,
+        approvedInWriting: json['approved_in_writing'] as bool?,
+        city: json['city'] as String?,
+        companyName: json['company_name'] as String,
+        onWebsite: json['on_website'] as bool?,
+        personName: json['person_name'] as String,
+        photo: json['photo'] as String?,
+        quote: Map<String, dynamic>.from(json['quote'] as Map),
+        role: json['role'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'approval_note': approvalNote,
+        'approved_in_writing': approvedInWriting,
+        'city': city,
+        'company_name': companyName,
+        'on_website': onWebsite,
+        'person_name': personName,
+        'photo': photo,
+        'quote': quote,
+        'role': role,
       };
 }
 
