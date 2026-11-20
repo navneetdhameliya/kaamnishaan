@@ -7646,4 +7646,116 @@ abstract final class LangKeys {
   static const adminEvGpsYes = 'admin.ev.gps_yes';
   /// No GPS
   static const adminEvGpsNo = 'admin.ev.gps_no';
+  /// Reports
+  static const adminNavReports = 'admin.nav.reports';
+  /// Search report, job, customer or company
+  static const adminRpSearch = 'admin.rp.search';
+  /// Language
+  static const adminRpFLanguage = 'admin.rp.f_language';
+  /// Passed
+  static const adminRpCkPassed = 'admin.rp.ck.passed';
+  /// {n} check(s) failed
+  static const adminRpCkFailedCheck = 'admin.rp.ck.failed_check';
+  /// Missing proof ({n})
+  static const adminRpCkMissingEvidence = 'admin.rp.ck.missing_evidence';
+  /// Invented work ({n})
+  static const adminRpCkUnsupportedClaim = 'admin.rp.ck.unsupported_claim';
+  /// Report
+  static const adminRpCReport = 'admin.rp.c_report';
+  /// Company
+  static const adminRpCCompany = 'admin.rp.c_company';
+  /// Language
+  static const adminRpCLanguage = 'admin.rp.c_language';
+  /// AI check
+  static const adminRpCCheck = 'admin.rp.c_check';
+  /// Status
+  static const adminRpCStatus = 'admin.rp.c_status';
+  /// Sent
+  static const adminRpCSent = 'admin.rp.c_sent';
+  /// No reports match
+  static const adminRpEmptyTitle = 'admin.rp.empty_title';
+  /// No reports yet
+  static const adminRpNoneTitle = 'admin.rp.none_title';
+  /// Reports appear here as soon as technicians make them.
+  static const adminRpNoneBody = 'admin.rp.none_body';
+  /// All reports
+  static const adminRpBack = 'admin.rp.back';
+  /// This report doesn't exist.
+  static const adminRpNotFound = 'admin.rp.not_found';
+  /// Drafted by AI
+  static const adminRpByAi = 'admin.rp.by.ai';
+  /// Made from the template
+  static const adminRpByTemplate = 'admin.rp.by.template';
+  /// {by} · edited by {who}
+  static const adminRpEdited = 'admin.rp.edited';
+  /// No text yet.
+  static const adminRpNoText = 'admin.rp.no_text';
+  /// Summary
+  static const adminRpSecSummary = 'admin.rp.sec.summary';
+  /// Work done
+  static const adminRpSecWorkDone = 'admin.rp.sec.work_done';
+  /// Advice
+  static const adminRpSecAdvice = 'admin.rp.sec.advice';
+  /// AI checks
+  static const adminRpAiChecks = 'admin.rp.ai_checks';
+  /// Not checked yet — the report is still being written or failed.
+  static const adminRpNotChecked = 'admin.rp.not_checked';
+  /// Every sentence linked to proof
+  static const adminRpAllLinked = 'admin.rp.all_linked';
+  /// {n} of {total} sentences linked to proof
+  static const adminRpLinked = 'admin.rp.linked';
+  /// Checklist {n} of {total} passed
+  static const adminRpChecklist = 'admin.rp.checklist';
+  /// No invented work found
+  static const adminRpNoInvented = 'admin.rp.no_invented';
+  /// {n} sentence(s) with no proof behind them
+  static const adminRpInvented = 'admin.rp.invented';
+  /// Prompt: report-draft v{v} · {tokens} tokens · {cost}
+  static const adminRpPrompt = 'admin.rp.prompt';
+  /// Steps
+  static const adminRpSteps = 'admin.rp.steps';
+  /// Report made
+  static const adminRpStCreated = 'admin.rp.st.created';
+  /// Sent for approval
+  static const adminRpStSubmitted = 'admin.rp.st.submitted';
+  /// Changes asked: {why}
+  static const adminRpStChanges = 'admin.rp.st.changes';
+  /// Approved
+  static const adminRpStApproved = 'admin.rp.st.approved';
+  /// Sent to the customer
+  static const adminRpStShared = 'admin.rp.st.shared';
+  /// Confirmed by the customer
+  static const adminRpStAcknowledged = 'admin.rp.st.acknowledged';
+  /// missing photos
+  static const adminRpReasonMissingPhotos = 'admin.rp.reason.missing_photos';
+  /// wrong details
+  static const adminRpReasonWrongDetails = 'admin.rp.reason.wrong_details';
+  /// unclear text
+  static const adminRpReasonUnclearText = 'admin.rp.reason.unclear_text';
+  /// failed checks not explained
+  static const adminRpReasonFailedCheckNotExplained = 'admin.rp.reason.failed_check_not_explained';
+  /// other
+  static const adminRpReasonOther = 'admin.rp.reason.other';
+  /// Customer links
+  static const adminRpLinks = 'admin.rp.links';
+  /// Not sent to the customer yet.
+  static const adminRpNoLinks = 'admin.rp.no_links';
+  /// SMS
+  static const adminRpChSms = 'admin.rp.ch.sms';
+  /// WhatsApp
+  static const adminRpChWhatsapp = 'admin.rp.ch.whatsapp';
+  /// Email
+  static const adminRpChEmail = 'admin.rp.ch.email';
+  /// Copied link
+  static const adminRpChCopy = 'admin.rp.ch.copy';
+  /// Turned off
+  static const adminRpRevoked = 'admin.rp.revoked';
+  /// Works until {when}
+  static const adminRpUntil = 'admin.rp.until';
+  /// Opened {n} times · last {when}
+  static const adminRpOpens = 'admin.rp.opens';
+  /// Not opened yet
+  static const adminRpNotOpened = 'admin.rp.not_opened';
+  /// Download PDF
+  static const adminRpPdf = 'admin.rp.pdf';
 }

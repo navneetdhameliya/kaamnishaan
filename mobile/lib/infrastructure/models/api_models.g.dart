@@ -2352,6 +2352,7 @@ class AdminJobReportModel {
   final DateTime? acknowledgedAt;
   final DateTime? approvedAt;
   final int changeRequests;
+  final String id;
   /// R-1042
   final String number;
   /// How many times the customer opened the report link
@@ -2364,6 +2365,7 @@ class AdminJobReportModel {
     this.acknowledgedAt,
     this.approvedAt,
     required this.changeRequests,
+    required this.id,
     required this.number,
     required this.openCount,
     this.sharedAt,
@@ -2375,6 +2377,7 @@ class AdminJobReportModel {
         acknowledgedAt: json['acknowledged_at'] == null ? null : DateTime.parse(json['acknowledged_at'] as String),
         approvedAt: json['approved_at'] == null ? null : DateTime.parse(json['approved_at'] as String),
         changeRequests: (json['change_requests'] as num).toInt(),
+        id: json['id'] as String,
         number: json['number'] as String,
         openCount: (json['open_count'] as num).toInt(),
         sharedAt: json['shared_at'] == null ? null : DateTime.parse(json['shared_at'] as String),
@@ -2386,6 +2389,7 @@ class AdminJobReportModel {
         'acknowledged_at': acknowledgedAt?.toIso8601String(),
         'approved_at': approvedAt?.toIso8601String(),
         'change_requests': changeRequests,
+        'id': id,
         'number': number,
         'open_count': openCount,
         'shared_at': sharedAt?.toIso8601String(),
@@ -3333,6 +3337,466 @@ class AdminProofModel {
   Map<String, dynamic> toJson() => {
         'done': done,
         'total': total,
+      };
+}
+
+AdminReportChangeModel adminReportChangeModelFromJson(String str) => AdminReportChangeModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReportChangeModelToJson(AdminReportChangeModel data) => json.encode(data.toJson());
+
+class AdminReportChangeModel {
+  final DateTime at;
+  final String? by;
+  final String? note;
+  final List<String> reasons;
+  final DateTime? resolvedAt;
+
+  const AdminReportChangeModel({
+    required this.at,
+    this.by,
+    this.note,
+    required this.reasons,
+    this.resolvedAt,
+  });
+
+  factory AdminReportChangeModel.fromJson(Map<String, dynamic> json) => AdminReportChangeModel(
+        at: DateTime.parse(json['at'] as String),
+        by: json['by'] as String?,
+        note: json['note'] as String?,
+        reasons: (json['reasons'] as List).map((e) => e as String).toList(),
+        resolvedAt: json['resolved_at'] == null ? null : DateTime.parse(json['resolved_at'] as String),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'at': at.toIso8601String(),
+        'by': by,
+        'note': note,
+        'reasons': reasons,
+        'resolved_at': resolvedAt?.toIso8601String(),
+      };
+}
+
+AdminReportDetailModel adminReportDetailModelFromJson(String str) => AdminReportDetailModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReportDetailModelToJson(AdminReportDetailModel data) => json.encode(data.toJson());
+
+class AdminReportDetailModel {
+  final DateTime? acknowledgedAt;
+  final String? acknowledgedName;
+  final String? advice;
+  final double aiCostUsd;
+  final int? aiPromptVersion;
+  final int aiTokens;
+  final DateTime? approvedAt;
+  final String? approvedBy;
+  final List<AdminReportChangeModel> changes;
+  final int checksFailed;
+  final int checksPassed;
+  final AdminOptionModel company;
+  final DateTime createdAt;
+  /// One of: ai, template
+  final String? draftedBy;
+  /// People who changed the text after the draft
+  final List<String> editedBy;
+  final String? error;
+  final List<AdminReportFlagModel> flags;
+  final String id;
+  final AdminReportJobModel job;
+  final String language;
+  final List<AdminReportLinkModel> links;
+  final String number;
+  /// Short-lived download link when the PDF is ready
+  final String? pdfUrl;
+  final List<AdminReportPhotoModel> photos;
+  final int sentences;
+  final int sentencesLinked;
+  final DateTime? sharedAt;
+  /// One of: generating, generation_failed, draft, pending_review, changes_requested, approved, shared, acknowledged
+  final String status;
+  final DateTime? submittedAt;
+  final String? submittedBy;
+  final String? summary;
+  final String? technician;
+  final List<AdminReportVersionModel> versions;
+  final String? workDone;
+
+  const AdminReportDetailModel({
+    this.acknowledgedAt,
+    this.acknowledgedName,
+    this.advice,
+    required this.aiCostUsd,
+    this.aiPromptVersion,
+    required this.aiTokens,
+    this.approvedAt,
+    this.approvedBy,
+    required this.changes,
+    required this.checksFailed,
+    required this.checksPassed,
+    required this.company,
+    required this.createdAt,
+    this.draftedBy,
+    required this.editedBy,
+    this.error,
+    required this.flags,
+    required this.id,
+    required this.job,
+    required this.language,
+    required this.links,
+    required this.number,
+    this.pdfUrl,
+    required this.photos,
+    required this.sentences,
+    required this.sentencesLinked,
+    this.sharedAt,
+    required this.status,
+    this.submittedAt,
+    this.submittedBy,
+    this.summary,
+    this.technician,
+    required this.versions,
+    this.workDone,
+  });
+
+  factory AdminReportDetailModel.fromJson(Map<String, dynamic> json) => AdminReportDetailModel(
+        acknowledgedAt: json['acknowledged_at'] == null ? null : DateTime.parse(json['acknowledged_at'] as String),
+        acknowledgedName: json['acknowledged_name'] as String?,
+        advice: json['advice'] as String?,
+        aiCostUsd: (json['ai_cost_usd'] as num).toDouble(),
+        aiPromptVersion: json['ai_prompt_version'] == null ? null : (json['ai_prompt_version'] as num).toInt(),
+        aiTokens: (json['ai_tokens'] as num).toInt(),
+        approvedAt: json['approved_at'] == null ? null : DateTime.parse(json['approved_at'] as String),
+        approvedBy: json['approved_by'] as String?,
+        changes: (json['changes'] as List).map((e) => AdminReportChangeModel.fromJson(e as Map<String, dynamic>)).toList(),
+        checksFailed: (json['checks_failed'] as num).toInt(),
+        checksPassed: (json['checks_passed'] as num).toInt(),
+        company: AdminOptionModel.fromJson(json['company'] as Map<String, dynamic>),
+        createdAt: DateTime.parse(json['created_at'] as String),
+        draftedBy: json['drafted_by'] as String?,
+        editedBy: (json['edited_by'] as List).map((e) => e as String).toList(),
+        error: json['error'] as String?,
+        flags: (json['flags'] as List).map((e) => AdminReportFlagModel.fromJson(e as Map<String, dynamic>)).toList(),
+        id: json['id'] as String,
+        job: AdminReportJobModel.fromJson(json['job'] as Map<String, dynamic>),
+        language: json['language'] as String,
+        links: (json['links'] as List).map((e) => AdminReportLinkModel.fromJson(e as Map<String, dynamic>)).toList(),
+        number: json['number'] as String,
+        pdfUrl: json['pdf_url'] as String?,
+        photos: (json['photos'] as List).map((e) => AdminReportPhotoModel.fromJson(e as Map<String, dynamic>)).toList(),
+        sentences: (json['sentences'] as num).toInt(),
+        sentencesLinked: (json['sentences_linked'] as num).toInt(),
+        sharedAt: json['shared_at'] == null ? null : DateTime.parse(json['shared_at'] as String),
+        status: json['status'] as String,
+        submittedAt: json['submitted_at'] == null ? null : DateTime.parse(json['submitted_at'] as String),
+        submittedBy: json['submitted_by'] as String?,
+        summary: json['summary'] as String?,
+        technician: json['technician'] as String?,
+        versions: (json['versions'] as List).map((e) => AdminReportVersionModel.fromJson(e as Map<String, dynamic>)).toList(),
+        workDone: json['work_done'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'acknowledged_at': acknowledgedAt?.toIso8601String(),
+        'acknowledged_name': acknowledgedName,
+        'advice': advice,
+        'ai_cost_usd': aiCostUsd,
+        'ai_prompt_version': aiPromptVersion,
+        'ai_tokens': aiTokens,
+        'approved_at': approvedAt?.toIso8601String(),
+        'approved_by': approvedBy,
+        'changes': changes.map((e) => e.toJson()).toList(),
+        'checks_failed': checksFailed,
+        'checks_passed': checksPassed,
+        'company': company.toJson(),
+        'created_at': createdAt.toIso8601String(),
+        'drafted_by': draftedBy,
+        'edited_by': editedBy,
+        'error': error,
+        'flags': flags.map((e) => e.toJson()).toList(),
+        'id': id,
+        'job': job.toJson(),
+        'language': language,
+        'links': links.map((e) => e.toJson()).toList(),
+        'number': number,
+        'pdf_url': pdfUrl,
+        'photos': photos.map((e) => e.toJson()).toList(),
+        'sentences': sentences,
+        'sentences_linked': sentencesLinked,
+        'shared_at': sharedAt?.toIso8601String(),
+        'status': status,
+        'submitted_at': submittedAt?.toIso8601String(),
+        'submitted_by': submittedBy,
+        'summary': summary,
+        'technician': technician,
+        'versions': versions.map((e) => e.toJson()).toList(),
+        'work_done': workDone,
+      };
+}
+
+AdminReportFlagModel adminReportFlagModelFromJson(String str) => AdminReportFlagModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReportFlagModelToJson(AdminReportFlagModel data) => json.encode(data.toJson());
+
+class AdminReportFlagModel {
+  /// One of: missing_evidence, failed_check, unsupported_claim
+  final String kind;
+  final String text;
+
+  const AdminReportFlagModel({
+    required this.kind,
+    required this.text,
+  });
+
+  factory AdminReportFlagModel.fromJson(Map<String, dynamic> json) => AdminReportFlagModel(
+        kind: json['kind'] as String,
+        text: json['text'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'kind': kind,
+        'text': text,
+      };
+}
+
+AdminReportJobModel adminReportJobModelFromJson(String str) => AdminReportJobModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReportJobModelToJson(AdminReportJobModel data) => json.encode(data.toJson());
+
+class AdminReportJobModel {
+  final String customer;
+  final String id;
+  final String number;
+  final String title;
+
+  const AdminReportJobModel({
+    required this.customer,
+    required this.id,
+    required this.number,
+    required this.title,
+  });
+
+  factory AdminReportJobModel.fromJson(Map<String, dynamic> json) => AdminReportJobModel(
+        customer: json['customer'] as String,
+        id: json['id'] as String,
+        number: json['number'] as String,
+        title: json['title'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'customer': customer,
+        'id': id,
+        'number': number,
+        'title': title,
+      };
+}
+
+AdminReportLinkModel adminReportLinkModelFromJson(String str) => AdminReportLinkModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReportLinkModelToJson(AdminReportLinkModel data) => json.encode(data.toJson());
+
+class AdminReportLinkModel {
+  final String channel;
+  final DateTime createdAt;
+  final DateTime expiresAt;
+  final DateTime? lastOpenedAt;
+  final int opens;
+  /// Name, with the phone or email partly hidden
+  final String? recipient;
+  final bool revoked;
+
+  const AdminReportLinkModel({
+    required this.channel,
+    required this.createdAt,
+    required this.expiresAt,
+    this.lastOpenedAt,
+    required this.opens,
+    this.recipient,
+    required this.revoked,
+  });
+
+  factory AdminReportLinkModel.fromJson(Map<String, dynamic> json) => AdminReportLinkModel(
+        channel: json['channel'] as String,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        expiresAt: DateTime.parse(json['expires_at'] as String),
+        lastOpenedAt: json['last_opened_at'] == null ? null : DateTime.parse(json['last_opened_at'] as String),
+        opens: (json['opens'] as num).toInt(),
+        recipient: json['recipient'] as String?,
+        revoked: json['revoked'] as bool,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'channel': channel,
+        'created_at': createdAt.toIso8601String(),
+        'expires_at': expiresAt.toIso8601String(),
+        'last_opened_at': lastOpenedAt?.toIso8601String(),
+        'opens': opens,
+        'recipient': recipient,
+        'revoked': revoked,
+      };
+}
+
+AdminReportListModel adminReportListModelFromJson(String str) => AdminReportListModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReportListModelToJson(AdminReportListModel data) => json.encode(data.toJson());
+
+class AdminReportListModel {
+  final List<AdminOptionModel> companies;
+  /// Reports per status for the current search, company and dates
+  final Map<String, dynamic> counts;
+  final List<AdminReportRowModel> items;
+  final int page;
+  final int pageSize;
+  final int total;
+
+  const AdminReportListModel({
+    required this.companies,
+    required this.counts,
+    required this.items,
+    required this.page,
+    required this.pageSize,
+    required this.total,
+  });
+
+  factory AdminReportListModel.fromJson(Map<String, dynamic> json) => AdminReportListModel(
+        companies: (json['companies'] as List).map((e) => AdminOptionModel.fromJson(e as Map<String, dynamic>)).toList(),
+        counts: Map<String, dynamic>.from(json['counts'] as Map),
+        items: (json['items'] as List).map((e) => AdminReportRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        page: (json['page'] as num).toInt(),
+        pageSize: (json['page_size'] as num).toInt(),
+        total: (json['total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'companies': companies.map((e) => e.toJson()).toList(),
+        'counts': counts,
+        'items': items.map((e) => e.toJson()).toList(),
+        'page': page,
+        'page_size': pageSize,
+        'total': total,
+      };
+}
+
+AdminReportPhotoModel adminReportPhotoModelFromJson(String str) => AdminReportPhotoModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReportPhotoModelToJson(AdminReportPhotoModel data) => json.encode(data.toJson());
+
+class AdminReportPhotoModel {
+  final String stage;
+  final String url;
+
+  const AdminReportPhotoModel({
+    required this.stage,
+    required this.url,
+  });
+
+  factory AdminReportPhotoModel.fromJson(Map<String, dynamic> json) => AdminReportPhotoModel(
+        stage: json['stage'] as String,
+        url: json['url'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'stage': stage,
+        'url': url,
+      };
+}
+
+AdminReportRowModel adminReportRowModelFromJson(String str) => AdminReportRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReportRowModelToJson(AdminReportRowModel data) => json.encode(data.toJson());
+
+class AdminReportRowModel {
+  /// The first problem the AI checks found, or passed
+  /// One of: passed, failed_check, missing_evidence, unsupported_claim, not_checked
+  final String check;
+  /// How many problems of that kind
+  final int checkCount;
+  final AdminOptionModel company;
+  final DateTime createdAt;
+  final String id;
+  final AdminReportJobModel job;
+  final String language;
+  /// R-1042
+  final String number;
+  final DateTime? sharedAt;
+  /// One of: generating, generation_failed, draft, pending_review, changes_requested, approved, shared, acknowledged
+  final String status;
+  final String? technician;
+
+  const AdminReportRowModel({
+    required this.check,
+    required this.checkCount,
+    required this.company,
+    required this.createdAt,
+    required this.id,
+    required this.job,
+    required this.language,
+    required this.number,
+    this.sharedAt,
+    required this.status,
+    this.technician,
+  });
+
+  factory AdminReportRowModel.fromJson(Map<String, dynamic> json) => AdminReportRowModel(
+        check: json['check'] as String,
+        checkCount: (json['check_count'] as num).toInt(),
+        company: AdminOptionModel.fromJson(json['company'] as Map<String, dynamic>),
+        createdAt: DateTime.parse(json['created_at'] as String),
+        id: json['id'] as String,
+        job: AdminReportJobModel.fromJson(json['job'] as Map<String, dynamic>),
+        language: json['language'] as String,
+        number: json['number'] as String,
+        sharedAt: json['shared_at'] == null ? null : DateTime.parse(json['shared_at'] as String),
+        status: json['status'] as String,
+        technician: json['technician'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'check': check,
+        'check_count': checkCount,
+        'company': company.toJson(),
+        'created_at': createdAt.toIso8601String(),
+        'id': id,
+        'job': job.toJson(),
+        'language': language,
+        'number': number,
+        'shared_at': sharedAt?.toIso8601String(),
+        'status': status,
+        'technician': technician,
+      };
+}
+
+AdminReportVersionModel adminReportVersionModelFromJson(String str) => AdminReportVersionModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminReportVersionModelToJson(AdminReportVersionModel data) => json.encode(data.toJson());
+
+class AdminReportVersionModel {
+  final DateTime at;
+  final String? by;
+  final String event;
+  final String source;
+  final int version;
+
+  const AdminReportVersionModel({
+    required this.at,
+    this.by,
+    required this.event,
+    required this.source,
+    required this.version,
+  });
+
+  factory AdminReportVersionModel.fromJson(Map<String, dynamic> json) => AdminReportVersionModel(
+        at: DateTime.parse(json['at'] as String),
+        by: json['by'] as String?,
+        event: json['event'] as String,
+        source: json['source'] as String,
+        version: (json['version'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'at': at.toIso8601String(),
+        'by': by,
+        'event': event,
+        'source': source,
+        'version': version,
       };
 }
 

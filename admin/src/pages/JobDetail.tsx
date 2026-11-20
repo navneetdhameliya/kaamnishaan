@@ -199,7 +199,7 @@ export function JobDetail({ t, lang, id, onName }: { t: T; lang: Lang; id: strin
           <p className="text-latin-body text-text-secondary">{t('admin.jb.no_report')}</p>
         ) : (
           <div className="flex flex-wrap items-center gap-x-24 gap-y-8 text-[14px]">
-            <span className="inline-flex items-center gap-8 font-semibold"><FileText width={16} height={16} aria-hidden />#{r.number}</span>
+            <Link to={`/reports/${r.id}`} className="inline-flex items-center gap-8 font-semibold hover:underline"><FileText width={16} height={16} aria-hidden />#{r.number}</Link>
             <span className="rounded-full bg-bg-subtle px-[10px] py-[3px] text-[13px] font-semibold text-mocha-700">{t(`admin.jb.rs.${r.status}`)}</span>
             {r.change_requests > 0 && <span className="text-status-danger">{t('admin.jb.changes_n', { n: num(r.change_requests, lang) })}</span>}
             {r.shared_at && <span className="text-text-secondary">{t('admin.jb.opened_n', { n: num(r.open_count, lang) })}</span>}

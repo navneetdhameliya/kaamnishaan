@@ -327,7 +327,7 @@ async def detail(db: AsyncSession, job_id: uuid.UUID, lang: str) -> AdminJobDeta
         photos=AdminJobPhotos(**counts, voice_notes=int(voice[0])),
         proof=proof,
         report=AdminJobReport(
-            number=f"R-{report.number}", status=report.status, submitted_at=report.submitted_at,
+            id=report.id, number=f"R-{report.number}", status=report.status, submitted_at=report.submitted_at,
             approved_at=report.approved_at, shared_at=report.shared_at,
             acknowledged_at=report.acknowledged_at,
             change_requests=len(changes), open_count=opens,
