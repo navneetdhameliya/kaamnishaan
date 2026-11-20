@@ -470,3 +470,27 @@ export interface EmailSettingsOut {
   live: boolean;
   can_act: boolean;
 }
+
+/** A10 Roles and permissions (GET /admin/roles). */
+export type RoleCell = { value: 'yes' | 'no' | 'partial'; note: string | null };
+export type RoleRow = { key: string; cells: Record<string, RoleCell> };
+export interface StaffRow {
+  id: string;
+  name: string;
+  email: string;
+  role: StaffRole;
+  status: 'invited' | 'active' | 'disabled';
+  last_login_at: string | null;
+  created_at: string;
+  me: boolean;
+}
+export interface RolesOut {
+  matrix: RoleRow[];
+  staff_matrix: RoleRow[];
+  staff: StaffRow[];
+  can_act: boolean;
+}
+export interface StaffLink {
+  staff: StaffRow;
+  setup_link: string;
+}

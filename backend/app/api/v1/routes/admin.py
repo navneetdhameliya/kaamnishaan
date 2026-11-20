@@ -57,6 +57,13 @@ from app.schemas.admin_reviews import (
     AdminReviewRules,
     ReviewStatusFilter,
 )
+from app.schemas.admin_staff import (
+    AdminRolesOut,
+    AdminStaffInvite,
+    AdminStaffLink,
+    AdminStaffRow,
+    AdminStaffUpdate,
+)
 from app.schemas.admin_users import AdminUserAction, AdminUserDetail, AdminUserList
 from app.schemas.checklists import QuestionIn, QuestionPatch
 from app.schemas.identity import Locale
@@ -83,6 +90,7 @@ from app.services import (
     admin_messages,
     admin_platform,
     admin_reviews,
+    admin_staff,
     admin_users,
     ai_calls,
     audit,
@@ -958,3 +966,51 @@ async def test_email_settings(
     return AdminEmailTestOut(
         to=await admin_email.test(db, str(body.to), staff_id=me.staff.id, ip=client_ip(request))
     )
+
+
+# ---- A10 Roles and permissions, staff accounts -------------------------------------------------------
+def _super_only(me: Staff) -> None:
+    if me.staff.role != "super_admin":
+        raise Forbidden("forbidden", "Only a super admin can manage staff accounts.")
+
+
+@router.get("/roles", response_model=AdminRolesOut)
+async def roles(me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)) -> AdminRolesOut:
+    """Who can do what (from the rules the server enforces) and the KaamNishaan staff accounts."""
+    return AdminRolesOut(
+        matrix=admin_staff.matrix(), staff_matrix=admin_staff.staff_matrix(),
+        staff=await admin_staff.staff_list(db, me.staff.id), can_act=me.staff.role == "super_admin",
+    )  # fmt: skip
+
+
+@router.post("/staff", response_model=AdminStaffLink, status_code=201)
+async def invite_staff(
+    body: AdminStaffInvite, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminStaffLink:
+    """The setup link is shown once, to share yourself (no email needed). It works for 72 hours."""
+    _super_only(me)
+    row, link = await admin_staff.invite(
+        db, name=body.name, email=str(body.email), role=body.role, by=me.staff.id
+    )
+    return AdminStaffLink(staff=row, setup_link=link)
+
+
+@router.patch("/staff/{staff_id}", response_model=AdminStaffRow)
+async def update_staff(
+    staff_id: uuid.UUID, body: AdminStaffUpdate, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminStaffRow:  # fmt: skip
+    """Change the role, or turn the account off (signs them out at once) or back on."""
+    _super_only(me)
+    return await admin_staff.change(db, staff_id, role=body.role, active=body.active, by=me.staff.id,
+                                    ip=client_ip(request))  # fmt: skip
+
+
+@router.post("/staff/{staff_id}/setup-link", response_model=AdminStaffLink)
+async def staff_setup_link(
+    staff_id: uuid.UUID, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminStaffLink:
+    """For a lost phone or password: clears their password and authenticator and signs them out."""
+    _super_only(me)
+    row, link = await admin_staff.new_link(db, staff_id, by=me.staff.id)
+    return AdminStaffLink(staff=row, setup_link=link)
