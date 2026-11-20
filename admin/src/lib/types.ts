@@ -494,3 +494,58 @@ export interface StaffLink {
   staff: StaffRow;
   setup_link: string;
 }
+
+/** A11 Jobs and A12 Job details (GET /admin/jobs, /admin/jobs/{id}). */
+export type JobStatus = 'unassigned' | 'assigned' | 'in_progress' | 'in_review' | 'changes_requested' | 'completed' | 'cancelled';
+export type AdminProof = { done: number; total: number };
+export interface AdminJobRow {
+  id: string;
+  number: string;
+  title: string;
+  customer: string;
+  company: Option;
+  technician: string | null;
+  status: JobStatus;
+  proof: AdminProof;
+  when: string;
+  is_quick_job: boolean;
+}
+export interface AdminJobList {
+  items: AdminJobRow[];
+  total: number;
+  page: number;
+  page_size: number;
+  counts: Partial<Record<JobStatus, number>>;
+  companies: Option[];
+}
+export interface AdminTimelineItem {
+  type: string;
+  at: string;
+  until: string | null;
+  actor: string | null;
+  data: { technician?: string | null; reason?: string; quick_job?: boolean; fields?: string[]; stage?: string; count?: number; reasons?: string[] };
+}
+export interface AdminJobDetail {
+  id: string;
+  number: string;
+  title: string;
+  description: string | null;
+  status: JobStatus;
+  is_quick_job: boolean;
+  company: Option;
+  industry: string | null;
+  customer: string;
+  contact: string | null;
+  technician: string | null;
+  scheduled_at: string | null;
+  duration_min: number | null;
+  created_at: string;
+  completed_at: string | null;
+  cancel_reason: string | null;
+  place: { address: string | null; site_lat: number | null; site_lng: number | null; started_at: string | null; start_lat: number | null; start_lng: number | null; start_distance_m: number | null };
+  checklists: { name: string; answered: number; total: number; done: boolean }[];
+  photos: { before: number; during: number; after: number; voice_notes: number };
+  proof: AdminProof;
+  report: { number: string; status: string; submitted_at: string | null; approved_at: string | null; shared_at: string | null; acknowledged_at: string | null; change_requests: number; open_count: number } | null;
+  timeline: AdminTimelineItem[];
+}

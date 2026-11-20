@@ -2898,6 +2898,559 @@
         "title": "AdminEmailTestOut",
         "type": "object"
       },
+      "AdminJobChecklist": {
+        "properties": {
+          "answered": {
+            "title": "Answered",
+            "type": "integer"
+          },
+          "done": {
+            "title": "Done",
+            "type": "boolean"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "answered",
+          "total",
+          "done"
+        ],
+        "title": "AdminJobChecklist",
+        "type": "object"
+      },
+      "AdminJobDetail": {
+        "properties": {
+          "cancel_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cancel Reason"
+          },
+          "checklists": {
+            "items": {
+              "$ref": "#/components/schemas/AdminJobChecklist"
+            },
+            "title": "Checklists",
+            "type": "array"
+          },
+          "company": {
+            "$ref": "#/components/schemas/AdminOption"
+          },
+          "completed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Completed At"
+          },
+          "contact": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Contact"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "customer": {
+            "title": "Customer",
+            "type": "string"
+          },
+          "description": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Description"
+          },
+          "duration_min": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Duration Min"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "industry": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Industry"
+          },
+          "is_quick_job": {
+            "title": "Is Quick Job",
+            "type": "boolean"
+          },
+          "number": {
+            "title": "Number",
+            "type": "string"
+          },
+          "photos": {
+            "$ref": "#/components/schemas/AdminJobPhotos"
+          },
+          "place": {
+            "$ref": "#/components/schemas/AdminJobPlace"
+          },
+          "proof": {
+            "$ref": "#/components/schemas/AdminProof"
+          },
+          "report": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AdminJobReport"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "scheduled_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scheduled At"
+          },
+          "status": {
+            "enum": [
+              "unassigned",
+              "assigned",
+              "in_progress",
+              "in_review",
+              "changes_requested",
+              "completed",
+              "cancelled"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "technician": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Technician"
+          },
+          "timeline": {
+            "items": {
+              "$ref": "#/components/schemas/AdminTimelineItem"
+            },
+            "title": "Timeline",
+            "type": "array"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "title",
+          "description",
+          "status",
+          "is_quick_job",
+          "company",
+          "industry",
+          "customer",
+          "contact",
+          "technician",
+          "scheduled_at",
+          "duration_min",
+          "created_at",
+          "completed_at",
+          "cancel_reason",
+          "place",
+          "checklists",
+          "photos",
+          "proof",
+          "report",
+          "timeline"
+        ],
+        "title": "AdminJobDetail",
+        "type": "object"
+      },
+      "AdminJobList": {
+        "properties": {
+          "companies": {
+            "description": "Companies with jobs, for the filter",
+            "items": {
+              "$ref": "#/components/schemas/AdminOption"
+            },
+            "title": "Companies",
+            "type": "array"
+          },
+          "counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "description": "Jobs per status for the current search, company and dates",
+            "title": "Counts",
+            "type": "object"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AdminJobRow"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "page_size",
+          "counts",
+          "companies"
+        ],
+        "title": "AdminJobList",
+        "type": "object"
+      },
+      "AdminJobPhotos": {
+        "properties": {
+          "after": {
+            "title": "After",
+            "type": "integer"
+          },
+          "before": {
+            "title": "Before",
+            "type": "integer"
+          },
+          "during": {
+            "title": "During",
+            "type": "integer"
+          },
+          "voice_notes": {
+            "title": "Voice Notes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "before",
+          "during",
+          "after",
+          "voice_notes"
+        ],
+        "title": "AdminJobPhotos",
+        "type": "object"
+      },
+      "AdminJobPlace": {
+        "properties": {
+          "address": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Address"
+          },
+          "site_lat": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Site Lat"
+          },
+          "site_lng": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Site Lng"
+          },
+          "start_distance_m": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Start point to the site, when both are known",
+            "title": "Start Distance M"
+          },
+          "start_lat": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Where the technician pressed Start",
+            "title": "Start Lat"
+          },
+          "start_lng": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Start Lng"
+          },
+          "started_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Started At"
+          }
+        },
+        "required": [
+          "address",
+          "site_lat",
+          "site_lng",
+          "started_at",
+          "start_lat",
+          "start_lng",
+          "start_distance_m"
+        ],
+        "title": "AdminJobPlace",
+        "type": "object"
+      },
+      "AdminJobReport": {
+        "properties": {
+          "acknowledged_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Acknowledged At"
+          },
+          "approved_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approved At"
+          },
+          "change_requests": {
+            "title": "Change Requests",
+            "type": "integer"
+          },
+          "number": {
+            "description": "R-1042",
+            "title": "Number",
+            "type": "string"
+          },
+          "open_count": {
+            "description": "How many times the customer opened the report link",
+            "title": "Open Count",
+            "type": "integer"
+          },
+          "shared_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shared At"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "submitted_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Submitted At"
+          }
+        },
+        "required": [
+          "number",
+          "status",
+          "submitted_at",
+          "approved_at",
+          "shared_at",
+          "acknowledged_at",
+          "change_requests",
+          "open_count"
+        ],
+        "title": "AdminJobReport",
+        "type": "object"
+      },
+      "AdminJobRow": {
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/AdminOption"
+          },
+          "customer": {
+            "title": "Customer",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "is_quick_job": {
+            "title": "Is Quick Job",
+            "type": "boolean"
+          },
+          "number": {
+            "description": "J-2231",
+            "title": "Number",
+            "type": "string"
+          },
+          "proof": {
+            "$ref": "#/components/schemas/AdminProof"
+          },
+          "status": {
+            "enum": [
+              "unassigned",
+              "assigned",
+              "in_progress",
+              "in_review",
+              "changes_requested",
+              "completed",
+              "cancelled"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "technician": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Technician"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "when": {
+            "description": "Scheduled time, or when it was created",
+            "format": "date-time",
+            "title": "When",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "title",
+          "customer",
+          "company",
+          "technician",
+          "status",
+          "proof",
+          "when",
+          "is_quick_job"
+        ],
+        "title": "AdminJobRow",
+        "type": "object"
+      },
       "AdminLeadCounts": {
         "properties": {
           "contact": {
@@ -3666,6 +4219,25 @@
           "max_photo_mb"
         ],
         "title": "AdminPlatformSettings",
+        "type": "object"
+      },
+      "AdminProof": {
+        "properties": {
+          "done": {
+            "title": "Done",
+            "type": "integer"
+          },
+          "total": {
+            "description": "Before, during, after photos, checklists (if any), voice note",
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "done",
+          "total"
+        ],
+        "title": "AdminProof",
         "type": "object"
       },
       "AdminReviewDetail": {
@@ -4956,6 +5528,55 @@
           "seconds"
         ],
         "title": "AdminTestCallOut",
+        "type": "object"
+      },
+      "AdminTimelineItem": {
+        "properties": {
+          "actor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actor"
+          },
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "data": {
+            "additionalProperties": true,
+            "title": "Data",
+            "type": "object"
+          },
+          "type": {
+            "description": "created, assigned, unassigned, started, edited, cancelled, photos, voice, report_submitted, changes_requested, approved, shared, acknowledged",
+            "title": "Type",
+            "type": "string"
+          },
+          "until": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For grouped photos: the last one",
+            "title": "Until"
+          }
+        },
+        "required": [
+          "type",
+          "at"
+        ],
+        "title": "AdminTimelineItem",
         "type": "object"
       },
       "AdminTopCompany": {
@@ -20751,6 +21372,360 @@
           }
         ],
         "summary": "Test Email Settings",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/jobs": {
+      "get": {
+        "description": "Every company's jobs, newest first by scheduled time. The browser sends its own day as from/to.",
+        "operationId": "jobs_api_v1_admin_jobs_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 120,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "unassigned",
+                    "assigned",
+                    "in_progress",
+                    "in_review",
+                    "changes_requested",
+                    "completed",
+                    "cancelled"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "company",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Company"
+            }
+          },
+          {
+            "description": "Scheduled (or created) from",
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Scheduled (or created) from",
+              "title": "From"
+            }
+          },
+          {
+            "description": "...and before",
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "...and before",
+              "title": "To"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "maximum": 10000,
+              "minimum": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 25,
+              "maximum": 100,
+              "minimum": 5,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminJobList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Jobs",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/jobs.csv": {
+      "get": {
+        "description": "Every matching job (up to 50,000), for a spreadsheet. Exports are written to the audit log.",
+        "operationId": "jobs_csv_api_v1_admin_jobs_csv_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 120,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "unassigned",
+                    "assigned",
+                    "in_progress",
+                    "in_review",
+                    "changes_requested",
+                    "completed",
+                    "cancelled"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "company",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Company"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/csv": {}
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Jobs Csv",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/jobs/{job_id}": {
+      "get": {
+        "description": "One job: details, where it was started, proof so far, the report and the full timeline.",
+        "operationId": "job_api_v1_admin_jobs__job_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminJobDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Job",
         "tags": [
           "admin"
         ]

@@ -2087,6 +2087,372 @@ class AdminEmailTestOutModel {
       };
 }
 
+AdminJobChecklistModel adminJobChecklistModelFromJson(String str) => AdminJobChecklistModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminJobChecklistModelToJson(AdminJobChecklistModel data) => json.encode(data.toJson());
+
+class AdminJobChecklistModel {
+  final int answered;
+  final bool done;
+  final String name;
+  final int total;
+
+  const AdminJobChecklistModel({
+    required this.answered,
+    required this.done,
+    required this.name,
+    required this.total,
+  });
+
+  factory AdminJobChecklistModel.fromJson(Map<String, dynamic> json) => AdminJobChecklistModel(
+        answered: (json['answered'] as num).toInt(),
+        done: json['done'] as bool,
+        name: json['name'] as String,
+        total: (json['total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'answered': answered,
+        'done': done,
+        'name': name,
+        'total': total,
+      };
+}
+
+AdminJobDetailModel adminJobDetailModelFromJson(String str) => AdminJobDetailModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminJobDetailModelToJson(AdminJobDetailModel data) => json.encode(data.toJson());
+
+class AdminJobDetailModel {
+  final String? cancelReason;
+  final List<AdminJobChecklistModel> checklists;
+  final AdminOptionModel company;
+  final DateTime? completedAt;
+  final String? contact;
+  final DateTime createdAt;
+  final String customer;
+  final String? description;
+  final int? durationMin;
+  final String id;
+  final String? industry;
+  final bool isQuickJob;
+  final String number;
+  final AdminJobPhotosModel photos;
+  final AdminJobPlaceModel place;
+  final AdminProofModel proof;
+  final AdminJobReportModel? report;
+  final DateTime? scheduledAt;
+  /// One of: unassigned, assigned, in_progress, in_review, changes_requested, completed, cancelled
+  final String status;
+  final String? technician;
+  final List<AdminTimelineItemModel> timeline;
+  final String title;
+
+  const AdminJobDetailModel({
+    this.cancelReason,
+    required this.checklists,
+    required this.company,
+    this.completedAt,
+    this.contact,
+    required this.createdAt,
+    required this.customer,
+    this.description,
+    this.durationMin,
+    required this.id,
+    this.industry,
+    required this.isQuickJob,
+    required this.number,
+    required this.photos,
+    required this.place,
+    required this.proof,
+    this.report,
+    this.scheduledAt,
+    required this.status,
+    this.technician,
+    required this.timeline,
+    required this.title,
+  });
+
+  factory AdminJobDetailModel.fromJson(Map<String, dynamic> json) => AdminJobDetailModel(
+        cancelReason: json['cancel_reason'] as String?,
+        checklists: (json['checklists'] as List).map((e) => AdminJobChecklistModel.fromJson(e as Map<String, dynamic>)).toList(),
+        company: AdminOptionModel.fromJson(json['company'] as Map<String, dynamic>),
+        completedAt: json['completed_at'] == null ? null : DateTime.parse(json['completed_at'] as String),
+        contact: json['contact'] as String?,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        customer: json['customer'] as String,
+        description: json['description'] as String?,
+        durationMin: json['duration_min'] == null ? null : (json['duration_min'] as num).toInt(),
+        id: json['id'] as String,
+        industry: json['industry'] as String?,
+        isQuickJob: json['is_quick_job'] as bool,
+        number: json['number'] as String,
+        photos: AdminJobPhotosModel.fromJson(json['photos'] as Map<String, dynamic>),
+        place: AdminJobPlaceModel.fromJson(json['place'] as Map<String, dynamic>),
+        proof: AdminProofModel.fromJson(json['proof'] as Map<String, dynamic>),
+        report: json['report'] == null ? null : AdminJobReportModel.fromJson(json['report'] as Map<String, dynamic>),
+        scheduledAt: json['scheduled_at'] == null ? null : DateTime.parse(json['scheduled_at'] as String),
+        status: json['status'] as String,
+        technician: json['technician'] as String?,
+        timeline: (json['timeline'] as List).map((e) => AdminTimelineItemModel.fromJson(e as Map<String, dynamic>)).toList(),
+        title: json['title'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'cancel_reason': cancelReason,
+        'checklists': checklists.map((e) => e.toJson()).toList(),
+        'company': company.toJson(),
+        'completed_at': completedAt?.toIso8601String(),
+        'contact': contact,
+        'created_at': createdAt.toIso8601String(),
+        'customer': customer,
+        'description': description,
+        'duration_min': durationMin,
+        'id': id,
+        'industry': industry,
+        'is_quick_job': isQuickJob,
+        'number': number,
+        'photos': photos.toJson(),
+        'place': place.toJson(),
+        'proof': proof.toJson(),
+        'report': report?.toJson(),
+        'scheduled_at': scheduledAt?.toIso8601String(),
+        'status': status,
+        'technician': technician,
+        'timeline': timeline.map((e) => e.toJson()).toList(),
+        'title': title,
+      };
+}
+
+AdminJobListModel adminJobListModelFromJson(String str) => AdminJobListModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminJobListModelToJson(AdminJobListModel data) => json.encode(data.toJson());
+
+class AdminJobListModel {
+  /// Companies with jobs, for the filter
+  final List<AdminOptionModel> companies;
+  /// Jobs per status for the current search, company and dates
+  final Map<String, dynamic> counts;
+  final List<AdminJobRowModel> items;
+  final int page;
+  final int pageSize;
+  final int total;
+
+  const AdminJobListModel({
+    required this.companies,
+    required this.counts,
+    required this.items,
+    required this.page,
+    required this.pageSize,
+    required this.total,
+  });
+
+  factory AdminJobListModel.fromJson(Map<String, dynamic> json) => AdminJobListModel(
+        companies: (json['companies'] as List).map((e) => AdminOptionModel.fromJson(e as Map<String, dynamic>)).toList(),
+        counts: Map<String, dynamic>.from(json['counts'] as Map),
+        items: (json['items'] as List).map((e) => AdminJobRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        page: (json['page'] as num).toInt(),
+        pageSize: (json['page_size'] as num).toInt(),
+        total: (json['total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'companies': companies.map((e) => e.toJson()).toList(),
+        'counts': counts,
+        'items': items.map((e) => e.toJson()).toList(),
+        'page': page,
+        'page_size': pageSize,
+        'total': total,
+      };
+}
+
+AdminJobPhotosModel adminJobPhotosModelFromJson(String str) => AdminJobPhotosModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminJobPhotosModelToJson(AdminJobPhotosModel data) => json.encode(data.toJson());
+
+class AdminJobPhotosModel {
+  final int after;
+  final int before;
+  final int during;
+  final int voiceNotes;
+
+  const AdminJobPhotosModel({
+    required this.after,
+    required this.before,
+    required this.during,
+    required this.voiceNotes,
+  });
+
+  factory AdminJobPhotosModel.fromJson(Map<String, dynamic> json) => AdminJobPhotosModel(
+        after: (json['after'] as num).toInt(),
+        before: (json['before'] as num).toInt(),
+        during: (json['during'] as num).toInt(),
+        voiceNotes: (json['voice_notes'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'after': after,
+        'before': before,
+        'during': during,
+        'voice_notes': voiceNotes,
+      };
+}
+
+AdminJobPlaceModel adminJobPlaceModelFromJson(String str) => AdminJobPlaceModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminJobPlaceModelToJson(AdminJobPlaceModel data) => json.encode(data.toJson());
+
+class AdminJobPlaceModel {
+  final String? address;
+  final double? siteLat;
+  final double? siteLng;
+  /// Start point to the site, when both are known
+  final int? startDistanceM;
+  /// Where the technician pressed Start
+  final double? startLat;
+  final double? startLng;
+  final DateTime? startedAt;
+
+  const AdminJobPlaceModel({
+    this.address,
+    this.siteLat,
+    this.siteLng,
+    this.startDistanceM,
+    this.startLat,
+    this.startLng,
+    this.startedAt,
+  });
+
+  factory AdminJobPlaceModel.fromJson(Map<String, dynamic> json) => AdminJobPlaceModel(
+        address: json['address'] as String?,
+        siteLat: json['site_lat'] == null ? null : (json['site_lat'] as num).toDouble(),
+        siteLng: json['site_lng'] == null ? null : (json['site_lng'] as num).toDouble(),
+        startDistanceM: json['start_distance_m'] == null ? null : (json['start_distance_m'] as num).toInt(),
+        startLat: json['start_lat'] == null ? null : (json['start_lat'] as num).toDouble(),
+        startLng: json['start_lng'] == null ? null : (json['start_lng'] as num).toDouble(),
+        startedAt: json['started_at'] == null ? null : DateTime.parse(json['started_at'] as String),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'address': address,
+        'site_lat': siteLat,
+        'site_lng': siteLng,
+        'start_distance_m': startDistanceM,
+        'start_lat': startLat,
+        'start_lng': startLng,
+        'started_at': startedAt?.toIso8601String(),
+      };
+}
+
+AdminJobReportModel adminJobReportModelFromJson(String str) => AdminJobReportModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminJobReportModelToJson(AdminJobReportModel data) => json.encode(data.toJson());
+
+class AdminJobReportModel {
+  final DateTime? acknowledgedAt;
+  final DateTime? approvedAt;
+  final int changeRequests;
+  /// R-1042
+  final String number;
+  /// How many times the customer opened the report link
+  final int openCount;
+  final DateTime? sharedAt;
+  final String status;
+  final DateTime? submittedAt;
+
+  const AdminJobReportModel({
+    this.acknowledgedAt,
+    this.approvedAt,
+    required this.changeRequests,
+    required this.number,
+    required this.openCount,
+    this.sharedAt,
+    required this.status,
+    this.submittedAt,
+  });
+
+  factory AdminJobReportModel.fromJson(Map<String, dynamic> json) => AdminJobReportModel(
+        acknowledgedAt: json['acknowledged_at'] == null ? null : DateTime.parse(json['acknowledged_at'] as String),
+        approvedAt: json['approved_at'] == null ? null : DateTime.parse(json['approved_at'] as String),
+        changeRequests: (json['change_requests'] as num).toInt(),
+        number: json['number'] as String,
+        openCount: (json['open_count'] as num).toInt(),
+        sharedAt: json['shared_at'] == null ? null : DateTime.parse(json['shared_at'] as String),
+        status: json['status'] as String,
+        submittedAt: json['submitted_at'] == null ? null : DateTime.parse(json['submitted_at'] as String),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'acknowledged_at': acknowledgedAt?.toIso8601String(),
+        'approved_at': approvedAt?.toIso8601String(),
+        'change_requests': changeRequests,
+        'number': number,
+        'open_count': openCount,
+        'shared_at': sharedAt?.toIso8601String(),
+        'status': status,
+        'submitted_at': submittedAt?.toIso8601String(),
+      };
+}
+
+AdminJobRowModel adminJobRowModelFromJson(String str) => AdminJobRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminJobRowModelToJson(AdminJobRowModel data) => json.encode(data.toJson());
+
+class AdminJobRowModel {
+  final AdminOptionModel company;
+  final String customer;
+  final String id;
+  final bool isQuickJob;
+  /// J-2231
+  final String number;
+  final AdminProofModel proof;
+  /// One of: unassigned, assigned, in_progress, in_review, changes_requested, completed, cancelled
+  final String status;
+  final String? technician;
+  final String title;
+  /// Scheduled time, or when it was created
+  final DateTime when;
+
+  const AdminJobRowModel({
+    required this.company,
+    required this.customer,
+    required this.id,
+    required this.isQuickJob,
+    required this.number,
+    required this.proof,
+    required this.status,
+    this.technician,
+    required this.title,
+    required this.when,
+  });
+
+  factory AdminJobRowModel.fromJson(Map<String, dynamic> json) => AdminJobRowModel(
+        company: AdminOptionModel.fromJson(json['company'] as Map<String, dynamic>),
+        customer: json['customer'] as String,
+        id: json['id'] as String,
+        isQuickJob: json['is_quick_job'] as bool,
+        number: json['number'] as String,
+        proof: AdminProofModel.fromJson(json['proof'] as Map<String, dynamic>),
+        status: json['status'] as String,
+        technician: json['technician'] as String?,
+        title: json['title'] as String,
+        when: DateTime.parse(json['when'] as String),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'company': company.toJson(),
+        'customer': customer,
+        'id': id,
+        'is_quick_job': isQuickJob,
+        'number': number,
+        'proof': proof.toJson(),
+        'status': status,
+        'technician': technician,
+        'title': title,
+        'when': when.toIso8601String(),
+      };
+}
+
 AdminLeadCountsModel adminLeadCountsModelFromJson(String str) => AdminLeadCountsModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminLeadCountsModelToJson(AdminLeadCountsModel data) => json.encode(data.toJson());
@@ -2655,6 +3021,31 @@ class AdminPlatformSettingsModel {
         'signups': signups,
         'support_email': supportEmail,
         'support_whatsapp': supportWhatsapp,
+      };
+}
+
+AdminProofModel adminProofModelFromJson(String str) => AdminProofModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminProofModelToJson(AdminProofModel data) => json.encode(data.toJson());
+
+class AdminProofModel {
+  final int done;
+  /// Before, during, after photos, checklists (if any), voice note
+  final int total;
+
+  const AdminProofModel({
+    required this.done,
+    required this.total,
+  });
+
+  factory AdminProofModel.fromJson(Map<String, dynamic> json) => AdminProofModel(
+        done: (json['done'] as num).toInt(),
+        total: (json['total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'done': done,
+        'total': total,
       };
 }
 
@@ -3617,6 +4008,44 @@ class AdminTestCallOutModel {
   Map<String, dynamic> toJson() => {
         'outcome': outcome,
         'seconds': seconds,
+      };
+}
+
+AdminTimelineItemModel adminTimelineItemModelFromJson(String str) => AdminTimelineItemModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTimelineItemModelToJson(AdminTimelineItemModel data) => json.encode(data.toJson());
+
+class AdminTimelineItemModel {
+  final String? actor;
+  final DateTime at;
+  final Map<String, dynamic>? data;
+  /// created, assigned, unassigned, started, edited, cancelled, photos, voice, report_submitted, changes_requested, approved, shared, acknowledged
+  final String type;
+  /// For grouped photos: the last one
+  final DateTime? until;
+
+  const AdminTimelineItemModel({
+    this.actor,
+    required this.at,
+    this.data,
+    required this.type,
+    this.until,
+  });
+
+  factory AdminTimelineItemModel.fromJson(Map<String, dynamic> json) => AdminTimelineItemModel(
+        actor: json['actor'] as String?,
+        at: DateTime.parse(json['at'] as String),
+        data: json['data'] == null ? null : Map<String, dynamic>.from(json['data'] as Map),
+        type: json['type'] as String,
+        until: json['until'] == null ? null : DateTime.parse(json['until'] as String),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'actor': actor,
+        'at': at.toIso8601String(),
+        'data': data,
+        'type': type,
+        'until': until?.toIso8601String(),
       };
 }
 
