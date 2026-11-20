@@ -4420,6 +4420,261 @@
         "title": "AdminPackIn",
         "type": "object"
       },
+      "AdminPageField": {
+        "properties": {
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "label": {
+            "description": "eyebrow, headline, subheadline, primary_button, question, seo_title, …",
+            "title": "Label",
+            "type": "string"
+          },
+          "max": {
+            "title": "Max",
+            "type": "integer"
+          },
+          "multiline": {
+            "title": "Multiline",
+            "type": "boolean"
+          },
+          "n": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Question number for FAQ fields",
+            "title": "N"
+          },
+          "values": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/FieldValue"
+            },
+            "title": "Values",
+            "type": "object"
+          }
+        },
+        "required": [
+          "key",
+          "label",
+          "max",
+          "multiline",
+          "values"
+        ],
+        "title": "AdminPageField",
+        "type": "object"
+      },
+      "AdminPageOut": {
+        "properties": {
+          "drafts": {
+            "title": "Drafts",
+            "type": "integer"
+          },
+          "edited_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Edited At"
+          },
+          "edited_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Edited By"
+          },
+          "page": {
+            "title": "Page",
+            "type": "string"
+          },
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "sections": {
+            "items": {
+              "$ref": "#/components/schemas/AdminPageSection"
+            },
+            "title": "Sections",
+            "type": "array"
+          },
+          "trade": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trade"
+          }
+        },
+        "required": [
+          "page",
+          "path",
+          "sections",
+          "drafts",
+          "edited_at",
+          "edited_by"
+        ],
+        "title": "AdminPageOut",
+        "type": "object"
+      },
+      "AdminPageRow": {
+        "properties": {
+          "changed": {
+            "description": "Live texts that differ from the built-in ones",
+            "title": "Changed",
+            "type": "integer"
+          },
+          "drafts": {
+            "description": "Texts changed but not published",
+            "title": "Drafts",
+            "type": "integer"
+          },
+          "edited_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Edited At"
+          },
+          "page": {
+            "title": "Page",
+            "type": "string"
+          },
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "trade": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trade"
+          }
+        },
+        "required": [
+          "page",
+          "path",
+          "drafts",
+          "changed",
+          "edited_at"
+        ],
+        "title": "AdminPageRow",
+        "type": "object"
+      },
+      "AdminPageSave": {
+        "additionalProperties": false,
+        "properties": {
+          "values": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "propertyNames": {
+                "enum": [
+                  "en",
+                  "hi",
+                  "gu",
+                  "es",
+                  "fr"
+                ]
+              },
+              "type": "object"
+            },
+            "description": "key -> language -> text; empty or null = back to the built-in text",
+            "title": "Values",
+            "type": "object"
+          }
+        },
+        "required": [
+          "values"
+        ],
+        "title": "AdminPageSave",
+        "type": "object"
+      },
+      "AdminPageSection": {
+        "properties": {
+          "fields": {
+            "items": {
+              "$ref": "#/components/schemas/AdminPageField"
+            },
+            "title": "Fields",
+            "type": "array"
+          },
+          "key": {
+            "description": "hero, problem, how, faq, final, why, seo",
+            "title": "Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "fields"
+        ],
+        "title": "AdminPageSection",
+        "type": "object"
+      },
+      "AdminPagesOut": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "pages": {
+            "items": {
+              "$ref": "#/components/schemas/AdminPageRow"
+            },
+            "title": "Pages",
+            "type": "array"
+          },
+          "web_url": {
+            "title": "Web Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "pages",
+          "can_act",
+          "web_url"
+        ],
+        "title": "AdminPagesOut",
+        "type": "object"
+      },
       "AdminPaymentsOut": {
         "properties": {
           "connected": {
@@ -5373,6 +5628,39 @@
           "max_photo_mb"
         ],
         "title": "AdminPlatformSettings",
+        "type": "object"
+      },
+      "AdminPreviewIn": {
+        "additionalProperties": false,
+        "properties": {
+          "lang": {
+            "default": "en",
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Lang",
+            "type": "string"
+          }
+        },
+        "title": "AdminPreviewIn",
+        "type": "object"
+      },
+      "AdminPreviewOut": {
+        "properties": {
+          "url": {
+            "description": "The website page with unpublished changes; the link works for 1 hour",
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "url"
+        ],
+        "title": "AdminPreviewOut",
         "type": "object"
       },
       "AdminPrompt": {
@@ -7914,6 +8202,182 @@
           "seconds"
         ],
         "title": "AdminTestCallOut",
+        "type": "object"
+      },
+      "AdminTextChange": {
+        "additionalProperties": false,
+        "properties": {
+          "key": {
+            "maxLength": 160,
+            "title": "Key",
+            "type": "string"
+          },
+          "lang": {
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Lang",
+            "type": "string"
+          },
+          "reviewed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Mark (or unmark) that a person checked this text",
+            "title": "Reviewed"
+          },
+          "set_value": {
+            "default": false,
+            "description": "True to change the text (value null/empty = built-in)",
+            "title": "Set Value",
+            "type": "boolean"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "maxLength": 2000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Value"
+          }
+        },
+        "required": [
+          "key",
+          "lang"
+        ],
+        "title": "AdminTextChange",
+        "type": "object"
+      },
+      "AdminTextRow": {
+        "properties": {
+          "draft": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Draft"
+          },
+          "has_draft": {
+            "default": false,
+            "title": "Has Draft",
+            "type": "boolean"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          },
+          "lang": {
+            "title": "Lang",
+            "type": "string"
+          },
+          "reviewed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed At"
+          },
+          "reviewed_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reviewed By"
+          },
+          "updated_at": {
+            "format": "date-time",
+            "title": "Updated At",
+            "type": "string"
+          },
+          "value": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Live change; null = built-in text",
+            "title": "Value"
+          }
+        },
+        "required": [
+          "key",
+          "lang",
+          "value",
+          "reviewed_at",
+          "reviewed_by",
+          "updated_at"
+        ],
+        "title": "AdminTextRow",
+        "type": "object"
+      },
+      "AdminTextsIn": {
+        "additionalProperties": false,
+        "properties": {
+          "changes": {
+            "items": {
+              "$ref": "#/components/schemas/AdminTextChange"
+            },
+            "maxItems": 2000,
+            "minItems": 1,
+            "title": "Changes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "changes"
+        ],
+        "title": "AdminTextsIn",
+        "type": "object"
+      },
+      "AdminTextsOut": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "rows": {
+            "description": "Only texts that were changed or reviewed",
+            "items": {
+              "$ref": "#/components/schemas/AdminTextRow"
+            },
+            "title": "Rows",
+            "type": "array"
+          }
+        },
+        "required": [
+          "rows",
+          "can_act"
+        ],
+        "title": "AdminTextsOut",
         "type": "object"
       },
       "AdminTicketDetail": {
@@ -12500,6 +12964,45 @@
         "title": "EvidenceSummary",
         "type": "object"
       },
+      "FieldValue": {
+        "properties": {
+          "draft": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Saved, not published; null with has_draft = back to built-in",
+            "title": "Draft"
+          },
+          "has_draft": {
+            "title": "Has Draft",
+            "type": "boolean"
+          },
+          "live": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "What people see now; null = the built-in text",
+            "title": "Live"
+          }
+        },
+        "required": [
+          "live",
+          "draft",
+          "has_draft"
+        ],
+        "title": "FieldValue",
+        "type": "object"
+      },
       "FollowupIn": {
         "additionalProperties": false,
         "properties": {
@@ -16500,6 +17003,32 @@
           "rated"
         ],
         "title": "PublicReviewState",
+        "type": "object"
+      },
+      "PublicTextsOut": {
+        "properties": {
+          "preview": {
+            "default": false,
+            "description": "True when unpublished website changes are included",
+            "title": "Preview",
+            "type": "boolean"
+          },
+          "texts": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            "description": "language -> key -> text; only texts changed by staff",
+            "title": "Texts",
+            "type": "object"
+          }
+        },
+        "required": [
+          "texts"
+        ],
+        "title": "PublicTextsOut",
         "type": "object"
       },
       "QuestionIn": {
@@ -28353,6 +28882,78 @@
         ]
       }
     },
+    "/api/v1/admin/texts": {
+      "get": {
+        "description": "Texts staff changed or checked; the built-in texts are in the admin panel itself.",
+        "operationId": "admin_texts_api_v1_admin_texts_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTextsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Admin Texts",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "description": "Changes go live at once (the app, website and admin panel pick them up when they next start).",
+        "operationId": "change_texts_api_v1_admin_texts_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminTextsIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTextsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Change Texts",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/api/v1/admin/trial": {
       "put": {
         "description": "Super admins only: the plan and length of the free trial for new companies. Audited.",
@@ -28784,6 +29385,289 @@
           }
         ],
         "summary": "Sign Out",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/website-content": {
+      "get": {
+        "description": "The website pages whose texts staff can change, with unpublished changes per page.",
+        "operationId": "website_pages_api_v1_admin_website_content_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPagesOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Website Pages",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/website-content/{page}": {
+      "get": {
+        "description": "Each text on the page in 5 languages: what is live and what is saved but not published.",
+        "operationId": "website_page_api_v1_admin_website_content__page__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "page",
+            "required": true,
+            "schema": {
+              "title": "Page",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPageOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Website Page",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "description": "Saves changes as drafts; the website keeps showing the live text until Publish.",
+        "operationId": "save_website_page_api_v1_admin_website_content__page__put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "page",
+            "required": true,
+            "schema": {
+              "title": "Page",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminPageSave"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPageOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Save Website Page",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/website-content/{page}/discard": {
+      "post": {
+        "operationId": "discard_website_page_api_v1_admin_website_content__page__discard_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "page",
+            "required": true,
+            "schema": {
+              "title": "Page",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPageOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Discard Website Page",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/website-content/{page}/preview": {
+      "post": {
+        "description": "A link to the website page showing the unpublished changes (works for 1 hour).",
+        "operationId": "preview_website_page_api_v1_admin_website_content__page__preview_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "page",
+            "required": true,
+            "schema": {
+              "title": "Page",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminPreviewIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPreviewOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Preview Website Page",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/website-content/{page}/publish": {
+      "post": {
+        "operationId": "publish_website_page_api_v1_admin_website_content__page__publish_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "page",
+            "required": true,
+            "schema": {
+              "title": "Page",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminPageOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Publish Website Page",
         "tags": [
           "admin"
         ]
@@ -34296,6 +35180,73 @@
         "summary": "Stop Asking",
         "tags": [
           "customer report page"
+        ]
+      }
+    },
+    "/api/v1/public/texts": {
+      "get": {
+        "description": "Texts staff changed (A24, A25) for the app, website or admin panel, in every language.\n\nClients start with their built-in texts and put these on top.",
+        "operationId": "public_texts_api_v1_public_texts_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "area",
+            "required": true,
+            "schema": {
+              "enum": [
+                "app",
+                "site",
+                "admin"
+              ],
+              "title": "Area",
+              "type": "string"
+            }
+          },
+          {
+            "description": "Website preview link from the admin panel",
+            "in": "query",
+            "name": "preview",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 1000,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Website preview link from the admin panel",
+              "title": "Preview"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PublicTextsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Public Texts",
+        "tags": [
+          "config"
         ]
       }
     },

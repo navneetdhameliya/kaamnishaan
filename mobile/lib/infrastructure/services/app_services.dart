@@ -111,7 +111,7 @@ abstract final class AppServices {
     Get.put<ISupportApiRepository>(SupportApiRepository(provider: SupportApiProvider(client)), permanent: true);
     Get.put<IFilesApiRepository>(FilesApiRepository(provider: FilesApiProvider(client)), permanent: true);
     Get.put<IConfigApiRepository>(ConfigApiRepository(ConfigApiProvider(client)), permanent: true);
-    Get.put<ConfigService>(ConfigService(Get.find<IConfigApiRepository>()), permanent: true);
+    Get.put<ConfigService>(ConfigService(Get.find<IConfigApiRepository>(), prefs: prefs), permanent: true);
     Get.put<SessionService>(SessionService(tokens: tokens, repository: authRepository), permanent: true);
 
     final photos = PhotoQueueService(

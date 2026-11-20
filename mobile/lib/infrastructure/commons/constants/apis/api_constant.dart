@@ -119,4 +119,5 @@ abstract final class APIConstant {
 
   // app settings
   static const String configAPIEP = '/config';
+  static const String publicTextsAPIEP = '/public/texts';
 }

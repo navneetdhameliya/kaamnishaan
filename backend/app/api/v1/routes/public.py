@@ -2,7 +2,7 @@
 
 from typing import Literal
 
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends, Query, Response
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -20,7 +20,8 @@ from app.schemas.identity import (
     PlansOut,
     TradeOut,
 )
-from app.services import credits, platform
+from app.schemas.texts import Area, PublicTextsOut
+from app.services import credits, platform, texts
 from app.services.auth import PASSWORD_MIN
 from app.services.credits import plan_out
 from app.services.email import email_on
@@ -106,3 +107,20 @@ async def plans(
         credit_rules=await credits.rules(db),
         trial_days=(await platform.trial(db)).days,
     )
+
+
+@router.get("/public/texts", response_model=PublicTextsOut)
+async def public_texts(
+    response: Response,
+    area: Area,
+    preview: str | None = Query(
+        None, max_length=1000, description="Website preview link from the admin panel"
+    ),
+    db: AsyncSession = Depends(get_db),
+) -> PublicTextsOut:
+    """Texts staff changed (A24, A25) for the app, website or admin panel, in every language.
+
+    Clients start with their built-in texts and put these on top."""
+    out = await texts.public(db, area, preview)
+    response.headers["Cache-Control"] = "no-store" if out.preview else "public, max-age=60"
+    return out

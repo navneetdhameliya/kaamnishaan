@@ -3140,6 +3140,208 @@ class AdminPackInModel {
       };
 }
 
+AdminPageFieldModel adminPageFieldModelFromJson(String str) => AdminPageFieldModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPageFieldModelToJson(AdminPageFieldModel data) => json.encode(data.toJson());
+
+class AdminPageFieldModel {
+  final String key;
+  /// eyebrow, headline, subheadline, primary_button, question, seo_title, …
+  final String label;
+  final int max;
+  final bool multiline;
+  /// Question number for FAQ fields
+  final int? n;
+  final Map<String, dynamic> values;
+
+  const AdminPageFieldModel({
+    required this.key,
+    required this.label,
+    required this.max,
+    required this.multiline,
+    this.n,
+    required this.values,
+  });
+
+  factory AdminPageFieldModel.fromJson(Map<String, dynamic> json) => AdminPageFieldModel(
+        key: json['key'] as String,
+        label: json['label'] as String,
+        max: (json['max'] as num).toInt(),
+        multiline: json['multiline'] as bool,
+        n: json['n'] == null ? null : (json['n'] as num).toInt(),
+        values: Map<String, dynamic>.from(json['values'] as Map),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'key': key,
+        'label': label,
+        'max': max,
+        'multiline': multiline,
+        'n': n,
+        'values': values,
+      };
+}
+
+AdminPageOutModel adminPageOutModelFromJson(String str) => AdminPageOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPageOutModelToJson(AdminPageOutModel data) => json.encode(data.toJson());
+
+class AdminPageOutModel {
+  final int drafts;
+  final DateTime? editedAt;
+  final String? editedBy;
+  final String page;
+  final String path;
+  final List<AdminPageSectionModel> sections;
+  final String? trade;
+
+  const AdminPageOutModel({
+    required this.drafts,
+    this.editedAt,
+    this.editedBy,
+    required this.page,
+    required this.path,
+    required this.sections,
+    this.trade,
+  });
+
+  factory AdminPageOutModel.fromJson(Map<String, dynamic> json) => AdminPageOutModel(
+        drafts: (json['drafts'] as num).toInt(),
+        editedAt: json['edited_at'] == null ? null : DateTime.parse(json['edited_at'] as String),
+        editedBy: json['edited_by'] as String?,
+        page: json['page'] as String,
+        path: json['path'] as String,
+        sections: (json['sections'] as List).map((e) => AdminPageSectionModel.fromJson(e as Map<String, dynamic>)).toList(),
+        trade: json['trade'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'drafts': drafts,
+        'edited_at': editedAt?.toIso8601String(),
+        'edited_by': editedBy,
+        'page': page,
+        'path': path,
+        'sections': sections.map((e) => e.toJson()).toList(),
+        'trade': trade,
+      };
+}
+
+AdminPageRowModel adminPageRowModelFromJson(String str) => AdminPageRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPageRowModelToJson(AdminPageRowModel data) => json.encode(data.toJson());
+
+class AdminPageRowModel {
+  /// Live texts that differ from the built-in ones
+  final int changed;
+  /// Texts changed but not published
+  final int drafts;
+  final DateTime? editedAt;
+  final String page;
+  final String path;
+  final String? trade;
+
+  const AdminPageRowModel({
+    required this.changed,
+    required this.drafts,
+    this.editedAt,
+    required this.page,
+    required this.path,
+    this.trade,
+  });
+
+  factory AdminPageRowModel.fromJson(Map<String, dynamic> json) => AdminPageRowModel(
+        changed: (json['changed'] as num).toInt(),
+        drafts: (json['drafts'] as num).toInt(),
+        editedAt: json['edited_at'] == null ? null : DateTime.parse(json['edited_at'] as String),
+        page: json['page'] as String,
+        path: json['path'] as String,
+        trade: json['trade'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'changed': changed,
+        'drafts': drafts,
+        'edited_at': editedAt?.toIso8601String(),
+        'page': page,
+        'path': path,
+        'trade': trade,
+      };
+}
+
+AdminPageSaveModel adminPageSaveModelFromJson(String str) => AdminPageSaveModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPageSaveModelToJson(AdminPageSaveModel data) => json.encode(data.toJson());
+
+class AdminPageSaveModel {
+  /// key -> language -> text; empty or null = back to the built-in text
+  final Map<String, dynamic> values;
+
+  const AdminPageSaveModel({
+    required this.values,
+  });
+
+  factory AdminPageSaveModel.fromJson(Map<String, dynamic> json) => AdminPageSaveModel(
+        values: Map<String, dynamic>.from(json['values'] as Map),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'values': values,
+      };
+}
+
+AdminPageSectionModel adminPageSectionModelFromJson(String str) => AdminPageSectionModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPageSectionModelToJson(AdminPageSectionModel data) => json.encode(data.toJson());
+
+class AdminPageSectionModel {
+  final List<AdminPageFieldModel> fields;
+  /// hero, problem, how, faq, final, why, seo
+  final String key;
+
+  const AdminPageSectionModel({
+    required this.fields,
+    required this.key,
+  });
+
+  factory AdminPageSectionModel.fromJson(Map<String, dynamic> json) => AdminPageSectionModel(
+        fields: (json['fields'] as List).map((e) => AdminPageFieldModel.fromJson(e as Map<String, dynamic>)).toList(),
+        key: json['key'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'fields': fields.map((e) => e.toJson()).toList(),
+        'key': key,
+      };
+}
+
+AdminPagesOutModel adminPagesOutModelFromJson(String str) => AdminPagesOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPagesOutModelToJson(AdminPagesOutModel data) => json.encode(data.toJson());
+
+class AdminPagesOutModel {
+  final bool canAct;
+  final List<AdminPageRowModel> pages;
+  final String webUrl;
+
+  const AdminPagesOutModel({
+    required this.canAct,
+    required this.pages,
+    required this.webUrl,
+  });
+
+  factory AdminPagesOutModel.fromJson(Map<String, dynamic> json) => AdminPagesOutModel(
+        canAct: json['can_act'] as bool,
+        pages: (json['pages'] as List).map((e) => AdminPageRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        webUrl: json['web_url'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'pages': pages.map((e) => e.toJson()).toList(),
+        'web_url': webUrl,
+      };
+}
+
 AdminPaymentsOutModel adminPaymentsOutModelFromJson(String str) => AdminPaymentsOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminPaymentsOutModelToJson(AdminPaymentsOutModel data) => json.encode(data.toJson());
@@ -3837,6 +4039,48 @@ class AdminPlatformSettingsModel {
         'signups': signups,
         'support_email': supportEmail,
         'support_whatsapp': supportWhatsapp,
+      };
+}
+
+AdminPreviewInModel adminPreviewInModelFromJson(String str) => AdminPreviewInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPreviewInModelToJson(AdminPreviewInModel data) => json.encode(data.toJson());
+
+class AdminPreviewInModel {
+  /// One of: en, hi, gu, es, fr
+  final String? lang;
+
+  const AdminPreviewInModel({
+    this.lang,
+  });
+
+  factory AdminPreviewInModel.fromJson(Map<String, dynamic> json) => AdminPreviewInModel(
+        lang: json['lang'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'lang': lang,
+      };
+}
+
+AdminPreviewOutModel adminPreviewOutModelFromJson(String str) => AdminPreviewOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPreviewOutModelToJson(AdminPreviewOutModel data) => json.encode(data.toJson());
+
+class AdminPreviewOutModel {
+  /// The website page with unpublished changes; the link works for 1 hour
+  final String url;
+
+  const AdminPreviewOutModel({
+    required this.url,
+  });
+
+  factory AdminPreviewOutModel.fromJson(Map<String, dynamic> json) => AdminPreviewOutModel(
+        url: json['url'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'url': url,
       };
 }
 
@@ -5704,6 +5948,139 @@ class AdminTestCallOutModel {
   Map<String, dynamic> toJson() => {
         'outcome': outcome,
         'seconds': seconds,
+      };
+}
+
+AdminTextChangeModel adminTextChangeModelFromJson(String str) => AdminTextChangeModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTextChangeModelToJson(AdminTextChangeModel data) => json.encode(data.toJson());
+
+class AdminTextChangeModel {
+  final String key;
+  /// One of: en, hi, gu, es, fr
+  final String lang;
+  /// Mark (or unmark) that a person checked this text
+  final bool? reviewed;
+  /// True to change the text (value null/empty = built-in)
+  final bool? setValue;
+  final String? value;
+
+  const AdminTextChangeModel({
+    required this.key,
+    required this.lang,
+    this.reviewed,
+    this.setValue,
+    this.value,
+  });
+
+  factory AdminTextChangeModel.fromJson(Map<String, dynamic> json) => AdminTextChangeModel(
+        key: json['key'] as String,
+        lang: json['lang'] as String,
+        reviewed: json['reviewed'] as bool?,
+        setValue: json['set_value'] as bool?,
+        value: json['value'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'key': key,
+        'lang': lang,
+        'reviewed': reviewed,
+        'set_value': setValue,
+        'value': value,
+      };
+}
+
+AdminTextRowModel adminTextRowModelFromJson(String str) => AdminTextRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTextRowModelToJson(AdminTextRowModel data) => json.encode(data.toJson());
+
+class AdminTextRowModel {
+  final String? draft;
+  final bool? hasDraft;
+  final String key;
+  final String lang;
+  final DateTime? reviewedAt;
+  final String? reviewedBy;
+  final DateTime updatedAt;
+  /// Live change; null = built-in text
+  final String? value;
+
+  const AdminTextRowModel({
+    this.draft,
+    this.hasDraft,
+    required this.key,
+    required this.lang,
+    this.reviewedAt,
+    this.reviewedBy,
+    required this.updatedAt,
+    this.value,
+  });
+
+  factory AdminTextRowModel.fromJson(Map<String, dynamic> json) => AdminTextRowModel(
+        draft: json['draft'] as String?,
+        hasDraft: json['has_draft'] as bool?,
+        key: json['key'] as String,
+        lang: json['lang'] as String,
+        reviewedAt: json['reviewed_at'] == null ? null : DateTime.parse(json['reviewed_at'] as String),
+        reviewedBy: json['reviewed_by'] as String?,
+        updatedAt: DateTime.parse(json['updated_at'] as String),
+        value: json['value'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'draft': draft,
+        'has_draft': hasDraft,
+        'key': key,
+        'lang': lang,
+        'reviewed_at': reviewedAt?.toIso8601String(),
+        'reviewed_by': reviewedBy,
+        'updated_at': updatedAt.toIso8601String(),
+        'value': value,
+      };
+}
+
+AdminTextsInModel adminTextsInModelFromJson(String str) => AdminTextsInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTextsInModelToJson(AdminTextsInModel data) => json.encode(data.toJson());
+
+class AdminTextsInModel {
+  final List<AdminTextChangeModel> changes;
+
+  const AdminTextsInModel({
+    required this.changes,
+  });
+
+  factory AdminTextsInModel.fromJson(Map<String, dynamic> json) => AdminTextsInModel(
+        changes: (json['changes'] as List).map((e) => AdminTextChangeModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'changes': changes.map((e) => e.toJson()).toList(),
+      };
+}
+
+AdminTextsOutModel adminTextsOutModelFromJson(String str) => AdminTextsOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminTextsOutModelToJson(AdminTextsOutModel data) => json.encode(data.toJson());
+
+class AdminTextsOutModel {
+  final bool canAct;
+  /// Only texts that were changed or reviewed
+  final List<AdminTextRowModel> rows;
+
+  const AdminTextsOutModel({
+    required this.canAct,
+    required this.rows,
+  });
+
+  factory AdminTextsOutModel.fromJson(Map<String, dynamic> json) => AdminTextsOutModel(
+        canAct: json['can_act'] as bool,
+        rows: (json['rows'] as List).map((e) => AdminTextRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'rows': rows.map((e) => e.toJson()).toList(),
       };
 }
 
@@ -9044,6 +9421,36 @@ class EvidenceSummaryModel {
       };
 }
 
+FieldValueModel fieldValueModelFromJson(String str) => FieldValueModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String fieldValueModelToJson(FieldValueModel data) => json.encode(data.toJson());
+
+class FieldValueModel {
+  /// Saved, not published; null with has_draft = back to built-in
+  final String? draft;
+  final bool hasDraft;
+  /// What people see now; null = the built-in text
+  final String? live;
+
+  const FieldValueModel({
+    this.draft,
+    required this.hasDraft,
+    this.live,
+  });
+
+  factory FieldValueModel.fromJson(Map<String, dynamic> json) => FieldValueModel(
+        draft: json['draft'] as String?,
+        hasDraft: json['has_draft'] as bool,
+        live: json['live'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'draft': draft,
+        'has_draft': hasDraft,
+        'live': live,
+      };
+}
+
 FollowupInModel followupInModelFromJson(String str) => FollowupInModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String followupInModelToJson(FollowupInModel data) => json.encode(data.toJson());
@@ -11959,6 +12366,32 @@ class PublicReviewStateModel {
         'rated': rated,
         'rating': rating,
         'technician': technician,
+      };
+}
+
+PublicTextsOutModel publicTextsOutModelFromJson(String str) => PublicTextsOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String publicTextsOutModelToJson(PublicTextsOutModel data) => json.encode(data.toJson());
+
+class PublicTextsOutModel {
+  /// True when unpublished website changes are included
+  final bool? preview;
+  /// language -> key -> text; only texts changed by staff
+  final Map<String, dynamic> texts;
+
+  const PublicTextsOutModel({
+    this.preview,
+    required this.texts,
+  });
+
+  factory PublicTextsOutModel.fromJson(Map<String, dynamic> json) => PublicTextsOutModel(
+        preview: json['preview'] as bool?,
+        texts: Map<String, dynamic>.from(json['texts'] as Map),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'preview': preview,
+        'texts': texts,
       };
 }
 
