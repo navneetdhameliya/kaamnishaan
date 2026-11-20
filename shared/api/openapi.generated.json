@@ -2224,6 +2224,309 @@
         "title": "AdminCompanyUpdate",
         "type": "object"
       },
+      "AdminCreditAdjust": {
+        "additionalProperties": false,
+        "properties": {
+          "credits": {
+            "description": "Add (+) or take back (−) top-up credits",
+            "maximum": 100000.0,
+            "minimum": -100000.0,
+            "title": "Credits",
+            "type": "integer"
+          },
+          "reason": {
+            "maxLength": 300,
+            "minLength": 3,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "credits",
+          "reason"
+        ],
+        "title": "AdminCreditAdjust",
+        "type": "object"
+      },
+      "AdminCreditKpis": {
+        "properties": {
+          "calls_30d": {
+            "title": "Calls 30D",
+            "type": "integer"
+          },
+          "included_30d": {
+            "description": "Monthly credits given in the last 30 days",
+            "title": "Included 30D",
+            "type": "integer"
+          },
+          "out_of_credits": {
+            "description": "Companies that can't send reminders now",
+            "title": "Out Of Credits",
+            "type": "integer"
+          },
+          "paused_requests": {
+            "description": "Reminders waiting for credits",
+            "title": "Paused Requests",
+            "type": "integer"
+          },
+          "sms_30d": {
+            "title": "Sms 30D",
+            "type": "integer"
+          },
+          "topup_credits_30d": {
+            "description": "Credits added by top-ups and staff in the last 30 days",
+            "title": "Topup Credits 30D",
+            "type": "integer"
+          },
+          "topups_30d": {
+            "title": "Topups 30D",
+            "type": "integer"
+          },
+          "used_30d": {
+            "description": "Credits used by every company in the last 30 days",
+            "title": "Used 30D",
+            "type": "integer"
+          },
+          "whatsapp_30d": {
+            "title": "Whatsapp 30D",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "used_30d",
+          "included_30d",
+          "topup_credits_30d",
+          "topups_30d",
+          "sms_30d",
+          "whatsapp_30d",
+          "calls_30d",
+          "out_of_credits",
+          "paused_requests"
+        ],
+        "title": "AdminCreditKpis",
+        "type": "object"
+      },
+      "AdminCreditPack": {
+        "properties": {
+          "credits": {
+            "title": "Credits",
+            "type": "integer"
+          },
+          "prices": {
+            "items": {
+              "$ref": "#/components/schemas/Money"
+            },
+            "title": "Prices",
+            "type": "array"
+          }
+        },
+        "required": [
+          "credits",
+          "prices"
+        ],
+        "title": "AdminCreditPack",
+        "type": "object"
+      },
+      "AdminCreditRow": {
+        "properties": {
+          "company": {
+            "title": "Company",
+            "type": "string"
+          },
+          "company_id": {
+            "format": "uuid",
+            "title": "Company Id",
+            "type": "string"
+          },
+          "included": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "This month's plan credits; None = no limit",
+            "title": "Included"
+          },
+          "plan": {
+            "title": "Plan",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "unlimited",
+              "ok",
+              "low",
+              "out"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "topup_left": {
+            "title": "Topup Left",
+            "type": "integer"
+          },
+          "topups": {
+            "description": "Top-ups and staff additions, all time",
+            "title": "Topups",
+            "type": "integer"
+          },
+          "used": {
+            "description": "Plan credits used this month",
+            "title": "Used",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "company_id",
+          "company",
+          "plan",
+          "included",
+          "used",
+          "topup_left",
+          "topups",
+          "status"
+        ],
+        "title": "AdminCreditRow",
+        "type": "object"
+      },
+      "AdminCreditRules": {
+        "additionalProperties": false,
+        "properties": {
+          "ai_call": {
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "Ai Call",
+            "type": "integer"
+          },
+          "sms": {
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Sms",
+            "type": "integer"
+          },
+          "whatsapp": {
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Whatsapp",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "sms",
+          "whatsapp",
+          "ai_call"
+        ],
+        "title": "AdminCreditRules",
+        "type": "object"
+      },
+      "AdminCreditRulesIn": {
+        "additionalProperties": false,
+        "properties": {
+          "ai_call": {
+            "maximum": 100.0,
+            "minimum": 1.0,
+            "title": "Ai Call",
+            "type": "integer"
+          },
+          "plans": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "description": "Monthly credits per plan code; None = no limit",
+            "title": "Plans",
+            "type": "object"
+          },
+          "sms": {
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Sms",
+            "type": "integer"
+          },
+          "whatsapp": {
+            "maximum": 20.0,
+            "minimum": 1.0,
+            "title": "Whatsapp",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "sms",
+          "whatsapp",
+          "ai_call"
+        ],
+        "title": "AdminCreditRulesIn",
+        "type": "object"
+      },
+      "AdminCreditsOut": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AdminCreditRow"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "kpis": {
+            "$ref": "#/components/schemas/AdminCreditKpis"
+          },
+          "packs": {
+            "items": {
+              "$ref": "#/components/schemas/AdminCreditPack"
+            },
+            "title": "Packs",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "plans": {
+            "items": {
+              "$ref": "#/components/schemas/AdminPlanCredits"
+            },
+            "title": "Plans",
+            "type": "array"
+          },
+          "rules": {
+            "$ref": "#/components/schemas/AdminCreditRules"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "kpis",
+          "rules",
+          "plans",
+          "packs",
+          "items",
+          "total",
+          "page",
+          "page_size",
+          "can_act"
+        ],
+        "title": "AdminCreditsOut",
+        "type": "object"
+      },
       "AdminDashboardOut": {
         "properties": {
           "active_companies": {
@@ -2842,6 +3145,42 @@
           "sms_text"
         ],
         "title": "AdminOwnerInvite",
+        "type": "object"
+      },
+      "AdminPlanCredits": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "companies": {
+            "title": "Companies",
+            "type": "integer"
+          },
+          "monthly_credits": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "None = no limit (custom plans)",
+            "title": "Monthly Credits"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "monthly_credits",
+          "companies"
+        ],
+        "title": "AdminPlanCredits",
         "type": "object"
       },
       "AdminPlanInfo": {
@@ -19111,6 +19450,58 @@
         ]
       }
     },
+    "/api/v1/admin/companies/{company_id}/credits": {
+      "post": {
+        "description": "Adds (or takes back) extra credits for one company. They stay until used, like a top-up.",
+        "operationId": "adjust_credits_api_v1_admin_companies__company_id__credits_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Company Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminCreditAdjust"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Adjust Credits",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/api/v1/admin/companies/{company_id}/owner-invite": {
       "post": {
         "description": "A new join link for an owner who hasn't joined; older links stop working.",
@@ -19323,6 +19714,211 @@
           }
         ],
         "summary": "Suspend Company",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/credits": {
+      "get": {
+        "description": "Credits used, the credit rules, plan credits and every company's credits (out of credits first).",
+        "operationId": "credit_overview_api_v1_admin_credits_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 120,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "maximum": 10000,
+              "minimum": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 20,
+              "maximum": 100,
+              "minimum": 5,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminCreditsOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Credit Overview",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/credits.csv": {
+      "get": {
+        "operationId": "credits_csv_api_v1_admin_credits_csv_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 120,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/csv": {}
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Credits Csv",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/credits/rules": {
+      "put": {
+        "description": "Credits per SMS, WhatsApp and AI call (used from the next message) and each plan's monthly credits\n(each company gets the new amount from its next month).",
+        "operationId": "credit_rules_api_v1_admin_credits_rules_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminCreditRulesIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Credit Rules",
         "tags": [
           "admin"
         ]

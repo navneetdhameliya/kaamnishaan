@@ -15,12 +15,12 @@ from app.schemas.identity import (
     ConfigOut,
     CountryOut,
     CreditPackOut,
-    CreditRules,
     LanguageOut,
     Money,
     PlansOut,
     TradeOut,
 )
+from app.services import credits
 from app.services.auth import PASSWORD_MIN
 from app.services.credits import plan_out
 from app.services.leads import support
@@ -101,6 +101,6 @@ async def plans(
             for c in packs
             if currency in c.prices
         ],
-        credit_rules=CreditRules(),
+        credit_rules=await credits.rules(db),
         trial_days=get_settings().trial_days,
     )

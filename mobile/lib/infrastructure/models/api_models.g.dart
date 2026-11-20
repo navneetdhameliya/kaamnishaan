@@ -1507,6 +1507,277 @@ class AdminCompanyUpdateModel {
       };
 }
 
+AdminCreditAdjustModel adminCreditAdjustModelFromJson(String str) => AdminCreditAdjustModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminCreditAdjustModelToJson(AdminCreditAdjustModel data) => json.encode(data.toJson());
+
+class AdminCreditAdjustModel {
+  /// Add (+) or take back (−) top-up credits
+  final int credits;
+  final String reason;
+
+  const AdminCreditAdjustModel({
+    required this.credits,
+    required this.reason,
+  });
+
+  factory AdminCreditAdjustModel.fromJson(Map<String, dynamic> json) => AdminCreditAdjustModel(
+        credits: (json['credits'] as num).toInt(),
+        reason: json['reason'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'credits': credits,
+        'reason': reason,
+      };
+}
+
+AdminCreditKpisModel adminCreditKpisModelFromJson(String str) => AdminCreditKpisModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminCreditKpisModelToJson(AdminCreditKpisModel data) => json.encode(data.toJson());
+
+class AdminCreditKpisModel {
+  final int calls30d;
+  /// Monthly credits given in the last 30 days
+  final int included30d;
+  /// Companies that can't send reminders now
+  final int outOfCredits;
+  /// Reminders waiting for credits
+  final int pausedRequests;
+  final int sms30d;
+  /// Credits added by top-ups and staff in the last 30 days
+  final int topupCredits30d;
+  final int topups30d;
+  /// Credits used by every company in the last 30 days
+  final int used30d;
+  final int whatsapp30d;
+
+  const AdminCreditKpisModel({
+    required this.calls30d,
+    required this.included30d,
+    required this.outOfCredits,
+    required this.pausedRequests,
+    required this.sms30d,
+    required this.topupCredits30d,
+    required this.topups30d,
+    required this.used30d,
+    required this.whatsapp30d,
+  });
+
+  factory AdminCreditKpisModel.fromJson(Map<String, dynamic> json) => AdminCreditKpisModel(
+        calls30d: (json['calls_30d'] as num).toInt(),
+        included30d: (json['included_30d'] as num).toInt(),
+        outOfCredits: (json['out_of_credits'] as num).toInt(),
+        pausedRequests: (json['paused_requests'] as num).toInt(),
+        sms30d: (json['sms_30d'] as num).toInt(),
+        topupCredits30d: (json['topup_credits_30d'] as num).toInt(),
+        topups30d: (json['topups_30d'] as num).toInt(),
+        used30d: (json['used_30d'] as num).toInt(),
+        whatsapp30d: (json['whatsapp_30d'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'calls_30d': calls30d,
+        'included_30d': included30d,
+        'out_of_credits': outOfCredits,
+        'paused_requests': pausedRequests,
+        'sms_30d': sms30d,
+        'topup_credits_30d': topupCredits30d,
+        'topups_30d': topups30d,
+        'used_30d': used30d,
+        'whatsapp_30d': whatsapp30d,
+      };
+}
+
+AdminCreditPackModel adminCreditPackModelFromJson(String str) => AdminCreditPackModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminCreditPackModelToJson(AdminCreditPackModel data) => json.encode(data.toJson());
+
+class AdminCreditPackModel {
+  final int credits;
+  final List<MoneyModel> prices;
+
+  const AdminCreditPackModel({
+    required this.credits,
+    required this.prices,
+  });
+
+  factory AdminCreditPackModel.fromJson(Map<String, dynamic> json) => AdminCreditPackModel(
+        credits: (json['credits'] as num).toInt(),
+        prices: (json['prices'] as List).map((e) => MoneyModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'credits': credits,
+        'prices': prices.map((e) => e.toJson()).toList(),
+      };
+}
+
+AdminCreditRowModel adminCreditRowModelFromJson(String str) => AdminCreditRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminCreditRowModelToJson(AdminCreditRowModel data) => json.encode(data.toJson());
+
+class AdminCreditRowModel {
+  final String company;
+  final String companyId;
+  /// This month's plan credits; None = no limit
+  final int? included;
+  final String plan;
+  /// One of: unlimited, ok, low, out
+  final String status;
+  final int topupLeft;
+  /// Top-ups and staff additions, all time
+  final int topups;
+  /// Plan credits used this month
+  final int used;
+
+  const AdminCreditRowModel({
+    required this.company,
+    required this.companyId,
+    this.included,
+    required this.plan,
+    required this.status,
+    required this.topupLeft,
+    required this.topups,
+    required this.used,
+  });
+
+  factory AdminCreditRowModel.fromJson(Map<String, dynamic> json) => AdminCreditRowModel(
+        company: json['company'] as String,
+        companyId: json['company_id'] as String,
+        included: json['included'] == null ? null : (json['included'] as num).toInt(),
+        plan: json['plan'] as String,
+        status: json['status'] as String,
+        topupLeft: (json['topup_left'] as num).toInt(),
+        topups: (json['topups'] as num).toInt(),
+        used: (json['used'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'company': company,
+        'company_id': companyId,
+        'included': included,
+        'plan': plan,
+        'status': status,
+        'topup_left': topupLeft,
+        'topups': topups,
+        'used': used,
+      };
+}
+
+AdminCreditRulesModel adminCreditRulesModelFromJson(String str) => AdminCreditRulesModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminCreditRulesModelToJson(AdminCreditRulesModel data) => json.encode(data.toJson());
+
+class AdminCreditRulesModel {
+  final int aiCall;
+  final int sms;
+  final int whatsapp;
+
+  const AdminCreditRulesModel({
+    required this.aiCall,
+    required this.sms,
+    required this.whatsapp,
+  });
+
+  factory AdminCreditRulesModel.fromJson(Map<String, dynamic> json) => AdminCreditRulesModel(
+        aiCall: (json['ai_call'] as num).toInt(),
+        sms: (json['sms'] as num).toInt(),
+        whatsapp: (json['whatsapp'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ai_call': aiCall,
+        'sms': sms,
+        'whatsapp': whatsapp,
+      };
+}
+
+AdminCreditRulesInModel adminCreditRulesInModelFromJson(String str) => AdminCreditRulesInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminCreditRulesInModelToJson(AdminCreditRulesInModel data) => json.encode(data.toJson());
+
+class AdminCreditRulesInModel {
+  final int aiCall;
+  /// Monthly credits per plan code; None = no limit
+  final Map<String, dynamic>? plans;
+  final int sms;
+  final int whatsapp;
+
+  const AdminCreditRulesInModel({
+    required this.aiCall,
+    this.plans,
+    required this.sms,
+    required this.whatsapp,
+  });
+
+  factory AdminCreditRulesInModel.fromJson(Map<String, dynamic> json) => AdminCreditRulesInModel(
+        aiCall: (json['ai_call'] as num).toInt(),
+        plans: json['plans'] == null ? null : Map<String, dynamic>.from(json['plans'] as Map),
+        sms: (json['sms'] as num).toInt(),
+        whatsapp: (json['whatsapp'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ai_call': aiCall,
+        'plans': plans,
+        'sms': sms,
+        'whatsapp': whatsapp,
+      };
+}
+
+AdminCreditsOutModel adminCreditsOutModelFromJson(String str) => AdminCreditsOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminCreditsOutModelToJson(AdminCreditsOutModel data) => json.encode(data.toJson());
+
+class AdminCreditsOutModel {
+  final bool canAct;
+  final List<AdminCreditRowModel> items;
+  final AdminCreditKpisModel kpis;
+  final List<AdminCreditPackModel> packs;
+  final int page;
+  final int pageSize;
+  final List<AdminPlanCreditsModel> plans;
+  final AdminCreditRulesModel rules;
+  final int total;
+
+  const AdminCreditsOutModel({
+    required this.canAct,
+    required this.items,
+    required this.kpis,
+    required this.packs,
+    required this.page,
+    required this.pageSize,
+    required this.plans,
+    required this.rules,
+    required this.total,
+  });
+
+  factory AdminCreditsOutModel.fromJson(Map<String, dynamic> json) => AdminCreditsOutModel(
+        canAct: json['can_act'] as bool,
+        items: (json['items'] as List).map((e) => AdminCreditRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        kpis: AdminCreditKpisModel.fromJson(json['kpis'] as Map<String, dynamic>),
+        packs: (json['packs'] as List).map((e) => AdminCreditPackModel.fromJson(e as Map<String, dynamic>)).toList(),
+        page: (json['page'] as num).toInt(),
+        pageSize: (json['page_size'] as num).toInt(),
+        plans: (json['plans'] as List).map((e) => AdminPlanCreditsModel.fromJson(e as Map<String, dynamic>)).toList(),
+        rules: AdminCreditRulesModel.fromJson(json['rules'] as Map<String, dynamic>),
+        total: (json['total'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'items': items.map((e) => e.toJson()).toList(),
+        'kpis': kpis.toJson(),
+        'packs': packs.map((e) => e.toJson()).toList(),
+        'page': page,
+        'page_size': pageSize,
+        'plans': plans.map((e) => e.toJson()).toList(),
+        'rules': rules.toJson(),
+        'total': total,
+      };
+}
+
 AdminDashboardOutModel adminDashboardOutModelFromJson(String str) => AdminDashboardOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminDashboardOutModelToJson(AdminDashboardOutModel data) => json.encode(data.toJson());
@@ -1951,6 +2222,39 @@ class AdminOwnerInviteModel {
         'company': company.toJson(),
         'invite_link': inviteLink,
         'sms_text': smsText,
+      };
+}
+
+AdminPlanCreditsModel adminPlanCreditsModelFromJson(String str) => AdminPlanCreditsModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPlanCreditsModelToJson(AdminPlanCreditsModel data) => json.encode(data.toJson());
+
+class AdminPlanCreditsModel {
+  final String code;
+  final int companies;
+  /// None = no limit (custom plans)
+  final int? monthlyCredits;
+  final String name;
+
+  const AdminPlanCreditsModel({
+    required this.code,
+    required this.companies,
+    this.monthlyCredits,
+    required this.name,
+  });
+
+  factory AdminPlanCreditsModel.fromJson(Map<String, dynamic> json) => AdminPlanCreditsModel(
+        code: json['code'] as String,
+        companies: (json['companies'] as num).toInt(),
+        monthlyCredits: json['monthly_credits'] == null ? null : (json['monthly_credits'] as num).toInt(),
+        name: json['name'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'code': code,
+        'companies': companies,
+        'monthly_credits': monthlyCredits,
+        'name': name,
       };
 }
 

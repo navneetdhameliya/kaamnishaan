@@ -36,6 +36,7 @@ from app.schemas.admin_companies import (
     AdminCompanyUpdate,
     AdminOwnerInvite,
 )
+from app.schemas.admin_credits import AdminCreditAdjust, AdminCreditRulesIn, AdminCreditsOut
 from app.schemas.admin_leads import AdminLeadDetail, AdminLeadList, AdminLeadUpdate
 from app.schemas.admin_messages import (
     AdminTemplate,
@@ -73,6 +74,7 @@ from app.services import (
     admin_audit,
     admin_checklists,
     admin_companies,
+    admin_credits,
     admin_dashboard,
     admin_leads,
     admin_messages,
@@ -836,3 +838,67 @@ async def test_message_template(
     """Sends the text (as being edited, or as saved) with sample values to your own phone or email."""
     _can_moderate(me)
     return await admin_messages.test(db, body, staff_id=me.staff.id)
+
+
+# ---- A40 Usage and credits --------------------------------------------------------------------------
+@router.get("/credits", response_model=AdminCreditsOut)
+async def credit_overview(
+    q: str | None = Query(None, max_length=120),
+    page: int = Query(1, ge=1, le=10_000),
+    page_size: int = Query(20, ge=5, le=100),
+    locale: Locale = "en",
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminCreditsOut:
+    """Credits used, the credit rules, plan credits and every company's credits (out of credits first)."""
+    return await admin_credits.overview(
+        db,
+        q=q,
+        page=page,
+        page_size=page_size,
+        lang=locale,
+        can_act=me.staff.role in ("super_admin", "admin"),
+    )
+
+
+@router.get("/credits.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
+async def credits_csv(
+    q: str | None = Query(None, max_length=120), locale: Locale = "en",
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> Response:  # fmt: skip
+    body = await admin_credits.credits_csv(db, q=q, lang=locale)
+    await audit.record(
+        db, "staff.export", staff_id=me.staff.id, target_type="credits", data={"q": q} if q else {}
+    )
+    return Response(
+        "".join(body),
+        media_type="text/csv; charset=utf-8",
+        headers={"Content-Disposition": f'attachment; filename="kaamnishaan-credits-{now():%Y-%m-%d}.csv"',
+                 "Cache-Control": "no-store"},
+    )  # fmt: skip
+
+
+@router.put("/credits/rules", status_code=204)
+async def credit_rules(
+    body: AdminCreditRulesIn,
+    request: Request,
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> Response:
+    """Credits per SMS, WhatsApp and AI call (used from the next message) and each plan's monthly credits
+    (each company gets the new amount from its next month)."""
+    _can_change(me)
+    await admin_credits.save_rules(db, body, staff_id=me.staff.id, ip=client_ip(request))
+    return Response(status_code=204)
+
+
+@router.post("/companies/{company_id}/credits", status_code=204)
+async def adjust_credits(
+    company_id: uuid.UUID, body: AdminCreditAdjust, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> Response:  # fmt: skip
+    """Adds (or takes back) extra credits for one company. They stay until used, like a top-up."""
+    _can_change(me)
+    await admin_credits.adjust(db, company_id, body.credits, body.reason, staff_id=me.staff.id,
+                               ip=client_ip(request))  # fmt: skip
+    return Response(status_code=204)
