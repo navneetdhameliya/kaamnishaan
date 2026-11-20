@@ -9,6 +9,7 @@ abstract final class RoutesConstants {
   static const String joinCompanyScreen = '/join-company';
   static const String profileSetupScreen = '/profile-setup';
   static const String chooseCompanyScreen = '/choose-company';
+  static const String companyPausedScreen = '/company-paused';
   static const String emailLoginScreen = '/login';
   static const String ownerSignupScreen = '/sign-up';
   static const String companySetupScreen = '/company-setup';

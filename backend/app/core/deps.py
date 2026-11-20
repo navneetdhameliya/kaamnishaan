@@ -45,12 +45,27 @@ class Principal:
         return self.membership.role if self.membership else None
 
     @property
+    def suspended(self) -> bool:
+        return bool(self.company and self.company.status == "suspended")
+
+    def _check_suspended(self) -> None:
+        # A07: a company paused by KaamNishaan can't do any work; /me still shows it so the app can explain
+        if self.suspended:
+            raise Forbidden(
+                "company_suspended",
+                "This company is paused by KaamNishaan. Your data is kept. Contact support to restart it.",
+                {"company": self.company.name},
+            )
+
+    @property
     def company_id(self) -> uuid.UUID:
         if not self.company:
             raise Forbidden("no_company", "Choose a company first.")
+        self._check_suspended()
         return self.company.id
 
     def require(self, permission: str) -> None:
+        self._check_suspended()
         if permission not in self.permissions:
             raise Forbidden("forbidden", "You don't have permission to do this.", {"needs": permission})
 

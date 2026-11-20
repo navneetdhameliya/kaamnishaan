@@ -216,3 +216,56 @@ export function FilterSelect({ label, value, options, allLabel, onChange }: { la
     </label>
   );
 }
+
+/** Asks for a short reason (saved in the audit log) before an action. Escape or Cancel closes it. */
+export function ReasonDialog({ t, title, body, confirm, danger, onClose, onConfirm }: { t: T; title: string; body: string; confirm: string; danger?: boolean; onClose: () => void; onConfirm: (reason: string) => Promise<string | null> }) {
+  const [reason, setReason] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const ref = useRef<HTMLTextAreaElement>(null);
+  useEffect(() => {
+    ref.current?.focus();
+    const esc = (e: globalThis.KeyboardEvent) => e.key === 'Escape' && !busy && onClose();
+    window.addEventListener('keydown', esc);
+    return () => window.removeEventListener('keydown', esc);
+  }, [busy, onClose]);
+  const go = async () => {
+    if (reason.trim().length < 3) return setError(t('admin.us.reason_short'));
+    setBusy(true);
+    setError(null);
+    const err = await onConfirm(reason.trim());
+    if (err) {
+      setError(err);
+      setBusy(false);
+    }
+  };
+  return (
+    <div className="fixed inset-0 z-50 flex items-end justify-center p-16 sm:items-center">
+      <button type="button" aria-hidden tabIndex={-1} onClick={() => !busy && onClose()} className="absolute inset-0 cursor-default bg-espresso-950/50" />
+      <div role="dialog" aria-modal="true" aria-labelledby="reason-title" className="kn-pop relative w-full max-w-[460px] rounded-xl bg-bg-surface p-24 shadow-lg">
+        <h2 id="reason-title" className="text-[22px] font-bold leading-[30px]">
+          {title}
+        </h2>
+        <p className="mt-8 text-latin-body text-text-secondary">{body}</p>
+        <label htmlFor="reason" className="mt-20 block text-latin-label-sm font-semibold">
+          {t('admin.us.reason')}
+        </label>
+        <textarea id="reason" ref={ref} value={reason} onChange={(e) => setReason(e.target.value)} maxLength={300} rows={3} className="mt-8 w-full rounded-lg border border-border-strong bg-bg-surface p-12 text-latin-body hover:border-mocha-500 focus:outline-none focus:ring-2 focus:ring-focus-ring" />
+        {error && (
+          <div className="mt-12">
+            <ErrorBanner>{error}</ErrorBanner>
+          </div>
+        )}
+        <div className="mt-20 flex flex-col-reverse gap-12 sm:flex-row sm:justify-end">
+          <button type="button" onClick={onClose} disabled={busy} className="kn-btn inline-flex h-[44px] items-center justify-center rounded-lg bg-bg-subtle px-20 text-latin-label-sm font-semibold hover:bg-cream-300">
+            {t('admin.us.cancel')}
+          </button>
+          <button type="button" onClick={() => void go()} disabled={busy} className={cx('kn-btn inline-flex h-[44px] items-center justify-center gap-8 rounded-lg px-20 text-latin-label-sm font-semibold text-cream-50 disabled:opacity-60', danger ? 'bg-status-danger hover:brightness-95' : 'bg-action-primary hover:bg-action-primary-pressed')}>
+            {busy && <Spinner />}
+            {confirm}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

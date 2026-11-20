@@ -1,10 +1,12 @@
-import { AlertCircle, Briefcase, ChevronLeft, Clock, FileText, Globe, MapPin, ScrollText, SlidersHorizontal, Timer, User } from 'lucide-react';
+import { AlertCircle, Briefcase, ChevronLeft, Clock, FileText, Globe, Link2, Lock, MapPin, Pencil, Power, ScrollText, SlidersHorizontal, Timer, User } from 'lucide-react';
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
 
 import { api, ApiError } from '../lib/api';
 import { ago, day, money, num, plural, region, type Lang, type T } from '../lib/i18n';
-import type { CompanyDetail as Detail, PlanInfo } from '../lib/types';
-import { cx, Initials, Link } from '../ui';
+import { session } from '../lib/session';
+import type { CompanyDetail as Detail, OwnerInvite, PlanInfo } from '../lib/types';
+import { cx, Initials, Link, ReasonDialog, Spinner } from '../ui';
+import { InvitePanel } from './CompanyForm';
 import { StatusBadge } from './badges';
 
 const stagger = (i: number) => ({ ['--d' as string]: `${i * 60}ms` });
@@ -49,6 +51,33 @@ function minutes(m: number, t: T, lang: Lang): string {
 export function CompanyDetail({ t, lang, id, onName }: { t: T; lang: Lang; id: string; onName: (name: string) => void }) {
   const [d, setD] = useState<Detail | null>(null);
   const [error, setError] = useState<'missing' | 'load' | null>(null);
+  const [dialog, setDialog] = useState<'suspend' | 'reactivate' | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+  const [invite, setInvite] = useState<OwnerInvite | null>(null);
+  const [linkBusy, setLinkBusy] = useState(false);
+  const canChange = session.get()?.staff.role !== 'support';
+  const act = async (kind: 'suspend' | 'reactivate', reason: string): Promise<string | null> => {
+    try {
+      setD(await api<Detail>(`/admin/companies/${id}/${kind}?locale=${lang}`, { method: 'POST', body: { reason } }));
+      setDialog(null);
+      setNotice(t(kind === 'suspend' ? 'admin.cf.done_suspend' : 'admin.cf.done_reactivate'));
+      return null;
+    } catch (e) {
+      return e instanceof ApiError && e.status === 403 ? t('admin.cf.not_allowed') : t('admin.err.generic');
+    }
+  };
+  const newLink = async () => {
+    setLinkBusy(true);
+    try {
+      const out = await api<OwnerInvite>(`/admin/companies/${id}/owner-invite?locale=${lang}`, { method: 'POST' });
+      setInvite(out);
+      setD(out.company);
+    } catch {
+      setNotice(t('admin.err.generic'));
+    } finally {
+      setLinkBusy(false);
+    }
+  };
   const load = useCallback(() => {
     setError(null);
     api<Detail>(`/admin/companies/${id}?locale=${lang}`)
@@ -69,10 +98,31 @@ export function CompanyDetail({ t, lang, id, onName }: { t: T; lang: Lang; id: s
         <ChevronLeft width={16} height={16} className="transition-transform group-hover:-translate-x-[3px]" aria-hidden />
         {t('admin.co.back')}
       </Link>
-      <Link to={`/audit-logs?company=${id}&days=90`} className="kn-link inline-flex items-center gap-[6px] text-latin-label-sm font-semibold text-mocha-700">
-        <ScrollText width={16} height={16} aria-hidden />
-        {t('admin.au.audit_link')}
-      </Link>
+      <div className="flex flex-wrap items-center gap-12">
+        <Link to={`/audit-logs?company=${id}&days=90`} className="kn-link inline-flex items-center gap-[6px] text-latin-label-sm font-semibold text-mocha-700">
+          <ScrollText width={16} height={16} aria-hidden />
+          {t('admin.au.audit_link')}
+        </Link>
+        {canChange && d && (
+          <>
+            <Link to={`/companies/${id}/edit`} className="kn-btn inline-flex h-[40px] items-center gap-8 rounded-lg bg-bg-subtle px-16 text-latin-label-sm font-semibold hover:bg-cream-300">
+              <Pencil width={16} height={16} aria-hidden />
+              {t('admin.cf.edit')}
+            </Link>
+            {d.status === 'suspended' ? (
+              <button type="button" onClick={() => setDialog('reactivate')} className="kn-btn inline-flex h-[40px] items-center gap-8 rounded-lg bg-action-primary px-16 text-latin-label-sm font-semibold text-text-on-action hover:bg-action-primary-pressed">
+                <Power width={16} height={16} aria-hidden />
+                {t('admin.cf.reactivate')}
+              </button>
+            ) : (
+              <button type="button" onClick={() => setDialog('suspend')} className="kn-btn inline-flex h-[40px] items-center gap-8 rounded-lg bg-status-danger px-16 text-latin-label-sm font-semibold text-cream-50 hover:brightness-95">
+                <Lock width={16} height={16} aria-hidden />
+                {t('admin.cf.suspend')}
+              </button>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
   if (error)
@@ -111,6 +161,32 @@ export function CompanyDetail({ t, lang, id, onName }: { t: T; lang: Lang; id: s
   return (
     <div className="flex flex-col gap-24">
       {back}
+      {notice && (
+        <p role="status" className="kn-pop -my-8 rounded-lg bg-status-success-bg px-16 py-12 text-latin-label-sm font-semibold text-status-success">
+          {notice}
+        </p>
+      )}
+      {d.status === 'suspended' && (
+        <p role="note" className="flex items-start gap-12 rounded-lg bg-status-danger-bg px-16 py-12 text-latin-label-sm font-semibold text-status-danger">
+          <Lock width={18} height={18} className="mt-[2px] shrink-0" aria-hidden />
+          {t('admin.cf.suspended_banner', { date: d.suspended_at ? day(d.suspended_at, lang) : '', reason: d.suspend_reason ?? '' })}
+        </p>
+      )}
+      {invite ? (
+        <InvitePanel t={t} invite={invite} />
+      ) : (
+        d.owner_pending && (
+          <div className="flex flex-col gap-12 rounded-lg bg-status-info-bg px-16 py-12 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-latin-label-sm font-semibold text-status-info">{t('admin.cf.owner_pending', { name: d.owner_name ?? '', phone: d.owner_phone ?? '' })}</p>
+            {canChange && (
+              <button type="button" disabled={linkBusy} onClick={() => void newLink()} className="kn-btn inline-flex h-[40px] shrink-0 items-center gap-8 rounded-lg bg-bg-surface px-16 text-latin-label-sm font-semibold hover:bg-cream-100">
+                {linkBusy ? <Spinner /> : <Link2 width={16} height={16} aria-hidden />}
+                {t('admin.cf.new_link')}
+              </button>
+            )}
+          </div>
+        )
+      )}
       {/* header */}
       <section className="kn-in flex flex-col gap-24 rounded-xl border border-border-default bg-bg-surface p-20 sm:p-24 lg:flex-row lg:items-center">
         <div className="flex min-w-0 flex-1 gap-16 sm:gap-20">
@@ -292,6 +368,17 @@ export function CompanyDetail({ t, lang, id, onName }: { t: T; lang: Lang; id: s
           )}
         </section>
       </div>
+      {dialog && (
+        <ReasonDialog
+          t={t}
+          title={t(dialog === 'suspend' ? 'admin.cf.confirm_suspend' : 'admin.cf.confirm_reactivate', { name: d.name })}
+          body={t(dialog === 'suspend' ? 'admin.cf.suspend_body' : 'admin.cf.confirm_reactivate_body')}
+          confirm={t(dialog === 'suspend' ? 'admin.cf.suspend' : 'admin.cf.reactivate')}
+          danger={dialog === 'suspend'}
+          onClose={() => setDialog(null)}
+          onConfirm={(r) => act(dialog, r)}
+        />
+      )}
     </div>
   );
 }

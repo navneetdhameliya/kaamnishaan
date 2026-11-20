@@ -69,6 +69,10 @@ abstract final class AppServices {
         if (Get.isRegistered<SessionService>()) await Get.find<SessionService>().clear();
         Get.offAllNamed(RoutesConstants.welcomeScreen);
       },
+      onCompanySuspended: () {
+        if (Get.currentRoute == RoutesConstants.companyPausedScreen) return;
+        Get.offAllNamed<void>(RoutesConstants.companyPausedScreen);
+      },
     );
 
     Get.put<PreferencesService>(prefs, permanent: true);

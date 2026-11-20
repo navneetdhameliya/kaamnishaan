@@ -15,6 +15,7 @@ class ApiClient {
     required this.language,
     required this.deviceId,
     this.onSessionExpired,
+    this.onCompanySuspended,
     String? baseUrl,
     Dio? dio,
     Dio? refreshDio,
@@ -42,6 +43,9 @@ class ApiClient {
   final String Function() language;
   final Future<String> Function() deviceId;
   final void Function()? onSessionExpired;
+
+  /// KaamNishaan paused the company (403 company_suspended): the app shows the paused screen.
+  final void Function()? onCompanySuspended;
   Future<bool>? _refreshing;
 
   static const _noAuth = 'kn_no_auth';
@@ -86,6 +90,10 @@ class ApiClient {
 
   Future<void> _onError(DioException err, ErrorInterceptorHandler handler) async {
     final options = err.requestOptions;
+    if (err.response?.statusCode == 403 && _code(err.response?.data) == 'company_suspended') {
+      onCompanySuspended?.call();
+      return handler.next(err);
+    }
     final unauthorised = err.response?.statusCode == 401;
     if (!unauthorised || options.extra[_noAuth] == true || options.extra[_retried] == true) {
       return handler.next(err);
@@ -102,6 +110,11 @@ class ApiClient {
     }
     onSessionExpired?.call();
     handler.next(err);
+  }
+
+  static String? _code(dynamic data) {
+    if (data is Map && data['error'] is Map) return (data['error'] as Map)['code'] as String?;
+    return null;
   }
 
   /// Swaps the refresh token for a new pair. Several 401s at once share one refresh.

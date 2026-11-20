@@ -8,6 +8,7 @@ import { ChecklistEditor } from './pages/ChecklistEditor';
 import { ChecklistTemplates } from './pages/ChecklistTemplates';
 import { Companies } from './pages/Companies';
 import { CompanyDetail } from './pages/CompanyDetail';
+import { CompanyForm } from './pages/CompanyForm';
 import { Dashboard, RangeSelect, RANGES, type Range } from './pages/Dashboard';
 import { Leads } from './pages/Leads';
 import { Forgot, Login } from './pages/Login';
@@ -30,10 +31,11 @@ export default function App() {
     return (RANGES as readonly number[]).includes(d) ? (d as Range) : 30;
   });
 
-  const [pageName, setPageName] = useState('');
-  const onName = useCallback((n: string) => setPageName(n), []);
+  // the name a detail page reports, kept with the path it belongs to so a new page never shows the old one
+  const [named, setNamed] = useState<{ path: string; name: string }>({ path: '', name: '' });
+  const onName = useCallback((n: string) => setNamed({ path: location.pathname, name: n }), []);
+  const pageName = named.path === path ? named.name : '';
   useEffect(() => session.subscribe(setSess), []);
-  useEffect(() => setPageName(''), [path]);
   useEffect(() => {
     document.documentElement.lang = lang;
     rememberLang(lang);
@@ -65,6 +67,8 @@ export default function App() {
   let page;
   if (!nav.ready) page = <Soon t={t} name={name} />;
   else if (nav.key === 'dashboard') page = <Dashboard t={t} lang={lang} days={days} />;
+  else if (companyId === 'new') page = <CompanyForm key="new" t={t} lang={lang} id={null} onName={onName} />;
+  else if (companyId?.endsWith('/edit')) page = <CompanyForm key={companyId} t={t} lang={lang} id={companyId.slice(0, -5)} onName={onName} />;
   else if (companyId) page = <CompanyDetail key={companyId} t={t} lang={lang} id={companyId} onName={onName} />;
   else if (nav.key === 'companies') page = <Companies key={path} t={t} lang={lang} />;
   else if (nav.key === 'checklists') page = sub ? <ChecklistEditor key={sub} t={t} lang={lang} id={sub} onName={onName} /> : <ChecklistTemplates key="cl" t={t} lang={lang} />;

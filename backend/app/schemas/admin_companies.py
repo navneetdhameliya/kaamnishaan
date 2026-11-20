@@ -4,7 +4,9 @@ import uuid
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, EmailStr, Field
+
+from app.schemas.identity import Locale, _In
 
 CompanyStatus = Literal["trial", "active", "past_due", "suspended", "cancelled"]
 # what the list shows: the status, or "near_limit" for a paying company at 90 % of its monthly reports
@@ -77,7 +79,10 @@ class AdminTeamMember(BaseModel):
 class AdminCompanyDetail(BaseModel):
     id: uuid.UUID
     name: str
+    industry_slug: str | None
     status: CompanyStatus
+    suspended_at: datetime | None
+    suspend_reason: str | None
     badge: CompanyBadge
     trial_ends_at: datetime | None
     created_at: datetime
@@ -90,6 +95,8 @@ class AdminCompanyDetail(BaseModel):
     owner_name: str | None
     owner_email: str | None
     owner_phone: str | None
+    owner_user_id: uuid.UUID | None
+    owner_pending: bool = Field(description="The owner was invited by KaamNishaan and hasn't joined yet")
     health: Literal["good", "quiet", "at_risk"] = Field(
         description="at_risk: past due or suspended; quiet: nobody active for 14 days; else good"
     )
@@ -107,3 +114,37 @@ class AdminCompanyDetail(BaseModel):
     upgrade_to: AdminPlanInfo | None = Field(
         description="The next plan when this one's reports or seats are used up, else None"
     )
+
+
+class AdminCompanyCreate(_In):
+    """A06. The owner joins with their phone: they log in with an OTP and accept the invite."""
+
+    name: str = Field(min_length=1, max_length=120)
+    trade: str
+    country: str = Field(default="IN", pattern=r"^[A-Z]{2}$")
+    report_language: Locale = "en"
+    owner_name: str = Field(min_length=1, max_length=120)
+    owner_phone: str = Field(min_length=6, max_length=24)
+    owner_email: EmailStr | None = None
+    plan: str = "professional"
+
+
+class AdminCompanyUpdate(_In):
+    """A07. The owner's own details are changed on their user page, not here."""
+
+    name: str | None = Field(default=None, min_length=1, max_length=120)
+    trade: str | None = None
+    country: str | None = Field(default=None, pattern=r"^[A-Z]{2}$")
+    report_language: Locale | None = None
+    plan: str | None = None
+    trial_ends_at: datetime | None = Field(default=None, description="Only for a company in trial")
+
+
+class AdminCompanyReason(_In):
+    reason: str = Field(min_length=3, max_length=300, description="Written to the audit log")
+
+
+class AdminOwnerInvite(BaseModel):
+    company: AdminCompanyDetail
+    invite_link: str = Field(description="Shown once. The SMS is sent too when SMS is set up.")
+    sms_text: str

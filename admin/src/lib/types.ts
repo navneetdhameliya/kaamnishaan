@@ -107,7 +107,10 @@ export interface PlanInfo {
 export interface CompanyDetail {
   id: string;
   name: string;
+  industry_slug: string | null;
   status: CompanyStatus;
+  suspended_at: string | null;
+  suspend_reason: string | null;
   badge: CompanyBadge;
   trial_ends_at: string | null;
   created_at: string;
@@ -120,6 +123,8 @@ export interface CompanyDetail {
   owner_name: string | null;
   owner_email: string | null;
   owner_phone: string | null;
+  owner_user_id: string | null;
+  owner_pending: boolean;
   health: 'good' | 'quiet' | 'at_risk';
   last_active_at: string | null;
   cycle_start: string;
@@ -293,4 +298,10 @@ export interface ChecklistDetail {
   questions: ChecklistQuestion[];
   ai_available: boolean;
   trades: Option[];
+}
+
+export interface OwnerInvite {
+  company: CompanyDetail;
+  invite_link: string;
+  sms_text: string;
 }

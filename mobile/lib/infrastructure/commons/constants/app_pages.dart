@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../../../UI/screens/auth_section/check_email_section/check_email_binding.dart';
 import '../../../UI/screens/auth_section/check_email_section/check_email_screen.dart';
+import '../../../UI/screens/auth_section/company_paused_section/company_paused_binding.dart';
+import '../../../UI/screens/auth_section/company_paused_section/company_paused_screen.dart';
 import '../../../UI/screens/auth_section/choose_company_section/choose_company_binding.dart';
 import '../../../UI/screens/auth_section/choose_company_section/choose_company_screen.dart';
 import '../../../UI/screens/auth_section/company_setup_section/company_setup_binding.dart';
@@ -139,6 +141,11 @@ abstract final class AppPages {
       name: RoutesConstants.chooseCompanyScreen,
       page: () => const ChooseCompanyScreen(),
       binding: ChooseCompanyBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.companyPausedScreen,
+      page: () => const CompanyPausedScreen(),
+      binding: CompanyPausedBinding(),
     ),
     GetPage(
       name: RoutesConstants.emailLoginScreen,

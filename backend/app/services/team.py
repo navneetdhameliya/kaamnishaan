@@ -385,7 +385,7 @@ async def my_invites(db: AsyncSession, user: User, include_expired: bool = True)
     q = (
         select(Invitation, Company, inviter.c.name, inviter.c.phone)
         .join(Company, Company.id == Invitation.company_id)
-        .join(inviter, inviter.c.id == Invitation.invited_by)
+        .outerjoin(inviter, inviter.c.id == Invitation.invited_by)  # None: KaamNishaan made the company
         .join(Membership, Membership.id == Invitation.membership_id)
         .where(Invitation.phone == user.phone, *_open_invite_filter(), Membership.status == "invited")
         .order_by(Invitation.created_at.desc())
@@ -398,7 +398,9 @@ async def my_invites(db: AsyncSession, user: User, include_expired: bool = True)
             MyInvite(
                 id=inv.id,
                 company=InviteCompany(id=c.id, name=c.name, trade=c.industry_slug, country=c.country),
-                invited_by=InviterOut(name=by_name or "", phone=by_phone),
+                invited_by=InviterOut(
+                    name=by_name or ("KaamNishaan" if not inv.invited_by else ""), phone=by_phone
+                ),
                 role=inv.role,
                 sent_at=inv.created_at,
                 expires_at=inv.expires_at,
