@@ -7196,4 +7196,170 @@ abstract final class LangKeys {
   static const adminAuAStaffEmailSettingsUpdated = 'admin.au.a.staff.email_settings_updated';
   /// Sent a test email
   static const adminAuAStaffEmailTest = 'admin.au.a.staff.email_test';
+  /// Roles & permissions
+  static const adminNavRoles = 'admin.nav.roles';
+  /// Allowed
+  static const adminRoYes = 'admin.ro.yes';
+  /// Not allowed
+  static const adminRoNo = 'admin.ro.no';
+  /// Permission
+  static const adminRoCPermission = 'admin.ro.c_permission';
+  /// Super admin
+  static const adminRoColSuperAdmin = 'admin.ro.col.super_admin';
+  /// Owner
+  static const adminRoColOwner = 'admin.ro.col.owner';
+  /// Manager
+  static const adminRoColManager = 'admin.ro.col.manager';
+  /// Technician
+  static const adminRoColTechnician = 'admin.ro.col.technician';
+  /// Customer
+  static const adminRoColCustomer = 'admin.ro.col.customer';
+  /// Admin
+  static const adminRoColAdmin = 'admin.ro.col.admin';
+  /// Support
+  static const adminRoColSupport = 'admin.ro.col.support';
+  /// Technicians
+  static const adminRoNoteTechnicians = 'admin.ro.note.technicians';
+  /// Quick job
+  static const adminRoNoteQuickJob = 'admin.ro.note.quick_job';
+  /// If allowed
+  static const adminRoNoteIfAllowed = 'admin.ro.note.if_allowed';
+  /// Secure link
+  static const adminRoNoteSecureLink = 'admin.ro.note.secure_link';
+  /// Own company
+  static const adminRoNoteOwnCompany = 'admin.ro.note.own_company';
+  /// Platform settings, plans, AI config
+  static const adminRoRowPlatform = 'admin.ro.row.platform';
+  /// Company profile and billing
+  static const adminRoRowCompany = 'admin.ro.row.company';
+  /// Invite or remove users
+  static const adminRoRowUsers = 'admin.ro.row.users';
+  /// Create and assign jobs
+  static const adminRoRowJobs = 'admin.ro.row.jobs';
+  /// Capture photos, checklist, voice
+  static const adminRoRowCapture = 'admin.ro.row.capture';
+  /// Approve or reject reports
+  static const adminRoRowApprove = 'admin.ro.row.approve';
+  /// Share report link
+  static const adminRoRowShare = 'admin.ro.row.share';
+  /// Ask for reviews
+  static const adminRoRowReviews = 'admin.ro.row.reviews';
+  /// Edit checklists
+  static const adminRoRowChecklists = 'admin.ro.row.checklists';
+  /// View report and acknowledge
+  static const adminRoRowViewReport = 'admin.ro.row.view_report';
+  /// Audit logs
+  static const adminRoRowAudit = 'admin.ro.row.audit';
+  /// See every admin page
+  static const adminRoSrowLook = 'admin.ro.srow.look';
+  /// Change companies, users, reviews, credits and templates
+  static const adminRoSrowChange = 'admin.ro.srow.change';
+  /// Platform settings, email and staff accounts
+  static const adminRoSrowPlatform = 'admin.ro.srow.platform';
+  /// Who can do what
+  static const adminRoMatrixTitle = 'admin.ro.matrix_title';
+  /// Read from the rules the server enforces. "If allowed" is a switch each company sets in the app.
+  static const adminRoMatrixSub = 'admin.ro.matrix_sub';
+  /// Admin panel roles
+  static const adminRoStaffTitle = 'admin.ro.staff_title';
+  /// What each KaamNishaan staff role can do here.
+  static const adminRoStaffSub = 'admin.ro.staff_sub';
+  /// Staff accounts
+  static const adminRoPeopleTitle = 'admin.ro.people_title';
+  /// Invite staff, change roles, turn accounts off, or send a new setup link.
+  static const adminRoPeopleSub = 'admin.ro.people_sub';
+  /// Only a super admin can change staff accounts.
+  static const adminRoPeopleView = 'admin.ro.people_view';
+  /// Name
+  static const adminRoCName = 'admin.ro.c_name';
+  /// Role
+  static const adminRoCRole = 'admin.ro.c_role';
+  /// Status
+  static const adminRoCStatus = 'admin.ro.c_status';
+  /// Last login
+  static const adminRoCLogin = 'admin.ro.c_login';
+  /// Actions
+  static const adminRoCActions = 'admin.ro.c_actions';
+  /// (you)
+  static const adminRoYou = 'admin.ro.you';
+  /// Active
+  static const adminRoStActive = 'admin.ro.st.active';
+  /// Invited
+  static const adminRoStInvited = 'admin.ro.st.invited';
+  /// Turned off
+  static const adminRoStDisabled = 'admin.ro.st.disabled';
+  /// Invite staff
+  static const adminRoInvite = 'admin.ro.invite';
+  /// Invite a staff member
+  static const adminRoInviteTitle = 'admin.ro.invite_title';
+  /// You'll get a setup link to share with them. It works for 72 hours.
+  static const adminRoInviteBody = 'admin.ro.invite_body';
+  /// Create setup link
+  static const adminRoInviteSend = 'admin.ro.invite_send';
+  /// Full name
+  static const adminRoFName = 'admin.ro.f_name';
+  /// Work email
+  static const adminRoFEmail = 'admin.ro.f_email';
+  /// Role
+  static const adminRoFRole = 'admin.ro.f_role';
+  /// Everything, including platform settings and staff accounts.
+  static const adminRoRoleHintSuperAdmin = 'admin.ro.role_hint.super_admin';
+  /// Can change companies, users, reviews, credits and templates.
+  static const adminRoRoleHintAdmin = 'admin.ro.role_hint.admin';
+  /// Can look at everything but can't change anything.
+  static const adminRoRoleHintSupport = 'admin.ro.role_hint.support';
+  /// Enter their full name.
+  static const adminRoErrName = 'admin.ro.err.name';
+  /// Enter a valid email.
+  static const adminRoErrEmail = 'admin.ro.err.email';
+  /// This email already has a staff account.
+  static const adminRoErrExists = 'admin.ro.err.exists';
+  /// Keep at least one super admin.
+  static const adminRoErrLastSuperAdmin = 'admin.ro.err.last_super_admin';
+  /// Ask another super admin to change your own account.
+  static const adminRoErrNotYourself = 'admin.ro.err.not_yourself';
+  /// Turn the account back on first.
+  static const adminRoErrStaffDisabled = 'admin.ro.err.staff_disabled';
+  /// Setup link ready
+  static const adminRoLinkTitle = 'admin.ro.link_title';
+  /// Send this link to {name}. They'll set a password and an authenticator app.
+  static const adminRoLinkBody = 'admin.ro.link_body';
+  /// This link is shown only once and works for 72 hours.
+  static const adminRoLinkNote = 'admin.ro.link_note';
+  /// Copy link
+  static const adminRoCopy = 'admin.ro.copy';
+  /// Copied
+  static const adminRoCopied = 'admin.ro.copied';
+  /// Done
+  static const adminRoDone = 'admin.ro.done';
+  /// New setup link
+  static const adminRoNewLink = 'admin.ro.new_link';
+  /// Turn off
+  static const adminRoTurnOff = 'admin.ro.turn_off';
+  /// Turn on
+  static const adminRoTurnOn = 'admin.ro.turn_on';
+  /// Turn off {name}?
+  static const adminRoAskOffTitle = 'admin.ro.ask.off.title';
+  /// They'll be signed out at once and can't log in until you turn the account back on.
+  static const adminRoAskOffBody = 'admin.ro.ask.off.body';
+  /// Turn off
+  static const adminRoAskOffConfirm = 'admin.ro.ask.off.confirm';
+  /// Turn on {name}?
+  static const adminRoAskOnTitle = 'admin.ro.ask.on.title';
+  /// They'll be able to log in again.
+  static const adminRoAskOnBody = 'admin.ro.ask.on.body';
+  /// Turn on
+  static const adminRoAskOnConfirm = 'admin.ro.ask.on.confirm';
+  /// New setup link for {name}?
+  static const adminRoAskLinkTitle = 'admin.ro.ask.link.title';
+  /// Their password and authenticator are cleared and they're signed out. Use this for a lost phone or password.
+  static const adminRoAskLinkBody = 'admin.ro.ask.link.body';
+  /// Create link
+  static const adminRoAskLinkConfirm = 'admin.ro.ask.link.confirm';
+  /// Change {name}'s role?
+  static const adminRoAskRoleTitle = 'admin.ro.ask.role.title';
+  /// {name} will become {role}. It takes effect on their next page load.
+  static const adminRoAskRoleBody = 'admin.ro.ask.role.body';
+  /// Change role
+  static const adminRoAskRoleConfirm = 'admin.ro.ask.role.confirm';
 }

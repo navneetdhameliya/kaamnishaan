@@ -4188,6 +4188,97 @@
         "title": "AdminReviewRules",
         "type": "object"
       },
+      "AdminRoleCell": {
+        "properties": {
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "For partial: technicians, quick_job, if_allowed, secure_link, own_company",
+            "title": "Note"
+          },
+          "value": {
+            "enum": [
+              "yes",
+              "no",
+              "partial"
+            ],
+            "title": "Value",
+            "type": "string"
+          }
+        },
+        "required": [
+          "value",
+          "note"
+        ],
+        "title": "AdminRoleCell",
+        "type": "object"
+      },
+      "AdminRoleRow": {
+        "properties": {
+          "cells": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/AdminRoleCell"
+            },
+            "description": "super_admin, owner, manager, technician, customer",
+            "title": "Cells",
+            "type": "object"
+          },
+          "key": {
+            "title": "Key",
+            "type": "string"
+          }
+        },
+        "required": [
+          "key",
+          "cells"
+        ],
+        "title": "AdminRoleRow",
+        "type": "object"
+      },
+      "AdminRolesOut": {
+        "properties": {
+          "can_act": {
+            "title": "Can Act",
+            "type": "boolean"
+          },
+          "matrix": {
+            "items": {
+              "$ref": "#/components/schemas/AdminRoleRow"
+            },
+            "title": "Matrix",
+            "type": "array"
+          },
+          "staff": {
+            "items": {
+              "$ref": "#/components/schemas/AdminStaffRow"
+            },
+            "title": "Staff",
+            "type": "array"
+          },
+          "staff_matrix": {
+            "description": "What each admin panel role can do",
+            "items": {
+              "$ref": "#/components/schemas/AdminRoleRow"
+            },
+            "title": "Staff Matrix",
+            "type": "array"
+          }
+        },
+        "required": [
+          "matrix",
+          "staff_matrix",
+          "staff",
+          "can_act"
+        ],
+        "title": "AdminRolesOut",
+        "type": "object"
+      },
       "AdminScriptStep": {
         "properties": {
           "key": {
@@ -4220,6 +4311,158 @@
           "text"
         ],
         "title": "AdminScriptStepIn",
+        "type": "object"
+      },
+      "AdminStaffInvite": {
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "format": "email",
+            "title": "Email",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 120,
+            "minLength": 2,
+            "title": "Name",
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "super_admin",
+              "admin",
+              "support"
+            ],
+            "title": "Role",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "role"
+        ],
+        "title": "AdminStaffInvite",
+        "type": "object"
+      },
+      "AdminStaffLink": {
+        "properties": {
+          "setup_link": {
+            "description": "Shown once; works for 72 hours",
+            "title": "Setup Link",
+            "type": "string"
+          },
+          "staff": {
+            "$ref": "#/components/schemas/AdminStaffRow"
+          }
+        },
+        "required": [
+          "staff",
+          "setup_link"
+        ],
+        "title": "AdminStaffLink",
+        "type": "object"
+      },
+      "AdminStaffRow": {
+        "properties": {
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "last_login_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Login At"
+          },
+          "me": {
+            "title": "Me",
+            "type": "boolean"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "super_admin",
+              "admin",
+              "support"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "invited",
+              "active",
+              "disabled"
+            ],
+            "title": "Status",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "email",
+          "role",
+          "status",
+          "last_login_at",
+          "created_at",
+          "me"
+        ],
+        "title": "AdminStaffRow",
+        "type": "object"
+      },
+      "AdminStaffUpdate": {
+        "additionalProperties": false,
+        "properties": {
+          "active": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Active"
+          },
+          "role": {
+            "anyOf": [
+              {
+                "enum": [
+                  "super_admin",
+                  "admin",
+                  "support"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Role"
+          }
+        },
+        "title": "AdminStaffUpdate",
         "type": "object"
       },
       "AdminStat": {
@@ -21735,6 +21978,188 @@
           }
         ],
         "summary": "Restore Review",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/roles": {
+      "get": {
+        "description": "Who can do what (from the rules the server enforces) and the KaamNishaan staff accounts.",
+        "operationId": "roles_api_v1_admin_roles_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminRolesOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Roles",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/staff": {
+      "post": {
+        "description": "The setup link is shown once, to share yourself (no email needed). It works for 72 hours.",
+        "operationId": "invite_staff_api_v1_admin_staff_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminStaffInvite"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminStaffLink"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Invite Staff",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/staff/{staff_id}": {
+      "patch": {
+        "description": "Change the role, or turn the account off (signs them out at once) or back on.",
+        "operationId": "update_staff_api_v1_admin_staff__staff_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "staff_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Staff Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminStaffUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminStaffRow"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Update Staff",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/staff/{staff_id}/setup-link": {
+      "post": {
+        "description": "For a lost phone or password: clears their password and authenticator and signs them out.",
+        "operationId": "staff_setup_link_api_v1_admin_staff__staff_id__setup_link_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "staff_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Staff Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminStaffLink"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Staff Setup Link",
         "tags": [
           "admin"
         ]

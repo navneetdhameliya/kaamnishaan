@@ -8,6 +8,7 @@ import {
   Inbox,
   KeyRound,
   ListChecks,
+  Lock,
   LogOut,
   Menu,
   MessageSquareText,
@@ -56,6 +57,7 @@ export const NAV: { section: string; items: NavItem[] }[] = [
       { key: 'audit', path: '/audit-logs', icon: ScrollText, ready: true },
       { key: 'settings', path: '/settings', icon: Globe, ready: true },
       { key: 'email', path: '/email-settings', icon: Bell, ready: true },
+      { key: 'roles', path: '/roles', icon: Lock, ready: true },
     ],
   },
 ];

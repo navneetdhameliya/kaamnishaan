@@ -3000,6 +3000,90 @@ class AdminReviewRulesModel {
       };
 }
 
+AdminRoleCellModel adminRoleCellModelFromJson(String str) => AdminRoleCellModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminRoleCellModelToJson(AdminRoleCellModel data) => json.encode(data.toJson());
+
+class AdminRoleCellModel {
+  /// For partial: technicians, quick_job, if_allowed, secure_link, own_company
+  final String? note;
+  /// One of: yes, no, partial
+  final String value;
+
+  const AdminRoleCellModel({
+    this.note,
+    required this.value,
+  });
+
+  factory AdminRoleCellModel.fromJson(Map<String, dynamic> json) => AdminRoleCellModel(
+        note: json['note'] as String?,
+        value: json['value'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'note': note,
+        'value': value,
+      };
+}
+
+AdminRoleRowModel adminRoleRowModelFromJson(String str) => AdminRoleRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminRoleRowModelToJson(AdminRoleRowModel data) => json.encode(data.toJson());
+
+class AdminRoleRowModel {
+  /// super_admin, owner, manager, technician, customer
+  final Map<String, dynamic> cells;
+  final String key;
+
+  const AdminRoleRowModel({
+    required this.cells,
+    required this.key,
+  });
+
+  factory AdminRoleRowModel.fromJson(Map<String, dynamic> json) => AdminRoleRowModel(
+        cells: Map<String, dynamic>.from(json['cells'] as Map),
+        key: json['key'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'cells': cells,
+        'key': key,
+      };
+}
+
+AdminRolesOutModel adminRolesOutModelFromJson(String str) => AdminRolesOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminRolesOutModelToJson(AdminRolesOutModel data) => json.encode(data.toJson());
+
+class AdminRolesOutModel {
+  final bool canAct;
+  final List<AdminRoleRowModel> matrix;
+  final List<AdminStaffRowModel> staff;
+  /// What each admin panel role can do
+  final List<AdminRoleRowModel> staffMatrix;
+
+  const AdminRolesOutModel({
+    required this.canAct,
+    required this.matrix,
+    required this.staff,
+    required this.staffMatrix,
+  });
+
+  factory AdminRolesOutModel.fromJson(Map<String, dynamic> json) => AdminRolesOutModel(
+        canAct: json['can_act'] as bool,
+        matrix: (json['matrix'] as List).map((e) => AdminRoleRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        staff: (json['staff'] as List).map((e) => AdminStaffRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+        staffMatrix: (json['staff_matrix'] as List).map((e) => AdminRoleRowModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'matrix': matrix.map((e) => e.toJson()).toList(),
+        'staff': staff.map((e) => e.toJson()).toList(),
+        'staff_matrix': staffMatrix.map((e) => e.toJson()).toList(),
+      };
+}
+
 AdminScriptStepModel adminScriptStepModelFromJson(String str) => AdminScriptStepModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminScriptStepModelToJson(AdminScriptStepModel data) => json.encode(data.toJson());
@@ -3041,6 +3125,135 @@ class AdminScriptStepInModel {
 
   Map<String, dynamic> toJson() => {
         'text': text,
+      };
+}
+
+AdminStaffInviteModel adminStaffInviteModelFromJson(String str) => AdminStaffInviteModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminStaffInviteModelToJson(AdminStaffInviteModel data) => json.encode(data.toJson());
+
+class AdminStaffInviteModel {
+  final String email;
+  final String name;
+  /// One of: super_admin, admin, support
+  final String role;
+
+  const AdminStaffInviteModel({
+    required this.email,
+    required this.name,
+    required this.role,
+  });
+
+  factory AdminStaffInviteModel.fromJson(Map<String, dynamic> json) => AdminStaffInviteModel(
+        email: json['email'] as String,
+        name: json['name'] as String,
+        role: json['role'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'email': email,
+        'name': name,
+        'role': role,
+      };
+}
+
+AdminStaffLinkModel adminStaffLinkModelFromJson(String str) => AdminStaffLinkModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminStaffLinkModelToJson(AdminStaffLinkModel data) => json.encode(data.toJson());
+
+class AdminStaffLinkModel {
+  /// Shown once; works for 72 hours
+  final String setupLink;
+  final AdminStaffRowModel staff;
+
+  const AdminStaffLinkModel({
+    required this.setupLink,
+    required this.staff,
+  });
+
+  factory AdminStaffLinkModel.fromJson(Map<String, dynamic> json) => AdminStaffLinkModel(
+        setupLink: json['setup_link'] as String,
+        staff: AdminStaffRowModel.fromJson(json['staff'] as Map<String, dynamic>),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'setup_link': setupLink,
+        'staff': staff.toJson(),
+      };
+}
+
+AdminStaffRowModel adminStaffRowModelFromJson(String str) => AdminStaffRowModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminStaffRowModelToJson(AdminStaffRowModel data) => json.encode(data.toJson());
+
+class AdminStaffRowModel {
+  final DateTime createdAt;
+  final String email;
+  final String id;
+  final DateTime? lastLoginAt;
+  final bool me;
+  final String name;
+  /// One of: super_admin, admin, support
+  final String role;
+  /// One of: invited, active, disabled
+  final String status;
+
+  const AdminStaffRowModel({
+    required this.createdAt,
+    required this.email,
+    required this.id,
+    this.lastLoginAt,
+    required this.me,
+    required this.name,
+    required this.role,
+    required this.status,
+  });
+
+  factory AdminStaffRowModel.fromJson(Map<String, dynamic> json) => AdminStaffRowModel(
+        createdAt: DateTime.parse(json['created_at'] as String),
+        email: json['email'] as String,
+        id: json['id'] as String,
+        lastLoginAt: json['last_login_at'] == null ? null : DateTime.parse(json['last_login_at'] as String),
+        me: json['me'] as bool,
+        name: json['name'] as String,
+        role: json['role'] as String,
+        status: json['status'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'created_at': createdAt.toIso8601String(),
+        'email': email,
+        'id': id,
+        'last_login_at': lastLoginAt?.toIso8601String(),
+        'me': me,
+        'name': name,
+        'role': role,
+        'status': status,
+      };
+}
+
+AdminStaffUpdateModel adminStaffUpdateModelFromJson(String str) => AdminStaffUpdateModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminStaffUpdateModelToJson(AdminStaffUpdateModel data) => json.encode(data.toJson());
+
+class AdminStaffUpdateModel {
+  final bool? active;
+  /// One of: super_admin, admin, support
+  final String? role;
+
+  const AdminStaffUpdateModel({
+    this.active,
+    this.role,
+  });
+
+  factory AdminStaffUpdateModel.fromJson(Map<String, dynamic> json) => AdminStaffUpdateModel(
+        active: json['active'] as bool?,
+        role: json['role'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'active': active,
+        'role': role,
       };
 }
 
