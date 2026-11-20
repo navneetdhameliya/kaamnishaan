@@ -71,9 +71,20 @@ async def test_ai_config_budget_and_fallback(client, ready, fake_ai, seed_back):
 
 
 def test_contacts_are_hidden_before_sending():
-    out = masked({"notes": ["Call Ravi on 98250 11111 or ravi@x.in", 12], "id": "photo:1"})
+    ev = {
+        "notes": ["Call Ravi on 98250 11111 or ravi@x.in", 12],
+        "photos": [{"id": "0b9e9f36-4545-4c55-9a51-7e1f3d1c0101", "taken_at": "2026-11-20T18:30:00+00:00",
+                    "notes": ["Owner phone 9825011111"]}],
+        "before_after_pairs": [{"before": "11112222-3333-4444-5555-666677778888", "after": "x"}],
+    }  # fmt: skip
+    out = masked(ev)
     assert "98250" not in out["notes"][0] and "ravi@x.in" not in out["notes"][0] and out["notes"][1] == 12
-    assert out["id"] == "photo:1"
+    assert (
+        out["photos"][0]["id"] == ev["photos"][0]["id"]
+        and out["photos"][0]["taken_at"] == "2026-11-20T18:30:00+00:00"
+    )
+    assert "9825011111" not in out["photos"][0]["notes"][0]
+    assert out["before_after_pairs"] == ev["before_after_pairs"]
     assert masked({"a": "98250 11111"}, False) == {"a": "98250 11111"}
 
 

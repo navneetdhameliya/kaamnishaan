@@ -56,8 +56,16 @@ async def ai_for(db: AsyncSession, *, budgeted: bool) -> AIProvider | None:
     return ai
 
 
+# ids, links and times are kept as they are: the AI must quote them back exactly
+KEEP_KEYS = {"id", "ref", "refs", "before", "after", "number", "stage", "shot"}
+
+
+def _keep(key: str) -> bool:
+    return key in KEEP_KEYS or key.endswith("_id") or key.endswith("_at")
+
+
 def masked(value, on: bool = True):
-    """Phone numbers and emails inside every text of the evidence, hidden before it goes to the AI."""
+    """Phone numbers and emails inside the texts of the evidence, hidden before it goes to the AI."""
     if not on:
         return value
     if isinstance(value, str):
@@ -65,5 +73,5 @@ def masked(value, on: bool = True):
     if isinstance(value, list):
         return [masked(v) for v in value]
     if isinstance(value, dict):
-        return {k: masked(v) for k, v in value.items()}
+        return {k: v if _keep(str(k)) else masked(v) for k, v in value.items()}
     return value
