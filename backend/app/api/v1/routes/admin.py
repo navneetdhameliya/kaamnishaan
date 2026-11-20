@@ -108,6 +108,15 @@ from app.schemas.support import (
     AdminTicketPatch,
     AdminTicketReply,
 )  # fmt: skip
+from app.schemas.texts import (
+    AdminPageOut,
+    AdminPageSave,
+    AdminPagesOut,
+    AdminPreviewIn,
+    AdminPreviewOut,
+    AdminTextsIn,
+    AdminTextsOut,
+)
 from app.services import (
     admin_ai,
     admin_ai_calls,
@@ -132,6 +141,7 @@ from app.services import (
     ai_calls,
     audit,
     staff,
+    texts,
 )
 from app.services import checklists as checklist_svc
 from app.services.platform import AiConfig
@@ -1491,3 +1501,67 @@ async def cancel_announcement(
     """Cancel a scheduled announcement before it goes."""
     _can_change(me)
     return await admin_support.cancel(db, announcement_id, staff_id=me.staff.id, ip=client_ip(request))
+
+
+# ---- A24 Website content, A25 Localized content ---------------------------------------------------------
+@router.get("/website-content", response_model=AdminPagesOut)
+async def website_pages(me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)) -> AdminPagesOut:
+    """The website pages whose texts staff can change, with unpublished changes per page."""
+    return await texts.pages(db, can_act=me.staff.role in ("super_admin", "admin"))
+
+
+@router.get("/website-content/{page}", response_model=AdminPageOut)
+async def website_page(
+    page: str, _: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminPageOut:
+    """Each text on the page in 5 languages: what is live and what is saved but not published."""
+    return await texts.page(db, page)
+
+
+@router.put("/website-content/{page}", response_model=AdminPageOut)
+async def save_website_page(
+    page: str, body: AdminPageSave, request: Request,
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminPageOut:  # fmt: skip
+    """Saves changes as drafts; the website keeps showing the live text until Publish."""
+    _can_change(me)
+    return await texts.save_drafts(db, page, body.values, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.post("/website-content/{page}/publish", response_model=AdminPageOut)
+async def publish_website_page(
+    page: str, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminPageOut:
+    _can_change(me)
+    return await texts.publish(db, page, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.post("/website-content/{page}/discard", response_model=AdminPageOut)
+async def discard_website_page(
+    page: str, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminPageOut:
+    _can_change(me)
+    return await texts.discard(db, page, staff_id=me.staff.id, ip=client_ip(request))
+
+
+@router.post("/website-content/{page}/preview", response_model=AdminPreviewOut)
+async def preview_website_page(
+    page: str, body: AdminPreviewIn, me: Staff = Depends(get_staff)
+) -> AdminPreviewOut:
+    """A link to the website page showing the unpublished changes (works for 1 hour)."""
+    return AdminPreviewOut(url=texts.preview_link(page, body.lang, me.staff.id))
+
+
+@router.get("/texts", response_model=AdminTextsOut)
+async def admin_texts(me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)) -> AdminTextsOut:
+    """Texts staff changed or checked; the built-in texts are in the admin panel itself."""
+    return await texts.all_texts(db, can_act=me.staff.role in ("super_admin", "admin"))
+
+
+@router.put("/texts", response_model=AdminTextsOut)
+async def change_texts(
+    body: AdminTextsIn, request: Request, me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminTextsOut:
+    """Changes go live at once (the app, website and admin panel pick them up when they next start)."""
+    _can_change(me)
+    return await texts.change_texts(db, body.changes, staff_id=me.staff.id, ip=client_ip(request))

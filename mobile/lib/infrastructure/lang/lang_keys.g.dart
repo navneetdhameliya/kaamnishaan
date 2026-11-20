@@ -8422,4 +8422,264 @@ abstract final class LangKeys {
   static const adminAuTSupportTicket = 'admin.au.t.support_ticket';
   /// Announcement
   static const adminAuTAnnouncement = 'admin.au.t.announcement';
+  /// KaamNishaan — Proof of work for field service teams
+  static const siteSeoHomeTitle = 'site.seo.home.title';
+  /// Photos, checklists and voice notes become a clear AI report your customer can trust — in 5 languages. Free trial, no card needed.
+  static const siteSeoHomeDescription = 'site.seo.home.description';
+  /// Pricing — KaamNishaan
+  static const siteSeoPricingTitle = 'site.seo.pricing.title';
+  /// Simple monthly plans for field service teams. AI reports and follow-up credits on every plan. Start with a free trial.
+  static const siteSeoPricingDescription = 'site.seo.pricing.description';
+  /// Features — KaamNishaan
+  static const siteSeoFeaturesTitle = 'site.seo.features.title';
+  /// Jobs, photo proof, checklists, voice notes, AI reports, PDF and customer sharing — one simple app that works offline.
+  static const siteSeoFeaturesDescription = 'site.seo.features.description';
+  /// About us — KaamNishaan
+  static const siteSeoAboutTitle = 'site.seo.about.title';
+  /// KaamNishaan means “mark of work”. We build simple tools that help field workers prove their work, in their own language.
+  static const siteSeoAboutDescription = 'site.seo.about.description';
+  /// Contact us — KaamNishaan
+  static const siteSeoContactTitle = 'site.seo.contact.title';
+  /// Questions about KaamNishaan? Email, WhatsApp or call us. We reply within one working day.
+  static const siteSeoContactDescription = 'site.seo.contact.description';
+  /// Book a demo — KaamNishaan
+  static const siteSeoDemoTitle = 'site.seo.demo.title';
+  /// See KaamNishaan on your own jobs in a short video call with our team.
+  static const siteSeoDemoDescription = 'site.seo.demo.description';
+  /// Blog — guides for field service teams
+  static const siteSeoBlogTitle = 'site.seo.blog.title';
+  /// Practical how-tos on photo proof, checklists and service reports for HVAC, roofing, solar and more.
+  static const siteSeoBlogDescription = 'site.seo.blog.description';
+  /// HVAC service reports — KaamNishaan
+  static const siteSeoIndHvacTitle = 'site.seo.ind_hvac.title';
+  /// Photo proof, checklists and AI reports made for HVAC teams. Settle disputes and get paid faster.
+  static const siteSeoIndHvacDescription = 'site.seo.ind_hvac.description';
+  /// Roofing service reports — KaamNishaan
+  static const siteSeoIndRoofingTitle = 'site.seo.ind_roofing.title';
+  /// Photo proof, checklists and AI reports made for roofing teams. Settle disputes and get paid faster.
+  static const siteSeoIndRoofingDescription = 'site.seo.ind_roofing.description';
+  /// Solar service reports — KaamNishaan
+  static const siteSeoIndSolarTitle = 'site.seo.ind_solar.title';
+  /// Photo proof, checklists and AI reports made for solar teams. Settle disputes and get paid faster.
+  static const siteSeoIndSolarDescription = 'site.seo.ind_solar.description';
+  /// Property maintenance service reports — KaamNishaan
+  static const siteSeoIndMaintenanceTitle = 'site.seo.ind_maintenance.title';
+  /// Photo proof, checklists and AI reports made for property maintenance teams. Settle disputes and get paid faster.
+  static const siteSeoIndMaintenanceDescription = 'site.seo.ind_maintenance.description';
+  /// Pest control service reports — KaamNishaan
+  static const siteSeoIndPestControlTitle = 'site.seo.ind_pest_control.title';
+  /// Photo proof, checklists and AI reports made for pest control teams. Settle disputes and get paid faster.
+  static const siteSeoIndPestControlDescription = 'site.seo.ind_pest_control.description';
+  /// Cleaning service reports — KaamNishaan
+  static const siteSeoIndCleaningTitle = 'site.seo.ind_cleaning.title';
+  /// Photo proof, checklists and AI reports made for cleaning teams. Settle disputes and get paid faster.
+  static const siteSeoIndCleaningDescription = 'site.seo.ind_cleaning.description';
+  /// Preview — these changes are not on the live website yet.
+  static const sitePreview = 'site.preview';
+  /// Website content
+  static const adminNavWebsiteContent = 'admin.nav.website_content';
+  /// Localized content
+  static const adminNavTexts = 'admin.nav.texts';
+  /// Website pages
+  static const adminWcPages = 'admin.wc.pages';
+  /// Home
+  static const adminWcPageHome = 'admin.wc.page.home';
+  /// Pricing
+  static const adminWcPagePricing = 'admin.wc.page.pricing';
+  /// Features
+  static const adminWcPageFeatures = 'admin.wc.page.features';
+  /// About
+  static const adminWcPageAbout = 'admin.wc.page.about';
+  /// Contact
+  static const adminWcPageContact = 'admin.wc.page.contact';
+  /// Book a demo
+  static const adminWcPageDemo = 'admin.wc.page.demo';
+  /// Blog
+  static const adminWcPageBlog = 'admin.wc.page.blog';
+  /// Industries / {trade}
+  static const adminWcPageIndustry = 'admin.wc.page.industry';
+  /// HVAC
+  static const adminWcTradeHvac = 'admin.wc.trade.hvac';
+  /// Roofing
+  static const adminWcTradeRoofing = 'admin.wc.trade.roofing';
+  /// Solar
+  static const adminWcTradeSolar = 'admin.wc.trade.solar';
+  /// Property maintenance
+  static const adminWcTradeMaintenance = 'admin.wc.trade.maintenance';
+  /// Pest control
+  static const adminWcTradePestControl = 'admin.wc.trade.pest_control';
+  /// Cleaning
+  static const adminWcTradeCleaning = 'admin.wc.trade.cleaning';
+  /// {n} unpublished changes
+  static const adminWcDrafts = 'admin.wc.drafts';
+  /// Published · edited {ago}
+  static const adminWcEdited = 'admin.wc.edited';
+  /// Original texts
+  static const adminWcBuiltIn = 'admin.wc.built_in';
+  /// Unpublished changes
+  static const adminWcUnpublished = 'admin.wc.unpublished';
+  /// Last change {ago} by {who}
+  static const adminWcLast = 'admin.wc.last';
+  /// You can see these texts. An admin can change them.
+  static const adminWcReadOnly = 'admin.wc.read_only';
+  /// Top of the page
+  static const adminWcSHero = 'admin.wc.s.hero';
+  /// The problem
+  static const adminWcSProblem = 'admin.wc.s.problem';
+  /// How it works
+  static const adminWcSHow = 'admin.wc.s.how';
+  /// Questions (FAQ)
+  static const adminWcSFaq = 'admin.wc.s.faq';
+  /// Closing call to action
+  static const adminWcSFinal = 'admin.wc.s.final';
+  /// Why we built it
+  static const adminWcSWhy = 'admin.wc.s.why';
+  /// Search engines
+  static const adminWcSSeo = 'admin.wc.s.seo';
+  /// Shown in Google results and on the browser tab.
+  static const adminWcSeoHint = 'admin.wc.seo_hint';
+  /// Small label above the headline
+  static const adminWcFEyebrow = 'admin.wc.f.eyebrow';
+  /// Headline
+  static const adminWcFHeadline = 'admin.wc.f.headline';
+  /// Sub-headline
+  static const adminWcFSubheadline = 'admin.wc.f.subheadline';
+  /// Primary button
+  static const adminWcFPrimaryButton = 'admin.wc.f.primary_button';
+  /// Secondary button
+  static const adminWcFSecondaryButton = 'admin.wc.f.secondary_button';
+  /// Question {n}
+  static const adminWcFQuestion = 'admin.wc.f.question';
+  /// Answer {n}
+  static const adminWcFAnswer = 'admin.wc.f.answer';
+  /// SEO title
+  static const adminWcFSeoTitle = 'admin.wc.f.seo_title';
+  /// SEO description
+  static const adminWcFSeoDescription = 'admin.wc.f.seo_description';
+  /// Not saved
+  static const adminWcStateUnsaved = 'admin.wc.state.unsaved';
+  /// Draft
+  static const adminWcStateDraft = 'admin.wc.state.draft';
+  /// Changed
+  static const adminWcStateChanged = 'admin.wc.state.changed';
+  /// Use original
+  static const adminWcOriginal = 'admin.wc.original';
+  /// {n} of {max} characters
+  static const adminWcChars = 'admin.wc.chars';
+  /// Keep {parts}
+  static const adminWcKeep = 'admin.wc.keep';
+  /// Preview
+  static const adminWcPreview = 'admin.wc.preview';
+  /// Publish
+  static const adminWcPublish = 'admin.wc.publish';
+  /// Save draft
+  static const adminWcSave = 'admin.wc.save';
+  /// Draft saved. The website changes when you publish.
+  static const adminWcSaved = 'admin.wc.saved';
+  /// Published. The website shows it within a minute.
+  static const adminWcPublished = 'admin.wc.published';
+  /// Discard drafts
+  static const adminWcDiscard = 'admin.wc.discard';
+  /// Drafts removed.
+  static const adminWcDiscarded = 'admin.wc.discarded';
+  /// Undo edits
+  static const adminWcUndo = 'admin.wc.undo';
+  /// {n} changes waiting to be published
+  static const adminWcPending = 'admin.wc.pending';
+  /// Everything is published.
+  static const adminWcNothing = 'admin.wc.nothing';
+  /// Search key or text
+  static const adminLcSearch = 'admin.lc.search';
+  /// Area
+  static const adminLcArea = 'admin.lc.area';
+  /// Mobile app
+  static const adminLcAreaApp = 'admin.lc.area.app';
+  /// Website
+  static const adminLcAreaSite = 'admin.lc.area.site';
+  /// Admin panel
+  static const adminLcAreaAdmin = 'admin.lc.area.admin';
+  /// Status
+  static const adminLcStatus = 'admin.lc.status';
+  /// Not checked in {lang}
+  static const adminLcStNotReviewed = 'admin.lc.st.not_reviewed';
+  /// Checked in {lang}
+  static const adminLcStReviewed = 'admin.lc.st.reviewed';
+  /// Changed here
+  static const adminLcStChanged = 'admin.lc.st.changed';
+  /// All
+  static const adminLcStAll = 'admin.lc.st.all';
+  /// Source
+  static const adminLcSource = 'admin.lc.source';
+  /// Ready
+  static const adminLcReady = 'admin.lc.ready';
+  /// Needs review
+  static const adminLcNeedsReview = 'admin.lc.needs_review';
+  /// {n} changed
+  static const adminLcChangedN = 'admin.lc.changed_n';
+  /// % = texts a person checked, out of {n} in this area. Pick a language to work on it.
+  static const adminLcCoverHint = 'admin.lc.cover_hint';
+  /// {n} texts
+  static const adminLcCount = 'admin.lc.count';
+  /// Mark these {n} as checked in {lang}
+  static const adminLcMarkAll = 'admin.lc.mark_all';
+  /// {n} texts marked as checked in {lang}.
+  static const adminLcMarked = 'admin.lc.marked';
+  /// Key
+  static const adminLcKey = 'admin.lc.key';
+  /// Changed
+  static const adminLcChanged = 'admin.lc.changed';
+  /// Checked
+  static const adminLcChecked = 'admin.lc.checked';
+  /// Checked by {who}, {ago}
+  static const adminLcBy = 'admin.lc.by';
+  /// No texts match.
+  static const adminLcEmpty = 'admin.lc.empty';
+  /// Every text here is checked in {lang}.
+  static const adminLcAllChecked = 'admin.lc.all_checked';
+  /// Close
+  static const adminLcClose = 'admin.lc.close';
+  /// This text also has a website change waiting in Website content.
+  static const adminLcHasDraft = 'admin.lc.has_draft';
+  /// Goes live when saved. Apps pick it up when they next open.
+  static const adminLcLiveNote = 'admin.lc.live_note';
+  /// Save
+  static const adminLcSave = 'admin.lc.save';
+  /// Saved. It’s live now.
+  static const adminLcSaved = 'admin.lc.saved';
+  /// Import file
+  static const adminLcImport = 'admin.lc.import';
+  /// Use a CSV with a “key” column and language columns (en, hi, gu, es, fr), like Export makes.
+  static const adminLcBadFile = 'admin.lc.bad_file';
+  /// Nothing to change: the file matches what’s live.
+  static const adminLcNoChanges = 'admin.lc.no_changes';
+  /// Nothing to change. {n} rows had keys we don’t know.
+  static const adminLcNoChangesUnknown = 'admin.lc.no_changes_unknown';
+  /// Import texts?
+  static const adminLcImportTitle = 'admin.lc.import_title';
+  /// {n} texts in {keys} keys will change and go live now. Imported translations are marked as checked.
+  static const adminLcImportBody = 'admin.lc.import_body';
+  /// Import
+  static const adminLcApply = 'admin.lc.apply';
+  /// {n} texts imported.
+  static const adminLcImported = 'admin.lc.imported';
+  /// Saved website text drafts
+  static const adminAuAWebsiteDraftSaved = 'admin.au.a.website.draft_saved';
+  /// Published website texts
+  static const adminAuAWebsitePublished = 'admin.au.a.website.published';
+  /// Discarded website drafts
+  static const adminAuAWebsiteDiscarded = 'admin.au.a.website.discarded';
+  /// Changed or checked texts
+  static const adminAuATextsUpdated = 'admin.au.a.texts.updated';
+  /// Website page
+  static const adminAuTWebsitePage = 'admin.au.t.website_page';
+  /// Texts
+  static const adminAuTTexts = 'admin.au.t.texts';
+  /// 1 text
+  static const adminLcCountOne = 'admin.lc.count_one';
+  /// Mark this one as checked in {lang}
+  static const adminLcMarkAllOne = 'admin.lc.mark_all_one';
+  /// 1 unpublished change
+  static const adminWcDraftsOne = 'admin.wc.drafts_one';
+  /// 1 change waiting to be published
+  static const adminWcPendingOne = 'admin.wc.pending_one';
 }

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { rememberLang, startLang, translator, type Lang } from './lib/i18n';
+import { rememberLang, startLang, translator, useTextsVersion, type Lang } from './lib/i18n';
 import { session } from './lib/session';
 import type { StaffSession } from './lib/types';
 import { AuditLogs } from './pages/AuditLogs';
@@ -31,6 +31,8 @@ import { ExportReviews, Reviews } from './pages/Reviews';
 import { Templates } from './pages/Templates';
 import { Leads } from './pages/Leads';
 import { Notifications } from './pages/Notifications';
+import { Texts } from './pages/Texts';
+import { WebsiteContent } from './pages/WebsiteContent';
 import { ExportSupport, Support } from './pages/Support';
 import { Forgot, Login } from './pages/Login';
 import { Setup } from './pages/Setup';
@@ -44,7 +46,8 @@ const PUBLIC = ['/login', '/forgot-password', '/setup'];
 /** Admin panel (Step 4a): log in, setup links, the dashboard and the side menu. */
 export default function App() {
   const [lang, setLang] = useState<Lang>(startLang);
-  const t = useMemo(() => translator(lang), [lang]);
+  const texts = useTextsVersion();
+  const t = useMemo(() => translator(lang), [lang, texts]);
   const { path, search } = useLocation();
   const [sess, setSess] = useState<StaffSession | null>(session.get);
   const [days, setDays] = useState<Range>(() => {
@@ -113,6 +116,8 @@ export default function App() {
   else if (nav.key === 'audit') page = <AuditLogs key="audit" t={t} lang={lang} />;
   else if (nav.key === 'leads') page = <Leads key="leads" t={t} lang={lang} id={sub} />;
   else if (nav.key === 'support') page = <Support key="support" t={t} lang={lang} id={sub} />;
+  else if (nav.key === 'website_content') page = <WebsiteContent key="wc" t={t} lang={lang} page={sub} />;
+  else if (nav.key === 'texts') page = <Texts key="texts" t={t} lang={lang} />;
   else if (nav.key === 'notifications') page = <Notifications key="notifications" t={t} lang={lang} />;
   else if (userId) page = <UserDetail key={userId} t={t} lang={lang} id={userId} onName={onName} />;
   else page = <Users key={path} t={t} lang={lang} />;
@@ -123,8 +128,8 @@ export default function App() {
       onLang={setLang}
       path={path}
       staff={sess.staff}
-      crumb={sub && nav.key !== 'leads' && nav.key !== 'support' ? `${t(`admin.nav.${nav.section}`)} / ${name}` : t(`admin.nav.${nav.section}`)}
-      title={sub && nav.key !== 'leads' && nav.key !== 'support' ? pageName || name : name}
+      crumb={sub && nav.key !== 'leads' && nav.key !== 'support' && nav.key !== 'website_content' ? `${t(`admin.nav.${nav.section}`)} / ${name}` : t(`admin.nav.${nav.section}`)}
+      title={sub && nav.key !== 'leads' && nav.key !== 'support' && nav.key !== 'website_content' ? pageName || name : name}
       actions={nav.key === 'dashboard' || nav.key === 'ai_usage' ? <RangeSelect t={t} days={days} onChange={setDays} /> : nav.key === 'reviews' ? <ExportReviews t={t} /> : nav.key === 'jobs' && !sub ? <ExportJobs t={t} /> : nav.key === 'reports' && !sub ? <ExportReports t={t} /> : nav.key === 'subscriptions' ? <ExportSubscriptions t={t} lang={lang} /> : nav.key === 'support' ? <ExportSupport t={t} /> : undefined}
     >
       {page}

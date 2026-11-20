@@ -10,6 +10,8 @@ import {
   Home,
   Inbox,
   KeyRound,
+  Languages,
+  LayoutTemplate,
   Bot,
   CreditCard,
   Factory,
@@ -92,6 +94,8 @@ export const NAV: { section: string; items: NavItem[] }[] = [
     items: [
       { key: 'checklists', path: '/checklist-templates', icon: ListChecks, ready: true },
       { key: 'industries', path: '/industries', icon: Factory, ready: true },
+      { key: 'website_content', path: '/website-content', icon: LayoutTemplate, ready: true },
+      { key: 'texts', path: '/localized-content', icon: Languages, ready: true },
     ],
   },
   {

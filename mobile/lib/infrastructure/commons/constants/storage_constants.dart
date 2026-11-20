@@ -9,6 +9,9 @@ abstract final class StorageConstants {
   static const String onboardingSeen = 'kn.onboarding_seen';
   static const String deviceId = 'kn.device_id';
 
+  /// Texts staff changed in the admin panel (A25), so they show even when the app starts offline.
+  static const String changedTexts = 'kn.changed_texts';
+
   /// The last Today screen (per person), shown when there is no internet.
   static String today(String userId) => 'kn.today.$userId';
 }

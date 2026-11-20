@@ -35,7 +35,11 @@ const maps = [head, '// Placeholders use GetX @name syntax (trParams).', "import
 for (const l of LANGS) { maps.push(`        '${locale[l]}': {`); for (const [k, v] of Object.entries(data[l])) maps.push(`          '${k}': '${esc(v)}',`); maps.push('        },'); }
 maps.push('      };', '}', '');
 
+// Every key with its placeholders, so the API can check text changed in the admin panel (A24, A25).
+const textKeys = Object.fromEntries(Object.entries(data.en).map(([k, v]) => [k, ph(v)]));
+
 const outputs = {
+  'backend/app/content/text_keys.json': JSON.stringify(textKeys, null, 0).replace(/","/g, '",\n"') + '\n',
   'mobile/lib/infrastructure/lang/lang_keys.g.dart': keys.join('\n'),
   'mobile/lib/infrastructure/lang/translations.g.dart': maps.join('\n'),
 };

@@ -811,3 +811,53 @@ export interface AdminNotificationsOut {
   audience_sizes: Record<string, number>;
   can_act: boolean;
 }
+
+/** A24 Website content, A25 Localized content. */
+export interface FieldValue {
+  live: string | null;
+  draft: string | null;
+  has_draft: boolean;
+}
+export interface AdminPageField {
+  key: string;
+  label: string;
+  n: number | null;
+  max: number;
+  multiline: boolean;
+  values: Record<string, FieldValue>;
+}
+export interface AdminPageOut {
+  page: string;
+  path: string;
+  trade: string | null;
+  sections: { key: string; fields: AdminPageField[] }[];
+  drafts: number;
+  edited_at: string | null;
+  edited_by: string | null;
+}
+export interface AdminPagesOut {
+  pages: { page: string; path: string; trade: string | null; drafts: number; changed: number; edited_at: string | null }[];
+  can_act: boolean;
+  web_url: string;
+}
+export interface AdminTextRow {
+  key: string;
+  lang: string;
+  value: string | null;
+  draft: string | null;
+  has_draft: boolean;
+  reviewed_at: string | null;
+  reviewed_by: string | null;
+  updated_at: string;
+}
+export interface AdminTextsOut {
+  rows: AdminTextRow[];
+  can_act: boolean;
+}
+export interface AdminTextChange {
+  key: string;
+  lang: string;
+  set_value?: boolean;
+  value?: string | null;
+  reviewed?: boolean;
+}

@@ -14,6 +14,9 @@ class PreferencesService {
   String? get languageCode => _prefs.getString(StorageConstants.languageCode);
   Future<void> setLanguageCode(String code) => _prefs.setString(StorageConstants.languageCode, code);
 
+  String? get changedTexts => _prefs.getString(StorageConstants.changedTexts);
+  Future<void> setChangedTexts(String json) => _prefs.setString(StorageConstants.changedTexts, json);
+
   bool get onboardingSeen => _prefs.getBool(StorageConstants.onboardingSeen) ?? false;
   Future<void> setOnboardingSeen() => _prefs.setBool(StorageConstants.onboardingSeen, true);
 

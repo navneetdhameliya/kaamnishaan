@@ -1,3 +1,6 @@
+import { useEffect, useState } from 'react';
+
+import { textsReady } from '../lib/texts';
 import BookDemo from './BookDemo';
 import ComingSoon from './ComingSoon';
 import About from './About';
@@ -18,6 +21,28 @@ import Pricing from './Pricing';
 import { ROUTES, useConfig, useLang, usePlans } from './site';
 import StartTrial from './StartTrial';
 
+/** The SEO title and description for a page (A24 Website content). */
+function seoKey(page: string, industry?: string): string | null {
+  if (industry) return `ind_${industry}`;
+  const map: Record<string, string> = {
+    [ROUTES.home]: 'home', [ROUTES.pricing]: 'pricing', [ROUTES.features]: 'features', [ROUTES.about]: 'about',
+    [ROUTES.contact]: 'contact', [ROUTES.demo]: 'demo', [ROUTES.blog]: 'blog',
+  };
+  return map[page] ?? null;
+}
+
+function setMeta(title: string, description: string | null): void {
+  document.title = title;
+  let tag = document.querySelector<HTMLMetaElement>('meta[name="description"]');
+  if (!description) return;
+  if (!tag) {
+    tag = document.createElement('meta');
+    tag.name = 'description';
+    document.head.appendChild(tag);
+  }
+  tag.content = description;
+}
+
 /**
  * The marketing website: / (W01), /pricing (W02), /start-trial (W04), /login (W28), /book-demo (W03), /contact (W05),
  * /features (W08), /features/<slug> (W09–W17, W31) and /industries/<trade> (W18–W23) /about (W24), /blog and /blog/<slug> (W25/W26), /privacy and /terms (W06/W07); other paths show "coming soon".
@@ -34,10 +59,25 @@ export default function Site({ path }: { path: string }) {
   const feat = page.startsWith(`${ROUTES.features}/`) ? featureBySlug(page.slice(ROUTES.features.length + 1)) : undefined;
   const spec = feat ? featurePage(feat.id) : undefined;
   const ind = page.startsWith('/industries/') ? industryByKey(page.slice('/industries/'.length)) : undefined;
-  const firstDataIn = config.kind !== 'loading' && plans.kind !== 'loading';
+  const [textsIn, setTextsIn] = useState(false);
+  useEffect(() => {
+    void textsReady.then(() => setTextsIn(true));
+  }, []);
+  const seo = seoKey(page, ind?.id);
+  useEffect(() => {
+    if (seo) setMeta(t(`site.seo.${seo}.title`), t(`site.seo.${seo}.description`));
+    else if (!page.startsWith(`${ROUTES.blog}/`) && page !== ROUTES.privacy && page !== ROUTES.terms) setMeta(t('site.seo.home.title'), null);
+  }, [seo, page, t, textsIn]);
+  const preview = textsIn && document.documentElement.dataset.preview === 'true';
+  const firstDataIn = config.kind !== 'loading' && plans.kind !== 'loading' && textsIn;
   return (
     <>
     <PageLoader ready={firstDataIn} />
+    {preview && (
+      <p role="status" className="sticky top-0 z-40 bg-status-warning-bg px-16 py-8 text-center text-[14px] font-semibold text-status-warning">
+        {t('site.preview')}
+      </p>
+    )}
     <SiteLayout t={t} lang={lang} setLang={setLang} trades={trades} announcement={page !== ROUTES.login}>
       {page === ROUTES.home ? (
         <Home t={t} lang={lang} plans={plans} retryPlans={retryPlans} trades={trades} />

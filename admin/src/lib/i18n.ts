@@ -1,3 +1,5 @@
+import { useSyncExternalStore } from 'react';
+
 import en from '../../../shared/i18n/en.json';
 import es from '../../../shared/i18n/es.json';
 import fr from '../../../shared/i18n/fr.json';
@@ -40,9 +42,34 @@ export function rememberLang(lang: Lang): void {
 
 export type T = (key: string, params?: Record<string, string | number>) => string;
 
+/** The built-in texts (shared/i18n), before any change made in the admin panel. */
+export const BUILT_IN: Readonly<Record<Lang, Readonly<Record<string, string>>>> = TEXTS;
+
+/** Texts staff changed in the admin panel (A24 Website content, A25 Localized content), per language. */
+let changed: Partial<Record<Lang, Record<string, string>>> = {};
+let changedVersion = 0;
+const listeners = new Set<() => void>();
+
+export function setChangedTexts(texts: Partial<Record<string, Record<string, string>>>): void {
+  changed = Object.fromEntries(Object.entries(texts).filter(([l]) => isLang(l))) as typeof changed;
+  changedVersion += 1;
+  listeners.forEach((f) => f());
+}
+
+/** Changes whenever new texts arrive, so screens can translate again. */
+export function useTextsVersion(): number {
+  return useSyncExternalStore(
+    (f) => {
+      listeners.add(f);
+      return () => listeners.delete(f);
+    },
+    () => changedVersion,
+  );
+}
+
 export function translator(lang: Lang): T {
   return (key, params) => {
-    const raw = TEXTS[lang][key] ?? TEXTS.en[key] ?? key;
+    const raw = changed[lang]?.[key] ?? TEXTS[lang][key] ?? changed.en?.[key] ?? TEXTS.en[key] ?? key;
     return params ? raw.replace(/\{(\w+)\}/g, (m, k: string) => (k in params ? String(params[k]) : m)) : raw;
   };
 }
