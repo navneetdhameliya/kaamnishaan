@@ -7014,4 +7014,90 @@ abstract final class LangKeys {
   static const adminAuAStaffCreditsAdjusted = 'admin.au.a.staff.credits_adjusted';
   /// Credits list
   static const adminAuTCredits = 'admin.au.t.credits';
+  /// Save changes
+  static const adminPsSave = 'admin.ps.save';
+  /// Saved. It applies to every company now.
+  static const adminPsSaved = 'admin.ps.saved';
+  /// Fix the highlighted fields to save.
+  static const adminPsFix = 'admin.ps.fix';
+  /// Only a super admin can change platform settings.
+  static const adminPsSuperOnly = 'admin.ps.super_only';
+  /// Maintenance mode is on: nobody can log in or sign up in the apps. The admin panel still works.
+  static const adminPsMaintenanceOn = 'admin.ps.maintenance_on';
+  /// General
+  static const adminPsGeneral = 'admin.ps.general';
+  /// Name and contact shown across the apps and website.
+  static const adminPsGeneralSub = 'admin.ps.general_sub';
+  /// Platform name
+  static const adminPsName = 'admin.ps.name';
+  /// The brand name is part of the apps and can’t be changed here
+  static const adminPsNameLocked = 'admin.ps.name_locked';
+  /// Default country
+  static const adminPsCountry = 'admin.ps.country';
+  /// Picked first on sign-up forms. A company’s currency follows its country.
+  static const adminPsCountryHint = 'admin.ps.country_hint';
+  /// Server setting ({value})
+  static const adminPsServerValue = 'admin.ps.server_value';
+  /// Support email
+  static const adminPsEmail = 'admin.ps.email';
+  /// Support WhatsApp
+  static const adminPsWhatsapp = 'admin.ps.whatsapp';
+  /// Leave a field empty to use the value set on the server (Render).
+  static const adminPsEmptyHint = 'admin.ps.empty_hint';
+  /// Enter a valid email.
+  static const adminPsESupportEmail = 'admin.ps.e.support_email';
+  /// Enter a full phone number.
+  static const adminPsESupportWhatsapp = 'admin.ps.e.support_whatsapp';
+  /// Pick a country from the list.
+  static const adminPsEDefaultCountry = 'admin.ps.e.default_country';
+  /// Enter a number from 2 to 25.
+  static const adminPsEMaxPhotoMb = 'admin.ps.e.max_photo_mb';
+  /// Features
+  static const adminPsFeatures = 'admin.ps.features';
+  /// Turn platform features on or off for every company.
+  static const adminPsFeaturesSub = 'admin.ps.features_sub';
+  /// New company sign-ups
+  static const adminPsFSignups = 'admin.ps.f.signups';
+  /// Owners can start a free trial themselves. When off, only KaamNishaan staff can create companies.
+  static const adminPsFSignupsHint = 'admin.ps.f.signups_hint';
+  /// AI report drafting
+  static const adminPsFAiDrafting = 'admin.ps.f.ai_drafting';
+  /// Drafts reports from photos, checklists and voice. When off, reports use the plain template.
+  static const adminPsFAiDraftingHint = 'admin.ps.f.ai_drafting_hint';
+  /// AI assistant
+  static const adminPsFAiAssistant = 'admin.ps.f.ai_assistant';
+  /// Chat about jobs in the office app.
+  static const adminPsFAiAssistantHint = 'admin.ps.f.ai_assistant_hint';
+  /// No OpenAI key is set on the server, so AI is off anyway.
+  static const adminPsFNoKey = 'admin.ps.f.no_key';
+  /// Maintenance mode
+  static const adminPsFMaintenance = 'admin.ps.f.maintenance';
+  /// Shows a notice and blocks new logins and sign-ups. The admin panel keeps working.
+  static const adminPsFMaintenanceHint = 'admin.ps.f.maintenance_hint';
+  /// Limits
+  static const adminPsLimits = 'admin.ps.limits';
+  /// Upload limits for every company.
+  static const adminPsLimitsSub = 'admin.ps.limits_sub';
+  /// Max photo size (MB)
+  static const adminPsPhoto = 'admin.ps.photo';
+  /// From 2 to 25. The app shrinks photos before upload, so 12 is plenty.
+  static const adminPsPhotoHint = 'admin.ps.photo_hint';
+  /// Report and technician limits per plan are set in Plans and pricing.
+  static const adminPsLimitsNote = 'admin.ps.limits_note';
+  /// Turn on maintenance mode?
+  static const adminPsConfirmTitle = 'admin.ps.confirm_title';
+  /// Nobody can log in or sign up in the apps until you turn it off. People already logged in can keep working.
+  static const adminPsConfirmBody = 'admin.ps.confirm_body';
+  /// Turn on
+  static const adminPsConfirmGo = 'admin.ps.confirm_go';
+  /// Changed platform settings
+  static const adminAuAStaffPlatformUpdated = 'admin.au.a.staff.platform_updated';
+  /// Turned maintenance mode on
+  static const adminAuAStaffMaintenanceOn = 'admin.au.a.staff.maintenance_on';
+  /// Turned maintenance mode off
+  static const adminAuAStaffMaintenanceOff = 'admin.au.a.staff.maintenance_off';
+  /// KaamNishaan is down for a short update. Logging in and signing up will work again soon.
+  static const siteNoticeMaintenance = 'site.notice.maintenance';
+  /// New sign-ups are paused right now. Please contact KaamNishaan support and we’ll set up your company.
+  static const siteNoticeSignupsClosed = 'site.notice.signups_closed';
 }

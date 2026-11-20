@@ -2326,6 +2326,126 @@ class AdminPlanMixRowModel {
       };
 }
 
+AdminPlatformOutModel adminPlatformOutModelFromJson(String str) => AdminPlatformOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPlatformOutModelToJson(AdminPlatformOutModel data) => json.encode(data.toJson());
+
+class AdminPlatformOutModel {
+  final bool canAct;
+  final List<AdminOptionModel> countries;
+  final AdminPlatformServerModel server;
+  final AdminPlatformSettingsModel settings;
+
+  const AdminPlatformOutModel({
+    required this.canAct,
+    required this.countries,
+    required this.server,
+    required this.settings,
+  });
+
+  factory AdminPlatformOutModel.fromJson(Map<String, dynamic> json) => AdminPlatformOutModel(
+        canAct: json['can_act'] as bool,
+        countries: (json['countries'] as List).map((e) => AdminOptionModel.fromJson(e as Map<String, dynamic>)).toList(),
+        server: AdminPlatformServerModel.fromJson(json['server'] as Map<String, dynamic>),
+        settings: AdminPlatformSettingsModel.fromJson(json['settings'] as Map<String, dynamic>),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'can_act': canAct,
+        'countries': countries.map((e) => e.toJson()).toList(),
+        'server': server.toJson(),
+        'settings': settings.toJson(),
+      };
+}
+
+/// What the server is set to (Render), used when a field above is empty.
+AdminPlatformServerModel adminPlatformServerModelFromJson(String str) => AdminPlatformServerModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPlatformServerModelToJson(AdminPlatformServerModel data) => json.encode(data.toJson());
+
+class AdminPlatformServerModel {
+  /// An OpenAI key is set; without it AI switches have no effect
+  final bool aiKey;
+  final String defaultCountry;
+  final bool emailOn;
+  final String? supportEmail;
+  final String? supportWhatsapp;
+
+  const AdminPlatformServerModel({
+    required this.aiKey,
+    required this.defaultCountry,
+    required this.emailOn,
+    this.supportEmail,
+    this.supportWhatsapp,
+  });
+
+  factory AdminPlatformServerModel.fromJson(Map<String, dynamic> json) => AdminPlatformServerModel(
+        aiKey: json['ai_key'] as bool,
+        defaultCountry: json['default_country'] as String,
+        emailOn: json['email_on'] as bool,
+        supportEmail: json['support_email'] as String?,
+        supportWhatsapp: json['support_whatsapp'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ai_key': aiKey,
+        'default_country': defaultCountry,
+        'email_on': emailOn,
+        'support_email': supportEmail,
+        'support_whatsapp': supportWhatsapp,
+      };
+}
+
+AdminPlatformSettingsModel adminPlatformSettingsModelFromJson(String str) => AdminPlatformSettingsModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminPlatformSettingsModelToJson(AdminPlatformSettingsModel data) => json.encode(data.toJson());
+
+class AdminPlatformSettingsModel {
+  final bool aiAssistant;
+  final bool aiDrafting;
+  final String? defaultCountry;
+  final bool maintenance;
+  final int maxPhotoMb;
+  final bool signups;
+  /// Empty = the server setting
+  final String? supportEmail;
+  /// Empty = the server setting
+  final String? supportWhatsapp;
+
+  const AdminPlatformSettingsModel({
+    required this.aiAssistant,
+    required this.aiDrafting,
+    this.defaultCountry,
+    required this.maintenance,
+    required this.maxPhotoMb,
+    required this.signups,
+    this.supportEmail,
+    this.supportWhatsapp,
+  });
+
+  factory AdminPlatformSettingsModel.fromJson(Map<String, dynamic> json) => AdminPlatformSettingsModel(
+        aiAssistant: json['ai_assistant'] as bool,
+        aiDrafting: json['ai_drafting'] as bool,
+        defaultCountry: json['default_country'] as String?,
+        maintenance: json['maintenance'] as bool,
+        maxPhotoMb: (json['max_photo_mb'] as num).toInt(),
+        signups: json['signups'] as bool,
+        supportEmail: json['support_email'] as String?,
+        supportWhatsapp: json['support_whatsapp'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'ai_assistant': aiAssistant,
+        'ai_drafting': aiDrafting,
+        'default_country': defaultCountry,
+        'maintenance': maintenance,
+        'max_photo_mb': maxPhotoMb,
+        'signups': signups,
+        'support_email': supportEmail,
+        'support_whatsapp': supportWhatsapp,
+      };
+}
+
 AdminReviewDetailModel adminReviewDetailModelFromJson(String str) => AdminReviewDetailModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminReviewDetailModelToJson(AdminReviewDetailModel data) => json.encode(data.toJson());

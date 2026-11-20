@@ -5,7 +5,7 @@ import { api, ApiError } from '../lib/api';
 import { clock, type Lang, type T } from '../lib/i18n';
 import type { ConfigOut, SessionOut } from '../lib/types';
 import { Logo } from './Layout';
-import { EMAIL_RE, ErrorSummary, Field, PasswordInput, StoreBadges, TextInput } from './form';
+import { EMAIL_RE, ErrorSummary, Field, PasswordInput, PlatformNotice, StoreBadges, TextInput } from './form';
 import { rv, Spinner } from './motion';
 import { ROUTES } from './site';
 
@@ -188,6 +188,7 @@ export default function Login({ t, lang, config }: { t: T; lang: Lang; config: C
             <h1 className="text-[32px] font-bold leading-[40px] md:text-latin-display">{t('site.login.title')}</h1>
             <p className="mt-8 text-latin-body text-text-secondary">{t('site.login.body')}</p>
             <form noValidate onSubmit={(e) => void submit(e)} className="mt-24 flex flex-col gap-20">
+              <PlatformNotice t={t} config={config} />
               {problem && <ErrorSummary>{problem}</ErrorSummary>}
               <Field label={t('site.trial.email')} error={errors.email}>
                 {(id, bad) => <TextInput id={id} invalid={bad} type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="name@company.com" autoComplete="email" />}

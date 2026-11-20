@@ -20,7 +20,7 @@ from app.core.security import now
 from app.models import AssistantMessage, Customer, Evidence, Job, Plan, Report, Site, User
 from app.providers.ai import LANGUAGE_NAMES, get_ai
 from app.schemas.assistant import AskOut, AssistantMessageOut, AssistantOut, SourceJob, SourceReport
-from app.services import ai_usage, credits
+from app.services import ai_usage, credits, platform
 from app.services.evidence import photo_counts, thumbs_for
 from app.services.jobs import CLOSED
 from app.services.jobs import label as jlabel
@@ -310,7 +310,7 @@ async def ask(db: AsyncSession, p: Principal, text: str) -> AskOut:
             "This month's AI questions are used up.",
             {"used": used, "limit": limit, "renews_at": renews.isoformat()},
         )
-    ai = get_ai()
+    ai = get_ai() if (await platform.config(db)).ai_assistant else None  # A32 switch
     if ai is None:
         raise AppError("assistant_unavailable", "The assistant isn't switched on yet.", status=503)
     history = list(

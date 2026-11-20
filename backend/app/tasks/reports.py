@@ -12,7 +12,7 @@ from app.core.db import SessionLocal
 from app.core.security import now
 from app.models import BackgroundTask, Job, PromptVersion, Report, ReportVersion
 from app.providers.ai import LANGUAGE_NAMES, get_ai
-from app.services import ai_usage
+from app.services import ai_usage, platform
 from app.services.report_draft import collect, merge_flags, parse_ai, server_flags, template_draft
 from app.tasks import task
 
@@ -56,7 +56,7 @@ async def draft_report(ctx, report_id: str, task_id: str, section: str | None = 
             bt.steps = _steps(1, running=1)
             await db.commit()
 
-            ai = get_ai()
+            ai = get_ai() if (await platform.config(db)).ai_drafting else None  # A32 switch
             links, ai_flags = [], []
             if ai:
                 prompt = await _live_prompt(db, "report_draft")
