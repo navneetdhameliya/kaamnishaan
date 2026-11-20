@@ -75,6 +75,10 @@ class Company(IdMixin, TimestampMixin, Base):
         default="trial",
     )
     trial_ends_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # A07: KaamNishaan staff can pause a company; the app refuses its work until it is turned back on
+    suspended_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    suspended_from: Mapped[str | None] = mapped_column(String(16))  # the status to go back to
+    suspend_reason: Mapped[str | None] = mapped_column(String(300))
     settings: Mapped[dict] = mapped_column(JSONB, default=dict, server_default=text("'{}'::jsonb"))
     created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
 
@@ -113,7 +117,10 @@ class Invitation(IdMixin, TimestampMixin, Base):
     accepted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     declined_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     revoked_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    invited_by: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id"))
+    invited_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))  # None: by KaamNishaan
+    invited_by_staff: Mapped[uuid.UUID | None] = mapped_column(
+        ForeignKey("staff_users.id", ondelete="SET NULL")
+    )
 
 
 class OtpChallenge(IdMixin, TimestampMixin, Base):

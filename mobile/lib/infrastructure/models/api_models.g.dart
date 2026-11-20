@@ -680,6 +680,56 @@ class AdminCompanyCountsModel {
       };
 }
 
+/// A06. The owner joins with their phone: they log in with an OTP and accept the invite.
+AdminCompanyCreateModel adminCompanyCreateModelFromJson(String str) => AdminCompanyCreateModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminCompanyCreateModelToJson(AdminCompanyCreateModel data) => json.encode(data.toJson());
+
+class AdminCompanyCreateModel {
+  final String? country;
+  final String name;
+  final String? ownerEmail;
+  final String ownerName;
+  final String ownerPhone;
+  final String? plan;
+  /// One of: en, hi, gu, es, fr
+  final String? reportLanguage;
+  final String trade;
+
+  const AdminCompanyCreateModel({
+    this.country,
+    required this.name,
+    this.ownerEmail,
+    required this.ownerName,
+    required this.ownerPhone,
+    this.plan,
+    this.reportLanguage,
+    required this.trade,
+  });
+
+  factory AdminCompanyCreateModel.fromJson(Map<String, dynamic> json) => AdminCompanyCreateModel(
+        country: json['country'] as String?,
+        name: json['name'] as String,
+        ownerEmail: json['owner_email'] as String?,
+        ownerName: json['owner_name'] as String,
+        ownerPhone: json['owner_phone'] as String,
+        plan: json['plan'] as String?,
+        reportLanguage: json['report_language'] as String?,
+        trade: json['trade'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'country': country,
+        'name': name,
+        'owner_email': ownerEmail,
+        'owner_name': ownerName,
+        'owner_phone': ownerPhone,
+        'plan': plan,
+        'report_language': reportLanguage,
+        'trade': trade,
+      };
+}
+
 AdminCompanyDetailModel adminCompanyDetailModelFromJson(String str) => AdminCompanyDetailModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String adminCompanyDetailModelToJson(AdminCompanyDetailModel data) => json.encode(data.toJson());
@@ -701,18 +751,24 @@ class AdminCompanyDetailModel {
   final String health;
   final String id;
   final String? industry;
+  final String? industrySlug;
   final int jobsThisCycle;
   final DateTime? lastActiveAt;
   final int members;
   final String name;
   final String? ownerEmail;
   final String? ownerName;
+  /// The owner was invited by KaamNishaan and hasn't joined yet
+  final bool ownerPending;
   final String? ownerPhone;
+  final String? ownerUserId;
   final AdminPlanInfoModel plan;
   final String reportLanguage;
   final int reportsThisCycle;
   /// One of: trial, active, past_due, suspended, cancelled
   final String status;
+  final String? suspendReason;
+  final DateTime? suspendedAt;
   /// Owner, managers, then technicians; first 5
   final List<AdminTeamMemberModel> team;
   final int technicians;
@@ -734,17 +790,22 @@ class AdminCompanyDetailModel {
     required this.health,
     required this.id,
     this.industry,
+    this.industrySlug,
     required this.jobsThisCycle,
     this.lastActiveAt,
     required this.members,
     required this.name,
     this.ownerEmail,
     this.ownerName,
+    required this.ownerPending,
     this.ownerPhone,
+    this.ownerUserId,
     required this.plan,
     required this.reportLanguage,
     required this.reportsThisCycle,
     required this.status,
+    this.suspendReason,
+    this.suspendedAt,
     required this.team,
     required this.technicians,
     required this.timezone,
@@ -765,17 +826,22 @@ class AdminCompanyDetailModel {
         health: json['health'] as String,
         id: json['id'] as String,
         industry: json['industry'] as String?,
+        industrySlug: json['industry_slug'] as String?,
         jobsThisCycle: (json['jobs_this_cycle'] as num).toInt(),
         lastActiveAt: json['last_active_at'] == null ? null : DateTime.parse(json['last_active_at'] as String),
         members: (json['members'] as num).toInt(),
         name: json['name'] as String,
         ownerEmail: json['owner_email'] as String?,
         ownerName: json['owner_name'] as String?,
+        ownerPending: json['owner_pending'] as bool,
         ownerPhone: json['owner_phone'] as String?,
+        ownerUserId: json['owner_user_id'] as String?,
         plan: AdminPlanInfoModel.fromJson(json['plan'] as Map<String, dynamic>),
         reportLanguage: json['report_language'] as String,
         reportsThisCycle: (json['reports_this_cycle'] as num).toInt(),
         status: json['status'] as String,
+        suspendReason: json['suspend_reason'] as String?,
+        suspendedAt: json['suspended_at'] == null ? null : DateTime.parse(json['suspended_at'] as String),
         team: (json['team'] as List).map((e) => AdminTeamMemberModel.fromJson(e as Map<String, dynamic>)).toList(),
         technicians: (json['technicians'] as num).toInt(),
         timezone: json['timezone'] as String,
@@ -796,17 +862,22 @@ class AdminCompanyDetailModel {
         'health': health,
         'id': id,
         'industry': industry,
+        'industry_slug': industrySlug,
         'jobs_this_cycle': jobsThisCycle,
         'last_active_at': lastActiveAt?.toIso8601String(),
         'members': members,
         'name': name,
         'owner_email': ownerEmail,
         'owner_name': ownerName,
+        'owner_pending': ownerPending,
         'owner_phone': ownerPhone,
+        'owner_user_id': ownerUserId,
         'plan': plan.toJson(),
         'report_language': reportLanguage,
         'reports_this_cycle': reportsThisCycle,
         'status': status,
+        'suspend_reason': suspendReason,
+        'suspended_at': suspendedAt?.toIso8601String(),
         'team': team.map((e) => e.toJson()).toList(),
         'technicians': technicians,
         'timezone': timezone,
@@ -862,6 +933,27 @@ class AdminCompanyListModel {
         'page_size': pageSize,
         'plans': plans.map((e) => e.toJson()).toList(),
         'total': total,
+      };
+}
+
+AdminCompanyReasonModel adminCompanyReasonModelFromJson(String str) => AdminCompanyReasonModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminCompanyReasonModelToJson(AdminCompanyReasonModel data) => json.encode(data.toJson());
+
+class AdminCompanyReasonModel {
+  /// Written to the audit log
+  final String reason;
+
+  const AdminCompanyReasonModel({
+    required this.reason,
+  });
+
+  factory AdminCompanyReasonModel.fromJson(Map<String, dynamic> json) => AdminCompanyReasonModel(
+        reason: json['reason'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'reason': reason,
       };
 }
 
@@ -942,6 +1034,49 @@ class AdminCompanyRowModel {
         'technician_limit': technicianLimit,
         'technicians': technicians,
         'trial_days_left': trialDaysLeft,
+      };
+}
+
+/// A07. The owner's own details are changed on their user page, not here.
+AdminCompanyUpdateModel adminCompanyUpdateModelFromJson(String str) => AdminCompanyUpdateModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminCompanyUpdateModelToJson(AdminCompanyUpdateModel data) => json.encode(data.toJson());
+
+class AdminCompanyUpdateModel {
+  final String? country;
+  final String? name;
+  final String? plan;
+  /// One of: en, hi, gu, es, fr
+  final String? reportLanguage;
+  final String? trade;
+  /// Only for a company in trial
+  final DateTime? trialEndsAt;
+
+  const AdminCompanyUpdateModel({
+    this.country,
+    this.name,
+    this.plan,
+    this.reportLanguage,
+    this.trade,
+    this.trialEndsAt,
+  });
+
+  factory AdminCompanyUpdateModel.fromJson(Map<String, dynamic> json) => AdminCompanyUpdateModel(
+        country: json['country'] as String?,
+        name: json['name'] as String?,
+        plan: json['plan'] as String?,
+        reportLanguage: json['report_language'] as String?,
+        trade: json['trade'] as String?,
+        trialEndsAt: json['trial_ends_at'] == null ? null : DateTime.parse(json['trial_ends_at'] as String),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'country': country,
+        'name': name,
+        'plan': plan,
+        'report_language': reportLanguage,
+        'trade': trade,
+        'trial_ends_at': trialEndsAt?.toIso8601String(),
       };
 }
 
@@ -1360,6 +1495,35 @@ class AdminOptionModel {
   Map<String, dynamic> toJson() => {
         'label': label,
         'value': value,
+      };
+}
+
+AdminOwnerInviteModel adminOwnerInviteModelFromJson(String str) => AdminOwnerInviteModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String adminOwnerInviteModelToJson(AdminOwnerInviteModel data) => json.encode(data.toJson());
+
+class AdminOwnerInviteModel {
+  final AdminCompanyDetailModel company;
+  /// Shown once. The SMS is sent too when SMS is set up.
+  final String inviteLink;
+  final String smsText;
+
+  const AdminOwnerInviteModel({
+    required this.company,
+    required this.inviteLink,
+    required this.smsText,
+  });
+
+  factory AdminOwnerInviteModel.fromJson(Map<String, dynamic> json) => AdminOwnerInviteModel(
+        company: AdminCompanyDetailModel.fromJson(json['company'] as Map<String, dynamic>),
+        inviteLink: json['invite_link'] as String,
+        smsText: json['sms_text'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'company': company.toJson(),
+        'invite_link': inviteLink,
+        'sms_text': smsText,
       };
 }
 

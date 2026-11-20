@@ -6230,4 +6230,144 @@ abstract final class LangKeys {
   static const adminClLanguages = 'admin.cl.languages';
   /// Mark as checked
   static const adminClMarkChecked = 'admin.cl.mark_checked';
+  /// Create company
+  static const adminCfCreateTitle = 'admin.cf.create_title';
+  /// Edit company
+  static const adminCfEditTitle = 'admin.cf.edit_title';
+  /// Create company
+  static const adminCfCreate = 'admin.cf.create';
+  /// Save changes
+  static const adminCfSave = 'admin.cf.save';
+  /// Company
+  static const adminCfCompany = 'admin.cf.company';
+  /// Shown on reports and the customer link.
+  static const adminCfCompanySub = 'admin.cf.company_sub';
+  /// Company name
+  static const adminCfName = 'admin.cf.name';
+  /// Industry
+  static const adminCfIndustry = 'admin.cf.industry';
+  /// Country
+  static const adminCfCountry = 'admin.cf.country';
+  /// Default report language
+  static const adminCfLanguage = 'admin.cf.language';
+  /// Owner
+  static const adminCfOwner = 'admin.cf.owner';
+  /// The owner gets an invite by SMS. They log in to the app with this phone number (one-time code) and accept it.
+  static const adminCfOwnerSubCreate = 'admin.cf.owner_sub_create';
+  /// Owners change their own details in the app. You can see them on their user page.
+  static const adminCfOwnerSubEdit = 'admin.cf.owner_sub_edit';
+  /// Owner name
+  static const adminCfOwnerName = 'admin.cf.owner_name';
+  /// Owner phone
+  static const adminCfOwnerPhone = 'admin.cf.owner_phone';
+  /// Owner email (optional)
+  static const adminCfOwnerEmail = 'admin.cf.owner_email';
+  /// Plan
+  static const adminCfPlan = 'admin.cf.plan';
+  /// Starts with a {n}-day trial. You can change the plan later.
+  static const adminCfPlanSubCreate = 'admin.cf.plan_sub_create';
+  /// A new plan applies straight away. No payments are taken yet.
+  static const adminCfPlanSubEdit = 'admin.cf.plan_sub_edit';
+  /// {plan} · {n}-day trial
+  static const adminCfPlanTrial = 'admin.cf.plan_trial';
+  /// {plan} · contact us
+  static const adminCfPlanContact = 'admin.cf.plan_contact';
+  /// Trial ends on
+  static const adminCfTrialEnds = 'admin.cf.trial_ends';
+  /// Fix {n} fields to save. Everything you typed is kept.
+  static const adminCfFix = 'admin.cf.fix';
+  /// Fix 1 field to save. Everything you typed is kept.
+  static const adminCfFixOne = 'admin.cf.fix_one';
+  /// Add the company name
+  static const adminCfEName = 'admin.cf.e.name';
+  /// Add the owner’s name
+  static const adminCfEOwnerName = 'admin.cf.e.owner_name';
+  /// Enter a full phone number
+  static const adminCfEOwnerPhone = 'admin.cf.e.owner_phone';
+  /// This number belongs to a turned-off account
+  static const adminCfEPhoneDisabled = 'admin.cf.e.phone_disabled';
+  /// Enter a valid email, like name@company.com
+  static const adminCfEOwnerEmail = 'admin.cf.e.owner_email';
+  /// Another account already uses this email
+  static const adminCfEEmailTaken = 'admin.cf.e.email_taken';
+  /// Pick an industry
+  static const adminCfETrade = 'admin.cf.e.trade';
+  /// Pick a plan
+  static const adminCfEPlan = 'admin.cf.e.plan';
+  /// Only a company in trial has an end date
+  static const adminCfETrial = 'admin.cf.e.trial';
+  /// Company created
+  static const adminCfCreatedTitle = 'admin.cf.created_title';
+  /// {name} logs in to the app with {phone} and accepts the invite. The link works for 7 days.
+  static const adminCfCreatedBody = 'admin.cf.created_body';
+  /// If SMS isn’t set up yet, send this message yourself (for example on WhatsApp). It is shown only now.
+  static const adminCfSmsNote = 'admin.cf.sms_note';
+  /// Copy link
+  static const adminCfCopyLink = 'admin.cf.copy_link';
+  /// Copy message
+  static const adminCfCopySms = 'admin.cf.copy_sms';
+  /// Send on WhatsApp
+  static const adminCfWhatsapp = 'admin.cf.whatsapp';
+  /// Open company
+  static const adminCfOpen = 'admin.cf.open';
+  /// Suspend company
+  static const adminCfSuspendTitle = 'admin.cf.suspend_title';
+  /// Nobody in the company can work in the app while it is suspended. Jobs, photos and reports are kept, and report links already sent to customers keep working.
+  static const adminCfSuspendBody = 'admin.cf.suspend_body';
+  /// Suspend
+  static const adminCfSuspend = 'admin.cf.suspend';
+  /// Suspend {name}?
+  static const adminCfConfirmSuspend = 'admin.cf.confirm_suspend';
+  /// Turn the company back on
+  static const adminCfReactivateTitle = 'admin.cf.reactivate_title';
+  /// Turn back on
+  static const adminCfReactivate = 'admin.cf.reactivate';
+  /// Turn {name} back on?
+  static const adminCfConfirmReactivate = 'admin.cf.confirm_reactivate';
+  /// Everyone in the company can work in the app again.
+  static const adminCfConfirmReactivateBody = 'admin.cf.confirm_reactivate_body';
+  /// Suspended on {date}: {reason}
+  static const adminCfSuspended = 'admin.cf.suspended';
+  /// Suspended on {date} · {reason}. Nobody can work in the app until it’s turned back on.
+  static const adminCfSuspendedBanner = 'admin.cf.suspended_banner';
+  /// Company suspended.
+  static const adminCfDoneSuspend = 'admin.cf.done_suspend';
+  /// Company turned back on.
+  static const adminCfDoneReactivate = 'admin.cf.done_reactivate';
+  /// Changes saved.
+  static const adminCfDoneSaved = 'admin.cf.done_saved';
+  /// {name} hasn’t joined yet. They log in with {phone} and accept the invite.
+  static const adminCfOwnerPending = 'admin.cf.owner_pending';
+  /// New invite link
+  static const adminCfNewLink = 'admin.cf.new_link';
+  /// New link made. Older links stop working.
+  static const adminCfNewLinkDone = 'admin.cf.new_link_done';
+  /// Edit
+  static const adminCfEdit = 'admin.cf.edit';
+  /// Open user page
+  static const adminCfOpenUser = 'admin.cf.open_user';
+  /// Support staff can look but not change companies.
+  static const adminCfNotAllowed = 'admin.cf.not_allowed';
+  /// Company created by staff
+  static const adminAuAStaffCompanyCreated = 'admin.au.a.staff.company_created';
+  /// Company edited by staff
+  static const adminAuAStaffCompanyUpdated = 'admin.au.a.staff.company_updated';
+  /// Company suspended
+  static const adminAuAStaffCompanySuspended = 'admin.au.a.staff.company_suspended';
+  /// Company turned back on
+  static const adminAuAStaffCompanyReactivated = 'admin.au.a.staff.company_reactivated';
+  /// Owner invite link made
+  static const adminAuAStaffOwnerInvited = 'admin.au.a.staff.owner_invited';
+  /// Checklist created by staff
+  static const adminAuAStaffChecklistCreated = 'admin.au.a.staff.checklist_created';
+  /// Checklist changed by staff
+  static const adminAuAStaffChecklistUpdated = 'admin.au.a.staff.checklist_updated';
+  /// This company is paused
+  static const companyPausedTitle = 'company.paused_title';
+  /// KaamNishaan has paused {company}. Your jobs, photos and reports are kept. Contact KaamNishaan support to turn it back on.
+  static const companyPausedBody = 'company.paused_body';
+  /// If you are the owner, the reason was shared with you by KaamNishaan.
+  static const companyPausedOwner = 'company.paused_owner';
+  /// Switch company
+  static const companyPausedSwitch = 'company.paused_switch';
 }

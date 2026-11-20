@@ -51,6 +51,8 @@ class SessionService extends GetxService {
     }
     if (needs.contains('profile')) return RoutesConstants.profileSetupScreen;
     if (needs.contains('choose_company')) return RoutesConstants.chooseCompanyScreen;
+    // paused by KaamNishaan (admin A07): the server refuses the company's work, so explain instead
+    if (me.value?.company?.status == 'suspended') return RoutesConstants.companyPausedScreen;
     return RoutesConstants.homeScreen;
   }
 

@@ -981,6 +981,77 @@
         "title": "AdminCompanyCounts",
         "type": "object"
       },
+      "AdminCompanyCreate": {
+        "additionalProperties": false,
+        "description": "A06. The owner joins with their phone: they log in with an OTP and accept the invite.",
+        "properties": {
+          "country": {
+            "default": "IN",
+            "pattern": "^[A-Z]{2}$",
+            "title": "Country",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Name",
+            "type": "string"
+          },
+          "owner_email": {
+            "anyOf": [
+              {
+                "format": "email",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner Email"
+          },
+          "owner_name": {
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Owner Name",
+            "type": "string"
+          },
+          "owner_phone": {
+            "maxLength": 24,
+            "minLength": 6,
+            "title": "Owner Phone",
+            "type": "string"
+          },
+          "plan": {
+            "default": "professional",
+            "title": "Plan",
+            "type": "string"
+          },
+          "report_language": {
+            "default": "en",
+            "enum": [
+              "en",
+              "hi",
+              "gu",
+              "es",
+              "fr"
+            ],
+            "title": "Report Language",
+            "type": "string"
+          },
+          "trade": {
+            "title": "Trade",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "trade",
+          "owner_name",
+          "owner_phone"
+        ],
+        "title": "AdminCompanyCreate",
+        "type": "object"
+      },
       "AdminCompanyDetail": {
         "properties": {
           "ai_cost_30d_usd": {
@@ -1071,6 +1142,17 @@
             ],
             "title": "Industry"
           },
+          "industry_slug": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Industry Slug"
+          },
           "jobs_this_cycle": {
             "title": "Jobs This Cycle",
             "type": "integer"
@@ -1117,6 +1199,11 @@
             ],
             "title": "Owner Name"
           },
+          "owner_pending": {
+            "description": "The owner was invited by KaamNishaan and hasn't joined yet",
+            "title": "Owner Pending",
+            "type": "boolean"
+          },
           "owner_phone": {
             "anyOf": [
               {
@@ -1127,6 +1214,18 @@
               }
             ],
             "title": "Owner Phone"
+          },
+          "owner_user_id": {
+            "anyOf": [
+              {
+                "format": "uuid",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Owner User Id"
           },
           "plan": {
             "$ref": "#/components/schemas/AdminPlanInfo"
@@ -1149,6 +1248,29 @@
             ],
             "title": "Status",
             "type": "string"
+          },
+          "suspend_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Suspend Reason"
+          },
+          "suspended_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Suspended At"
           },
           "team": {
             "description": "Owner, managers, then technicians; first 5",
@@ -1193,7 +1315,10 @@
         "required": [
           "id",
           "name",
+          "industry_slug",
           "status",
+          "suspended_at",
+          "suspend_reason",
           "badge",
           "trial_ends_at",
           "created_at",
@@ -1206,6 +1331,8 @@
           "owner_name",
           "owner_email",
           "owner_phone",
+          "owner_user_id",
+          "owner_pending",
           "health",
           "last_active_at",
           "cycle_start",
@@ -1282,6 +1409,23 @@
           "countries"
         ],
         "title": "AdminCompanyList",
+        "type": "object"
+      },
+      "AdminCompanyReason": {
+        "additionalProperties": false,
+        "properties": {
+          "reason": {
+            "description": "Written to the audit log",
+            "maxLength": 300,
+            "minLength": 3,
+            "title": "Reason",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reason"
+        ],
+        "title": "AdminCompanyReason",
         "type": "object"
       },
       "AdminCompanyRow": {
@@ -1419,6 +1563,92 @@
           "created_at"
         ],
         "title": "AdminCompanyRow",
+        "type": "object"
+      },
+      "AdminCompanyUpdate": {
+        "additionalProperties": false,
+        "description": "A07. The owner's own details are changed on their user page, not here.",
+        "properties": {
+          "country": {
+            "anyOf": [
+              {
+                "pattern": "^[A-Z]{2}$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Country"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "minLength": 1,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Name"
+          },
+          "plan": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Plan"
+          },
+          "report_language": {
+            "anyOf": [
+              {
+                "enum": [
+                  "en",
+                  "hi",
+                  "gu",
+                  "es",
+                  "fr"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Report Language"
+          },
+          "trade": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trade"
+          },
+          "trial_ends_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Only for a company in trial",
+            "title": "Trial Ends At"
+          }
+        },
+        "title": "AdminCompanyUpdate",
         "type": "object"
       },
       "AdminDashboardOut": {
@@ -2016,6 +2246,29 @@
           "label"
         ],
         "title": "AdminOption",
+        "type": "object"
+      },
+      "AdminOwnerInvite": {
+        "properties": {
+          "company": {
+            "$ref": "#/components/schemas/AdminCompanyDetail"
+          },
+          "invite_link": {
+            "description": "Shown once. The SMS is sent too when SMS is set up.",
+            "title": "Invite Link",
+            "type": "string"
+          },
+          "sms_text": {
+            "title": "Sms Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "company",
+          "invite_link",
+          "sms_text"
+        ],
+        "title": "AdminOwnerInvite",
         "type": "object"
       },
       "AdminPlanInfo": {
@@ -16614,6 +16867,70 @@
         "tags": [
           "admin"
         ]
+      },
+      "post": {
+        "description": "A06: a company on a trial, and an invite for its owner. The owner logs in to the app with their\nphone (OTP) and accepts it. The join link is returned once, to share if SMS isn't set up.",
+        "operationId": "create_company_api_v1_admin_companies_post",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminCompanyCreate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOwnerInvite"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create Company",
+        "tags": [
+          "admin"
+        ]
       }
     },
     "/api/v1/admin/companies.csv": {
@@ -16836,6 +17153,297 @@
           }
         ],
         "summary": "Company",
+        "tags": [
+          "admin"
+        ]
+      },
+      "patch": {
+        "description": "A07. Changing the country also changes the currency (no payments are taken yet).",
+        "operationId": "update_company_api_v1_admin_companies__company_id__patch",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Company Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminCompanyUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminCompanyDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Update Company",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/companies/{company_id}/owner-invite": {
+      "post": {
+        "description": "A new join link for an owner who hasn't joined; older links stop working.",
+        "operationId": "resend_owner_invite_api_v1_admin_companies__company_id__owner_invite_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Company Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminOwnerInvite"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Resend Owner Invite",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/companies/{company_id}/reactivate": {
+      "post": {
+        "operationId": "reactivate_company_api_v1_admin_companies__company_id__reactivate_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Company Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminCompanyReason"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminCompanyDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reactivate Company",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/companies/{company_id}/suspend": {
+      "post": {
+        "description": "Nobody in the company can work in the app until it is turned back on. Nothing is deleted.",
+        "operationId": "suspend_company_api_v1_admin_companies__company_id__suspend_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "company_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Company Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminCompanyReason"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminCompanyDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Suspend Company",
         "tags": [
           "admin"
         ]

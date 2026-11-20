@@ -1,8 +1,9 @@
-import { ArrowDown, ChevronLeft, ChevronRight, Download, Search, X } from 'lucide-react';
+import { ArrowDown, ChevronLeft, ChevronRight, Download, Plus, Search, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 import { api, ApiError, download } from '../lib/api';
 import { num, region, type Lang, type T } from '../lib/i18n';
+import { session } from '../lib/session';
 import type { CompanyList, CompanyStatus } from '../lib/types';
 import { cx, FilterSelect, Initials, Link, navigate, Spinner } from '../ui';
 import { StatusBadge } from './badges';
@@ -151,6 +152,12 @@ export function Companies({ t, lang }: { t: T; lang: Lang }) {
         <FilterSelect label={t('admin.co.f_plan')} value={f.plan} allLabel={t('admin.co.f_all')} options={data?.plans ?? []} onChange={(v) => set({ plan: v })} />
         <FilterSelect label={t('admin.co.f_industry')} value={f.industry} allLabel={t('admin.co.f_all')} options={data?.industries ?? []} onChange={(v) => set({ industry: v })} />
         <FilterSelect label={t('admin.co.f_country')} value={f.country} allLabel={t('admin.co.f_all')} options={(data?.countries ?? []).map((c) => ({ value: c, label: region(c, lang) }))} onChange={(v) => set({ country: v })} />
+        {session.get()?.staff.role !== 'support' && (
+          <Link to="/companies/new" className="kn-btn inline-flex h-[44px] items-center gap-8 rounded-lg bg-action-primary px-16 text-latin-label-sm font-semibold text-text-on-action hover:bg-action-primary-pressed">
+            <Plus width={18} height={18} aria-hidden />
+            {t('admin.cf.create')}
+          </Link>
+        )}
         <button
           type="button"
           onClick={() => void exportCsv()}

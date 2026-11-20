@@ -19,7 +19,14 @@ from app.schemas.admin_checklists import (
     AdminChecklistPatch,
     AdminTranslateOut,
 )
-from app.schemas.admin_companies import AdminCompanyDetail, AdminCompanyList
+from app.schemas.admin_companies import (
+    AdminCompanyCreate,
+    AdminCompanyDetail,
+    AdminCompanyList,
+    AdminCompanyReason,
+    AdminCompanyUpdate,
+    AdminOwnerInvite,
+)
 from app.schemas.admin_leads import AdminLeadDetail, AdminLeadList, AdminLeadUpdate
 from app.schemas.admin_users import AdminUserAction, AdminUserDetail, AdminUserList
 from app.schemas.checklists import QuestionIn, QuestionPatch
@@ -165,6 +172,76 @@ async def companies_csv(
         headers={"Content-Disposition": f'attachment; filename="kaamnishaan-companies-{stamp}.csv"',
                  "Cache-Control": "no-store"},
     )  # fmt: skip
+
+
+def _can_change(me: Staff) -> None:
+    if me.staff.role not in ("super_admin", "admin"):
+        raise Forbidden("forbidden", "Support staff can look but not change companies.")
+
+
+@router.post("/companies", response_model=AdminOwnerInvite, status_code=201)
+async def create_company(
+    body: AdminCompanyCreate, request: Request, locale: Locale = "en",
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminOwnerInvite:  # fmt: skip
+    """A06: a company on a trial, and an invite for its owner. The owner logs in to the app with their
+    phone (OTP) and accepts it. The join link is returned once, to share if SMS isn't set up."""
+    _can_change(me)
+    c, link, sms = await admin_companies.create_company(db, body, staff_id=me.staff.id, ip=client_ip(request))
+    return AdminOwnerInvite(
+        company=await admin_companies.company(db, c.id, lang=locale), invite_link=link, sms_text=sms
+    )
+
+
+@router.patch("/companies/{company_id}", response_model=AdminCompanyDetail)
+async def update_company(
+    company_id: uuid.UUID, body: AdminCompanyUpdate, request: Request, locale: Locale = "en",
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminCompanyDetail:  # fmt: skip
+    """A07. Changing the country also changes the currency (no payments are taken yet)."""
+    _can_change(me)
+    await admin_companies.update_company(db, company_id, body, staff_id=me.staff.id, ip=client_ip(request))
+    return await admin_companies.company(db, company_id, lang=locale)
+
+
+@router.post("/companies/{company_id}/owner-invite", response_model=AdminOwnerInvite)
+async def resend_owner_invite(
+    company_id: uuid.UUID, request: Request, locale: Locale = "en",
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminOwnerInvite:  # fmt: skip
+    """A new join link for an owner who hasn't joined; older links stop working."""
+    _can_change(me)
+    c, link, sms = await admin_companies.resend_owner_invite(
+        db, company_id, staff_id=me.staff.id, ip=client_ip(request)
+    )
+    return AdminOwnerInvite(
+        company=await admin_companies.company(db, c.id, lang=locale), invite_link=link, sms_text=sms
+    )
+
+
+@router.post("/companies/{company_id}/suspend", response_model=AdminCompanyDetail)
+async def suspend_company(
+    company_id: uuid.UUID, body: AdminCompanyReason, request: Request, locale: Locale = "en",
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminCompanyDetail:  # fmt: skip
+    """Nobody in the company can work in the app until it is turned back on. Nothing is deleted."""
+    _can_change(me)
+    await admin_companies.suspend(
+        db, company_id, reason=body.reason, staff_id=me.staff.id, ip=client_ip(request)
+    )
+    return await admin_companies.company(db, company_id, lang=locale)
+
+
+@router.post("/companies/{company_id}/reactivate", response_model=AdminCompanyDetail)
+async def reactivate_company(
+    company_id: uuid.UUID, body: AdminCompanyReason, request: Request, locale: Locale = "en",
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminCompanyDetail:  # fmt: skip
+    _can_change(me)
+    await admin_companies.reactivate(
+        db, company_id, reason=body.reason, staff_id=me.staff.id, ip=client_ip(request)
+    )
+    return await admin_companies.company(db, company_id, lang=locale)
 
 
 @router.get("/companies/{company_id}", response_model=AdminCompanyDetail)
