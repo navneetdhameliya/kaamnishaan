@@ -1,0 +1,20 @@
+# Temporary: shows where the scheduler settings were saved (set/empty only, never the values).
+name: scheduler secrets check (temporary)
+on:
+  workflow_dispatch:
+permissions: {}
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          S_URL: ${{ secrets.KN_API_URL }}
+          S_KEY: ${{ secrets.KN_CRON_KEY }}
+          V_URL: ${{ vars.KN_API_URL }}
+          V_KEY: ${{ vars.KN_CRON_KEY }}
+          S_URL2: ${{ secrets.API_URL }}
+          S_KEY2: ${{ secrets.CRON_KEY }}
+        run: |
+          for n in S_URL S_KEY V_URL V_KEY S_URL2 S_KEY2; do
+            v="${!n}"; if [ -n "$v" ]; then echo "$n: set (${#v} characters)"; else echo "$n: empty"; fi
+          done
