@@ -26,6 +26,7 @@ from app.models.identity import (
 )
 from app.models.leads import Lead
 from app.models.notifications import Notification
+from app.models.platform import PlatformSetting
 from app.models.reports import (
     AIUsage,
     BackgroundTask,
@@ -47,6 +48,7 @@ from app.models.staff import StaffSession, StaffUser
 from app.models.work import Customer, CustomerContact, Equipment, Job, JobEvent, Site
 
 __all__ = [
+    "PlatformSetting",
     "StaffSession",
     "StaffUser",
     "AssistantMessage",

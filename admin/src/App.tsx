@@ -11,6 +11,7 @@ import { CompanyDetail } from './pages/CompanyDetail';
 import { CompanyForm } from './pages/CompanyForm';
 import { Dashboard, RangeSelect, RANGES, type Range } from './pages/Dashboard';
 import { AiUsage } from './pages/AiUsage';
+import { ExportReviews, Reviews } from './pages/Reviews';
 import { Leads } from './pages/Leads';
 import { Forgot, Login } from './pages/Login';
 import { Setup } from './pages/Setup';
@@ -69,6 +70,7 @@ export default function App() {
   if (!nav.ready) page = <Soon t={t} name={name} />;
   else if (nav.key === 'dashboard') page = <Dashboard t={t} lang={lang} days={days} />;
   else if (nav.key === 'ai_usage') page = <AiUsage t={t} lang={lang} days={days} />;
+  else if (nav.key === 'reviews') page = <Reviews key="reviews" t={t} lang={lang} canAct={sess.staff.role !== 'support'} />;
   else if (companyId === 'new') page = <CompanyForm key="new" t={t} lang={lang} id={null} onName={onName} />;
   else if (companyId?.endsWith('/edit')) page = <CompanyForm key={companyId} t={t} lang={lang} id={companyId.slice(0, -5)} onName={onName} />;
   else if (companyId) page = <CompanyDetail key={companyId} t={t} lang={lang} id={companyId} onName={onName} />;
@@ -87,7 +89,7 @@ export default function App() {
       staff={sess.staff}
       crumb={sub && nav.key !== 'leads' ? `${t(`admin.nav.${nav.section}`)} / ${name}` : t(`admin.nav.${nav.section}`)}
       title={sub && nav.key !== 'leads' ? pageName || name : name}
-      actions={nav.key === 'dashboard' || nav.key === 'ai_usage' ? <RangeSelect t={t} days={days} onChange={setDays} /> : undefined}
+      actions={nav.key === 'dashboard' || nav.key === 'ai_usage' ? <RangeSelect t={t} days={days} onChange={setDays} /> : nav.key === 'reviews' ? <ExportReviews t={t} /> : undefined}
     >
       {page}
     </Shell>

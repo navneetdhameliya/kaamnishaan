@@ -6428,4 +6428,154 @@ abstract final class LangKeys {
   static const adminAiOffTitle = 'admin.ai.off_title';
   /// No OpenAI key is set, so nothing is sent to AI. Voice notes wait for transcription and reports use the plain template.
   static const adminAiOffBody = 'admin.ai.off_body';
+  /// Export
+  static const adminRvExport = 'admin.rv.export';
+  /// {n} stars
+  static const adminRvStars = 'admin.rv.stars';
+  /// 2 stars or less
+  static const adminRvRLow = 'admin.rv.r_low';
+  /// Average rating
+  static const adminRvKAvg = 'admin.rv.k_avg';
+  /// All companies · 30 days
+  static const adminRvKAvgSub = 'admin.rv.k_avg_sub';
+  /// Reviews (30 d)
+  static const adminRvKCount = 'admin.rv.k_count';
+  /// {pct} of shared reports
+  static const adminRvKCountSub = 'admin.rv.k_count_sub';
+  /// No reports shared yet
+  static const adminRvKNoShared = 'admin.rv.k_no_shared';
+  /// Low ratings
+  static const adminRvKLow = 'admin.rv.k_low';
+  /// 2 stars or less · {pct}
+  static const adminRvKLowSub = 'admin.rv.k_low_sub';
+  /// Flagged for review
+  static const adminRvKFlagged = 'admin.rv.k_flagged';
+  /// Abuse, personal data or spam
+  static const adminRvKFlaggedSub = 'admin.rv.k_flagged_sub';
+  /// Search company, customer or technician
+  static const adminRvSearch = 'admin.rv.search';
+  /// Rating
+  static const adminRvFRating = 'admin.rv.f_rating';
+  /// Status
+  static const adminRvFStatus = 'admin.rv.f_status';
+  /// Company
+  static const adminRvFCompany = 'admin.rv.f_company';
+  /// Flagged first
+  static const adminRvFlaggedFirst = 'admin.rv.flagged_first';
+  /// Flagged
+  static const adminRvFFlagged = 'admin.rv.f.flagged';
+  /// Published
+  static const adminRvFPublished = 'admin.rv.f.published';
+  /// Manager following up
+  static const adminRvFFollowup = 'admin.rv.f.followup';
+  /// Replied
+  static const adminRvFReplied = 'admin.rv.f.replied';
+  /// Hidden
+  static const adminRvFHidden = 'admin.rv.f.hidden';
+  /// Review
+  static const adminRvCReview = 'admin.rv.c_review';
+  /// Company
+  static const adminRvCCompany = 'admin.rv.c_company';
+  /// Technician
+  static const adminRvCTech = 'admin.rv.c_tech';
+  /// Rating
+  static const adminRvCRating = 'admin.rv.c_rating';
+  /// Status
+  static const adminRvCStatus = 'admin.rv.c_status';
+  /// When
+  static const adminRvCWhen = 'admin.rv.c_when';
+  /// Flagged · {why}
+  static const adminRvFlaggedWhy = 'admin.rv.flagged_why';
+  /// personal data
+  static const adminRvWhyPersonalData = 'admin.rv.why.personal_data';
+  /// abuse
+  static const adminRvWhyAbuse = 'admin.rv.why.abuse';
+  /// spam
+  static const adminRvWhySpam = 'admin.rv.why.spam';
+  /// Personal data found
+  static const adminRvFoundPersonalData = 'admin.rv.found.personal_data';
+  /// Abusive words
+  static const adminRvFoundAbuse = 'admin.rv.found.abuse';
+  /// Repeat review
+  static const adminRvFoundSpam = 'admin.rv.found.spam';
+  /// Automatic check: a phone number or email was hidden.
+  static const adminRvCheckPersonalData = 'admin.rv.check.personal_data';
+  /// Automatic check: abusive words found.
+  static const adminRvCheckAbuse = 'admin.rv.check.abuse';
+  /// Automatic check: the same phone number left another review within a day.
+  static const adminRvCheckSpam = 'admin.rv.check.spam';
+  /// Published
+  static const adminRvStPublished = 'admin.rv.st.published';
+  /// Published · replied
+  static const adminRvStReplied = 'admin.rv.st.replied';
+  /// Manager following up
+  static const adminRvStFollowup = 'admin.rv.st.followup';
+  /// Hidden
+  static const adminRvStHidden = 'admin.rv.st.hidden';
+  /// No comment, just stars
+  static const adminRvNoComment = 'admin.rv.no_comment';
+  /// Unknown
+  static const adminRvUnknown = 'admin.rv.unknown';
+  /// Flagged review · {company}
+  static const adminRvPanelFlagged = 'admin.rv.panel_flagged';
+  /// Review · {company}
+  static const adminRvPanel = 'admin.rv.panel';
+  /// Before hiding (only staff see this):
+  static const adminRvOriginal = 'admin.rv.original';
+  /// Reply from {name}
+  static const adminRvReplyBy = 'admin.rv.reply_by';
+  /// Checked by {name} {when}
+  static const adminRvDecided = 'admin.rv.decided';
+  /// Publish
+  static const adminRvPublish = 'admin.rv.publish';
+  /// Publish with edit
+  static const adminRvPublishEdit = 'admin.rv.publish_edit';
+  /// Hide review
+  static const adminRvHide = 'admin.rv.hide';
+  /// Put back
+  static const adminRvRestore = 'admin.rv.restore';
+  /// Hide this review?
+  static const adminRvHideTitle = 'admin.rv.hide_title';
+  /// The company and technician won’t see it. It is kept, and you can put it back later. Say why for the audit log.
+  static const adminRvHideBody = 'admin.rv.hide_body';
+  /// Published. The company can see it now.
+  static const adminRvDonePublished = 'admin.rv.done_published';
+  /// Review hidden.
+  static const adminRvDoneHidden = 'admin.rv.done_hidden';
+  /// Review is shown again.
+  static const adminRvDoneRestored = 'admin.rv.done_restored';
+  /// Someone already dealt with this review. Refresh to see it.
+  static const adminRvErrDone = 'admin.rv.err_done';
+  /// Support staff can look but not change reviews.
+  static const adminRvSupportOnly = 'admin.rv.support_only';
+  /// Pick a review to see it here.
+  static const adminRvPick = 'admin.rv.pick';
+  /// Review rules
+  static const adminRvRules = 'admin.rv.rules';
+  /// Hide phone numbers and emails
+  static const adminRvRuleHideContact = 'admin.rv.rule.hide_contact';
+  /// Flag abusive words (5 languages)
+  static const adminRvRuleFlagAbuse = 'admin.rv.rule.flag_abuse';
+  /// Hold repeat reviews from one number
+  static const adminRvRuleBlockRepeats = 'admin.rv.rule.block_repeats';
+  /// Held reviews wait here until you publish or hide them. Companies can reply, but can’t delete or change a customer’s words.
+  static const adminRvRulesNote = 'admin.rv.rules_note';
+  /// No reviews match
+  static const adminRvEmptyTitle = 'admin.rv.empty_title';
+  /// No reviews yet
+  static const adminRvNoneTitle = 'admin.rv.none_title';
+  /// Reviews appear here when customers rate a job from their report link.
+  static const adminRvNoneBody = 'admin.rv.none_body';
+  /// Published a held review
+  static const adminAuAStaffReviewPublished = 'admin.au.a.staff.review_published';
+  /// Hid a review
+  static const adminAuAStaffReviewHidden = 'admin.au.a.staff.review_hidden';
+  /// Showed a hidden review again
+  static const adminAuAStaffReviewRestored = 'admin.au.a.staff.review_restored';
+  /// Changed the review rules
+  static const adminAuAStaffReviewRulesUpdated = 'admin.au.a.staff.review_rules_updated';
+  /// Reviews
+  static const adminAuTReviews = 'admin.au.t.reviews';
+  /// Platform
+  static const adminAuTPlatform = 'admin.au.t.platform';
 }

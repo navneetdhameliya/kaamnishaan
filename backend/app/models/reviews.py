@@ -112,6 +112,13 @@ class Review(IdMixin, TimestampMixin, Base):
     public_allowed: Mapped[bool] = mapped_column(Boolean, default=False, server_default=sql("false"))
     wants_call_back: Mapped[bool] = mapped_column(Boolean, default=False, server_default=sql("false"))
     status: Mapped[str] = mapped_column(String(16), default="published")  # published, flagged, hidden
+    # A37 moderation: why it was held (personal_data, abuse, spam), the customer's words before phone
+    # numbers and emails were hidden (staff only), and who decided
+    flag_reason: Mapped[str | None] = mapped_column(String(16))
+    comment_original: Mapped[str | None] = mapped_column(Text)
+    moderated_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("staff_users.id", ondelete="SET NULL"))
+    moderated_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    moderation_note: Mapped[str | None] = mapped_column(String(300))
 
 
 class ReviewReply(IdMixin, TimestampMixin, Base):

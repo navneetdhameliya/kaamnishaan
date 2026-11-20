@@ -9,7 +9,7 @@ import uuid
 from datetime import UTC, datetime, time, timedelta
 from zoneinfo import ZoneInfo
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import Principal
@@ -44,10 +44,11 @@ from app.schemas.reviews import (
     TagCount,
 )
 from app.schemas.work import PersonRef
-from app.services import audit, sharing
+from app.services import audit, moderation, platform, sharing
 from app.services.report_labels import label
 from app.services.reports import DONE, rlabel
 
+REPEAT_WINDOW = timedelta(hours=24)  # A37: a second review from one phone within a day is held
 STARTED = ("link_sent", "reminded", "ai_call_scheduled", "ai_call_done")
 
 
@@ -130,7 +131,9 @@ async def job_review(db: AsyncSession, p: Principal, job: Job) -> JobReview | No
         )  # fmt: skip
     contact = await db.get(CustomerContact, req.contact_id) if req.contact_id else None
     who = await db.get(User, req.requested_by) if req.requested_by else None
-    review = (await db.execute(select(Review).where(Review.request_id == req.id))).scalar_one_or_none()
+    review = (
+        await db.execute(select(Review).where(Review.request_id == req.id, Review.status == "published"))
+    ).scalar_one_or_none()  # a review held or hidden by KaamNishaan (A37) is not shown
     return JobReview(
         status=req.status,
         request_id=req.id,
@@ -327,26 +330,62 @@ async def rate(db: AsyncSession, token: str, body: ReviewIn) -> RatedOut:
     if (await db.execute(select(Review.id).where(Review.request_id == req.id))).first():
         raise Conflict("already_rated", "Thank you, this job was already rated.")
     contact = await db.get(CustomerContact, req.contact_id) if req.contact_id else None
+    comment, original, reason = await _checked(db, body.comment or None, job.company_id, contact)
     review = Review(
         company_id=job.company_id, request_id=req.id, job_id=job.id, technician_id=job.assigned_to,
         rating=body.rating, technician_rating=body.technician_rating, tags=body.tags,
-        comment=(body.comment or None), reviewer_name=body.name or (contact.name if contact else None),
+        comment=comment, comment_original=original,
+        reviewer_name=body.name or (contact.name if contact else None),
         source="link", public_allowed=body.public_allowed, wants_call_back=body.wants_call_back,
+        status="flagged" if reason else "published", flag_reason=reason,
     )  # fmt: skip
     db.add(review)
     req.status = "rated"
     db.add(ReviewRequestEvent(request_id=req.id, step="rated", channel="link"))
     await db.flush()
     s = await settings_for(db, job.company_id)
-    await _tell(db, s, review, job)
+    if not reason:  # a held review reaches the company when KaamNishaan publishes it (A37)
+        await tell(db, review)
     return RatedOut(review_id=review.id, google_review_url=s.google_review_url if body.rating >= 4 else None)
 
 
-async def _tell(db: AsyncSession, s: ReviewSettings, review: Review, job: Job) -> None:
+async def _checked(
+    db: AsyncSession, comment: str | None, company_id: uuid.UUID, contact: CustomerContact | None
+) -> tuple[str | None, str | None, str | None]:
+    """A37 review rules: (comment to show, the words before hiding contact details, why it is held)."""
+    rules = await platform.review_rules(db)
+    original, reason = None, None
+    if comment and rules.hide_contact:
+        hidden, found = moderation.hide_contact(comment)
+        if found:
+            original, comment, reason = comment, hidden, "personal_data"
+    if rules.block_repeats and contact and contact.phone:
+        same_phone = await db.scalar(
+            select(func.count())
+            .select_from(Review)
+            .join(ReviewRequest, ReviewRequest.id == Review.request_id)
+            .join(CustomerContact, CustomerContact.id == ReviewRequest.contact_id)
+            .where(
+                Review.company_id == company_id,
+                CustomerContact.phone == contact.phone,
+                Review.created_at >= now() - REPEAT_WINDOW,
+            )
+        )
+        if same_phone:
+            reason = "spam"
+    if comment and rules.flag_abuse and moderation.is_abusive(original or comment):
+        reason = "abuse"
+    return comment, original, reason
+
+
+async def tell(db: AsyncSession, review: Review) -> None:
     """A new review: the technician sees it (when allowed); a low one alerts the office and opens a
     follow-up."""
     from app.models import ReviewFollowup
     from app.services import notifications
+
+    job = await db.get(Job, review.job_id)
+    s = await settings_for(db, review.company_id)
 
     stars = review.technician_rating or review.rating
     params = {**await notifications.job_params(db, job), "rating": str(review.rating)}
@@ -464,7 +503,12 @@ async def my_reviews(db: AsyncSession, p: Principal) -> MyReviews:
 
 async def get_review(db: AsyncSession, p: Principal, review_id: uuid.UUID) -> ReviewOut:
     r = await db.get(Review, review_id)
-    if not r or r.company_id != p.company_id or (not _manager(p) and r.technician_id != p.user.id):
+    if (
+        not r
+        or r.company_id != p.company_id
+        or r.status != "published"
+        or (not _manager(p) and r.technician_id != p.user.id)
+    ):
         raise NotFound("not_found", "Review not found.")
     [(_, job, item)] = await _items(db, [r])
     rep = await _report(db, job)
