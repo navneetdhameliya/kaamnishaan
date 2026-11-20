@@ -10,6 +10,7 @@ import { pages } from './Companies';
 const PAGE_SIZE = 25;
 export const JOB_STATUSES: JobStatus[] = ['unassigned', 'assigned', 'in_progress', 'in_review', 'changes_requested', 'completed', 'cancelled'];
 const DATES = ['today', 'yesterday', 'tomorrow', 'last7', 'next7'] as const;
+export const PAST_DATES = ['today', 'yesterday', 'last7', 'last30'] as const;
 
 type Filters = { q: string; status: string; company: string; date: string; page: number };
 
@@ -20,12 +21,12 @@ function readFilters(): Filters {
 }
 
 /** The chosen day range in this browser's own time, sent to the server as from/to. */
-function range(date: string): [string, string] | null {
+export function range(date: string): [string, string] | null {
   if (!date) return null;
   const d0 = new Date();
   d0.setHours(0, 0, 0, 0);
   const at = (days: number) => new Date(d0.getTime() + days * 86_400_000).toISOString();
-  const r: Record<string, [number, number]> = { today: [0, 1], yesterday: [-1, 0], tomorrow: [1, 2], last7: [-6, 1], next7: [0, 7] };
+  const r: Record<string, [number, number]> = { today: [0, 1], yesterday: [-1, 0], tomorrow: [1, 2], last7: [-6, 1], last30: [-29, 1], next7: [0, 7] };
   const [a, b] = r[date];
   return [at(a), at(b)];
 }

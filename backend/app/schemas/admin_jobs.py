@@ -65,6 +65,7 @@ class AdminJobPhotos(BaseModel):
 
 
 class AdminJobReport(BaseModel):
+    id: uuid.UUID
     number: str = Field(description="R-1042")
     status: str
     submitted_at: datetime | None

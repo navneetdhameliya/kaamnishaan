@@ -3323,6 +3323,11 @@
             "title": "Change Requests",
             "type": "integer"
           },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
           "number": {
             "description": "R-1042",
             "title": "Number",
@@ -3363,6 +3368,7 @@
           }
         },
         "required": [
+          "id",
           "number",
           "status",
           "submitted_at",
@@ -4623,6 +4629,704 @@
           "total"
         ],
         "title": "AdminProof",
+        "type": "object"
+      },
+      "AdminReportChange": {
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "By"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "reasons": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Reasons",
+            "type": "array"
+          },
+          "resolved_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Resolved At"
+          }
+        },
+        "required": [
+          "reasons",
+          "note",
+          "by",
+          "at",
+          "resolved_at"
+        ],
+        "title": "AdminReportChange",
+        "type": "object"
+      },
+      "AdminReportDetail": {
+        "properties": {
+          "acknowledged_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Acknowledged At"
+          },
+          "acknowledged_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Acknowledged Name"
+          },
+          "advice": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Advice"
+          },
+          "ai_cost_usd": {
+            "title": "Ai Cost Usd",
+            "type": "number"
+          },
+          "ai_prompt_version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ai Prompt Version"
+          },
+          "ai_tokens": {
+            "title": "Ai Tokens",
+            "type": "integer"
+          },
+          "approved_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approved At"
+          },
+          "approved_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Approved By"
+          },
+          "changes": {
+            "items": {
+              "$ref": "#/components/schemas/AdminReportChange"
+            },
+            "title": "Changes",
+            "type": "array"
+          },
+          "checks_failed": {
+            "title": "Checks Failed",
+            "type": "integer"
+          },
+          "checks_passed": {
+            "title": "Checks Passed",
+            "type": "integer"
+          },
+          "company": {
+            "$ref": "#/components/schemas/AdminOption"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "drafted_by": {
+            "anyOf": [
+              {
+                "enum": [
+                  "ai",
+                  "template"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Drafted By"
+          },
+          "edited_by": {
+            "description": "People who changed the text after the draft",
+            "items": {
+              "type": "string"
+            },
+            "title": "Edited By",
+            "type": "array"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "flags": {
+            "items": {
+              "$ref": "#/components/schemas/AdminReportFlag"
+            },
+            "title": "Flags",
+            "type": "array"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job": {
+            "$ref": "#/components/schemas/AdminReportJob"
+          },
+          "language": {
+            "title": "Language",
+            "type": "string"
+          },
+          "links": {
+            "items": {
+              "$ref": "#/components/schemas/AdminReportLink"
+            },
+            "title": "Links",
+            "type": "array"
+          },
+          "number": {
+            "title": "Number",
+            "type": "string"
+          },
+          "pdf_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Short-lived download link when the PDF is ready",
+            "title": "Pdf Url"
+          },
+          "photos": {
+            "items": {
+              "$ref": "#/components/schemas/AdminReportPhoto"
+            },
+            "title": "Photos",
+            "type": "array"
+          },
+          "sentences": {
+            "title": "Sentences",
+            "type": "integer"
+          },
+          "sentences_linked": {
+            "title": "Sentences Linked",
+            "type": "integer"
+          },
+          "shared_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shared At"
+          },
+          "status": {
+            "enum": [
+              "generating",
+              "generation_failed",
+              "draft",
+              "pending_review",
+              "changes_requested",
+              "approved",
+              "shared",
+              "acknowledged"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "submitted_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Submitted At"
+          },
+          "submitted_by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Submitted By"
+          },
+          "summary": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Summary"
+          },
+          "technician": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Technician"
+          },
+          "versions": {
+            "items": {
+              "$ref": "#/components/schemas/AdminReportVersion"
+            },
+            "title": "Versions",
+            "type": "array"
+          },
+          "work_done": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Work Done"
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "status",
+          "language",
+          "job",
+          "company",
+          "technician",
+          "drafted_by",
+          "edited_by",
+          "summary",
+          "work_done",
+          "advice",
+          "photos",
+          "sentences",
+          "sentences_linked",
+          "checks_passed",
+          "checks_failed",
+          "flags",
+          "ai_prompt_version",
+          "ai_tokens",
+          "ai_cost_usd",
+          "error",
+          "submitted_by",
+          "submitted_at",
+          "approved_by",
+          "approved_at",
+          "shared_at",
+          "acknowledged_at",
+          "acknowledged_name",
+          "changes",
+          "links",
+          "versions",
+          "pdf_url",
+          "created_at"
+        ],
+        "title": "AdminReportDetail",
+        "type": "object"
+      },
+      "AdminReportFlag": {
+        "properties": {
+          "kind": {
+            "enum": [
+              "missing_evidence",
+              "failed_check",
+              "unsupported_claim"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "text"
+        ],
+        "title": "AdminReportFlag",
+        "type": "object"
+      },
+      "AdminReportJob": {
+        "properties": {
+          "customer": {
+            "title": "Customer",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "number": {
+            "title": "Number",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "title",
+          "customer"
+        ],
+        "title": "AdminReportJob",
+        "type": "object"
+      },
+      "AdminReportLink": {
+        "properties": {
+          "channel": {
+            "title": "Channel",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "expires_at": {
+            "format": "date-time",
+            "title": "Expires At",
+            "type": "string"
+          },
+          "last_opened_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Opened At"
+          },
+          "opens": {
+            "title": "Opens",
+            "type": "integer"
+          },
+          "recipient": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Name, with the phone or email partly hidden",
+            "title": "Recipient"
+          },
+          "revoked": {
+            "title": "Revoked",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "channel",
+          "recipient",
+          "created_at",
+          "expires_at",
+          "revoked",
+          "opens",
+          "last_opened_at"
+        ],
+        "title": "AdminReportLink",
+        "type": "object"
+      },
+      "AdminReportList": {
+        "properties": {
+          "companies": {
+            "items": {
+              "$ref": "#/components/schemas/AdminOption"
+            },
+            "title": "Companies",
+            "type": "array"
+          },
+          "counts": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "description": "Reports per status for the current search, company and dates",
+            "title": "Counts",
+            "type": "object"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/AdminReportRow"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "page": {
+            "title": "Page",
+            "type": "integer"
+          },
+          "page_size": {
+            "title": "Page Size",
+            "type": "integer"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items",
+          "total",
+          "page",
+          "page_size",
+          "counts",
+          "companies"
+        ],
+        "title": "AdminReportList",
+        "type": "object"
+      },
+      "AdminReportPhoto": {
+        "properties": {
+          "stage": {
+            "title": "Stage",
+            "type": "string"
+          },
+          "url": {
+            "title": "Url",
+            "type": "string"
+          }
+        },
+        "required": [
+          "stage",
+          "url"
+        ],
+        "title": "AdminReportPhoto",
+        "type": "object"
+      },
+      "AdminReportRow": {
+        "properties": {
+          "check": {
+            "description": "The first problem the AI checks found, or passed",
+            "enum": [
+              "passed",
+              "failed_check",
+              "missing_evidence",
+              "unsupported_claim",
+              "not_checked"
+            ],
+            "title": "Check",
+            "type": "string"
+          },
+          "check_count": {
+            "description": "How many problems of that kind",
+            "title": "Check Count",
+            "type": "integer"
+          },
+          "company": {
+            "$ref": "#/components/schemas/AdminOption"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "id": {
+            "format": "uuid",
+            "title": "Id",
+            "type": "string"
+          },
+          "job": {
+            "$ref": "#/components/schemas/AdminReportJob"
+          },
+          "language": {
+            "title": "Language",
+            "type": "string"
+          },
+          "number": {
+            "description": "R-1042",
+            "title": "Number",
+            "type": "string"
+          },
+          "shared_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Shared At"
+          },
+          "status": {
+            "enum": [
+              "generating",
+              "generation_failed",
+              "draft",
+              "pending_review",
+              "changes_requested",
+              "approved",
+              "shared",
+              "acknowledged"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "technician": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Technician"
+          }
+        },
+        "required": [
+          "id",
+          "number",
+          "status",
+          "language",
+          "job",
+          "company",
+          "technician",
+          "check",
+          "check_count",
+          "created_at",
+          "shared_at"
+        ],
+        "title": "AdminReportRow",
+        "type": "object"
+      },
+      "AdminReportVersion": {
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "by": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "By"
+          },
+          "event": {
+            "title": "Event",
+            "type": "string"
+          },
+          "source": {
+            "title": "Source",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "version",
+          "event",
+          "source",
+          "by",
+          "at"
+        ],
+        "title": "AdminReportVersion",
         "type": "object"
       },
       "AdminReviewDetail": {
@@ -23149,6 +23853,391 @@
           }
         ],
         "summary": "Save Platform Settings",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/reports": {
+      "get": {
+        "description": "Every company's reports, newest first, with what the AI checks found.",
+        "operationId": "reports_api_v1_admin_reports_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 120,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "generating",
+                    "generation_failed",
+                    "draft",
+                    "pending_review",
+                    "changes_requested",
+                    "approved",
+                    "shared",
+                    "acknowledged"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "company",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Company"
+            }
+          },
+          {
+            "in": "query",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "en",
+                    "hi",
+                    "gu",
+                    "es",
+                    "fr"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Language"
+            }
+          },
+          {
+            "description": "Created from",
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "Created from",
+              "title": "From"
+            }
+          },
+          {
+            "description": "...and before",
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "...and before",
+              "title": "To"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page",
+            "required": false,
+            "schema": {
+              "default": 1,
+              "maximum": 10000,
+              "minimum": 1,
+              "title": "Page",
+              "type": "integer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_size",
+            "required": false,
+            "schema": {
+              "default": 25,
+              "maximum": 100,
+              "minimum": 5,
+              "title": "Page Size",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminReportList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reports",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/reports.csv": {
+      "get": {
+        "description": "Every matching report (up to 50,000), for a spreadsheet. Exports are written to the audit log.",
+        "operationId": "reports_csv_api_v1_admin_reports_csv_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "q",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 120,
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Q"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "generating",
+                    "generation_failed",
+                    "draft",
+                    "pending_review",
+                    "changes_requested",
+                    "approved",
+                    "shared",
+                    "acknowledged"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Status"
+            }
+          },
+          {
+            "in": "query",
+            "name": "company",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Company"
+            }
+          },
+          {
+            "in": "query",
+            "name": "language",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "en",
+                    "hi",
+                    "gu",
+                    "es",
+                    "fr"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Language"
+            }
+          },
+          {
+            "in": "query",
+            "name": "from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "From"
+            }
+          },
+          {
+            "in": "query",
+            "name": "to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date-time",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "To"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "text/csv": {}
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reports Csv",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/reports/{report_id}": {
+      "get": {
+        "description": "One report: its text and photos, what the AI checks found, who changed it, and the customer links.",
+        "operationId": "report_api_v1_admin_reports__report_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "report_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Report Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminReportDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Report",
         "tags": [
           "admin"
         ]

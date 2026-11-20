@@ -546,7 +546,7 @@ export interface AdminJobDetail {
   checklists: { name: string; answered: number; total: number; done: boolean }[];
   photos: { before: number; during: number; after: number; voice_notes: number };
   proof: AdminProof;
-  report: { number: string; status: string; submitted_at: string | null; approved_at: string | null; shared_at: string | null; acknowledged_at: string | null; change_requests: number; open_count: number } | null;
+  report: { id: string; number: string; status: string; submitted_at: string | null; approved_at: string | null; shared_at: string | null; acknowledged_at: string | null; change_requests: number; open_count: number } | null;
   timeline: AdminTimelineItem[];
 }
 
@@ -584,4 +584,66 @@ export interface AdminPhotoDetail extends AdminPhoto {
   fingerprint: string | null;
   job_created_at: string;
   twins: { id: string; job: AdminPhoto['job']; company: Option; taken_at: string }[];
+}
+
+/** A14 Reports and A15 Report details (GET /admin/reports, /admin/reports/{id}). */
+export type ReportStatus = 'generating' | 'generation_failed' | 'draft' | 'pending_review' | 'changes_requested' | 'approved' | 'shared' | 'acknowledged';
+export type AiCheck = 'passed' | 'failed_check' | 'missing_evidence' | 'unsupported_claim' | 'not_checked';
+export type AdminReportJob = { id: string; number: string; title: string; customer: string };
+export interface AdminReportRow {
+  id: string;
+  number: string;
+  status: ReportStatus;
+  language: string;
+  job: AdminReportJob;
+  company: Option;
+  technician: string | null;
+  check: AiCheck;
+  check_count: number;
+  created_at: string;
+  shared_at: string | null;
+}
+export interface AdminReportList {
+  items: AdminReportRow[];
+  total: number;
+  page: number;
+  page_size: number;
+  counts: Partial<Record<ReportStatus, number>>;
+  companies: Option[];
+}
+export interface AdminReportDetail {
+  id: string;
+  number: string;
+  status: ReportStatus;
+  language: string;
+  job: AdminReportJob;
+  company: Option;
+  technician: string | null;
+  drafted_by: 'ai' | 'template' | null;
+  edited_by: string[];
+  summary: string | null;
+  work_done: string | null;
+  advice: string | null;
+  photos: { stage: string; url: string }[];
+  sentences: number;
+  sentences_linked: number;
+  checks_passed: number;
+  checks_failed: number;
+  flags: { kind: 'missing_evidence' | 'failed_check' | 'unsupported_claim'; text: string }[];
+  ai_prompt_version: number | null;
+  ai_tokens: number;
+  ai_cost_usd: number;
+  error: string | null;
+  submitted_by: string | null;
+  submitted_at: string | null;
+  approved_by: string | null;
+  approved_at: string | null;
+  shared_at: string | null;
+  acknowledged_at: string | null;
+  acknowledged_name: string | null;
+  changes: { reasons: string[]; note: string | null; by: string | null; at: string; resolved_at: string | null }[];
+  links: { channel: string; recipient: string | null; created_at: string; expires_at: string; revoked: boolean; opens: number; last_opened_at: string | null }[];
+  versions: { version: number; event: string; source: string; by: string | null; at: string }[];
+  pdf_url: string | null;
+  created_at: string;
 }

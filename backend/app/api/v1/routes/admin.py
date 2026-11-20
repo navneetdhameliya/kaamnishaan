@@ -53,6 +53,7 @@ from app.schemas.admin_messages import (
     TemplateKey,
 )
 from app.schemas.admin_platform import AdminPlatformOut, AdminPlatformSettings
+from app.schemas.admin_reports import AdminReportDetail, AdminReportList
 from app.schemas.admin_reviews import (
     AdminReviewDetail,
     AdminReviewHide,
@@ -70,6 +71,7 @@ from app.schemas.admin_staff import (
 from app.schemas.admin_users import AdminUserAction, AdminUserDetail, AdminUserList
 from app.schemas.checklists import QuestionIn, QuestionPatch
 from app.schemas.identity import Locale
+from app.schemas.reports import ReportStatus
 from app.schemas.staff import (
     AdminDashboardOut,
     StaffLoginIn,
@@ -94,6 +96,7 @@ from app.services import (
     admin_leads,
     admin_messages,
     admin_platform,
+    admin_reports,
     admin_reviews,
     admin_staff,
     admin_users,
@@ -1121,3 +1124,61 @@ async def unflag_evidence(
     """Clear the staff flag. Audited."""
     _can_moderate(me)
     return await admin_evidence.flag(db, photo_id, None, staff_id=me.staff.id, ip=client_ip(request))
+
+
+# ---- A14 Reports, A15 Report details (read-only) -----------------------------------------------------
+@router.get("/reports", response_model=AdminReportList)
+async def reports(
+    q: str | None = Query(None, max_length=120),
+    status: ReportStatus | None = None,
+    company: uuid.UUID | None = None,
+    language: Locale | None = None,
+    start: datetime | None = Query(None, alias="from", description="Created from"),
+    end: datetime | None = Query(None, alias="to", description="...and before"),
+    page: int = Query(1, ge=1, le=10_000),
+    page_size: int = Query(25, ge=5, le=100),
+    _: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> AdminReportList:
+    """Every company's reports, newest first, with what the AI checks found."""
+    return await admin_reports.reports(
+        db, q=q, status=status, company_id=company, language=language, start=start, end=end, page=page,
+        page_size=page_size,
+    )  # fmt: skip
+
+
+@router.get("/reports.csv", response_class=Response, responses={200: {"content": {"text/csv": {}}}})
+async def reports_csv(
+    q: str | None = Query(None, max_length=120),
+    status: ReportStatus | None = None,
+    company: uuid.UUID | None = None,
+    language: Locale | None = None,
+    start: datetime | None = Query(None, alias="from"),
+    end: datetime | None = Query(None, alias="to"),
+    me: Staff = Depends(get_staff),
+    db: AsyncSession = Depends(get_db),
+) -> Response:
+    """Every matching report (up to 50,000), for a spreadsheet. Exports are written to the audit log."""
+    filters = {
+        "q": q, "status": status, "company": str(company) if company else None, "language": language,
+        "from": start.isoformat() if start else None, "to": end.isoformat() if end else None,
+    }  # fmt: skip
+    body = await admin_reports.reports_csv(
+        db, q=q, status=status, company_id=company, language=language, start=start, end=end
+    )
+    await audit.record(db, "staff.export", staff_id=me.staff.id, target_type="reports",
+                       data={k: v for k, v in filters.items() if v})  # fmt: skip
+    return Response(
+        "".join(body),
+        media_type="text/csv; charset=utf-8",
+        headers={"Content-Disposition": f'attachment; filename="kaamnishaan-reports-{now():%Y-%m-%d}.csv"',
+                 "Cache-Control": "no-store"},
+    )  # fmt: skip
+
+
+@router.get("/reports/{report_id}", response_model=AdminReportDetail)
+async def report(
+    report_id: uuid.UUID, _: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> AdminReportDetail:
+    """One report: its text and photos, what the AI checks found, who changed it, and the customer links."""
+    return await admin_reports.detail(db, report_id)

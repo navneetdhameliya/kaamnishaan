@@ -55,6 +55,7 @@ export const NAV: { section: string; items: NavItem[] }[] = [
   { section: 'operations', items: [
       { key: 'jobs', path: '/jobs', icon: ClipboardList, ready: true },
       { key: 'evidence', path: '/evidence', icon: Images, ready: true },
+      { key: 'reports', path: '/reports', icon: FileText, ready: true },
     ] },
   { section: 'content', items: [{ key: 'checklists', path: '/checklist-templates', icon: ListChecks, ready: true }] },
   {
