@@ -1,6 +1,34 @@
 {
   "components": {
     "schemas": {
+      "AccountDelete": {
+        "additionalProperties": false,
+        "properties": {
+          "confirm": {
+            "const": true,
+            "title": "Confirm",
+            "type": "boolean"
+          },
+          "reason": {
+            "anyOf": [
+              {
+                "maxLength": 300,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Optional: why they are leaving",
+            "title": "Reason"
+          }
+        },
+        "required": [
+          "confirm"
+        ],
+        "title": "AccountDelete",
+        "type": "object"
+      },
       "AcknowledgeIn": {
         "additionalProperties": false,
         "properties": {
@@ -9745,6 +9773,19 @@
             "title": "Created At",
             "type": "string"
           },
+          "deleted_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "They deleted their account; details are wiped",
+            "title": "Deleted At"
+          },
           "device": {
             "anyOf": [
               {
@@ -12816,6 +12857,87 @@
           "reports_sent"
         ],
         "title": "DayCount",
+        "type": "object"
+      },
+      "DeletionCheck": {
+        "properties": {
+          "can_delete": {
+            "title": "Can Delete",
+            "type": "boolean"
+          },
+          "companies": {
+            "items": {
+              "$ref": "#/components/schemas/DeletionCompany"
+            },
+            "title": "Companies",
+            "type": "array"
+          },
+          "open_jobs": {
+            "default": 0,
+            "description": "Jobs given to you that are not finished; they go back to the office",
+            "title": "Open Jobs",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "can_delete",
+          "companies"
+        ],
+        "title": "DeletionCheck",
+        "type": "object"
+      },
+      "DeletionCompany": {
+        "properties": {
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/OwnerCandidate"
+            },
+            "title": "Candidates",
+            "type": "array"
+          },
+          "closes": {
+            "description": "True when the company closes too (you are its only member)",
+            "title": "Closes",
+            "type": "boolean"
+          },
+          "company_id": {
+            "format": "uuid",
+            "title": "Company Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "needs_new_owner": {
+            "description": "You own it and others work there: pick a new owner first",
+            "title": "Needs New Owner",
+            "type": "boolean"
+          },
+          "others": {
+            "description": "Other active people in the company",
+            "title": "Others",
+            "type": "integer"
+          },
+          "role": {
+            "enum": [
+              "owner",
+              "manager",
+              "technician"
+            ],
+            "title": "Role",
+            "type": "string"
+          }
+        },
+        "required": [
+          "company_id",
+          "name",
+          "role",
+          "others",
+          "closes",
+          "needs_new_owner"
+        ],
+        "title": "DeletionCompany",
         "type": "object"
       },
       "DemoBookedOut": {
@@ -16710,6 +16832,51 @@
           "code"
         ],
         "title": "OtpVerify",
+        "type": "object"
+      },
+      "OwnerCandidate": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "owner",
+              "manager",
+              "technician"
+            ],
+            "title": "Role",
+            "type": "string"
+          },
+          "user_id": {
+            "format": "uuid",
+            "title": "User Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id",
+          "name",
+          "role"
+        ],
+        "title": "OwnerCandidate",
+        "type": "object"
+      },
+      "OwnerChange": {
+        "additionalProperties": false,
+        "properties": {
+          "user_id": {
+            "description": "An active member of this company; you become a manager",
+            "format": "uuid",
+            "title": "User Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "user_id"
+        ],
+        "title": "OwnerChange",
         "type": "object"
       },
       "PairIn": {
@@ -33356,6 +33523,53 @@
         ]
       }
     },
+    "/api/v1/company/owner": {
+      "post": {
+        "description": "The owner hands the company to an active member, who becomes owner; you become a manager.",
+        "operationId": "change_owner_api_v1_company_owner_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OwnerChange"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Change Owner",
+        "tags": [
+          "team"
+        ]
+      }
+    },
     "/api/v1/company/settings": {
       "patch": {
         "operationId": "patch_company_settings_api_v1_company_settings_patch",
@@ -36441,6 +36655,73 @@
           }
         ],
         "summary": "My Companies",
+        "tags": [
+          "me"
+        ]
+      }
+    },
+    "/api/v1/me/delete": {
+      "post": {
+        "description": "Deletes your account now: your details are wiped and you are logged out everywhere. Your work stays\nwith the company. An owner with a team gets 409 owner_has_team until they pick a new owner.",
+        "operationId": "delete_me_api_v1_me_delete_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AccountDelete"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delete Me",
+        "tags": [
+          "me"
+        ]
+      }
+    },
+    "/api/v1/me/deletion": {
+      "get": {
+        "description": "What deleting your account would do: companies left or closed, and whether to pick an owner first.",
+        "operationId": "deletion_check_api_v1_me_deletion_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeletionCheck"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Deletion Check",
         "tags": [
           "me"
         ]

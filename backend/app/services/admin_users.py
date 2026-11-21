@@ -248,6 +248,7 @@ async def user(db: AsyncSession, user_id: uuid.UUID) -> AdminUserDetail:
         email_verified=u.email_verified_at is not None,
         login=_login(u, invited_only),
         status=u.status,
+        deleted_at=u.deleted_at,
         app_language=u.app_language,
         created_at=u.created_at,
         last_seen_at=u.last_seen_at,
@@ -287,6 +288,8 @@ async def set_active(
 ) -> AdminUserDetail:
     """Turn a person off for every company (they can't log in; their sessions end) or back on."""
     u = await _user(db, user_id)
+    if u.deleted_at:
+        raise AppError("account_deleted", "This person deleted their account.", status=409)
     if active and u.status != "disabled":
         raise AppError("not_disabled", "This person is not turned off.", status=409)
     if not active and u.status == "disabled":

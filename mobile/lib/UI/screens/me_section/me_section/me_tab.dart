@@ -257,6 +257,12 @@ class MeTab extends GetView<MeController> {
                             chevron: false,
                             onTap: _logout,
                           ),
+                          MeRow(
+                            key: const ValueKey('me-delete-account'),
+                            icon: LucideIcons.userX,
+                            label: LangKeys.meDeleteAccount.tr,
+                            onTap: controller.onDeleteAccountTap,
+                          ),
                         ],
                       ),
                     ],

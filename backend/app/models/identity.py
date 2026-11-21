@@ -34,7 +34,11 @@ def str_enum(*values: str, name: str) -> Enum:
 
 class User(IdMixin, TimestampMixin, Base):
     __tablename__ = "users"
-    __table_args__ = (CheckConstraint("phone IS NOT NULL OR email IS NOT NULL", name="phone_or_email"),)
+    __table_args__ = (
+        CheckConstraint(
+            "phone IS NOT NULL OR email IS NOT NULL OR deleted_at IS NOT NULL", name="phone_or_email"
+        ),
+    )
 
     phone: Mapped[str | None] = mapped_column(String(20), unique=True)
     email: Mapped[str | None] = mapped_column(String(254), unique=True)
@@ -53,6 +57,8 @@ class User(IdMixin, TimestampMixin, Base):
     )
     is_super_admin: Mapped[bool] = mapped_column(Boolean, default=False, server_default=text("false"))
     last_seen_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # the person deleted their account: personal details are wiped, their work stays with the company
+    deleted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     memberships: Mapped[list["Membership"]] = relationship(
         back_populates="user", foreign_keys="Membership.user_id"

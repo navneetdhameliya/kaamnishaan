@@ -177,6 +177,7 @@ export interface UserDetail {
   email_verified: boolean;
   login: 'email' | 'phone' | 'invited';
   status: 'active' | 'invited' | 'disabled';
+  deleted_at?: string | null;
   app_language: string;
   created_at: string;
   last_seen_at: string | null;

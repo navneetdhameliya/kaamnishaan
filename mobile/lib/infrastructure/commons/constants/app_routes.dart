@@ -42,6 +42,7 @@ abstract final class RoutesConstants {
   static const String messagesScreen = '/messages';
   static const String helpScreen = '/help';
   static const String helpNewScreen = '/help/new';
+  static const String deleteAccountScreen = '/delete-account';
   static const String helpTicketScreen = '/help/ticket';
   static const String teamScreen = '/team';
   static const String customerScreen = '/customer';

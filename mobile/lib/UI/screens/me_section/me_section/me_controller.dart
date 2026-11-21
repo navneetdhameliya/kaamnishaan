@@ -194,6 +194,11 @@ class MeController extends GetxController {
   }
 
   /// Log out now; the screen asks first when things are still waiting to send.
+  /// D-130: what deleting the account means, then delete it for good.
+  Future<void> onDeleteAccountTap() async {
+    await Get.toNamed<void>(RoutesConstants.deleteAccountScreen);
+  }
+
   Future<void> logout() async {
     await session.logout();
     Get.offAllNamed<void>(RoutesConstants.welcomeScreen);
