@@ -106,7 +106,7 @@ void main() {
 
     c.understood.value = true;
     c.reason.text = '  Closing the business ';
-    await _ignoreApp(c.onDelete);
+    await _ignoreApp(c.onDeleteAccount);
     verify(() => repo.deleteAccount(reason: 'Closing the business')).called(1);
     expect(session.me.value, isNull);
   });
@@ -121,7 +121,7 @@ void main() {
     final c = DeleteAccountController(repository: repo, session: session);
     await c.load();
     c.understood.value = true;
-    await _ignoreApp(c.onDelete);
+    await _ignoreApp(c.onDeleteAccount);
     expect(c.error.value, 'Choose a new owner for your company first.');
     expect(c.deleting.value, isFalse);
     verify(() => repo.deletionCheck()).called(2);

@@ -85,7 +85,7 @@ class DeleteAccountScreen extends GetView<DeleteAccountController> {
               variant: KnButtonVariant.danger,
               loading: controller.deleting.value,
               enabled: controller.ready,
-              onTap: controller.onDelete,
+              onTap: controller.onDeleteAccount,
               onDisabledTap: controller.onDisabledTap,
             ),
           ),

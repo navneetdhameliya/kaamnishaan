@@ -84,7 +84,7 @@ class DeleteAccountController extends GetxController {
     error.value = (check.value?.canDelete ?? false) ? LangKeys.delErrConfirm.tr : LangKeys.delErrOwner.tr;
   }
 
-  Future<void> onDelete() async {
+  Future<void> onDeleteAccount() async {
     if (!ready) {
       onDisabledTap();
       return;
