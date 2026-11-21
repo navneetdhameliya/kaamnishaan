@@ -1010,8 +1010,6 @@ abstract final class LangKeys {
   static const editorSave = 'editor.save';
   /// Report saved
   static const editorSaved = 'editor.saved';
-  /// Tap 🎤 on your keyboard and speak.
-  static const editorSpeakHint = 'editor.speak_hint';
   /// Write {part} again with AI?
   static const editorAiTitle = 'editor.ai_title';
   /// Your words in this part will be replaced.
@@ -9292,20 +9290,20 @@ abstract final class LangKeys {
   static const cbTrSaved = 'cb.tr_saved';
   /// Type the words first.
   static const cbTrEmpty = 'cb.tr_empty';
-  /// Speak the question
-  static const cbMicSpeak = 'cb.mic_speak';
+  /// Speak instead of typing
+  static const dictateSpeak = 'dictate.speak';
   /// Stop listening
-  static const cbMicStop = 'cb.mic_stop';
+  static const dictateStop = 'dictate.stop';
   /// Listening… tap the square to stop
-  static const cbMicListening = 'cb.mic_listening';
+  static const dictateListening = 'dictate.listening';
   /// Writing it down…
-  static const cbMicWorking = 'cb.mic_working';
-  /// The microphone is off. Turn it on in the phone's settings, or type the question.
-  static const cbMicOff = 'cb.mic_off';
+  static const dictateWorking = 'dictate.working';
+  /// The microphone is off. Turn it on in the phone's settings, or type it.
+  static const dictateOff = 'dictate.off';
   /// Couldn't hear any words. Try again a little closer.
-  static const cbMicUnclear = 'cb.mic_unclear';
-  /// Speaking instead of typing isn't available right now. Please type the question.
-  static const cbMicNoAi = 'cb.mic_no_ai';
+  static const dictateUnclear = 'dictate.unclear';
+  /// Speaking instead of typing isn't available right now. Please type it.
+  static const dictateNoAi = 'dictate.no_ai';
   /// Couldn't turn that into words. Try again, or type it.
-  static const cbMicFailed = 'cb.mic_failed';
+  static const dictateFailed = 'dictate.failed';
 }

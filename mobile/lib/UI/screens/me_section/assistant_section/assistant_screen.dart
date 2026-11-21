@@ -6,6 +6,7 @@ import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../common_widgets/common_shimmer.dart';
 import '../../../common_widgets/custom_inkwell.dart';
 import '../../../common_widgets/kn_back_button.dart';
+import '../../../common_widgets/kn_dictation.dart';
 import '../../../commons/behaviour/behaviour.dart';
 import '../../../commons/text_widgets/base/custom_base_text_widget.dart';
 import '../../../theme/kn_app_theme.dart';
@@ -205,6 +206,12 @@ class _InputBar extends StatelessWidget {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(KnSize.radiusFull),
                       borderSide: BorderSide.none,
+                    ),
+                    suffixIcon: KnMicButton(
+                      key: const ValueKey('ai-mic'),
+                      dictation: controller.dictation,
+                      box: controller.input,
+                      enabled: controller.canAsk,
                     ),
                   ),
                 ),

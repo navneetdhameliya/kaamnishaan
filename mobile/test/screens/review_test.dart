@@ -105,7 +105,7 @@ void main() {
       when(() => jobs.evidence(any())).thenAnswer(
         (_) async => const ApiSuccess<EvidenceListModel>(EvidenceListModel(data: [], meta: ListMetaModel(), pairs: [])),
       );
-      return ReportReviewController(reports: reports, jobs: jobs, translation: translation, args: args, clock: () => now);
+      return ReportReviewController(dictation: fakeDictation(), reports: reports, jobs: jobs, translation: translation, args: args, clock: () => now);
     }
 
     ReportOutModel waiting() => reportOut(

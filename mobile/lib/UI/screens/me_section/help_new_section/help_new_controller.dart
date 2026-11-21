@@ -6,11 +6,16 @@ import '../../../../infrastructure/commons/constants/app_routes.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/support_api_repository.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
+import '../../../common_widgets/kn_dictation.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// M47 New help request: what it is about, a short subject and the message.
 class HelpNewController extends GetxController {
-  HelpNewController({required this.repository, Future<String?> Function()? appVersion})
+  HelpNewController({
+    required this.repository,
+    required this.dictation,
+    Future<String?> Function()? appVersion,
+  })
       : _appVersion = appVersion ?? _packageVersion;
 
   static Future<String?> _packageVersion() async {
@@ -23,6 +28,9 @@ class HelpNewController extends GetxController {
   }
 
   final ISupportApiRepository repository;
+
+  /// Speak instead of typing (the microphone in the text box).
+  final Dictation dictation;
   final Future<String?> Function() _appVersion;
 
   static const categories = ['problem', 'question', 'billing', 'feature'];
@@ -44,6 +52,7 @@ class HelpNewController extends GetxController {
 
   @override
   void onClose() {
+    dictation.cancel();
     subject.dispose();
     message.dispose();
     super.onClose();

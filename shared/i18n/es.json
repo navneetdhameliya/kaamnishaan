@@ -503,7 +503,6 @@
   "editor.locked_note": "Las fotos y respuestas no se pueden cambiar.",
   "editor.save": "Guardar cambios",
   "editor.saved": "Informe guardado",
-  "editor.speak_hint": "Toca 🎤 en tu teclado y habla.",
   "editor.ai_title": "¿Escribir {part} otra vez con IA?",
   "editor.ai_body": "Tus palabras en esta parte se cambiarán.",
   "editor.ai_yes": "Escribir otra vez",
@@ -4644,12 +4643,12 @@
   "cb.tr_looks_right": "Está bien",
   "cb.tr_saved": "Traducción guardada.",
   "cb.tr_empty": "Escribe las palabras primero.",
-  "cb.mic_speak": "Di la pregunta",
-  "cb.mic_stop": "Dejar de escuchar",
-  "cb.mic_listening": "Escuchando… toca el cuadrado para parar",
-  "cb.mic_working": "Escribiéndolo…",
-  "cb.mic_off": "El micrófono está apagado. Actívalo en los ajustes del teléfono o escribe la pregunta.",
-  "cb.mic_unclear": "No se oyeron palabras. Inténtalo de nuevo un poco más cerca.",
-  "cb.mic_no_ai": "Dictar no está disponible ahora. Escribe la pregunta.",
-  "cb.mic_failed": "No se pudo convertir en texto. Inténtalo de nuevo o escríbelo."
+  "dictate.speak": "Habla en lugar de escribir",
+  "dictate.stop": "Dejar de escuchar",
+  "dictate.listening": "Escuchando… toca el cuadrado para parar",
+  "dictate.working": "Escribiéndolo…",
+  "dictate.off": "El micrófono está apagado. Actívalo en los ajustes del teléfono o escríbelo.",
+  "dictate.unclear": "No se oyeron palabras. Inténtalo de nuevo un poco más cerca.",
+  "dictate.no_ai": "Dictar no está disponible ahora. Escríbelo.",
+  "dictate.failed": "No se pudo convertir en texto. Inténtalo de nuevo o escríbelo."
 }

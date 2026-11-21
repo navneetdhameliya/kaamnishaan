@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../../../common_widgets/kn_dictation.dart';
 import 'checklist_builder_controller.dart';
 
 class ChecklistBuilderBinding extends Bindings {
@@ -9,8 +10,7 @@ class ChecklistBuilderBinding extends Bindings {
           checklists: Get.find(),
           files: Get.find(),
           picker: Get.find(),
-          recorder: Get.find(),
-          voice: Get.find(),
+          dictation: Dictation.find(),
         ));
   }
 }

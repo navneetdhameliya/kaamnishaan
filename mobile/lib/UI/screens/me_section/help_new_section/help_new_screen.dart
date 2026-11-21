@@ -5,6 +5,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../common_widgets/kn_custom_button.dart';
 import '../../../common_widgets/kn_custom_text_form_field.dart';
+import '../../../common_widgets/kn_dictation.dart';
 import '../../../common_widgets/kn_inline_error.dart';
 import '../../../common_widgets/kn_page_scaffold.dart';
 import '../../../common_widgets/kn_screen_footer.dart';
@@ -64,7 +65,9 @@ class HelpNewScreen extends GetView<HelpNewController> {
               minLines: 5,
               maxLines: 10,
               maxLength: 4000,
+              suffix: KnMicButton(key: const ValueKey('help-mic'), dictation: controller.dictation, box: controller.message),
             ),
+            KnDictationNote(dictation: controller.dictation, box: controller.message),
             if (controller.error.value != null) ...[
               const SizedBox(height: KnSize.space12),
               KnInlineError(message: controller.error.value!),

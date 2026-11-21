@@ -503,7 +503,6 @@
   "editor.locked_note": "Les photos et réponses ne peuvent pas être modifiées.",
   "editor.save": "Enregistrer",
   "editor.saved": "Rapport enregistré",
-  "editor.speak_hint": "Touchez 🎤 sur votre clavier et parlez.",
   "editor.ai_title": "Réécrire {part} avec l'IA ?",
   "editor.ai_body": "Vos mots dans cette partie seront remplacés.",
   "editor.ai_yes": "Réécrire",
@@ -4644,12 +4643,12 @@
   "cb.tr_looks_right": "C'est correct",
   "cb.tr_saved": "Traduction enregistrée.",
   "cb.tr_empty": "Écrivez d'abord les mots.",
-  "cb.mic_speak": "Dites la question",
-  "cb.mic_stop": "Arrêter l'écoute",
-  "cb.mic_listening": "À l'écoute… touchez le carré pour arrêter",
-  "cb.mic_working": "Écriture en cours…",
-  "cb.mic_off": "Le micro est coupé. Activez-le dans les réglages du téléphone, ou tapez la question.",
-  "cb.mic_unclear": "Aucun mot entendu. Réessayez un peu plus près.",
-  "cb.mic_no_ai": "La dictée n'est pas disponible pour le moment. Tapez la question.",
-  "cb.mic_failed": "Impossible de le transcrire. Réessayez, ou tapez-le."
+  "dictate.speak": "Parlez au lieu de taper",
+  "dictate.stop": "Arrêter l'écoute",
+  "dictate.listening": "À l'écoute… touchez le carré pour arrêter",
+  "dictate.working": "Écriture en cours…",
+  "dictate.off": "Le micro est coupé. Activez-le dans les réglages du téléphone, ou tapez-le.",
+  "dictate.unclear": "Aucun mot entendu. Réessayez un peu plus près.",
+  "dictate.no_ai": "La dictée n'est pas disponible pour le moment. Tapez-le.",
+  "dictate.failed": "Impossible de le transcrire. Réessayez, ou tapez-le."
 }

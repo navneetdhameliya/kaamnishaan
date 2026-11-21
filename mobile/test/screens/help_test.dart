@@ -83,7 +83,7 @@ void main() {
 
   test('a new request needs a subject and a message, then sends what was typed', () async {
     when(() => repo.create(any())).thenAnswer((_) async => ApiSuccess<TicketOutModel>(ticket('1', 'open')));
-    final c = HelpNewController(repository: repo, appVersion: () async => '1.0.0+1');
+    final c = HelpNewController(dictation: fakeDictation(), repository: repo, appVersion: () async => '1.0.0+1');
     c.onInit();
     expect(c.ready, isFalse);
     c.onDisabledTap();

@@ -54,7 +54,7 @@ void main() {
     session = SessionService(tokens: MemoryTokenStorage(), repository: MockAuthRepository());
   });
 
-  AssistantController make() => AssistantController(assistant: assistant, translation: translation, session: session);
+  AssistantController make() => AssistantController(dictation: fakeDictation(), assistant: assistant, translation: translation, session: session);
 
   test('M36 asks, then shows the answer with where it came from', () async {
     when(() => assistant.chat()).thenAnswer((_) async => ApiSuccess<AssistantOutModel>(chat()));

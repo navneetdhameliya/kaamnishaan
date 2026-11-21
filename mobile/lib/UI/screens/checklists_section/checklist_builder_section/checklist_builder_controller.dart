@@ -1,24 +1,16 @@
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../../../../infrastructure/data_access_layer/api_repository/checklists_api_repository.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/files_api_repository.dart';
-import '../../../../infrastructure/data_access_layer/api_repository/voice_api_repository.dart';
 import '../../../../infrastructure/data_access_layer/networks/api_result.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
-import '../../../../infrastructure/services/audio_service.dart';
 import '../../../../infrastructure/services/image_picker_service.dart';
+import '../../../common_widgets/kn_dictation.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// One choice in a "Choice" question: its saved key (null until saved) and its words.
-/// The microphone in the question box: off, listening, or turning the words into text.
-enum DictationPhase { idle, listening, working }
-
 class OptionDraft {
   OptionDraft({this.key, String label = ''}) : text = TextEditingController(text: label);
 
@@ -34,22 +26,16 @@ class ChecklistBuilderController extends GetxController {
     required this.checklists,
     required this.files,
     required this.picker,
-    required this.recorder,
-    required this.voice,
+    required this.dictation,
     String? templateId,
-    Future<Directory> Function()? temp,
-  })  : templateId = (templateId ?? Get.arguments as String).obs,
-        _temp = temp ?? getTemporaryDirectory;
+  }) : templateId = (templateId ?? Get.arguments as String).obs;
 
   final IChecklistsApiRepository checklists;
   final IFilesApiRepository files;
   final IImagePickerService picker;
-  final IVoiceRecorder recorder;
-  final IVoiceApiRepository voice;
-  final Future<Directory> Function() _temp;
 
-  /// A question is said in a few seconds; listening stops on its own after this.
-  static const dictationMax = Duration(seconds: 30);
+  /// The microphone in the question box (speak instead of typing).
+  final Dictation dictation;
   final RxString templateId;
 
   static const languages = ['en', 'hi', 'gu', 'es', 'fr'];
@@ -81,11 +67,6 @@ class ChecklistBuilderController extends GetxController {
   final RxnString ruleQuestionId = RxnString();
   final RxnString ruleEquals = RxnString();
 
-  /// Speak instead of typing the question.
-  final Rx<DictationPhase> dictation = DictationPhase.idle.obs;
-  Timer? _dictationLimit;
-  String? _dictationPath;
-
   /// Translations: the language being checked and one box per question for it.
   final RxString trLanguage = 'hi'.obs;
   final Map<String, TextEditingController> trBoxes = {};
@@ -103,7 +84,7 @@ class ChecklistBuilderController extends GetxController {
 
   @override
   void onClose() {
-    _cancelDictation();
+    dictation.cancel();
     text.dispose();
     unit.dispose();
     rename.dispose();
@@ -204,7 +185,7 @@ class ChecklistBuilderController extends GetxController {
   // ---- the question sheet ------------------------------------------------------------------
 
   void startAdd() {
-    _cancelDictation();
+    dictation.cancel();
     editing.value = null;
     text.clear();
     unit.clear();
@@ -219,7 +200,7 @@ class ChecklistBuilderController extends GetxController {
   }
 
   void startEdit(TemplateQuestionOutModel q) {
-    _cancelDictation();
+    dictation.cancel();
     editing.value = q;
     text.text = q.text;
     unit.text = q.unit ?? '';
@@ -239,71 +220,6 @@ class ChecklistBuilderController extends GetxController {
       o.text.dispose();
     }
     options.clear();
-  }
-
-  // ---- speak instead of typing -------------------------------------------------------------
-
-  /// The microphone in the question box: tap to listen, tap again to turn it into words.
-  Future<void> onMicTap() async {
-    switch (dictation.value) {
-      case DictationPhase.idle:
-        await _startDictation();
-      case DictationPhase.listening:
-        await _finishDictation();
-      case DictationPhase.working:
-        return;
-    }
-  }
-
-  Future<void> _startDictation() async {
-    if (await recorder.askPermission() == MicResult.denied) return KnToast.info(LangKeys.cbMicOff.tr);
-    final path = '${(await _temp()).path}/question_${DateTime.now().millisecondsSinceEpoch}.m4a';
-    if (!await recorder.start(path)) return KnToast.error(LangKeys.voiceMicFailed.tr);
-    _dictationPath = path;
-    dictation.value = DictationPhase.listening;
-    _dictationLimit = Timer(dictationMax, _finishDictation);
-  }
-
-  Future<void> _finishDictation() async {
-    if (dictation.value != DictationPhase.listening) return;
-    _dictationLimit?.cancel();
-    dictation.value = DictationPhase.working;
-    final path = await recorder.stop() ?? _dictationPath;
-    _dictationPath = null;
-    final file = path == null ? null : File(path);
-    if (file == null || !file.existsSync()) {
-      dictation.value = DictationPhase.idle;
-      return;
-    }
-    final bytes = await file.readAsBytes();
-    file.delete().ignore();
-    final upload = await files.upload(kind: UploadKind.audio, bytes: bytes, contentType: 'audio/mp4');
-    final uploadId = upload.dataOrNull;
-    final result = uploadId == null ? null : await voice.dictate(uploadId, languageHint: template.value?.language);
-    dictation.value = DictationPhase.idle;
-    final words = result?.dataOrNull?.text;
-    if (words == null) {
-      return KnToast.error(switch ((result?.errorOrNull ?? upload.errorOrNull)?.code) {
-        'unclear' => LangKeys.cbMicUnclear.tr,
-        'ai_unavailable' => LangKeys.cbMicNoAi.tr,
-        _ => LangKeys.cbMicFailed.tr,
-      });
-    }
-    final before = text.text.trim();
-    text.text = before.isEmpty ? words : '$before $words';
-    text.selection = TextSelection.collapsed(offset: text.text.length);
-  }
-
-  /// Stops listening without using what was said (the sheet changed or closed).
-  void _cancelDictation() {
-    _dictationLimit?.cancel();
-    if (dictation.value == DictationPhase.listening) {
-      unawaited(recorder.stop().then((p) {
-        if (p != null) File(p).delete().ignore();
-      }));
-    }
-    _dictationPath = null;
-    dictation.value = DictationPhase.idle;
   }
 
   // ---- choice answers ----------------------------------------------------------------------

@@ -7,17 +7,26 @@ import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/shared/review_words.dart';
 import '../../../../infrastructure/shared/text_utils.dart';
+import '../../../common_widgets/kn_dictation.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// M45 Customer reviews (owners and managers): the average, how many of each star, the chips
 /// All / Needs reply / Low, and each review with a reply or a follow-up.
 class CompanyReviewsController extends GetxController {
-  CompanyReviewsController({required this.reviews, String? filter, DateTime Function()? clock})
+  CompanyReviewsController({
+    required this.reviews,
+    required this.dictation,
+    String? filter,
+    DateTime Function()? clock,
+  })
       : _clock = clock ?? DateTime.now {
     this.filter.value = filter ?? (Get.arguments is String ? Get.arguments as String : 'all');
   }
 
   final IReviewsApiRepository reviews;
+
+  /// Speak instead of typing (the microphone in the text box).
+  final Dictation dictation;
   final DateTime Function() _clock;
 
   static const filters = ['all', 'needs_reply', 'low'];
@@ -41,6 +50,7 @@ class CompanyReviewsController extends GetxController {
 
   @override
   void onClose() {
+    dictation.cancel();
     replyText.dispose();
     super.onClose();
   }
@@ -136,6 +146,7 @@ class CompanyReviewsController extends GetxController {
 
   /// Opens the sheet with the current reply, if any.
   void startReply(CompanyReviewItemModel r) {
+    dictation.cancel();
     replyText.text = r.reply?.text ?? '';
   }
 

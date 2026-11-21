@@ -13,6 +13,7 @@ import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/services/photo_queue_service.dart';
 import '../../../../infrastructure/services/speech_service.dart';
 import '../../../../infrastructure/shared/job_arguments.dart';
+import '../../../common_widgets/kn_dictation.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// M25 one checklist question at a time, big answers, read aloud. Answers are kept on the phone and
@@ -25,6 +26,7 @@ class ChecklistQuestionController extends GetxController {
     required this.queue,
     required this.speech,
     required this.translation,
+    required this.dictation,
     ChecklistArguments? args,
     this.advanceDelay = const Duration(milliseconds: 250),
   }) : args = args ?? Get.arguments as ChecklistArguments;
@@ -34,6 +36,9 @@ class ChecklistQuestionController extends GetxController {
   final PhotoQueueService queue;
   final ISpeechService speech;
   final TranslationService translation;
+
+  /// Speak instead of typing (the microphone in the text box).
+  final Dictation dictation;
   final ChecklistArguments args;
   final Duration advanceDelay;
 
@@ -58,6 +63,7 @@ class ChecklistQuestionController extends GetxController {
 
   @override
   void onClose() {
+    dictation.cancel();
     _sentWorker?.dispose();
     textController.dispose();
     super.onClose();
@@ -126,6 +132,7 @@ class ChecklistQuestionController extends GetxController {
   int get percent => shown.isEmpty ? 0 : (answeredCount * 100 / shown.length).round();
 
   void _fillText() {
+    dictation.cancel(); // another question: what was being said belonged to the last one
     final q = current;
     final v = q == null ? null : valueOf(q);
     textController.text = v == null ? '' : _plain(v);
