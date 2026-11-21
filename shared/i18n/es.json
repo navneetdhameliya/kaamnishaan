@@ -4631,5 +4631,17 @@
   "cb.rule_note": "Solo si P{n} es {answer}",
   "cb.preview": "Vista previa",
   "cb.preview_count": "{n} de {m} preguntas · toca respuestas para probar las reglas",
-  "cb.preview_words": "Palabras o nota de voz"
+  "cb.preview_words": "Palabras o nota de voz",
+  "cb.tr_title": "Traducciones",
+  "cb.tr_open": "Revisar",
+  "cb.tr_all_ready": "Todas las preguntas están listas en este idioma.",
+  "cb.tr_left": "{n} por revisar",
+  "cb.tr_ready_one": "Lista",
+  "cb.tr_check": "Revísala",
+  "cb.tr_missing": "Falta",
+  "cb.tr_hint": "Escríbela en {lang}",
+  "cb.tr_save": "Guardar",
+  "cb.tr_looks_right": "Está bien",
+  "cb.tr_saved": "Traducción guardada.",
+  "cb.tr_empty": "Escribe las palabras primero."
 }

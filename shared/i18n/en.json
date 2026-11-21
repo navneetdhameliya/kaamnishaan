@@ -4631,5 +4631,17 @@
   "cb.rule_note": "Only if Q{n} is {answer}",
   "cb.preview": "Preview",
   "cb.preview_count": "{n} of {m} questions shown · tap answers to try the rules",
-  "cb.preview_words": "Words or a voice note"
+  "cb.preview_words": "Words or a voice note",
+  "cb.tr_title": "Translations",
+  "cb.tr_open": "Check",
+  "cb.tr_all_ready": "Every question is ready in this language.",
+  "cb.tr_left": "{n} to check",
+  "cb.tr_ready_one": "Ready",
+  "cb.tr_check": "Check it",
+  "cb.tr_missing": "Missing",
+  "cb.tr_hint": "Type it in {lang}",
+  "cb.tr_save": "Save",
+  "cb.tr_looks_right": "Looks right",
+  "cb.tr_saved": "Translation saved.",
+  "cb.tr_empty": "Type the words first."
 }

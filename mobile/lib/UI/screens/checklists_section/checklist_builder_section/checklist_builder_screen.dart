@@ -19,6 +19,7 @@ import '../../me_section/me_section/custom_widgets/me_rows.dart';
 import 'checklist_builder_controller.dart';
 import 'custom_widgets/preview_sheet.dart';
 import 'custom_widgets/question_sheet.dart';
+import 'custom_widgets/translations_sheet.dart';
 
 /// M26 Checklist builder (Figma 247:2300; add question 247:2404). Preview has no Figma frame; it reuses
 /// the builder's cards and chips.
@@ -35,6 +36,11 @@ class ChecklistBuilderScreen extends GetView<ChecklistBuilderController> {
   void _preview() {
     controller.startPreview();
     showKnBottomSheet<void>(title: LangKeys.cbPreview.tr, child: PreviewSheet(controller: controller));
+  }
+
+  void _translations() {
+    controller.startTranslations();
+    showKnBottomSheet<void>(title: LangKeys.cbTrTitle.tr, child: TranslationsSheet(controller: controller));
   }
 
   void _rename() {
@@ -153,6 +159,7 @@ class ChecklistBuilderScreen extends GetView<ChecklistBuilderController> {
                     label: controller.editable ? controller.translations : LangKeys.cbReadOnly.tr,
                     good: controller.editable && controller.languagesReady == ChecklistBuilderController.languages.length,
                     done: controller.editable && controller.languagesReady == ChecklistBuilderController.languages.length,
+                    onTap: controller.editable && qs.isNotEmpty ? _translations : null,
                   ),
                   if (controller.editable && (controller.draft || controller.archived)) ...[
                     const SizedBox(height: KnSize.space8),
@@ -304,30 +311,42 @@ class _RoundButton extends StatelessWidget {
 }
 
 class _Banner extends StatelessWidget {
-  const _Banner({required this.icon, required this.label, required this.good, required this.done});
+  const _Banner({required this.icon, required this.label, required this.good, required this.done, this.onTap});
 
   final IconData icon;
   final String label;
   final bool good;
   final bool done;
 
+  /// Opens the translations to check them; null when they can't be changed.
+  final VoidCallback? onTap;
+
   @override
   Widget build(BuildContext context) {
     final kn = context.kn;
     final fg = good ? kn.statusSuccess : kn.textPrimary;
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: KnSize.space12, vertical: 10),
-      decoration: BoxDecoration(
-        color: good ? kn.statusSuccessBg : kn.actionSecondary,
-        borderRadius: BorderRadius.circular(KnSize.radiusMd),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, size: 18, color: fg),
-          const SizedBox(width: KnSize.space8),
-          Expanded(child: CustomBaseTextWidget(label, style: context.knText.labelSm, color: fg)),
-          if (done) Icon(LucideIcons.check, size: 18, color: fg),
-        ],
+    return CustomInkWell(
+      key: const ValueKey('checklist-translations'),
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(KnSize.radiusMd),
+      child: Ink(
+        padding: const EdgeInsets.symmetric(horizontal: KnSize.space12, vertical: 10),
+        decoration: BoxDecoration(
+          color: good ? kn.statusSuccessBg : kn.actionSecondary,
+          borderRadius: BorderRadius.circular(KnSize.radiusMd),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, size: 18, color: fg),
+            const SizedBox(width: KnSize.space8),
+            Expanded(child: CustomBaseTextWidget(label, style: context.knText.labelSm, color: fg)),
+            if (onTap != null) ...[
+              CustomBaseTextWidget(LangKeys.cbTrOpen.tr, style: context.knText.labelSm, color: fg),
+              Icon(LucideIcons.chevronRight, size: 18, color: fg),
+            ] else if (done)
+              Icon(LucideIcons.check, size: 18, color: fg),
+          ],
+        ),
       ),
     );
   }

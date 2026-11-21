@@ -4631,5 +4631,17 @@
   "cb.rule_note": "तभी जब प्र{n} का जवाब {answer} हो",
   "cb.preview": "पूर्वावलोकन",
   "cb.preview_count": "{m} में से {n} सवाल दिख रहे हैं · नियम आज़माने के लिए जवाब दबाएँ",
-  "cb.preview_words": "शब्द या आवाज़ नोट"
+  "cb.preview_words": "शब्द या आवाज़ नोट",
+  "cb.tr_title": "अनुवाद",
+  "cb.tr_open": "जाँचें",
+  "cb.tr_all_ready": "इस भाषा में हर सवाल तैयार है।",
+  "cb.tr_left": "{n} जाँचने हैं",
+  "cb.tr_ready_one": "तैयार",
+  "cb.tr_check": "जाँचें",
+  "cb.tr_missing": "नहीं है",
+  "cb.tr_hint": "{lang} में लिखें",
+  "cb.tr_save": "सहेजें",
+  "cb.tr_looks_right": "सही है",
+  "cb.tr_saved": "अनुवाद सहेजा गया।",
+  "cb.tr_empty": "पहले शब्द लिखें।"
 }

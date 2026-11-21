@@ -4630,4 +4630,16 @@
 "cb.rule_note":"answer,n",
 "cb.preview":"",
 "cb.preview_count":"m,n",
-"cb.preview_words":""}
+"cb.preview_words":"",
+"cb.tr_title":"",
+"cb.tr_open":"",
+"cb.tr_all_ready":"",
+"cb.tr_left":"n",
+"cb.tr_ready_one":"",
+"cb.tr_check":"",
+"cb.tr_missing":"",
+"cb.tr_hint":"lang",
+"cb.tr_save":"",
+"cb.tr_looks_right":"",
+"cb.tr_saved":"",
+"cb.tr_empty":""}

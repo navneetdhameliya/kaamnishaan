@@ -9268,4 +9268,28 @@ abstract final class LangKeys {
   static const cbPreviewCount = 'cb.preview_count';
   /// Words or a voice note
   static const cbPreviewWords = 'cb.preview_words';
+  /// Translations
+  static const cbTrTitle = 'cb.tr_title';
+  /// Check
+  static const cbTrOpen = 'cb.tr_open';
+  /// Every question is ready in this language.
+  static const cbTrAllReady = 'cb.tr_all_ready';
+  /// {n} to check
+  static const cbTrLeft = 'cb.tr_left';
+  /// Ready
+  static const cbTrReadyOne = 'cb.tr_ready_one';
+  /// Check it
+  static const cbTrCheck = 'cb.tr_check';
+  /// Missing
+  static const cbTrMissing = 'cb.tr_missing';
+  /// Type it in {lang}
+  static const cbTrHint = 'cb.tr_hint';
+  /// Save
+  static const cbTrSave = 'cb.tr_save';
+  /// Looks right
+  static const cbTrLooksRight = 'cb.tr_looks_right';
+  /// Translation saved.
+  static const cbTrSaved = 'cb.tr_saved';
+  /// Type the words first.
+  static const cbTrEmpty = 'cb.tr_empty';
 }

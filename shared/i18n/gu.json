@@ -4631,5 +4631,17 @@
   "cb.rule_note": "ત્યારે જ જ્યારે પ્ર{n} નો જવાબ {answer} હોય",
   "cb.preview": "પૂર્વાવલોકન",
   "cb.preview_count": "{m} માંથી {n} સવાલ દેખાય છે · નિયમ અજમાવવા જવાબ દબાવો",
-  "cb.preview_words": "શબ્દો અથવા અવાજ નોંધ"
+  "cb.preview_words": "શબ્દો અથવા અવાજ નોંધ",
+  "cb.tr_title": "અનુવાદ",
+  "cb.tr_open": "તપાસો",
+  "cb.tr_all_ready": "આ ભાષામાં દરેક સવાલ તૈયાર છે.",
+  "cb.tr_left": "{n} તપાસવાના છે",
+  "cb.tr_ready_one": "તૈયાર",
+  "cb.tr_check": "તપાસો",
+  "cb.tr_missing": "નથી",
+  "cb.tr_hint": "{lang} માં લખો",
+  "cb.tr_save": "સાચવો",
+  "cb.tr_looks_right": "બરાબર છે",
+  "cb.tr_saved": "અનુવાદ સાચવ્યો.",
+  "cb.tr_empty": "પહેલા શબ્દો લખો."
 }
