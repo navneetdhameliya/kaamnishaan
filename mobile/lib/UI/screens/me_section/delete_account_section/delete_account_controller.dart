@@ -76,8 +76,8 @@ class DeleteAccountController extends GetxController {
       return;
     }
     session.me.value = me;
-    KnToast.success(LangKeys.delOwnerDone.trParams({'company': c.name}));
     await load();
+    KnToast.success(LangKeys.delOwnerDone.trParams({'company': c.name}));
   }
 
   void onDisabledTap() {
