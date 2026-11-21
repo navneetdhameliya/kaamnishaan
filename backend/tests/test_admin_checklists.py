@@ -127,3 +127,42 @@ async def test_review_approve_and_support_is_read_only(client):
         await db.commit()
     assert (await client.get(A, headers=auth(s))).status_code == 200
     assert (await client.patch(f"{A}/{t['id']}", json={"minutes": 5}, headers=auth(s))).status_code == 403
+
+
+async def test_reference_photos(client):
+    """Admin adds a "what good looks like" photo; companies that copy the checklist keep theirs."""
+    png = b"\x89PNG\r\n\x1a\n" + b"\x00" * 64
+    s, _ = await _setup(client)
+    t = await _new(client, s)
+    r = await client.post(
+        f"{A}/{t['id']}/questions", json={"type": "photo", "text": "Panel after cleaning"}, headers=auth(s)
+    )
+    q = r.json()["questions"][0]
+    assert q["reference_image_url"] is None
+    bad = await client.put(f"{A}/{t['id']}/questions/{q['id']}/reference", content=b"hello", headers=auth(s))
+    assert bad.status_code == 400
+    r = await client.put(f"{A}/{t['id']}/questions/{q['id']}/reference", content=png, headers=auth(s))
+    assert r.status_code == 200 and r.json()["questions"][0]["reference_image_url"]
+
+    await client.patch(f"{A}/{t['id']}", json={"status": "published"}, headers=auth(s))
+    owner = await make_owner(client)
+    mine = await client.post(f"/api/v1/checklist-templates/{t['id']}/copy", headers=auth(owner))
+    assert mine.status_code == 201, mine.text
+    copy = mine.json()
+    assert copy["questions"][0]["reference_image_url"]
+
+    r = await client.delete(f"{A}/{t['id']}/questions/{q['id']}/reference", headers=auth(s))
+    assert r.json()["questions"][0]["reference_image_url"] is None
+    again = (await client.get(f"/api/v1/checklist-templates/{copy['id']}", headers=auth(owner))).json()
+    assert again["questions"][0]["reference_image_url"]
+
+    # the company takes it off its own copy
+    cq = copy["questions"][0]["id"]
+    r = await client.patch(
+        f"/api/v1/checklist-templates/{copy['id']}/questions/{cq}",
+        json={"remove_reference": True},
+        headers=auth(owner),
+    )
+    assert r.status_code == 200, r.text
+    after = (await client.get(f"/api/v1/checklist-templates/{copy['id']}", headers=auth(owner))).json()
+    assert after["questions"][0]["reference_image_url"] is None

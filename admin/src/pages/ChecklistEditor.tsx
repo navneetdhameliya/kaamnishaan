@@ -1,4 +1,4 @@
-import { Archive, ArrowDown, ArrowUp, Camera, Check, ChevronLeft, Languages, Pencil, Plus, Send, Trash2, Undo2, X } from 'lucide-react';
+import { Archive, ArrowDown, ArrowUp, Camera, Check, ChevronLeft, ImagePlus, Languages, Pencil, Plus, Send, Trash2, Undo2, X } from 'lucide-react';
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
 
 import { api, ApiError } from '../lib/api';
@@ -281,6 +281,20 @@ export function ChecklistEditor({ t, lang, id, onName }: { t: T; lang: Lang; id:
     }
   };
 
+  /** The reference photo: the file itself is the body. */
+  const setReference = async (q: ChecklistQuestion, file: File) => {
+    setBusy(`r-${q.id}`);
+    setFormError(null);
+    try {
+      take(await api<ChecklistDetail>(`/admin/checklist-templates/${id}/questions/${q.id}/reference?locale=${lang}`, { method: 'PUT', file }));
+      setNotice(t('admin.cl.ref_saved'));
+    } catch (e) {
+      setFormError(e instanceof ApiError && e.status === 400 ? e.message : t('admin.err.generic'));
+    } finally {
+      setBusy(null);
+    }
+  };
+
   const back = (
     <Link to="/checklist-templates" className="group inline-flex w-fit items-center gap-4 text-latin-label-sm font-semibold text-text-secondary hover:text-text-primary">
       <ChevronLeft width={16} height={16} className="transition-transform group-hover:-translate-x-[3px]" aria-hidden />
@@ -467,6 +481,30 @@ export function ChecklistEditor({ t, lang, id, onName }: { t: T; lang: Lang; id:
                           </li>
                         ))}
                       </ul>
+                    )}
+                    {(q.reference_image_url || (canEdit && isSrc)) && (
+                      <div className="mt-12 flex flex-wrap items-center gap-12">
+                        {q.reference_image_url && (
+                          <a href={q.reference_image_url} target="_blank" rel="noreferrer" className="group block overflow-hidden rounded-md" title={t('admin.cl.ref')}>
+                            <img src={q.reference_image_url} alt={t('admin.cl.ref')} className="h-[72px] w-[112px] bg-bg-subtle object-cover transition-transform duration-300 group-hover:scale-105" />
+                          </a>
+                        )}
+                        {canEdit && isSrc && (
+                          <span className="flex flex-wrap items-center gap-8">
+                            <label className={cx('kn-btn inline-flex h-[32px] cursor-pointer items-center gap-8 rounded-full border border-border-default px-12 text-[13px] font-semibold hover:border-mocha-500', busy && 'pointer-events-none opacity-50')}>
+                              {busy === `r-${q.id}` ? <Spinner /> : <ImagePlus width={14} height={14} aria-hidden />}
+                              {t(q.reference_image_url ? 'admin.cl.ref_change' : 'admin.cl.ref_add')}
+                              <input type="file" accept="image/jpeg,image/png,image/webp" className="sr-only" onChange={(e) => { const f = e.target.files?.[0]; e.target.value = ''; if (f) void setReference(q, f); }} />
+                            </label>
+                            {q.reference_image_url && (
+                              <button type="button" disabled={!!busy} onClick={() => void call(`r-${q.id}`, `/questions/${q.id}/reference`, 'DELETE', undefined, t('admin.cl.ref_removed'))} className="text-[13px] font-semibold text-text-secondary hover:text-status-danger disabled:opacity-50">
+                                {t('admin.cl.ref_remove')}
+                              </button>
+                            )}
+                            {!q.reference_image_url && <span className="text-[13px] text-text-secondary">{t('admin.cl.ref_hint')}</span>}
+                          </span>
+                        )}
+                      </div>
                     )}
                   </div>
                   {canEdit && isSrc && (

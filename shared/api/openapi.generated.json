@@ -1988,6 +1988,18 @@
             "title": "Position",
             "type": "integer"
           },
+          "reference_image_url": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The photo showing what a good answer looks like",
+            "title": "Reference Image Url"
+          },
           "required": {
             "title": "Required",
             "type": "boolean"
@@ -18635,6 +18647,12 @@
             ],
             "title": "Reference Upload Id"
           },
+          "remove_reference": {
+            "default": false,
+            "description": "Take the reference photo off the question",
+            "title": "Remove Reference",
+            "type": "boolean"
+          },
           "required": {
             "anyOf": [
               {
@@ -25969,6 +25987,155 @@
           }
         ],
         "summary": "Patch Checklist Question",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
+    "/api/v1/admin/checklist-templates/{template_id}/questions/{question_id}/reference": {
+      "delete": {
+        "operationId": "delete_question_reference_api_v1_admin_checklist_templates__template_id__questions__question_id__reference_delete",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "template_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Template Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "question_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Question Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminChecklistDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Delete Question Reference",
+        "tags": [
+          "admin"
+        ]
+      },
+      "put": {
+        "description": "The photo showing technicians what a good answer looks like: send the file itself as the body\n(JPG, PNG or WebP, at most 3 MB). Companies that copy this checklist get the photo too.",
+        "operationId": "put_question_reference_api_v1_admin_checklist_templates__template_id__questions__question_id__reference_put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "template_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Template Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "question_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Question Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "locale",
+            "required": false,
+            "schema": {
+              "default": "en",
+              "enum": [
+                "en",
+                "hi",
+                "gu",
+                "es",
+                "fr"
+              ],
+              "title": "Locale",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminChecklistDetail"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Put Question Reference",
         "tags": [
           "admin"
         ]

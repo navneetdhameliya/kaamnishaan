@@ -4,7 +4,9 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../common_widgets/custom_inkwell.dart';
+import '../../../../common_widgets/kn_cover_image.dart';
 import '../../../../common_widgets/kn_custom_button.dart';
+import '../../../../common_widgets/kn_photo_source_sheet.dart';
 import '../../../../common_widgets/kn_switch_row.dart';
 import '../../../../common_widgets/kn_text_box.dart';
 import '../../../../commons/text_widgets/base/custom_base_text_widget.dart';
@@ -12,7 +14,8 @@ import '../../../../theme/kn_app_theme.dart';
 import '../../../../theme/kn_tokens.g.dart';
 import '../checklist_builder_controller.dart';
 
-/// M26 Add question / Edit question (Figma 247:2404): the words, the answer type, a photo rule.
+/// M26 Add question / Edit question (Figma 247:2404): the words, the answer type, a photo rule and a
+/// reference photo showing what a good answer looks like.
 class QuestionSheet extends StatelessWidget {
   const QuestionSheet({super.key, required this.controller});
 
@@ -92,6 +95,8 @@ class QuestionSheet extends StatelessWidget {
               ),
             ],
             const SizedBox(height: KnSize.space8),
+            _ReferencePhoto(controller: controller),
+            const SizedBox(height: KnSize.space16),
             Container(
               padding: const EdgeInsets.all(KnSize.space12),
               decoration: BoxDecoration(color: kn.actionSecondary, borderRadius: BorderRadius.circular(KnSize.radiusMd)),
@@ -137,6 +142,86 @@ class QuestionSheet extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+/// "Reference photo": a thumbnail with Change / Remove, or a button to add one.
+class _ReferencePhoto extends StatelessWidget {
+  const _ReferencePhoto({required this.controller});
+
+  final ChecklistBuilderController controller;
+
+  Future<void> _pick() async {
+    final source = await showKnPhotoSourceSheet(title: LangKeys.cbRef.tr);
+    if (source != null) await controller.onPickReference(source);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final text = context.knText;
+    final picked = controller.referencePicked.value;
+    const side = 72.0;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        CustomBaseTextWidget(LangKeys.cbRef.tr, style: text.label),
+        const SizedBox(height: KnSize.space4),
+        CustomBaseTextWidget(LangKeys.cbRefHint.tr, style: text.labelSm, color: context.kn.textSecondary),
+        const SizedBox(height: KnSize.space8),
+        if (!controller.hasReference)
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: IntrinsicWidth(
+              child: KnCustomButton(
+                key: const ValueKey('question-ref-add'),
+                text: LangKeys.cbRefAdd.tr,
+                icon: LucideIcons.imagePlus,
+                variant: KnButtonVariant.secondary,
+                onTap: _pick,
+              ),
+            ),
+          )
+        else
+          Row(
+            children: [
+              ClipRRect(
+                key: const ValueKey('question-ref-thumb'),
+                borderRadius: BorderRadius.circular(KnSize.radiusMd),
+                child: picked != null
+                    ? Image.memory(picked.bytes, width: side, height: side, fit: BoxFit.cover)
+                    : KnCoverImage(url: controller.referenceUrl.value, width: side, height: side, placeholderIcon: LucideIcons.image),
+              ),
+              const SizedBox(width: KnSize.space12),
+              Flexible(
+                child: Wrap(
+                  spacing: KnSize.space8,
+                  runSpacing: KnSize.space8,
+                  children: [
+                    IntrinsicWidth(
+                      child: KnCustomButton(
+                        key: const ValueKey('question-ref-change'),
+                        text: LangKeys.cbRefChange.tr,
+                        icon: LucideIcons.imagePlus,
+                        variant: KnButtonVariant.secondary,
+                        onTap: _pick,
+                      ),
+                    ),
+                    IntrinsicWidth(
+                      child: KnCustomButton(
+                        key: const ValueKey('question-ref-remove'),
+                        text: LangKeys.cbRefRemove.tr,
+                        icon: LucideIcons.x,
+                        variant: KnButtonVariant.ghost,
+                        onTap: controller.onRemoveReference,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+      ],
     );
   }
 }

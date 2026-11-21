@@ -631,7 +631,7 @@ async def add_checklist_question(
     if body.reference_upload_id:
         raise AppError(
             "validation_error",
-            "Reference photos can't be added here yet.",
+            "Add the question first, then its reference photo.",
             fields={"reference_upload_id": "not_supported"},
         )
     t = await admin_checklists.global_template(db, template_id)
@@ -653,7 +653,7 @@ async def patch_checklist_question(
     if body.reference_upload_id:
         raise AppError(
             "validation_error",
-            "Reference photos can't be added here yet.",
+            "Add the question first, then its reference photo.",
             fields={"reference_upload_id": "not_supported"},
         )
     t = await admin_checklists.global_template(db, template_id)
@@ -662,6 +662,48 @@ async def patch_checklist_question(
     await db.commit()
     if words_changed:
         await enqueue("translate_checklist_question", question_id=str(q.id))
+    return await admin_checklists.detail(db, template_id, lang=locale)
+
+
+@router.put(
+    "/checklist-templates/{template_id}/questions/{question_id}/reference",
+    response_model=AdminChecklistDetail,
+)
+async def put_question_reference(
+    template_id: uuid.UUID, question_id: uuid.UUID, request: Request, locale: Locale = "en",
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminChecklistDetail:  # fmt: skip
+    """The photo showing technicians what a good answer looks like: send the file itself as the body
+    (JPG, PNG or WebP, at most 3 MB). Companies that copy this checklist get the photo too."""
+    _can_edit(me)
+    t = await admin_checklists.global_template(db, template_id)
+    q = await checklist_svc.template_question(db, t, question_id)
+    q.reference_image_key = await media.upload("reference", await request.body())
+    await audit.record(
+        db, "checklist.reference_set", staff_id=me.staff.id, target_type="checklist_template",
+        target_id=t.id, data={"question_id": str(q.id)}, ip=client_ip(request),
+    )  # fmt: skip
+    await db.commit()
+    return await admin_checklists.detail(db, template_id, lang=locale)
+
+
+@router.delete(
+    "/checklist-templates/{template_id}/questions/{question_id}/reference",
+    response_model=AdminChecklistDetail,
+)
+async def delete_question_reference(
+    template_id: uuid.UUID, question_id: uuid.UUID, request: Request, locale: Locale = "en",
+    me: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db),
+) -> AdminChecklistDetail:  # fmt: skip
+    _can_edit(me)
+    t = await admin_checklists.global_template(db, template_id)
+    q = await checklist_svc.template_question(db, t, question_id)
+    q.reference_image_key = None  # the file stays: companies' copies may still show it
+    await audit.record(
+        db, "checklist.reference_removed", staff_id=me.staff.id, target_type="checklist_template",
+        target_id=t.id, data={"question_id": str(q.id)}, ip=client_ip(request),
+    )  # fmt: skip
+    await db.commit()
     return await admin_checklists.detail(db, template_id, lang=locale)
 
 

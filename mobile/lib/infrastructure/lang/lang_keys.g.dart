@@ -9204,4 +9204,34 @@ abstract final class LangKeys {
   static const adminAuATeamOwnerChanged = 'admin.au.a.team.owner_changed';
   /// Closed the company when deleting their account
   static const adminAuACompanyClosedByOwner = 'admin.au.a.company.closed_by_owner';
+  /// Reference photo
+  static const cbRef = 'cb.ref';
+  /// Shows the technician what a good answer looks like.
+  static const cbRefHint = 'cb.ref_hint';
+  /// Add reference photo
+  static const cbRefAdd = 'cb.ref_add';
+  /// Change
+  static const cbRefChange = 'cb.ref_change';
+  /// Remove
+  static const cbRefRemove = 'cb.ref_remove';
+  /// The reference photo didn't upload. Try again.
+  static const cbRefFailed = 'cb.ref_failed';
+  /// Reference photo
+  static const adminClRef = 'admin.cl.ref';
+  /// Reference photo saved.
+  static const adminClRefSaved = 'admin.cl.ref_saved';
+  /// Change reference photo
+  static const adminClRefChange = 'admin.cl.ref_change';
+  /// Add reference photo
+  static const adminClRefAdd = 'admin.cl.ref_add';
+  /// Reference photo removed.
+  static const adminClRefRemoved = 'admin.cl.ref_removed';
+  /// Remove
+  static const adminClRefRemove = 'admin.cl.ref_remove';
+  /// Shows technicians what a good answer looks like. Companies that already copied this template keep their photo.
+  static const adminClRefHint = 'admin.cl.ref_hint';
+  /// Reference photo set
+  static const adminAuAChecklistReferenceSet = 'admin.au.a.checklist.reference_set';
+  /// Reference photo removed
+  static const adminAuAChecklistReferenceRemoved = 'admin.au.a.checklist.reference_removed';
 }

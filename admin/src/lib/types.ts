@@ -284,6 +284,7 @@ export interface ChecklistQuestion {
   photo_rule: 'none' | 'always' | 'if_no' | 'if_fail';
   required: boolean;
   condition: { question_id: string; equals: string } | null;
+  reference_image_url?: string | null;
 }
 export interface ChecklistDetail {
   id: string;

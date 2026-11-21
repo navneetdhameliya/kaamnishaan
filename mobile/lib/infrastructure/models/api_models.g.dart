@@ -1381,6 +1381,8 @@ class AdminChecklistQuestionModel {
   final List<AdminChecklistOptionModel> options;
   final String photoRule;
   final int position;
+  /// The photo showing what a good answer looks like
+  final String? referenceImageUrl;
   final bool requiredValue;
   final Map<String, dynamic> text;
   final Map<String, dynamic> textStatus;
@@ -1396,6 +1398,7 @@ class AdminChecklistQuestionModel {
     required this.options,
     required this.photoRule,
     required this.position,
+    this.referenceImageUrl,
     required this.requiredValue,
     required this.text,
     required this.textStatus,
@@ -1412,6 +1415,7 @@ class AdminChecklistQuestionModel {
         options: (json['options'] as List).map((e) => AdminChecklistOptionModel.fromJson(e as Map<String, dynamic>)).toList(),
         photoRule: json['photo_rule'] as String,
         position: (json['position'] as num).toInt(),
+        referenceImageUrl: json['reference_image_url'] as String?,
         requiredValue: json['required'] as bool,
         text: Map<String, dynamic>.from(json['text'] as Map),
         textStatus: Map<String, dynamic>.from(json['text_status'] as Map),
@@ -1428,6 +1432,7 @@ class AdminChecklistQuestionModel {
         'options': options.map((e) => e.toJson()).toList(),
         'photo_rule': photoRule,
         'position': position,
+        'reference_image_url': referenceImageUrl,
         'required': requiredValue,
         'text': text,
         'text_status': textStatus,
@@ -13531,6 +13536,8 @@ class QuestionPatchModel {
   final String? photoRule;
   final int? position;
   final String? referenceUploadId;
+  /// Take the reference photo off the question
+  final bool? removeReference;
   final bool? requiredValue;
   final String? text;
   /// Fix a translation by hand (marks it ready)
@@ -13547,6 +13554,7 @@ class QuestionPatchModel {
     this.photoRule,
     this.position,
     this.referenceUploadId,
+    this.removeReference,
     this.requiredValue,
     this.text,
     this.translations,
@@ -13563,6 +13571,7 @@ class QuestionPatchModel {
         photoRule: json['photo_rule'] as String?,
         position: json['position'] == null ? null : (json['position'] as num).toInt(),
         referenceUploadId: json['reference_upload_id'] as String?,
+        removeReference: json['remove_reference'] as bool?,
         requiredValue: json['required'] as bool?,
         text: json['text'] as String?,
         translations: json['translations'] == null ? null : Map<String, dynamic>.from(json['translations'] as Map),
@@ -13579,6 +13588,7 @@ class QuestionPatchModel {
         'photo_rule': photoRule,
         'position': position,
         'reference_upload_id': referenceUploadId,
+        'remove_reference': removeReference,
         'required': requiredValue,
         'text': text,
         'translations': translations,

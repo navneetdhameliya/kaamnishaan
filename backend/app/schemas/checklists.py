@@ -95,6 +95,7 @@ class QuestionPatch(_In):
     clear_condition: bool = False
     position: int | None = Field(default=None, ge=1)
     reference_upload_id: uuid.UUID | None = None
+    remove_reference: bool = Field(default=False, description="Take the reference photo off the question")
     translations: dict[Locale, str] | None = Field(
         default=None, description="Fix a translation by hand (marks it ready)"
     )

@@ -4599,5 +4599,20 @@
   "admin.au.a.account.deleted": "Eliminó su cuenta",
   "admin.au.a.team.left": "Dejó la empresa (cuenta eliminada)",
   "admin.au.a.team.owner_changed": "Pasó la empresa a un nuevo dueño",
-  "admin.au.a.company.closed_by_owner": "Cerró la empresa al eliminar su cuenta"
+  "admin.au.a.company.closed_by_owner": "Cerró la empresa al eliminar su cuenta",
+  "cb.ref": "Foto de referencia",
+  "cb.ref_hint": "Muestra al técnico cómo se ve una buena respuesta.",
+  "cb.ref_add": "Añadir foto de referencia",
+  "cb.ref_change": "Cambiar",
+  "cb.ref_remove": "Quitar",
+  "cb.ref_failed": "La foto de referencia no se subió. Inténtalo de nuevo.",
+  "admin.cl.ref": "Foto de referencia",
+  "admin.cl.ref_saved": "Foto de referencia guardada.",
+  "admin.cl.ref_change": "Cambiar foto de referencia",
+  "admin.cl.ref_add": "Añadir foto de referencia",
+  "admin.cl.ref_removed": "Foto de referencia quitada.",
+  "admin.cl.ref_remove": "Quitar",
+  "admin.cl.ref_hint": "Muestra a los técnicos cómo se ve una buena respuesta. Las empresas que ya copiaron esta plantilla conservan su foto.",
+  "admin.au.a.checklist.reference_set": "Foto de referencia puesta",
+  "admin.au.a.checklist.reference_removed": "Foto de referencia quitada"
 }

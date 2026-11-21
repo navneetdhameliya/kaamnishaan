@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.errors import AppError, NotFound
 from app.models import ChecklistQuestion, ChecklistTemplate, Industry, JobChecklist
 from app.providers.ai import get_ai
+from app.providers.storage import get_storage
 from app.schemas.admin_checklists import (
     AdminChecklistCounts,
     AdminChecklistCreate,
@@ -159,6 +160,9 @@ async def detail(db: AsyncSession, template_id: uuid.UUID, *, lang: str) -> Admi
                 photo_rule=x.photo_rule,
                 required=x.required,
                 condition=x.condition,
+                reference_image_url=get_storage().presign_get(x.reference_image_key)
+                if x.reference_image_key
+                else None,
             )
             for x in qs
         ],
