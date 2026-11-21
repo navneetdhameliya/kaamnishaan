@@ -4642,4 +4642,12 @@
 "cb.tr_save":"",
 "cb.tr_looks_right":"",
 "cb.tr_saved":"",
-"cb.tr_empty":""}
+"cb.tr_empty":"",
+"cb.mic_speak":"",
+"cb.mic_stop":"",
+"cb.mic_listening":"",
+"cb.mic_working":"",
+"cb.mic_off":"",
+"cb.mic_unclear":"",
+"cb.mic_no_ai":"",
+"cb.mic_failed":""}

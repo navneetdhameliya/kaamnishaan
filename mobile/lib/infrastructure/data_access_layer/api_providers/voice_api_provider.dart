@@ -10,6 +10,7 @@ abstract class IVoiceApiProvider {
   Future<dynamic> patchNote(String id, Map<String, dynamic> body);
   Future<dynamic> postRetranscribe(String id, Map<String, dynamic> body);
   Future<dynamic> deleteNote(String id);
+  Future<dynamic> postDictation(Map<String, dynamic> body);
 }
 
 class VoiceApiProvider implements IVoiceApiProvider {
@@ -41,4 +42,7 @@ class VoiceApiProvider implements IVoiceApiProvider {
 
   @override
   Future<dynamic> deleteNote(String id) => _client.delete(APIConstant.voiceNoteAPIEP(id));
+
+  @override
+  Future<dynamic> postDictation(Map<String, dynamic> body) => _client.post(APIConstant.dictationAPIEP, body: body);
 }

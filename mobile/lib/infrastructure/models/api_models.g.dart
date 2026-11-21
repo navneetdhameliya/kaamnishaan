@@ -9669,6 +9669,59 @@ class DeviceRegisterModel {
       };
 }
 
+DictationInModel dictationInModelFromJson(String str) => DictationInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String dictationInModelToJson(DictationInModel data) => json.encode(data.toJson());
+
+class DictationInModel {
+  /// The language being spoken, when known
+  /// One of: en, hi, gu, es, fr
+  final String? languageHint;
+  /// A short recording uploaded with kind audio
+  final String uploadId;
+
+  const DictationInModel({
+    this.languageHint,
+    required this.uploadId,
+  });
+
+  factory DictationInModel.fromJson(Map<String, dynamic> json) => DictationInModel(
+        languageHint: json['language_hint'] as String?,
+        uploadId: json['upload_id'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'language_hint': languageHint,
+        'upload_id': uploadId,
+      };
+}
+
+DictationOutModel dictationOutModelFromJson(String str) => DictationOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String dictationOutModelToJson(DictationOutModel data) => json.encode(data.toJson());
+
+class DictationOutModel {
+  /// The language heard
+  final String? language;
+  /// What was said, to put in a text box
+  final String text;
+
+  const DictationOutModel({
+    this.language,
+    required this.text,
+  });
+
+  factory DictationOutModel.fromJson(Map<String, dynamic> json) => DictationOutModel(
+        language: json['language'] as String?,
+        text: json['text'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'language': language,
+        'text': text,
+      };
+}
+
 EmailBodyModel emailBodyModelFromJson(String str) => EmailBodyModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String emailBodyModelToJson(EmailBodyModel data) => json.encode(data.toJson());

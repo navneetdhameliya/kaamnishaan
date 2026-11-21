@@ -9292,4 +9292,20 @@ abstract final class LangKeys {
   static const cbTrSaved = 'cb.tr_saved';
   /// Type the words first.
   static const cbTrEmpty = 'cb.tr_empty';
+  /// Speak the question
+  static const cbMicSpeak = 'cb.mic_speak';
+  /// Stop listening
+  static const cbMicStop = 'cb.mic_stop';
+  /// Listening… tap the square to stop
+  static const cbMicListening = 'cb.mic_listening';
+  /// Writing it down…
+  static const cbMicWorking = 'cb.mic_working';
+  /// The microphone is off. Turn it on in the phone's settings, or type the question.
+  static const cbMicOff = 'cb.mic_off';
+  /// Couldn't hear any words. Try again a little closer.
+  static const cbMicUnclear = 'cb.mic_unclear';
+  /// Speaking instead of typing isn't available right now. Please type the question.
+  static const cbMicNoAi = 'cb.mic_no_ai';
+  /// Couldn't turn that into words. Try again, or type it.
+  static const cbMicFailed = 'cb.mic_failed';
 }

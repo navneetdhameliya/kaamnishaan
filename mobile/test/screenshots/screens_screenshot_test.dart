@@ -2149,7 +2149,7 @@ void main() {
         ),
       ),
     );
-    Get.put(ChecklistBuilderController(checklists: checklists, files: MockFilesRepository(), picker: FakeImagePicker(), templateId: 't1'));
+    Get.put(ChecklistBuilderController(checklists: checklists, files: MockFilesRepository(), picker: FakeImagePicker(), recorder: FakeRecorder(), voice: MockVoiceRepository(), templateId: 't1'));
     await shot(t, name, const ChecklistBuilderScreen(), act: act);
   }
 

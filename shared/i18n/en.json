@@ -4643,5 +4643,13 @@
   "cb.tr_save": "Save",
   "cb.tr_looks_right": "Looks right",
   "cb.tr_saved": "Translation saved.",
-  "cb.tr_empty": "Type the words first."
+  "cb.tr_empty": "Type the words first.",
+  "cb.mic_speak": "Speak the question",
+  "cb.mic_stop": "Stop listening",
+  "cb.mic_listening": "Listening… tap the square to stop",
+  "cb.mic_working": "Writing it down…",
+  "cb.mic_off": "The microphone is off. Turn it on in the phone's settings, or type the question.",
+  "cb.mic_unclear": "Couldn't hear any words. Try again a little closer.",
+  "cb.mic_no_ai": "Speaking instead of typing isn't available right now. Please type the question.",
+  "cb.mic_failed": "Couldn't turn that into words. Try again, or type it."
 }
