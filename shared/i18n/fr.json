@@ -4599,5 +4599,20 @@
   "admin.au.a.account.deleted": "A supprimé son compte",
   "admin.au.a.team.left": "A quitté l’entreprise (compte supprimé)",
   "admin.au.a.team.owner_changed": "A transmis l’entreprise à un nouveau propriétaire",
-  "admin.au.a.company.closed_by_owner": "A fermé l’entreprise en supprimant son compte"
+  "admin.au.a.company.closed_by_owner": "A fermé l’entreprise en supprimant son compte",
+  "cb.ref": "Photo de référence",
+  "cb.ref_hint": "Montre au technicien à quoi ressemble une bonne réponse.",
+  "cb.ref_add": "Ajouter une photo de référence",
+  "cb.ref_change": "Changer",
+  "cb.ref_remove": "Retirer",
+  "cb.ref_failed": "La photo de référence n'a pas été envoyée. Réessayez.",
+  "admin.cl.ref": "Photo de référence",
+  "admin.cl.ref_saved": "Photo de référence enregistrée.",
+  "admin.cl.ref_change": "Changer la photo de référence",
+  "admin.cl.ref_add": "Ajouter une photo de référence",
+  "admin.cl.ref_removed": "Photo de référence retirée.",
+  "admin.cl.ref_remove": "Retirer",
+  "admin.cl.ref_hint": "Montre aux techniciens à quoi ressemble une bonne réponse. Les entreprises qui ont déjà copié ce modèle gardent leur photo.",
+  "admin.au.a.checklist.reference_set": "Photo de référence ajoutée",
+  "admin.au.a.checklist.reference_removed": "Photo de référence retirée"
 }

@@ -11,7 +11,7 @@ from app.core.errors import AppError
 from app.providers.storage import get_storage
 
 MAX_BYTES = 3 * 1024 * 1024
-KINDS = ("blog", "people")
+KINDS = ("blog", "people", "reference")
 TYPES = {"image/jpeg": "jpg", "image/png": "png", "image/webp": "webp"}
 
 

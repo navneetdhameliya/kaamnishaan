@@ -59,6 +59,9 @@ class AdminChecklistQuestion(BaseModel):
     photo_rule: str
     required: bool
     condition: dict[str, Any] | None
+    reference_image_url: str | None = Field(
+        None, description="The photo showing what a good answer looks like"
+    )
 
 
 class AdminChecklistDetail(BaseModel):

@@ -2,19 +2,23 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
 import '../../../../infrastructure/data_access_layer/api_repository/checklists_api_repository.dart';
+import '../../../../infrastructure/data_access_layer/api_repository/files_api_repository.dart';
 import '../../../../infrastructure/data_access_layer/networks/api_result.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
+import '../../../../infrastructure/services/image_picker_service.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// M26 Checklist builder: the questions in order (drag to move), add or change one in a sheet, how many
 /// languages are translated, and "Save checklist" (it can then be added to new jobs). A KaamNishaan
 /// checklist is read-only until copied.
 class ChecklistBuilderController extends GetxController {
-  ChecklistBuilderController({required this.checklists, String? templateId})
+  ChecklistBuilderController({required this.checklists, required this.files, required this.picker, String? templateId})
       : templateId = (templateId ?? Get.arguments as String).obs;
 
   final IChecklistsApiRepository checklists;
+  final IFilesApiRepository files;
+  final IImagePickerService picker;
   final RxString templateId;
 
   static const languages = ['en', 'hi', 'gu', 'es', 'fr'];
@@ -31,6 +35,10 @@ class ChecklistBuilderController extends GetxController {
   final RxString textDraft = ''.obs;
   final RxString type = 'yes_no'.obs;
   final RxBool photo = false.obs;
+
+  /// The reference photo (what a good answer looks like): the one saved, a new one picked, or taken off.
+  final RxnString referenceUrl = RxnString();
+  final Rxn<PickedImage> referencePicked = Rxn<PickedImage>();
 
   @override
   void onInit() {
@@ -114,6 +122,8 @@ class ChecklistBuilderController extends GetxController {
     unit.clear();
     type.value = 'yes_no';
     photo.value = false;
+    referenceUrl.value = null;
+    referencePicked.value = null;
   }
 
   void startEdit(TemplateQuestionOutModel q) {
@@ -122,7 +132,25 @@ class ChecklistBuilderController extends GetxController {
     unit.text = q.unit ?? '';
     type.value = q.type;
     photo.value = q.photoRule != 'none';
+    referenceUrl.value = q.referenceImageUrl;
+    referencePicked.value = null;
   }
+
+  bool get hasReference => referencePicked.value != null || referenceUrl.value != null;
+
+  /// Takes or chooses the reference photo; it is uploaded when the question is saved.
+  Future<void> onPickReference(PickSource source) async {
+    final picked = await picker.pick(source, maxSide: 1600);
+    if (picked != null) referencePicked.value = picked;
+  }
+
+  void onRemoveReference() {
+    referencePicked.value = null;
+    referenceUrl.value = null;
+  }
+
+  /// Whether saving takes the saved reference photo off.
+  bool get _referenceRemoved => editing.value?.referenceImageUrl != null && !hasReference;
 
   /// The type can't change once the question exists (answers depend on it).
   bool get typeLocked => editing.value != null;
@@ -156,6 +184,17 @@ class ChecklistBuilderController extends GetxController {
     if (words.isEmpty || busy.value) return false;
     final u = unit.text.trim();
     busy.value = true;
+    String? referenceUploadId;
+    final picked = referencePicked.value;
+    if (picked != null) {
+      final upload = await files.upload(kind: UploadKind.photo, bytes: picked.bytes, contentType: picked.contentType);
+      referenceUploadId = upload.dataOrNull;
+      if (referenceUploadId == null) {
+        busy.value = false;
+        KnToast.error(LangKeys.cbRefFailed.tr);
+        return false;
+      }
+    }
     final q = editing.value;
     final result = q == null
         ? await checklists.addQuestion(
@@ -165,12 +204,19 @@ class ChecklistBuilderController extends GetxController {
               text: words,
               photoRule: _photoRule,
               unit: type.value == 'number' && u.isNotEmpty ? u : null,
+              referenceUploadId: referenceUploadId,
             ),
           )
         : await checklists.updateQuestion(
             templateId.value,
             q.id,
-            QuestionPatchModel(text: words, photoRule: _photoRule, unit: type.value == 'number' && u.isNotEmpty ? u : null),
+            QuestionPatchModel(
+              text: words,
+              photoRule: _photoRule,
+              unit: type.value == 'number' && u.isNotEmpty ? u : null,
+              referenceUploadId: referenceUploadId,
+              removeReference: _referenceRemoved ? true : null,
+            ),
           );
     busy.value = false;
     return _take(result);

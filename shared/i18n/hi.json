@@ -4599,5 +4599,20 @@
   "admin.au.a.account.deleted": "अपना खाता हटाया",
   "admin.au.a.team.left": "कंपनी छोड़ी (खाता हटाया)",
   "admin.au.a.team.owner_changed": "कंपनी नए मालिक को सौंपी",
-  "admin.au.a.company.closed_by_owner": "खाता हटाते समय कंपनी बंद की"
+  "admin.au.a.company.closed_by_owner": "खाता हटाते समय कंपनी बंद की",
+  "cb.ref": "संदर्भ फ़ोटो",
+  "cb.ref_hint": "तकनीशियन को दिखाता है कि सही जवाब कैसा दिखता है।",
+  "cb.ref_add": "संदर्भ फ़ोटो जोड़ें",
+  "cb.ref_change": "बदलें",
+  "cb.ref_remove": "हटाएँ",
+  "cb.ref_failed": "संदर्भ फ़ोटो अपलोड नहीं हुई। फिर से कोशिश करें।",
+  "admin.cl.ref": "संदर्भ फ़ोटो",
+  "admin.cl.ref_saved": "संदर्भ फ़ोटो सहेजी गई।",
+  "admin.cl.ref_change": "संदर्भ फ़ोटो बदलें",
+  "admin.cl.ref_add": "संदर्भ फ़ोटो जोड़ें",
+  "admin.cl.ref_removed": "संदर्भ फ़ोटो हटाई गई।",
+  "admin.cl.ref_remove": "हटाएँ",
+  "admin.cl.ref_hint": "तकनीशियनों को दिखाता है कि सही जवाब कैसा दिखता है। जिन कंपनियों ने यह टेम्पलेट पहले ही कॉपी किया है, उनकी फ़ोटो वैसी ही रहती है।",
+  "admin.au.a.checklist.reference_set": "संदर्भ फ़ोटो लगाई गई",
+  "admin.au.a.checklist.reference_removed": "संदर्भ फ़ोटो हटाई गई"
 }

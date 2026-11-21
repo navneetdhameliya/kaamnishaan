@@ -4599,5 +4599,20 @@
   "admin.au.a.account.deleted": "પોતાનું ખાતું કાઢ્યું",
   "admin.au.a.team.left": "કંપની છોડી (ખાતું કાઢ્યું)",
   "admin.au.a.team.owner_changed": "કંપની નવા માલિકને સોંપી",
-  "admin.au.a.company.closed_by_owner": "ખાતું કાઢતી વખતે કંપની બંધ કરી"
+  "admin.au.a.company.closed_by_owner": "ખાતું કાઢતી વખતે કંપની બંધ કરી",
+  "cb.ref": "સંદર્ભ ફોટો",
+  "cb.ref_hint": "ટેક્નિશિયનને બતાવે છે કે સાચો જવાબ કેવો દેખાય છે.",
+  "cb.ref_add": "સંદર્ભ ફોટો ઉમેરો",
+  "cb.ref_change": "બદલો",
+  "cb.ref_remove": "દૂર કરો",
+  "cb.ref_failed": "સંદર્ભ ફોટો અપલોડ ન થયો. ફરી પ્રયાસ કરો.",
+  "admin.cl.ref": "સંદર્ભ ફોટો",
+  "admin.cl.ref_saved": "સંદર્ભ ફોટો સાચવ્યો.",
+  "admin.cl.ref_change": "સંદર્ભ ફોટો બદલો",
+  "admin.cl.ref_add": "સંદર્ભ ફોટો ઉમેરો",
+  "admin.cl.ref_removed": "સંદર્ભ ફોટો દૂર કર્યો.",
+  "admin.cl.ref_remove": "દૂર કરો",
+  "admin.cl.ref_hint": "ટેક્નિશિયનોને બતાવે છે કે સાચો જવાબ કેવો દેખાય છે. જે કંપનીઓએ આ ટેમ્પ્લેટ પહેલેથી કૉપિ કર્યું છે તેમનો ફોટો એમ જ રહે છે.",
+  "admin.au.a.checklist.reference_set": "સંદર્ભ ફોટો મૂક્યો",
+  "admin.au.a.checklist.reference_removed": "સંદર્ભ ફોટો દૂર કર્યો"
 }

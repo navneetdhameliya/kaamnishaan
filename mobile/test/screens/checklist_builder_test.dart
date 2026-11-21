@@ -3,9 +3,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_builder_section/checklist_builder_controller.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_library_section/checklist_library_controller.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/files_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_result.dart';
 import 'package:kaamnishaan/infrastructure/lang/translations.g.dart';
 import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
+import 'package:kaamnishaan/infrastructure/services/image_picker_service.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../helpers/fakes.dart';
@@ -18,7 +20,7 @@ Future<void> _ignoreApp(Future<void> Function() run) async {
 
 const ready = {'en': 'ready', 'hi': 'ready', 'gu': 'ready', 'es': 'ready', 'fr': 'ready'};
 
-TemplateQuestionOutModel question(String id, int position, String type, String text, {String photo = 'none'}) =>
+TemplateQuestionOutModel question(String id, int position, String type, String text, {String photo = 'none', String? ref}) =>
     TemplateQuestionOutModel(
       id: id,
       position: position,
@@ -29,6 +31,7 @@ TemplateQuestionOutModel question(String id, int position, String type, String t
       options: const [],
       photoRule: photo,
       requiredValue: true,
+      referenceImageUrl: ref,
     );
 
 TemplateOutModel template({String scope = 'company', String status = 'draft', List<TemplateQuestionOutModel>? qs}) {
@@ -56,10 +59,14 @@ TemplateOutModel template({String scope = 'company', String status = 'draft', Li
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   late MockChecklistsRepository checklists;
+  late MockFilesRepository files;
+  late FakeImagePicker picker;
 
   setUpAll(() {
     registerFallbackValue(const QuestionInModel(type: 'yes_no', text: ''));
     registerFallbackValue(const QuestionPatchModel());
+    registerFallbackValue(UploadKind.photo);
+    registerFallbackValue(<int>[]);
   });
 
   setUp(() {
@@ -68,11 +75,13 @@ void main() {
     Get.addTranslations(KnTranslations().keys);
     Get.locale = const Locale('en', 'IN');
     checklists = MockChecklistsRepository();
+    files = MockFilesRepository();
+    picker = FakeImagePicker();
   });
 
   test('M26 shows the questions, their types and the languages ready', () async {
     when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
-    final c = ChecklistBuilderController(checklists: checklists, templateId: 't1');
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
     await c.load();
     expect((c.name, c.subtitle), ('HVAC service check', '3 questions · used in 21 jobs'));
     expect(c.translations, 'Translations: 4 of 5 languages ready');
@@ -83,7 +92,7 @@ void main() {
   test('M26 add a Pass / Fail question with a photo when it fails', () async {
     when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
     when(() => checklists.addQuestion(any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
-    final c = ChecklistBuilderController(checklists: checklists, templateId: 't1');
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
     await c.load();
     c.startAdd();
     c.text.text = 'Is the condensate drain clear?';
@@ -98,7 +107,7 @@ void main() {
   test('M26 edit keeps the type; numbers can have a unit', () async {
     when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
     when(() => checklists.updateQuestion(any(), any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
-    final c = ChecklistBuilderController(checklists: checklists, templateId: 't1');
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
     await c.load();
     c.startEdit(c.questions[1]);
     c.onType('yes_no');
@@ -110,10 +119,49 @@ void main() {
     expect((sent.text, sent.unit, sent.photoRule), ('Refrigerant pressure', 'psi', 'always'));
   });
 
+  test('M26 a reference photo is uploaded with the question, and can be taken off', () async {
+    when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    when(() => checklists.addQuestion(any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    when(() => checklists.updateQuestion(any(), any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    when(() => files.upload(kind: any(named: 'kind'), bytes: any(named: 'bytes'), contentType: any(named: 'contentType')))
+        .thenAnswer((_) async => const ApiSuccess<String>('up1'));
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
+    await c.load();
+
+    // add: pick a photo, it goes up with the question
+    c.startAdd();
+    c.text.text = 'Is the outdoor unit level?';
+    expect(c.hasReference, isFalse);
+    picker.next = tinyJpeg;
+    await c.onPickReference(PickSource.camera);
+    expect(c.hasReference, isTrue);
+    expect(picker.sources, [PickSource.camera]);
+    expect(await c.onSaveQuestion(), isTrue);
+    verify(() => files.upload(kind: UploadKind.photo, bytes: tinyJpeg.bytes, contentType: 'image/jpeg')).called(1);
+    final added = verify(() => checklists.addQuestion('t1', captureAny())).captured.single as QuestionInModel;
+    expect(added.referenceUploadId, 'up1');
+
+    clearInteractions(checklists);
+    // edit: the saved photo shows; removing it sends remove_reference
+    c.startEdit(question('q1', 1, 'yes_no', 'Is the air filter clean?', ref: 'https://x/ref.jpg'));
+    expect((c.hasReference, c.referenceUrl.value), (true, 'https://x/ref.jpg'));
+    c.onRemoveReference();
+    await c.onSaveQuestion();
+    final removed = verify(() => checklists.updateQuestion('t1', 'q1', captureAny())).captured.single as QuestionPatchModel;
+    expect((removed.removeReference, removed.referenceUploadId), (true, null));
+
+    clearInteractions(checklists);
+    // edit without touching the photo sends neither
+    c.startEdit(question('q1', 1, 'yes_no', 'Is the air filter clean?', ref: 'https://x/ref.jpg'));
+    await c.onSaveQuestion();
+    final kept = verify(() => checklists.updateQuestion('t1', 'q1', captureAny())).captured.single as QuestionPatchModel;
+    expect((kept.removeReference, kept.referenceUploadId), (null, null));
+  });
+
   test('M26 drag to move saves the new place', () async {
     when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
     when(() => checklists.updateQuestion(any(), any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
-    final c = ChecklistBuilderController(checklists: checklists, templateId: 't1');
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
     await c.load();
     final moving = c.onReorder(2, 0);
     expect([for (final q in c.questions) q.id], ['q3', 'q1', 'q2']); // shown at once
@@ -128,7 +176,7 @@ void main() {
     when(() => checklists.update(any(), status: any(named: 'status'), name: any(named: 'name'))).thenAnswer(
       (_) async => ApiSuccess<TemplateOutModel>(template(status: 'published')),
     );
-    final c = ChecklistBuilderController(checklists: checklists, templateId: 'g1');
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 'g1');
     await c.load();
     expect(c.editable, isFalse);
     await _ignoreApp(c.onCopy);

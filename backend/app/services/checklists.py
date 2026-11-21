@@ -528,6 +528,8 @@ async def update_question_in(
         }
     if reference_key:
         q.reference_image_key = reference_key
+    elif body.remove_reference:
+        q.reference_image_key = None  # the file stays: copies of this checklist may still show it
     if body.translations:
         for lg, txt in body.translations.items():
             q.text = {**q.text, lg: txt}
