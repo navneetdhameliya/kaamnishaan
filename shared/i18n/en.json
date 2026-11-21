@@ -503,7 +503,6 @@
   "editor.locked_note": "Photos and checklist answers cannot be changed.",
   "editor.save": "Save changes",
   "editor.saved": "Report saved",
-  "editor.speak_hint": "Tap 🎤 on your keyboard and speak.",
   "editor.ai_title": "Write {part} again with AI?",
   "editor.ai_body": "Your words in this part will be replaced.",
   "editor.ai_yes": "Write again",
@@ -4644,12 +4643,12 @@
   "cb.tr_looks_right": "Looks right",
   "cb.tr_saved": "Translation saved.",
   "cb.tr_empty": "Type the words first.",
-  "cb.mic_speak": "Speak the question",
-  "cb.mic_stop": "Stop listening",
-  "cb.mic_listening": "Listening… tap the square to stop",
-  "cb.mic_working": "Writing it down…",
-  "cb.mic_off": "The microphone is off. Turn it on in the phone's settings, or type the question.",
-  "cb.mic_unclear": "Couldn't hear any words. Try again a little closer.",
-  "cb.mic_no_ai": "Speaking instead of typing isn't available right now. Please type the question.",
-  "cb.mic_failed": "Couldn't turn that into words. Try again, or type it."
+  "dictate.speak": "Speak instead of typing",
+  "dictate.stop": "Stop listening",
+  "dictate.listening": "Listening… tap the square to stop",
+  "dictate.working": "Writing it down…",
+  "dictate.off": "The microphone is off. Turn it on in the phone's settings, or type it.",
+  "dictate.unclear": "Couldn't hear any words. Try again a little closer.",
+  "dictate.no_ai": "Speaking instead of typing isn't available right now. Please type it.",
+  "dictate.failed": "Couldn't turn that into words. Try again, or type it."
 }

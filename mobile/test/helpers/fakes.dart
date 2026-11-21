@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' show Widget, Image, BoxFit, ColoredBox, Colors;
+import 'package:kaamnishaan/UI/common_widgets/kn_dictation.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/assistant_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/auth_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/billing_api_repository.dart';
@@ -576,4 +577,12 @@ MyInviteModel invite({String status = 'pending'}) => MyInviteModel(
       status: status,
       sentAt: DateTime.now().subtract(const Duration(days: 2)),
       expiresAt: DateTime.now().add(const Duration(days: 5)),
+    );
+
+/// A microphone helper for screens whose tests don't speak (nothing is stubbed).
+Dictation fakeDictation() => Dictation(
+      recorder: FakeRecorder(),
+      files: MockFilesRepository(),
+      voice: MockVoiceRepository(),
+      temp: () async => Directory.systemTemp,
     );

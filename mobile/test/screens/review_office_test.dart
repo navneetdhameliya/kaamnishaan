@@ -108,7 +108,7 @@ void main() {
   test('M45 shows the average, the chips and which cards need a follow-up', () async {
     final good = review(id: 'v2', rating: 4, low: false, callBack: false, followup: null);
     when(() => reviews.company(any())).thenAnswer((_) async => ApiSuccess<ReviewsPageModel>(page([review(), good])));
-    final c = CompanyReviewsController(reviews: reviews, filter: 'all', clock: () => now);
+    final c = CompanyReviewsController(dictation: fakeDictation(), reviews: reviews, filter: 'all', clock: () => now);
     await c.load();
     expect((c.average, c.countLine), ('4.7', '48 reviews'));
     expect([for (final f in CompanyReviewsController.filters) c.chip(f)], ['All 48', 'Needs reply 3', 'Low 1']);
@@ -126,7 +126,7 @@ void main() {
     when(() => reviews.reply(any(), any())).thenAnswer(
       (_) async => ApiSuccess<ReplyOutModel>(ReplyOutModel(text: 'Thank you, Mr. Mehta!', createdAt: now)),
     );
-    final c = CompanyReviewsController(reviews: reviews, filter: 'all', clock: () => now);
+    final c = CompanyReviewsController(dictation: fakeDictation(), reviews: reviews, filter: 'all', clock: () => now);
     c.onInit();
     c.startReply(r);
     expect(c.draft.value, '');

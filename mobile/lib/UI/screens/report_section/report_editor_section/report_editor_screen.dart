@@ -133,7 +133,7 @@ class ReportEditorScreen extends GetView<ReportEditorController> {
                         showAi: controller.canRewrite,
                         aiWritten: controller.sourceOf(p) != 'technician',
                         emptyText: controller.emptyText(p),
-                        onMic: () => controller.onMicTap(p),
+                        dictation: controller.dictation,
                         onAi: () => _rewrite(p),
                         onHear: () => controller.onHearTap(p),
                       ),

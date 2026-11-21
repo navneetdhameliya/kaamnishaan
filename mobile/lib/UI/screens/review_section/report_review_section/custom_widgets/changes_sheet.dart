@@ -7,8 +7,8 @@ import '../../../../../infrastructure/shared/text_utils.dart';
 import '../../../../common_widgets/kn_bottom_sheet.dart';
 import '../../../../common_widgets/kn_checkbox_tile.dart';
 import '../../../../common_widgets/kn_custom_button.dart';
+import '../../../../common_widgets/kn_dictation.dart';
 import '../../../../common_widgets/kn_initials_avatar.dart';
-import '../../../../common_widgets/kn_toast.dart';
 import '../../../../commons/text_widgets/base/custom_base_text_widget.dart';
 import '../../../../theme/kn_app_theme.dart';
 import '../../../../theme/kn_tokens.g.dart';
@@ -70,9 +70,11 @@ Future<bool?> showChangesSheet(ReportReviewController c) => showKnBottomSheet<bo
                     counterText: '',
                     filled: true,
                     fillColor: kn.bgSurface,
-                    suffixIcon: IconButton(
-                      icon: Icon(LucideIcons.mic, size: 20, color: kn.textSecondary),
-                      onPressed: () => KnToast.info(LangKeys.editorSpeakHint.tr),
+                    suffixIcon: KnMicButton(
+                      key: const ValueKey('change-note-mic'),
+                      dictation: c.dictation,
+                      box: c.note,
+                      onText: (_) => c.changesError.value = null,
                     ),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(KnSize.radiusMd)),
                     enabledBorder: OutlineInputBorder(
@@ -81,6 +83,7 @@ Future<bool?> showChangesSheet(ReportReviewController c) => showKnBottomSheet<bo
                     ),
                   ),
                 ),
+                KnDictationNote(dictation: c.dictation, box: c.note),
                 if (c.changesError.value != null) ...[
                   const SizedBox(height: KnSize.space8),
                   Row(

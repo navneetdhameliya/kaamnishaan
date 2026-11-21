@@ -114,7 +114,7 @@ void main() {
           ),
         ),
       );
-      return ChecklistQuestionController(
+      return ChecklistQuestionController(dictation: fakeDictation(), 
         checklists: checklists,
         files: files,
         queue: queue,

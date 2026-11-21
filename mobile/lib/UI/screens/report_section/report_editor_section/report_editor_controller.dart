@@ -7,6 +7,7 @@ import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/services/speech_service.dart';
 import '../../../../infrastructure/shared/job_arguments.dart';
+import '../../../common_widgets/kn_dictation.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// One part of the report the technician can change.
@@ -35,12 +36,13 @@ class ReportPart {
 }
 
 /// M32 Report editor: the words only. Photos and checklist answers are proof and cannot be changed here.
-/// Each part can be typed, spoken with the keyboard's microphone, or written again by AI.
+/// Each part can be typed, spoken (the microphone writes it in), or written again by AI.
 class ReportEditorController extends GetxController {
   ReportEditorController({
     required this.reports,
     required this.speech,
     required this.translation,
+    required this.dictation,
     ReportArguments? args,
     this.pollEvery = const Duration(milliseconds: 1200),
   }) : args = args ?? Get.arguments as ReportArguments;
@@ -48,6 +50,9 @@ class ReportEditorController extends GetxController {
   final IReportsApiRepository reports;
   final ISpeechService speech;
   final TranslationService translation;
+
+  /// Speak instead of typing a part.
+  final Dictation dictation;
   final ReportArguments args;
   final Duration pollEvery;
 
@@ -80,6 +85,7 @@ class ReportEditorController extends GetxController {
   @override
   void onClose() {
     speech.stop();
+    dictation.cancel();
     for (final p in parts) {
       p.dispose();
     }
@@ -123,12 +129,6 @@ class ReportEditorController extends GetxController {
   String sourceOf(ReportPart p) => '${report.value?.sectionSources[p.key] ?? ''}';
 
   String emptyText(ReportPart p) => LangKeys.editorEmpty.trParams({'part': p.title});
-
-  /// The microphone: the field opens with the keyboard, whose own microphone types what is said.
-  void onMicTap(ReportPart p) {
-    p.focus.requestFocus();
-    KnToast.info(LangKeys.editorSpeakHint.tr);
-  }
 
   /// "Hear it": reads the message out loud.
   Future<void> onHearTap(ReportPart p) => speech.speak(emptyText(p), languageCode: translation.currentCode);

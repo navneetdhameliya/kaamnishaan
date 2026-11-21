@@ -155,7 +155,7 @@ void main() {
   group('M32 editor', () {
     Future<ReportEditorController> editor() async {
       when(() => reports.report(any())).thenAnswer((_) async => ApiSuccess<ReportOutModel>(reportOut()));
-      final c = ReportEditorController(reports: reports, speech: FakeSpeech(), translation: translation, args: args)
+      final c = ReportEditorController(reports: reports, speech: FakeSpeech(), translation: translation, dictation: fakeDictation(), args: args)
         ..onInit();
       await c.load();
       return c;
@@ -191,7 +191,7 @@ void main() {
         (_) async => const ApiSuccess<ReportStartedModel>(ReportStartedModel(reportId: 'r1', taskId: 't2', status: 'draft')),
       );
       when(() => reports.task(any())).thenAnswer((_) async => ApiSuccess<TaskOutModel>(taskOut('done', ['done', 'done', 'done'])));
-      final c = ReportEditorController(
+      final c = ReportEditorController(dictation: fakeDictation(), 
         reports: reports,
         speech: FakeSpeech(),
         translation: translation,

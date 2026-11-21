@@ -30,6 +30,7 @@ import 'package:kaamnishaan/UI/screens/auth_section/profile_setup_section/profil
 import 'package:kaamnishaan/UI/screens/auth_section/profile_setup_section/profile_setup_screen.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/verify_email_section/verify_email_controller.dart';
 import 'package:kaamnishaan/UI/screens/auth_section/verify_email_section/verify_email_screen.dart';
+import 'package:kaamnishaan/UI/common_widgets/kn_dictation.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_builder_section/checklist_builder_controller.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_builder_section/checklist_builder_screen.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_builder_section/custom_widgets/question_sheet.dart';
@@ -876,7 +877,7 @@ void main() {
       ),
     );
     final c = Get.put(
-      ChecklistQuestionController(
+      ChecklistQuestionController(dictation: fakeDictation(), 
         checklists: checklists,
         files: MockFilesRepository(),
         queue: queue,
@@ -1065,7 +1066,7 @@ void main() {
       ),
     );
     final c = Get.put(
-      ReportEditorController(reports: reports, speech: FakeSpeech(), translation: translation(), args: reportArgs),
+      ReportEditorController(reports: reports, speech: FakeSpeech(), translation: translation(), dictation: fakeDictation(), args: reportArgs),
     );
     await t.pump();
     if (empty) c.parts[1].text.text = '';
@@ -1320,7 +1321,7 @@ void main() {
         ),
       ),
     );
-    Get.put(ReportReviewController(reports: reports, jobs: jobs, translation: translation(), args: reviewArgs, clock: () => reviewAt));
+    Get.put(ReportReviewController(dictation: fakeDictation(), reports: reports, jobs: jobs, translation: translation(), args: reviewArgs, clock: () => reviewAt));
     await shot(t, 'm33_report_review', const ReportReviewScreen());
   });
 
@@ -1919,7 +1920,7 @@ void main() {
       ),
     );
     when(() => reviews.suggestion(any())).thenAnswer((_) async => const ApiSuccess<String>('Thank you, Dr. Rao!'));
-    Get.put(CompanyReviewsController(reviews: reviews, filter: 'all', clock: () => officeNow));
+    Get.put(CompanyReviewsController(dictation: fakeDictation(), reviews: reviews, filter: 'all', clock: () => officeNow));
     await shot(t, name, const CompanyReviewsScreen(), act: act);
   }
 
@@ -2149,7 +2150,7 @@ void main() {
         ),
       ),
     );
-    Get.put(ChecklistBuilderController(checklists: checklists, files: MockFilesRepository(), picker: FakeImagePicker(), recorder: FakeRecorder(), voice: MockVoiceRepository(), templateId: 't1'));
+    Get.put(ChecklistBuilderController(checklists: checklists, files: MockFilesRepository(), picker: FakeImagePicker(), dictation: Dictation(recorder: FakeRecorder(), files: MockFilesRepository(), voice: MockVoiceRepository()), templateId: 't1'));
     await shot(t, name, const ChecklistBuilderScreen(), act: act);
   }
 
@@ -2262,7 +2263,7 @@ void main() {
         ),
       ),
     );
-    Get.put(AssistantController(assistant: assistant, translation: translation(), session: session));
+    Get.put(AssistantController(dictation: fakeDictation(), assistant: assistant, translation: translation(), session: session));
     await shot(t, name, const AssistantScreen());
   }
 

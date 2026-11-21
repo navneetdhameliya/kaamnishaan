@@ -10,6 +10,7 @@ import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/shared/job_arguments.dart';
 import '../../../../infrastructure/shared/time_utils.dart';
+import '../../../common_widgets/kn_dictation.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// One tick box on "Ask for changes".
@@ -33,6 +34,7 @@ class ReportReviewController extends GetxController {
     required this.reports,
     required this.jobs,
     required this.translation,
+    required this.dictation,
     ReportArguments? args,
     DateTime Function()? clock,
   })  : args = args ?? Get.arguments as ReportArguments,
@@ -41,6 +43,9 @@ class ReportReviewController extends GetxController {
   final IReportsApiRepository reports;
   final IJobsApiRepository jobs;
   final TranslationService translation;
+
+  /// Speak instead of typing (the microphone in the text box).
+  final Dictation dictation;
   final ReportArguments args;
   final DateTime Function() _clock;
 
@@ -64,6 +69,7 @@ class ReportReviewController extends GetxController {
 
   @override
   void onClose() {
+    dictation.cancel();
     note.dispose();
     super.onClose();
   }

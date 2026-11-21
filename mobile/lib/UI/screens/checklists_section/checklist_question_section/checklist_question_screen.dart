@@ -7,6 +7,7 @@ import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../common_widgets/common_shimmer.dart';
 import '../../../common_widgets/custom_inkwell.dart';
+import '../../../common_widgets/kn_dictation.dart';
 import '../../../common_widgets/kn_back_button.dart';
 import '../../../common_widgets/kn_cover_image.dart';
 import '../../../common_widgets/kn_custom_button.dart';
@@ -295,7 +296,7 @@ class ChecklistQuestionScreen extends GetView<ChecklistQuestionController> {
       case 'number':
       case 'text':
         final number = q.type == 'number';
-        return TextField(
+        final field = TextField(
           key: const ValueKey('typed-answer'),
           controller: controller.textController,
           enabled: enabled,
@@ -310,6 +311,9 @@ class ChecklistQuestionScreen extends GetView<ChecklistQuestionController> {
             fillColor: context.kn.bgSurface,
             hintText: number ? LangKeys.questionNumberHint.tr : LangKeys.questionTextHint.tr,
             suffixText: q.unit,
+            suffixIcon: number || !enabled
+                ? null
+                : KnMicButton(key: const ValueKey('typed-answer-mic'), dictation: controller.dictation, box: controller.textController),
             helperText: number && (q.minValue != null || q.maxValue != null)
                 ? LangKeys.questionRange.trParams({'min': '${q.minValue ?? ''}', 'max': '${q.maxValue ?? ''}'})
                 : null,
@@ -320,6 +324,11 @@ class ChecklistQuestionScreen extends GetView<ChecklistQuestionController> {
               borderSide: BorderSide(color: context.kn.borderStrong),
             ),
           ),
+        );
+        if (number) return field;
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [field, KnDictationNote(dictation: controller.dictation, box: controller.textController)],
         );
       case 'signature':
         return SignaturePad(saving: controller.saving.value, onSave: controller.onSignature);

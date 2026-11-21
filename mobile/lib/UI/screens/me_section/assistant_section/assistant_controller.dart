@@ -9,6 +9,7 @@ import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/services/session_service.dart';
 import '../../../../infrastructure/shared/job_arguments.dart';
+import '../../../common_widgets/kn_dictation.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// A quick question chip: [label] on the chip, [text] goes in the box (and is sent when [send]).
@@ -24,11 +25,19 @@ class AskChip {
 /// M36 Ask KaamNishaan AI (owners and managers): questions about the company's own jobs, answered
 /// with the reports and jobs they came from. At the plan's monthly limit, chat pauses.
 class AssistantController extends GetxController {
-  AssistantController({required this.assistant, required this.translation, required this.session});
+  AssistantController({
+    required this.assistant,
+    required this.translation,
+    required this.session,
+    required this.dictation,
+  });
 
   final IAssistantApiRepository assistant;
   final TranslationService translation;
   final SessionService session;
+
+  /// Speak instead of typing (the microphone in the text box).
+  final Dictation dictation;
 
   final RxList<AssistantMessageOutModel> messages = <AssistantMessageOutModel>[].obs;
   final RxBool loading = true.obs;
@@ -55,6 +64,7 @@ class AssistantController extends GetxController {
 
   @override
   void onClose() {
+    dictation.cancel();
     input.dispose();
     scroll.dispose();
     super.onClose();

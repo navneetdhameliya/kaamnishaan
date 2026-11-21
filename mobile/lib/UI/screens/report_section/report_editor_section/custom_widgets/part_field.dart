@@ -4,6 +4,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../common_widgets/custom_inkwell.dart';
+import '../../../../common_widgets/kn_dictation.dart';
 import '../../../../commons/text_widgets/base/custom_base_text_widget.dart';
 import '../../../../theme/kn_app_theme.dart';
 import '../../../../theme/kn_tokens.g.dart';
@@ -17,7 +18,7 @@ class PartField extends StatelessWidget {
     required this.showAi,
     required this.aiWritten,
     required this.emptyText,
-    required this.onMic,
+    required this.dictation,
     required this.onAi,
     required this.onHear,
   });
@@ -26,7 +27,7 @@ class PartField extends StatelessWidget {
   final bool showAi;
   final bool aiWritten;
   final String emptyText;
-  final VoidCallback onMic;
+  final Dictation dictation;
   final VoidCallback onAi;
   final VoidCallback onHear;
 
@@ -111,22 +112,20 @@ class PartField extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 6),
-                    child: CustomInkWell(
+                    child: KnMicButton(
                       key: ValueKey('part-mic-${part.key}'),
-                      onTap: onMic,
-                      borderRadius: BorderRadius.circular(20),
-                      child: Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: kn.actionSecondary),
-                        child: Icon(LucideIcons.mic, size: 20, color: kn.textPrimary),
-                      ),
+                      dictation: dictation,
+                      box: part.text,
+                      size: 40,
+                      filled: true,
+                      enabled: !busy,
                     ),
                   ),
                 ],
               ),
             ),
           ),
+          KnDictationNote(dictation: dictation, box: part.text),
           if (empty) ...[
             const SizedBox(height: KnSize.space8),
             Row(

@@ -6,6 +6,7 @@ import '../../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../../infrastructure/models/api_models.g.dart';
 import '../../../../common_widgets/custom_inkwell.dart';
 import '../../../../common_widgets/kn_custom_button.dart';
+import '../../../../common_widgets/kn_dictation.dart';
 import '../../../../common_widgets/kn_stars.dart';
 import '../../../../common_widgets/kn_text_box.dart';
 import '../../../../commons/text_widgets/base/custom_base_text_widget.dart';
@@ -73,7 +74,9 @@ class ReplySheet extends StatelessWidget {
             fieldKey: const ValueKey('reply-text'),
             controller: controller.replyText,
             hint: LangKeys.crevReplyHint.tr,
+            suffix: KnMicButton(key: const ValueKey('reply-mic'), dictation: controller.dictation, box: controller.replyText),
           ),
+          KnDictationNote(dictation: controller.dictation, box: controller.replyText),
           const SizedBox(height: KnSize.space12),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
