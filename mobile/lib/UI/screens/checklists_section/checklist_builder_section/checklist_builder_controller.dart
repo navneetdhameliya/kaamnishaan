@@ -58,6 +58,11 @@ class ChecklistBuilderController extends GetxController {
   final RxnString ruleQuestionId = RxnString();
   final RxnString ruleEquals = RxnString();
 
+  /// Translations: the language being checked and one box per question for it.
+  final RxString trLanguage = 'hi'.obs;
+  final Map<String, TextEditingController> trBoxes = {};
+  final RxnString trSaving = RxnString();
+
   /// Preview: the answers tapped so far (question id → answer key), to show the "show only if" questions.
   final RxMap<String, String> previewAnswers = <String, String>{}.obs;
 
@@ -74,6 +79,7 @@ class ChecklistBuilderController extends GetxController {
     unit.dispose();
     rename.dispose();
     _clearOptions();
+    _clearTrBoxes();
     super.onClose();
   }
 
@@ -379,6 +385,50 @@ class ChecklistBuilderController extends GetxController {
       'questions': [for (final q in list) q.toJson()],
     });
     _take(await checklists.updateQuestion(templateId.value, moved.id, QuestionPatchModel(position: target + 1)));
+  }
+
+  // ---- translations ------------------------------------------------------------------------
+
+  /// The languages other than the one the checklist is written in.
+  List<String> get otherLanguages => [for (final l in languages) if (l != (template.value?.language ?? 'en')) l];
+
+  /// 'ready', 'needs_review' (made automatically, check it) or 'missing' (type it).
+  static String trStatus(TemplateQuestionOutModel q, String lang) => q.textStatus[lang] ?? 'missing';
+
+  /// How many questions still need a look in [lang].
+  int toCheck(String lang) => questions.where((q) => trStatus(q, lang) != 'ready').length;
+
+  /// Opens on the first language that still needs a look.
+  void startTranslations() {
+    final langs = otherLanguages;
+    onTrLanguage(langs.firstWhere((l) => toCheck(l) > 0, orElse: () => langs.first));
+  }
+
+  void onTrLanguage(String lang) {
+    trLanguage.value = lang;
+    _clearTrBoxes();
+    for (final q in questions) {
+      trBoxes[q.id] = TextEditingController(text: q.textAll[lang] ?? '');
+    }
+  }
+
+  void _clearTrBoxes() {
+    for (final b in trBoxes.values) {
+      b.dispose();
+    }
+    trBoxes.clear();
+  }
+
+  /// Saves the words in the box (as typed or as they were): the question is then ready in that language.
+  Future<void> onSaveTranslation(TemplateQuestionOutModel q) async {
+    final lang = trLanguage.value;
+    final words = trBoxes[q.id]?.text.trim() ?? '';
+    if (trSaving.value != null) return;
+    if (words.isEmpty) return KnToast.info(LangKeys.cbTrEmpty.tr);
+    trSaving.value = q.id;
+    final ok = _take(await checklists.updateQuestion(templateId.value, q.id, QuestionPatchModel(translations: {lang: words})));
+    trSaving.value = null;
+    if (ok) KnToast.success(LangKeys.cbTrSaved.tr);
   }
 
   // ---- preview -----------------------------------------------------------------------------

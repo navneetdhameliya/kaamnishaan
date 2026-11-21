@@ -4631,5 +4631,17 @@
   "cb.rule_note": "Seulement si Q{n} est {answer}",
   "cb.preview": "Aperçu",
   "cb.preview_count": "{n} questions sur {m} · touchez les réponses pour tester les règles",
-  "cb.preview_words": "Mots ou note vocale"
+  "cb.preview_words": "Mots ou note vocale",
+  "cb.tr_title": "Traductions",
+  "cb.tr_open": "Vérifier",
+  "cb.tr_all_ready": "Toutes les questions sont prêtes dans cette langue.",
+  "cb.tr_left": "{n} à vérifier",
+  "cb.tr_ready_one": "Prête",
+  "cb.tr_check": "À vérifier",
+  "cb.tr_missing": "Manquante",
+  "cb.tr_hint": "Écrivez-la en {lang}",
+  "cb.tr_save": "Enregistrer",
+  "cb.tr_looks_right": "C'est correct",
+  "cb.tr_saved": "Traduction enregistrée.",
+  "cb.tr_empty": "Écrivez d'abord les mots."
 }

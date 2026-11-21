@@ -255,6 +255,32 @@ void main() {
     expect([for (final q in c.previewQuestions) q.id], ['q1', 'q4']);
   });
 
+  test('M26 translations open on the language that needs a look; saving makes it ready', () async {
+    when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    when(() => checklists.updateQuestion(any(), any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
+    await c.load();
+    expect(c.otherLanguages, ['hi', 'gu', 'es', 'fr']);
+    expect((c.toCheck('hi'), c.toCheck('gu')), (0, 1)); // q3 was translated automatically into Gujarati
+    c.startTranslations();
+    expect(c.trLanguage.value, 'gu');
+    expect(c.trBoxes.keys.toList(), ['q1', 'q2', 'q3']);
+
+    c.trBoxes['q3']!.text = '  ડ્રેન પાઇપની સ્થિતિ ';
+    await _quiet(() => c.onSaveTranslation(c.questions[2]));
+    final patch = verify(() => checklists.updateQuestion('t1', 'q3', captureAny())).captured.single as QuestionPatchModel;
+    expect(patch.translations, {'gu': 'ડ્રેન પાઇપની સ્થિતિ'});
+    expect(c.trSaving.value, isNull);
+
+    // an empty box is not sent
+    c.trBoxes['q1']!.text = ' ';
+    await _quiet(() => c.onSaveTranslation(c.questions[0]));
+    verifyNever(() => checklists.updateQuestion('t1', 'q1', any()));
+
+    c.onTrLanguage('fr');
+    expect(c.trLanguage.value, 'fr');
+  });
+
   test('M26 drag to move saves the new place', () async {
     when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
     when(() => checklists.updateQuestion(any(), any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
