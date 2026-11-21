@@ -30,6 +30,7 @@ class StaffOut(BaseModel):
     email: str
     role: StaffRole
     recovery_codes_left: int
+    lang: Literal["en", "hi", "gu", "es", "fr"] = Field("en", description="Admin panel language (A36)")
 
 
 class StaffSessionOut(BaseModel):
@@ -120,3 +121,37 @@ class AdminDashboardOut(BaseModel):
     top_companies: list[AdminTopCompany]
     attention: list[AdminAttentionRow]
     activity: list[AdminActivityRow]
+
+
+# ---- A36 My profile -----------------------------------------------------------------------------------
+class StaffProfileIn(_In):
+    name: str = Field(min_length=1, max_length=120)
+    lang: Literal["en", "hi", "gu", "es", "fr"]
+
+
+class StaffPasswordIn(_In):
+    current_password: str = Field(max_length=256)
+    new_password: str = Field(max_length=256)
+    code: str = Field(max_length=12, description="6 digits from the authenticator app")
+
+
+class StaffCodeIn(_In):
+    code: str = Field(max_length=12, description="6 digits from the authenticator app")
+
+
+class StaffRecoveryOut(BaseModel):
+    recovery_codes: list[str] = Field(description="Shown once; the old codes stop working")
+
+
+class StaffDevice(BaseModel):
+    id: uuid.UUID
+    device: str = Field(description='e.g. "Chrome on macOS"')
+    ip: str | None
+    started_at: datetime
+    last_used_at: datetime | None
+    ends_at: datetime
+    current: bool
+
+
+class StaffDevices(BaseModel):
+    items: list[StaffDevice]

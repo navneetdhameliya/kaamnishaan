@@ -32,6 +32,7 @@ class StaffUser(IdMixin, TimestampMixin, Base):
     # goes up with every new setup link, so older links stop working
     setup_version: Mapped[int] = mapped_column(Integer, default=0, server_default=sql("0"))
     last_login_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    lang: Mapped[str] = mapped_column(String(2), default="en", server_default="en")  # A36 panel language
 
 
 class StaffSession(IdMixin, TimestampMixin, Base):

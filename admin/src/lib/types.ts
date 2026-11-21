@@ -8,6 +8,7 @@ export interface StaffOut {
   email: string;
   role: StaffRole;
   recovery_codes_left: number;
+  lang?: 'en' | 'hi' | 'gu' | 'es' | 'fr';
 }
 
 export interface StaffSession {
@@ -936,4 +937,51 @@ export interface AdminTestimonial {
 export interface AdminTestimonials {
   items: AdminTestimonial[];
   can_act: boolean;
+}
+
+/** A30 Analytics, A34 Storage, A35 Localization, A36 My profile. */
+export interface Metric {
+  value: number | null;
+  previous: number | null;
+}
+export interface Share {
+  key: string;
+  label: string | null;
+  count: number;
+}
+export interface AdminAnalyticsOut {
+  days: number;
+  reports_sent: Metric;
+  review_minutes: Metric;
+  first_time: Metric;
+  active_technicians: Metric;
+  step: 'day' | 'week';
+  sent_by_period: { start: string; count: number }[];
+  voice_languages: Share[];
+  voice_total: number;
+  reports_by_industry: Share[];
+}
+export interface AdminStorageOut {
+  provider: 'local' | 'r2';
+  bucket: string;
+  kinds: { kind: 'photos' | 'voice' | 'pdfs'; files: number; bytes: number }[];
+  total_bytes: number;
+  top_companies: { id: string; name: string; bytes: number }[];
+  link_minutes: number;
+  max_photo_mb: number;
+  locked_evidence: number;
+}
+export interface AdminLocalizationOut {
+  languages: { code: string; native_name: string; app_checked: number; site_checked: number; reports: boolean; voice: boolean }[];
+  report_language: string;
+  can_act: boolean;
+}
+export interface StaffDevice {
+  id: string;
+  device: string;
+  ip: string | null;
+  started_at: string;
+  last_used_at: string | null;
+  ends_at: string;
+  current: boolean;
 }

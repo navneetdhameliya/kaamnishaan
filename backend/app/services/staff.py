@@ -34,7 +34,15 @@ from app.core.staff_security import (
     unseal,
 )
 from app.models import LoginAttempt, StaffSession, StaffUser
-from app.schemas.staff import StaffOut, StaffSessionOut, StaffSetupInfo, StaffSetupOut
+from app.schemas.staff import (
+    StaffDevice,
+    StaffDevices,
+    StaffOut,
+    StaffRecoveryOut,
+    StaffSessionOut,
+    StaffSetupInfo,
+    StaffSetupOut,
+)
 from app.services import audit
 from app.services.auth import LOGIN_LOCK, LOGIN_MAX_FAILS, _lock_state, check_password
 
@@ -47,7 +55,12 @@ _DUMMY_HASH = hash_password("not-a-real-password-1")
 
 def staff_out(s: StaffUser) -> StaffOut:
     return StaffOut(
-        id=s.id, name=s.name, email=s.email, role=s.role, recovery_codes_left=len(s.recovery_codes or [])
+        id=s.id,
+        name=s.name,
+        email=s.email,
+        role=s.role,
+        recovery_codes_left=len(s.recovery_codes or []),
+        lang=s.lang or "en",  # type: ignore[arg-type]
     )
 
 
@@ -321,3 +334,161 @@ async def bootstrap() -> None:
             return
         await db.commit()
     log.warning("Admin panel setup link for %s (works for 72 hours, once): %s", email, link)
+
+
+# ---- A36 My profile -----------------------------------------------------------------------------------
+async def update_profile(db: AsyncSession, me: StaffUser, *, name: str, lang: str, ip) -> StaffOut:
+    changes = {k: [getattr(me, k), v] for k, v in (("name", name), ("lang", lang)) if getattr(me, k) != v}
+    if changes:
+        me.name, me.lang = name, lang
+        await audit.record(
+            db,
+            "staff.profile_updated",
+            staff_id=me.id,
+            target_type="staff",
+            target_id=me.id,
+            data=changes,
+            ip=ip,
+        )
+        await db.flush()
+    return staff_out(me)
+
+
+async def _check_code(db: AsyncSession, me: StaffUser, code: str, ip) -> None:
+    """The authenticator code proves it is really them; wrong tries count towards the 15-minute lock."""
+    ident = f"staff-profile:{me.id}"
+    fails, locked_until = await _lock_state(db, ident)
+    if locked_until:
+        raise RateLimited("too_many_tries", "Too many wrong tries. Try again in 15 minutes.")
+    step = match_totp(unseal(me.totp_secret or "") or "", code, me.totp_last_step)
+    if step is None:
+        db.add(LoginAttempt(identifier=ident, success=False, ip=ip))
+        await db.commit()
+        raise AppError("code_invalid", "This code is wrong or expired.", fields={"code": "code_invalid"})
+    me.totp_last_step = step
+
+
+async def change_password(
+    db: AsyncSession, me: StaffUser, *, current: str, new: str, code: str, session_id: uuid.UUID, ip
+) -> int:
+    if not verify_password(current, me.password_hash):
+        raise AppError(
+            "password_wrong", "Your current password is wrong.", fields={"current_password": "password_wrong"}
+        )
+    check_password(new)
+    await _check_code(db, me, code, ip)
+    me.password_hash = hash_password(new)
+    # every other device has to log in again with the new password
+    ended = await db.execute(
+        update(StaffSession)
+        .where(
+            StaffSession.staff_id == me.id, StaffSession.id != session_id, StaffSession.revoked_at.is_(None)
+        )
+        .values(revoked_at=now())
+    )
+    await audit.record(
+        db,
+        "staff.password_changed",
+        staff_id=me.id,
+        target_type="staff",
+        target_id=me.id,
+        data={"other_sessions_ended": ended.rowcount},
+        ip=ip,
+    )
+    return int(ended.rowcount or 0)
+
+
+async def new_recovery(db: AsyncSession, me: StaffUser, *, code: str, ip) -> StaffRecoveryOut:
+    await _check_code(db, me, code, ip)
+    codes = new_recovery_codes()
+    me.recovery_codes = [recovery_digest(c) for c in codes]
+    await audit.record(
+        db, "staff.recovery_codes_new", staff_id=me.id, target_type="staff", target_id=me.id, ip=ip
+    )
+    return StaffRecoveryOut(recovery_codes=codes)
+
+
+def device_name(agent: str | None) -> str:
+    a = agent or ""
+    browser = next(
+        (
+            n
+            for k, n in (
+                ("Edg/", "Edge"),
+                ("OPR/", "Opera"),
+                ("Firefox/", "Firefox"),
+                ("Chrome/", "Chrome"),
+                ("Safari/", "Safari"),
+            )
+            if k in a
+        ),
+        "Browser",
+    )
+    system = next(
+        (
+            n
+            for k, n in (
+                ("iPad", "iPad"),
+                ("iPhone", "iPhone"),
+                ("Android", "Android"),
+                ("Windows", "Windows"),
+                ("Mac OS X", "macOS"),
+                ("CrOS", "ChromeOS"),
+                ("Linux", "Linux"),
+            )
+            if k in a
+        ),
+        "",
+    )
+    return f"{browser} on {system}" if system else browser
+
+
+async def devices(db: AsyncSession, me: StaffUser, session_id: uuid.UUID) -> StaffDevices:
+    rows = (
+        await db.execute(
+            select(StaffSession)
+            .where(
+                StaffSession.staff_id == me.id,
+                StaffSession.revoked_at.is_(None),
+                StaffSession.expires_at > now(),
+            )
+            .order_by(StaffSession.last_used_at.desc().nulls_last())
+        )
+    ).scalars()
+    items = [
+        StaffDevice(
+            id=r.id,
+            device=device_name(r.user_agent),
+            ip=r.ip,
+            started_at=r.created_at,
+            last_used_at=r.last_used_at,
+            ends_at=r.expires_at,
+            current=r.id == session_id,
+        )
+        for r in rows
+    ]
+    items.sort(key=lambda d: not d.current)
+    return StaffDevices(items=items)
+
+
+async def end_device(
+    db: AsyncSession, me: StaffUser, device_id: uuid.UUID, session_id: uuid.UUID, ip
+) -> StaffDevices:
+    if device_id == session_id:
+        raise AppError("this_device", "Use Log out to end the session on this device.")
+    sess = await db.get(StaffSession, device_id)
+    if not sess or sess.staff_id != me.id:
+        raise NotFound("not_found", "Session not found.")
+    if not sess.revoked_at:
+        sess.revoked_at = now()
+        await audit.record(
+            db,
+            "staff.session_ended",
+            staff_id=me.id,
+            target_type="staff_session",
+            target_id=sess.id,
+            data={"device": device_name(sess.user_agent)},
+            ip=ip,
+        )
+    await db.flush()
+    return await devices(db, me, session_id)

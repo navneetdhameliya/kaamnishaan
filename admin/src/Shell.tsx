@@ -1,4 +1,5 @@
 import {
+  BarChart3,
   Bell,
   BellRing,
   LifeBuoy,
@@ -14,7 +15,9 @@ import {
   LayoutTemplate,
   Bot,
   CreditCard,
+  Earth,
   Factory,
+  HardDrive,
   FileCode,
   Images,
   Repeat,
@@ -41,7 +44,7 @@ import { session } from './lib/session';
 import type { StaffOut } from './lib/types';
 import { cx, Initials, LangSelect, Link, navigate } from './ui';
 
-export type NavItem = { key: string; path: string; icon: LucideIcon; ready?: boolean };
+export type NavItem = { key: string; path: string; icon: LucideIcon; ready?: boolean; hidden?: boolean };
 
 /** The A03 side menu. Pages not built yet open a "coming soon" page. */
 export const NAV: { section: string; items: NavItem[] }[] = [
@@ -50,6 +53,7 @@ export const NAV: { section: string; items: NavItem[] }[] = [
     items: [
       { key: 'dashboard', path: '/', icon: Home, ready: true },
       { key: 'ai_usage', path: '/ai-usage', icon: SlidersHorizontal, ready: true },
+      { key: 'analytics', path: '/analytics', icon: BarChart3, ready: true },
     ],
   },
   {
@@ -108,9 +112,13 @@ export const NAV: { section: string; items: NavItem[] }[] = [
       { key: 'audit', path: '/audit-logs', icon: ScrollText, ready: true },
       { key: 'settings', path: '/settings', icon: Globe, ready: true },
       { key: 'email', path: '/email-settings', icon: Bell, ready: true },
+      { key: 'storage', path: '/storage', icon: HardDrive, ready: true },
+      { key: 'localization', path: '/localization', icon: Earth, ready: true },
       { key: 'roles', path: '/roles', icon: Lock, ready: true },
     ],
   },
+  // A36 opens from the name at the bottom of the menu
+  { section: 'account', items: [{ key: 'profile', path: '/profile', icon: User, ready: true, hidden: true }] },
 ];
 
 /** The menu item for a path; /companies/<id> belongs to Companies. */
@@ -141,10 +149,10 @@ function Sidebar({ t, path, staff, onPick }: { t: T; path: string; staff: StaffO
         <span className="mt-8 inline-block rounded-sm bg-white/10 px-[6px] text-[12px] font-semibold uppercase leading-[18px] text-mocha-300">{t('admin.role.admin')}</span>
       </Link>
       <nav aria-label={t('admin.console')} className="mt-24 flex-1 overflow-y-auto">
-        {NAV.map((s) => (
+        {NAV.filter((s) => s.items.some((i) => !i.hidden)).map((s) => (
           <div key={s.section} className="mb-16">
             <p className="px-4 pb-4 text-[13px] font-semibold uppercase tracking-wide text-cream-400">{t(`admin.nav.${s.section}`)}</p>
-            {s.items.map((i) => {
+            {s.items.filter((i) => !i.hidden).map((i) => {
               const on = path === i.path || (i.path !== '/' && path.startsWith(`${i.path}/`));
               const Icon = i.icon;
               return (
@@ -167,12 +175,14 @@ function Sidebar({ t, path, staff, onPick }: { t: T; path: string; staff: StaffO
           </div>
         ))}
       </nav>
-      <div className="mt-8 flex items-center gap-12 rounded-lg bg-white/[0.08] p-12">
-        <Initials name={staff.name} className="h-[40px] w-[40px] rounded-full bg-mocha-500 text-[14px] text-cream-50" />
-        <div className="min-w-0 flex-1">
-          <p className="truncate text-[14px] font-semibold text-cream-50">{staff.name}</p>
-          <p className="truncate text-[13px] text-cream-400">{t(`admin.role.${staff.role}`)}</p>
-        </div>
+      <div className={cx('mt-8 flex items-center gap-12 rounded-lg p-12 transition-colors', path === '/profile' ? 'bg-white/[0.16]' : 'bg-white/[0.08]')}>
+        <Link to="/profile" onClick={onPick} aria-current={path === '/profile' ? 'page' : undefined} className="group flex min-w-0 flex-1 items-center gap-12">
+          <Initials name={staff.name} className="h-[40px] w-[40px] shrink-0 rounded-full bg-mocha-500 text-[14px] text-cream-50 transition-transform group-hover:scale-105" />
+          <span className="min-w-0 flex-1">
+            <span className="block truncate text-[14px] font-semibold text-cream-50 group-hover:underline">{staff.name}</span>
+            <span className="block truncate text-[13px] text-cream-400">{t(`admin.role.${staff.role}`)}</span>
+          </span>
+        </Link>
         <button
           type="button"
           onClick={() => void logout()}
