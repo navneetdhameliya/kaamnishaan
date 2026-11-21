@@ -162,6 +162,56 @@ async def test_builder_questions_rules_and_order(client, setup, fake_ai):
     assert pub.json()["status"] == "published"
 
 
+async def test_show_if_rules_survive_choice_edits_and_moves(client, setup):
+    owner = setup["owner"]
+    t = (
+        await client.post("/api/v1/checklist-templates", json={"name": "Filters"}, headers=auth(owner))
+    ).json()
+    base = f"/api/v1/checklist-templates/{t['id']}/questions"
+    opts = [{"label": "Clean"}, {"label": "Dusty"}, {"label": "Torn"}]
+    q1 = (
+        await client.post(
+            base, json={"type": "choice", "text": "Filter state", "options": opts}, headers=auth(owner)
+        )
+    ).json()["questions"][0]
+    assert [o["key"] for o in q1["options"]] == ["clean", "dusty", "torn"]
+    r = await client.post(
+        base,
+        json={
+            "type": "photo",
+            "text": "Photo of the tear",
+            "required": False,
+            "condition": {"question_id": q1["id"], "equals": "torn"},
+        },
+        headers=auth(owner),
+    )
+    q2 = r.json()["questions"][1]
+    assert q2["condition"]["equals"] == "torn" and q2["required"] is False
+    # renaming a choice keeps its key, so the rule stays
+    keep = [
+        {"key": "clean", "label": "Clean"},
+        {"key": "dusty", "label": "Dusty"},
+        {"key": "torn", "label": "Ripped"},
+    ]
+    r = await client.patch(f"{base}/{q1['id']}", json={"options": keep}, headers=auth(owner))
+    assert r.json()["questions"][1]["condition"]["equals"] == "torn"
+    # removing the choice frees the question that waited for it
+    r = await client.patch(f"{base}/{q1['id']}", json={"options": keep[:2]}, headers=auth(owner))
+    assert r.status_code == 200 and r.json()["questions"][1]["condition"] is None
+    # moving a question above the one it waits for drops its rule instead of failing
+    await client.patch(
+        f"{base}/{q2['id']}",
+        json={"condition": {"question_id": q1["id"], "equals": "dusty"}},
+        headers=auth(owner),
+    )
+    r = await client.patch(f"{base}/{q2['id']}", json={"position": 1}, headers=auth(owner))
+    assert r.status_code == 200
+    assert [q["id"] for q in r.json()["questions"]] == [q2["id"], q1["id"]]
+    assert r.json()["questions"][0]["condition"] is None
+    r = await client.patch(f"{base}/{q2['id']}", json={"clear_condition": True}, headers=auth(owner))
+    assert r.status_code == 200
+
+
 async def test_hand_fixed_translation_is_kept(client, setup, fake_ai):
     owner = setup["owner"]
     t = (await client.post("/api/v1/checklist-templates", json={"name": "X"}, headers=auth(owner))).json()

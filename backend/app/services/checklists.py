@@ -537,12 +537,41 @@ async def update_question_in(
     if body.position is not None:
         await _renumber(db, t.id, q, body.position)
     others = {str(x.id): x for x in await questions(db, t.id) if x.id != q.id}
+    everyone = {**others, str(q.id): q}
+    # a move or new choices can leave a "show if" pointing at a later question or a choice that is gone:
+    # that question is then always shown (as when the question it waited for is deleted)
+    _drop_broken_rules(list(others.values()), everyone)
+    if body.position is not None and not body.condition:
+        _drop_broken_rules([q], everyone)
     _validate_question(
         q.type, q.photo_rule, q.options or [], q.min_value, q.max_value, q.condition, others, q.position
     )
     await _bump(t)
     await db.flush()
     return q, words_changed
+
+
+def _rule_answers(q: ChecklistQuestion) -> set[str] | None:
+    return {
+        "yes_no": {"yes", "no"},
+        "pass_fail": {"pass", "fail"},
+        "choice": {o["key"] for o in q.options or []},
+    }.get(q.type)
+
+
+def _drop_broken_rules(qs: list[ChecklistQuestion], everyone: dict[str, ChecklistQuestion]) -> None:
+    for x in qs:
+        if not x.condition:
+            continue
+        dep = everyone.get(str(x.condition.get("question_id")))
+        allowed = _rule_answers(dep) if dep else None
+        if (
+            not dep
+            or dep.position >= x.position
+            or not allowed
+            or str(x.condition.get("equals")) not in allowed
+        ):
+            x.condition = None
 
 
 async def delete_question(

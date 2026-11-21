@@ -4614,5 +4614,22 @@
   "admin.cl.ref_remove": "हटाएँ",
   "admin.cl.ref_hint": "तकनीशियनों को दिखाता है कि सही जवाब कैसा दिखता है। जिन कंपनियों ने यह टेम्पलेट पहले ही कॉपी किया है, उनकी फ़ोटो वैसी ही रहती है।",
   "admin.au.a.checklist.reference_set": "संदर्भ फ़ोटो लगाई गई",
-  "admin.au.a.checklist.reference_removed": "संदर्भ फ़ोटो हटाई गई"
+  "admin.au.a.checklist.reference_removed": "संदर्भ फ़ोटो हटाई गई",
+  "cb.choices": "विकल्प",
+  "cb.choice_hint": "विकल्प {n}",
+  "cb.choice_add": "विकल्प जोड़ें",
+  "cb.choice_remove": "विकल्प हटाएँ",
+  "cb.options_needed": "कम से कम 2 विकल्प लिखें।",
+  "cb.required": "जवाब ज़रूरी",
+  "cb.required_sub": "बंद: तकनीशियन इसे छोड़ सकता है।",
+  "cb.optional": "वैकल्पिक",
+  "cb.rule": "तभी दिखाएँ जब",
+  "cb.rule_sub": "यह सवाल किसी खास जवाब के बाद ही पूछें।",
+  "cb.rule_always": "हमेशा",
+  "cb.rule_q": "प्र{n}",
+  "cb.rule_when": "जब “{question}” का जवाब हो:",
+  "cb.rule_note": "तभी जब प्र{n} का जवाब {answer} हो",
+  "cb.preview": "पूर्वावलोकन",
+  "cb.preview_count": "{m} में से {n} सवाल दिख रहे हैं · नियम आज़माने के लिए जवाब दबाएँ",
+  "cb.preview_words": "शब्द या आवाज़ नोट"
 }
