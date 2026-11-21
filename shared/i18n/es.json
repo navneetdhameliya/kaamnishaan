@@ -4614,5 +4614,22 @@
   "admin.cl.ref_remove": "Quitar",
   "admin.cl.ref_hint": "Muestra a los técnicos cómo se ve una buena respuesta. Las empresas que ya copiaron esta plantilla conservan su foto.",
   "admin.au.a.checklist.reference_set": "Foto de referencia puesta",
-  "admin.au.a.checklist.reference_removed": "Foto de referencia quitada"
+  "admin.au.a.checklist.reference_removed": "Foto de referencia quitada",
+  "cb.choices": "Opciones",
+  "cb.choice_hint": "Opción {n}",
+  "cb.choice_add": "Añadir opción",
+  "cb.choice_remove": "Quitar opción",
+  "cb.options_needed": "Escribe al menos 2 opciones.",
+  "cb.required": "Respuesta obligatoria",
+  "cb.required_sub": "Desactivado: el técnico puede saltarla.",
+  "cb.optional": "Opcional",
+  "cb.rule": "Mostrar solo si",
+  "cb.rule_sub": "Pregúntala solo después de cierta respuesta.",
+  "cb.rule_always": "Siempre",
+  "cb.rule_q": "P{n}",
+  "cb.rule_when": "Cuando «{question}» sea:",
+  "cb.rule_note": "Solo si P{n} es {answer}",
+  "cb.preview": "Vista previa",
+  "cb.preview_count": "{n} de {m} preguntas · toca respuestas para probar las reglas",
+  "cb.preview_words": "Palabras o nota de voz"
 }

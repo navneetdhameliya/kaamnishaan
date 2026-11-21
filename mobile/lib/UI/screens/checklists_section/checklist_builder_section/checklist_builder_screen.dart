@@ -17,9 +17,11 @@ import '../../../theme/kn_app_theme.dart';
 import '../../../theme/kn_tokens.g.dart';
 import '../../me_section/me_section/custom_widgets/me_rows.dart';
 import 'checklist_builder_controller.dart';
+import 'custom_widgets/preview_sheet.dart';
 import 'custom_widgets/question_sheet.dart';
 
-/// M26 Checklist builder (Figma 247:2300; add question 247:2404).
+/// M26 Checklist builder (Figma 247:2300; add question 247:2404). Preview has no Figma frame; it reuses
+/// the builder's cards and chips.
 class ChecklistBuilderScreen extends GetView<ChecklistBuilderController> {
   const ChecklistBuilderScreen({super.key});
 
@@ -28,6 +30,11 @@ class ChecklistBuilderScreen extends GetView<ChecklistBuilderController> {
       title: edit ? LangKeys.cbEdit.tr : LangKeys.cbAdd.tr,
       child: QuestionSheet(controller: controller),
     );
+  }
+
+  void _preview() {
+    controller.startPreview();
+    showKnBottomSheet<void>(title: LangKeys.cbPreview.tr, child: PreviewSheet(controller: controller));
   }
 
   void _rename() {
@@ -117,23 +124,22 @@ class ChecklistBuilderScreen extends GetView<ChecklistBuilderController> {
                         ],
                       ),
                     ),
-                    if (controller.editable) ...[
+                    if (qs.isNotEmpty) ...[
                       const SizedBox(width: KnSize.space12),
-                      CustomInkWell(
+                      _RoundButton(
+                        key: const ValueKey('checklist-preview'),
+                        icon: LucideIcons.eye,
+                        label: LangKeys.cbPreview.tr,
+                        onTap: _preview,
+                      ),
+                    ],
+                    if (controller.editable) ...[
+                      const SizedBox(width: KnSize.space8),
+                      _RoundButton(
                         key: const ValueKey('checklist-menu'),
+                        icon: LucideIcons.ellipsis,
+                        label: LangKeys.cbMenu.tr,
                         onTap: _menu,
-                        borderRadius: BorderRadius.circular(KnSize.radiusFull),
-                        semanticLabel: LangKeys.cbMenu.tr,
-                        child: Ink(
-                          width: 44,
-                          height: 44,
-                          decoration: BoxDecoration(
-                            color: kn.bgSurface,
-                            shape: BoxShape.circle,
-                            border: Border.all(color: kn.borderDefault),
-                          ),
-                          child: Icon(LucideIcons.ellipsis, size: 22, color: kn.textPrimary),
-                        ),
                       ),
                     ],
                   ],
@@ -226,6 +232,7 @@ class ChecklistBuilderScreen extends GetView<ChecklistBuilderController> {
                     number: i + 1,
                     text: q.text,
                     chip: controller.chip(q),
+                    note: controller.note(q),
                     warn: q.photoRule == 'if_fail' || q.photoRule == 'if_no',
                     editable: controller.editable,
                     onTap: () {
@@ -272,6 +279,30 @@ class ChecklistBuilderScreen extends GetView<ChecklistBuilderController> {
   }
 }
 
+class _RoundButton extends StatelessWidget {
+  const _RoundButton({super.key, required this.icon, required this.label, required this.onTap});
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final kn = context.kn;
+    return CustomInkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(KnSize.radiusFull),
+      semanticLabel: label,
+      child: Ink(
+        width: 44,
+        height: 44,
+        decoration: BoxDecoration(color: kn.bgSurface, shape: BoxShape.circle, border: Border.all(color: kn.borderDefault)),
+        child: Icon(icon, size: 22, color: kn.textPrimary),
+      ),
+    );
+  }
+}
+
 class _Banner extends StatelessWidget {
   const _Banner({required this.icon, required this.label, required this.good, required this.done});
 
@@ -308,6 +339,7 @@ class _QuestionCard extends StatelessWidget {
     required this.number,
     required this.text,
     required this.chip,
+    required this.note,
     required this.warn,
     required this.editable,
     required this.onTap,
@@ -317,6 +349,7 @@ class _QuestionCard extends StatelessWidget {
   final int number;
   final String text;
   final String chip;
+  final String? note;
   final bool warn;
   final bool editable;
   final VoidCallback onTap;
@@ -367,6 +400,16 @@ class _QuestionCard extends StatelessWidget {
                     ),
                     child: CustomBaseTextWidget(chip, style: t.labelSm, color: warn ? kn.statusWarning : kn.textPrimary),
                   ),
+                  if (note != null) ...[
+                    const SizedBox(height: 4),
+                    Row(
+                      children: [
+                        Icon(LucideIcons.gitBranch, size: 14, color: kn.textSecondary),
+                        const SizedBox(width: 4),
+                        Expanded(child: CustomBaseTextWidget(note!, style: t.caption, color: kn.textSecondary, maxLines: 2)),
+                      ],
+                    ),
+                  ],
                 ],
               ),
             ),

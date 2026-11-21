@@ -9234,4 +9234,38 @@ abstract final class LangKeys {
   static const adminAuAChecklistReferenceSet = 'admin.au.a.checklist.reference_set';
   /// Reference photo removed
   static const adminAuAChecklistReferenceRemoved = 'admin.au.a.checklist.reference_removed';
+  /// Choices
+  static const cbChoices = 'cb.choices';
+  /// Choice {n}
+  static const cbChoiceHint = 'cb.choice_hint';
+  /// Add a choice
+  static const cbChoiceAdd = 'cb.choice_add';
+  /// Remove choice
+  static const cbChoiceRemove = 'cb.choice_remove';
+  /// Write at least 2 choices.
+  static const cbOptionsNeeded = 'cb.options_needed';
+  /// Answer needed
+  static const cbRequired = 'cb.required';
+  /// Off: the technician can skip it.
+  static const cbRequiredSub = 'cb.required_sub';
+  /// Optional
+  static const cbOptional = 'cb.optional';
+  /// Show only if
+  static const cbRule = 'cb.rule';
+  /// Ask this only after a certain answer.
+  static const cbRuleSub = 'cb.rule_sub';
+  /// Always
+  static const cbRuleAlways = 'cb.rule_always';
+  /// Q{n}
+  static const cbRuleQ = 'cb.rule_q';
+  /// When “{question}” is:
+  static const cbRuleWhen = 'cb.rule_when';
+  /// Only if Q{n} is {answer}
+  static const cbRuleNote = 'cb.rule_note';
+  /// Preview
+  static const cbPreview = 'cb.preview';
+  /// {n} of {m} questions shown · tap answers to try the rules
+  static const cbPreviewCount = 'cb.preview_count';
+  /// Words or a voice note
+  static const cbPreviewWords = 'cb.preview_words';
 }

@@ -32,6 +32,7 @@ import 'package:kaamnishaan/UI/screens/auth_section/verify_email_section/verify_
 import 'package:kaamnishaan/UI/screens/auth_section/verify_email_section/verify_email_screen.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_builder_section/checklist_builder_controller.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_builder_section/checklist_builder_screen.dart';
+import 'package:kaamnishaan/UI/screens/checklists_section/checklist_builder_section/custom_widgets/question_sheet.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_library_section/checklist_library_controller.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_library_section/checklist_library_screen.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_question_section/checklist_question_controller.dart';
@@ -2102,7 +2103,14 @@ void main() {
   });
 
   // ---- Step 2r: checklist builder -------------------------------------------------------------------
-  TemplateQuestionOutModel cbQ(String id, int position, String type, String text, {String photo = 'none'}) =>
+  TemplateQuestionOutModel cbQ(
+    String id,
+    int position,
+    String type,
+    String text, {
+    String photo = 'none',
+    Map<String, dynamic>? condition,
+  }) =>
       TemplateQuestionOutModel(
         id: id,
         position: position,
@@ -2113,6 +2121,7 @@ void main() {
         options: const [],
         photoRule: photo,
         requiredValue: true,
+        condition: condition,
       );
 
   Future<void> builderShot(WidgetTester t, String name, {Future<void> Function()? act}) async {
@@ -2121,7 +2130,7 @@ void main() {
       cbQ('q1', 1, 'yes_no', 'Is the air filter clean?'),
       cbQ('q2', 2, 'number', 'Refrigerant pressure'),
       cbQ('q3', 3, 'pass_fail', 'Drain pipe condition', photo: 'if_fail'),
-      cbQ('q4', 4, 'photo', 'Photo of the outdoor unit'),
+      cbQ('q4', 4, 'photo', 'Photo of the outdoor unit', condition: {'question_id': 'q3', 'equals': 'fail'}),
     ];
     when(() => checklists.template(any())).thenAnswer(
       (_) async => ApiSuccess<TemplateOutModel>(
@@ -2160,6 +2169,33 @@ void main() {
           c.photo.value = true;
           FocusManager.instance.primaryFocus?.unfocus();
           await t.pump(const Duration(milliseconds: 600));
+        },
+      ));
+
+  testWidgets('M26 choice question shown only if', (t) async => builderShot(
+        t,
+        'm26_choice_rule',
+        act: () async {
+          final c = Get.find<ChecklistBuilderController>();
+          c.startAdd();
+          c.text.text = 'Filter state';
+          c.onType('choice');
+          c.options[0].text.text = 'Clean';
+          c.options[1].text.text = 'Dusty';
+          c.onRuleQuestion('q3');
+          c.onRuleAnswer('fail');
+          Get.bottomSheet<void>(Material(child: SingleChildScrollView(child: QuestionSheet(controller: c))));
+          await t.pump(const Duration(milliseconds: 600));
+        },
+      ));
+  testWidgets('M26 preview', (t) async => builderShot(
+        t,
+        'm26_preview',
+        act: () async {
+          await t.tap(find.byKey(const ValueKey('checklist-preview')));
+          await t.pump(const Duration(milliseconds: 600));
+          await t.tap(find.byKey(const ValueKey('preview-q3-fail')));
+          await t.pump(const Duration(milliseconds: 400));
         },
       ));
 

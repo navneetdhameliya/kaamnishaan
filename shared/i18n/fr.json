@@ -4614,5 +4614,22 @@
   "admin.cl.ref_remove": "Retirer",
   "admin.cl.ref_hint": "Montre aux techniciens à quoi ressemble une bonne réponse. Les entreprises qui ont déjà copié ce modèle gardent leur photo.",
   "admin.au.a.checklist.reference_set": "Photo de référence ajoutée",
-  "admin.au.a.checklist.reference_removed": "Photo de référence retirée"
+  "admin.au.a.checklist.reference_removed": "Photo de référence retirée",
+  "cb.choices": "Choix",
+  "cb.choice_hint": "Choix {n}",
+  "cb.choice_add": "Ajouter un choix",
+  "cb.choice_remove": "Retirer le choix",
+  "cb.options_needed": "Écrivez au moins 2 choix.",
+  "cb.required": "Réponse obligatoire",
+  "cb.required_sub": "Désactivé : le technicien peut la passer.",
+  "cb.optional": "Facultative",
+  "cb.rule": "Afficher seulement si",
+  "cb.rule_sub": "Posez-la seulement après une certaine réponse.",
+  "cb.rule_always": "Toujours",
+  "cb.rule_q": "Q{n}",
+  "cb.rule_when": "Quand « {question} » est :",
+  "cb.rule_note": "Seulement si Q{n} est {answer}",
+  "cb.preview": "Aperçu",
+  "cb.preview_count": "{n} questions sur {m} · touchez les réponses pour tester les règles",
+  "cb.preview_words": "Mots ou note vocale"
 }

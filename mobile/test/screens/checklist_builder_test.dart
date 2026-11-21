@@ -12,6 +12,15 @@ import 'package:mocktail/mocktail.dart';
 
 import '../helpers/fakes.dart';
 
+/// Runs a call that shows a toast (toasts need the whole app, which a unit test doesn't have).
+Future<T?> _quiet<T>(Future<T> Function() run) async {
+  try {
+    return await run();
+  } on Object catch (_) {
+    return null;
+  }
+}
+
 Future<void> _ignoreApp(Future<void> Function() run) async {
   try {
     await run();
@@ -20,7 +29,17 @@ Future<void> _ignoreApp(Future<void> Function() run) async {
 
 const ready = {'en': 'ready', 'hi': 'ready', 'gu': 'ready', 'es': 'ready', 'fr': 'ready'};
 
-TemplateQuestionOutModel question(String id, int position, String type, String text, {String photo = 'none', String? ref}) =>
+TemplateQuestionOutModel question(
+  String id,
+  int position,
+  String type,
+  String text, {
+  String photo = 'none',
+  String? ref,
+  List<OptionOutModel> options = const [],
+  Map<String, dynamic>? condition,
+  bool required = true,
+}) =>
     TemplateQuestionOutModel(
       id: id,
       position: position,
@@ -28,10 +47,11 @@ TemplateQuestionOutModel question(String id, int position, String type, String t
       text: text,
       textAll: {'en': text},
       textStatus: position == 3 ? {...ready, 'gu': 'needs_review'} : ready,
-      options: const [],
+      options: options,
       photoRule: photo,
-      requiredValue: true,
+      requiredValue: required,
       referenceImageUrl: ref,
+      condition: condition,
     );
 
 TemplateOutModel template({String scope = 'company', String status = 'draft', List<TemplateQuestionOutModel>? qs}) {
@@ -156,6 +176,83 @@ void main() {
     await c.onSaveQuestion();
     final kept = verify(() => checklists.updateQuestion('t1', 'q1', captureAny())).captured.single as QuestionPatchModel;
     expect((kept.removeReference, kept.referenceUploadId), (null, null));
+  });
+
+  test('M26 a choice question, optional, shown only after an earlier answer', () async {
+    when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    when(() => checklists.addQuestion(any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
+    await c.load();
+    c.startAdd();
+    c.text.text = 'Filter state';
+    c.onType('choice');
+    expect(c.options.length, 2); // two empty boxes to start
+    c.options[0].text.text = 'Clean';
+    await _quiet(c.onSaveQuestion); // needs 2 choices: a note, nothing sent
+    verifyNever(() => checklists.addQuestion(any(), any()));
+    c.options[1].text.text = 'Dusty';
+    c.onAddOption();
+    c.options[2].text.text = ' Torn ';
+    c.requiredAnswer.value = false;
+    // only Yes/No, Pass/Fail and choice questions can be waited for
+    expect([for (final q in c.ruleSources) q.id], ['q1', 'q3']);
+    c.onRuleQuestion('q3');
+    expect(c.ruleEquals.value, 'pass'); // the first answer to start with
+    c.onRuleAnswer('fail');
+    expect(await c.onSaveQuestion(), isTrue);
+    final sent = verify(() => checklists.addQuestion('t1', captureAny())).captured.single as QuestionInModel;
+    expect([for (final o in sent.options!) o.label], ['Clean', 'Dusty', 'Torn']);
+    expect((sent.type, sent.requiredValue, sent.condition?.questionId, sent.condition?.equals), ('choice', false, 'q3', 'fail'));
+  });
+
+  test('M26 editing keeps choice keys, can drop the rule, and only earlier questions are offered', () async {
+    final qs = [
+      question('q1', 1, 'yes_no', 'Ducts dusty?'),
+      question('q2', 2, 'choice', 'Filter state', options: const [
+        OptionOutModel(key: 'clean', label: 'Clean'),
+        OptionOutModel(key: 'torn', label: 'Torn'),
+      ]),
+      question('q3', 3, 'photo', 'Photo of the tear', condition: {'question_id': 'q2', 'equals': 'torn'}, required: false),
+    ];
+    when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template(qs: qs)));
+    when(() => checklists.updateQuestion(any(), any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template(qs: qs)));
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
+    await c.load();
+    expect(c.note(qs[2]), 'Only if Q2 is Torn · Optional');
+    expect(c.note(qs[0]), isNull);
+
+    c.startEdit(qs[1]);
+    expect([for (final q in c.ruleSources) q.id], ['q1']);
+    c.options[1].text.text = 'Ripped';
+    await c.onSaveQuestion();
+    final opts = (verify(() => checklists.updateQuestion('t1', 'q2', captureAny())).captured.single as QuestionPatchModel).options!;
+    expect([for (final o in opts) (o.key, o.label)], [('clean', 'Clean'), ('torn', 'Ripped')]);
+
+    c.startEdit(qs[2]);
+    expect((c.ruleQuestionId.value, c.ruleEquals.value, c.requiredAnswer.value), ('q2', 'torn', false));
+    c.onRuleQuestion(null);
+    await c.onSaveQuestion();
+    final patch = verify(() => checklists.updateQuestion('t1', 'q3', captureAny())).captured.single as QuestionPatchModel;
+    expect((patch.condition, patch.clearCondition, patch.options), (null, true, null));
+  });
+
+  test('M26 preview shows a waiting question only after its answer', () async {
+    final qs = [
+      question('q1', 1, 'pass_fail', 'Drain clear?'),
+      question('q2', 2, 'photo', 'Photo of the block', condition: {'question_id': 'q1', 'equals': 'fail'}),
+      question('q3', 3, 'yes_no', 'Cleaned it?', condition: {'question_id': 'q2', 'equals': 'yes'}),
+      question('q4', 4, 'number', 'Pressure'),
+    ];
+    when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template(qs: qs)));
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
+    await c.load();
+    c.startPreview();
+    expect([for (final q in c.previewQuestions) q.id], ['q1', 'q4']);
+    expect(c.previewCount, '2 of 4 questions shown · tap answers to try the rules');
+    c.onPreviewAnswer(qs[0], 'fail');
+    expect([for (final q in c.previewQuestions) q.id], ['q1', 'q2', 'q4']);
+    c.onPreviewAnswer(qs[0], 'fail'); // tapping again clears it
+    expect([for (final q in c.previewQuestions) q.id], ['q1', 'q4']);
   });
 
   test('M26 drag to move saves the new place', () async {

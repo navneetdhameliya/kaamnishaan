@@ -4614,5 +4614,22 @@
   "admin.cl.ref_remove": "દૂર કરો",
   "admin.cl.ref_hint": "ટેક્નિશિયનોને બતાવે છે કે સાચો જવાબ કેવો દેખાય છે. જે કંપનીઓએ આ ટેમ્પ્લેટ પહેલેથી કૉપિ કર્યું છે તેમનો ફોટો એમ જ રહે છે.",
   "admin.au.a.checklist.reference_set": "સંદર્ભ ફોટો મૂક્યો",
-  "admin.au.a.checklist.reference_removed": "સંદર્ભ ફોટો દૂર કર્યો"
+  "admin.au.a.checklist.reference_removed": "સંદર્ભ ફોટો દૂર કર્યો",
+  "cb.choices": "વિકલ્પો",
+  "cb.choice_hint": "વિકલ્પ {n}",
+  "cb.choice_add": "વિકલ્પ ઉમેરો",
+  "cb.choice_remove": "વિકલ્પ દૂર કરો",
+  "cb.options_needed": "ઓછામાં ઓછા 2 વિકલ્પ લખો.",
+  "cb.required": "જવાબ જરૂરી",
+  "cb.required_sub": "બંધ: ટેક્નિશિયન તેને છોડી શકે છે.",
+  "cb.optional": "વૈકલ્પિક",
+  "cb.rule": "ત્યારે જ બતાવો જ્યારે",
+  "cb.rule_sub": "આ સવાલ કોઈ ચોક્કસ જવાબ પછી જ પૂછો.",
+  "cb.rule_always": "હંમેશા",
+  "cb.rule_q": "પ્ર{n}",
+  "cb.rule_when": "જ્યારે “{question}” નો જવાબ હોય:",
+  "cb.rule_note": "ત્યારે જ જ્યારે પ્ર{n} નો જવાબ {answer} હોય",
+  "cb.preview": "પૂર્વાવલોકન",
+  "cb.preview_count": "{m} માંથી {n} સવાલ દેખાય છે · નિયમ અજમાવવા જવાબ દબાવો",
+  "cb.preview_words": "શબ્દો અથવા અવાજ નોંધ"
 }

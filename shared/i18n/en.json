@@ -4614,5 +4614,22 @@
   "admin.cl.ref_remove": "Remove",
   "admin.cl.ref_hint": "Shows technicians what a good answer looks like. Companies that already copied this template keep their photo.",
   "admin.au.a.checklist.reference_set": "Reference photo set",
-  "admin.au.a.checklist.reference_removed": "Reference photo removed"
+  "admin.au.a.checklist.reference_removed": "Reference photo removed",
+  "cb.choices": "Choices",
+  "cb.choice_hint": "Choice {n}",
+  "cb.choice_add": "Add a choice",
+  "cb.choice_remove": "Remove choice",
+  "cb.options_needed": "Write at least 2 choices.",
+  "cb.required": "Answer needed",
+  "cb.required_sub": "Off: the technician can skip it.",
+  "cb.optional": "Optional",
+  "cb.rule": "Show only if",
+  "cb.rule_sub": "Ask this only after a certain answer.",
+  "cb.rule_always": "Always",
+  "cb.rule_q": "Q{n}",
+  "cb.rule_when": "When “{question}” is:",
+  "cb.rule_note": "Only if Q{n} is {answer}",
+  "cb.preview": "Preview",
+  "cb.preview_count": "{n} of {m} questions shown · tap answers to try the rules",
+  "cb.preview_words": "Words or a voice note"
 }
