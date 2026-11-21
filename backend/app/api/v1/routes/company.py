@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.deps import Principal, client_ip, get_db, get_principal, requires
 from app.core.errors import Forbidden
+from app.schemas.account import OwnerChange
 from app.schemas.identity import (
     CompanyCreate,
     CompanyOut,
@@ -21,7 +22,7 @@ from app.schemas.identity import (
     MeOut,
     MyInviteList,
 )
-from app.services import companies, team
+from app.services import account, companies, team
 from app.services.views import company_out, me_out
 
 router = APIRouter()
@@ -107,6 +108,15 @@ async def remove_member(
 
 
 # ---- invites -----------------------------------------------------------------------------------
+@router.post("/company/owner", response_model=MeOut, tags=["team"])
+async def change_owner(
+    body: OwnerChange, p: Principal = Depends(get_principal), db: AsyncSession = Depends(get_db)
+) -> MeOut:
+    """The owner hands the company to an active member, who becomes owner; you become a manager."""
+    await account.change_owner(db, p, body.user_id)
+    return me_out(p.user, p.company, p.membership)
+
+
 @router.post("/invites", response_model=InviteOut, status_code=status.HTTP_201_CREATED, tags=["invites"])
 async def create_invite(
     body: InviteCreate,

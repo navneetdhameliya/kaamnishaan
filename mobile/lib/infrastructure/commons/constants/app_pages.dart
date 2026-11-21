@@ -62,6 +62,8 @@ import '../../../UI/screens/me_section/company_settings_section/company_settings
 import '../../../UI/screens/me_section/company_settings_section/company_settings_screen.dart';
 import '../../../UI/screens/me_section/credits_section/credits_binding.dart';
 import '../../../UI/screens/me_section/credits_section/credits_screen.dart';
+import '../../../UI/screens/me_section/delete_account_section/delete_account_binding.dart';
+import '../../../UI/screens/me_section/delete_account_section/delete_account_screen.dart';
 import '../../../UI/screens/me_section/language_settings_section/language_settings_binding.dart';
 import '../../../UI/screens/me_section/language_settings_section/language_settings_screen.dart';
 import '../../../UI/screens/me_section/help_new_section/help_new_binding.dart';
@@ -288,6 +290,11 @@ abstract final class AppPages {
     GetPage(name: RoutesConstants.inviteScreen, page: () => const InviteScreen(), binding: InviteBinding()),
     GetPage(name: RoutesConstants.messagesScreen, page: () => const MessagesScreen(), binding: MessagesBinding()),
     GetPage(name: RoutesConstants.helpScreen, page: () => const HelpScreen(), binding: HelpBinding()),
+    GetPage(
+      name: RoutesConstants.deleteAccountScreen,
+      page: () => const DeleteAccountScreen(),
+      binding: DeleteAccountBinding(),
+    ),
     GetPage(name: RoutesConstants.helpNewScreen, page: () => const HelpNewScreen(), binding: HelpNewBinding()),
     GetPage(name: RoutesConstants.helpTicketScreen, page: () => const HelpTicketScreen(), binding: HelpTicketBinding()),
     GetPage(name: RoutesConstants.myReportsScreen, page: () => const MyReportsScreen(), binding: MyReportsBinding()),

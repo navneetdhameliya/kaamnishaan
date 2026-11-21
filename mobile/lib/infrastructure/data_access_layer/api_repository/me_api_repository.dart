@@ -11,6 +11,15 @@ abstract class IMeApiRepository {
 
   /// My reports (M30): this week's, optionally only some states.
   Future<ApiResult<ReportListModel>> myReports({List<String>? statuses, String period = 'week', String? cursor});
+
+  /// D-130: what deleting the account would do (companies left or closed, an owner to pick first).
+  Future<ApiResult<DeletionCheckModel>> deletionCheck();
+
+  /// D-130: deletes the account now; the server logs this person out everywhere.
+  Future<ApiResult<void>> deleteAccount({String? reason});
+
+  /// The owner hands the current company to someone in the team and becomes a manager.
+  Future<ApiResult<MeOutModel>> changeOwner(String userId);
 }
 
 class MeApiRepository implements IMeApiRepository {
@@ -42,4 +51,17 @@ class MeApiRepository implements IMeApiRepository {
           ),
         ),
       );
+
+  @override
+  Future<ApiResult<DeletionCheckModel>> deletionCheck() =>
+      guard(() async => DeletionCheckModel.fromJson(_map(await provider.getDeletion())));
+
+  @override
+  Future<ApiResult<void>> deleteAccount({String? reason}) => guard(() async {
+        await provider.postDelete({'confirm': true, 'reason': ?reason});
+      });
+
+  @override
+  Future<ApiResult<MeOutModel>> changeOwner(String userId) =>
+      guard(() async => MeOutModel.fromJson(_map(await provider.postOwner({'user_id': userId}))));
 }

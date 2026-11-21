@@ -5,7 +5,9 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import Principal, get_db, get_principal
 from app.core.security import now
 from app.models import Device
+from app.schemas.account import AccountDelete, DeletionCheck
 from app.schemas.identity import DeviceRegister, ListMeta, MeOut, MeUpdate, MyCompanies, Preferences
+from app.services import account
 from app.services.companies import check_trade
 from app.services.evidence import take_upload
 from app.services.views import active_memberships, choices, me_out
@@ -71,3 +73,21 @@ async def register_device(
         db.add(d)
     d.platform, d.app_version, d.last_seen_at = body.platform, body.app_version, now()
     return Response(status_code=204)
+
+
+@router.get("/me/deletion", response_model=DeletionCheck)
+async def deletion_check(
+    p: Principal = Depends(get_principal), db: AsyncSession = Depends(get_db)
+) -> DeletionCheck:
+    """What deleting your account would do: companies left or closed, and whether to pick an owner first."""
+    return await account.check(db, p.user)
+
+
+@router.post("/me/delete", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_me(
+    body: AccountDelete, p: Principal = Depends(get_principal), db: AsyncSession = Depends(get_db)
+) -> Response:
+    """Deletes your account now: your details are wiped and you are logged out everywhere. Your work stays
+    with the company. An owner with a team gets 409 owner_has_team until they pick a new owner."""
+    await account.delete(db, p.user, body.reason)
+    return Response(status_code=status.HTTP_204_NO_CONTENT)

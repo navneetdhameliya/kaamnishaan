@@ -72,6 +72,7 @@ class AdminUserDetail(BaseModel):
     email_verified: bool
     login: Login
     status: Literal["active", "invited", "disabled"]
+    deleted_at: datetime | None = Field(None, description="They deleted their account; details are wiped")
     app_language: str
     created_at: datetime
     last_seen_at: datetime | None

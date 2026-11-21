@@ -158,7 +158,7 @@ export function UserDetail({ t, lang, id, onName }: { t: T; lang: Lang; id: stri
     <div className="flex flex-col gap-24">
       <div className="flex flex-wrap items-center justify-between gap-12">
         {back}
-        {canAct && (
+        {canAct && !d.deleted_at && (
           <div className="flex flex-wrap gap-12">
             {d.status !== 'disabled' && (
               <button type="button" onClick={() => setAction('sign-out')} disabled={!d.active_sessions} className="kn-btn inline-flex h-[44px] items-center gap-8 rounded-lg bg-bg-subtle px-16 text-latin-label-sm font-semibold hover:bg-cream-300 disabled:opacity-50">
@@ -186,10 +186,16 @@ export function UserDetail({ t, lang, id, onName }: { t: T; lang: Lang; id: stri
           {done}
         </p>
       )}
-      {d.status === 'disabled' && (
-        <p role="note" className="rounded-lg bg-status-danger-bg px-16 py-12 text-latin-label-sm font-semibold text-status-danger">
-          {t('admin.us.disabled_note')}
+      {d.deleted_at ? (
+        <p role="note" className="rounded-lg bg-bg-subtle px-16 py-12 text-latin-label-sm font-semibold text-text-secondary">
+          {t('admin.ud.deleted', { day: day(d.deleted_at, lang) })}
         </p>
+      ) : (
+        d.status === 'disabled' && (
+          <p role="note" className="rounded-lg bg-status-danger-bg px-16 py-12 text-latin-label-sm font-semibold text-status-danger">
+            {t('admin.us.disabled_note')}
+          </p>
+        )
       )}
 
       <section className="kn-in flex flex-col gap-16 rounded-xl border border-border-default bg-bg-surface p-20 sm:flex-row sm:items-center sm:p-24">

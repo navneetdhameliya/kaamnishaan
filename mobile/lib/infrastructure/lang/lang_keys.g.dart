@@ -9150,4 +9150,58 @@ abstract final class LangKeys {
   static const adminAuAStaffSessionEnded = 'admin.au.a.staff.session_ended';
   /// No approved reports with times yet
   static const adminAnNoReview = 'admin.an.no_review';
+  /// Delete account
+  static const meDeleteAccount = 'me.delete_account';
+  /// Delete your account
+  static const delTitle = 'del.title';
+  /// Read what happens before you go.
+  static const delBody = 'del.body';
+  /// Your name, phone, email and photo are wiped.
+  static const delFactDetails = 'del.fact_details';
+  /// You are logged out on every phone and computer.
+  static const delFactLogout = 'del.fact_logout';
+  /// Jobs, photos and reports you made stay with {company}, shown as “Deleted user”.
+  static const delFactWork = 'del.fact_work';
+  /// {n} open jobs go back to the office to give to someone else.
+  static const delFactJobs = 'del.fact_jobs';
+  /// This can’t be undone. To use KaamNishaan again you start a new account.
+  static const delFactForever = 'del.fact_forever';
+  /// You are the only person in {company}, so the company closes too.
+  static const delCloses = 'del.closes';
+  /// Choose a new owner for {company}
+  static const delOwnerTitle = 'del.owner_title';
+  /// Your team keeps working. The new owner gets billing and settings; you become a manager until you delete.
+  static const delOwnerBody = 'del.owner_body';
+  /// Switch to this company in the app first, then choose the new owner here.
+  static const delOwnerSwitch = 'del.owner_switch';
+  /// Make owner
+  static const delOwnerButton = 'del.owner_button';
+  /// {company} has a new owner.
+  static const delOwnerDone = 'del.owner_done';
+  /// Why are you leaving? (optional)
+  static const delReason = 'del.reason';
+  /// It helps us do better.
+  static const delReasonHint = 'del.reason_hint';
+  /// I understand my account is deleted for good.
+  static const delUnderstood = 'del.understood';
+  /// Delete my account
+  static const delButton = 'del.button';
+  /// Tick the box to confirm.
+  static const delErrConfirm = 'del.err_confirm';
+  /// Choose a new owner for your company first.
+  static const delErrOwner = 'del.err_owner';
+  /// Something went wrong. Please try again.
+  static const delErrGeneric = 'del.err_generic';
+  /// Your account is deleted. Thank you for using KaamNishaan.
+  static const delDone = 'del.done';
+  /// Deleted their account on {day}. Their details are wiped; their work stays with the company.
+  static const adminUdDeleted = 'admin.ud.deleted';
+  /// Deleted their account
+  static const adminAuAAccountDeleted = 'admin.au.a.account.deleted';
+  /// Left the company (account deleted)
+  static const adminAuATeamLeft = 'admin.au.a.team.left';
+  /// Handed the company to a new owner
+  static const adminAuATeamOwnerChanged = 'admin.au.a.team.owner_changed';
+  /// Closed the company when deleting their account
+  static const adminAuACompanyClosedByOwner = 'admin.au.a.company.closed_by_owner';
 }

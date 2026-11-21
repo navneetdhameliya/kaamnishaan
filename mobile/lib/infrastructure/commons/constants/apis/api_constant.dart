@@ -16,6 +16,9 @@ abstract final class APIConstant {
 
   // me
   static const String meAPIEP = '/me';
+  static const String meDeletionAPIEP = '/me/deletion';
+  static const String meDeleteAPIEP = '/me/delete';
+  static const String companyOwnerAPIEP = '/company/owner';
   static const String meStatsAPIEP = '/me/stats';
   static const String mePreferencesAPIEP = '/me/preferences';
   static const String notificationsAPIEP = '/notifications';
