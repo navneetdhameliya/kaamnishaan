@@ -9306,4 +9306,66 @@ abstract final class LangKeys {
   static const dictateNoAi = 'dictate.no_ai';
   /// Couldn't turn that into words. Try again, or type it.
   static const dictateFailed = 'dictate.failed';
+  /// Search name, phone or city
+  static const customersSearch = 'customers.search';
+  /// Add customer
+  static const customersAdd = 'customers.add';
+  /// Edit customer
+  static const customersEdit = 'customers.edit';
+  /// Save changes
+  static const customersSave = 'customers.save';
+  /// Customer added.
+  static const customersAdded = 'customers.added';
+  /// Customer saved.
+  static const customersSaved = 'customers.saved';
+  /// {n} jobs
+  static const customersJobs = 'customers.jobs';
+  /// 1 job
+  static const customersJobOne = 'customers.job_one';
+  /// No jobs yet
+  static const customersNoJobs = 'customers.no_jobs';
+  /// No customer matches “{q}”.
+  static const customersNoResults = 'customers.no_results';
+  /// No customers yet
+  static const customersEmptyTitle = 'customers.empty_title';
+  /// Customers are added with each new job, or here with “Add customer”.
+  static const customersEmptyBody = 'customers.empty_body';
+  /// Customer name
+  static const customersName = 'customers.name';
+  /// Person or business
+  static const customersNameHint = 'customers.name_hint';
+  /// Type the customer's name.
+  static const customersNameNeeded = 'customers.name_needed';
+  /// How to reach them
+  static const customersReach = 'customers.reach';
+  /// Phone
+  static const customersPhone = 'customers.phone';
+  /// Mobile number
+  static const customersPhoneHint = 'customers.phone_hint';
+  /// This phone number doesn't look right.
+  static const customersPhoneBad = 'customers.phone_bad';
+  /// Email
+  static const customersEmail = 'customers.email';
+  /// For reports and review links
+  static const customersEmailHint = 'customers.email_hint';
+  /// This email doesn't look right.
+  static const customersEmailBad = 'customers.email_bad';
+  /// Main address
+  static const customersAddress = 'customers.address';
+  /// House, street
+  static const customersLine1 = 'customers.line1';
+  /// Where the work is done
+  static const customersLine1Hint = 'customers.line1_hint';
+  /// Area, landmark (optional)
+  static const customersLine2 = 'customers.line2';
+  /// City
+  static const customersCity = 'customers.city';
+  /// PIN code
+  static const customersPostcode = 'customers.postcode';
+  /// Type the house and street.
+  static const customersAddressNeeded = 'customers.address_needed';
+  /// Note for your team
+  static const customersNote = 'customers.note';
+  /// Gate code, dog, best time to call… (customers don't see this)
+  static const customersNoteHint = 'customers.note_hint';
 }
