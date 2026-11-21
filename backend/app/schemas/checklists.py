@@ -308,3 +308,14 @@ class PublicChecklistTemplates(BaseModel):
     trade: str
     language: str
     items: list[PublicChecklistTemplate]
+
+
+class DictationIn(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    upload_id: uuid.UUID = Field(description="A short recording uploaded with kind audio")
+    language_hint: Locale | None = Field(None, description="The language being spoken, when known")
+
+
+class DictationOut(BaseModel):
+    text: str = Field(description="What was said, to put in a text box")
+    language: str | None = Field(None, description="The language heard")

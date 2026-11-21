@@ -13,6 +13,7 @@ class KnTextBox extends StatelessWidget {
     this.minLines = 3,
     this.maxLines = 6,
     this.maxLength = 1000,
+    this.suffix,
   });
 
   final TextEditingController controller;
@@ -21,6 +22,9 @@ class KnTextBox extends StatelessWidget {
   final int minLines;
   final int maxLines;
   final int maxLength;
+
+  /// A button at the end of the box, such as the microphone.
+  final Widget? suffix;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +50,7 @@ class KnTextBox extends StatelessWidget {
         enabledBorder: border.copyWith(borderSide: BorderSide(color: kn.borderStrong)),
         focusedBorder: border,
         contentPadding: const EdgeInsets.all(KnSize.space16),
+        suffixIcon: suffix,
       ),
     );
   }

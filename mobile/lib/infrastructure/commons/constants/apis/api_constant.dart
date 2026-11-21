@@ -98,6 +98,7 @@ abstract final class APIConstant {
   static String jobTypedNotesAPIEP(String jobId) => '/jobs/$jobId/notes';
   static String voiceNoteAPIEP(String id) => '/voice-notes/$id';
   static String retranscribeAPIEP(String id) => '/voice-notes/$id/retranscribe';
+  static const String dictationAPIEP = '/dictation';
 
   // reports (M31–M32)
   static String jobReportsAPIEP(String jobId) => '/jobs/$jobId/reports';

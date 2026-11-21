@@ -13156,6 +13156,67 @@
         "title": "DeviceRegister",
         "type": "object"
       },
+      "DictationIn": {
+        "additionalProperties": false,
+        "properties": {
+          "language_hint": {
+            "anyOf": [
+              {
+                "enum": [
+                  "en",
+                  "hi",
+                  "gu",
+                  "es",
+                  "fr"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The language being spoken, when known",
+            "title": "Language Hint"
+          },
+          "upload_id": {
+            "description": "A short recording uploaded with kind audio",
+            "format": "uuid",
+            "title": "Upload Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "upload_id"
+        ],
+        "title": "DictationIn",
+        "type": "object"
+      },
+      "DictationOut": {
+        "properties": {
+          "language": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The language heard",
+            "title": "Language"
+          },
+          "text": {
+            "description": "What was said, to put in a text box",
+            "title": "Text",
+            "type": "string"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "DictationOut",
+        "type": "object"
+      },
       "EmailBody": {
         "additionalProperties": false,
         "properties": {
@@ -34743,6 +34804,53 @@
         "summary": "Register Device",
         "tags": [
           "me"
+        ]
+      }
+    },
+    "/api/v1/dictation": {
+      "post": {
+        "description": "Speak instead of typing (the question box in the checklist builder): a short recording becomes words.\n503 ai_unavailable when no AI is set up, 422 unclear when no words were heard.",
+        "operationId": "dictation_api_v1_dictation_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DictationIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DictationOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Dictation",
+        "tags": [
+          "voice notes"
         ]
       }
     },

@@ -4643,5 +4643,13 @@
   "cb.tr_save": "Enregistrer",
   "cb.tr_looks_right": "C'est correct",
   "cb.tr_saved": "Traduction enregistrée.",
-  "cb.tr_empty": "Écrivez d'abord les mots."
+  "cb.tr_empty": "Écrivez d'abord les mots.",
+  "cb.mic_speak": "Dites la question",
+  "cb.mic_stop": "Arrêter l'écoute",
+  "cb.mic_listening": "À l'écoute… touchez le carré pour arrêter",
+  "cb.mic_working": "Écriture en cours…",
+  "cb.mic_off": "Le micro est coupé. Activez-le dans les réglages du téléphone, ou tapez la question.",
+  "cb.mic_unclear": "Aucun mot entendu. Réessayez un peu plus près.",
+  "cb.mic_no_ai": "La dictée n'est pas disponible pour le moment. Tapez la question.",
+  "cb.mic_failed": "Impossible de le transcrire. Réessayez, ou tapez-le."
 }

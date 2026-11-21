@@ -94,7 +94,9 @@ class _TrCard extends StatelessWidget {
   final String lang;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => Obx(() => _build(context));
+
+  Widget _build(BuildContext context) {
     final kn = context.kn;
     final text = context.knText;
     final status = ChecklistBuilderController.trStatus(question, lang);

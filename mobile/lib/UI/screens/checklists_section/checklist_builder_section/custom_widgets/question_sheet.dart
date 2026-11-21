@@ -51,6 +51,23 @@ class QuestionSheet extends StatelessWidget {
               minLines: 1,
               maxLines: 3,
               maxLength: 200,
+              suffix: _MicButton(controller: controller),
+            ),
+            AnimatedSize(
+              duration: const Duration(milliseconds: 200),
+              child: controller.dictation.value == DictationPhase.idle
+                  ? const SizedBox(width: double.infinity)
+                  : Padding(
+                      padding: const EdgeInsets.only(top: KnSize.space8),
+                      child: CustomBaseTextWidget(
+                        controller.dictation.value == DictationPhase.listening
+                            ? LangKeys.cbMicListening.tr
+                            : LangKeys.cbMicWorking.tr,
+                        key: const ValueKey('question-mic-state'),
+                        style: text.labelSm,
+                        color: controller.dictation.value == DictationPhase.listening ? kn.statusDanger : kn.textSecondary,
+                      ),
+                    ),
             ),
             const SizedBox(height: KnSize.space16),
             CustomBaseTextWidget(LangKeys.cbAnswerType.tr, style: text.label),
@@ -166,6 +183,50 @@ class QuestionSheet extends StatelessWidget {
   }
 }
 
+/// The microphone at the end of the question box: tap to speak, tap again to stop; the words are typed in.
+class _MicButton extends StatelessWidget {
+  const _MicButton({required this.controller});
+
+  final ChecklistBuilderController controller;
+
+  @override
+  Widget build(BuildContext context) => Obx(() => _build(context));
+
+  Widget _build(BuildContext context) {
+    final kn = context.kn;
+    final phase = controller.dictation.value;
+    final listening = phase == DictationPhase.listening;
+    return Padding(
+      padding: const EdgeInsetsDirectional.only(end: KnSize.space4),
+      child: CustomInkWell(
+        key: const ValueKey('question-mic'),
+        onTap: phase == DictationPhase.working ? null : controller.onMicTap,
+        borderRadius: BorderRadius.circular(KnSize.radiusFull),
+        semanticLabel: listening ? LangKeys.cbMicStop.tr : LangKeys.cbMicSpeak.tr,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          width: 44,
+          height: 44,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: listening ? kn.statusDangerBg : Colors.transparent,
+            shape: BoxShape.circle,
+          ),
+          child: switch (phase) {
+            DictationPhase.working => SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(strokeWidth: 2, color: kn.textSecondary),
+              ),
+            DictationPhase.listening => Icon(LucideIcons.square, size: 18, color: kn.statusDanger),
+            DictationPhase.idle => Icon(LucideIcons.mic, size: 22, color: kn.textSecondary),
+          },
+        ),
+      ),
+    );
+  }
+}
+
 /// "Choices": one box per answer (2 to 12), a remove button on each, and "Add a choice".
 class _Choices extends StatelessWidget {
   const _Choices({required this.controller});
@@ -173,7 +234,9 @@ class _Choices extends StatelessWidget {
   final ChecklistBuilderController controller;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => Obx(() => _build(context));
+
+  Widget _build(BuildContext context) {
     final kn = context.kn;
     final text = context.knText;
     return Column(
@@ -239,7 +302,9 @@ class _Rule extends StatelessWidget {
   final ChecklistBuilderController controller;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => Obx(() => _build(context));
+
+  Widget _build(BuildContext context) {
     final kn = context.kn;
     final text = context.knText;
     final src = controller.ruleSource;
@@ -309,7 +374,9 @@ class _ReferencePhoto extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) => Obx(() => _build(context));
+
+  Widget _build(BuildContext context) {
     final text = context.knText;
     final picked = controller.referencePicked.value;
     const side = 72.0;

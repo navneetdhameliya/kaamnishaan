@@ -7,6 +7,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.api.v1.routes.jobs import member
 from app.core.deps import Principal, get_db
 from app.schemas.checklists import (
+    DictationIn,
+    DictationOut,
     TypedNoteCreate,
     VoiceNoteCreate,
     VoiceNoteList,
@@ -107,3 +109,14 @@ async def delete_note(
 ) -> Response:
     await svc.delete(db, p, note_id)
     return Response(status_code=204)
+
+
+@router.post("/dictation", response_model=DictationOut)
+async def dictation(body: DictationIn, p: Principal = Depends(member), db: AsyncSession = Depends(get_db)):
+    """Speak instead of typing (the question box in the checklist builder): a short recording becomes words.
+    503 ai_unavailable when no AI is set up, 422 unclear when no words were heard."""
+    try:
+        text, language = await svc.dictate(db, p, body.upload_id, body.language_hint)
+    finally:
+        await db.commit()  # the upload is used up, and the cost is counted, either way
+    return DictationOut(text=text, language=language)

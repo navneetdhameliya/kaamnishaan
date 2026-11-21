@@ -622,3 +622,36 @@ async def test_companies_never_see_each_others_checklists_or_notes(client, setup
     assert (await client.get(f"/api/v1/jobs/{job['id']}/checklists", headers=auth(b))).status_code == 404
     assert (await client.get(f"/api/v1/voice-notes/{note['id']}", headers=auth(b))).status_code == 404
     assert (await client.get(f"/api/v1/jobs/{job['id']}/voice-notes", headers=auth(b))).status_code == 404
+
+
+async def test_dictation_turns_a_recording_into_words(client, setup, fake_ai):
+    owner = setup["owner"]
+    fake_ai.text, fake_ai.language = "Is the condensate drain clear?", "en"
+    up = await upload(client, owner, b"fake m4a audio bytes", kind="audio", content_type="audio/mp4")
+    r = await client.post(
+        "/api/v1/dictation", json={"upload_id": up, "language_hint": "en"}, headers=auth(owner)
+    )
+    assert r.status_code == 200, r.text
+    assert r.json() == {"text": "Is the condensate drain clear?", "language": "en"}
+    # an upload is used once
+    again = await client.post("/api/v1/dictation", json={"upload_id": up}, headers=auth(owner))
+    assert again.status_code == 409
+    # nothing heard
+    fake_ai.text = "  "
+    up = await upload(client, owner, b"silence", kind="audio", content_type="audio/mp4")
+    r = await client.post("/api/v1/dictation", json={"upload_id": up}, headers=auth(owner))
+    assert r.status_code == 422 and r.json()["error"]["code"] == "unclear"
+    # a photo upload is not a recording
+    up = await upload(client, owner, jpeg())
+    r = await client.post("/api/v1/dictation", json={"upload_id": up}, headers=auth(owner))
+    assert r.status_code == 404
+    async with SessionLocal() as db:
+        n = (await db.execute(text("select count(*) from ai_usage where task = 'transcription'"))).scalar()
+    assert n == 2
+
+
+async def test_dictation_without_ai(client, setup):
+    owner = setup["owner"]
+    up = await upload(client, owner, b"fake m4a audio bytes", kind="audio", content_type="audio/mp4")
+    r = await client.post("/api/v1/dictation", json={"upload_id": up}, headers=auth(owner))
+    assert r.status_code == 503 and r.json()["error"]["code"] == "ai_unavailable"

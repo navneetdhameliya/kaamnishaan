@@ -25,7 +25,8 @@ from app.schemas.checklists import (
 )
 from app.schemas.identity import ListMeta
 from app.schemas.work import PersonRef
-from app.services import audit
+from app.services import ai_usage, audit
+from app.services.ai_config import ai_for
 from app.services.evidence import CAPTURE_STATUSES, take_upload
 from app.services.jobs import get_job
 
@@ -249,3 +250,31 @@ async def count_for_job(db: AsyncSession, job_id: uuid.UUID) -> int:
             select(func.count()).where(VoiceNote.job_id == job_id, VoiceNote.deleted_at.is_(None))
         )
     ).scalar_one()
+
+
+# ---- dictation: speak instead of typing -----------------------------------------------------
+async def dictate(
+    db: AsyncSession, p: Principal, upload_id: uuid.UUID, hint: str | None
+) -> tuple[str, str | None]:
+    """Turns a short recording into words for a text box. Nothing is kept: the file is deleted after."""
+    up, _ = await take_upload(db, p, upload_id, "audio")
+    storage = get_storage()
+    ai = await ai_for(db, budgeted=True)
+    if not ai:
+        await storage.delete(up.key)
+        raise AppError("ai_unavailable", "Speaking instead of typing isn't available right now.", status=503)
+    try:
+        data = await storage.read(up.key)
+        result = await ai.transcribe(data, up.key.rsplit("/", 1)[-1], up.content_type or "audio/mp4", hint)
+    except Exception as e:  # noqa: BLE001 - the person can type, or try again
+        ai_usage.record(db, "transcription", company_id=p.company.id, ok=False)
+        raise AppError(
+            "dictation_failed", "Couldn't turn that into words. Please try again.", status=502
+        ) from e
+    finally:
+        await storage.delete(up.key)
+    ai_usage.record(db, "transcription", company_id=p.company.id, model=result.model, seconds=result.seconds)
+    words = (result.text or "").strip()
+    if not words:
+        raise AppError("unclear", "Couldn't hear any words. Please try again, a little closer.", status=422)
+    return words, result.language or hint

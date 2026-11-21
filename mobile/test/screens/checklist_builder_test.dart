@@ -1,12 +1,19 @@
-import 'package:flutter/widgets.dart' show Locale;
+import 'dart:io';
+
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_builder_section/checklist_builder_controller.dart';
+import 'package:kaamnishaan/UI/screens/checklists_section/checklist_builder_section/custom_widgets/question_sheet.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/job_list_section/custom_widgets/job_list_parts.dart';
+import 'package:kaamnishaan/UI/theme/kn_app_theme.dart';
 import 'package:kaamnishaan/UI/screens/checklists_section/checklist_library_section/checklist_library_controller.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/files_api_repository.dart';
+import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_exception.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_result.dart';
 import 'package:kaamnishaan/infrastructure/lang/translations.g.dart';
 import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
+import 'package:kaamnishaan/infrastructure/services/audio_service.dart';
 import 'package:kaamnishaan/infrastructure/services/image_picker_service.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -81,6 +88,9 @@ void main() {
   late MockChecklistsRepository checklists;
   late MockFilesRepository files;
   late FakeImagePicker picker;
+  late FakeRecorder recorder;
+  late MockVoiceRepository voice;
+  Future<Directory> temp() async => Directory.systemTemp;
 
   setUpAll(() {
     registerFallbackValue(const QuestionInModel(type: 'yes_no', text: ''));
@@ -97,11 +107,13 @@ void main() {
     checklists = MockChecklistsRepository();
     files = MockFilesRepository();
     picker = FakeImagePicker();
+    recorder = FakeRecorder();
+    voice = MockVoiceRepository();
   });
 
   test('M26 shows the questions, their types and the languages ready', () async {
     when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
-    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, recorder: recorder, voice: voice, temp: temp, templateId: 't1');
     await c.load();
     expect((c.name, c.subtitle), ('HVAC service check', '3 questions · used in 21 jobs'));
     expect(c.translations, 'Translations: 4 of 5 languages ready');
@@ -112,7 +124,7 @@ void main() {
   test('M26 add a Pass / Fail question with a photo when it fails', () async {
     when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
     when(() => checklists.addQuestion(any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
-    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, recorder: recorder, voice: voice, temp: temp, templateId: 't1');
     await c.load();
     c.startAdd();
     c.text.text = 'Is the condensate drain clear?';
@@ -127,7 +139,7 @@ void main() {
   test('M26 edit keeps the type; numbers can have a unit', () async {
     when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
     when(() => checklists.updateQuestion(any(), any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
-    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, recorder: recorder, voice: voice, temp: temp, templateId: 't1');
     await c.load();
     c.startEdit(c.questions[1]);
     c.onType('yes_no');
@@ -145,7 +157,7 @@ void main() {
     when(() => checklists.updateQuestion(any(), any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
     when(() => files.upload(kind: any(named: 'kind'), bytes: any(named: 'bytes'), contentType: any(named: 'contentType')))
         .thenAnswer((_) async => const ApiSuccess<String>('up1'));
-    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, recorder: recorder, voice: voice, temp: temp, templateId: 't1');
     await c.load();
 
     // add: pick a photo, it goes up with the question
@@ -181,7 +193,7 @@ void main() {
   test('M26 a choice question, optional, shown only after an earlier answer', () async {
     when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
     when(() => checklists.addQuestion(any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
-    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, recorder: recorder, voice: voice, temp: temp, templateId: 't1');
     await c.load();
     c.startAdd();
     c.text.text = 'Filter state';
@@ -216,7 +228,7 @@ void main() {
     ];
     when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template(qs: qs)));
     when(() => checklists.updateQuestion(any(), any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template(qs: qs)));
-    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, recorder: recorder, voice: voice, temp: temp, templateId: 't1');
     await c.load();
     expect(c.note(qs[2]), 'Only if Q2 is Torn · Optional');
     expect(c.note(qs[0]), isNull);
@@ -244,7 +256,7 @@ void main() {
       question('q4', 4, 'number', 'Pressure'),
     ];
     when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template(qs: qs)));
-    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, recorder: recorder, voice: voice, temp: temp, templateId: 't1');
     await c.load();
     c.startPreview();
     expect([for (final q in c.previewQuestions) q.id], ['q1', 'q4']);
@@ -258,7 +270,7 @@ void main() {
   test('M26 translations open on the language that needs a look; saving makes it ready', () async {
     when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
     when(() => checklists.updateQuestion(any(), any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
-    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, recorder: recorder, voice: voice, temp: temp, templateId: 't1');
     await c.load();
     expect(c.otherLanguages, ['hi', 'gu', 'es', 'fr']);
     expect((c.toCheck('hi'), c.toCheck('gu')), (0, 1)); // q3 was translated automatically into Gujarati
@@ -281,10 +293,91 @@ void main() {
     expect(c.trLanguage.value, 'fr');
   });
 
+  test('M26 speak instead of typing: the words go into the question box', () async {
+    when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    when(() => files.upload(kind: any(named: 'kind'), bytes: any(named: 'bytes'), contentType: any(named: 'contentType')))
+        .thenAnswer((_) async => const ApiSuccess<String>('a1'));
+    when(() => voice.dictate(any(), languageHint: any(named: 'languageHint')))
+        .thenAnswer((_) async => const ApiSuccess<DictationOutModel>(DictationOutModel(text: 'is the drain clear?', language: 'en')));
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, recorder: recorder, voice: voice, temp: temp, templateId: 't1');
+    await c.load();
+    c.startAdd();
+    c.text.text = 'Outdoor unit:';
+
+    await c.onMicTap();
+    expect((c.dictation.value, recorder.starts), (DictationPhase.listening, 1));
+    final path = recorder.recording!;
+    await c.onMicTap();
+    expect(c.dictation.value, DictationPhase.idle);
+    expect(c.text.text, 'Outdoor unit: is the drain clear?');
+    verify(() => files.upload(kind: UploadKind.audio, bytes: [1, 2, 3], contentType: 'audio/mp4')).called(1);
+    verify(() => voice.dictate('a1', languageHint: 'en')).called(1);
+    await Future<void>.delayed(const Duration(milliseconds: 50));
+    expect(File(path).existsSync(), isFalse); // the recording isn't kept on the phone
+
+    // nothing heard: the box stays as it was
+    when(() => voice.dictate(any(), languageHint: any(named: 'languageHint')))
+        .thenAnswer((_) async => const ApiFailure<DictationOutModel>(ApiException(code: 'unclear', message: "Couldn't hear any words.")));
+    await c.onMicTap();
+    await _quiet(c.onMicTap);
+    expect((c.dictation.value, c.text.text), (DictationPhase.idle, 'Outdoor unit: is the drain clear?'));
+
+    // closing or reopening the sheet while listening drops the recording
+    await c.onMicTap();
+    c.startAdd();
+    expect((c.dictation.value, recorder.recording), (DictationPhase.idle, null));
+  });
+
+  test('M26 microphone off: nothing is recorded', () async {
+    when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    final off = FakeRecorder(result: MicResult.denied);
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, recorder: off, voice: voice, temp: temp, templateId: 't1');
+    await c.load();
+    await _quiet(c.onMicTap);
+    expect((c.dictation.value, off.starts), (DictationPhase.idle, 0));
+  });
+
+  testWidgets('M26 question sheet parts redraw as they change', (tester) async {
+    when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, recorder: recorder, voice: voice, temp: temp, templateId: 't1');
+    await c.load();
+    c.startAdd();
+    await tester.binding.setSurfaceSize(const Size(400, 1400));
+    await tester.pumpWidget(
+      GetMaterialApp(
+        translations: KnTranslations(),
+        locale: const Locale('en', 'IN'),
+        theme: KnTheme.light(const Locale('en')),
+        home: Scaffold(body: QuestionSheet(controller: c)),
+      ),
+    );
+    await tester.pump();
+    bool selected(String key) => tester.widget<JobFilterChip>(find.byKey(ValueKey(key))).selected;
+    expect(selected('question-rule-always'), isTrue);
+    await tester.ensureVisible(find.byKey(const ValueKey('question-rule-q3')));
+    await tester.tap(find.byKey(const ValueKey('question-rule-q3')));
+    await tester.pump();
+    expect((selected('question-rule-always'), selected('question-rule-q3')), (false, true));
+    await tester.ensureVisible(find.byKey(const ValueKey('question-rule-answer-fail')));
+    await tester.tap(find.byKey(const ValueKey('question-rule-answer-fail')));
+    await tester.pump();
+    expect(selected('question-rule-answer-fail'), isTrue);
+
+    await tester.ensureVisible(find.byKey(const ValueKey('question-mic')));
+    await tester.tap(find.byKey(const ValueKey('question-mic')));
+    await tester.pump();
+    expect(find.text('Listening… tap the square to stop'), findsOneWidget);
+    c.startAdd(); // stops listening
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.byKey(const ValueKey('question-mic-state')), findsNothing);
+    await tester.binding.setSurfaceSize(null);
+    Get.reset();
+  });
+
   test('M26 drag to move saves the new place', () async {
     when(() => checklists.template(any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
     when(() => checklists.updateQuestion(any(), any(), any())).thenAnswer((_) async => ApiSuccess<TemplateOutModel>(template()));
-    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 't1');
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, recorder: recorder, voice: voice, temp: temp, templateId: 't1');
     await c.load();
     final moving = c.onReorder(2, 0);
     expect([for (final q in c.questions) q.id], ['q3', 'q1', 'q2']); // shown at once
@@ -299,7 +392,7 @@ void main() {
     when(() => checklists.update(any(), status: any(named: 'status'), name: any(named: 'name'))).thenAnswer(
       (_) async => ApiSuccess<TemplateOutModel>(template(status: 'published')),
     );
-    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, templateId: 'g1');
+    final c = ChecklistBuilderController(checklists: checklists, files: files, picker: picker, recorder: recorder, voice: voice, temp: temp, templateId: 'g1');
     await c.load();
     expect(c.editable, isFalse);
     await _ignoreApp(c.onCopy);

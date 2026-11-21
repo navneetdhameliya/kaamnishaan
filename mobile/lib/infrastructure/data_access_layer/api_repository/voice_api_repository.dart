@@ -24,6 +24,9 @@ abstract class IVoiceApiRepository {
 
   Future<ApiResult<VoiceNoteOutModel>> retranscribe(String id, {String? languageHint});
   Future<ApiResult<void>> delete(String id);
+
+  /// Speak instead of typing: a short recording (an audio upload) becomes words. Nothing is kept.
+  Future<ApiResult<DictationOutModel>> dictate(String uploadId, {String? languageHint});
 }
 
 class VoiceApiRepository implements IVoiceApiRepository {
@@ -79,4 +82,11 @@ class VoiceApiRepository implements IVoiceApiRepository {
   Future<ApiResult<void>> delete(String id) => guard(() async {
         await provider.deleteNote(id);
       });
+
+  @override
+  Future<ApiResult<DictationOutModel>> dictate(String uploadId, {String? languageHint}) => guard(
+        () async => DictationOutModel.fromJson(
+          _map(await provider.postDictation({'upload_id': uploadId, 'language_hint': ?languageHint})),
+        ),
+      );
 }
