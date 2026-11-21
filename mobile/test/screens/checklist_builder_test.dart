@@ -134,7 +134,8 @@ void main() {
     expect(c.hasReference, isFalse);
     picker.next = tinyJpeg;
     await c.onPickReference(PickSource.camera);
-    expect((c.hasReference, picker.sources), (true, [PickSource.camera]));
+    expect(c.hasReference, isTrue);
+    expect(picker.sources, [PickSource.camera]);
     expect(await c.onSaveQuestion(), isTrue);
     verify(() => files.upload(kind: UploadKind.photo, bytes: tinyJpeg.bytes, contentType: 'image/jpeg')).called(1);
     final added = verify(() => checklists.addQuestion('t1', captureAny())).captured.single as QuestionInModel;
