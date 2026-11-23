@@ -70,7 +70,12 @@ async def test(db: AsyncSession, to: str, *, staff_id: uuid.UUID, ip: str | None
             "This is a test from the KaamNishaan admin panel. Your email settings work.",
         )  # fmt: skip
     except Exception as e:  # noqa: BLE001 - any SMTP or network problem is shown to staff
-        raise AppError("smtp_failed", f"{type(e).__name__}: {e}"[:300], status=502) from None
+        raise AppError(
+            "smtp_failed",
+            "The test email was not sent: {reason}",
+            status=502,
+            params={"reason": f"{type(e).__name__}: {e}"[:300]},
+        ) from None
     await audit.record(
         db, "staff.email_test", staff_id=staff_id, target_type="platform", data={"to": to}, ip=ip
     )

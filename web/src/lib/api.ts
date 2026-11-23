@@ -1,4 +1,6 @@
 /** The KaamNishaan API (public customer pages need no login). Set VITE_API_URL on Vercel. */
+import { currentLang } from './i18n';
+
 export const API_URL = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, '') || 'http://localhost:8000';
 
 export class ApiError extends Error {
@@ -15,7 +17,7 @@ export class ApiError extends Error {
 
 export async function api<T>(path: string, init: { method?: string; body?: unknown; token?: string } = {}): Promise<T> {
   let res: Response;
-  const headers: Record<string, string> = {};
+  const headers: Record<string, string> = { 'Accept-Language': currentLang() };
   if (init.body !== undefined) headers['Content-Type'] = 'application/json';
   if (init.token) headers.Authorization = `Bearer ${init.token}`;
   try {

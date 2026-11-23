@@ -47,7 +47,12 @@ def _apply(x: Testimonial, body: TestimonialIn) -> None:
     if not quote.get("en"):
         raise AppError("validation_error", "English is needed.", fields={"quote.en": "required"})
     if any(len(v) > MAX_QUOTE for v in quote.values()):
-        raise AppError("validation_error", f"At most {MAX_QUOTE} characters.", fields={"quote": "too_long"})
+        raise AppError(
+            "validation_error",
+            "At most {limit} characters.",
+            fields={"quote": "too_long"},
+            params={"limit": MAX_QUOTE},
+        )
     if body.photo and not media.is_key(body.photo):
         raise AppError("validation_error", "Upload the photo first.", fields={"photo": "picture"})
     if body.on_website and not body.approved_in_writing:
