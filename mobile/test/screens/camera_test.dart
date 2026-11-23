@@ -78,7 +78,8 @@ void main() {
     ).init();
   });
 
-  tearDown(() {
+  tearDown(() async {
+    await queue.process(); // a send started by the test may still be using the folder
     queue.onClose();
     tmp.deleteSync(recursive: true);
   });
