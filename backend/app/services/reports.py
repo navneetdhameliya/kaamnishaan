@@ -6,6 +6,7 @@ approve                   pending_review -> approved; job completed      (owner,
 request-changes           pending_review -> changes_requested; job changes_requested
 """
 
+import math
 import uuid
 from datetime import timedelta
 
@@ -140,10 +141,23 @@ async def _new_task(db: AsyncSession, p: Principal, type_: str, rep: Report) -> 
 
 
 # ---- start / redraft ----------------------------------------------------------------------------
-async def _check_report_limit(db: AsyncSession, company) -> None:
+NEAR_LIMIT = 0.8  # the owner hears when 80% of the month's reports are used (D-143)
+
+
+def limit_stage(made: int, limit: int) -> str | None:
+    """'reached' with the month's last report, 'near' with the one that crosses 80%, else nothing."""
+    if made == limit:
+        return "reached"
+    return "near" if made == math.ceil(limit * NEAR_LIMIT) else None
+
+
+async def _check_report_limit(db: AsyncSession, p: Principal, company, job) -> None:
     """M41 "You used 60 of 60 reports": no new report past the plan's monthly number. Photos, checklists
-    and notes are kept; the report can be made next month or after an upgrade."""
-    from app.models import Plan
+    and notes are kept; the report can be made next month or after an upgrade.
+
+    The owner gets a message in the app (D-143): at 80%, when the last report is made, and once a month
+    when someone could not make a report because none were left."""
+    from app.models import Notification, Plan
     from app.services.credits import cycle
 
     plan = await db.get(Plan, company.plan_code)
@@ -153,7 +167,34 @@ async def _check_report_limit(db: AsyncSession, company) -> None:
     used = await db.scalar(
         select(func.count()).where(Report.company_id == company.id, Report.created_at >= start)
     )
-    if (used or 0) >= plan.report_limit_monthly:
+    used, limit = used or 0, plan.report_limit_monthly
+    about = {"used": used, "limit": limit, "plan": plan.code, "renews_at": end.isoformat()}
+    if used >= limit:
+        told = await db.scalar(
+            select(func.count())
+            .select_from(Notification)
+            .where(
+                Notification.company_id == company.id,
+                Notification.kind == "plan_limit",
+                Notification.params["stage"].astext == "blocked",
+                Notification.created_at >= start,
+            )
+        )
+        if not told:
+            await notifications.notify(
+                db,
+                company_id=company.id,
+                to=await notifications.owners(db, company.id),
+                kind="plan_limit",
+                actor_id=p.user.id,
+                params={
+                    **about,
+                    **await notifications.job_params(db, job),
+                    "stage": "blocked",
+                    "technician": p.user.name,
+                },
+            )
+            await db.commit()  # kept although the request fails below; nothing else was changed yet
         raise PlanLimit(
             "report_limit_reached",
             "This month's reports are used up. Nothing you captured is lost.",
@@ -163,6 +204,17 @@ async def _check_report_limit(db: AsyncSession, company) -> None:
                 "plan": plan.code,
                 "renews_at": end.isoformat(),
             },
+        )
+    made = used + 1  # this report
+    stage = limit_stage(made, limit)
+    if stage:
+        await notifications.notify(
+            db,
+            company_id=company.id,
+            to=await notifications.owners(db, company.id),
+            kind="plan_limit",
+            actor_id=None,
+            params={**about, "used": made, "stage": stage},
         )
 
 
@@ -185,7 +237,7 @@ async def start(db: AsyncSession, p: Principal, job_id: uuid.UUID) -> tuple[Repo
         raise Conflict("report_not_ready", "Some proof is still missing.", {"blocked_by": ready.blocked_by})
     company = p.company
     if not rep:
-        await _check_report_limit(db, company)
+        await _check_report_limit(db, p, company, job)
         number = (
             await db.execute(
                 text(

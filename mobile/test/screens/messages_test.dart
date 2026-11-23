@@ -134,6 +134,30 @@ void main() {
     expect(c.tone(plain), MessageTone.review);
   });
 
+  test('plan limit messages tell the owner how many reports are left and when more come', () async {
+    final about = {'used': '48', 'limit': '60', 'plan': 'starter', 'renews_at': '2026-12-01T06:30:00Z'};
+    final c = open([
+      message('7', 'plan_limit', now, params: {...about, 'stage': 'near'}),
+      message('8', 'plan_limit', now, params: {...about, 'used': '60', 'stage': 'reached'}),
+      message('9', 'plan_limit', now, params: {
+        ...about,
+        'used': '60',
+        'stage': 'blocked',
+        'technician': 'Ramesh Patel',
+        'customer': 'Green Valley Clinic',
+      }),
+    ]);
+    await c.load();
+    final [near, reached, blocked] = c.items.toList();
+    expect((c.title(near), c.body(near)),
+        ('Reports running out', '48 of 60 reports used this month. More come on 1 Dec, or upgrade your plan.'));
+    expect((c.title(reached), c.body(reached)),
+        ('This month’s reports are used up', 'All 60 reports are used. New reports wait until 1 Dec, or upgrade your plan.'));
+    expect(c.title(blocked), 'A report couldn’t be made');
+    expect(c.body(blocked), startsWith('Ramesh tried to make the Green Valley Clinic report, but all 60 reports are used.'));
+    expect((c.tone(near), c.tone(reached), c.tone(blocked)), (MessageTone.news, MessageTone.problem, MessageTone.problem));
+  });
+
   test('opening the list marks everything read, but this visit still shows which were new', () async {
     final c = open([
       message('1', 'report_approved', now, params: {'customer': 'Mehta house'}),

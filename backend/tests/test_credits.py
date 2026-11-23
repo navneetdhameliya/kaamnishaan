@@ -9,6 +9,7 @@ from sqlalchemy import text
 from app.core.db import engine
 from app.providers.messaging import outbox
 from app.services.credits import cycle
+from app.services.reports import limit_stage
 from tests.conftest import auth, invite_and_join
 from tests.test_reports import make_report, ready  # noqa: F401 - the `ready` fixture
 from tests.test_review_office import asked
@@ -100,6 +101,49 @@ async def test_no_new_report_past_the_plans_monthly_number(client, ready):
         # the job's photos are still there
         proof = (await client.get(f"/api/v1/jobs/{ready['job']['id']}/proof", headers=auth(tech))).json()
         assert proof
+    finally:
+        async with engine.begin() as c:
+            await c.execute(text("update plans set report_limit_monthly = 300 where code = 'professional'"))
+
+
+def test_owner_hears_at_80_percent_and_with_the_last_report():
+    assert [limit_stage(n, 5) for n in range(1, 6)] == [None, None, None, "near", "reached"]
+    assert [limit_stage(n, 60) for n in (47, 48, 49, 60)] == [None, "near", None, "reached"]
+    assert limit_stage(1, 1) == "reached"
+
+
+async def _plan_alerts(client, owner):
+    items = (await client.get("/api/v1/notifications", headers=auth(owner))).json()["data"]
+    return [n["params"] for n in items if n["kind"] == "plan_limit"]
+
+
+async def test_owner_is_told_once_when_a_technician_is_stopped_by_the_limit(client, ready):
+    tech, owner = ready["tech"], ready["owner"]
+    async with engine.begin() as c:
+        await c.execute(text("update plans set report_limit_monthly = 0 where code = 'professional'"))
+    try:
+        for _ in range(2):
+            r = await client.post(f"/api/v1/jobs/{ready['job']['id']}/reports", headers=auth(tech))
+            assert r.status_code == 402, r.text
+        [blocked] = await _plan_alerts(client, owner)
+        assert blocked["stage"] == "blocked" and blocked["limit"] == "0" and blocked["technician"]
+        assert blocked["customer"] and blocked["renews_at"]
+        tech_items = (await client.get("/api/v1/notifications", headers=auth(tech))).json()["data"]
+        assert all(n["kind"] != "plan_limit" for n in tech_items)  # the plan is the owner's business
+    finally:
+        async with engine.begin() as c:
+            await c.execute(text("update plans set report_limit_monthly = 300 where code = 'professional'"))
+
+
+async def test_owner_is_told_when_the_months_last_report_is_made(client, ready):
+    tech, owner = ready["tech"], ready["owner"]
+    async with engine.begin() as c:
+        await c.execute(text("update plans set report_limit_monthly = 1 where code = 'professional'"))
+    try:
+        r = await client.post(f"/api/v1/jobs/{ready['job']['id']}/reports", headers=auth(tech))
+        assert r.status_code in (200, 201, 202), r.text
+        [reached] = await _plan_alerts(client, owner)
+        assert (reached["stage"], reached["used"], reached["limit"]) == ("reached", "1", "1")
     finally:
         async with engine.begin() as c:
             await c.execute(text("update plans set report_limit_monthly = 300 where code = 'professional'"))

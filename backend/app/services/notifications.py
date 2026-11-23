@@ -69,6 +69,16 @@ async def reviewers(db: AsyncSession, company_id: uuid.UUID) -> list[uuid.UUID]:
     return list(rows.scalars())
 
 
+async def owners(db: AsyncSession, company_id: uuid.UUID) -> list[uuid.UUID]:
+    """The company's owners: they look after the plan and paying."""
+    rows = await db.execute(
+        select(Membership.user_id).where(
+            Membership.company_id == company_id, Membership.status == "active", Membership.role == "owner"
+        )
+    )
+    return list(rows.scalars())
+
+
 def _where(p: Principal):
     return (Notification.user_id == p.user.id, Notification.company_id == p.company_id)
 

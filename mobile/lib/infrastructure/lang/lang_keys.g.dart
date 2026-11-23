@@ -2420,7 +2420,7 @@ abstract final class LangKeys {
   static const adminNoKindJobAssigned = 'admin.no.kind.job_assigned';
   /// Low rating (1–3 stars)
   static const adminNoKindLowRating = 'admin.no.kind.low_rating';
-  /// Plan limit almost reached
+  /// Monthly reports nearly or all used
   static const adminNoKindPlanLimit = 'admin.no.kind.plan_limit';
   /// Report approved
   static const adminNoKindReportApproved = 'admin.no.kind.report_approved';
@@ -5316,6 +5316,18 @@ abstract final class LangKeys {
   static const msgJobTitle = 'msg.job_title';
   /// New job for today
   static const msgJobTitleToday = 'msg.job_title_today';
+  /// {technician} tried to make the {customer} report, but all {limit} reports are used. Their work is saved. Upgrade to keep going, or wait until {date}.
+  static const msgLimitBlockedBody = 'msg.limit_blocked_body';
+  /// A report couldn’t be made
+  static const msgLimitBlockedTitle = 'msg.limit_blocked_title';
+  /// {used} of {limit} reports used this month. More come on {date}, or upgrade your plan.
+  static const msgLimitNearBody = 'msg.limit_near_body';
+  /// Reports running out
+  static const msgLimitNearTitle = 'msg.limit_near_title';
+  /// All {limit} reports are used. New reports wait until {date}, or upgrade your plan.
+  static const msgLimitReachedBody = 'msg.limit_reached_body';
+  /// This month’s reports are used up
+  static const msgLimitReachedTitle = 'msg.limit_reached_title';
   /// {customer} gave {n}★. Follow up soon.
   static const msgLowBody = 'msg.low_body';
   /// Low rating

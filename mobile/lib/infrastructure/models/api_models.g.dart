@@ -12125,7 +12125,7 @@ class NotificationOutModel {
   final DateTime createdAt;
   final String id;
   final String? jobId;
-  /// One of: job_assigned, report_submitted, changes_requested, report_approved, report_shared, review_received, low_rating, support_reply, tech_question, announcement
+  /// One of: job_assigned, report_submitted, changes_requested, report_approved, report_shared, review_received, low_rating, support_reply, tech_question, plan_limit, announcement
   final String kind;
   /// Names for the sentence the app writes in its own language: customer, job, report, note, scheduled_at (ISO), technician
   final Map<String, dynamic> params;
