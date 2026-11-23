@@ -43,7 +43,7 @@ Future<void> showEquipmentHistorySheet(JobDetailsController c) => showKnBottomSh
               child: ListView.separated(
                 shrinkWrap: true,
                 itemCount: list.length,
-                separatorBuilder: (_, _) => Divider(height: 1, color: kn.borderSubtle),
+                separatorBuilder: (_, _) => Divider(height: 1, color: kn.borderDefault),
                 itemBuilder: (_, i) {
                   final j = list[i];
                   return CustomInkWell(
@@ -67,7 +67,7 @@ Future<void> showEquipmentHistorySheet(JobDetailsController c) => showKnBottomSh
                           const SizedBox(width: KnSize.space8),
                           KnJobStatusPill(status: j.status),
                           const SizedBox(width: KnSize.space4),
-                          Icon(LucideIcons.chevronRight, size: 18, color: kn.textTertiary),
+                          Icon(LucideIcons.chevronRight, size: 18, color: kn.textSecondary),
                         ],
                       ),
                     ),
