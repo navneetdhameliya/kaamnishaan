@@ -44,6 +44,7 @@ import 'audio_service.dart';
 import 'camera_service.dart';
 import 'config_service.dart';
 import 'image_picker_service.dart';
+import 'share_service.dart';
 import 'location_service.dart';
 import 'photo_queue_service.dart';
 import 'preferences_service.dart';
@@ -83,6 +84,7 @@ abstract final class AppServices {
     Get.put<ApiClient>(client, permanent: true);
     Get.put<ISpeechService>(SpeechService(), permanent: true);
     Get.put<IImagePickerService>(ImagePickerService(), permanent: true);
+    Get.put<IShareService>(ShareService(), permanent: true);
     Get.put<ICameraService>(CameraService(), permanent: true);
     Get.put<ILocationService>(LocationService(), permanent: true);
     Get.put<IVoiceRecorder>(VoiceRecorder(), permanent: true);

@@ -5,6 +5,6 @@ import 'photo_details_controller.dart';
 class PhotoDetailsBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => PhotoDetailsController(jobs: Get.find(), translation: Get.find()));
+    Get.lazyPut(() => PhotoDetailsController(jobs: Get.find(), translation: Get.find(), share: Get.find(), session: Get.find()));
   }
 }

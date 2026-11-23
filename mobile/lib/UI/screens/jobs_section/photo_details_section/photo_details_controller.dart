@@ -6,19 +6,33 @@ import '../../../../infrastructure/data_access_layer/api_repository/jobs_api_rep
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
+import '../../../../infrastructure/services/session_service.dart';
+import '../../../../infrastructure/services/share_service.dart';
 import '../../../../infrastructure/shared/job_arguments.dart';
+import '../../../../infrastructure/shared/share_rules.dart';
 import '../../../../infrastructure/shared/time_utils.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// M23 Photo details: the photo, its stage, when, who, where and notes. After the report is sent the
 /// photo is locked (D-34): it can't be changed, only notes can be added.
 class PhotoDetailsController extends GetxController {
-  PhotoDetailsController({required this.jobs, required this.translation, PhotoDetailArguments? args})
+  PhotoDetailsController({
+    required this.jobs,
+    required this.translation,
+    required this.share,
+    required this.session,
+    PhotoDetailArguments? args,
+  })
       : args = args ?? Get.arguments as PhotoDetailArguments;
 
   final IJobsApiRepository jobs;
   final TranslationService translation;
+  final IShareService share;
+  final SessionService session;
   final PhotoDetailArguments args;
+
+  /// Fetching the photo for the share sheet.
+  final RxBool sharing = false.obs;
 
   final Rxn<EvidenceDetailModel> photo = Rxn<EvidenceDetailModel>();
   final RxBool saving = false.obs;
@@ -97,6 +111,15 @@ class PhotoDetailsController extends GetxController {
     Get.back<bool>(result: true);
   }
 
-  /// Sharing a single photo comes with the report sharing screens.
-  void onShareTap() => KnToast.info(LangKeys.commonComingSoon.tr);
+  /// The phone's share sheet with this photo (D-141): owners and managers, and technicians when the
+  /// company lets them share. Anyone else hears why.
+  Future<void> onShareTap() async {
+    final p = photo.value;
+    if (p == null || sharing.value) return;
+    if (!ShareRules.maySharePhotos(session)) return KnToast.info(LangKeys.photoShareOffice.tr);
+    sharing.value = true;
+    final ok = await share.sharePictures([p.url], text: [args.customer, chip, taken].where((x) => x.isNotEmpty).join(' · '));
+    sharing.value = false;
+    if (!ok) KnToast.error(LangKeys.photoShareFailed.tr);
+  }
 }

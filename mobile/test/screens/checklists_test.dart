@@ -17,6 +17,7 @@ import 'package:kaamnishaan/infrastructure/models/api_models.g.dart';
 import 'package:kaamnishaan/infrastructure/services/photo_queue_service.dart';
 import 'package:kaamnishaan/infrastructure/services/preferences_service.dart';
 import 'package:kaamnishaan/infrastructure/shared/job_arguments.dart';
+import 'package:kaamnishaan/infrastructure/services/session_service.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -227,6 +228,8 @@ void main() {
         .thenAnswer((_) async => ApiSuccess<PairOutModel>(PairOutModel(id: 'p1', before: ev('b1', 'before', 50), after: ev('a1', 'after', 58), useInReport: true)));
     final c = PhotoPairController(
       jobs: jobs,
+      share: FakeShare(),
+      session: SessionService(tokens: MemoryTokenStorage(), repository: MockAuthRepository()),
       translation: translation,
       args: const PhotoDetailArguments(jobId: 'j1', customer: 'Green Valley Clinic', place: 'Room 2 · AC unit'),
     );
@@ -252,6 +255,8 @@ void main() {
     );
     final c = PhotoDetailsController(
       jobs: jobs,
+      share: FakeShare(),
+      session: SessionService(tokens: MemoryTokenStorage(), repository: MockAuthRepository()),
       translation: translation,
       args: const PhotoDetailArguments(jobId: 'j1', evidenceId: 'b1', index: 1, total: 3),
     );
@@ -261,5 +266,61 @@ void main() {
     expect(c.latestNote, 'Filter blocked with dust.');
     expect(c.canDelete, isFalse);
     c.onClose();
+  });
+
+  test('D-141 sharing a photo or a pair: the office always, technicians when the owner allows', () async {
+    MeOutModel who(String role, {bool techsShare = false}) => MeOutModel(
+          id: 'u1', name: 'Ramesh Patel', emailVerified: true, appLanguage: 'en', theme: 'system', role: role,
+          permissions: const [],
+          company: CompanyOutModel(
+            id: 'c1', name: 'BrightAir', country: 'IN', timezone: 'Asia/Kolkata', currency: 'INR', reportLanguage: 'en',
+            plan: 'professional', status: 'active', settings: CompanySettingsModel(techniciansCanShare: techsShare),
+          ),
+        );
+    when(() => jobs.photo(any())).thenAnswer(
+      (_) async => ApiSuccess<EvidenceDetailModel>(
+        EvidenceDetailModel(
+          id: 'b1', jobId: 'j1', stage: 'before', url: 'https://x/b1.jpg', size: 1, processing: 'ready',
+          takenAt: DateTime(2026, 10, 31, 10, 52), takenBy: const PersonRefModel(id: 'u1', name: 'Ramesh Patel'),
+          locked: true, notesCount: 0, canDelete: false, notes: const [],
+        ),
+      ),
+    );
+    final session = SessionService(tokens: MemoryTokenStorage(), repository: MockAuthRepository());
+    final sheet = FakeShare();
+    final c = PhotoDetailsController(
+      jobs: jobs,
+      translation: translation,
+      share: sheet,
+      session: session,
+      args: const PhotoDetailArguments(jobId: 'j1', evidenceId: 'b1', customer: 'Green Valley Clinic', index: 1, total: 3),
+    );
+    await c.load();
+
+    session.me.value = who('technician');
+    await _ignoreToast(c.onShareTap); // "Your company lets the office share photos."
+    expect(sheet.shared, isEmpty);
+
+    session.me.value = who('technician', techsShare: true);
+    await c.onShareTap();
+    session.me.value = who('manager');
+    await c.onShareTap();
+    expect(sheet.shared.length, 2);
+    final (urls, text) = sheet.shared.first;
+    expect(urls, ['https://x/b1.jpg']);
+    expect(text, startsWith('Green Valley Clinic · BEFORE · photo 1 of 3 · 31 Oct 2026'));
+
+    final broken = PhotoDetailsController(
+      jobs: jobs,
+      translation: translation,
+      share: FakeShare(works: false),
+      session: session,
+      args: const PhotoDetailArguments(jobId: 'j1', evidenceId: 'b1'),
+    );
+    await broken.load();
+    await _ignoreToast(broken.onShareTap); // "Couldn't get the photo ready. Try again."
+    expect(broken.sharing.value, isFalse);
+    c.onClose();
+    broken.onClose();
   });
 }

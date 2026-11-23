@@ -6,6 +6,7 @@ import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart' show Widget, Image, BoxFit, ColoredBox, Colors;
 import 'package:kaamnishaan/UI/common_widgets/kn_dictation.dart';
+import 'package:kaamnishaan/infrastructure/services/share_service.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/assistant_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/auth_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/billing_api_repository.dart';
@@ -586,3 +587,18 @@ Dictation fakeDictation() => Dictation(
       voice: MockVoiceRepository(),
       temp: () async => Directory.systemTemp,
     );
+
+/// The share sheet: remembers what was shared; [works] false acts like a photo that couldn't be fetched.
+class FakeShare implements IShareService {
+  FakeShare({this.works = true});
+
+  final bool works;
+  final List<(List<String>, String?)> shared = [];
+
+  @override
+  Future<bool> sharePictures(List<String> urls, {String? text}) async {
+    if (!works) return false;
+    shared.add((urls, text));
+    return true;
+  }
+}

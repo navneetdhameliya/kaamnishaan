@@ -9502,4 +9502,10 @@ abstract final class LangKeys {
   static const qjPhone = 'qj.phone';
   /// Address (optional)
   static const qjAddress = 'qj.address';
+  /// Your company lets the office share photos. Ask your manager.
+  static const photoShareOffice = 'photo.share_office';
+  /// Couldn't get the photo ready. Try again.
+  static const photoShareFailed = 'photo.share_failed';
+  /// Before and after: {what} · {when}
+  static const pairShareText = 'pair.share_text';
 }

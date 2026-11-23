@@ -4756,6 +4756,9 @@ class KnTranslations extends Translations {
           'qj.customer_needed': 'Say or type the customer\'s name.',
           'qj.phone': 'Customer\'s phone (optional)',
           'qj.address': 'Address (optional)',
+          'photo.share_office': 'Your company lets the office share photos. Ask your manager.',
+          'photo.share_failed': 'Couldn\'t get the photo ready. Try again.',
+          'pair.share_text': 'Before and after: @what · @when',
         },
         'hi_IN': {
           'app.name': 'KaamNishaan',
@@ -9508,6 +9511,9 @@ class KnTranslations extends Translations {
           'qj.customer_needed': 'ग्राहक का नाम बोलें या लिखें।',
           'qj.phone': 'ग्राहक का फ़ोन (वैकल्पिक)',
           'qj.address': 'पता (वैकल्पिक)',
+          'photo.share_office': 'आपकी कंपनी में फ़ोटो सिर्फ़ ऑफ़िस भेज सकता है। अपने मैनेजर से कहें।',
+          'photo.share_failed': 'फ़ोटो तैयार नहीं हो सकी। फिर कोशिश करें।',
+          'pair.share_text': 'पहले और बाद: @what · @when',
         },
         'gu_IN': {
           'app.name': 'KaamNishaan',
@@ -14260,6 +14266,9 @@ class KnTranslations extends Translations {
           'qj.customer_needed': 'ગ્રાહકનું નામ બોલો અથવા લખો.',
           'qj.phone': 'ગ્રાહકનો ફોન (વૈકલ્પિક)',
           'qj.address': 'સરનામું (વૈકલ્પિક)',
+          'photo.share_office': 'તમારી કંપનીમાં ફોટા ફક્ત ઑફિસ મોકલી શકે છે. તમારા મેનેજરને કહો.',
+          'photo.share_failed': 'ફોટો તૈયાર થઈ શક્યો નહીં. ફરી પ્રયાસ કરો.',
+          'pair.share_text': 'પહેલા અને પછી: @what · @when',
         },
         'es_ES': {
           'app.name': 'KaamNishaan',
@@ -19012,6 +19021,9 @@ class KnTranslations extends Translations {
           'qj.customer_needed': 'Di o escribe el nombre del cliente.',
           'qj.phone': 'Teléfono del cliente (opcional)',
           'qj.address': 'Dirección (opcional)',
+          'photo.share_office': 'En tu empresa, las fotos las comparte la oficina. Pídeselo a tu responsable.',
+          'photo.share_failed': 'No se pudo preparar la foto. Inténtalo de nuevo.',
+          'pair.share_text': 'Antes y después: @what · @when',
         },
         'fr_FR': {
           'app.name': 'KaamNishaan',
@@ -23764,6 +23776,9 @@ class KnTranslations extends Translations {
           'qj.customer_needed': 'Dites ou tapez le nom du client.',
           'qj.phone': 'Téléphone du client (facultatif)',
           'qj.address': 'Adresse (facultatif)',
+          'photo.share_office': 'Dans votre entreprise, c\'est le bureau qui partage les photos. Demandez à votre responsable.',
+          'photo.share_failed': 'Impossible de préparer la photo. Réessayez.',
+          'pair.share_text': 'Avant et après : @what · @when',
         },
       };
 }

@@ -27,6 +27,7 @@ dependencies:
   shimmer: ^4.0.0
   flutter_tts: ^4.2.5
   url_launcher: ^6.3.3
+  share_plus: ^13.2.0
   image_picker: ^1.2.4
   camera: ^0.12.2
   permission_handler: ^13.0.2

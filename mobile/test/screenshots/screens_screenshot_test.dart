@@ -778,6 +778,8 @@ void main() {
     Get.put(
       PhotoPairController(
         jobs: jobs,
+        share: FakeShare(),
+        session: SessionService(tokens: MemoryTokenStorage(), repository: MockAuthRepository()),
         translation: translation(),
         args: const PhotoDetailArguments(jobId: 'j1', customer: 'Green Valley Clinic', place: 'Room 2 · AC unit'),
       ),
@@ -818,6 +820,8 @@ void main() {
     Get.put(
       PhotoDetailsController(
         jobs: jobs,
+        share: FakeShare(),
+        session: SessionService(tokens: MemoryTokenStorage(), repository: MockAuthRepository()),
         translation: translation(),
         args: const PhotoDetailArguments(jobId: 'j1', evidenceId: 'b1', customer: 'Green Valley Clinic', place: 'Room 2 · AC unit', index: 1, total: 3),
       ),

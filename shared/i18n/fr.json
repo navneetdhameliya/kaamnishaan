@@ -4748,5 +4748,8 @@
   "qj.customer": "Client",
   "qj.customer_needed": "Dites ou tapez le nom du client.",
   "qj.phone": "Téléphone du client (facultatif)",
-  "qj.address": "Adresse (facultatif)"
+  "qj.address": "Adresse (facultatif)",
+  "photo.share_office": "Dans votre entreprise, c'est le bureau qui partage les photos. Demandez à votre responsable.",
+  "photo.share_failed": "Impossible de préparer la photo. Réessayez.",
+  "pair.share_text": "Avant et après : {what} · {when}"
 }
