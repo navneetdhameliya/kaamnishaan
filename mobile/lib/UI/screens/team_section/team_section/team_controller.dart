@@ -153,8 +153,11 @@ class TeamController extends GetxController {
 
   void onSearchChanged(String q) => query.value = q;
 
-  /// A person's own page comes later; for now it says so.
-  void onMemberTap(MemberOutModel m) => KnToast.info(LangKeys.commonComingSoon.tr);
+  /// A person's own page: their jobs, and changing their role or taking them off the team.
+  Future<void> onMemberTap(MemberOutModel m) async {
+    final changed = await Get.toNamed<bool>(RoutesConstants.teamMemberScreen, arguments: m);
+    if (changed == true) await load();
+  }
 
   Future<void> onResendTap(MemberOutModel m) async {
     final id = m.inviteId;

@@ -3,6 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kaamnishaan/UI/screens/team_section/invite_section/invite_controller.dart';
+import 'package:kaamnishaan/UI/screens/team_section/team_member_section/team_member_controller.dart';
 import 'package:kaamnishaan/UI/screens/team_section/team_section/team_controller.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_exception.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_result.dart';
@@ -195,6 +196,99 @@ void main() {
       c.onPhoneChanged('5550100189');
       expect((c.phoneError, c.canSend), (null, true));
       c.onClose();
+    });
+  });
+
+  group('Team member page', () {
+    const ramesh = MemberOutModel(id: 'u1', name: 'Ramesh Patel', role: 'technician', status: 'active', phone: '+919812345678');
+    final detail = MemberOutModel(
+      id: 'u1', name: 'Ramesh Patel', role: 'technician', status: 'active', phone: '+919812345678',
+      waitingJobs: 2, activeJobs: 1, doneJobs30d: 14, joinedAt: DateTime(2026, 11, 3),
+    );
+    final asked = <String>[];
+    var answer = true;
+
+    TeamMemberController open(MemberOutModel m, {bool owner = false}) {
+      session.me.value = MeOutModel(
+        id: 'u9', name: 'Priya Mehta', emailVerified: true, appLanguage: 'en', theme: 'system', company: company,
+        role: owner ? 'owner' : 'manager',
+        permissions: owner ? const ['team.manage_managers', 'team.invite_technician'] : const ['team.invite_technician'],
+      );
+      when(() => repo.member(any())).thenAnswer((i) async => ApiSuccess<MemberOutModel>(
+            i.positionalArguments.first == 'u1' ? detail : m,
+          ));
+      return TeamMemberController(
+        company: repo,
+        session: session,
+        member: m,
+        openUrl: (_) async => true,
+        confirm: ({required title, required body, required action}) async {
+          asked.add('$title | $body');
+          return answer;
+        },
+      );
+    }
+
+    setUp(() {
+      asked.clear();
+      answer = true;
+    });
+
+    test('shows the jobs and what a manager may do with a technician', () async {
+      final c = open(ramesh);
+      await c.load();
+      expect((c.waitingJobs, c.activeJobs, c.doneJobs, c.showJobs), (2, 1, 14, true));
+      expect(c.since, 'Joined 3 Nov 2026');
+      expect((c.canCall, c.canRemove, c.canChangeRole), (true, true, false)); // managers can't make managers
+      expect(c.removeBody, startsWith('Their 2 jobs not started go back to Unassigned'));
+    });
+
+    test('removing asks first, says what happens to the jobs, then goes back', () async {
+      when(() => repo.removeMember(any())).thenAnswer((_) async => const ApiSuccess<void>(null));
+      final c = open(ramesh);
+      await c.load();
+      answer = false;
+      await c.onRemoveTap();
+      verifyNever(() => repo.removeMember(any()));
+      expect(asked.single, startsWith('Remove Ramesh from the team? | Their 2 jobs'));
+      answer = true;
+      await _ignoreApp(c.onRemoveTap);
+      verify(() => repo.removeMember('u1')).called(1);
+      expect(c.busy.value, isNull);
+    });
+
+    test('the owner changes roles; nobody changes themselves or the owner', () async {
+      when(() => repo.setRole(any(), any())).thenAnswer(
+        (_) async => const ApiSuccess<MemberOutModel>(
+          MemberOutModel(id: 'u1', name: 'Ramesh Patel', role: 'manager', status: 'active', phone: '+919812345678'),
+        ),
+      );
+      final c = open(ramesh, owner: true);
+      await c.load();
+      expect((c.canChangeRole, c.roleAction), (true, 'Make manager'));
+      await _ignoreApp(c.onRoleTap);
+      verify(() => repo.setRole('u1', 'manager')).called(1);
+      expect(asked.single, startsWith('Make Ramesh a manager?'));
+
+      final me = open(const MemberOutModel(id: 'u9', name: 'Priya Mehta', role: 'owner', status: 'active'), owner: true);
+      expect((me.isMe, me.canRemove, me.canChangeRole, me.canCall), (true, false, false, false));
+      final boss = open(const MemberOutModel(id: 'u7', name: 'Asha Patel', role: 'owner', status: 'active'));
+      expect((boss.canRemove, boss.canChangeRole), (false, false));
+      final otherManager = open(const MemberOutModel(id: 'u8', name: 'Neha Shah', role: 'manager', status: 'active'));
+      expect((otherManager.canRemove, otherManager.canChangeRole), (false, false)); // only the owner
+    });
+
+    test('someone not joined yet: resend or cancel the invite', () async {
+      when(() => repo.cancelInvite(any())).thenAnswer((_) async => const ApiSuccess<void>(null));
+      final arjun = MemberOutModel(
+        id: 'u3', name: 'Arjun Desai', role: 'technician', status: 'invited', inviteId: 'i3',
+        invitedAt: DateTime.now().subtract(const Duration(days: 2)),
+      );
+      final c = open(arjun);
+      await c.load();
+      expect((c.invited, c.canHandleInvite, c.canRemove, c.showJobs, c.state), (true, true, false, false, 'Waiting to join'));
+      await _ignoreApp(c.onCancelInviteTap);
+      verify(() => repo.cancelInvite('i3')).called(1);
     });
   });
 }

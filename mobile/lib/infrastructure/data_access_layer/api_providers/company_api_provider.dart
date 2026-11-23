@@ -12,6 +12,10 @@ abstract class ICompanyApiProvider {
   Future<dynamic> getInvitePreview();
   Future<dynamic> patchSettings(Map<String, dynamic> body);
   Future<dynamic> getPlans(Map<String, dynamic> query);
+  Future<dynamic> getMember(String userId);
+  Future<dynamic> patchMember(String userId, Map<String, dynamic> body);
+  Future<dynamic> deleteMember(String userId);
+  Future<dynamic> deleteInvite(String inviteId);
 }
 
 class CompanyApiProvider implements ICompanyApiProvider {
@@ -43,4 +47,17 @@ class CompanyApiProvider implements ICompanyApiProvider {
 
   @override
   Future<dynamic> getPlans(Map<String, dynamic> query) => _client.get(APIConstant.plansAPIEP, query: query);
+
+  @override
+  Future<dynamic> getMember(String userId) => _client.get(APIConstant.teamMemberAPIEP(userId));
+
+  @override
+  Future<dynamic> patchMember(String userId, Map<String, dynamic> body) =>
+      _client.patch(APIConstant.teamMemberAPIEP(userId), body: body);
+
+  @override
+  Future<dynamic> deleteMember(String userId) => _client.delete(APIConstant.teamMemberAPIEP(userId));
+
+  @override
+  Future<dynamic> deleteInvite(String inviteId) => _client.delete(APIConstant.inviteAPIEP(inviteId));
 }

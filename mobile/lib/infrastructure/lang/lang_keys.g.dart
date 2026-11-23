@@ -9368,4 +9368,54 @@ abstract final class LangKeys {
   static const customersNote = 'customers.note';
   /// Gate code, dog, best time to call… (customers don't see this)
   static const customersNoteHint = 'customers.note_hint';
+  /// Keep
+  static const commonKeep = 'common.keep';
+  /// Call
+  static const tmCall = 'tm.call';
+  /// Joined {date}
+  static const tmJoined = 'tm.joined';
+  /// Invite sent {ago}
+  static const tmInvited = 'tm.invited';
+  /// Not started
+  static const tmWaiting = 'tm.waiting';
+  /// Going on
+  static const tmActive = 'tm.active';
+  /// Done in 30 days
+  static const tmDone = 'tm.done';
+  /// Make manager
+  static const tmMakeManager = 'tm.make_manager';
+  /// Make technician
+  static const tmMakeTechnician = 'tm.make_technician';
+  /// Make {name} a manager?
+  static const tmMakeManagerTitle = 'tm.make_manager_title';
+  /// Make {name} a technician?
+  static const tmMakeTechnicianTitle = 'tm.make_technician_title';
+  /// Managers see every job, check reports before they go to customers, and invite technicians.
+  static const tmMakeManagerBody = 'tm.make_manager_body';
+  /// They will see only the jobs given to them. Their manager rights stop at once.
+  static const tmMakeTechnicianBody = 'tm.make_technician_body';
+  /// {name}'s role is now {role}.
+  static const tmRoleChanged = 'tm.role_changed';
+  /// Remove from team
+  static const tmRemove = 'tm.remove';
+  /// Remove {name} from the team?
+  static const tmRemoveTitle = 'tm.remove_title';
+  /// They can't open your company's jobs any more. Their finished work stays.
+  static const tmRemoveBody = 'tm.remove_body';
+  /// Their {n} jobs not started go back to Unassigned, so you can give them to someone else. Jobs they started stay with them, and their finished work stays.
+  static const tmRemoveBodyJobs = 'tm.remove_body_jobs';
+  /// They can't open your company's jobs or reports any more. Their past work stays.
+  static const tmRemoveBodyManager = 'tm.remove_body_manager';
+  /// {name} is no longer on the team.
+  static const tmRemoved = 'tm.removed';
+  /// Cancel invite
+  static const tmCancelInvite = 'tm.cancel_invite';
+  /// Cancel {name}'s invite?
+  static const tmCancelInviteTitle = 'tm.cancel_invite_title';
+  /// The link in their SMS will stop working. You can invite them again later.
+  static const tmCancelInviteBody = 'tm.cancel_invite_body';
+  /// {name}'s invite is cancelled.
+  static const tmInviteCancelled = 'tm.invite_cancelled';
+  /// Only the owner can change or remove managers.
+  static const tmOwnerOnly = 'tm.owner_only';
 }

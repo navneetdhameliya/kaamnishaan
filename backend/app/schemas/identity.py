@@ -251,6 +251,13 @@ class MemberOut(BaseModel):
     live_status: Literal["on_job", "driving", "idle", "offline"] | None = None
     jobs_today: int = 0
     invited_at: datetime | None = Field(default=None, description="When the open invite SMS was sent")
+    # only on GET /team/{user_id} (the person's own page); null in the list
+    waiting_jobs: int | None = Field(
+        default=None,
+        description="Jobs given to them and not started; removing them sends these back to Unassigned",
+    )
+    active_jobs: int | None = Field(default=None, description="Jobs they started that are not finished yet")
+    done_jobs_30d: int | None = Field(default=None, description="Jobs they finished in the last 30 days")
 
 
 class MemberList(BaseModel):

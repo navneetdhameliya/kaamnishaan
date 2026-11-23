@@ -15,6 +15,9 @@ abstract final class TimeUtils {
   /// "Sat 31 Oct"
   static String shortDate(DateTime d, String locale) => DateFormat('EEE d MMM', locale).format(d);
 
+  /// "3 Nov 2026"
+  static String date(DateTime d, String locale) => DateFormat('d MMM y', locale).format(d.toLocal());
+
   /// "11:30 AM" in the phone's time zone.
   static String clock(DateTime t, String locale) => DateFormat.jm(locale).format(t.toLocal());
 

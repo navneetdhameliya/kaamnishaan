@@ -32,6 +32,8 @@ abstract final class APIConstant {
   static const String invitePreviewAPIEP = '/invites/preview';
   static String resendInviteAPIEP(String id) => '/invites/$id/resend';
   static const String teamAPIEP = '/team';
+  static String teamMemberAPIEP(String userId) => '/team/$userId';
+  static String inviteAPIEP(String id) => '/invites/$id';
   static const String companySettingsAPIEP = '/company/settings';
   static const String plansAPIEP = '/plans';
   static String acceptInviteAPIEP(String id) => '/invites/$id/accept';

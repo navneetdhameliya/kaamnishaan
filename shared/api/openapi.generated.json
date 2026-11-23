@@ -16075,6 +16075,18 @@
       },
       "MemberOut": {
         "properties": {
+          "active_jobs": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Jobs they started that are not finished yet",
+            "title": "Active Jobs"
+          },
           "avatar_url": {
             "anyOf": [
               {
@@ -16085,6 +16097,18 @@
               }
             ],
             "title": "Avatar Url"
+          },
+          "done_jobs_30d": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Jobs they finished in the last 30 days",
+            "title": "Done Jobs 30D"
           },
           "id": {
             "description": "The person's user id",
@@ -16182,6 +16206,18 @@
             ],
             "title": "Status",
             "type": "string"
+          },
+          "waiting_jobs": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Jobs given to them and not started; removing them sends these back to Unassigned",
+            "title": "Waiting Jobs"
           }
         },
         "required": [
