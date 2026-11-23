@@ -46,6 +46,19 @@ class CustomerView:
         return [x.strip(" -•") for x in (self.report.advice or "").splitlines() if x.strip(" -•")]
 
 
+def auto_pair(photos: list[Evidence]) -> tuple[Evidence, Evidence] | None:
+    """D-60/D-144: with no pair saved, the report shows the one the app shows: the before and after of the
+    same checklist shot, else the latest before and the latest after."""
+    newest = sorted(photos, key=lambda e: e.taken_at, reverse=True)
+    befores = [e for e in newest if e.stage == "before"]
+    afters = [e for e in newest if e.stage == "after"]
+    for a in afters:
+        match = next((b for b in befores if a.shot_slot and b.shot_slot == a.shot_slot), None)
+        if match:
+            return match, a
+    return (befores[0], afters[0]) if befores and afters else None
+
+
 async def customer_view(db: AsyncSession, rep: Report, lang: str | None = None) -> CustomerView:
     job = await db.get(Job, rep.job_id)
     company = await db.get(Company, rep.company_id)
@@ -70,6 +83,8 @@ async def customer_view(db: AsyncSession, rep: Report, lang: str | None = None) 
         for x in (await db.execute(select(PhotoPair).where(PhotoPair.job_id == job.id))).scalars()
         if x.use_in_report and x.before_id in by_id and x.after_id in by_id
     ]
+    if not pairs and (auto := auto_pair(photos)):
+        pairs = [(None, *auto)]
     lang = lang or rep.language
     bundle = await collect(db, job, lang)
     for cl in bundle["checklists"]:

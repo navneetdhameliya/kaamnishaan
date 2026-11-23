@@ -54,6 +54,9 @@ abstract class IJobsApiRepository {
   /// M22 "Use in report": keep a before and an after photo side by side.
   Future<ApiResult<PairOutModel>> addPair({required String jobId, required String beforeId, required String afterId, String? subject});
 
+  /// Takes a saved before/after pair off the report (the photos stay).
+  Future<ApiResult<void>> deletePair(String pairId);
+
   /// All photos of a job (M21).
   Future<ApiResult<EvidenceListModel>> evidence(String jobId);
 
@@ -247,5 +250,10 @@ class JobsApiRepository implements IJobsApiRepository {
           'question': question,
           if (note != null && note.trim().isNotEmpty) 'note': note.trim(),
         });
+      });
+
+  @override
+  Future<ApiResult<void>> deletePair(String pairId) => guard(() async {
+        await provider.deletePair(pairId);
       });
 }

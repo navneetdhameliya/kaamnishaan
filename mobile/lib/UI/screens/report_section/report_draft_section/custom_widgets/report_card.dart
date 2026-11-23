@@ -4,6 +4,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../../infrastructure/shared/text_utils.dart';
+import '../../../../common_widgets/custom_inkwell.dart';
 import '../../../../common_widgets/kn_cover_image.dart';
 import '../../../../common_widgets/kn_custom_button.dart';
 import '../../../../common_widgets/kn_initials_avatar.dart';
@@ -101,13 +102,23 @@ class ReportCard extends StatelessWidget {
           ),
           if (pair.before != null || pair.after != null) ...[
             const SizedBox(height: KnSize.space12),
-            Row(
-              children: [
-                Expanded(child: _photo(context, pair.before?.url, LangKeys.cameraStageBefore.tr, KnPrimitive.mocha950.withValues(alpha: 0.7))),
-                const SizedBox(width: KnSize.space8),
-                Expanded(child: _photo(context, pair.after?.url, LangKeys.cameraStageAfter.tr, KnPrimitive.green650)),
-              ],
+            CustomInkWell(
+              key: const ValueKey('draft-pair'),
+              onTap: controller.onPairTap,
+              borderRadius: BorderRadius.circular(KnSize.radiusMd),
+              semanticLabel: LangKeys.pairTapChange.tr,
+              child: Row(
+                children: [
+                  Expanded(child: _photo(context, pair.before?.url, LangKeys.cameraStageBefore.tr, KnPrimitive.mocha950.withValues(alpha: 0.7))),
+                  const SizedBox(width: KnSize.space8),
+                  Expanded(child: _photo(context, pair.after?.url, LangKeys.cameraStageAfter.tr, KnPrimitive.green650)),
+                ],
+              ),
             ),
+            if (controller.canEdit) ...[
+              const SizedBox(height: KnSize.space4),
+              CustomBaseTextWidget(LangKeys.pairTapChange.tr, style: text.caption, color: kn.textSecondary),
+            ],
           ],
           section(LangKeys.reportSummary.tr, r.summary),
           section(LangKeys.reportWorkDone.tr, r.workDone),

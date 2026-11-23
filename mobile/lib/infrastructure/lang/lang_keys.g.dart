@@ -5548,6 +5548,14 @@ abstract final class LangKeys {
   static const notesWriting = 'notes.writing';
   /// Written
   static const notesWritten = 'notes.written';
+  /// Choose photos
+  static const pairChoose = 'pair.choose';
+  /// After photo
+  static const pairChooseAfter = 'pair.choose_after';
+  /// Before photo
+  static const pairChooseBefore = 'pair.choose_before';
+  /// Done
+  static const pairChooseDone = 'pair.choose_done';
   /// Compare before and after
   static const pairCompare = 'pair.compare';
   /// Drag the line to compare
@@ -5560,6 +5568,8 @@ abstract final class LangKeys {
   static const pairRetake = 'pair.retake';
   /// Before and after: {what} · {when}
   static const pairShareText = 'pair.share_text';
+  /// Tap the photos to change them
+  static const pairTapChange = 'pair.tap_change';
   /// Before and after
   static const pairTitle = 'pair.title';
   /// Use in report

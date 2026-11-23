@@ -43,7 +43,7 @@ class PhotoPairScreen extends GetView<PhotoPairController> {
                 child: Obx(
                   () => KnCustomButton(
                     key: const ValueKey('pair-use'),
-                    text: controller.pairId.value != null ? LangKeys.pairInReport.tr : LangKeys.pairUse.tr,
+                    text: controller.isSaved ? LangKeys.pairInReport.tr : LangKeys.pairUse.tr,
                     icon: LucideIcons.check,
                     loading: controller.saving.value,
                     enabled: controller.ready,
@@ -76,6 +76,23 @@ class PhotoPairScreen extends GetView<PhotoPairController> {
                       ],
                     ),
                   ),
+                  CustomInkWell(
+                    key: const ValueKey('pair-choose'),
+                    onTap: controller.onChooseTap,
+                    borderRadius: BorderRadius.circular(22),
+                    semanticLabel: LangKeys.pairChoose.tr,
+                    child: Ink(
+                      width: 44,
+                      height: 44,
+                      decoration: BoxDecoration(
+                        color: kn.bgSurface,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: kn.borderDefault),
+                      ),
+                      child: Icon(LucideIcons.images, size: 22, color: kn.textPrimary),
+                    ),
+                  ),
+                  const SizedBox(width: KnSize.space8),
                   CustomInkWell(
                     key: const ValueKey('pair-share'),
                     onTap: controller.onShareTap,

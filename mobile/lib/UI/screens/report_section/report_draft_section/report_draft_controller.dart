@@ -65,6 +65,17 @@ class ReportDraftController extends GetxController {
 
   bool get canEdit => report.value?.actions.contains('edit') ?? false;
 
+  /// The draft's before/after opens M22, where another pair can be chosen (D-144); then shows the new one.
+  Future<void> onPairTap() async {
+    if (!canEdit) return;
+    await Get.toNamed(
+      RoutesConstants.photoPairScreen,
+      arguments: PhotoDetailArguments(jobId: args.jobId, customer: args.customer),
+    );
+    final list = (await jobs.evidence(args.jobId)).dataOrNull;
+    if (list != null) pair.value = ChosenPair.pick(list);
+  }
+
   bool get canSend => report.value?.actions.contains('submit') ?? false;
 
   String get title => canEdit ? LangKeys.reportDraftTitle.tr : LangKeys.reportTitle.tr;
