@@ -6,7 +6,10 @@ import '../../../../infrastructure/data_access_layer/api_repository/jobs_api_rep
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
+import '../../../../infrastructure/services/session_service.dart';
+import '../../../../infrastructure/services/share_service.dart';
 import '../../../../infrastructure/shared/job_arguments.dart';
+import '../../../../infrastructure/shared/share_rules.dart';
 import '../../../../infrastructure/shared/photo_pairs.dart';
 import '../../../../infrastructure/shared/time_utils.dart';
 import '../../../common_widgets/kn_toast.dart';
@@ -14,12 +17,23 @@ import '../../../common_widgets/kn_toast.dart';
 /// M22 Before and after: one before and one after photo side by side with a line to drag.
 /// Uses the pair already saved, else the same checklist shot, else the latest of each (D-60).
 class PhotoPairController extends GetxController {
-  PhotoPairController({required this.jobs, required this.translation, PhotoDetailArguments? args})
+  PhotoPairController({
+    required this.jobs,
+    required this.translation,
+    required this.share,
+    required this.session,
+    PhotoDetailArguments? args,
+  })
       : args = args ?? Get.arguments as PhotoDetailArguments;
 
   final IJobsApiRepository jobs;
   final TranslationService translation;
+  final IShareService share;
+  final SessionService session;
   final PhotoDetailArguments args;
+
+  /// Fetching the two photos for the share sheet.
+  final RxBool sharing = false.obs;
 
   final Rxn<EvidenceOutModel> before = Rxn<EvidenceOutModel>();
   final Rxn<EvidenceOutModel> after = Rxn<EvidenceOutModel>();
@@ -87,5 +101,17 @@ class PhotoPairController extends GetxController {
     Get.back<bool>(result: true);
   }
 
-  void onShareTap() => KnToast.info(LangKeys.commonComingSoon.tr);
+  /// The phone's share sheet with the before photo, then the after photo (D-141); same rule as one photo.
+  Future<void> onShareTap() async {
+    if (sharing.value) return;
+    if (!ready) return KnToast.info(LangKeys.pairNeedBoth.tr);
+    if (!ShareRules.maySharePhotos(session)) return KnToast.info(LangKeys.photoShareOffice.tr);
+    sharing.value = true;
+    final ok = await share.sharePictures(
+      [before.value!.url, after.value!.url],
+      text: LangKeys.pairShareText.trParams({'what': title, 'when': dateLine}),
+    );
+    sharing.value = false;
+    if (!ok) KnToast.error(LangKeys.photoShareFailed.tr);
+  }
 }
