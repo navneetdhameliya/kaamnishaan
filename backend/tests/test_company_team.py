@@ -326,3 +326,33 @@ async def test_config_app_links(client, monkeypatch):
         assert links["android"].startswith("https://play.google.com") and links["ios"] is None
     finally:
         get_settings.cache_clear()
+
+
+async def test_member_page_counts_and_removal_frees_unstarted_jobs(client):
+    from tests.test_customers_jobs import at, new_customer, new_job
+
+    owner = await make_owner(client)
+    tech = await invite_and_join(client, owner, TECH)
+    tid = tech["user"]["id"]
+    c = await new_customer(client, owner)
+    waiting = [await new_job(client, owner, c, scheduled_at=at(2 + i), assigned_to=tid) for i in range(2)]
+    going = await new_job(client, owner, c, scheduled_at=at(1), assigned_to=tid)
+    assert (await client.post(f"/api/v1/jobs/{going['id']}/start", headers=auth(tech))).status_code == 200
+
+    page = (await client.get(f"/api/v1/team/{tid}", headers=auth(owner))).json()
+    assert (page["waiting_jobs"], page["active_jobs"], page["done_jobs_30d"]) == (2, 1, 0)
+    listed = next(
+        m for m in (await client.get("/api/v1/team", headers=auth(owner))).json()["data"] if m["id"] == tid
+    )
+    assert listed["waiting_jobs"] is None  # only on the person's own page
+
+    assert (await client.delete(f"/api/v1/team/{tid}", headers=auth(owner))).status_code == 204
+    for j in waiting:
+        back = (await client.get(f"/api/v1/jobs/{j['id']}", headers=auth(owner))).json()
+        assert (back["status"], back["assignee"], back["version"]) == (
+            "unassigned",
+            None,
+            j["version"] + 1,
+        )
+    started = (await client.get(f"/api/v1/jobs/{going['id']}", headers=auth(owner))).json()
+    assert started["status"] == "in_progress" and started["assignee"]["id"] == tid

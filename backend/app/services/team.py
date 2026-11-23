@@ -14,7 +14,7 @@ from app.core.config import get_settings
 from app.core.deps import Principal
 from app.core.errors import Conflict, Forbidden, Gone, NotFound, PlanLimit, RateLimited
 from app.core.security import digest, normalize_phone, now, random_token
-from app.models import AuthSession, Company, Invitation, Job, Membership, Plan, User
+from app.models import AuthSession, Company, Invitation, Job, JobEvent, Membership, Plan, User
 from app.providers.messaging import SMS_TEMPLATES, send_sms
 from app.schemas.identity import (
     InviteCompany,
@@ -163,11 +163,29 @@ async def _member(db: AsyncSession, company_id: uuid.UUID, user_id: uuid.UUID) -
 
 
 async def get_member(db: AsyncSession, p: Principal, user_id: uuid.UUID) -> MemberOut:
+    """One person's page: what the list shows, plus how many jobs are waiting, going and done."""
     members = await list_members(db, p.company_id, None, None)
-    for m in members.data:
-        if m.id == user_id:
-            return m
-    raise NotFound("member_not_found", "Team member not found.")
+    m = next((x for x in members.data if x.id == user_id), None)
+    if m is None:
+        raise NotFound("member_not_found", "Team member not found.")
+    mine = (Job.company_id == p.company_id, Job.assigned_to == user_id, Job.deleted_at.is_(None))
+    counts = dict(
+        (await db.execute(select(Job.status, func.count()).where(*mine).group_by(Job.status))).all()
+    )
+    done = (
+        await db.execute(
+            select(func.count()).where(
+                *mine, Job.status == "completed", Job.completed_at >= now() - timedelta(days=30)
+            )
+        )
+    ).scalar_one()
+    return m.model_copy(
+        update={
+            "waiting_jobs": counts.get("assigned", 0),
+            "active_jobs": sum(counts.get(s, 0) for s in ("in_progress", "in_review", "changes_requested")),
+            "done_jobs_30d": done,
+        }
+    )
 
 
 def _can_manage(p: Principal, m: Membership) -> None:
@@ -205,6 +223,32 @@ async def remove(db: AsyncSession, p: Principal, user_id: uuid.UUID) -> None:
     m, u = await _member(db, p.company_id, user_id)
     _can_manage(p, m)
     m.status = "removed"
+    # jobs given to them and not started go back to Unassigned, so the office can give them to someone else;
+    # started ones keep their proof and stay with them for the office to finish (D-138)
+    waiting = (
+        (
+            await db.execute(
+                select(Job).where(
+                    Job.company_id == p.company_id,
+                    Job.assigned_to == user_id,
+                    Job.status == "assigned",
+                    Job.deleted_at.is_(None),
+                )
+            )
+        )
+        .scalars()
+        .all()
+    )
+    for j in waiting:
+        j.status, j.assigned_to = "unassigned", None
+        j.version += 1  # phones holding the old copy see the change on their next sync
+        db.add(
+            JobEvent(
+                company_id=j.company_id, job_id=j.id, type="unassigned", from_status="assigned",
+                to_status="unassigned", actor_id=p.user.id,
+                data={"reason": "member_removed", "user_id": str(user_id)},
+            )
+        )  # fmt: skip
     await db.execute(
         update(Invitation)
         .where(Invitation.membership_id == m.id, *_open_invite_filter())
@@ -218,7 +262,7 @@ async def remove(db: AsyncSession, p: Principal, user_id: uuid.UUID) -> None:
     )
     await audit.record(
         db, "team.removed", company_id=p.company_id, actor_id=p.user.id, actor_role=p.role,
-        target_type="user", target_id=u.id, data={"role": m.role},
+        target_type="user", target_id=u.id, data={"role": m.role, "jobs_unassigned": len(waiting)},
     )  # fmt: skip
 
 

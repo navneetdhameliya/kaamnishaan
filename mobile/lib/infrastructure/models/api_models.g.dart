@@ -11612,7 +11612,11 @@ MemberOutModel memberOutModelFromJson(String str) => MemberOutModel.fromJson(jso
 String memberOutModelToJson(MemberOutModel data) => json.encode(data.toJson());
 
 class MemberOutModel {
+  /// Jobs they started that are not finished yet
+  final int? activeJobs;
   final String? avatarUrl;
+  /// Jobs they finished in the last 30 days
+  final int? doneJobs30d;
   /// The person's user id
   final String id;
   final String? inviteId;
@@ -11628,9 +11632,13 @@ class MemberOutModel {
   final String role;
   /// One of: invited, active
   final String status;
+  /// Jobs given to them and not started; removing them sends these back to Unassigned
+  final int? waitingJobs;
 
   const MemberOutModel({
+    this.activeJobs,
     this.avatarUrl,
+    this.doneJobs30d,
     required this.id,
     this.inviteId,
     this.invitedAt,
@@ -11641,10 +11649,13 @@ class MemberOutModel {
     this.phone,
     required this.role,
     required this.status,
+    this.waitingJobs,
   });
 
   factory MemberOutModel.fromJson(Map<String, dynamic> json) => MemberOutModel(
+        activeJobs: json['active_jobs'] == null ? null : (json['active_jobs'] as num).toInt(),
         avatarUrl: json['avatar_url'] as String?,
+        doneJobs30d: json['done_jobs_30d'] == null ? null : (json['done_jobs_30d'] as num).toInt(),
         id: json['id'] as String,
         inviteId: json['invite_id'] as String?,
         invitedAt: json['invited_at'] == null ? null : DateTime.parse(json['invited_at'] as String),
@@ -11655,10 +11666,13 @@ class MemberOutModel {
         phone: json['phone'] as String?,
         role: json['role'] as String,
         status: json['status'] as String,
+        waitingJobs: json['waiting_jobs'] == null ? null : (json['waiting_jobs'] as num).toInt(),
       );
 
   Map<String, dynamic> toJson() => {
+        'active_jobs': activeJobs,
         'avatar_url': avatarUrl,
+        'done_jobs_30d': doneJobs30d,
         'id': id,
         'invite_id': inviteId,
         'invited_at': invitedAt?.toIso8601String(),
@@ -11669,6 +11683,7 @@ class MemberOutModel {
         'phone': phone,
         'role': role,
         'status': status,
+        'waiting_jobs': waitingJobs,
       };
 }
 

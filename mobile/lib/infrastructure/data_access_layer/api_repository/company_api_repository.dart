@@ -29,6 +29,18 @@ abstract class ICompanyApiRepository {
   /// The SMS text, shown while the invite is filled in.
   Future<ApiResult<String>> invitePreview();
 
+  /// A team member's own page: what the list shows plus jobs waiting, going and done (30 days).
+  Future<ApiResult<MemberOutModel>> member(String userId);
+
+  /// Makes them a manager or a technician (managers change technicians only; the owner changes both).
+  Future<ApiResult<MemberOutModel>> setRole(String userId, String role);
+
+  /// Takes them off the team; their jobs not started go back to Unassigned.
+  Future<ApiResult<void>> removeMember(String userId);
+
+  /// Cancels an invite that hasn't been accepted yet.
+  Future<ApiResult<void>> cancelInvite(String inviteId);
+
   /// M39: the company's trade (owner only).
   Future<ApiResult<CompanyOutModel>> setTrade(String trade);
 
@@ -107,4 +119,22 @@ class CompanyApiRepository implements ICompanyApiRepository {
   Future<ApiResult<PlansOutModel>> plans({required String currency, required String locale}) => guard(
         () async => PlansOutModel.fromJson(_map(await provider.getPlans({'currency': currency, 'locale': locale}))),
       );
+
+  @override
+  Future<ApiResult<MemberOutModel>> member(String userId) =>
+      guard(() async => MemberOutModel.fromJson(_map(await provider.getMember(userId))));
+
+  @override
+  Future<ApiResult<MemberOutModel>> setRole(String userId, String role) =>
+      guard(() async => MemberOutModel.fromJson(_map(await provider.patchMember(userId, {'role': role}))));
+
+  @override
+  Future<ApiResult<void>> removeMember(String userId) => guard(() async {
+        await provider.deleteMember(userId);
+      });
+
+  @override
+  Future<ApiResult<void>> cancelInvite(String inviteId) => guard(() async {
+        await provider.deleteInvite(inviteId);
+      });
 }

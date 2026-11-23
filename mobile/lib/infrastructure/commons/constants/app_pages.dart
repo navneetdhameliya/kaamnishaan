@@ -121,6 +121,8 @@ import '../../../UI/screens/review_section/share_report_section/share_report_bin
 import '../../../UI/screens/review_section/share_report_section/share_report_screen.dart';
 import '../../../UI/screens/team_section/invite_section/invite_binding.dart';
 import '../../../UI/screens/team_section/invite_section/invite_screen.dart';
+import '../../../UI/screens/team_section/team_member_section/team_member_binding.dart';
+import '../../../UI/screens/team_section/team_member_section/team_member_screen.dart';
 import '../../../UI/screens/team_section/team_section/team_binding.dart';
 import '../../../UI/screens/team_section/team_section/team_screen.dart';
 import '../../../UI/screens/voice_section/voice_note_section/voice_note_binding.dart';
@@ -301,6 +303,7 @@ abstract final class AppPages {
     GetPage(name: RoutesConstants.planLimitScreen, page: () => const PlanLimitScreen(), binding: PlanLimitBinding()),
     GetPage(name: RoutesConstants.verifyEmailScreen, page: () => const VerifyEmailScreen(), binding: VerifyEmailBinding()),
     GetPage(name: RoutesConstants.teamScreen, page: () => const TeamScreen(), binding: TeamBinding()),
+    GetPage(name: RoutesConstants.teamMemberScreen, page: () => const TeamMemberScreen(), binding: TeamMemberBinding()),
     GetPage(name: RoutesConstants.inviteScreen, page: () => const InviteScreen(), binding: InviteBinding()),
     GetPage(name: RoutesConstants.messagesScreen, page: () => const MessagesScreen(), binding: MessagesBinding()),
     GetPage(name: RoutesConstants.helpScreen, page: () => const HelpScreen(), binding: HelpBinding()),
