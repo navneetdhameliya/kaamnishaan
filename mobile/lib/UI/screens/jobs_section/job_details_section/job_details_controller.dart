@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -14,6 +15,7 @@ import '../../../../infrastructure/services/speech_service.dart';
 import '../../../../infrastructure/shared/job_arguments.dart';
 import '../../../../infrastructure/shared/review_words.dart';
 import '../../../../infrastructure/shared/time_utils.dart';
+import '../../../common_widgets/kn_confirm_dialog.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// M15 Job details: where, when, who to meet, the problem and the machine; Start job for the technician.
@@ -49,11 +51,20 @@ class JobDetailsController extends GetxController {
   final RxBool starting = false.obs;
   final RxBool askingReview = false.obs;
 
+  /// The office's changes (assign, cancel, delete): what is running now, and the cancel reason box.
+  final RxnString busy = RxnString();
+  final TextEditingController cancelReason = TextEditingController();
+  final RxString cancelDraft = ''.obs;
+
+  /// Asks before deleting (tests answer here); null shows the confirm dialog.
+  Future<bool> Function()? confirmDelete;
+
   late final ReviewWords reviewWords = ReviewWords(translation.currentCode);
 
   @override
   void onInit() {
     super.onInit();
+    cancelReason.addListener(() => cancelDraft.value = cancelReason.text);
     load();
   }
 
@@ -153,6 +164,113 @@ class JobDetailsController extends GetxController {
     final s = job.value?.status;
     return mine && (s == 'in_progress' || s == 'changes_requested');
   }
+
+  @override
+  void onClose() {
+    cancelReason.dispose();
+    super.onClose();
+  }
+
+  // ---- the office's changes (owners and managers) -----------------------------------------
+
+  List<String> get _actions => job.value?.actions ?? const [];
+
+  bool get canAssign => _actions.contains('assign');
+
+  bool get canCancel => _actions.contains('cancel');
+
+  bool get canDelete => _actions.contains('delete');
+
+  bool get hasMenu => canAssign || canCancel || canDelete;
+
+  /// "Assign technician" when nobody has the job yet, else "Change technician".
+  String get assignLabel => job.value?.assignee == null ? LangKeys.jobAssign.tr : LangKeys.jobChangeTech.tr;
+
+  /// The big button for an unassigned job (the office's main next step).
+  bool get showAssignButton => canAssign && job.value?.assignee == null && !canStart && !canContinue;
+
+  /// M17 with this job: giving it saves at once; the page loads again.
+  Future<void> onAssignTap() async {
+    final j = job.value;
+    if (j == null || !canAssign) return;
+    final done = await Get.toNamed<bool>(
+      RoutesConstants.assignTechnicianScreen,
+      arguments: AssignArguments(
+        customer: j.customer.name,
+        title: j.title,
+        jobId: j.id,
+        at: j.scheduledAt,
+        selectedId: j.assignee?.id,
+      ),
+    );
+    if (done == true) {
+      _changed = true;
+      await load();
+    }
+  }
+
+  /// Quick reasons above the box; tapping one fills it.
+  List<String> get cancelReasons => [
+        LangKeys.jobCancelWhyCustomer.tr,
+        LangKeys.jobCancelWhyMoved.tr,
+        LangKeys.jobCancelWhyTwice.tr,
+      ];
+
+  void startCancel() {
+    cancelReason.clear();
+    cancelDraft.value = '';
+  }
+
+  void onCancelReasonPick(String r) {
+    cancelReason.text = r;
+    cancelDraft.value = r;
+  }
+
+  bool get canSendCancel => cancelDraft.value.trim().isNotEmpty && busy.value == null;
+
+  /// "Cancel job" in the reason sheet; true when it worked (the sheet closes).
+  Future<bool> onCancelJob() async {
+    final j = job.value;
+    final why = cancelReason.text.trim();
+    if (j == null || why.isEmpty || busy.value != null) return false;
+    busy.value = 'cancel';
+    final result = await repository.cancel(j.id, why);
+    busy.value = null;
+    final fresh = result.dataOrNull;
+    if (fresh == null) {
+      KnToast.error(result.errorOrNull!.message);
+      return false;
+    }
+    _changed = true;
+    job.value = fresh;
+    KnToast.success(LangKeys.jobCancelled.tr);
+    return true;
+  }
+
+  Future<void> onDeleteTap() async {
+    final j = job.value;
+    if (j == null || !canDelete || busy.value != null) return;
+    final ok = await (confirmDelete?.call() ??
+        showKnConfirmDialog(
+          title: LangKeys.jobDeleteTitle.tr,
+          body: LangKeys.jobDeleteBody.tr,
+          action: LangKeys.jobDelete.tr,
+          danger: true,
+        ));
+    if (!ok) return;
+    busy.value = 'delete';
+    final result = await repository.delete(j.id);
+    busy.value = null;
+    if (!result.isSuccess) return KnToast.error(result.errorOrNull!.message);
+    _changed = true;
+    KnToast.success(LangKeys.jobDeleted.tr);
+    Get.back<bool>(result: true);
+  }
+
+  bool _changed = false;
+
+  /// The back arrow: the job list reloads when the office changed this job.
+  void onBackTap() => Get.back<bool>(result: _changed);
 
   Future<void> load() async {
     loading.value = job.value == null;

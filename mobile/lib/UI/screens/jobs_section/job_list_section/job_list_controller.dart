@@ -16,6 +16,9 @@ import '../../../common_widgets/kn_toast.dart';
 
 enum JobFilter { today, tomorrow, unassigned }
 
+/// The filters sheet's job states: each is one or more server states (D-139).
+enum JobState { waiting, going, toCheck, done, cancelled }
+
 /// M14 Job list: today, tomorrow or unassigned (this week), with search by customer or address.
 /// Owners and managers see everyone's jobs; technicians see their own (the server decides).
 class JobListController extends GetxController {
@@ -42,6 +45,14 @@ class JobListController extends GetxController {
   Timer? _debounce;
   int _request = 0;
 
+  /// The filters sheet: a state and (managers) a technician; drafts while the sheet is open.
+  final Rxn<JobState> state = Rxn<JobState>();
+  final RxnString technicianId = RxnString();
+  final RxnString technicianName = RxnString();
+  final Rxn<JobState> draftState = Rxn<JobState>();
+  final RxnString draftTechnician = RxnString();
+  final RxList<AssignableTechnicianModel> technicians = <AssignableTechnicianModel>[].obs;
+
   bool get isManager => const {'owner', 'manager'}.contains(session.me.value?.role);
 
   List<JobFilter> get filters => isManager ? JobFilter.values : const [JobFilter.today, JobFilter.tomorrow];
@@ -57,11 +68,37 @@ class JobListController extends GetxController {
     return DateTime(n.year, n.month, n.day);
   }
 
-  JobQuery get query => switch (filter.value) {
-        JobFilter.today => JobQuery(date: _today, search: search.value),
-        JobFilter.tomorrow => JobQuery(date: _today.add(const Duration(days: 1)), search: search.value),
-        JobFilter.unassigned => JobQuery(date: _today, range: 'week', unassigned: true, search: search.value),
+  static List<String> statesOf(JobState? s) => switch (s) {
+        null => const [],
+        JobState.waiting => const ['unassigned', 'assigned'],
+        JobState.going => const ['in_progress', 'changes_requested'],
+        JobState.toCheck => const ['in_review'],
+        JobState.done => const ['completed'],
+        JobState.cancelled => const ['cancelled'],
       };
+
+  JobQuery get query {
+    final st = statesOf(state.value);
+    final who = technicianId.value;
+    return switch (filter.value) {
+      JobFilter.today => JobQuery(date: _today, search: search.value, statuses: st, assignee: who),
+      JobFilter.tomorrow =>
+        JobQuery(date: _today.add(const Duration(days: 1)), search: search.value, statuses: st, assignee: who),
+      JobFilter.unassigned =>
+        JobQuery(date: _today, range: 'week', unassigned: true, search: search.value, statuses: st),
+    };
+  }
+
+  String stateLabel(JobState s) => switch (s) {
+        JobState.waiting => LangKeys.jfWaiting.tr,
+        JobState.going => LangKeys.jfGoing.tr,
+        JobState.toCheck => LangKeys.jfToCheck.tr,
+        JobState.done => LangKeys.jfDone.tr,
+        JobState.cancelled => LangKeys.jfCancelled.tr,
+      };
+
+  /// How many sheet filters are on (the dot on the filters button).
+  int get sheetFilters => (state.value == null ? 0 : 1) + (technicianId.value == null ? 0 : 1);
 
   String chipLabel(JobFilter f) => switch (f) {
         JobFilter.today => LangKeys.jobsToday.tr,
@@ -90,7 +127,7 @@ class JobListController extends GetxController {
 
   String timeOf(DateTime? t) => t == null ? '' : TimeUtils.clock(t, translation.currentCode);
 
-  bool get hasFilters => filter.value != JobFilter.today || search.value.trim().isNotEmpty;
+  bool get hasFilters => filter.value != JobFilter.today || search.value.trim().isNotEmpty || sheetFilters > 0;
 
   Future<void> load() async {
     final request = ++_request;
@@ -129,20 +166,53 @@ class JobListController extends GetxController {
     searchController.clear();
     search.value = '';
     filter.value = JobFilter.today;
+    state.value = null;
+    technicianId.value = null;
+    technicianName.value = null;
     load();
   }
 
-  void onJobTap(JobListItemModel job) =>
-      Get.toNamed(RoutesConstants.jobDetailsScreen, arguments: JobArguments.of(job));
+  /// M15; the list loads again when the office changed the job there (assigned, cancelled, deleted).
+  Future<void> onJobTap(JobListItemModel job) async {
+    final changed = await Get.toNamed<bool>(RoutesConstants.jobDetailsScreen, arguments: JobArguments.of(job));
+    if (changed == true) await load();
+  }
 
-  /// Filters sheet and new job (M16) come with the job editing step.
+  // ---- the filters sheet -------------------------------------------------------------------
+
+  /// Opens with the filters in use; managers also get their technicians to pick from.
+  Future<void> startFilters() async {
+    draftState.value = state.value;
+    draftTechnician.value = technicianId.value;
+    if (isManager && technicians.isEmpty) {
+      final result = await repository.technicians();
+      final list = result.dataOrNull?.data;
+      if (list != null) technicians.assignAll(list.where((t) => t.status != 'invited'));
+    }
+  }
+
+  void onDraftState(JobState? s) => draftState.value = draftState.value == s ? null : s;
+
+  void onDraftTechnician(String? id) => draftTechnician.value = draftTechnician.value == id ? null : id;
+
+  void onApplyFilters() {
+    state.value = draftState.value;
+    technicianId.value = draftTechnician.value;
+    technicianName.value = technicians.firstWhereOrNull((t) => t.id == draftTechnician.value)?.name;
+    load();
+  }
+
+  void onResetDraft() {
+    draftState.value = null;
+    draftTechnician.value = null;
+  }
+
   /// M16 New job; the list (or dashboard) loads again when a job was made.
   Future<void> onNewJobTap() async {
     final made = await Get.toNamed(RoutesConstants.newJobScreen);
     if (made == true) await load();
   }
 
-  void onComingSoonTap() => KnToast.info(LangKeys.commonComingSoon.tr);
 
   @override
   void onClose() {

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart' show ListFormat, ListParam;
 import 'package:intl/intl.dart';
 
 import '../../models/api_models.g.dart';
@@ -6,7 +7,14 @@ import '../networks/api_result.dart';
 
 /// Which jobs the list shows. Days are in the company's time zone (the server knows it).
 class JobQuery {
-  const JobQuery({this.date, this.range = 'day', this.unassigned = false, this.search});
+  const JobQuery({
+    this.date,
+    this.range = 'day',
+    this.unassigned = false,
+    this.search,
+    this.statuses = const [],
+    this.assignee,
+  });
 
   final DateTime? date;
 
@@ -15,11 +23,19 @@ class JobQuery {
   final bool unassigned;
   final String? search;
 
+  /// Only jobs in these states (the filters sheet); empty: all.
+  final List<String> statuses;
+
+  /// Only this technician's jobs (managers).
+  final String? assignee;
+
   Map<String, dynamic> toQuery() => {
         if (date != null) 'date': DateFormat('yyyy-MM-dd').format(date!),
         'range': range,
         if (unassigned) 'unassigned': true,
         if (search != null && search!.trim().isNotEmpty) 'q': search!.trim(),
+        if (statuses.isNotEmpty) 'status': statuses,
+        'assignee': ?assignee,
         'limit': 100,
       };
 }
@@ -72,6 +88,12 @@ abstract class IJobsApiRepository {
 
   /// M17 on a saved job: give it to [technicianId] (null takes it back).
   Future<ApiResult<JobOutModel>> assign(String jobId, String? technicianId);
+
+  /// Cancels a job that isn't finished; the [reason] goes on its timeline.
+  Future<ApiResult<JobOutModel>> cancel(String jobId, String reason);
+
+  /// Deletes a job nobody has started.
+  Future<ApiResult<void>> delete(String jobId);
 }
 
 class JobsApiRepository implements IJobsApiRepository {
@@ -83,7 +105,12 @@ class JobsApiRepository implements IJobsApiRepository {
 
   @override
   Future<ApiResult<JobListModel>> list(JobQuery query) =>
-      guard(() async => JobListModel.fromJson(_map(await provider.getJobs(query.toQuery()))));
+      guard(() async => JobListModel.fromJson(_map(await provider.getJobs(_wire(query.toQuery())))));
+
+  /// Several states go as status=a&status=b (what the server reads), whatever Dio's default is.
+  static Map<String, dynamic> _wire(Map<String, dynamic> q) => {
+        for (final e in q.entries) e.key: e.value is List<String> ? ListParam<String>(e.value as List<String>, ListFormat.multi) : e.value,
+      };
 
   @override
   Future<ApiResult<JobOutModel>> job(String id) => guard(() async => JobOutModel.fromJson(_map(await provider.getJob(id))));
@@ -187,4 +214,13 @@ class JobsApiRepository implements IJobsApiRepository {
   Future<ApiResult<JobOutModel>> assign(String jobId, String? technicianId) => guard(
         () async => JobOutModel.fromJson(_map(await provider.postAssign(jobId, {'technician_id': technicianId}))),
       );
+
+  @override
+  Future<ApiResult<JobOutModel>> cancel(String jobId, String reason) =>
+      guard(() async => JobOutModel.fromJson(_map(await provider.postCancel(jobId, {'reason': reason}))));
+
+  @override
+  Future<ApiResult<void>> delete(String jobId) => guard(() async {
+        await provider.deleteJob(jobId);
+      });
 }

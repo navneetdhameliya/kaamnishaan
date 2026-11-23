@@ -9418,4 +9418,52 @@ abstract final class LangKeys {
   static const tmInviteCancelled = 'tm.invite_cancelled';
   /// Only the owner can change or remove managers.
   static const tmOwnerOnly = 'tm.owner_only';
+  /// Assign technician
+  static const jobAssign = 'job.assign';
+  /// Change technician
+  static const jobChangeTech = 'job.change_tech';
+  /// Job options
+  static const jobMenu = 'job.menu';
+  /// Cancel job
+  static const jobCancel = 'job.cancel';
+  /// Cancel this job?
+  static const jobCancelTitle = 'job.cancel_title';
+  /// Say why. It goes on the job's timeline, and the technician sees the job is cancelled.
+  static const jobCancelBody = 'job.cancel_body';
+  /// Why is it cancelled?
+  static const jobCancelHint = 'job.cancel_hint';
+  /// Customer cancelled
+  static const jobCancelWhyCustomer = 'job.cancel_why_customer';
+  /// Moved to another day
+  static const jobCancelWhyMoved = 'job.cancel_why_moved';
+  /// Made twice by mistake
+  static const jobCancelWhyTwice = 'job.cancel_why_twice';
+  /// Job cancelled.
+  static const jobCancelled = 'job.cancelled';
+  /// Delete job
+  static const jobDelete = 'job.delete';
+  /// Delete this job?
+  static const jobDeleteTitle = 'job.delete_title';
+  /// Nobody has started it. It goes from every list and can't be brought back.
+  static const jobDeleteBody = 'job.delete_body';
+  /// Job deleted.
+  static const jobDeleted = 'job.deleted';
+  /// State
+  static const jfState = 'jf.state';
+  /// Technician
+  static const jfTechnician = 'jf.technician';
+  /// Not started
+  static const jfWaiting = 'jf.waiting';
+  /// In progress
+  static const jfGoing = 'jf.going';
+  /// To check
+  static const jfToCheck = 'jf.to_check';
+  /// Done
+  static const jfDone = 'jf.done';
+  /// Cancelled
+  static const jfCancelled = 'jf.cancelled';
+  /// Clear
+  static const jfClear = 'jf.clear';
+  /// Show jobs
+  static const jfShow = 'jf.show';
 }
