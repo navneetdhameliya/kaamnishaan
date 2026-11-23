@@ -15,6 +15,7 @@ import '../../../commons/text_widgets/base/custom_base_text_widget.dart';
 import '../../../theme/kn_app_theme.dart';
 import '../../../theme/kn_tokens.g.dart';
 import 'custom_widgets/job_info_cards.dart';
+import 'custom_widgets/office_sheets.dart';
 import 'custom_widgets/review_card.dart';
 import 'job_details_controller.dart';
 
@@ -30,7 +31,12 @@ class JobDetailsScreen extends GetView<JobDetailsController> {
   Widget build(BuildContext context) {
     final kn = context.kn;
     final top = MediaQuery.paddingOf(context).top;
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) {
+        if (!didPop) controller.onBackTap();
+      },
+      child: Scaffold(
       backgroundColor: kn.bgCanvas,
       bottomNavigationBar: Obx(() => _footer() ?? const SizedBox.shrink()),
       body: ScrollConfiguration(
@@ -55,8 +61,31 @@ class JobDetailsScreen extends GetView<JobDetailsController> {
                   top: top + 12,
                   child: Row(
                     children: [
-                      const KnBackButton(),
+                      KnBackButton(onTap: controller.onBackTap),
                       const Spacer(),
+                      Obx(
+                        () => controller.hasMenu
+                            ? Padding(
+                                padding: const EdgeInsetsDirectional.only(end: KnSize.space8),
+                                child: CustomInkWell(
+                                  key: const ValueKey('job-menu'),
+                                  onTap: () => showJobOfficeMenu(controller),
+                                  borderRadius: BorderRadius.circular(22),
+                                  semanticLabel: LangKeys.jobMenu.tr,
+                                  child: Ink(
+                                    width: 44,
+                                    height: 44,
+                                    decoration: BoxDecoration(
+                                      color: kn.bgSurface,
+                                      shape: BoxShape.circle,
+                                      border: Border.all(color: kn.borderDefault),
+                                    ),
+                                    child: Icon(LucideIcons.ellipsis, size: 22, color: kn.textPrimary),
+                                  ),
+                                ),
+                              )
+                            : const SizedBox.shrink(),
+                      ),
                       CustomInkWell(
                         key: const ValueKey('read-job'),
                         onTap: controller.onSpeakTap,
@@ -90,6 +119,7 @@ class JobDetailsScreen extends GetView<JobDetailsController> {
           ),
         ),
       ),
+    ),
     );
   }
 
@@ -221,6 +251,18 @@ class JobDetailsScreen extends GetView<JobDetailsController> {
             icon: LucideIcons.play,
             loading: controller.starting.value,
             onTap: controller.onStartTap,
+          ),
+        ],
+      );
+    }
+    if (controller.showAssignButton) {
+      return KnScreenFooter(
+        children: [
+          KnCustomButton(
+            key: const ValueKey('assign-job'),
+            text: LangKeys.jobAssign.tr,
+            icon: LucideIcons.userCheck,
+            onTap: controller.onAssignTap,
           ),
         ],
       );

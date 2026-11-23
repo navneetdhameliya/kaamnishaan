@@ -112,6 +112,119 @@ void main() {
     });
   });
 
+  group('M14 filters sheet', () {
+    test('a state and a technician narrow the list; the button shows how many are on', () async {
+      session.me.value = const MeOutModel(
+        id: 'u9', name: 'Priya Mehta', emailVerified: true, appLanguage: 'en', theme: 'system',
+        role: 'manager', permissions: [],
+      );
+      final asked = <JobQuery>[];
+      when(() => jobs.list(any())).thenAnswer((inv) async {
+        asked.add(inv.positionalArguments.first as JobQuery);
+        return const ApiSuccess<JobListModel>(JobListModel(data: [], meta: ListMetaModel()));
+      });
+      when(() => jobs.technicians(jobId: any(named: 'jobId'), at: any(named: 'at'))).thenAnswer(
+        (_) async => const ApiSuccess<AssignableListModel>(
+          AssignableListModel(data: [
+            AssignableTechnicianModel(id: 't1', name: 'Ramesh Patel', status: 'active', available: true, capacity: 6, jobsToday: 2),
+            AssignableTechnicianModel(id: 't2', name: 'Arjun Desai', status: 'invited', available: false, capacity: 6, jobsToday: 0),
+          ], meta: ListMetaModel()),
+        ),
+      );
+      final c = JobListController(
+        repository: jobs, session: session, translation: translation, clock: () => DateTime(2026, 10, 31, 9),
+      );
+      await c.startFilters();
+      expect([for (final t in c.technicians) t.name], ['Ramesh Patel']); // not joined: left out
+      c.onDraftState(JobState.toCheck);
+      c.onDraftTechnician('t1');
+      expect(c.sheetFilters, 0); // nothing changes until "Show jobs"
+      c.onApplyFilters();
+      await Future<void>.delayed(Duration.zero);
+      expect(asked.last.toQuery(), {
+        'date': '2026-10-31', 'range': 'day', 'status': ['in_review'], 'assignee': 't1', 'limit': 100,
+      });
+      expect((c.sheetFilters, c.hasFilters, c.technicianName.value), (2, true, 'Ramesh Patel'));
+      await c.startFilters();
+      c.onDraftState(JobState.toCheck); // tapping the chosen one again clears it
+      c.onApplyFilters();
+      expect(c.sheetFilters, 1);
+      c.onClearFiltersTap();
+      await Future<void>.delayed(Duration.zero);
+      expect((c.sheetFilters, asked.last.toQuery().containsKey('status')), (0, false));
+      expect(JobListController.statesOf(JobState.going), ['in_progress', 'changes_requested']);
+      c.onClose();
+    });
+  });
+
+  group('M15 the office changes a job', () {
+    JobDetailsController office(JobOutModel j) {
+      when(() => jobs.job(any())).thenAnswer((_) async => ApiSuccess<JobOutModel>(j));
+      session.me.value = const MeOutModel(
+        id: 'u9', name: 'Priya Mehta', emailVerified: true, appLanguage: 'en', theme: 'system',
+        role: 'manager', permissions: [],
+      );
+      return JobDetailsController(
+        repository: jobs,
+        session: session,
+        speech: speech,
+        translation: translation,
+        args: const JobArguments(id: 'j1', customer: 'Green Valley Clinic'),
+        clock: () => DateTime(2026, 10, 31, 9),
+      );
+    }
+
+    test('an unassigned job offers Assign as the main button and in the menu', () async {
+      final c = office(jobOut(status: 'unassigned', assigneeId: null, actions: const ['edit', 'assign', 'cancel', 'delete']));
+      await c.load();
+      expect((c.hasMenu, c.showAssignButton, c.assignLabel), (true, true, 'Assign technician'));
+      expect((c.canCancel, c.canDelete), (true, true));
+    });
+
+    test('an assigned job says Change technician; a technician sees no menu', () async {
+      final c = office(jobOut(actions: const ['edit', 'assign', 'cancel', 'delete']));
+      await c.load();
+      expect((c.showAssignButton, c.assignLabel), (false, 'Change technician'));
+      final t = office(jobOut());
+      await t.load();
+      expect(t.hasMenu, isFalse);
+    });
+
+    test('cancelling needs a reason, then shows the cancelled job', () async {
+      when(() => jobs.cancel(any(), any())).thenAnswer(
+        (_) async => ApiSuccess<JobOutModel>(jobOut(status: 'cancelled', actions: const [])),
+      );
+      final c = office(jobOut(actions: const ['assign', 'cancel']))..onInit();
+      await c.load();
+      c.startCancel();
+      expect(c.canSendCancel, isFalse);
+      expect(await c.onCancelJob(), isFalse);
+      verifyNever(() => jobs.cancel(any(), any()));
+      c.onCancelReasonPick(c.cancelReasons.first);
+      expect((c.cancelReason.text, c.canSendCancel), ('Customer cancelled', true));
+      c.cancelReason.text = 'Customer is away until Monday';
+      expect(c.cancelDraft.value, 'Customer is away until Monday');
+      var ok = false;
+      await _quietRun(() async => ok = await c.onCancelJob());
+      verify(() => jobs.cancel('j1', 'Customer is away until Monday')).called(1);
+      expect((c.job.value!.status, c.hasMenu, c.busy.value), ('cancelled', false, null));
+      expect(ok || c.job.value!.status == 'cancelled', isTrue);
+      c.onClose();
+    });
+
+    test('deleting asks first', () async {
+      when(() => jobs.delete(any())).thenAnswer((_) async => const ApiSuccess<void>(null));
+      final c = office(jobOut(status: 'unassigned', assigneeId: null, actions: const ['assign', 'delete']));
+      await c.load();
+      c.confirmDelete = () async => false;
+      await c.onDeleteTap();
+      verifyNever(() => jobs.delete(any()));
+      c.confirmDelete = () async => true;
+      await _quietRun(c.onDeleteTap);
+      verify(() => jobs.delete('j1')).called(1);
+    });
+  });
+
   group('M15 job details', () {
     JobDetailsController details(JobOutModel j, {List<Uri>? opened}) {
       when(() => jobs.job(any())).thenAnswer((_) async => ApiSuccess<JobOutModel>(j));
@@ -231,4 +344,11 @@ void main() {
       expect(c.totalCount, 4);
     });
   });
+}
+
+/// Toasts and going back need the app, which unit tests don't have.
+Future<void> _quietRun(Future<void> Function() run) async {
+  try {
+    await run();
+  } on Object catch (_) {}
 }

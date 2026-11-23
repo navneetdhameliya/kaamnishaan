@@ -11,6 +11,7 @@ import '../../../commons/text_widgets/base/custom_base_text_widget.dart';
 import '../../../theme/kn_app_theme.dart';
 import '../../../theme/kn_tokens.g.dart';
 import 'custom_widgets/job_list_card.dart';
+import 'custom_widgets/job_filters_sheet.dart';
 import 'custom_widgets/job_list_parts.dart';
 import 'job_list_controller.dart';
 
@@ -77,18 +78,42 @@ class JobListScreen extends GetView<JobListController> {
                     const SizedBox(width: KnSize.space12),
                     CustomInkWell(
                       key: const ValueKey('job-filters'),
-                      onTap: controller.onComingSoonTap,
+                      onTap: () => showJobFiltersSheet(controller),
                       borderRadius: BorderRadius.circular(22),
                       semanticLabel: LangKeys.jobsFilters.tr,
-                      child: Ink(
-                        width: 44,
-                        height: 44,
-                        decoration: BoxDecoration(
-                          color: kn.bgSurface,
-                          shape: BoxShape.circle,
-                          border: Border.all(color: kn.borderDefault),
+                      child: Obx(
+                        () => Stack(
+                          clipBehavior: Clip.none,
+                          children: [
+                            Ink(
+                              width: 44,
+                              height: 44,
+                              decoration: BoxDecoration(
+                                color: controller.sheetFilters > 0 ? kn.actionSecondary : kn.bgSurface,
+                                shape: BoxShape.circle,
+                                border: Border.all(color: kn.borderDefault),
+                              ),
+                              child: Icon(LucideIcons.slidersHorizontal, size: 22, color: kn.textPrimary),
+                            ),
+                            if (controller.sheetFilters > 0)
+                              PositionedDirectional(
+                                top: -2,
+                                end: -2,
+                                child: Container(
+                                  key: const ValueKey('job-filters-count'),
+                                  width: 18,
+                                  height: 18,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(color: kn.actionPrimary, shape: BoxShape.circle),
+                                  child: CustomBaseTextWidget(
+                                    '${controller.sheetFilters}',
+                                    style: context.knText.caption,
+                                    color: kn.textOnAction,
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
-                        child: Icon(LucideIcons.slidersHorizontal, size: 22, color: kn.textPrimary),
                       ),
                     ),
                   ],

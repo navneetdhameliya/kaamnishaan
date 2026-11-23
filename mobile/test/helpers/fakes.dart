@@ -156,7 +156,7 @@ class FakeLocation implements ILocationService {
 JobOutModel jobOut({
   String status = 'assigned',
   List<String> actions = const ['start'],
-  String assigneeId = 'u1',
+  String? assigneeId = 'u1',
   JobReviewModel? review,
 }) =>
     JobOutModel(
@@ -167,7 +167,7 @@ JobOutModel jobOut({
       scheduledAt: DateTime(2026, 10, 31, 11, 30),
       customer: const CustomerRefModel(id: 'c1', name: 'Green Valley Clinic'),
       site: const SiteBriefModel(id: 's1', address: '4 Lake Road', city: 'Springfield', label: 'Room 2', lat: 21.17, lng: 72.83),
-      assignee: PersonRefModel(id: assigneeId, name: 'Ramesh Patel'),
+      assignee: assigneeId == null ? null : PersonRefModel(id: assigneeId, name: 'Ramesh Patel'),
       isQuickJob: false,
       version: 1,
       updatedAt: DateTime(2026, 10, 31),
