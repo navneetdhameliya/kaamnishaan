@@ -285,9 +285,10 @@ RULE_TO = {
     "review_received": "technician",
     "low_rating": "office",
     "tech_question": "office",
+    "plan_limit": "owner",
     "support_reply": "person",
 }
-EMAIL_ONLY = ("plan_limit", "trial_ending", "weekly_summary")  # need the email service (D-96)
+EMAIL_ONLY = ("trial_ending", "weekly_summary")  # need the email service (D-96)
 ROLES = {"everyone": None, "owners_managers": ("owner", "manager"), "owners": ("owner",), "company": None}
 
 

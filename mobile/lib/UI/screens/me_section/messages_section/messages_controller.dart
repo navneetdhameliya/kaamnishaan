@@ -89,6 +89,11 @@ class MessagesController extends GetxController {
         'low_rating' => LangKeys.msgLowTitle.tr,
         'support_reply' => LangKeys.msgSupportTitle.tr,
         'tech_question' => LangKeys.msgQuestionTitle.tr,
+        'plan_limit' => switch (_p(n, 'stage')) {
+            'near' => LangKeys.msgLimitNearTitle.tr,
+            'blocked' => LangKeys.msgLimitBlockedTitle.tr,
+            _ => LangKeys.msgLimitReachedTitle.tr,
+          },
         'announcement' => _inLanguage(n, 'title'),
         _ => LangKeys.msgApprovedTitle.tr,
       };
@@ -135,6 +140,20 @@ class MessagesController extends GetxController {
         return note.isEmpty
             ? LangKeys.msgQuestionBody.trParams(words)
             : LangKeys.msgQuestionBodyNote.trParams(words);
+      case 'plan_limit':
+        final renews = DateTime.tryParse(_p(n, 'renews_at'));
+        final words = {
+          'used': _p(n, 'used'),
+          'limit': _p(n, 'limit'),
+          'date': renews == null ? '' : DateFormat('d MMM', _code).format(renews.toLocal()),
+          'technician': _p(n, 'technician').split(' ').first,
+          'customer': customer,
+        };
+        return switch (_p(n, 'stage')) {
+          'near' => LangKeys.msgLimitNearBody.trParams(words),
+          'blocked' => LangKeys.msgLimitBlockedBody.trParams(words),
+          _ => LangKeys.msgLimitReachedBody.trParams(words),
+        };
       case 'report_shared':
         return LangKeys.msgSharedBody.trParams({'customer': customer});
       case 'review_received':
@@ -164,12 +183,17 @@ class MessagesController extends GetxController {
         'job_assigned' => MessageTone.job,
         'report_submitted' || 'tech_question' => MessageTone.review,
         'changes_requested' || 'low_rating' => MessageTone.problem,
+        'plan_limit' => _p(n, 'stage') == 'near' ? MessageTone.news : MessageTone.problem,
         'support_reply' || 'announcement' => MessageTone.news,
         _ => MessageTone.done,
       };
 
-  /// Opens what the message is about: the job, its proof (to fix it) or the report.
+  /// Opens what the message is about: the job, its proof (to fix it), the report or the plan.
   Future<void> onOpen(NotificationOutModel n) async {
+    if (n.kind == 'plan_limit') {
+      await Get.toNamed(RoutesConstants.billingScreen); // M41: the plan, what is used, Upgrade
+      return;
+    }
     if (n.kind == 'support_reply') {
       final ticket = _p(n, 'ticket_id');
       if (ticket.isNotEmpty) await Get.toNamed(RoutesConstants.helpTicketScreen, arguments: ticket);

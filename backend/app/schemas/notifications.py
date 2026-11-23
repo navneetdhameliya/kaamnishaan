@@ -17,6 +17,7 @@ NotificationKind = Literal[
     "low_rating",
     "support_reply",
     "tech_question",
+    "plan_limit",
     "announcement",
 ]
 
