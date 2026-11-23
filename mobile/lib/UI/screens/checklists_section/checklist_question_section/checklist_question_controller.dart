@@ -7,6 +7,7 @@ import 'package:uuid/uuid.dart';
 import '../../../../infrastructure/commons/constants/app_routes.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/checklists_api_repository.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/files_api_repository.dart';
+import '../../../../infrastructure/data_access_layer/api_repository/jobs_api_repository.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
@@ -15,6 +16,7 @@ import '../../../../infrastructure/services/speech_service.dart';
 import '../../../../infrastructure/shared/job_arguments.dart';
 import '../../../common_widgets/kn_dictation.dart';
 import '../../../common_widgets/kn_toast.dart';
+import 'custom_widgets/ask_manager_sheet.dart';
 
 /// M25 one checklist question at a time, big answers, read aloud. Answers are kept on the phone and
 /// sent in the background (D-59); a "photo needed" answer waits for its photo. "Show if" rules are
@@ -23,6 +25,7 @@ class ChecklistQuestionController extends GetxController {
   ChecklistQuestionController({
     required this.checklists,
     required this.files,
+    required this.jobs,
     required this.queue,
     required this.speech,
     required this.translation,
@@ -33,6 +36,9 @@ class ChecklistQuestionController extends GetxController {
 
   final IChecklistsApiRepository checklists;
   final IFilesApiRepository files;
+
+  /// "Not sure? Ask your manager" sends the question to the office.
+  final IJobsApiRepository jobs;
   final PhotoQueueService queue;
   final ISpeechService speech;
   final TranslationService translation;
@@ -50,6 +56,10 @@ class ChecklistQuestionController extends GetxController {
   final RxBool photoNeeded = false.obs;
   final RxBool saving = false.obs;
   final TextEditingController textController = TextEditingController();
+
+  /// The technician's note for the manager, and whether it is being sent.
+  final TextEditingController askNote = TextEditingController();
+  final RxBool asking = false.obs;
   Worker? _sentWorker;
 
   String get checklistId => args.checklistId!;
@@ -66,6 +76,7 @@ class ChecklistQuestionController extends GetxController {
     dictation.cancel();
     _sentWorker?.dispose();
     textController.dispose();
+    askNote.dispose();
     super.onClose();
   }
 
@@ -264,6 +275,27 @@ class ChecklistQuestionController extends GetxController {
     await _next();
   }
 
-  /// "Not sure? Ask your manager" comes with manager questions.
-  void onNotSureTap() => KnToast.info(LangKeys.commonComingSoon.tr);
+  /// "Not sure? Ask your manager": shows the question, takes an optional note (typed or spoken).
+  void onNotSureTap() {
+    if (current == null) return;
+    askNote.clear();
+    showAskManagerSheet(this);
+  }
+
+  /// Sends the question to the job's managers (they get it in Messages). True when it was sent.
+  Future<bool> onAskManager() async {
+    final q = current;
+    if (q == null || asking.value) return false;
+    asking.value = true;
+    final result = await jobs.askManager(args.jobId, question: q.text, note: askNote.text);
+    asking.value = false;
+    final e = result.errorOrNull;
+    if (e != null) {
+      KnToast.error(e.message);
+      return false;
+    }
+    dictation.cancel();
+    KnToast.success(LangKeys.askmgrSent.tr);
+    return true;
+  }
 }

@@ -244,6 +244,58 @@ async def list_jobs(
     )
 
 
+async def equipment_history(db: AsyncSession, p: Principal, job_id: uuid.UUID) -> JobList:
+    """Earlier jobs on this job's machine, newest first (D-142). Anyone who can see the job sees them,
+    whoever did them: the point is what was done to the machine before."""
+    j = await get_job(db, p, job_id)
+    if not j.equipment_id:
+        return JobList(data=[], meta=ListMeta())
+    rows = (
+        (
+            await db.execute(
+                select(Job)
+                .where(
+                    Job.company_id == p.company_id,
+                    Job.equipment_id == j.equipment_id,
+                    Job.id != j.id,
+                    Job.deleted_at.is_(None),
+                    Job.status.in_(("completed", "in_review", "changes_requested", "in_progress")),
+                )
+                .order_by(Job.completed_at.desc().nulls_last(), Job.scheduled_at.desc().nulls_last())
+                .limit(20)
+            )
+        )
+        .scalars()
+        .all()
+    )
+    return JobList(data=await items(db, list(rows)), meta=ListMeta())
+
+
+async def ask_manager(
+    db: AsyncSession, p: Principal, job_id: uuid.UUID, question: str, note: str | None
+) -> None:
+    """ "Not sure? Ask your manager": a message to the owners and managers about this job (D-142)."""
+    j = await get_job(db, p, job_id)
+    if j.assigned_to != p.user.id:
+        raise Forbidden("job_not_assigned_to_you", "This job is assigned to someone else.")
+    if j.status not in ("in_progress", "changes_requested"):
+        raise Conflict("invalid_transition", "Start the job before answering.", {"status": j.status})
+    await notifications.notify(
+        db,
+        company_id=p.company_id,
+        to=await notifications.reviewers(db, p.company_id),
+        kind="tech_question",
+        actor_id=p.user.id,
+        job=j,
+        params={
+            **await notifications.job_params(db, j),
+            "technician": p.user.name,
+            "question": question.strip(),
+            "note": (note or "").strip() or None,
+        },
+    )
+
+
 async def timeline(db: AsyncSession, p: Principal, job_id: uuid.UUID) -> Timeline:
     j = await get_job(db, p, job_id)
     rows = (

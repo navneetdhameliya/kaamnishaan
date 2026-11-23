@@ -17,6 +17,7 @@ import '../../../../infrastructure/shared/review_words.dart';
 import '../../../../infrastructure/shared/time_utils.dart';
 import '../../../common_widgets/kn_confirm_dialog.dart';
 import '../../../common_widgets/kn_toast.dart';
+import 'custom_widgets/equipment_history_sheet.dart';
 
 /// M15 Job details: where, when, who to meet, the problem and the machine; Start job for the technician.
 class JobDetailsController extends GetxController {
@@ -50,6 +51,9 @@ class JobDetailsController extends GetxController {
   final RxBool loading = false.obs;
   final RxBool starting = false.obs;
   final RxBool askingReview = false.obs;
+
+  /// Earlier jobs on this job's machine (the Equipment card opens them); null until loaded.
+  final Rxn<List<JobListItemModel>> history = Rxn<List<JobListItemModel>>();
 
   /// The office's changes (assign, cancel, delete): what is running now, and the cancel reason box.
   final RxnString busy = RxnString();
@@ -330,6 +334,33 @@ class JobDetailsController extends GetxController {
         arguments: JobArguments(id: args.id, customer: customer, title: job.value?.title ?? args.title),
       );
 
-  /// Equipment history comes later.
-  void onEquipmentTap() => KnToast.info(LangKeys.commonComingSoon.tr);
+  /// The Equipment card: what was done on this machine before (D-142).
+  void onEquipmentTap() {
+    loadHistory();
+    showEquipmentHistorySheet(this);
+  }
+
+  Future<void> loadHistory() async {
+    history.value = null;
+    final result = await repository.equipmentHistory(args.id);
+    final data = result.dataOrNull;
+    if (data == null) {
+      history.value = const [];
+      return KnToast.error(result.errorOrNull!.message);
+    }
+    history.value = data.data;
+  }
+
+  /// "12 Mar 2026 · Ramesh Patel" (the date alone when nobody was on it).
+  String historyLine(JobListItemModel j) {
+    final at = j.scheduledAt ?? j.updatedAt;
+    final date = DateFormat('d MMM y', translation.currentCode).format(at.toLocal());
+    final name = j.assignee?.name;
+    return name == null || name.isEmpty ? date : LangKeys.historyLine.trParams({'date': date, 'name': name});
+  }
+
+  void onHistoryJobTap(JobListItemModel j) {
+    Get.back<void>();
+    Get.toNamed(RoutesConstants.jobDetailsScreen, arguments: JobArguments.of(j), preventDuplicates: false);
+  }
 }

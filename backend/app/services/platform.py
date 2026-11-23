@@ -248,7 +248,7 @@ async def set_ai_config(db: AsyncSession, c: AiConfig, *, staff_id: uuid.UUID) -
 # ---- A29 automatic messages ----------------------------------------------------------------------------
 IN_APP_KINDS = (
     "job_assigned", "report_submitted", "changes_requested", "report_approved", "report_shared",
-    "review_received", "low_rating", "support_reply",
+    "review_received", "low_rating", "support_reply", "tech_question",
 )  # fmt: skip
 
 

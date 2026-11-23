@@ -2,2134 +2,3840 @@
 // Use as LangKeys.authSendCode.tr; values with {name} use .trParams({'name': …}).
 
 abstract final class LangKeys {
-  /// KaamNishaan
-  static const appName = 'app.name';
-  /// Every Job. Every Photo. Every Proof.
-  static const appTagline = 'app.tagline';
-  /// Today
-  static const navToday = 'nav.today';
-  /// Capture
-  static const navCapture = 'nav.capture';
-  /// Me
-  static const navMe = 'nav.me';
-  /// Home
-  static const navHome = 'nav.home';
-  /// Jobs
-  static const navJobs = 'nav.jobs';
-  /// Reports
-  static const navReports = 'nav.reports';
-  /// Profile
-  static const navProfile = 'nav.profile';
-  /// Continue
-  static const commonContinue = 'common.continue';
-  /// Save
-  static const commonSave = 'common.save';
-  /// Cancel
-  static const commonCancel = 'common.cancel';
-  /// Back
-  static const commonBack = 'common.back';
-  /// Try again
-  static const commonRetry = 'common.retry';
-  /// No internet. Your work is saved on the phone.
-  static const commonOfflineSaved = 'common.offline_saved';
-  /// Your phone number
-  static const authPhoneTitle = 'auth.phone_title';
-  /// Send code
-  static const authSendCode = 'auth.send_code';
-  /// We will send you a code by SMS.
-  static const authCodeSent = 'auth.code_sent';
-  /// Start job
-  static const jobStart = 'job.start';
-  /// Before photos
-  static const captureBefore = 'capture.before';
-  /// During photos
-  static const captureDuring = 'capture.during';
-  /// After photos
-  static const captureAfter = 'capture.after';
-  /// Voice note
-  static const captureVoiceNote = 'capture.voice_note';
-  /// Checklist
-  static const captureChecklist = 'capture.checklist';
-  /// Make report
-  static const reportMake = 'report.make';
-  /// Send report
-  static const reportSend = 'report.send';
-  /// Approve
-  static const reportApprove = 'report.approve';
-  /// Ask for changes
-  static const reportAskChanges = 'report.ask_changes';
-  /// Waiting to send
-  static const syncWaiting = 'sync.waiting';
-  /// Request review
-  static const reviewRequest = 'review.request';
-  /// Rate this job
-  static const reviewRateJob = 'review.rate_job';
-  /// Not asked yet
-  static const reviewNotAsked = 'review.not_asked';
-  /// Opted out
-  static const reviewOptedOut = 'review.opted_out';
-  /// {count} credits left
-  static const billingCreditsLeft = 'billing.credits_left';
-  /// Plan limit reached
-  static const billingPlanLimit = 'billing.plan_limit';
-  /// Next
-  static const commonNext = 'common.next';
-  /// Skip
-  static const commonSkip = 'common.skip';
-  /// Hear it
-  static const commonHearIt = 'common.hear_it';
-  /// Close
-  static const commonClose = 'common.close';
-  /// v{version}
-  static const commonVersion = 'common.version';
-  /// Proof of work for field technicians
-  static const splashSubtitle = 'splash.subtitle';
-  /// Choose your language
-  static const languageTitle = 'language.title';
-  /// Tap the speaker to hear it
-  static const languageHint = 'language.hint';
-  /// Get started
-  static const introGetStarted = 'intro.get_started';
-  /// Take photos of your work
-  static const introPhotosTitle = 'intro.photos_title';
-  /// Before, during and after. Your photos show the customer a job done right.
-  static const introPhotosBody = 'intro.photos_body';
-  /// BEFORE · photo 1
-  static const introPhotosBadge = 'intro.photos_badge';
-  /// Saved as proof
-  static const introPhotosSaved = 'intro.photos_saved';
-  /// Speak, don't type
-  static const introVoiceTitle = 'intro.voice_title';
-  /// Say what you did in your own language. We write it down for you.
-  static const introVoiceBody = 'intro.voice_body';
-  /// Recording 0:12
-  static const introVoiceBadge = 'intro.voice_badge';
-  /// Gujarati → written for you
-  static const introVoiceWritten = 'intro.voice_written';
-  /// Send proof in one tap
-  static const introReportTitle = 'intro.report_title';
-  /// Your manager checks the report and the customer gets it with all the photos.
-  static const introReportBody = 'intro.report_body';
-  /// Report approved
-  static const introReportBadge = 'intro.report_badge';
-  /// Sent with {count} photos
-  static const introReportSent = 'intro.report_sent';
-  /// Welcome
-  static const welcomeTitle = 'welcome.title';
-  /// How do you want to start?
-  static const welcomeSubtitle = 'welcome.subtitle';
-  /// Most technicians
-  static const welcomeInviteTag = 'welcome.invite_tag';
-  /// I have an invite
-  static const welcomeInviteTitle = 'welcome.invite_title';
-  /// Your company sent you an SMS or an invite card.
-  static const welcomeInviteBody = 'welcome.invite_body';
-  /// Start my business
-  static const welcomeBusinessTitle = 'welcome.business_title';
-  /// Set up your company and invite your team.
-  static const welcomeBusinessBody = 'welcome.business_body';
-  /// Already have an account?
-  static const welcomeHaveAccount = 'welcome.have_account';
-  /// Log in
-  static const welcomeLogIn = 'welcome.log_in';
-  /// Phone number
-  static const authPhoneLabel = 'auth.phone_label';
-  /// Only used to log in. We never share it.
-  static const authPhonePrivacy = 'auth.phone_privacy';
-  /// Enter a {digits}-digit phone number
-  static const authPhoneInvalid = 'auth.phone_invalid';
-  /// Choose country
-  static const authChooseCountry = 'auth.choose_country';
-  /// Search country
-  static const authSearchCountry = 'auth.search_country';
-  /// Enter the code
-  static const authCodeTitle = 'auth.code_title';
-  /// Sent to {phone}
-  static const authSentTo = 'auth.sent_to';
-  /// Change
-  static const authChange = 'auth.change';
-  /// Send a new code in {time}
-  static const authResendIn = 'auth.resend_in';
-  /// We fill the code for you when the SMS comes.
-  static const authAutofillHint = 'auth.autofill_hint';
-  /// Wrong code. {count} tries left.
-  static const authCodeWrong = 'auth.code_wrong';
-  /// Send again
-  static const authSendAgain = 'auth.send_again';
-  /// This code expired. Get a new one.
-  static const authCodeExpired = 'auth.code_expired';
-  /// Too many wrong codes. Get a new one.
-  static const authCodeTooMany = 'auth.code_too_many';
-  /// A code works for 10 minutes. We sent it at {time}.
-  static const authCodeValidFor = 'auth.code_valid_for';
-  /// Send new code
-  static const authSendNewCode = 'auth.send_new_code';
-  /// Change number
-  static const authChangeNumber = 'auth.change_number';
-  /// Wait {seconds} seconds, then try again.
-  static const authWaitResend = 'auth.wait_resend';
-  /// Join {company}?
-  static const joinTitle = 'join.title';
-  /// {name} invited you
-  static const joinInvitedYou = 'join.invited_you';
-  /// When you join
-  static const joinWhenYouJoin = 'join.when_you_join';
-  /// You see jobs from {company}
-  static const joinBenefitJobs = 'join.benefit_jobs';
-  /// Your photos and notes go with each job
-  static const joinBenefitPhotos = 'join.benefit_photos';
-  /// Your reports go to your manager
-  static const joinBenefitReports = 'join.benefit_reports';
-  /// Join company
-  static const joinJoinButton = 'join.join_button';
-  /// Not my company
-  static const joinNotMine = 'join.not_mine';
-  /// This invite has expired
-  static const joinExpiredTitle = 'join.expired_title';
-  /// Invites work for 7 days. This one ended on {date}, or was cancelled.
-  static const joinExpiredBody = 'join.expired_body';
-  /// Ask your manager to send a new invite
-  static const joinAskManager = 'join.ask_manager';
-  /// {name} can send it again from the Team screen. It comes by SMS.
-  static const joinAskManagerBody = 'join.ask_manager_body';
-  /// Call manager
-  static const joinCallManager = 'join.call_manager';
-  /// No invite for this number
-  static const joinNoInviteTitle = 'join.no_invite_title';
-  /// Ask your manager to invite this phone number from the Team screen.
-  static const joinNoInviteBody = 'join.no_invite_body';
-  /// today
-  static const timeToday = 'time.today';
-  /// {count} days ago
-  static const timeDaysAgo = 'time.days_ago';
-  /// Technician
-  static const roleTechnician = 'role.technician';
-  /// Manager
-  static const roleManager = 'role.manager';
-  /// Owner
-  static const roleOwner = 'role.owner';
-  /// About you
-  static const profileTitle = 'profile.title';
-  /// Your manager and customers will see this.
-  static const profileSubtitle = 'profile.subtitle';
-  /// Change photo
-  static const profileChangePhoto = 'profile.change_photo';
-  /// Your name
-  static const profileNameLabel = 'profile.name_label';
-  /// Your work
-  static const profileWorkLabel = 'profile.work_label';
-  /// Phone
-  static const profilePhoneLabel = 'profile.phone_label';
-  /// Add your name so your manager knows it's you
-  static const profileNameMissing = 'profile.name_missing';
-  /// Save and start
-  static const profileSaveStart = 'profile.save_start';
-  /// Choose company
-  static const companyChooseTitle = 'company.choose_title';
-  /// You work for more than one company.
-  static const companyChooseSubtitle = 'company.choose_subtitle';
-  /// Your jobs for today will show here.
-  static const homeComingSoon = 'home.coming_soon';
-  /// No internet. Check your connection and try again.
-  static const errorNoInternet = 'error.no_internet';
-  /// The server is slow. Try again.
-  static const errorTimeout = 'error.timeout';
-  /// Something went wrong. Try again.
-  static const errorUnknown = 'error.unknown';
-  /// Please log in again.
-  static const errorSessionExpired = 'error.session_expired';
-  /// Hello, {name}
-  static const homeHello = 'home.hello';
-  /// Log out
-  static const commonLogOut = 'common.log_out';
-  /// Log in
-  static const loginTitle = 'login.title';
-  /// For managers and owners. Check and approve your team's reports.
-  static const loginSubtitle = 'login.subtitle';
-  /// Work email
-  static const loginEmailLabel = 'login.email_label';
-  /// Password
-  static const loginPasswordLabel = 'login.password_label';
-  /// Forgot password?
-  static const loginForgot = 'login.forgot';
-  /// Forgot password? Reset it
-  static const loginForgotReset = 'login.forgot_reset';
-  /// Log in
-  static const loginButton = 'login.button';
-  /// or
-  static const loginOr = 'login.or';
-  /// Log in with phone
-  static const loginWithPhone = 'login.with_phone';
-  /// New here? Create a company account
-  static const loginNewHere = 'login.new_here';
-  /// Enter a valid email, like name@company.com
-  static const loginEmailInvalid = 'login.email_invalid';
-  /// Enter your password
-  static const loginPasswordMissing = 'login.password_missing';
-  /// Email or password is wrong. {count} tries left.
-  static const loginWrong = 'login.wrong';
-  /// Locked for {minutes} minutes
-  static const loginLockedTitle = 'login.locked_title';
-  /// {count} wrong tries. Try again at {time}.
-  static const loginLockedBody = 'login.locked_body';
-  /// Reset password
-  static const loginResetPassword = 'login.reset_password';
-  /// Create your account
-  static const signupTitle = 'signup.title';
-  /// Step 1 of 2 · Your details
-  static const signupStep = 'signup.step';
-  /// You are the owner
-  static const signupOwnerTitle = 'signup.owner_title';
-  /// Add managers and technicians after this.
-  static const signupOwnerBody = 'signup.owner_body';
-  /// Full name
-  static const signupNameLabel = 'signup.name_label';
-  /// Add your name
-  static const signupNameMissing = 'signup.name_missing';
-  /// This email already has an account.
-  static const signupEmailTaken = 'signup.email_taken';
-  /// Log in instead
-  static const signupLogInInstead = 'signup.log_in_instead';
-  /// At least 8 characters
-  static const signupPasswordHint = 'signup.password_hint';
-  /// Weak
-  static const signupPasswordWeak = 'signup.password_weak';
-  /// Missing: {rule}
-  static const signupRuleMissing = 'signup.rule_missing';
-  /// Done: {rule}
-  static const signupRuleDone = 'signup.rule_done';
-  /// 8 or more characters
-  static const signupRuleLength = 'signup.rule_length';
-  /// A number
-  static const signupRuleNumber = 'signup.rule_number';
-  /// A letter
-  static const signupRuleLetter = 'signup.rule_letter';
-  /// I agree to the Terms and Privacy Policy
-  static const signupTerms = 'signup.terms';
-  /// Tick the box to agree to the Terms
-  static const signupTermsMissing = 'signup.terms_missing';
-  /// Set up your company
-  static const companySetupTitle = 'company.setup_title';
-  /// Step 2 of 2 · Company
-  static const companyStep = 'company.step';
-  /// Add company logo
-  static const companyLogoTitle = 'company.logo_title';
-  /// Shows on every report PDF.
-  static const companyLogoBody = 'company.logo_body';
-  /// Upload
-  static const companyUpload = 'company.upload';
-  /// Change
-  static const companyChangeLogo = 'company.change_logo';
-  /// Company name
-  static const companyNameLabel = 'company.name_label';
-  /// Your company name
-  static const companyNamePlaceholder = 'company.name_placeholder';
-  /// Enter your company name
-  static const companyNameMissing = 'company.name_missing';
-  /// Trade
-  static const companyTradeLabel = 'company.trade_label';
-  /// Choose your trade
-  static const companyTradePlaceholder = 'company.trade_placeholder';
-  /// Choose a trade
-  static const companyTradeMissing = 'company.trade_missing';
-  /// Country
-  static const companyCountryLabel = 'company.country_label';
-  /// {trade} · {country} · Owner {name}
-  static const companyPreviewMeta = 'company.preview_meta';
-  /// Create company
-  static const companyCreate = 'company.create';
-  /// Your company is ready, but the logo did not upload. Add it later in Settings.
-  static const companyLogoFailed = 'company.logo_failed';
-  /// Forgot password?
-  static const forgotTitle = 'forgot.title';
-  /// Enter your work email. We will send you a link to make a new password.
-  static const forgotBody = 'forgot.body';
-  /// For your safety, the link works only once and ends in 30 minutes.
-  static const forgotTip = 'forgot.tip';
-  /// Send link
-  static const forgotSend = 'forgot.send';
-  /// Back to log in
-  static const forgotBackToLogin = 'forgot.back_to_login';
-  /// Check your email
-  static const forgotCheckTitle = 'forgot.check_title';
-  /// We sent a link to {email}. Open it on this phone to make a new password.
-  static const forgotCheckBody = 'forgot.check_body';
-  /// KaamNishaan · Reset your password
-  static const forgotMailSubject = 'forgot.mail_subject';
-  /// From no-reply@kaamnishaan.app · now
-  static const forgotMailFrom = 'forgot.mail_from';
-  /// Did not get it? Check spam, or resend in {time}
-  static const forgotResendIn = 'forgot.resend_in';
-  /// Did not get it? Check spam, or
-  static const forgotResendNow = 'forgot.resend_now';
-  /// We sent a new link.
-  static const forgotSentAgain = 'forgot.sent_again';
-  /// Open email app
-  static const forgotOpenMail = 'forgot.open_mail';
-  /// No email app found on this phone.
-  static const forgotNoMailApp = 'forgot.no_mail_app';
-  /// Take a photo
-  static const profileTakePhoto = 'profile.take_photo';
-  /// Choose from gallery
-  static const profileChoosePhoto = 'profile.choose_photo';
-  /// The photo did not upload. Try again.
-  static const profilePhotoFailed = 'profile.photo_failed';
-  /// Good morning
-  static const homeGoodMorning = 'home.good_morning';
-  /// Good afternoon
-  static const homeGoodAfternoon = 'home.good_afternoon';
-  /// Good evening
-  static const homeGoodEvening = 'home.good_evening';
-  /// Welcome,
-  static const homeWelcome = 'home.welcome';
-  /// See all
-  static const commonSeeAll = 'common.see_all';
-  /// Refresh
-  static const commonRefresh = 'common.refresh';
-  /// This part comes in the next update.
-  static const commonComingSoon = 'common.coming_soon';
-  /// Notifications
-  static const commonNotifications = 'common.notifications';
-  /// Jobs today
-  static const todayJobs = 'today.jobs';
-  /// Done
-  static const todayDone = 'today.done';
-  /// Photos
-  static const todayPhotos = 'today.photos';
-  /// NOW · In progress
-  static const todayNow = 'today.now';
-  /// Proof
-  static const todayProof = 'today.proof';
-  /// {done} of {total} steps
-  static const todayProofSteps = 'today.proof_steps';
-  /// Continue job
-  static const todayContinueJob = 'today.continue_job';
-  /// Next up
-  static const todayNextUp = 'today.next_up';
-  /// {title} · done
-  static const todayJobDone = 'today.job_done';
-  /// No jobs today
-  static const todayEmptyTitle = 'today.empty_title';
-  /// New jobs from your manager will show here.
-  static const todayEmptyBody = 'today.empty_body';
-  /// Expecting a job?
-  static const todayExpecting = 'today.expecting';
-  /// Call {name}, your manager.
-  static const todayCallManager = 'today.call_manager';
-  /// Saved on phone
-  static const todaySavedOnPhone = 'today.saved_on_phone';
-  /// Loading your jobs…
-  static const todayLoading = 'today.loading';
-  /// This week
-  static const dashThisWeek = 'dash.this_week';
-  /// reports sent
-  static const dashReportsSent = 'dash.reports_sent';
-  /// {pct}% more than last week
-  static const dashMore = 'dash.more';
-  /// {pct}% less than last week
-  static const dashLess = 'dash.less';
-  /// Same as last week
-  static const dashSame = 'dash.same';
-  /// Your first reports this week
-  static const dashFirst = 'dash.first';
-  /// To review
-  static const dashToReview = 'dash.to_review';
-  /// In progress
-  static const dashInProgress = 'dash.in_progress';
-  /// Done today
-  static const dashDoneToday = 'dash.done_today';
-  /// Waiting for your review
-  static const dashWaiting = 'dash.waiting';
-  /// {count} photos
-  static const dashPhotos = 'dash.photos';
-  /// AI draft
-  static const dashAiDraft = 'dash.ai_draft';
-  /// Team right now
-  static const dashTeamNow = 'dash.team_now';
-  /// On a job
-  static const dashOnJob = 'dash.on_job';
-  /// Free
-  static const dashFree = 'dash.free';
-  /// Invite sent
-  static const dashInviteSent = 'dash.invite_sent';
-  /// Set up your team
-  static const dashSetUpTeam = 'dash.set_up_team';
-  /// Get started
-  static const dashGetStarted = 'dash.get_started';
-  /// {done} of {total} done
-  static const dashStepsDone = 'dash.steps_done';
-  /// Create company
-  static const dashStepCompany = 'dash.step_company';
-  /// Done · {company}
-  static const dashStepCompanyDone = 'dash.step_company_done';
-  /// Invite your team
-  static const dashStepTeam = 'dash.step_team';
-  /// They join by SMS
-  static const dashStepTeamBody = 'dash.step_team_body';
-  /// Invite
-  static const dashInvite = 'dash.invite';
-  /// Create first job
-  static const dashStepJob = 'dash.step_job';
-  /// Add one, assign it
-  static const dashStepJobBody = 'dash.step_job_body';
-  /// Create
-  static const dashCreate = 'dash.create';
-  /// How KaamNishaan works
-  static const dashHowTitle = 'dash.how_title';
-  /// Technicians take photos
-  static const dashHow1 = 'dash.how_1';
-  /// AI writes the report
-  static const dashHow2 = 'dash.how_2';
-  /// You approve and send
-  static const dashHow3 = 'dash.how_3';
-  /// No reports to review yet
-  static const dashNoReports = 'dash.no_reports';
-  /// Reports from your team will show here.
-  static const dashNoReportsBody = 'dash.no_reports_body';
-  /// {role} · {company}
-  static const dashRoleCompany = 'dash.role_company';
-  /// {count} min ago
-  static const timeMinutesAgo = 'time.minutes_ago';
-  /// {count} h ago
-  static const timeHoursAgo = 'time.hours_ago';
-  /// just now
-  static const timeJustNow = 'time.just_now';
-  /// Jobs
-  static const jobsTitle = 'jobs.title';
-  /// Search customer or address
-  static const jobsSearch = 'jobs.search';
-  /// Today
-  static const jobsToday = 'jobs.today';
-  /// Tomorrow
-  static const jobsTomorrow = 'jobs.tomorrow';
-  /// Unassigned
-  static const jobsUnassigned = 'jobs.unassigned';
-  /// {date} · {count} jobs today
-  static const jobsCountToday = 'jobs.count_today';
-  /// {date} · {count} jobs
-  static const jobsCountDay = 'jobs.count_day';
-  /// This week · {count} found
-  static const jobsCountWeek = 'jobs.count_week';
-  /// No jobs for “{q}”
-  static const jobsNoResultsTitle = 'jobs.no_results_title';
-  /// Try another customer name or address, or clear the filters.
-  static const jobsNoResultsBody = 'jobs.no_results_body';
-  /// No jobs here
-  static const jobsNoneTitle = 'jobs.none_title';
-  /// New jobs will show here.
-  static const jobsNoneBody = 'jobs.none_body';
-  /// Clear filters
-  static const jobsClearFilters = 'jobs.clear_filters';
-  /// Filters
-  static const jobsFilters = 'jobs.filters';
-  /// New job
-  static const jobsNewJob = 'jobs.new_job';
-  /// Clear search
-  static const jobsClearSearch = 'jobs.clear_search';
-  /// Unassigned
-  static const statusUnassigned = 'status.unassigned';
-  /// Assigned
-  static const statusAssigned = 'status.assigned';
-  /// In progress
-  static const statusInProgress = 'status.in_progress';
-  /// Review
-  static const statusInReview = 'status.in_review';
-  /// Changes asked
-  static const statusChangesRequested = 'status.changes_requested';
-  /// Done
-  static const statusCompleted = 'status.completed';
-  /// Cancelled
-  static const statusCancelled = 'status.cancelled';
-  /// {day} · {time}
-  static const jobWhen = 'job.when';
-  /// Navigate
-  static const jobNavigate = 'job.navigate';
-  /// Call
-  static const jobCall = 'job.call';
-  /// Problem
-  static const jobProblem = 'job.problem';
-  /// Equipment
-  static const jobEquipment = 'job.equipment';
-  /// last service {date}
-  static const jobLastService = 'job.last_service';
-  /// Continue job
-  static const jobContinue = 'job.continue';
-  /// No maps app found on this phone.
-  static const jobNoMapApp = 'job.no_map_app';
-  /// Read aloud
-  static const jobReadAloud = 'job.read_aloud';
-  /// {customer}. {address}. Problem: {problem}.
-  static const jobSpeak = 'job.speak';
-  /// Your proof
-  static const hubYourProof = 'hub.your_proof';
-  /// {count} more steps, then make the report.
-  static const hubStepsLeft = 'hub.steps_left';
-  /// All done. Make the report.
-  static const hubReady = 'hub.ready';
-  /// Not started
-  static const hubNotStarted = 'hub.not_started';
-  /// Start the job to begin.
-  static const hubStartToBegin = 'hub.start_to_begin';
-  /// Start the job first to add proof.
-  static const hubStartFirst = 'hub.start_first';
-  /// Before photos
-  static const hubBefore = 'hub.before';
-  /// During photos
-  static const hubDuring = 'hub.during';
-  /// After photos
-  static const hubAfter = 'hub.after';
-  /// Checklist
-  static const hubChecklist = 'hub.checklist';
-  /// Voice note
-  static const hubVoice = 'hub.voice';
-  /// {count} photos added
-  static const hubPhotosAdded = 'hub.photos_added';
-  /// 1 photo added
-  static const hubPhotoAdded = 'hub.photo_added';
-  /// Take photos now
-  static const hubTakeNow = 'hub.take_now';
-  /// Not added yet
-  static const hubNotYet = 'hub.not_yet';
-  /// Optional
-  static const hubOptional = 'hub.optional';
-  /// Next
-  static const hubNext = 'hub.next';
-  /// {done} of {total}
-  static const hubOf = 'hub.of';
-  /// No checklist for this job
-  static const hubNoChecklist = 'hub.no_checklist';
-  /// Say what you did
-  static const hubSayWhat = 'hub.say_what';
-  /// {count} voice notes
-  static const hubNotesAdded = 'hub.notes_added';
-  /// Make report
-  static const hubMakeReport = 'hub.make_report';
-  /// Add before photos to unlock
-  static const hubUnlockBefore = 'hub.unlock_before';
-  /// Add after photos to unlock
-  static const hubUnlockAfter = 'hub.unlock_after';
-  /// Finish the checklist to unlock
-  static const hubUnlockChecklist = 'hub.unlock_checklist';
-  /// Report sent for review
-  static const hubSentForReview = 'hub.sent_for_review';
-  /// {done} of {total} steps done. {next}
-  static const hubSpeak = 'hub.speak';
-  /// {stage} · photo {count}
-  static const cameraStagePhoto = 'camera.stage_photo';
-  /// BEFORE
-  static const cameraStageBefore = 'camera.stage_before';
-  /// DURING
-  static const cameraStageDuring = 'camera.stage_during';
-  /// AFTER
-  static const cameraStageAfter = 'camera.stage_after';
-  /// Close camera
-  static const cameraClose = 'camera.close';
-  /// Show or hide the photo guide
-  static const cameraHints = 'camera.hints';
-  /// Take photo
-  static const cameraShutter = 'camera.shutter';
-  /// Done
-  static const cameraDone = 'camera.done';
-  /// Photos of this job
-  static const cameraGallery = 'camera.gallery';
-  /// Saved on phone
-  static const cameraSaved = 'camera.saved';
-  /// The photo was not taken. Try again.
-  static const cameraFailed = 'camera.failed';
-  /// The camera can't be opened on this phone.
-  static const cameraUnavailable = 'camera.unavailable';
-  /// Camera is off
-  static const cameraOffTitle = 'camera.off_title';
-  /// KaamNishaan needs the camera to take proof photos of your work.
-  static const cameraOffBody = 'camera.off_body';
-  /// How to turn it on
-  static const cameraHowTitle = 'camera.how_title';
-  /// Open phone settings
-  static const cameraHow1 = 'camera.how_1';
-  /// Tap Apps, then KaamNishaan
-  static const cameraHow2 = 'camera.how_2';
-  /// Turn on Camera
-  static const cameraHow3 = 'camera.how_3';
-  /// Open phone settings
-  static const cameraOpenSettings = 'camera.open_settings';
-  /// Not now
-  static const cameraNotNow = 'camera.not_now';
-  /// Photos
-  static const galleryTitle = 'gallery.title';
-  /// {customer} · {count} photos
-  static const gallerySubtitle = 'gallery.subtitle';
-  /// Before
-  static const galleryBefore = 'gallery.before';
-  /// During
-  static const galleryDuring = 'gallery.during';
-  /// After
-  static const galleryAfter = 'gallery.after';
-  /// {stage} · {count}
-  static const gallerySection = 'gallery.section';
-  /// Add photo
-  static const galleryAddPhoto = 'gallery.add_photo';
-  /// Take photo
-  static const galleryTakePhoto = 'gallery.take_photo';
-  /// Waiting to send
-  static const galleryWaiting = 'gallery.waiting';
-  /// Sending…
-  static const gallerySending = 'gallery.sending';
-  /// Not sent
-  static const galleryNotSent = 'gallery.not_sent';
-  /// No photos yet
-  static const galleryEmpty = 'gallery.empty';
-  /// {count} saved on phone, sending when online
-  static const hubWaitingUpload = 'hub.waiting_upload';
-  /// Before and after
-  static const pairTitle = 'pair.title';
-  /// Drag the line to compare
-  static const pairDrag = 'pair.drag';
-  /// Retake
-  static const pairRetake = 'pair.retake';
-  /// Use in report
-  static const pairUse = 'pair.use';
-  /// Added to the report.
-  static const pairUsed = 'pair.used';
-  /// In the report
-  static const pairInReport = 'pair.in_report';
-  /// Take a before and an after photo first.
-  static const pairNeedBoth = 'pair.need_both';
-  /// The photos are still being sent. Try again when they are on the server.
-  static const pairWaitUpload = 'pair.wait_upload';
-  /// Compare before and after
-  static const pairCompare = 'pair.compare';
-  /// {stage} · photo {n} of {total}
-  static const photoStageOf = 'photo.stage_of';
-  /// Locked. Report already sent.
-  static const photoLockedTitle = 'photo.locked_title';
-  /// Proof photos cannot be changed.
-  static const photoLockedBody = 'photo.locked_body';
-  /// Stage
-  static const photoStage = 'photo.stage';
-  /// Taken
-  static const photoTaken = 'photo.taken';
-  /// By
-  static const photoBy = 'photo.by';
-  /// Place
-  static const photoPlace = 'photo.place';
-  /// Note
-  static const photoNote = 'photo.note';
-  /// Add a note
-  static const photoAddNote = 'photo.add_note';
-  /// What does this photo show?
-  static const photoNoteHint = 'photo.note_hint';
-  /// Save note
-  static const photoSaveNote = 'photo.save_note';
-  /// Delete photo
-  static const photoDelete = 'photo.delete';
-  /// Photo deleted.
-  static const photoDeleted = 'photo.deleted';
-  /// Share
-  static const photoShare = 'photo.share';
-  /// Checklists
-  static const checklistTitle = 'checklist.title';
-  /// {customer} · {count} lists
-  static const checklistCount = 'checklist.count';
-  /// {count} questions · about {minutes} min
-  static const checklistMeta = 'checklist.meta';
-  /// {count} questions
-  static const checklistMetaShort = 'checklist.meta_short';
-  /// {done} of {total} · done at {time}
-  static const checklistDoneAt = 'checklist.done_at';
-  /// Every question can be read out loud.
-  static const checklistReadAloud = 'checklist.read_aloud';
-  /// Start {name}
-  static const checklistStart = 'checklist.start';
-  /// Continue {name}
-  static const checklistContinue = 'checklist.continue';
-  /// No checklists for this job
-  static const checklistNone = 'checklist.none';
-  /// Question {n} of {total}
-  static const questionOf = 'question.of';
-  /// Look for this
-  static const questionLook = 'question.look';
-  /// Yes
-  static const questionYes = 'question.yes';
-  /// No
-  static const questionNo = 'question.no';
-  /// Pass
-  static const questionPass = 'question.pass';
-  /// Fail
-  static const questionFail = 'question.fail';
-  /// Not sure? Take a photo and ask your manager.
-  static const questionNotSure = 'question.not_sure';
-  /// This question needs a photo. Take one to go on.
-  static const questionNeedsPhoto = 'question.needs_photo';
-  /// Photo added
-  static const questionPhotoAdded = 'question.photo_added';
-  /// Next
-  static const questionNext = 'question.next';
-  /// Skip
-  static const questionSkip = 'question.skip';
-  /// Type a number
-  static const questionNumberHint = 'question.number_hint';
-  /// Between {min} and {max}
-  static const questionRange = 'question.range';
-  /// Type or speak your answer
-  static const questionTextHint = 'question.text_hint';
-  /// Sign here
-  static const questionSignHere = 'question.sign_here';
-  /// Clear
-  static const questionClear = 'question.clear';
-  /// Save signature
-  static const questionSaveSignature = 'question.save_signature';
-  /// Signatures need internet. Try again when online.
-  static const questionSignatureOnline = 'question.signature_online';
-  /// Answers are locked: the report was sent.
-  static const questionLocked = 'question.locked';
-  /// Checklist done
-  static const questionFinished = 'question.finished';
-  /// Voice note
-  static const voiceTitle = 'voice.title';
-  /// Tell us what you did
-  static const voicePromptTitle = 'voice.prompt_title';
-  /// What was wrong, what you fixed, any advice.
-  static const voicePromptBody = 'voice.prompt_body';
-  /// Recording {time}
-  static const voiceRecording = 'voice.recording';
-  /// Paused {time}
-  static const voicePaused = 'voice.paused';
-  /// Starting…
-  static const voiceStarting = 'voice.starting';
-  /// Speak in any language
-  static const voiceAnyLanguage = 'voice.any_language';
-  /// Pause
-  static const voicePause = 'voice.pause';
-  /// Go on
-  static const voiceResume = 'voice.resume';
-  /// Stop and save
-  static const voiceStopSave = 'voice.stop_save';
-  /// Too short. Speak a little longer.
-  static const voiceTooShort = 'voice.too_short';
-  /// The microphone did not start. Try again.
-  static const voiceMicFailed = 'voice.mic_failed';
-  /// Voice note saved
-  static const voiceSaved = 'voice.saved';
-  /// 10 minutes is the most for one note. It was saved.
-  static const voiceMaxReached = 'voice.max_reached';
-  /// Microphone is off
-  static const voiceOffTitle = 'voice.off_title';
-  /// Turn it on to record voice notes. You can also type your notes instead.
-  static const voiceOffBody = 'voice.off_body';
-  /// How to turn it on
-  static const voiceOffHow = 'voice.off_how';
-  /// Open phone settings
-  static const voiceOffStep1 = 'voice.off_step1';
-  /// Tap Apps, then KaamNishaan
-  static const voiceOffStep2 = 'voice.off_step2';
-  /// Turn on Microphone
-  static const voiceOffStep3 = 'voice.off_step3';
-  /// Open phone settings
-  static const voiceOpenSettings = 'voice.open_settings';
-  /// Type notes instead
-  static const voiceTypeInstead = 'voice.type_instead';
-  /// Type your note
-  static const voiceTypeTitle = 'voice.type_title';
-  /// Save note
-  static const voiceTypeSave = 'voice.type_save';
-  /// Note saved
-  static const voiceTypedSaved = 'voice.typed_saved';
-  /// Voice notes
-  static const notesTitle = 'notes.title';
-  /// {customer} · {count} notes
-  static const notesCount = 'notes.count';
-  /// Voice note {n}
-  static const notesItem = 'notes.item';
-  /// Typed note {n}
-  static const notesTypedItem = 'notes.typed_item';
-  /// Written
-  static const notesWritten = 'notes.written';
-  /// Writing…
-  static const notesWriting = 'notes.writing';
-  /// Not clear
-  static const notesUnclear = 'notes.unclear';
-  /// Could not write
-  static const notesFailed = 'notes.failed';
-  /// Saved on phone
-  static const notesOnPhone = 'notes.on_phone';
-  /// Not sent · tap to try again
-  static const notesNotSent = 'notes.not_sent';
-  /// Tip
-  static const notesTipTitle = 'notes.tip_title';
-  /// Say the parts you used and your advice for the customer.
-  static const notesTipBody = 'notes.tip_body';
-  /// Record new note
-  static const notesRecordNew = 'notes.record_new';
-  /// No voice notes yet
-  static const notesNone = 'notes.none';
-  /// Delete this note?
-  static const notesDeleteTitle = 'notes.delete_title';
-  /// It will not be used in the report.
-  static const notesDeleteBody = 'notes.delete_body';
-  /// Delete note
-  static const notesDelete = 'notes.delete';
-  /// Note deleted
-  static const notesDeleted = 'notes.deleted';
-  /// {customer} · {time}
-  static const noteSubtitle = 'note.subtitle';
-  /// {language}, written in {target}
-  static const noteWrittenIn = 'note.written_in';
-  /// {language} · not clear
-  static const noteNotClear = 'note.not_clear';
-  /// What you said
-  static const noteWhatYouSaid = 'note.what_you_said';
-  /// What you wrote
-  static const noteWhatYouWrote = 'note.what_you_wrote';
-  /// Your voice recording is always kept.
-  static const noteAlwaysKept = 'note.always_kept';
-  /// Speak to change
-  static const noteSpeakChange = 'note.speak_change';
-  /// Saved
-  static const noteSaved = 'note.saved';
-  /// We couldn't hear clearly.
-  static const noteUnclearTitle = 'note.unclear_title';
-  /// Speak again in a quiet place.
-  static const noteUnclearBody = 'note.unclear_body';
-  /// Hold the phone close to your mouth.
-  static const noteUnclearTip1 = 'note.unclear_tip1';
-  /// Stop the AC or fan while you speak.
-  static const noteUnclearTip2 = 'note.unclear_tip2';
-  /// Hear it
-  static const noteHearIt = 'note.hear_it';
-  /// Type instead
-  static const noteTypeInstead = 'note.type_instead';
-  /// Speak again
-  static const noteSpeakAgain = 'note.speak_again';
-  /// We are writing it down. This takes a few seconds.
-  static const noteWriting = 'note.writing';
-  /// We could not write this note.
-  static const noteFailed = 'note.failed';
-  /// Try again
-  static const noteTryAgain = 'note.try_again';
-  /// Report already sent. Notes cannot be changed.
-  static const noteLocked = 'note.locked';
-  /// This note is still on the phone. It will be written down once it is sent.
-  static const noteOnPhone = 'note.on_phone';
-  /// English
-  static const langEn = 'lang.en';
-  /// Hindi
-  static const langHi = 'lang.hi';
-  /// Gujarati
-  static const langGu = 'lang.gu';
-  /// Spanish
-  static const langEs = 'lang.es';
-  /// French
-  static const langFr = 'lang.fr';
-  /// Your report
-  static const reportYourReport = 'report.your_report';
-  /// Making your report…
-  static const reportMaking = 'report.making';
-  /// About 20 seconds
-  static const reportAboutSeconds = 'report.about_seconds';
-  /// Reading {n} photos
-  static const reportStepPhotos = 'report.step_photos';
-  /// Checking {n} checklists
-  static const reportStepChecklists = 'report.step_checklists';
-  /// Writing from {n} voice notes
-  static const reportStepNotes = 'report.step_notes';
-  /// Writing the report
-  static const reportStepWrite = 'report.step_write';
-  /// Looking for missing proof
-  static const reportStepMissing = 'report.step_missing';
-  /// You can leave. We will tell you when it is ready.
-  static const reportCanLeave = 'report.can_leave';
-  /// Could not make the report
-  static const reportFailedTitle = 'report.failed_title';
-  /// Your photos and notes are safe.
-  static const reportFailedBody = 'report.failed_body';
-  /// {n} photos
-  static const reportCountPhotos = 'report.count_photos';
-  /// {n} checklists
-  static const reportCountChecklists = 'report.count_checklists';
-  /// {n} voice notes
-  static const reportCountNotes = 'report.count_notes';
-  /// Saved
-  static const reportSaved = 'report.saved';
-  /// Try again
-  static const reportTryAgain = 'report.try_again';
-  /// Back to job
-  static const reportBackToJob = 'report.back_to_job';
-  /// Report draft
-  static const reportDraftTitle = 'report.draft_title';
-  /// Report
-  static const reportTitle = 'report.title';
-  /// {customer} · #{number}
-  static const reportSubtitle = 'report.subtitle';
-  /// Drafted by AI from {proof}. Check before sending.
-  static const reportDraftedAi = 'report.drafted_ai';
-  /// Drafted from {proof}. Check before sending.
-  static const reportDraftedPlain = 'report.drafted_plain';
-  /// and
-  static const reportAnd = 'report.and';
-  /// Missing: {what}
-  static const reportMissing = 'report.missing';
-  /// Take photo
-  static const reportTakePhoto = 'report.take_photo';
-  /// Summary
-  static const reportSummary = 'report.summary';
-  /// Work done
-  static const reportWorkDone = 'report.work_done';
-  /// Advice
-  static const reportAdvice = 'report.advice';
-  /// {n} checks passed
-  static const reportChecksPassed = 'report.checks_passed';
-  /// {n} to fix
-  static const reportToFix = 'report.to_fix';
-  /// Edit
-  static const reportEdit = 'report.edit';
-  /// Send to manager
-  static const reportSendManager = 'report.send_manager';
-  /// Waiting for manager
-  static const reportWaitingReview = 'report.waiting_review';
-  /// Approved
-  static const reportApproved = 'report.approved';
-  /// Changes asked
-  static const reportChangesAsked = 'report.changes_asked';
-  /// Sent for review. It cannot be changed now.
-  static const reportLocked = 'report.locked';
-  /// Fill in the work done before sending.
-  static const reportEmptySection = 'report.empty_section';
-  /// Photo added. Making the report again with it.
-  static const reportRedraftAfterPhoto = 'report.redraft_after_photo';
-  /// Edit report
-  static const editorTitle = 'editor.title';
-  /// {customer} · draft
-  static const editorSubtitle = 'editor.subtitle';
-  /// Say or type what you did
-  static const editorHint = 'editor.hint';
-  /// {part} can't be empty. Speak or type.
-  static const editorEmpty = 'editor.empty';
-  /// Photos and checklist answers cannot be changed.
-  static const editorLockedNote = 'editor.locked_note';
-  /// Save changes
-  static const editorSave = 'editor.save';
-  /// Report saved
-  static const editorSaved = 'editor.saved';
-  /// Write {part} again with AI?
-  static const editorAiTitle = 'editor.ai_title';
-  /// Your words in this part will be replaced.
-  static const editorAiBody = 'editor.ai_body';
-  /// Write again
-  static const editorAiYes = 'editor.ai_yes';
-  /// Written again
-  static const editorAiDone = 'editor.ai_done';
-  /// Leave without saving?
-  static const editorUnsavedTitle = 'editor.unsaved_title';
-  /// Your changes will be lost.
-  static const editorUnsavedBody = 'editor.unsaved_body';
-  /// Leave
-  static const editorLeave = 'editor.leave';
-  /// Report sent to manager
-  static const sentTitle = 'sent.title';
-  /// You will get a message when it is approved.
-  static const sentBody = 'sent.body';
-  /// Report #{number} · {n} photos
-  static const sentMeta = 'sent.meta';
-  /// Sent {time}
-  static const sentAt = 'sent.at';
-  /// Your manager will review it
-  static const sentReviewer = 'sent.reviewer';
-  /// Proof is locked while they check
-  static const sentReviewerMeta = 'sent.reviewer_meta';
-  /// Review
-  static const sentReview = 'sent.review';
-  /// Back to Today
-  static const sentBackToday = 'sent.back_today';
-  /// See report
-  static const sentSeeReport = 'sent.see_report';
-  /// Open report draft
-  static const hubOpenDraft = 'hub.open_draft';
-  /// See report
-  static const hubSeeReport = 'hub.see_report';
-  /// Fix the report
-  static const hubFixReport = 'hub.fix_report';
-  /// {n} answers
-  static const reportCountAnswers = 'report.count_answers';
-  /// Jobs done
-  static const meJobsDone = 'me.jobs_done';
-  /// Photos
-  static const mePhotos = 'me.photos';
-  /// Reports
-  static const meReports = 'me.reports';
-  /// Team
-  static const meTeam = 'me.team';
-  /// Customers
-  static const meCustomers = 'me.customers';
-  /// My reports
-  static const meMyReports = 'me.my_reports';
-  /// My reviews
-  static const meMyReviews = 'me.my_reviews';
-  /// Waiting to send
-  static const meWaiting = 'me.waiting';
-  /// Language
-  static const meLanguage = 'me.language';
-  /// Messages
-  static const meMessages = 'me.messages';
-  /// Help
-  static const meHelp = 'me.help';
-  /// Edit profile
-  static const meEditProfile = 'me.edit_profile';
-  /// Log out?
-  static const meLogoutTitle = 'me.logout_title';
-  /// {n} items are not sent yet. If you log out now, they stay on this phone until you log in again.
-  static const meLogoutWaiting = 'me.logout_waiting';
-  /// Log out anyway
-  static const meLogoutAnyway = 'me.logout_anyway';
-  /// Send items first
-  static const meSendFirst = 'me.send_first';
-  /// Language
-  static const langTitle = 'lang.title';
-  /// App and reports
-  static const langSubtitle = 'lang.subtitle';
-  /// App language
-  static const langApp = 'lang.app';
-  /// Reports for customers
-  static const langReports = 'lang.reports';
-  /// Speak in any language. Customers get the report in this language.
-  static const langReportsNote = 'lang.reports_note';
-  /// Your company owner chooses it.
-  static const langReportsOwner = 'lang.reports_owner';
-  /// Language saved
-  static const langSaved = 'lang.saved';
-  /// This week · {n} reports
-  static const myreportsSubtitle = 'myreports.subtitle';
-  /// All {n}
-  static const myreportsAll = 'myreports.all';
-  /// Waiting
-  static const myreportsWaiting = 'myreports.waiting';
-  /// Changes
-  static const myreportsChanges = 'myreports.changes';
-  /// Approved
-  static const myreportsApproved = 'myreports.approved';
-  /// {title} · Report #{number}
-  static const myreportsMeta = 'myreports.meta';
-  /// Approved · sent to customer
-  static const myreportsApprovedSent = 'myreports.approved_sent';
-  /// Draft
-  static const myreportsDraft = 'myreports.draft';
-  /// Fix the report
-  static const myreportsFix = 'myreports.fix';
-  /// No reports this week
-  static const myreportsNone = 'myreports.none';
-  /// Finish a job and make its report. It shows here.
-  static const myreportsNoneBody = 'myreports.none_body';
-  /// Saved on this phone
-  static const pendingSubtitle = 'pending.subtitle';
-  /// {n} items
-  static const pendingSummary = 'pending.summary';
-  /// {n} items · {failed} not sent
-  static const pendingSummaryFailed = 'pending.summary_failed';
-  /// {stage} photo
-  static const pendingPhoto = 'pending.photo';
-  /// Voice note
-  static const pendingVoice = 'pending.voice';
-  /// Typed note
-  static const pendingTyped = 'pending.typed';
-  /// {n} checklist answers
-  static const pendingAnswers = 'pending.answers';
-  /// Waiting
-  static const pendingWaiting = 'pending.waiting';
-  /// Sending…
-  static const pendingSending = 'pending.sending';
-  /// Not sent
-  static const pendingNotSent = 'pending.not_sent';
-  /// Try again
-  static const pendingTryAgain = 'pending.try_again';
-  /// We send them by ourselves when internet comes back.
-  static const pendingAuto = 'pending.auto';
-  /// Send all now
-  static const pendingSendAll = 'pending.send_all';
-  /// Everything is sent
-  static const pendingAllSent = 'pending.all_sent';
-  /// Your manager has all your photos and notes.
-  static const pendingAllSentBody = 'pending.all_sent_body';
-  /// {n} items sent
-  static const pendingSentItems = 'pending.sent_items';
-  /// Sent at {time}
-  static const pendingSentAt = 'pending.sent_at';
-  /// Back to Today
-  static const pendingBackToday = 'pending.back_today';
-  /// No internet. We will send them when it comes back.
-  static const pendingNoInternet = 'pending.no_internet';
-  /// Before
-  static const stageBefore = 'stage.before';
-  /// During
-  static const stageDuring = 'stage.during';
-  /// After
-  static const stageAfter = 'stage.after';
-  /// Profile saved
-  static const profileSaved = 'profile.saved';
-  /// 1 photo
-  static const countPhotoOne = 'count.photo_one';
-  /// {n} photos
-  static const countPhotos = 'count.photos';
-  /// 1 note
-  static const countNoteOne = 'count.note_one';
-  /// {n} notes
-  static const countNotes = 'count.notes';
-  /// Messages
-  static const messagesTitle = 'messages.title';
-  /// {n} new
-  static const messagesNew = 'messages.new';
-  /// All read
-  static const messagesNoneNew = 'messages.none_new';
-  /// Today
-  static const messagesToday = 'messages.today';
-  /// Yesterday
-  static const messagesYesterday = 'messages.yesterday';
-  /// Just now
-  static const messagesJustNow = 'messages.just_now';
-  /// {n} min
-  static const messagesMinutes = 'messages.minutes';
-  /// {n} h
-  static const messagesHours = 'messages.hours';
-  /// No messages yet
-  static const messagesEmpty = 'messages.empty';
-  /// New jobs and report updates show here.
-  static const messagesEmptyBody = 'messages.empty_body';
-  /// New job
-  static const msgJobTitle = 'msg.job_title';
-  /// New job for today
-  static const msgJobTitleToday = 'msg.job_title_today';
-  /// Report to review
-  static const msgSubmittedTitle = 'msg.submitted_title';
-  /// {technician} sent the {customer} report.
-  static const msgSubmittedBody = 'msg.submitted_body';
-  /// Changes asked
-  static const msgChangesTitle = 'msg.changes_title';
-  /// {who}: {customer} — {note}
-  static const msgChangesBody = 'msg.changes_body';
-  /// {who} asked for changes to the {customer} report.
-  static const msgChangesBodyPlain = 'msg.changes_body_plain';
-  /// Report approved
-  static const msgApprovedTitle = 'msg.approved_title';
-  /// {customer} report was approved.
-  static const msgApprovedBody = 'msg.approved_body';
-  /// {customer} report was sent to the customer.
-  static const msgSharedBody = 'msg.shared_body';
-  /// Your manager
-  static const msgYourManager = 'msg.your_manager';
-  /// Your technician
-  static const msgTechnician = 'msg.technician';
-  /// {n} waiting for your review
-  static const queueSubtitle = 'queue.subtitle';
-  /// Nothing waiting for review
-  static const queueSubtitleNone = 'queue.subtitle_none';
-  /// To review {n}
-  static const queueToReview = 'queue.to_review';
-  /// Approved
-  static const queueApproved = 'queue.approved';
-  /// Changes
-  static const queueChanges = 'queue.changes';
-  /// {name} · sent {ago}
-  static const queueSentAgo = 'queue.sent_ago';
-  /// just now
-  static const queueJustNow = 'queue.just_now';
-  /// {n} min ago
-  static const queueMinAgo = 'queue.min_ago';
-  /// {n} h ago
-  static const queueHAgo = 'queue.h_ago';
-  /// {n} days ago
-  static const queueDaysAgo = 'queue.days_ago';
-  /// {n} min
-  static const queueMin = 'queue.min';
-  /// {n} h
-  static const queueH = 'queue.h';
-  /// Oldest · {time}
-  static const queueOldest = 'queue.oldest';
-  /// Waiting {time}
-  static const queueWaiting = 'queue.waiting';
-  /// AI draft ready
-  static const queueAiReady = 'queue.ai_ready';
-  /// {n} approved this week
-  static const queueApprovedWeek = 'queue.approved_week';
-  /// Tap to see them
-  static const queueApprovedWeekBody = 'queue.approved_week_body';
-  /// Nothing to review
-  static const queueEmpty = 'queue.empty';
-  /// Reports your technicians send show here.
-  static const queueEmptyBody = 'queue.empty_body';
-  /// Customer or report number
-  static const queueSearchHint = 'queue.search_hint';
-  /// Customer review
-  static const reviewTitle = 'review.title';
-  /// AI draft
-  static const reviewAiDraft = 'review.ai_draft';
-  /// Plain draft
-  static const reviewPlainDraft = 'review.plain_draft';
-  /// Sent {ago}
-  static const reviewSentAgo = 'review.sent_ago';
-  /// Photos
-  static const reviewPhotos = 'review.photos';
-  /// Checklist
-  static const reviewChecklist = 'review.checklist';
-  /// {a} of {b}
-  static const reviewOf = 'review.of';
-  /// Voice notes
-  static const reviewVoice = 'review.voice';
-  /// AI check · 1 thing to look at
-  static const reviewAiCheckOne = 'review.ai_check_one';
-  /// AI check · {n} things to look at
-  static const reviewAiCheckMany = 'review.ai_check_many';
-  /// {what} · no photo
-  static const reviewNoPhoto = 'review.no_photo';
-  /// Ask for changes
-  static const reviewAskChanges = 'review.ask_changes';
-  /// Approve
-  static const reviewApprove = 'review.approve';
-  /// Approved. Making the PDF…
-  static const reviewApproved = 'review.approved';
-  /// Share with customer
-  static const reviewShare = 'review.share';
-  /// See PDF
-  static const reviewSeePdf = 'review.see_pdf';
-  /// Ask {name} for changes
-  static const changesTitle = 'changes.title';
-  /// They get a message and can fix it on their phone.
-  static const changesBody = 'changes.body';
-  /// What needs fixing?
-  static const changesWhat = 'changes.what';
-  /// Add the missing photos
-  static const changesMissingPhotos = 'changes.missing_photos';
-  /// Add a photo of {what}
-  static const changesPhotoOf = 'changes.photo_of';
-  /// Explain the failed checks ({n})
-  static const changesFailedChecks = 'changes.failed_checks';
-  /// Fix the job details
-  static const changesWrongDetails = 'changes.wrong_details';
-  /// Fix the work done text
-  static const changesUnclearText = 'changes.unclear_text';
-  /// Something else
-  static const changesOther = 'changes.other';
-  /// Note for {name}
-  static const changesNote = 'changes.note';
-  /// Say what to fix
-  static const changesNoteHint = 'changes.note_hint';
-  /// Send to {name}
-  static const changesSend = 'changes.send';
-  /// Say what needs changing.
-  static const changesNoteRequired = 'changes.note_required';
-  /// Choose what needs fixing.
-  static const changesPickOne = 'changes.pick_one';
-  /// Sent to {name}
-  static const changesSent = 'changes.sent';
-  /// Report PDF
-  static const pdfTitle = 'pdf.title';
-  /// #{number} · {n} pages
-  static const pdfSubtitle = 'pdf.subtitle';
-  /// Making the PDF…
-  static const pdfBuilding = 'pdf.building';
-  /// This takes a few seconds.
-  static const pdfBuildingBody = 'pdf.building_body';
-  /// Could not make the PDF
-  static const pdfFailed = 'pdf.failed';
-  /// Try again
-  static const pdfTryAgain = 'pdf.try_again';
-  /// Service report
-  static const pdfServiceReport = 'pdf.service_report';
-  /// Customer
-  static const pdfCustomer = 'pdf.customer';
-  /// Technician
-  static const pdfTechnician = 'pdf.technician';
-  /// Problem
-  static const pdfProblem = 'pdf.problem';
-  /// Checklist · {a} of {b} passed
-  static const pdfChecklist = 'pdf.checklist';
-  /// Approved by {name}
-  static const pdfApprovedBy = 'pdf.approved_by';
-  /// Page 1 of {n}
-  static const pdfPage = 'pdf.page';
-  /// Download
-  static const pdfDownload = 'pdf.download';
-  /// Share
-  static const pdfShare = 'pdf.share';
-  /// Share report
-  static const shareTitle = 'share.title';
-  /// Service report · {n} pages
-  static const sharePdfTitle = 'share.pdf_title';
-  /// PDF · {size} · approved by {name}
-  static const sharePdfMeta = 'share.pdf_meta';
-  /// Send to
-  static const shareSendTo = 'share.send_to';
-  /// Change
-  static const shareChange = 'share.change';
-  /// Send by
-  static const shareSendBy = 'share.send_by';
-  /// SMS
-  static const shareSms = 'share.sms';
-  /// Email
-  static const shareEmail = 'share.email';
-  /// WhatsApp
-  static const shareWhatsapp = 'share.whatsapp';
-  /// More
-  static const shareMore = 'share.more';
-  /// Secure link
-  static const shareSecure = 'share.secure';
-  /// Copy
-  static const shareCopy = 'share.copy';
-  /// Link copied
-  static const shareCopied = 'share.copied';
-  /// Works for 30 days. Only people with the link can open it.
-  static const shareWorks = 'share.works';
-  /// Turn off link
-  static const shareTurnOff = 'share.turn_off';
-  /// Link turned off
-  static const shareTurnedOff = 'share.turned_off';
-  /// Make link
-  static const shareMakeLink = 'share.make_link';
-  /// No link yet
-  static const shareNoLink = 'share.no_link';
-  /// Send to customer
-  static const shareSend = 'share.send';
-  /// Sent to {name}
-  static const shareSent = 'share.sent';
-  /// No phone or email saved
-  static const shareNoContact = 'share.no_contact';
-  /// Add a phone or email to send this report
-  static const shareNoContactBody = 'share.no_contact_body';
-  /// Customer phone or email
-  static const shareAddContact = 'share.add_contact';
-  /// Who gets the report
-  static const shareContactTitle = 'share.contact_title';
-  /// Name
-  static const shareName = 'share.name';
-  /// Phone
-  static const sharePhone = 'share.phone';
-  /// Email
-  static const shareEmailLabel = 'share.email_label';
-  /// Use this
-  static const shareUse = 'share.use';
-  /// Choose how to send it.
-  static const sharePickChannel = 'share.pick_channel';
-  /// Sent {n} times
-  static const shareAlreadySent = 'share.already_sent';
-  /// {n} days
-  static const queueDays = 'queue.days';
-  /// PDF · {size}
-  static const sharePdfMetaPlain = 'share.pdf_meta_plain';
-  /// Edit
-  static const shareEdit = 'share.edit';
-  /// New job
-  static const newjobTitle = 'newjob.title';
-  /// Customer
-  static const newjobCustomer = 'newjob.customer';
-  /// Search customer
-  static const newjobCustomerHint = 'newjob.customer_hint';
-  /// Choose a customer
-  static const newjobCustomerMissing = 'newjob.customer_missing';
-  /// Address
-  static const newjobAddress = 'newjob.address';
-  /// Street, area, city
-  static const newjobAddressHint = 'newjob.address_hint';
-  /// Date
-  static const newjobDate = 'newjob.date';
-  /// Time
-  static const newjobTime = 'newjob.time';
-  /// Pick a time
-  static const newjobTimeHint = 'newjob.time_hint';
-  /// Choose a time
-  static const newjobTimeMissing = 'newjob.time_missing';
-  /// Work to do
-  static const newjobWork = 'newjob.work';
-  /// AC not cooling in room 2
-  static const newjobWorkHint = 'newjob.work_hint';
-  /// Say what work to do
-  static const newjobWorkMissing = 'newjob.work_missing';
-  /// Checklist
-  static const newjobChecklist = 'newjob.checklist';
-  /// No checklist
-  static const newjobChecklistNone = 'newjob.checklist_none';
-  /// Technician
-  static const newjobTechnician = 'newjob.technician';
-  /// Not assigned yet
-  static const newjobNotAssigned = 'newjob.not_assigned';
-  /// Tap to choose a technician
-  static const newjobTapToChoose = 'newjob.tap_to_choose';
-  /// Assign
-  static const newjobAssign = 'newjob.assign';
-  /// Change
-  static const newjobChange = 'newjob.change';
-  /// Create job
-  static const newjobCreate = 'newjob.create';
-  /// Job created
-  static const newjobCreated = 'newjob.created';
-  /// Job given to {name}
-  static const newjobCreatedFor = 'newjob.created_for';
-  /// 1 thing is missing. Please fill it in.
-  static const newjobMissingOne = 'newjob.missing_one';
-  /// {n} things are missing. Please fill them in.
-  static const newjobMissingMany = 'newjob.missing_many';
-  /// Find a customer
-  static const newjobSearchCustomers = 'newjob.search_customers';
-  /// Add “{name}” as new customer
-  static const newjobAddCustomer = 'newjob.add_customer';
-  /// New customer
-  static const newjobNewCustomer = 'newjob.new_customer';
-  /// No customers yet. Type a name to add one.
-  static const newjobNoCustomers = 'newjob.no_customers';
-  /// {n} jobs
-  static const newjobJobsCount = 'newjob.jobs_count';
-  /// Assign technician
-  static const assignTitle = 'assign.title';
-  /// Pick who will do this job
-  static const assignSubtitle = 'assign.subtitle';
-  /// Available today
-  static const assignAvailableToday = 'assign.available_today';
-  /// Available on {day}
-  static const assignAvailableOn = 'assign.available_on';
-  /// {n} jobs today
-  static const assignJobsToday = 'assign.jobs_today';
-  /// {n} jobs that day
-  static const assignJobsThatDay = 'assign.jobs_that_day';
-  /// {km} km away
-  static const assignKmAway = 'assign.km_away';
-  /// {n} of {max} jobs
-  static const assignLoad = 'assign.load';
-  /// Full day
-  static const assignFull = 'assign.full';
-  /// Technician · invite sent
-  static const assignInviteSent = 'assign.invite_sent';
-  /// Can assign after joining
-  static const assignAfterJoining = 'assign.after_joining';
-  /// {name} has not joined yet. You can give jobs after they join.
-  static const assignAfterJoiningToast = 'assign.after_joining_toast';
-  /// Assign {name}
-  static const assignButton = 'assign.button';
-  /// Pick a technician
-  static const assignPick = 'assign.pick';
-  /// No technicians yet
-  static const assignEmptyTitle = 'assign.empty_title';
-  /// Invite a technician first. They can take jobs as soon as they join.
-  static const assignEmptyBody = 'assign.empty_body';
-  /// Invite technician
-  static const assignInvite = 'assign.invite';
-  /// Save job without technician
-  static const assignSaveWithout = 'assign.save_without';
-  /// Job given to {name}
-  static const assignDone = 'assign.done';
-  /// Team
-  static const teamTitle = 'team.title';
-  /// {company} · {n} people
-  static const teamSubtitle = 'team.subtitle';
-  /// All {n}
-  static const teamAll = 'team.all';
-  /// Technicians {n}
-  static const teamTechnicians = 'team.technicians';
-  /// Managers {n}
-  static const teamManagers = 'team.managers';
-  /// Search name or phone
-  static const teamSearch = 'team.search';
-  /// {name} (you)
-  static const teamYou = 'team.you';
-  /// {role} · {n} jobs
-  static const teamJobsToday = 'team.jobs_today';
-  /// Online
-  static const teamOnline = 'team.online';
-  /// On a job
-  static const teamOnJob = 'team.on_job';
-  /// Driving
-  static const teamDriving = 'team.driving';
-  /// Free
-  static const teamFree = 'team.free';
-  /// Waiting to join
-  static const teamWaiting = 'team.waiting';
-  /// {role} · SMS sent {ago}
-  static const teamSmsSent = 'team.sms_sent';
-  /// Resend
-  static const teamResend = 'team.resend';
-  /// Invite sent again to {name}
-  static const teamResent = 'team.resent';
-  /// Invite person
-  static const teamInvitePerson = 'team.invite_person';
-  /// Only you so far
-  static const teamEmptyTitle = 'team.empty_title';
-  /// Invite your technicians. They join with a link by SMS.
-  static const teamEmptyBody = 'team.empty_body';
-  /// No one called “{q}”
-  static const teamNoResults = 'team.no_results';
-  /// Invite person
-  static const inviteTitle = 'invite.title';
-  /// They join with a link by SMS
-  static const inviteSubtitle = 'invite.subtitle';
-  /// Role
-  static const inviteRole = 'invite.role';
-  /// Mobile number
-  static const invitePhone = 'invite.phone';
-  /// Name
-  static const inviteName = 'invite.name';
-  /// Write their name
-  static const inviteNameMissing = 'invite.name_missing';
-  /// SMS language
-  static const inviteLanguage = 'invite.language';
-  /// {name} will get this SMS
-  static const inviteWillGet = 'invite.will_get';
-  /// They will get this SMS
-  static const inviteTheyGet = 'invite.they_get';
-  /// Send invite
-  static const inviteSend = 'invite.send';
-  /// Invite sent to {name}
-  static const inviteSent = 'invite.sent';
-  /// Already in your team ({name}).
-  static const inviteInTeam = 'invite.in_team';
-  /// Already invited ({name}).
-  static const inviteAlreadyInvited = 'invite.already_invited';
-  /// See {name} in Team
-  static const inviteSeeInTeam = 'invite.see_in_team';
-  /// Reports sent
-  static const meReportsSent = 'me.reports_sent';
-  /// To review
-  static const meToReview = 'me.to_review';
-  /// {n} people
-  static const mePeople = 'me.people';
-  /// Company settings
-  static const meCompanySettings = 'me.company_settings';
-  /// Customer since {year} · {n} jobs
-  static const customerSince = 'customer.since';
-  /// Main contact
-  static const customerMainContact = 'customer.main_contact';
-  /// {title} · main contact
-  static const customerRoleMain = 'customer.role_main';
-  /// Phone
-  static const customerPhone = 'customer.phone';
-  /// Email
-  static const customerEmail = 'customer.email';
-  /// Address
-  static const customerAddress = 'customer.address';
-  /// Not saved
-  static const customerNotSaved = 'customer.not_saved';
-  /// Past jobs
-  static const customerPastJobs = 'customer.past_jobs';
-  /// See all {n}
-  static const customerSeeAll = 'customer.see_all';
-  /// Show less
-  static const customerShowLess = 'customer.show_less';
-  /// No jobs for this customer yet.
-  static const customerNoJobs = 'customer.no_jobs';
-  /// New job for this customer
-  static const customerNewJob = 'customer.new_job';
-  /// Not assigned
-  static const customerNotAssigned = 'customer.not_assigned';
-  /// Company settings
-  static const settingsTitle = 'settings.title';
-  /// Only the owner can change these
-  static const settingsSubtitle = 'settings.subtitle';
-  /// Owner only
-  static const settingsOwnerOnly = 'settings.owner_only';
-  /// Only the owner can change this.
-  static const settingsOwnerOnlyToast = 'settings.owner_only_toast';
+  /// Voice agent
+  static const adminAcAgent = 'admin.ac.agent';
+  /// 1 call, no voicemail
+  static const adminAcAttCallOnly = 'admin.ac.att.call_only';
+  /// 1 call + 1 voicemail
+  static const adminAcAttCallVoicemail = 'admin.ac.att.call_voicemail';
+  /// 2 calls, a day apart
+  static const adminAcAttTwoCalls = 'admin.ac.att.two_calls';
+  /// Attempts
+  static const adminAcAttempts = 'admin.ac.attempts';
+  /// Monthly AI budget
+  static const adminAcBudget = 'admin.ac.budget';
+  /// No limit · spent this month {spent}
+  static const adminAcBudgetNone = 'admin.ac.budget_none';
+  /// Spent this month {spent} ({pct}%). At the limit, reports are written from the template and the assistant pauses; voice notes keep working.
+  static const adminAcBudgetNow = 'admin.ac.budget_now';
   /// Company
-  static const settingsCompany = 'settings.company';
-  /// Trade
-  static const settingsTrade = 'settings.trade';
-  /// Country
-  static const settingsCountry = 'settings.country';
-  /// The country sets prices and phone numbers, so it can't be changed here.
-  static const settingsCountryFixed = 'settings.country_fixed';
-  /// Logo
-  static const settingsLogo = 'settings.logo';
-  /// Logo saved
-  static const settingsLogoSaved = 'settings.logo_saved';
-  /// Plan
-  static const settingsPlan = 'settings.plan';
-  /// {name} · {price}/mo
-  static const settingsPlanPrice = 'settings.plan_price';
-  /// Trial ends {date}
-  static const settingsTrialEnds = 'settings.trial_ends';
-  /// Permissions
-  static const settingsPermissions = 'settings.permissions';
-  /// Technicians can share reports
-  static const settingsTechShare = 'settings.tech_share';
-  /// If off, only managers can send reports to customers.
-  static const settingsTechShareHelp = 'settings.tech_share_help';
-  /// Saved
-  static const settingsSaved = 'settings.saved';
-  /// Send {name} a link to rate this job. Reminders and one AI call follow if needed.
-  static const reviewNotAskedBody = 'review.not_asked_body';
-  /// Send {name} a link to rate this job. A reminder follows if needed.
-  static const reviewNotAskedBodyNoCall = 'review.not_asked_body_no_call';
-  /// the customer
-  static const reviewTheCustomer = 'review.the_customer';
-  /// Add the customer's phone or email to ask for a review.
-  static const reviewNoContact = 'review.no_contact';
-  /// Your company asks for reviews itself.
-  static const reviewNotAllowed = 'review.not_allowed';
-  /// Queued
-  static const reviewQueued = 'review.queued';
-  /// Will send after your manager approves the report.
-  static const reviewQueuedBody = 'review.queued_body';
-  /// Cancel request
-  static const reviewCancel = 'review.cancel';
-  /// Request cancelled
-  static const reviewCancelled = 'review.cancelled';
-  /// Waiting for rating
-  static const reviewWaiting = 'review.waiting';
-  /// Link sent with report
-  static const reviewLinkSent = 'review.link_sent';
-  /// Reminder
-  static const reviewReminder = 'review.reminder';
-  /// AI review call
-  static const reviewAiCall = 'review.ai_call';
-  /// {date} · if still no rating
-  static const reviewIfNoRating = 'review.if_no_rating';
-  /// Requested by you · no need to ask again.
-  static const reviewByYou = 'review.by_you';
-  /// Requested by {name} · no need to ask again.
-  static const reviewByName = 'review.by_name';
-  /// Rated
-  static const reviewRated = 'review.rated';
-  /// {n} · via {source} · {date}
-  static const reviewRatedLine = 'review.rated_line';
-  /// link
-  static const reviewViaLink = 'review.via_link';
-  /// AI call
-  static const reviewViaAiCall = 'review.via_ai_call';
-  /// message
-  static const reviewViaReply = 'review.via_reply';
-  /// Open review
-  static const reviewOpen = 'review.open';
-  /// All reminders stopped.
-  static const reviewAllStopped = 'review.all_stopped';
-  /// Customer asked not to be contacted for reviews.
-  static const reviewOptedOutBody = 'review.opted_out_body';
-  /// Said “don't ask” on {date}. No more messages or calls.
-  static const reviewOptedOutLine = 'review.opted_out_line';
-  /// Stopped
-  static const reviewStopped = 'review.stopped';
-  /// No rating came. Nothing more will be sent.
-  static const reviewStoppedBody = 'review.stopped_body';
-  /// Asked. The link goes with the approved report.
-  static const reviewAskedQueued = 'review.asked_queued';
-  /// Rating link sent to {name}
-  static const reviewAskedSent = 'review.asked_sent';
-  /// Ask {name} for a review?
-  static const askTitle = 'ask.title';
-  /// Day {n}
-  static const askDay = 'ask.day';
-  /// Rating link goes with the approved report
-  static const askDay0 = 'ask.day0';
-  /// Reminder by SMS and email
-  static const askDay2 = 'ask.day2';
-  /// One AI call if still no rating
-  static const askDay5 = 'ask.day5';
-  /// Stops as soon as the customer rates, in any way.
-  static const askStops = 'ask.stops';
-  /// Not now
-  static const askNotNow = 'ask.not_now';
-  /// Ask for review
-  static const askAsk = 'ask.ask';
-  /// You will get a message when it is approved.
-  static const askSentBody = 'ask.sent_body';
-  /// From customers · this year
-  static const myrevSubtitle = 'myrev.subtitle';
-  /// {n} reviews · {p}% gave 4★ or more
-  static const myrevSummary = 'myrev.summary';
-  /// No ratings yet
-  static const myrevEmptyHead = 'myrev.empty_head';
-  /// Your first one is on its way
-  static const myrevEmptySub = 'myrev.empty_sub';
-  /// No reviews yet
-  static const myrevEmptyTitle = 'myrev.empty_title';
-  /// When a customer rates one of your jobs, it will show here.
-  static const myrevEmptyBody = 'myrev.empty_body';
-  /// Tip: clear before and after photos get more 5-star ratings.
-  static const myrevTip = 'myrev.tip';
-  /// See jobs to ask about
-  static const myrevSeeJobs = 'myrev.see_jobs';
-  /// {name} replied
-  static const myrevReplied = 'myrev.replied';
-  /// {label} · {n}
-  static const myrevTagCount = 'myrev.tag_count';
-  /// Review
-  static const rdTitle = 'rd.title';
-  /// Report #{n}
-  static const rdSubtitle = 'rd.subtitle';
-  /// The service
-  static const rdService = 'rd.service';
-  /// You ({name})
-  static const rdYou = 'rd.you';
-  /// {name} replied · {ago}
-  static const rdRepliedAgo = 'rd.replied_ago';
-  /// Only you and your managers see this review.
-  static const rdPrivate = 'rd.private';
-  /// On time
-  static const tagOnTime = 'tag.on_time';
-  /// Clean work
-  static const tagCleanWork = 'tag.clean_work';
-  /// Explained clearly
-  static const tagExplainedClearly = 'tag.explained_clearly';
-  /// Polite
-  static const tagPolite = 'tag.polite';
-  /// Fixed first time
-  static const tagFixedFirstTime = 'tag.fixed_first_time';
-  /// Late
-  static const tagLate = 'tag.late';
-  /// Messy
-  static const tagMessy = 'tag.messy';
-  /// Not fixed
-  static const tagNotFixed = 'tag.not_fixed';
-  /// Not explained
-  static const tagNotExplained = 'tag.not_explained';
-  /// Rude
-  static const tagRude = 'tag.rude';
-  /// Customer reviews
-  static const crevTitle = 'crev.title';
-  /// {n} reviews
-  static const crevCount = 'crev.count';
-  /// 1 review
-  static const crevCountOne = 'crev.count_one';
-  /// All {n}
-  static const crevAll = 'crev.all';
-  /// Needs reply {n}
-  static const crevNeedsReply = 'crev.needs_reply';
-  /// Low {n}
-  static const crevLow = 'crev.low';
+  static const adminAcCCompany = 'admin.ac.c_company';
+  /// Cost
+  static const adminAcCCost = 'admin.ac.c_cost';
+  /// Customer
+  static const adminAcCCustomer = 'admin.ac.c_customer';
+  /// Language
+  static const adminAcCLanguage = 'admin.ac.c_language';
+  /// Length
+  static const adminAcCLength = 'admin.ac.c_length';
+  /// Outcome
+  static const adminAcCOutcome = 'admin.ac.c_outcome';
+  /// Time
+  static const adminAcCTime = 'admin.ac.c_time';
+  /// Skip do-not-call / DND numbers
+  static const adminAcDnd = 'admin.ac.dnd';
+  /// Checked before every call. Always on.
+  static const adminAcDndHint = 'admin.ac.dnd_hint';
+  /// AI review calls are paused and {n} calls are waiting. Customers get the rating link by SMS instead.
+  static const adminAcDownBody = 'admin.ac.down_body';
+  /// Voice provider not responding since {time}
+  static const adminAcDownTitle = 'admin.ac.down_title';
+  /// What the voice agent should do at this step, in plain English. Saving makes a new script version, used from the next call.
+  static const adminAcEditBody = 'admin.ac.edit_body';
+  /// Instructions for the agent
+  static const adminAcEditLabel = 'admin.ac.edit_label';
+  /// Edit “{step}”
+  static const adminAcEditStep = 'admin.ac.edit_step';
+  /// Day 5 calls, and SMS sent instead of them, appear here.
+  static const adminAcEmptyBody = 'admin.ac.empty_body';
+  /// No calls yet
+  static const adminAcEmptyTitle = 'admin.ac.empty_title';
+  /// Only use evidence from the job
+  static const adminAcEvidence = 'admin.ac.evidence';
+  /// Every sentence is linked to a photo, note or answer.
+  static const adminAcEvidenceHint = 'admin.ac.evidence_hint';
+  /// When the AI fails while writing a report
+  static const adminAcFallback = 'admin.ac.fallback';
+  /// The technician sees an error and can try again. Photos and notes are kept.
+  static const adminAcFallbackHintError = 'admin.ac.fallback_hint.error';
+  /// The report is written from the template instead, so the technician isn't stuck.
+  static const adminAcFallbackHintTemplate = 'admin.ac.fallback_hint.template';
+  /// Show an error, try again
+  static const adminAcFbError = 'admin.ac.fb.error';
+  /// Write from the template
+  static const adminAcFbTemplate = 'admin.ac.fb.template';
+  /// Calling hours
+  static const adminAcHours = 'admin.ac.hours';
+  /// {from} – {to}, company time
+  static const adminAcHoursV = 'admin.ac.hours_v';
+  /// Flag invented work
+  static const adminAcInvented = 'admin.ac.invented';
+  /// Sentences with no evidence are flagged for the manager before approval.
+  static const adminAcInventedHint = 'admin.ac.invented_hint';
+  /// Answered
+  static const adminAcKAnswered = 'admin.ac.k_answered';
+  /// Voicemail + SMS for the rest
+  static const adminAcKAnsweredSub = 'admin.ac.k_answered_sub';
+  /// Calls (30 d)
+  static const adminAcKCalls = 'admin.ac.k_calls';
+  /// Only jobs with no rating by Day 5
+  static const adminAcKCallsSub = 'admin.ac.k_calls_sub';
+  /// Cost
+  static const adminAcKCost = 'admin.ac.k_cost';
+  /// Per call, average
+  static const adminAcKCostSub = 'admin.ac.k_cost_sub';
+  /// Opted out
+  static const adminAcKOpted = 'admin.ac.k_opted';
+  /// Never called again
+  static const adminAcKOptedSub = 'admin.ac.k_opted_sub';
+  /// Rated on the call
+  static const adminAcKRated = 'admin.ac.k_rated';
+  /// Of answered calls
+  static const adminAcKRatedSub = 'admin.ac.k_rated_sub';
+  /// {n} sent by SMS instead
+  static const adminAcKSms = 'admin.ac.k_sms';
+  /// No AI key on the server yet: reports are written from the template, and voice notes wait.
+  static const adminAcKeyOff = 'admin.ac.key_off';
+  /// The AI key is set on the server. It is never shown here.
+  static const adminAcKeyOn = 'admin.ac.key_on';
+  /// Always English
+  static const adminAcLangEn = 'admin.ac.lang.en';
+  /// Customer’s report language
+  static const adminAcLangReport = 'admin.ac.lang.report';
+  /// Language
+  static const adminAcLanguage = 'admin.ac.language';
+  /// Limits and safety
+  static const adminAcLimits = 'admin.ac.limits';
+  /// v{n} live
+  static const adminAcLive = 'admin.ac.live';
+  /// Locked switches show how KaamNishaan always works.
+  static const adminAcLocked = 'admin.ac.locked';
+  /// Remove personal data from prompts
+  static const adminAcMask = 'admin.ac.mask';
+  /// Phone numbers and emails in notes are hidden before sending.
+  static const adminAcMaskHint = 'admin.ac.mask_hint';
+  /// Models
+  static const adminAcModels = 'admin.ac.models';
+  /// Over 80% of this month's budget is used.
+  static const adminAcNear = 'admin.ac.near';
+  /// Keep {job} in the greeting so the customer knows which job it is about.
+  static const adminAcNeedsJob = 'admin.ac.needs_job';
+  /// Not used yet
+  static const adminAcNotUsed = 'admin.ac.not_used';
+  /// Call back later
+  static const adminAcOCallBack = 'admin.ac.o.call_back';
+  /// Call back {time}
+  static const adminAcOCallBackAt = 'admin.ac.o.call_back_at';
+  /// Failed · provider down → SMS sent
+  static const adminAcOFailedSms = 'admin.ac.o.failed_sms';
+  /// No answer
+  static const adminAcONoAnswer = 'admin.ac.o.no_answer';
+  /// No call credits → SMS sent
+  static const adminAcONoCreditsSms = 'admin.ac.o.no_credits_sms';
+  /// No voice provider → SMS sent
+  static const adminAcONoProviderSms = 'admin.ac.o.no_provider_sms';
+  /// Nothing sent
+  static const adminAcONotSent = 'admin.ac.o.not_sent';
+  /// Opted out
+  static const adminAcOOptedOut = 'admin.ac.o.opted_out';
+  /// Rated {n}★
+  static const adminAcORated = 'admin.ac.o.rated';
+  /// Rated {n}★ · manager call asked
+  static const adminAcORatedCall = 'admin.ac.o.rated_call';
+  /// Skipped · do-not-call list
+  static const adminAcOSkippedDnd = 'admin.ac.o.skipped_dnd';
+  /// Voicemail + SMS sent
+  static const adminAcOVoicemailSms = 'admin.ac.o.voicemail_sms';
+  /// Wrong person
+  static const adminAcOWrongPerson = 'admin.ac.o.wrong_person';
+  /// No calls are placed. When a Day 5 call is due, the customer gets the rating link by SMS instead. Calls start once a provider is added.
+  static const adminAcOffBody = 'admin.ac.off_body';
+  /// No voice provider is connected yet.
+  static const adminAcOffTitle = 'admin.ac.off_title';
+  /// Call only if still no rating
+  static const adminAcOnly = 'admin.ac.only';
+  /// Cancelled the moment any rating arrives. Always on.
+  static const adminAcOnlyHint = 'admin.ac.only_hint';
+  /// Opening line (required)
+  static const adminAcOpening = 'admin.ac.opening';
+  /// Every call starts with this. It cannot be removed.
+  static const adminAcOpeningNote = 'admin.ac.opening_note';
+  /// The budget is used up: reports are written from the template and the assistant is paused until next month.
+  static const adminAcOver = 'admin.ac.over';
+  /// Photo check model
+  static const adminAcPhotoModel = 'admin.ac.photo_model';
+  /// Photos aren't checked by AI yet. It comes in a later version.
+  static const adminAcPhotoModelHint = 'admin.ac.photo_model_hint';
+  /// Record calls
+  static const adminAcRecord = 'admin.ac.record';
+  /// Recording and transcript saved with the review
+  static const adminAcRecordHint = 'admin.ac.record_hint';
+  /// Retry now
+  static const adminAcRetry = 'admin.ac.retry';
+  /// Save changes
+  static const adminAcSave = 'admin.ac.save';
+  /// Save step
+  static const adminAcSaveStep = 'admin.ac.save_step';
+  /// Saved. The next calls use these settings.
+  static const adminAcSaved = 'admin.ac.saved';
+  /// Call script
+  static const adminAcScript = 'admin.ac.script';
+  /// The steps are written in English; the agent speaks the customer’s language.
+  static const adminAcScriptNote = 'admin.ac.script_note';
+  /// Speech to text
+  static const adminAcSpeechModel = 'admin.ac.speech_model';
+  /// Turns technicians' voice notes into text.
+  static const adminAcSpeechModelHint = 'admin.ac.speech_model_hint';
+  /// Ask for a 1–5 rating
+  static const adminAcStepAskRating = 'admin.ac.step.ask_rating';
+  /// 1–2 → what went wrong, manager call?
+  static const adminAcStepBad = 'admin.ac.step.bad';
+  /// Not a good time → callback or send link
+  static const adminAcStepBadTime = 'admin.ac.step.bad_time';
+  /// Read back, save, thank-you SMS
+  static const adminAcStepConfirm = 'admin.ac.step.confirm';
+  /// "Don’t call" → opt out for good
+  static const adminAcStepDontCall = 'admin.ac.step.dont_call';
+  /// 3–5 → what went well, public OK?
+  static const adminAcStepGood = 'admin.ac.step.good';
+  /// Greeting + AI and recording disclosure
+  static const adminAcStepGreeting = 'admin.ac.step.greeting';
+  /// No answer → voicemail + SMS
+  static const adminAcStepNoAnswer = 'admin.ac.step.no_answer';
+  /// Wrong person → mark contact invalid
+  static const adminAcStepWrongPerson = 'admin.ac.step.wrong_person';
+  /// Saved. Script v{n} is live.
+  static const adminAcStepSaved = 'admin.ac.step_saved';
+  /// Test call to my phone
+  static const adminAcTest = 'admin.ac.test';
+  /// Enter a full phone number.
+  static const adminAcTestBadPhone = 'admin.ac.test_bad_phone';
+  /// The agent calls you with the live script and a sample job. It isn’t recorded.
+  static const adminAcTestBody = 'admin.ac.test_body';
+  /// Test call finished ({length}).
+  static const adminAcTestDone = 'admin.ac.test_done';
   /// Call me
-  static const crevCallMe = 'crev.call_me';
-  /// Follow up
-  static const crevFollowUp = 'crev.follow_up';
-  /// Reply
-  static const crevReply = 'crev.reply';
-  /// Resolved
-  static const crevResolved = 'crev.resolved';
-  /// No reviews yet
-  static const crevEmpty = 'crev.empty';
-  /// Ask for a rating when you share a report. Reviews show here.
-  static const crevEmptyBody = 'crev.empty_body';
-  /// Nothing here right now.
-  static const crevNoneHere = 'crev.none_here';
-  /// Reviews
-  static const crevMore = 'crev.more';
-  /// Review requests
-  static const crevRequests = 'crev.requests';
-  /// Review settings
-  static const crevSettings = 'crev.settings';
-  /// Review follow-ups
-  static const crevFollowups = 'crev.followups';
-  /// Reply to {name}
-  static const crevReplyTo = 'crev.reply_to';
-  /// Suggest a reply
-  static const crevSuggest = 'crev.suggest';
-  /// Write your reply
-  static const crevReplyHint = 'crev.reply_hint';
-  /// Your reply shows on the customer's report page and to {name}.
-  static const crevReplyNote = 'crev.reply_note';
-  /// Your reply shows on the customer's report page.
-  static const crevReplyNotePlain = 'crev.reply_note_plain';
-  /// Send reply
-  static const crevSendReply = 'crev.send_reply';
-  /// Reply sent
-  static const crevReplied = 'crev.replied';
-  /// {n}-star review
-  static const crevNStar = 'crev.n_star';
-  /// Needs follow-up · {ago}
-  static const crevNeedsFollow = 'crev.needs_follow';
-  /// Resolved · {ago}
-  static const crevResolvedAgo = 'crev.resolved_ago';
-  /// Report #{n}
-  static const crevReportN = 'crev.report_n';
-  /// Customer asked for a call
-  static const crevAskedCall = 'crev.asked_call';
-  /// within 1 working day
-  static const crevCallWithin = 'crev.call_within';
-  /// Call now
-  static const crevCallNow = 'crev.call_now';
-  /// Revisit job
-  static const crevRevisit = 'crev.revisit';
-  /// Private note for the team
-  static const crevNote = 'crev.note';
-  /// Only your team sees this
-  static const crevNoteHint = 'crev.note_hint';
-  /// Save note
-  static const crevSaveNote = 'crev.save_note';
-  /// Note saved
-  static const crevNoteSaved = 'crev.note_saved';
-  /// Mark as resolved
-  static const crevMarkResolved = 'crev.mark_resolved';
-  /// Marked as resolved
-  static const crevMarkedResolved = 'crev.marked_resolved';
-  /// Reopen
-  static const crevReopen = 'crev.reopen';
-  /// No phone number for this customer.
-  static const crevNoPhone = 'crev.no_phone';
-  /// Where each job's rating stands
-  static const rreqSubtitle = 'rreq.subtitle';
-  /// Waiting {n}
-  static const rreqWaiting = 'rreq.waiting';
-  /// Rated {n}
-  static const rreqRated = 'rreq.rated';
-  /// Opted out {n}
-  static const rreqOptedOut = 'rreq.opted_out';
-  /// AI call planned
-  static const rreqAiCallPlanned = 'rreq.ai_call_planned';
-  /// Reminder sent
-  static const rreqReminderSent = 'rreq.reminder_sent';
-  /// Link sent
-  static const rreqLinkSent = 'rreq.link_sent';
-  /// Rated {n}★ via {source}
-  static const rreqRatedVia = 'rreq.rated_via';
-  /// Reminder on {date}
-  static const rreqReminderOn = 'rreq.reminder_on';
-  /// AI call on {date}
-  static const rreqAiCallOn = 'rreq.ai_call_on';
-  /// Sends when the report is approved
-  static const rreqAfterApproval = 'rreq.after_approval';
-  /// Waiting for the customer
-  static const rreqWaitingLine = 'rreq.waiting_line';
-  /// Follow-ups stopped
-  static const rreqStoppedLine = 'rreq.stopped_line';
-  /// No more contact
-  static const rreqNoContact = 'rreq.no_contact';
-  /// Nothing here yet
-  static const rreqEmpty = 'rreq.empty';
-  /// Requests show here once you ask a customer to rate a job.
-  static const rreqEmptyBody = 'rreq.empty_body';
-  /// Company settings · owner and managers
-  static const rsetSubtitle = 'rset.subtitle';
-  /// Ask for a review
-  static const rsetAsk = 'rset.ask';
-  /// Add "Rate this job" to every shared report
-  static const rsetAskSub = 'rset.ask_sub';
-  /// Send a reminder
-  static const rsetRemind = 'rset.remind';
-  /// If no review after {n} days, by {channels}
-  static const rsetRemindSub = 'rset.remind_sub';
-  /// Alert me for low ratings
-  static const rsetLow = 'rset.low';
-  /// {n} stars or less · in the app
-  static const rsetLowSub = 'rset.low_sub';
-  /// Technicians see their reviews
-  static const rsetTechsSee = 'rset.techs_see';
-  /// Shown in their app under Me
-  static const rsetTechsSeeSub = 'rset.techs_see_sub';
-  /// Show good reviews on our page
-  static const rsetPublic = 'rset.public';
-  /// 5-star reviews, only with customer permission
-  static const rsetPublicSub = 'rset.public_sub';
-  /// Google review link (optional)
-  static const rsetGoogle = 'rset.google';
-  /// Happy customers get a button to post on Google too.
-  static const rsetGoogleHelp = 'rset.google_help';
-  /// Saved
-  static const rsetSaved = 'rset.saved';
-  /// Day {n}
-  static const rfuDay = 'rfu.day';
-  /// With the report
-  static const rfuWithReport = 'rfu.with_report';
-  /// Rating link in the share message
-  static const rfuWithReportSub = 'rfu.with_report_sub';
-  /// Reminder
-  static const rfuReminder = 'rfu.reminder';
-  /// Only if there is no rating yet
-  static const rfuReminderSub = 'rfu.reminder_sub';
-  /// AI review call
-  static const rfuAi = 'rfu.ai';
-  /// One call + voicemail, {from} – {to}
-  static const rfuAiSub = 'rfu.ai_sub';
-  /// Customer's language
-  static const rfuAiLang = 'rfu.ai_lang';
-  /// Recorded · disclosed
-  static const rfuAiRecorded = 'rfu.ai_recorded';
-  /// AI calls are not live yet. We will tell you when they start.
-  static const rfuAiNotLive = 'rfu.ai_not_live';
-  /// Stops right away when the customer rates by any channel, or asks not to be contacted.
-  static const rfuStops = 'rfu.stops';
-  /// Technicians can request reviews
-  static const rfuTechs = 'rfu.techs';
-  /// Shows "Request review" in their app
-  static const rfuTechsSub = 'rfu.techs_sub';
-  /// Pick at least one way to send.
-  static const rfuPickOne = 'rfu.pick_one';
-  /// Ask for a rating too
-  static const shareAskReview = 'share.ask_review';
-  /// Reminders follow if there is no rating
-  static const shareAskReviewSub = 'share.ask_review_sub';
-  /// A rating was already asked for this job.
-  static const shareReviewAsked = 'share.review_asked';
-  /// New review
-  static const msgReviewTitle = 'msg.review_title';
-  /// {customer} rated you {n}★
-  static const msgReviewBody = 'msg.review_body';
-  /// Low rating
-  static const msgLowTitle = 'msg.low_title';
-  /// {customer} gave {n}★. Follow up soon.
-  static const msgLowBody = 'msg.low_body';
-  /// Plan and billing
-  static const billTitle = 'bill.title';
-  /// Owner only
-  static const billOwnerOnly = 'bill.owner_only';
-  /// Renews {date}
-  static const billRenews = 'bill.renews';
-  /// Trial ends {date}
-  static const billTrialEnds = 'bill.trial_ends';
-  /// {price} / month
-  static const billPerMonth = 'bill.per_month';
-  /// Custom price
-  static const billContact = 'bill.contact';
-  /// This month
-  static const billThisMonth = 'bill.this_month';
-  /// Technicians
-  static const billTechnicians = 'bill.technicians';
-  /// Reports
-  static const billReports = 'bill.reports';
-  /// AI questions
-  static const billAiQuestions = 'bill.ai_questions';
-  /// Follow-up credits
-  static const billCredits = 'bill.credits';
-  /// {a} of {b}
-  static const billOf = 'bill.of';
-  /// {a} · no limit
-  static const billNoLimit = 'bill.no_limit';
-  /// Most popular
-  static const billMostPopular = 'bill.most_popular';
-  /// {price}/mo · {techs} techs · {reports} reports
-  static const billPlanLine = 'bill.plan_line';
-  /// {price}/mo · {techs} techs · fair-use reports
-  static const billPlanLineFair = 'bill.plan_line_fair';
-  /// Upgrade to {name}
-  static const billUpgrade = 'bill.upgrade';
-  /// Online payment isn't switched on yet. Write to us to change your plan.
-  static const billPaymentsSoon = 'bill.payments_soon';
-  /// Invoices and card payment come when online payment is switched on.
-  static const billPaymentsNote = 'bill.payments_note';
-  /// Only the owner can see the plan and billing.
-  static const billOwnerOnlyToast = 'bill.owner_only_toast';
-  /// {plan} · resets on {date}
-  static const credSub = 'cred.sub';
-  /// credits left of {n}
-  static const credLeftOf = 'cred.left_of';
-  /// credits left
-  static const credLeft = 'cred.left';
-  /// No limit on your plan
-  static const credNoLimit = 'cred.no_limit';
-  /// Reminders (WhatsApp, SMS)
-  static const credReminders = 'cred.reminders';
-  /// AI review calls · {n} calls
-  static const credAiCalls = 'cred.ai_calls';
-  /// Emails
-  static const credEmails = 'cred.emails';
-  /// free
-  static const credFree = 'cred.free';
-  /// {n} credits
-  static const credN = 'cred.n';
-  /// Includes {n} bought credits
-  static const credBoughtLeft = 'cred.bought_left';
-  /// At 0 credits, reminders by SMS and WhatsApp pause and AI calls stop. Rating links in emails keep working.
-  static const credWarning = 'cred.warning';
-  /// Top up
-  static const credTopUp = 'cred.top_up';
-  /// ≈ {calls} AI calls or {msgs} messages
-  static const credPackHint = 'cred.pack_hint';
-  /// Save {n}%
-  static const credSave = 'cred.save';
-  /// Buy {n} credits · {price}
-  static const credBuy = 'cred.buy';
-  /// Buying credits starts when online payment is switched on.
-  static const credBuySoon = 'cred.buy_soon';
-  /// Paused · no credits
-  static const reviewPaused = 'review.paused';
-  /// Top up credits to send the reminder
-  static const rreqPausedLine = 'rreq.paused_line';
-  /// Checklists
-  static const cbTitle = 'cb.title';
-  /// New checklist
-  static const cbNew = 'cb.new';
-  /// Checklist name
-  static const cbName = 'cb.name';
-  /// e.g. AC service check
-  static const cbNameHint = 'cb.name_hint';
-  /// Create
-  static const cbCreate = 'cb.create';
-  /// {n} questions · used in {m} jobs
-  static const cbMeta = 'cb.meta';
-  /// By KaamNishaan
-  static const cbByKn = 'cb.by_kn';
-  /// Draft
-  static const cbDraft = 'cb.draft';
-  /// Not in new jobs
-  static const cbArchived = 'cb.archived';
-  /// Translations: {n} of 5 languages ready
-  static const cbTrReady = 'cb.tr_ready';
-  /// Add question
-  static const cbAdd = 'cb.add';
-  /// Edit question
-  static const cbEdit = 'cb.edit';
-  /// Question
-  static const cbQuestion = 'cb.question';
-  /// Ask one thing
-  static const cbQuestionHint = 'cb.question_hint';
-  /// Answer type
-  static const cbAnswerType = 'cb.answer_type';
-  /// Yes / No
-  static const cbTYesNo = 'cb.t_yes_no';
-  /// Pass / Fail
-  static const cbTPassFail = 'cb.t_pass_fail';
-  /// Number
-  static const cbTNumber = 'cb.t_number';
-  /// Words
-  static const cbTText = 'cb.t_text';
+  static const adminAcTestGo = 'admin.ac.test_go';
+  /// No voice provider is connected yet, so test calls can’t be made.
+  static const adminAcTestOff = 'admin.ac.test_off';
+  /// Your phone number
+  static const adminAcTestPhone = 'admin.ac.test_phone';
+  /// Test call to my phone
+  static const adminAcTestTitle = 'admin.ac.test_title';
+  /// Report writing model
+  static const adminAcTextModel = 'admin.ac.text_model';
+  /// Also used by the assistant and for translations. Called from the server only.
+  static const adminAcTextModelHint = 'admin.ac.text_model_hint';
+  /// Today {time}
+  static const adminAcToday = 'admin.ac.today';
+  /// Max tokens per report
+  static const adminAcTokens = 'admin.ac.tokens';
+  /// 500 to 16,000. Longer reports cost more.
+  static const adminAcTokensHint = 'admin.ac.tokens_hint';
+  /// Use customer data to train models
+  static const adminAcTrain = 'admin.ac.train';
+  /// Never — off for all companies.
+  static const adminAcTrainHint = 'admin.ac.train_hint';
+  /// Only a super admin can change these.
+  static const adminAcViewOnly = 'admin.ac.view_only';
+  /// Voice
+  static const adminAcVoice = 'admin.ac.voice';
+  /// Bright · friendly
+  static const adminAcVoiceBright = 'admin.ac.voice.bright';
+  /// Clear · formal
+  static const adminAcVoiceFormal = 'admin.ac.voice.formal';
+  /// Warm · calm · neutral accent
+  static const adminAcVoiceWarm = 'admin.ac.voice.warm';
+  /// New company: {title}
+  static const adminActCompanyCreated = 'admin.act.company_created';
+  /// New message: {title}
+  static const adminActLeadContact = 'admin.act.lead_contact';
+  /// Demo requested: {title}
+  static const adminActLeadDemo = 'admin.act.lead_demo';
+  /// Newsletter sign-up: {title}
+  static const adminActLeadNewsletter = 'admin.act.lead_newsletter';
+  /// {title} set up an admin account
+  static const adminActStaffJoined = 'admin.act.staff_joined';
+  /// Cost by company
+  static const adminAiByCompany = 'admin.ai.by_company';
+  /// Avg. cost
+  static const adminAiColAvg = 'admin.ai.col_avg';
+  /// Calls ({days} d)
+  static const adminAiColCalls = 'admin.ai.col_calls';
+  /// Errors
+  static const adminAiColErrors = 'admin.ai.col_errors';
+  /// Model
+  static const adminAiColModel = 'admin.ai.col_model';
+  /// Task
+  static const adminAiColTask = 'admin.ai.col_task';
+  /// Reports drafted
+  static const adminAiDrafted = 'admin.ai.drafted';
+  /// Estimated from OpenAI’s prices per token and per audio minute.
+  static const adminAiEstimate = 'admin.ai.estimate';
+  /// Last {days} days
+  static const adminAiLastDays = 'admin.ai.last_days';
+  /// Last {days} days · budget {budget}
+  static const adminAiLastDaysBudget = 'admin.ai.last_days_budget';
+  /// Model usage
+  static const adminAiModels = 'admin.ai.models';
+  /// No AI report drafts yet
+  static const adminAiNoDrafts = 'admin.ai.no_drafts';
+  /// No AI use in this period.
+  static const adminAiNoUse = 'admin.ai.no_use';
+  /// No OpenAI key is set, so nothing is sent to AI. Voice notes wait for transcription and reports use the plain template.
+  static const adminAiOffBody = 'admin.ai.off_body';
+  /// AI is off.
+  static const adminAiOffTitle = 'admin.ai.off_title';
+  /// All others ({n})
+  static const adminAiOthers = 'admin.ai.others';
+  /// Above the {cost} target
+  static const adminAiOverTarget = 'admin.ai.over_target';
+  /// Cost per day by task
+  static const adminAiPerDay = 'admin.ai.per_day';
+  /// {cost} / min
+  static const adminAiPerMin = 'admin.ai.per_min';
+  /// Cost per report
+  static const adminAiPerReport = 'admin.ai.per_report';
+  /// All AI cost ÷ reports drafted
+  static const adminAiPerReportHow = 'admin.ai.per_report_how';
+  /// {pct} success
+  static const adminAiSuccess = 'admin.ai.success';
+  /// Target under {cost}
+  static const adminAiTarget = 'admin.ai.target';
+  /// Assistant
+  static const adminAiTaskAssistant = 'admin.ai.task.assistant';
+  /// Report drafts
+  static const adminAiTaskReportDraft = 'admin.ai.task.report_draft';
+  /// Transcription
+  static const adminAiTaskTranscription = 'admin.ai.task.transcription';
+  /// Translation
+  static const adminAiTaskTranslation = 'admin.ai.task.translation';
+  /// Total AI cost
+  static const adminAiTotal = 'admin.ai.total';
+  /// Voice minutes
+  static const adminAiVoice = 'admin.ai.voice';
+  /// Active technicians
+  static const adminAnActive = 'admin.an.active';
+  /// Reports sent by industry
+  static const adminAnByIndustry = 'admin.an.by_industry';
+  /// Bar chart: {n} reports sent in this period
+  static const adminAnChartLabel = 'admin.an.chart_label';
+  /// {n} days
+  static const adminAnDays = 'admin.an.days';
+  /// Approved first time
+  static const adminAnFirst = 'admin.an.first';
+  /// {n} h
+  static const adminAnHours = 'admin.an.hours';
+  /// {n} min
+  static const adminAnMin = 'admin.an.min';
+  /// Nothing to compare in the {days} days before
+  static const adminAnNoBefore = 'admin.an.no_before';
+  /// No reports in this period yet
+  static const adminAnNoData = 'admin.an.no_data';
+  /// No industry
+  static const adminAnNoIndustry = 'admin.an.no_industry';
+  /// No approved reports with times yet
+  static const adminAnNoReview = 'admin.an.no_review';
+  /// Review time is the middle value from “sent for approval” to “approved”. Active technicians took at least one photo or voice note. Days are counted in India time.
+  static const adminAnNote = 'admin.an.note';
+  /// Other
+  static const adminAnOther = 'admin.an.other';
+  /// Reports sent per day
+  static const adminAnPerDay = 'admin.an.per_day';
+  /// Reports companies sent to their customers.
+  static const adminAnPerSub = 'admin.an.per_sub';
+  /// Reports sent per week
+  static const adminAnPerWeek = 'admin.an.per_week';
+  /// {n} pts
+  static const adminAnPts = 'admin.an.pts';
+  /// Typical review time
+  static const adminAnReview = 'admin.an.review';
+  /// Same as the {days} days before
+  static const adminAnSame = 'admin.an.same';
+  /// Reports sent
+  static const adminAnSent = 'admin.an.sent';
+  /// No reports sent in this period.
+  static const adminAnSentNone = 'admin.an.sent_none';
+  /// {day}: {n}
+  static const adminAnTipDay = 'admin.an.tip_day';
+  /// Week of {day}: {n}
+  static const adminAnTipWeek = 'admin.an.tip_week';
+  /// Voice notes by language
+  static const adminAnVoice = 'admin.an.voice';
+  /// No voice notes in this period.
+  static const adminAnVoiceNone = 'admin.an.voice_none';
+  /// {n} voice notes in this period
+  static const adminAnVoiceSub = 'admin.an.voice_sub';
+  /// {change} vs the {days} days before
+  static const adminAnVs = 'admin.an.vs';
+  /// Deleted their account
+  static const adminAuAAccountDeleted = 'admin.au.a.account.deleted';
+  /// Cancelled an announcement
+  static const adminAuAAnnouncementCancelled = 'admin.au.a.announcement.cancelled';
+  /// Sent an announcement
+  static const adminAuAAnnouncementCreated = 'admin.au.a.announcement.created';
+  /// Started a blog post
+  static const adminAuABlogCreated = 'admin.au.a.blog.created';
+  /// Deleted a blog post
+  static const adminAuABlogDeleted = 'admin.au.a.blog.deleted';
+  /// Published a blog post
+  static const adminAuABlogPublished = 'admin.au.a.blog.published';
+  /// Unpublished a blog post
+  static const adminAuABlogUnpublished = 'admin.au.a.blog.unpublished';
+  /// Edited a blog post
+  static const adminAuABlogUpdated = 'admin.au.a.blog.updated';
+  /// Checklist created
+  static const adminAuAChecklistCreated = 'admin.au.a.checklist.created';
+  /// Reference photo removed
+  static const adminAuAChecklistReferenceRemoved = 'admin.au.a.checklist.reference_removed';
+  /// Reference photo set
+  static const adminAuAChecklistReferenceSet = 'admin.au.a.checklist.reference_set';
+  /// Closed the company when deleting their account
+  static const adminAuACompanyClosedByOwner = 'admin.au.a.company.closed_by_owner';
+  /// Company created
+  static const adminAuACompanyCreated = 'admin.au.a.company.created';
+  /// Settings changed
+  static const adminAuACompanySettingsChanged = 'admin.au.a.company.settings_changed';
+  /// Company edited
+  static const adminAuACompanyUpdated = 'admin.au.a.company.updated';
+  /// Customer added
+  static const adminAuACustomerCreated = 'admin.au.a.customer.created';
+  /// Customer edited
+  static const adminAuACustomerUpdated = 'admin.au.a.customer.updated';
+  /// Email check sent
+  static const adminAuAEmailVerifySent = 'admin.au.a.email.verify_sent';
+  /// Photo deleted
+  static const adminAuAEvidenceDeleted = 'admin.au.a.evidence.deleted';
+  /// Job assigned
+  static const adminAuAJobAssigned = 'admin.au.a.job.assigned';
+  /// Job cancelled
+  static const adminAuAJobCancelled = 'admin.au.a.job.cancelled';
+  /// Job created
+  static const adminAuAJobCreated = 'admin.au.a.job.created';
+  /// Job deleted
+  static const adminAuAJobDeleted = 'admin.au.a.job.deleted';
+  /// Job edited
+  static const adminAuAJobUpdated = 'admin.au.a.job.updated';
+  /// Changed the report language for new companies
+  static const adminAuALocalizationUpdated = 'admin.au.a.localization.updated';
+  /// Changed automatic messages
+  static const adminAuANotificationsRules = 'admin.au.a.notifications.rules';
+  /// Password changed
+  static const adminAuAPasswordReset = 'admin.au.a.password.reset';
+  /// Password reset sent
+  static const adminAuAPasswordResetSent = 'admin.au.a.password.reset_sent';
+  /// Customer confirmed report
+  static const adminAuAReportAcknowledged = 'admin.au.a.report.acknowledged';
+  /// Report approved
+  static const adminAuAReportApproved = 'admin.au.a.report.approved';
+  /// Changes asked
+  static const adminAuAReportChangesRequested = 'admin.au.a.report.changes_requested';
+  /// Report sent
+  static const adminAuAReportSent = 'admin.au.a.report.sent';
+  /// Report sent for review
+  static const adminAuAReportSubmitted = 'admin.au.a.report.submitted';
+  /// Review replied
+  static const adminAuAReviewReplied = 'admin.au.a.review.replied';
+  /// Review asked
+  static const adminAuAReviewRequested = 'admin.au.a.review.requested';
+  /// Review settings changed
+  static const adminAuAReviewSettingsUpdated = 'admin.au.a.review_settings.updated';
+  /// Old sign-in reused
+  static const adminAuASessionReuseDetected = 'admin.au.a.session.reuse_detected';
+  /// Report link made
+  static const adminAuAShareLinkCreated = 'admin.au.a.share_link.created';
+  /// Report link stopped
+  static const adminAuAShareLinkRevoked = 'admin.au.a.share_link.revoked';
+  /// Changed the AI call script
+  static const adminAuAStaffAiCallScriptUpdated = 'admin.au.a.staff.ai_call_script_updated';
+  /// Changed the AI call settings
+  static const adminAuAStaffAiCallSettingsUpdated = 'admin.au.a.staff.ai_call_settings_updated';
+  /// Made a test AI call
+  static const adminAuAStaffAiCallTest = 'admin.au.a.staff.ai_call_test';
+  /// Checklist created by staff
+  static const adminAuAStaffChecklistCreated = 'admin.au.a.staff.checklist_created';
+  /// Checklist changed by staff
+  static const adminAuAStaffChecklistUpdated = 'admin.au.a.staff.checklist_updated';
+  /// Company created by staff
+  static const adminAuAStaffCompanyCreated = 'admin.au.a.staff.company_created';
+  /// Company turned back on
+  static const adminAuAStaffCompanyReactivated = 'admin.au.a.staff.company_reactivated';
+  /// Company suspended
+  static const adminAuAStaffCompanySuspended = 'admin.au.a.staff.company_suspended';
+  /// Company edited by staff
+  static const adminAuAStaffCompanyUpdated = 'admin.au.a.staff.company_updated';
+  /// Changed the credit rules
+  static const adminAuAStaffCreditRulesUpdated = 'admin.au.a.staff.credit_rules_updated';
+  /// Adjusted a company’s credits
+  static const adminAuAStaffCreditsAdjusted = 'admin.au.a.staff.credits_adjusted';
+  /// Changed email settings
+  static const adminAuAStaffEmailSettingsUpdated = 'admin.au.a.staff.email_settings_updated';
+  /// Sent a test email
+  static const adminAuAStaffEmailTest = 'admin.au.a.staff.email_test';
+  /// Data exported
+  static const adminAuAStaffExport = 'admin.au.a.staff.export';
+  /// Staff invited
+  static const adminAuAStaffInvited = 'admin.au.a.staff.invited';
+  /// Lead updated
+  static const adminAuAStaffLeadUpdated = 'admin.au.a.staff.lead_updated';
+  /// Admin logged in
+  static const adminAuAStaffLogin = 'admin.au.a.staff.login';
+  /// Admin log in failed
+  static const adminAuAStaffLoginFailed = 'admin.au.a.staff.login_failed';
+  /// Admin logged out
+  static const adminAuAStaffLogout = 'admin.au.a.staff.logout';
+  /// Turned maintenance mode off
+  static const adminAuAStaffMaintenanceOff = 'admin.au.a.staff.maintenance_off';
+  /// Turned maintenance mode on
+  static const adminAuAStaffMaintenanceOn = 'admin.au.a.staff.maintenance_on';
+  /// Owner invite link made
+  static const adminAuAStaffOwnerInvited = 'admin.au.a.staff.owner_invited';
+  /// Changed their password
+  static const adminAuAStaffPasswordChanged = 'admin.au.a.staff.password_changed';
+  /// Changed platform settings
+  static const adminAuAStaffPlatformUpdated = 'admin.au.a.staff.platform_updated';
+  /// Changed their profile
+  static const adminAuAStaffProfileUpdated = 'admin.au.a.staff.profile_updated';
+  /// Made new recovery codes
+  static const adminAuAStaffRecoveryCodesNew = 'admin.au.a.staff.recovery_codes_new';
+  /// Staff account reset
+  static const adminAuAStaffReset = 'admin.au.a.staff.reset';
+  /// Hid a review
+  static const adminAuAStaffReviewHidden = 'admin.au.a.staff.review_hidden';
+  /// Published a held review
+  static const adminAuAStaffReviewPublished = 'admin.au.a.staff.review_published';
+  /// Showed a hidden review again
+  static const adminAuAStaffReviewRestored = 'admin.au.a.staff.review_restored';
+  /// Changed the review rules
+  static const adminAuAStaffReviewRulesUpdated = 'admin.au.a.staff.review_rules_updated';
+  /// Logged out another device
+  static const adminAuAStaffSessionEnded = 'admin.au.a.staff.session_ended';
+  /// Old admin sign-in reused
+  static const adminAuAStaffSessionReuse = 'admin.au.a.staff.session_reuse';
+  /// Staff set up account
+  static const adminAuAStaffSetupDone = 'admin.au.a.staff.setup_done';
+  /// Marked a message template as checked
+  static const adminAuAStaffTemplateChecked = 'admin.au.a.staff.template_checked';
+  /// Reset a message template
+  static const adminAuAStaffTemplateReset = 'admin.au.a.staff.template_reset';
+  /// Published a message template
+  static const adminAuAStaffTemplateUpdated = 'admin.au.a.staff.template_updated';
+  /// Person turned off
+  static const adminAuAStaffUserDisabled = 'admin.au.a.staff.user_disabled';
+  /// Person turned back on
+  static const adminAuAStaffUserEnabled = 'admin.au.a.staff.user_enabled';
+  /// Signed out everywhere
+  static const adminAuAStaffUserSignedOut = 'admin.au.a.staff.user_signed_out';
+  /// Added a note to a help request
+  static const adminAuASupportNote = 'admin.au.a.support.note';
+  /// Replied to a help request
+  static const adminAuASupportReplied = 'admin.au.a.support.replied';
+  /// Changed a help request
+  static const adminAuASupportUpdated = 'admin.au.a.support.updated';
+  /// Invite declined
+  static const adminAuATeamInviteDeclined = 'admin.au.a.team.invite_declined';
+  /// Invite cancelled
+  static const adminAuATeamInviteRevoked = 'admin.au.a.team.invite_revoked';
+  /// Person invited
+  static const adminAuATeamInvited = 'admin.au.a.team.invited';
+  /// Joined the team
+  static const adminAuATeamJoined = 'admin.au.a.team.joined';
+  /// Left the company (account deleted)
+  static const adminAuATeamLeft = 'admin.au.a.team.left';
+  /// Handed the company to a new owner
+  static const adminAuATeamOwnerChanged = 'admin.au.a.team.owner_changed';
+  /// Removed from team
+  static const adminAuATeamRemoved = 'admin.au.a.team.removed';
+  /// Role changed
+  static const adminAuATeamRoleChanged = 'admin.au.a.team.role_changed';
+  /// Added a testimonial
+  static const adminAuATestimonialCreated = 'admin.au.a.testimonial.created';
+  /// Deleted a testimonial
+  static const adminAuATestimonialDeleted = 'admin.au.a.testimonial.deleted';
+  /// Took a testimonial off the website
+  static const adminAuATestimonialHidden = 'admin.au.a.testimonial.hidden';
+  /// Put a testimonial on the website
+  static const adminAuATestimonialShown = 'admin.au.a.testimonial.shown';
+  /// Edited a testimonial
+  static const adminAuATestimonialUpdated = 'admin.au.a.testimonial.updated';
+  /// Changed or checked texts
+  static const adminAuATextsUpdated = 'admin.au.a.texts.updated';
+  /// Voice note deleted
+  static const adminAuAVoiceNoteDeleted = 'admin.au.a.voice_note.deleted';
+  /// Discarded website drafts
+  static const adminAuAWebsiteDiscarded = 'admin.au.a.website.discarded';
+  /// Saved website text drafts
+  static const adminAuAWebsiteDraftSaved = 'admin.au.a.website.draft_saved';
+  /// Published website texts
+  static const adminAuAWebsitePublished = 'admin.au.a.website.published';
+  /// KaamNishaan staff
+  static const adminAuActorStaff = 'admin.au.actor.staff';
+  /// System
+  static const adminAuActorSystem = 'admin.au.actor.system';
+  /// App users
+  static const adminAuActorUser = 'admin.au.actor.user';
+  /// Audit log
+  static const adminAuAuditLink = 'admin.au.audit_link';
+  /// Action
+  static const adminAuCAction = 'admin.au.c_action';
+  /// Actor
+  static const adminAuCActor = 'admin.au.c_actor';
+  /// Company
+  static const adminAuCCompany = 'admin.au.c_company';
+  /// IP
+  static const adminAuCIp = 'admin.au.c_ip';
+  /// Target
+  static const adminAuCTarget = 'admin.au.c_target';
+  /// Time
+  static const adminAuCTime = 'admin.au.c_time';
+  /// Last 24 hours
+  static const adminAuD1 = 'admin.au.d.1';
+  /// Last 30 days
+  static const adminAuD30 = 'admin.au.d.30';
+  /// Last 12 months
+  static const adminAuD365 = 'admin.au.d.365';
+  /// Last 7 days
+  static const adminAuD7 = 'admin.au.d.7';
+  /// Last 90 days
+  static const adminAuD90 = 'admin.au.d.90';
+  /// Details
+  static const adminAuDetails = 'admin.au.details';
+  /// Nothing was recorded for these filters.
+  static const adminAuEmpty = 'admin.au.empty';
+  /// Export CSV
+  static const adminAuExport = 'admin.au.export';
+  /// Action
+  static const adminAuFAction = 'admin.au.f_action';
+  /// Actor
+  static const adminAuFActor = 'admin.au.f_actor';
+  /// Date
+  static const adminAuFDate = 'admin.au.f_date';
+  /// Full IP
+  static const adminAuFullIp = 'admin.au.full_ip';
+  /// Admin actions
+  static const adminAuGAdmin = 'admin.au.g.admin';
+  /// Companies
+  static const adminAuGCompany = 'admin.au.g.company';
+  /// Jobs and customers
+  static const adminAuGJobs = 'admin.au.g.jobs';
+  /// Reports and reviews
+  static const adminAuGReports = 'admin.au.g.reports';
+  /// Log in and security
+  static const adminAuGSecurity = 'admin.au.g.security';
+  /// Teams
+  static const adminAuGTeam = 'admin.au.g.team';
+  /// No more details were saved.
+  static const adminAuNoDetails = 'admin.au.no_details';
+  /// Entries can’t be changed or deleted.
+  static const adminAuNote = 'admin.au.note';
+  /// Platform
+  static const adminAuPlatform = 'admin.au.platform';
+  /// Search person, action, target or IP
+  static const adminAuSearch = 'admin.au.search';
+  /// Show details
+  static const adminAuShow = 'admin.au.show';
+  /// System
+  static const adminAuSystem = 'admin.au.system';
+  /// Automatic
+  static const adminAuSystemSub = 'admin.au.system_sub';
+  /// Announcement
+  static const adminAuTAnnouncement = 'admin.au.t.announcement';
+  /// Audit log
+  static const adminAuTAuditLogs = 'admin.au.t.audit_logs';
+  /// Blog post
+  static const adminAuTBlogPost = 'admin.au.t.blog_post';
+  /// Checklist
+  static const adminAuTChecklistTemplate = 'admin.au.t.checklist_template';
+  /// Companies list
+  static const adminAuTCompanies = 'admin.au.t.companies';
+  /// Credits list
+  static const adminAuTCredits = 'admin.au.t.credits';
   /// Photo
-  static const cbTPhoto = 'cb.t_photo';
-  /// Choice
-  static const cbTChoice = 'cb.t_choice';
-  /// Signature
-  static const cbTSignature = 'cb.t_signature';
-  /// Unit (optional)
-  static const cbUnit = 'cb.unit';
-  /// e.g. psi, °C
-  static const cbUnitHint = 'cb.unit_hint';
-  /// Photo needed if No
-  static const cbPhotoIfNo = 'cb.photo_if_no';
-  /// Photo needed if Fail
-  static const cbPhotoIfFail = 'cb.photo_if_fail';
-  /// Photo needed every time
-  static const cbPhotoAlways = 'cb.photo_always';
-  /// Technician must take a photo to go on.
-  static const cbPhotoSub = 'cb.photo_sub';
-  /// We translate it to 5 languages. You can check them later.
-  static const cbTranslateNote = 'cb.translate_note';
-  /// Save question
-  static const cbSaveQ = 'cb.save_q';
-  /// Delete question
-  static const cbDeleteQ = 'cb.delete_q';
-  /// Question deleted
-  static const cbDeleted = 'cb.deleted';
-  /// Save checklist
-  static const cbSave = 'cb.save';
-  /// Saved. Technicians can use it on new jobs.
-  static const cbSaved = 'cb.saved';
-  /// Copy to change it
-  static const cbCopy = 'cb.copy';
-  /// Copied. Now you can change it.
-  static const cbCopied = 'cb.copied';
-  /// This checklist is by KaamNishaan. Copy it to make changes.
-  static const cbReadOnly = 'cb.read_only';
-  /// Rename
-  static const cbRename = 'cb.rename';
-  /// Don't offer on new jobs
-  static const cbArchive = 'cb.archive';
-  /// Offer on new jobs again
-  static const cbUnarchive = 'cb.unarchive';
-  /// It won't be offered on new jobs.
-  static const cbArchivedToast = 'cb.archived_toast';
-  /// Checklist options
-  static const cbMenu = 'cb.menu';
-  /// {type} · photo
-  static const cbWithPhoto = 'cb.with_photo';
-  /// No questions yet
-  static const cbEmpty = 'cb.empty';
-  /// Add the first thing the technician should check.
-  static const cbEmptyBody = 'cb.empty_body';
-  /// Draft · tap Save checklist so technicians can use it.
-  static const cbDraftNote = 'cb.draft_note';
-  /// Ask KaamNishaan AI
-  static const aiTitle = 'ai.title';
-  /// Answers only from your company's jobs
-  static const aiSubtitle = 'ai.subtitle';
+  static const adminAuTEvidence = 'admin.au.t.evidence';
+  /// Message template
+  static const adminAuTMessageTemplate = 'admin.au.t.message_template';
+  /// Newsletter list
+  static const adminAuTNewsletter = 'admin.au.t.newsletter';
+  /// Platform
+  static const adminAuTPlatform = 'admin.au.t.platform';
+  /// Review
+  static const adminAuTReview = 'admin.au.t.review';
+  /// Reviews
+  static const adminAuTReviews = 'admin.au.t.reviews';
+  /// Sign-in
+  static const adminAuTSession = 'admin.au.t.session';
+  /// Admin sign-in
+  static const adminAuTStaffSession = 'admin.au.t.staff_session';
+  /// Help request
+  static const adminAuTSupportTicket = 'admin.au.t.support_ticket';
+  /// Testimonial
+  static const adminAuTTestimonial = 'admin.au.t.testimonial';
+  /// Texts
+  static const adminAuTTexts = 'admin.au.t.texts';
+  /// Voice note
+  static const adminAuTVoiceNote = 'admin.au.t.voice_note';
+  /// Website page
+  static const adminAuTWebsitePage = 'admin.au.t.website_page';
+  /// Unknown
+  static const adminAuUnknown = 'admin.au.unknown';
+  /// No account with this email
+  static const adminAuUnknownSub = 'admin.au.unknown_sub';
+  /// Command line
+  static const adminAuViaCommandLine = 'admin.au.via.command_line';
+  /// Server start
+  static const adminAuViaStartUp = 'admin.au.via.start_up';
+  /// Add:
+  static const adminBlAdd = 'admin.bl.add';
+  /// All
+  static const adminBlAll = 'admin.bl.all';
+  /// Author
+  static const adminBlAuthor = 'admin.bl.author';
+  /// Heading
+  static const adminBlBH2 = 'admin.bl.b.h2';
+  /// Picture
+  static const adminBlBImage = 'admin.bl.b.image';
+  /// Checklist box
+  static const adminBlBList = 'admin.bl.b.list';
+  /// Paragraph
+  static const adminBlBP = 'admin.bl.b.p';
+  /// Quote
+  static const adminBlBQuote = 'admin.bl.b.quote';
+  /// Article
+  static const adminBlBody = 'admin.bl.body';
+  /// Who said it
+  static const adminBlBy = 'admin.bl.by';
+  /// Author
+  static const adminBlCAuthor = 'admin.bl.c_author';
+  /// Date
+  static const adminBlCDate = 'admin.bl.c_date';
+  /// Languages
+  static const adminBlCLang = 'admin.bl.c_lang';
+  /// Post
+  static const adminBlCPost = 'admin.bl.c_post';
+  /// Status
+  static const adminBlCState = 'admin.bl.c_state';
+  /// Caption
+  static const adminBlCaption = 'admin.bl.caption';
+  /// Topic
+  static const adminBlCategory = 'admin.bl.category';
+  /// Cover picture
+  static const adminBlCover = 'admin.bl.cover';
+  /// Delete post
+  static const adminBlDelete = 'admin.bl.delete';
+  /// Delete this post for good?
+  static const adminBlDeleteQ = 'admin.bl.delete_q';
+  /// Delete
+  static const adminBlDeleteYes = 'admin.bl.delete_yes';
+  /// Move down
+  static const adminBlDown = 'admin.bl.down';
+  /// Add the first paragraph below.
+  static const adminBlEmptyBody = 'admin.bl.empty_body';
+  /// Language
+  static const adminBlFLang = 'admin.bl.f_lang';
+  /// Status
+  static const adminBlFState = 'admin.bl.f_state';
+  /// Featured post
+  static const adminBlFeatured = 'admin.bl.featured';
+  /// Shown large at the top of the blog. Only one post at a time.
+  static const adminBlFeaturedHint = 'admin.bl.featured_hint';
+  /// English is needed. A language left empty shows the English post, marked “In English”.
+  static const adminBlLangHint = 'admin.bl.lang_hint';
+  /// Last saved {ago} by {who}
+  static const adminBlLast = 'admin.bl.last';
+  /// One line per item
+  static const adminBlListItems = 'admin.bl.list_items';
+  /// Box heading
+  static const adminBlListTitle = 'admin.bl.list_title';
+  /// New post
+  static const adminBlNew = 'admin.bl.new';
+  /// No cover yet
+  static const adminBlNoCover = 'admin.bl.no_cover';
+  /// No posts yet.
+  static const adminBlNone = 'admin.bl.none';
+  /// No posts match.
+  static const adminBlNoneMatch = 'admin.bl.none_match';
+  /// Every language you started must have a title, summary and article.
+  static const adminBlPublishHint = 'admin.bl.publish_hint';
+  /// Publish now
+  static const adminBlPublishNow = 'admin.bl.publish_now';
+  /// Published. It’s on the blog within 5 minutes.
+  static const adminBlPublished = 'admin.bl.published';
+  /// Publishing
+  static const adminBlPublishing = 'admin.bl.publishing';
+  /// Remove
+  static const adminBlRemove = 'admin.bl.remove';
+  /// Change picture
+  static const adminBlReplace = 'admin.bl.replace';
+  /// Save draft
+  static const adminBlSave = 'admin.bl.save';
+  /// Save changes
+  static const adminBlSaveLive = 'admin.bl.save_live';
+  /// Saved.
+  static const adminBlSaved = 'admin.bl.saved';
+  /// Schedule
+  static const adminBlSchedule = 'admin.bl.schedule';
+  /// Scheduled. It goes on the blog at the time you picked.
+  static const adminBlScheduled = 'admin.bl.scheduled';
+  /// Search posts
+  static const adminBlSearch = 'admin.bl.search';
+  /// Post settings
+  static const adminBlSettings = 'admin.bl.settings';
+  /// Web address
+  static const adminBlSlug = 'admin.bl.slug';
+  /// Unpublish to change the address, so shared links don’t break.
+  static const adminBlSlugLocked = 'admin.bl.slug_locked';
+  /// Draft
+  static const adminBlStDraft = 'admin.bl.st.draft';
+  /// Published
+  static const adminBlStPublished = 'admin.bl.st.published';
+  /// Scheduled
+  static const adminBlStScheduled = 'admin.bl.st.scheduled';
+  /// Scheduled · {day}
+  static const adminBlStScheduledOn = 'admin.bl.st.scheduled_on';
+  /// Summary
+  static const adminBlSummary = 'admin.bl.summary';
+  /// Title
+  static const adminBlTitle = 'admin.bl.title';
+  /// Unpublish
+  static const adminBlUnpublish = 'admin.bl.unpublish';
+  /// Back to draft. It’s off the website.
+  static const adminBlUnpublished = 'admin.bl.unpublished';
+  /// Move up
+  static const adminBlUp = 'admin.bl.up';
+  /// Upload picture
+  static const adminBlUpload = 'admin.bl.upload';
+  /// View on website
+  static const adminBlView = 'admin.bl.view';
+  /// Publish on
+  static const adminBlWhen = 'admin.bl.when';
+  /// Company
+  static const adminCfCompany = 'admin.cf.company';
+  /// Shown on reports and the customer link.
+  static const adminCfCompanySub = 'admin.cf.company_sub';
+  /// Turn {name} back on?
+  static const adminCfConfirmReactivate = 'admin.cf.confirm_reactivate';
+  /// Everyone in the company can work in the app again.
+  static const adminCfConfirmReactivateBody = 'admin.cf.confirm_reactivate_body';
+  /// Suspend {name}?
+  static const adminCfConfirmSuspend = 'admin.cf.confirm_suspend';
+  /// Copy link
+  static const adminCfCopyLink = 'admin.cf.copy_link';
+  /// Copy message
+  static const adminCfCopySms = 'admin.cf.copy_sms';
+  /// Country
+  static const adminCfCountry = 'admin.cf.country';
+  /// Create company
+  static const adminCfCreate = 'admin.cf.create';
+  /// Create company
+  static const adminCfCreateTitle = 'admin.cf.create_title';
+  /// {name} logs in to the app with {phone} and accepts the invite. The link works for 7 days.
+  static const adminCfCreatedBody = 'admin.cf.created_body';
+  /// Company created
+  static const adminCfCreatedTitle = 'admin.cf.created_title';
+  /// Company turned back on.
+  static const adminCfDoneReactivate = 'admin.cf.done_reactivate';
+  /// Changes saved.
+  static const adminCfDoneSaved = 'admin.cf.done_saved';
+  /// Company suspended.
+  static const adminCfDoneSuspend = 'admin.cf.done_suspend';
+  /// Another account already uses this email
+  static const adminCfEEmailTaken = 'admin.cf.e.email_taken';
+  /// Add the company name
+  static const adminCfEName = 'admin.cf.e.name';
+  /// Enter a valid email, like name@company.com
+  static const adminCfEOwnerEmail = 'admin.cf.e.owner_email';
+  /// Add the owner’s name
+  static const adminCfEOwnerName = 'admin.cf.e.owner_name';
+  /// Enter a full phone number
+  static const adminCfEOwnerPhone = 'admin.cf.e.owner_phone';
+  /// This number belongs to a turned-off account
+  static const adminCfEPhoneDisabled = 'admin.cf.e.phone_disabled';
+  /// Pick a plan
+  static const adminCfEPlan = 'admin.cf.e.plan';
+  /// Pick an industry
+  static const adminCfETrade = 'admin.cf.e.trade';
+  /// Only a company in trial has an end date
+  static const adminCfETrial = 'admin.cf.e.trial';
+  /// Edit
+  static const adminCfEdit = 'admin.cf.edit';
+  /// Edit company
+  static const adminCfEditTitle = 'admin.cf.edit_title';
+  /// Fix {n} fields to save. Everything you typed is kept.
+  static const adminCfFix = 'admin.cf.fix';
+  /// Fix 1 field to save. Everything you typed is kept.
+  static const adminCfFixOne = 'admin.cf.fix_one';
+  /// Industry
+  static const adminCfIndustry = 'admin.cf.industry';
+  /// Default report language
+  static const adminCfLanguage = 'admin.cf.language';
+  /// Company name
+  static const adminCfName = 'admin.cf.name';
+  /// New invite link
+  static const adminCfNewLink = 'admin.cf.new_link';
+  /// New link made. Older links stop working.
+  static const adminCfNewLinkDone = 'admin.cf.new_link_done';
+  /// Support staff can look but not change companies.
+  static const adminCfNotAllowed = 'admin.cf.not_allowed';
+  /// Open company
+  static const adminCfOpen = 'admin.cf.open';
+  /// Open user page
+  static const adminCfOpenUser = 'admin.cf.open_user';
+  /// Owner
+  static const adminCfOwner = 'admin.cf.owner';
+  /// Owner email (optional)
+  static const adminCfOwnerEmail = 'admin.cf.owner_email';
+  /// Owner name
+  static const adminCfOwnerName = 'admin.cf.owner_name';
+  /// {name} hasn’t joined yet. They log in with {phone} and accept the invite.
+  static const adminCfOwnerPending = 'admin.cf.owner_pending';
+  /// Owner phone
+  static const adminCfOwnerPhone = 'admin.cf.owner_phone';
+  /// The owner gets an invite by SMS. They log in to the app with this phone number (one-time code) and accept it.
+  static const adminCfOwnerSubCreate = 'admin.cf.owner_sub_create';
+  /// Owners change their own details in the app. You can see them on their user page.
+  static const adminCfOwnerSubEdit = 'admin.cf.owner_sub_edit';
+  /// Plan
+  static const adminCfPlan = 'admin.cf.plan';
+  /// {plan} · contact us
+  static const adminCfPlanContact = 'admin.cf.plan_contact';
+  /// Starts with a {n}-day trial. You can change the plan later.
+  static const adminCfPlanSubCreate = 'admin.cf.plan_sub_create';
+  /// A new plan applies straight away. No payments are taken yet.
+  static const adminCfPlanSubEdit = 'admin.cf.plan_sub_edit';
+  /// {plan} · {n}-day trial
+  static const adminCfPlanTrial = 'admin.cf.plan_trial';
+  /// Turn back on
+  static const adminCfReactivate = 'admin.cf.reactivate';
+  /// Turn the company back on
+  static const adminCfReactivateTitle = 'admin.cf.reactivate_title';
+  /// Save changes
+  static const adminCfSave = 'admin.cf.save';
+  /// If SMS isn’t set up yet, send this message yourself (for example on WhatsApp). It is shown only now.
+  static const adminCfSmsNote = 'admin.cf.sms_note';
+  /// Suspend
+  static const adminCfSuspend = 'admin.cf.suspend';
+  /// Nobody in the company can work in the app while it is suspended. Jobs, photos and reports are kept, and report links already sent to customers keep working.
+  static const adminCfSuspendBody = 'admin.cf.suspend_body';
+  /// Suspend company
+  static const adminCfSuspendTitle = 'admin.cf.suspend_title';
+  /// Suspended on {date}: {reason}
+  static const adminCfSuspended = 'admin.cf.suspended';
+  /// Suspended on {date} · {reason}. Nobody can work in the app until it’s turned back on.
+  static const adminCfSuspendedBanner = 'admin.cf.suspended_banner';
+  /// Trial ends on
+  static const adminCfTrialEnds = 'admin.cf.trial_ends';
+  /// Send on WhatsApp
+  static const adminCfWhatsapp = 'admin.cf.whatsapp';
+  /// Add choice
+  static const adminClAddOption = 'admin.cl.add_option';
+  /// Always show
+  static const adminClAlways = 'admin.cl.always';
+  /// answer is
+  static const adminClAnswerIs = 'admin.cl.answer_is';
+  /// Mark all {lang} as checked
+  static const adminClApprove = 'admin.cl.approve';
+  /// Archive
+  static const adminClArchive = 'admin.cl.archive';
+  /// Checklist templates
+  static const adminClBack = 'admin.cl.back';
+  /// Questions
+  static const adminClCQuestions = 'admin.cl.c_questions';
+  /// Template
+  static const adminClCTemplate = 'admin.cl.c_template';
+  /// Trade
+  static const adminClCTrade = 'admin.cl.c_trade';
+  /// Translations
+  static const adminClCTranslations = 'admin.cl.c_translations';
+  /// Updated
+  static const adminClCUpdated = 'admin.cl.c_updated';
+  /// Used by
+  static const adminClCUsed = 'admin.cl.c_used';
+  /// Cancel
+  static const adminClCancel = 'admin.cl.cancel';
+  /// Create draft
+  static const adminClCreate = 'admin.cl.create';
+  /// Write it in English. Other languages are added after.
+  static const adminClCreateBody = 'admin.cl.create_body';
+  /// New checklist template
+  static const adminClCreateTitle = 'admin.cl.create_title';
+  /// Delete this question? Jobs that already have it keep it.
+  static const adminClDeleteConfirm = 'admin.cl.delete_confirm';
+  /// Draft: companies don’t see it yet. Publish when the questions are ready.
+  static const adminClDraftNote = 'admin.cl.draft_note';
+  /// Edit
+  static const adminClEdit = 'admin.cl.edit';
+  /// No templates match.
+  static const adminClEmpty = 'admin.cl.empty';
+  /// Language status
+  static const adminClFLang = 'admin.cl.f_lang';
+  /// Trade
+  static const adminClFTrade = 'admin.cl.f_trade';
+  /// Fail
+  static const adminClFail = 'admin.cl.fail';
+  /// Help text (optional)
+  static const adminClHelp = 'admin.cl.help';
+  /// 5 of 5 languages
+  static const adminClLangsAll = 'admin.cl.langs_all';
+  /// {langs} to check
+  static const adminClLangsReview = 'admin.cl.langs_review';
+  /// {n} of 5 · {missing} missing
+  static const adminClLangsSome = 'admin.cl.langs_some';
+  /// Languages
+  static const adminClLanguages = 'admin.cl.languages';
+  /// Published: companies can pick it for new jobs. Changes never touch jobs that already have it.
+  static const adminClLiveNote = 'admin.cl.live_note';
+  /// A language is missing
+  static const adminClLsMissing = 'admin.cl.ls.missing';
+  /// Has checked languages
+  static const adminClLsReady = 'admin.cl.ls.ready';
+  /// Needs checking
+  static const adminClLsReview = 'admin.cl.ls.review';
+  /// Missing
+  static const adminClLstateMissing = 'admin.cl.lstate.missing';
+  /// Checked
+  static const adminClLstateReady = 'admin.cl.lstate.ready';
+  /// Machine translated · check
+  static const adminClLstateReview = 'admin.cl.lstate.review';
+  /// Mark as checked
+  static const adminClMarkChecked = 'admin.cl.mark_checked';
+  /// Highest
+  static const adminClMax = 'admin.cl.max';
+  /// Lowest
+  static const adminClMin = 'admin.cl.min';
+  /// Minutes to fill
+  static const adminClMinutes = 'admin.cl.minutes';
+  /// {n} need photos
+  static const adminClNPhotos = 'admin.cl.n_photos';
+  /// {n} questions
+  static const adminClNQuestions = 'admin.cl.n_questions';
+  /// 1 question
+  static const adminClNQuestionsOne = 'admin.cl.n_questions_one';
+  /// Name (English)
+  static const adminClName = 'admin.cl.name';
+  /// Name in {lang}
+  static const adminClNameIn = 'admin.cl.name_in';
+  /// New template
+  static const adminClNew = 'admin.cl.new';
+  /// No
+  static const adminClNo = 'admin.cl.no';
+  /// AI isn’t set up (KN_OPENAI_API_KEY), so translations can only be typed here.
+  static const adminClNoAi = 'admin.cl.no_ai';
+  /// This checklist doesn’t exist any more.
+  static const adminClNotFound = 'admin.cl.not_found';
+  /// Questions are written in English. Switch to English to add or change them.
+  static const adminClOnlySource = 'admin.cl.only_source';
+  /// Optional
+  static const adminClOptional = 'admin.cl.optional';
+  /// Choices
+  static const adminClOptions = 'admin.cl.options';
+  /// Pass
+  static const adminClPass = 'admin.cl.pass';
+  /// Photo
+  static const adminClPhoto = 'admin.cl.photo';
+  /// No photo needed
+  static const adminClPhotoNone = 'admin.cl.photo_none';
+  /// Publish
+  static const adminClPublish = 'admin.cl.publish';
+  /// Support staff can look but not change checklists.
+  static const adminClReadOnly = 'admin.cl.read_only';
+  /// Reference photo
+  static const adminClRef = 'admin.cl.ref';
+  /// Add reference photo
+  static const adminClRefAdd = 'admin.cl.ref_add';
+  /// Change reference photo
+  static const adminClRefChange = 'admin.cl.ref_change';
+  /// Shows technicians what a good answer looks like. Companies that already copied this template keep their photo.
+  static const adminClRefHint = 'admin.cl.ref_hint';
+  /// Remove
+  static const adminClRefRemove = 'admin.cl.ref_remove';
+  /// Reference photo removed.
+  static const adminClRefRemoved = 'admin.cl.ref_removed';
+  /// Reference photo saved.
+  static const adminClRefSaved = 'admin.cl.ref_saved';
+  /// Remove choice {n}
+  static const adminClRemoveOption = 'admin.cl.remove_option';
+  /// Must be answered
+  static const adminClRequired = 'admin.cl.required';
+  /// Save translation
+  static const adminClSaveTr = 'admin.cl.save_tr';
+  /// Saved
+  static const adminClSaved = 'admin.cl.saved';
+  /// Search templates
+  static const adminClSearch = 'admin.cl.search';
+  /// Show only if
+  static const adminClShowIf = 'admin.cl.show_if';
+  /// Shown if Q{n} is “{v}”
+  static const adminClShownIf = 'admin.cl.shown_if';
+  /// Written in
+  static const adminClSource = 'admin.cl.source';
+  /// Archived
+  static const adminClStArchived = 'admin.cl.st.archived';
+  /// Draft
+  static const adminClStDraft = 'admin.cl.st.draft';
+  /// Published
+  static const adminClStPublished = 'admin.cl.st.published';
+  /// Global templates
+  static const adminClTabAll = 'admin.cl.tab.all';
+  /// By trade
+  static const adminClTabByTrade = 'admin.cl.tab.by_trade';
+  /// Drafts
+  static const adminClTabDrafts = 'admin.cl.tab.drafts';
+  /// Needs translation
+  static const adminClTabNeedsTranslation = 'admin.cl.tab.needs_translation';
+  /// Translate missing with AI
+  static const adminClTranslate = 'admin.cl.translate';
+  /// Nothing is missing.
+  static const adminClTranslateNone = 'admin.cl.translate_none';
+  /// {n} questions sent for translation. Refresh in a minute.
+  static const adminClTranslateSent = 'admin.cl.translate_sent';
+  /// Translation
+  static const adminClTranslation = 'admin.cl.translation';
+  /// Move to draft
+  static const adminClUnpublish = 'admin.cl.unpublish';
+  /// Used by {n} companies
+  static const adminClUsedBy = 'admin.cl.used_by';
+  /// Yes
+  static const adminClYes = 'admin.cl.yes';
+  /// Active {when}
+  static const adminCoActiveWhen = 'admin.co.active_when';
+  /// AI cost (30 d)
+  static const adminCoAiCost = 'admin.co.ai_cost';
+  /// Approval time
+  static const adminCoApproval = 'admin.co.approval';
+  /// Median, job done → approved (30 d)
+  static const adminCoApprovalSub = 'admin.co.approval_sub';
+  /// Companies
+  static const adminCoBack = 'admin.co.back';
+  /// Company
+  static const adminCoCCompany = 'admin.co.c_company';
+  /// Industry
+  static const adminCoCIndustry = 'admin.co.c_industry';
+  /// Plan
+  static const adminCoCPlan = 'admin.co.c_plan';
+  /// Reports (30 d)
+  static const adminCoCReports = 'admin.co.c_reports';
+  /// Status
+  static const adminCoCStatus = 'admin.co.c_status';
+  /// Technicians
+  static const adminCoCTechs = 'admin.co.c_techs';
+  /// Clear filters
+  static const adminCoClear = 'admin.co.clear';
+  /// Try another name, or clear the filters.
+  static const adminCoEmptyBody = 'admin.co.empty_body';
+  /// No companies match
+  static const adminCoEmptyTitle = 'admin.co.empty_title';
+  /// Export CSV
+  static const adminCoExport = 'admin.co.export';
+  /// All
+  static const adminCoFAll = 'admin.co.f_all';
+  /// Country
+  static const adminCoFCountry = 'admin.co.f_country';
+  /// Industry
+  static const adminCoFIndustry = 'admin.co.f_industry';
+  /// Plan
+  static const adminCoFPlan = 'admin.co.f_plan';
+  /// Status
+  static const adminCoFStatus = 'admin.co.f_status';
+  /// Fair use, no fixed limit
+  static const adminCoFairUse = 'admin.co.fair_use';
+  /// At risk
+  static const adminCoHAtRisk = 'admin.co.h.at_risk';
+  /// Good
+  static const adminCoHGood = 'admin.co.h.good';
+  /// Quiet
+  static const adminCoHQuiet = 'admin.co.h.quiet';
+  /// At risk: payment late or suspended. Quiet: nobody active for 14 days.
+  static const adminCoHRule = 'admin.co.h_rule';
+  /// Health
+  static const adminCoHealth = 'admin.co.health';
+  /// {n} h
+  static const adminCoHours = 'admin.co.hours';
+  /// Invited
+  static const adminCoInvited = 'admin.co.invited';
+  /// Jobs this month
+  static const adminCoJobsMonth = 'admin.co.jobs_month';
+  /// Last active
+  static const adminCoLastActive = 'admin.co.last_active';
+  /// email login
+  static const adminCoLoginEmail = 'admin.co.login.email';
+  /// phone + OTP
+  static const adminCoLoginPhone = 'admin.co.login.phone';
+  /// {n} min
+  static const adminCoMinutes = 'admin.co.minutes';
+  /// Never
+  static const adminCoNever = 'admin.co.never';
+  /// Next page
+  static const adminCoNext = 'admin.co.next';
+  /// No AI use in 30 days
+  static const adminCoNoAi = 'admin.co.no_ai';
+  /// No approvals in 30 days
+  static const adminCoNoApprovals = 'admin.co.no_approvals';
+  /// No owner
+  static const adminCoNoOwner = 'admin.co.no_owner';
+  /// No seat limit
+  static const adminCoNoSeatLimit = 'admin.co.no_seat_limit';
+  /// Nobody has joined yet.
+  static const adminCoNoTeam = 'admin.co.no_team';
+  /// No companies yet. They appear here when owners sign up in the app.
+  static const adminCoNoneYet = 'admin.co.none_yet';
+  /// This company doesn’t exist any more.
+  static const adminCoNotFound = 'admin.co.not_found';
+  /// Over plan · fair-use review
+  static const adminCoOverPlan = 'admin.co.over_plan';
+  /// Owner: {name}
+  static const adminCoOwner = 'admin.co.owner';
+  /// Page {n}
+  static const adminCoPage = 'admin.co.page';
+  /// {n} people
+  static const adminCoPeople = 'admin.co.people';
+  /// 1 person
+  static const adminCoPeopleOne = 'admin.co.people_one';
+  /// {price}/mo
+  static const adminCoPerMonth = 'admin.co.per_month';
+  /// Previous page
+  static const adminCoPrev = 'admin.co.prev';
+  /// {n} left this month
+  static const adminCoReportsLeft = 'admin.co.reports_left';
+  /// Reports this month
+  static const adminCoReportsMonth = 'admin.co.reports_month';
+  /// Manager
+  static const adminCoRoleManager = 'admin.co.role.manager';
+  /// Owner
+  static const adminCoRoleOwner = 'admin.co.role.owner';
+  /// Technician
+  static const adminCoRoleTechnician = 'admin.co.role.technician';
+  /// Search company, owner or email
+  static const adminCoSearch = 'admin.co.search';
+  /// {n} seats free
+  static const adminCoSeatsFree = 'admin.co.seats_free';
+  /// 1 seat free
+  static const adminCoSeatsFreeOne = 'admin.co.seats_free_one';
+  /// Seat limit reached
+  static const adminCoSeatsFull = 'admin.co.seats_full';
+  /// Seat limit reached · suggest {plan}
+  static const adminCoSeatsFullSuggest = 'admin.co.seats_full_suggest';
+  /// Showing {from}–{to} of {total}
+  static const adminCoShowing = 'admin.co.showing';
+  /// Customer since {date}
+  static const adminCoSince = 'admin.co.since';
+  /// Sort by {col}
+  static const adminCoSortBy = 'admin.co.sort_by';
+  /// Active
+  static const adminCoStActive = 'admin.co.st.active';
+  /// Cancelled
+  static const adminCoStCancelled = 'admin.co.st.cancelled';
+  /// Near limit
+  static const adminCoStNearLimit = 'admin.co.st.near_limit';
+  /// Past due
+  static const adminCoStPastDue = 'admin.co.st.past_due';
+  /// Suspended
+  static const adminCoStSuspended = 'admin.co.st.suspended';
+  /// Trial
+  static const adminCoStTrial = 'admin.co.st.trial';
+  /// Subscription
+  static const adminCoSub = 'admin.co.sub';
+  /// Billing
+  static const adminCoSubBilling = 'admin.co.sub_billing';
+  /// This month
+  static const adminCoSubMonth = 'admin.co.sub_month';
+  /// No payments yet
+  static const adminCoSubNoPayments = 'admin.co.sub_no_payments';
+  /// Plan
+  static const adminCoSubPlan = 'admin.co.sub_plan';
+  /// Status
+  static const adminCoSubStatus = 'admin.co.sub_status';
+  /// Trial ends {date}
+  static const adminCoSubTrialEnds = 'admin.co.sub_trial_ends';
+  /// Usage
+  static const adminCoSubUsage = 'admin.co.sub_usage';
+  /// This plan’s limit is reached. Suggest {plan} ({price}).
+  static const adminCoSuggest = 'admin.co.suggest';
+  /// All
+  static const adminCoTabAll = 'admin.co.tab_all';
+  /// Company status
+  static const adminCoTabs = 'admin.co.tabs';
+  /// Team
+  static const adminCoTeam = 'admin.co.team';
+  /// {n} of {limit}
+  static const adminCoTechsOf = 'admin.co.techs_of';
+  /// This plan’s limit is reached, and there is no bigger plan. Talk to the owner.
+  static const adminCoTopPlan = 'admin.co.top_plan';
+  /// Trial ended
+  static const adminCoTrialEnded = 'admin.co.trial_ended';
+  /// Trial · {n} days left
+  static const adminCoTrialLeft = 'admin.co.trial_left';
+  /// Trial · 1 day left
+  static const adminCoTrialLeftOne = 'admin.co.trial_left_one';
+  /// {reports} reports · {seats} seats
+  static const adminCoUsageLine = 'admin.co.usage_line';
+  /// View
+  static const adminCoView = 'admin.co.view';
+  /// View all
+  static const adminCoViewAll = 'admin.co.view_all';
+  /// View {name}
+  static const adminCoViewName = 'admin.co.view_name';
+  /// Admin console
+  static const adminConsole = 'admin.console';
+  /// Adjust
+  static const adminCrAdjust = 'admin.cr.adjust';
+  /// Add extra credits (for example as a goodwill gift), or take some back with a minus sign. Extra credits stay until used. It has {n} now.
+  static const adminCrAdjustBody = 'admin.cr.adjust_body';
+  /// Credits (+ or −)
+  static const adminCrAdjustCredits = 'admin.cr.adjust_credits';
+  /// Save
+  static const adminCrAdjustGo = 'admin.cr.adjust_go';
+  /// Adjust credits · {company}
+  static const adminCrAdjustTitle = 'admin.cr.adjust_title';
+  /// Credits changed for {company}.
+  static const adminCrAdjusted = 'admin.cr.adjusted';
+  /// At 0 credits
+  static const adminCrAtZero = 'admin.cr.at_zero';
+  /// Company
+  static const adminCrCCompany = 'admin.cr.c_company';
+  /// Included
+  static const adminCrCIncluded = 'admin.cr.c_included';
+  /// Plan
+  static const adminCrCPlan = 'admin.cr.c_plan';
+  /// Status
+  static const adminCrCStatus = 'admin.cr.c_status';
+  /// Extra credits
+  static const adminCrCTopups = 'admin.cr.c_topups';
+  /// Used this month
+  static const adminCrCUsed = 'admin.cr.c_used';
+  /// {n} companies
+  static const adminCrCompanies = 'admin.cr.companies';
+  /// 1 company
+  static const adminCrCompaniesOne = 'admin.cr.companies_one';
+  /// credits
+  static const adminCrCreditsUnit = 'admin.cr.credits_unit';
+  /// It only has {n} extra credits to take back.
+  static const adminCrENotEnough = 'admin.cr.e.not_enough';
+  /// Enter a whole number other than 0, e.g. 500 or -100.
+  static const adminCrENumber = 'admin.cr.e.number';
+  /// Export
+  static const adminCrExport = 'admin.cr.export';
+  /// Fix the highlighted numbers to save.
+  static const adminCrFix = 'admin.cr.fix';
+  /// Free
+  static const adminCrFree = 'admin.cr.free';
+  /// Companies out of credits
+  static const adminCrKOut = 'admin.cr.k_out';
+  /// {n} reminders paused
+  static const adminCrKOutSub = 'admin.cr.k_out_sub';
+  /// Messages and calls (30 d)
+  static const adminCrKSent = 'admin.cr.k_sent';
+  /// {sms} SMS · {wa} WhatsApp · {calls} calls
+  static const adminCrKSentSub = 'admin.cr.k_sent_sub';
+  /// Extra credits added (30 d)
+  static const adminCrKTopups = 'admin.cr.k_topups';
+  /// {n} packs bought · no payments yet
+  static const adminCrKTopupsSub = 'admin.cr.k_topups_sub';
+  /// Credits used (30 d)
+  static const adminCrKUsed = 'admin.cr.k_used';
+  /// {pct} of included
+  static const adminCrKUsedSub = 'admin.cr.k_used_sub';
+  /// {n} left
+  static const adminCrLeft = 'admin.cr.left';
+  /// No limit
+  static const adminCrNoLimit = 'admin.cr.no_limit';
+  /// No companies yet.
+  static const adminCrNone = 'admin.cr.none';
+  /// No company matches.
+  static const adminCrNoneMatch = 'admin.cr.none_match';
+  /// {n} for {price}
+  static const adminCrPack = 'admin.cr.pack';
+  /// Top-up packs
+  static const adminCrPacks = 'admin.cr.packs';
+  /// / month
+  static const adminCrPerMonth = 'admin.cr.per_month';
+  /// Included per plan
+  static const adminCrPerPlan = 'admin.cr.per_plan';
+  /// Leave empty for no limit. A new amount applies from each company’s next month.
+  static const adminCrPlanNote = 'admin.cr.plan_note';
+  /// Credits roll over
+  static const adminCrRollover = 'admin.cr.rollover';
+  /// No · reset monthly (extra credits stay)
+  static const adminCrRolloverV = 'admin.cr.rollover_v';
+  /// AI review call (up to 3 min)
+  static const adminCrRuleAiCall = 'admin.cr.rule.ai_call';
+  /// Email
+  static const adminCrRuleEmail = 'admin.cr.rule.email';
+  /// SMS message
+  static const adminCrRuleSms = 'admin.cr.rule.sms';
+  /// WhatsApp message
+  static const adminCrRuleWhatsapp = 'admin.cr.rule.whatsapp';
+  /// Credit rules
+  static const adminCrRules = 'admin.cr.rules';
+  /// Save rules
+  static const adminCrSave = 'admin.cr.save';
+  /// Saved. Message and call prices apply from the next one; plan credits from each company’s next month.
+  static const adminCrSaved = 'admin.cr.saved';
+  /// Search company
+  static const adminCrSearch = 'admin.cr.search';
+  /// {pct} used
+  static const adminCrStLow = 'admin.cr.st.low';
+  /// OK
+  static const adminCrStOk = 'admin.cr.st.ok';
+  /// Out of credits · paused
+  static const adminCrStOut = 'admin.cr.st.out';
+  /// No limit
+  static const adminCrStUnlimited = 'admin.cr.st.unlimited';
+  /// {n} top-ups
+  static const adminCrTopups = 'admin.cr.topups';
+  /// 1 top-up
+  static const adminCrTopupsOne = 'admin.cr.topups_one';
+  /// Keep rating links in emails
+  static const adminCrZEmail = 'admin.cr.z.email';
+  /// Email is free. Always on.
+  static const adminCrZEmailHint = 'admin.cr.z.email_hint';
+  /// Pause reminders and AI calls
+  static const adminCrZPause = 'admin.cr.z.pause';
+  /// They go when credits are back. Always on.
+  static const adminCrZPauseHint = 'admin.cr.z.pause_hint';
+  /// Email owner at 80% and 100%
+  static const adminCrZWarn = 'admin.cr.z.warn';
+  /// Needs an email service, which isn’t set up yet. Owners see it in the app.
+  static const adminCrZWarnHint = 'admin.cr.z.warn_hint';
+  /// Recent activity
+  static const adminDashActivity = 'admin.dash.activity';
+  /// AI cost
+  static const adminDashAiCost = 'admin.dash.ai_cost';
+  /// Nothing needs attention right now.
+  static const adminDashAllClear = 'admin.dash.all_clear';
+  /// Approved
+  static const adminDashApproved = 'admin.dash.approved';
+  /// Needs attention
+  static const adminDashAttention = 'admin.dash.attention';
+  /// {date}: {approved} approved, {drafts} AI drafts
+  static const adminDashBar = 'admin.dash.bar';
+  /// Active companies
+  static const adminDashCompanies = 'admin.dash.companies';
+  /// AI drafts
+  static const adminDashDrafts = 'admin.dash.drafts';
+  /// Free
+  static const adminDashFree = 'admin.dash.free';
+  /// Latest: {name}
+  static const adminDashLatest = 'admin.dash.latest';
+  /// {n} new demo requests and messages
+  static const adminDashLeads = 'admin.dash.leads';
+  /// 1 new demo request or message
+  static const adminDashLeadsOne = 'admin.dash.leads_one';
+  /// {n} companies
+  static const adminDashNCompanies = 'admin.dash.n_companies';
+  /// 1 company
+  static const adminDashNCompaniesOne = 'admin.dash.n_companies_one';
+  /// {n} reports
+  static const adminDashNReports = 'admin.dash.n_reports';
+  /// 1 report
+  static const adminDashNReportsOne = 'admin.dash.n_reports_one';
+  /// {n} companies near report limit
+  static const adminDashNearLimit = 'admin.dash.near_limit';
+  /// 1 company near report limit
+  static const adminDashNearLimitOne = 'admin.dash.near_limit_one';
+  /// +{n} in the last {days} days
+  static const adminDashNewIn = 'admin.dash.new_in';
+  /// Nothing has happened yet.
+  static const adminDashNoActivity = 'admin.dash.no_activity';
+  /// No reports in this period yet.
+  static const adminDashNoReports = 'admin.dash.no_reports';
+  /// None new in the last {days} days
+  static const adminDashNoneNew = 'admin.dash.none_new';
+  /// {name} · {used} of {limit}
+  static const adminDashOf = 'admin.dash.of';
+  /// {n} payments failed
+  static const adminDashPastDue = 'admin.dash.past_due';
+  /// 1 payment failed
+  static const adminDashPastDueOne = 'admin.dash.past_due_one';
+  /// Reports per day
+  static const adminDashPerDay = 'admin.dash.per_day';
+  /// Approved reports and AI drafts across all companies
+  static const adminDashPerDayBody = 'admin.dash.per_day_body';
+  /// {cost} per report
+  static const adminDashPerReport = 'admin.dash.per_report';
+  /// Plan mix
+  static const adminDashPlanMix = 'admin.dash.plan_mix';
+  /// Reports sent
+  static const adminDashReports = 'admin.dash.reports';
+  /// Monthly revenue
+  static const adminDashRevenue = 'admin.dash.revenue';
+  /// No paying companies yet
+  static const adminDashRevenueNone = 'admin.dash.revenue_none';
+  /// From the plans of paying companies
+  static const adminDashRevenueNote = 'admin.dash.revenue_note';
+  /// Technicians
+  static const adminDashTechnicians = 'admin.dash.technicians';
+  /// Dashboard
+  static const adminDashTitle = 'admin.dash.title';
+  /// Top companies by reports
+  static const adminDashTop = 'admin.dash.top';
+  /// {n} trials end this week
+  static const adminDashTrials = 'admin.dash.trials';
+  /// First: {name}. Convert or remind owners.
+  static const adminDashTrialsDetail = 'admin.dash.trials_detail';
+  /// 1 trial ends this week
+  static const adminDashTrialsOne = 'admin.dash.trials_one';
+  /// {change} vs the {days} days before
+  static const adminDashVs = 'admin.dash.vs';
+  /// None in the {days} days before
+  static const adminDashVsNone = 'admin.dash.vs_none';
+  /// Enter a valid email.
+  static const adminEmEEmail = 'admin.em.e.email';
+  /// Enter a port from 1 to 65535.
+  static const adminEmEInvalid = 'admin.em.e.invalid';
+  /// Fill this in.
+  static const adminEmERequired = 'admin.em.e.required';
+  /// Enter a valid email.
+  static const adminEmEValueError = 'admin.em.e.value_error';
+  /// Emails
+  static const adminEmEmails = 'admin.em.emails';
+  /// What the platform sends by email, in the 5 languages.
+  static const adminEmEmailsSub = 'admin.em.emails_sub';
+  /// Send emails
+  static const adminEmEnabled = 'admin.em.enabled';
+  /// Needs the host and from email above.
+  static const adminEmEnabledHint = 'admin.em.enabled_hint';
+  /// Fix the highlighted fields to save.
+  static const adminEmFix = 'admin.em.fix';
+  /// From email
+  static const adminEmFromEmail = 'admin.em.from_email';
+  /// From name
+  static const adminEmFromName = 'admin.em.from_name';
+  /// Account emails
+  static const adminEmGAccount = 'admin.em.g.account';
+  /// Confirm email and password reset (link works for 30 minutes).
+  static const adminEmGAccountHint = 'admin.em.g.account_hint';
+  /// Review reminders
+  static const adminEmGReminders = 'admin.em.g.reminders';
+  /// Day 2 reminder when a customer hasn’t rated.
+  static const adminEmGRemindersHint = 'admin.em.g.reminders_hint';
+  /// Reports to customers
+  static const adminEmGReports = 'admin.em.g.reports';
+  /// The report link, and the rating link with it.
+  static const adminEmGReportsHint = 'admin.em.g.reports_hint';
+  /// Team notices
+  static const adminEmGTeam = 'admin.em.g.team';
+  /// To owners and managers, e.g. a customer asked for a new link.
+  static const adminEmGTeamHint = 'admin.em.g.team_hint';
+  /// SMTP host
+  static const adminEmHost = 'admin.em.host';
+  /// Email is on. Emails go out from {from}.
+  static const adminEmLive = 'admin.em.live';
+  /// Everything still works without it: logins use phone codes, reports go by SMS, WhatsApp or link. Connect an email service below and switch it on when you’re ready.
+  static const adminEmOffBody = 'admin.em.off_body';
+  /// Email is off.
+  static const adminEmOffTitle = 'admin.em.off_title';
+  /// Password
+  static const adminEmPassword = 'admin.em.password';
+  /// Remove the saved password
+  static const adminEmPasswordClear = 'admin.em.password_clear';
+  /// •••••••• (saved, type to change)
+  static const adminEmPasswordSet = 'admin.em.password_set';
+  /// Port
+  static const adminEmPort = 'admin.em.port';
+  /// Save changes
+  static const adminEmSave = 'admin.em.save';
+  /// Save the settings first.
+  static const adminEmSaveFirst = 'admin.em.save_first';
+  /// Saved. Email is still off.
+  static const adminEmSaved = 'admin.em.saved';
+  /// Saved. Emails now go out with these settings. Send a test to check.
+  static const adminEmSavedLive = 'admin.em.saved_live';
+  /// Security
+  static const adminEmSecurity = 'admin.em.security';
+  /// Sender
+  static const adminEmSender = 'admin.em.sender';
+  /// Who customers and teams see emails from.
+  static const adminEmSenderSub = 'admin.em.sender_sub';
+  /// Email service (SMTP)
+  static const adminEmSmtp = 'admin.em.smtp';
+  /// Your provider shows these details. Port 587 uses STARTTLS; port 465 uses SSL/TLS.
+  static const adminEmSmtpNote = 'admin.em.smtp_note';
+  /// Any provider works (Brevo, SendGrid, Zoho, Amazon SES…). The password is stored encrypted.
+  static const adminEmSmtpSub = 'admin.em.smtp_sub';
+  /// Only a super admin can change email settings.
+  static const adminEmSuperOnly = 'admin.em.super_only';
+  /// Send test email
+  static const adminEmTest = 'admin.em.test';
+  /// Uses the saved settings, even while sending is off, so you can check them first.
+  static const adminEmTestBody = 'admin.em.test_body';
+  /// It didn’t send. The email service said: {reason}
+  static const adminEmTestFailed = 'admin.em.test_failed';
+  /// Send
+  static const adminEmTestGo = 'admin.em.test_go';
+  /// Test email sent to {to}. Check the inbox (and spam).
+  static const adminEmTestSent = 'admin.em.test_sent';
+  /// Send a test email
+  static const adminEmTestTitle = 'admin.em.test_title';
+  /// Send to
+  static const adminEmTestTo = 'admin.em.test_to';
+  /// Username
+  static const adminEmUsername = 'admin.em.username';
+  /// Something went wrong. Please try again.
+  static const adminErrGeneric = 'admin.err.generic';
+  /// Couldn’t load this. Check your connection and try again.
+  static const adminErrLoad = 'admin.err.load';
+  /// No internet connection. Check it and try again.
+  static const adminErrOffline = 'admin.err.offline';
+  /// Write at least {n} characters.
+  static const adminErrTooShort = 'admin.err.too_short';
+  /// {stage} photo for {job}
+  static const adminEvAlt = 'admin.ev.alt';
+  /// Same photo used twice
+  static const adminEvCkDuplicate = 'admin.ev.ck.duplicate';
+  /// Taken before the job
+  static const adminEvCkEarly = 'admin.ev.ck.early';
+  /// Far from site
+  static const adminEvCkFar = 'admin.ev.ck.far';
+  /// No GPS
+  static const adminEvCkNoGps = 'admin.ev.ck.no_gps';
+  /// Close
+  static const adminEvClose = 'admin.ev.close';
+  /// Company
+  static const adminEvCompany = 'admin.ev.company';
+  /// No photos match
+  static const adminEvEmptyTitle = 'admin.ev.empty_title';
+  /// No problems found
+  static const adminEvFClean = 'admin.ev.f.clean';
+  /// Same photo used twice
+  static const adminEvFDuplicate = 'admin.ev.f.duplicate';
+  /// Taken before the job
+  static const adminEvFEarly = 'admin.ev.f.early';
+  /// Far from site (over 500 m)
+  static const adminEvFFar = 'admin.ev.f.far';
+  /// Needs a look
+  static const adminEvFNeedsLook = 'admin.ev.f.needs_look';
+  /// No GPS
+  static const adminEvFNoGps = 'admin.ev.f.no_gps';
+  /// Flagged by staff
+  static const adminEvFStaff = 'admin.ev.f.staff';
+  /// Any
+  static const adminEvFAny = 'admin.ev.f_any';
+  /// Checks
+  static const adminEvFFlag = 'admin.ev.f_flag';
+  /// Stage
+  static const adminEvFStage = 'admin.ev.f_stage';
+  /// File
+  static const adminEvFile = 'admin.ev.file';
+  /// Fingerprint
+  static const adminEvFingerprint = 'admin.ev.fingerprint';
+  /// Flag for support
+  static const adminEvFlag = 'admin.ev.flag';
+  /// Only KaamNishaan staff see this flag. Say what looks wrong.
+  static const adminEvFlagBody = 'admin.ev.flag_body';
+  /// Flagged by {who} · {when}
+  static const adminEvFlagBy = 'admin.ev.flag_by';
+  /// What looks wrong?
+  static const adminEvFlagNote = 'admin.ev.flag_note';
+  /// Flag this photo for support
+  static const adminEvFlagTitle = 'admin.ev.flag_title';
+  /// Flagged
+  static const adminEvFlagged = 'admin.ev.flagged';
+  /// {m} m from the site
+  static const adminEvFromSite = 'admin.ev.from_site';
+  /// No GPS
+  static const adminEvGpsNo = 'admin.ev.gps_no';
+  /// GPS on
+  static const adminEvGpsOn = 'admin.ev.gps_on';
+  /// GPS ✓
+  static const adminEvGpsYes = 'admin.ev.gps_yes';
+  /// Job
+  static const adminEvJob = 'admin.ev.job';
+  /// Job created
+  static const adminEvJobCreated = 'admin.ev.job_created';
+  /// locked
+  static const adminEvLocked = 'admin.ev.locked';
+  /// {n} photos need a look
+  static const adminEvNeeds = 'admin.ev.needs';
+  /// The phone didn't share its location
+  static const adminEvNoGps = 'admin.ev.no_gps';
+  /// Photos appear here as soon as technicians take them.
+  static const adminEvNoneBody = 'admin.ev.none_body';
+  /// No photos yet
+  static const adminEvNoneTitle = 'admin.ev.none_title';
+  /// Photos from one job:
+  static const adminEvOneJob = 'admin.ev.one_job';
+  /// Photo
+  static const adminEvPhoto = 'admin.ev.photo';
+  /// Location
+  static const adminEvPlace = 'admin.ev.place';
+  /// Still processing
+  static const adminEvProcessing = 'admin.ev.processing';
+  /// Search job, customer, company or J-number
+  static const adminEvSearch = 'admin.ev.search';
+  /// Show them
+  static const adminEvShow = 'admin.ev.show';
+  /// After
+  static const adminEvStageAfter = 'admin.ev.stage.after';
+  /// Before
+  static const adminEvStageBefore = 'admin.ev.stage.before';
+  /// During
+  static const adminEvStageDuring = 'admin.ev.stage.during';
+  /// Taken
+  static const adminEvTaken = 'admin.ev.taken';
+  /// The same file is on {n} other photo(s)
+  static const adminEvTwins = 'admin.ev.twins';
+  /// Remove flag
+  static const adminEvUnflag = 'admin.ev.unflag';
+  /// Back to log in
+  static const adminForgotBack = 'admin.forgot.back';
+  /// Email isn’t switched on yet, so we can’t send you a reset link. Ask a super admin for a new setup link: you will choose a new password and connect your authenticator again.
+  static const adminForgotBody = 'admin.forgot.body';
+  /// The only super admin? Run the reset command on the server: python scripts/staff.py reset --email you@example.com
+  static const adminForgotOnlySuper = 'admin.forgot.only_super';
+  /// Reset password
+  static const adminForgotTitle = 'admin.forgot.title';
+  /// Add industry
+  static const adminInAdd = 'admin.in.add';
+  /// Add industry
+  static const adminInAddTitle = 'admin.in.add_title';
+  /// Default checklist
+  static const adminInCChecklist = 'admin.in.c_checklist';
+  /// Companies
+  static const adminInCCompanies = 'admin.in.c_companies';
+  /// Industry
+  static const adminInCIndustry = 'admin.in.c_industry';
+  /// Ready checklists
+  static const adminInCReady = 'admin.in.c_ready';
+  /// Status
+  static const adminInCStatus = 'admin.in.c_status';
+  /// {name} · {n} questions
+  static const adminInChecklist = 'admin.in.checklist';
+  /// Edit {name}
+  static const adminInEditTitle = 'admin.in.edit_title';
+  /// That industry already exists.
+  static const adminInErrExists = 'admin.in.err.exists';
+  /// Use 3–48 small letters, numbers or dashes.
+  static const adminInErrSlug = 'admin.in.err.slug';
+  /// Offered at sign-up
+  static const adminInFLive = 'admin.in.f_live';
+  /// Hidden industries stay for companies already in them.
+  static const adminInFLiveHint = 'admin.in.f_live_hint';
+  /// Name
+  static const adminInFName = 'admin.in.f_name';
+  /// Web address name
+  static const adminInFSlug = 'admin.in.f_slug';
+  /// Order in lists
+  static const adminInFSort = 'admin.in.f_sort';
+  /// Not set
+  static const adminInNotSet = 'admin.in.not_set';
+  /// Industry pages on the website come later. Ready-made checklists are managed in Checklist templates.
+  static const adminInNote = 'admin.in.note';
+  /// Can't be changed: companies and checklists use it.
+  static const adminInSlugFixed = 'admin.in.slug_fixed';
+  /// Small letters, numbers and dashes, e.g. pest-control.
+  static const adminInSlugHint = 'admin.in.slug_hint';
+  /// Draft
+  static const adminInStDraft = 'admin.in.st.draft';
+  /// Live
+  static const adminInStLive = 'admin.in.st.live';
+  /// Customer confirmed
+  static const adminJbAcked = 'admin.jb.acked';
+  /// Address
+  static const adminJbAddress = 'admin.jb.address';
+  /// All jobs
+  static const adminJbBack = 'admin.jb.back';
+  /// Company
+  static const adminJbCCompany = 'admin.jb.c_company';
+  /// Job
+  static const adminJbCJob = 'admin.jb.c_job';
+  /// Proof
+  static const adminJbCProof = 'admin.jb.c_proof';
+  /// Status
+  static const adminJbCStatus = 'admin.jb.c_status';
+  /// Technician
+  static const adminJbCTech = 'admin.jb.c_tech';
+  /// When
+  static const adminJbCWhen = 'admin.jb.c_when';
+  /// Why cancelled
+  static const adminJbCancelReason = 'admin.jb.cancel_reason';
+  /// {n} change requests
+  static const adminJbChangesN = 'admin.jb.changes_n';
+  /// Checklist
+  static const adminJbChecklist = 'admin.jb.checklist';
+  /// {name} · {done} of {total}
+  static const adminJbClLine = 'admin.jb.cl_line';
+  /// Completed
+  static const adminJbCompleted = 'admin.jb.completed';
+  /// Customer
+  static const adminJbCustomer = 'admin.jb.customer';
+  /// Any day
+  static const adminJbDAny = 'admin.jb.d.any';
+  /// Last 7 days
+  static const adminJbDLast7 = 'admin.jb.d.last7';
+  /// Next 7 days
+  static const adminJbDNext7 = 'admin.jb.d.next7';
+  /// Today
+  static const adminJbDToday = 'admin.jb.d.today';
+  /// Tomorrow
+  static const adminJbDTomorrow = 'admin.jb.d.tomorrow';
+  /// Yesterday
+  static const adminJbDYesterday = 'admin.jb.d.yesterday';
+  /// No jobs match
+  static const adminJbEmptyTitle = 'admin.jb.empty_title';
+  /// Date
+  static const adminJbFDate = 'admin.jb.f_date';
+  /// Open site in Maps
+  static const adminJbMapSite = 'admin.jb.map_site';
+  /// Open start point in Maps
+  static const adminJbMapStart = 'admin.jb.map_start';
+  /// {n} min
+  static const adminJbMinutes = 'admin.jb.minutes';
+  /// No address
+  static const adminJbNoAddress = 'admin.jb.no_address';
+  /// No checklist
+  static const adminJbNoChecklist = 'admin.jb.no_checklist';
+  /// No report yet.
+  static const adminJbNoReport = 'admin.jb.no_report';
+  /// Started, but the phone didn't share its location.
+  static const adminJbNoStartGps = 'admin.jb.no_start_gps';
+  /// Not assigned
+  static const adminJbNobody = 'admin.jb.nobody';
+  /// Jobs appear here as soon as any company creates one.
+  static const adminJbNoneBody = 'admin.jb.none_body';
+  /// No jobs yet
+  static const adminJbNoneTitle = 'admin.jb.none_title';
+  /// This job doesn't exist or was deleted.
+  static const adminJbNotFound = 'admin.jb.not_found';
+  /// Not scheduled
+  static const adminJbNotScheduled = 'admin.jb.not_scheduled';
+  /// Not started yet.
+  static const adminJbNotStarted = 'admin.jb.not_started';
+  /// Opened {n} times
+  static const adminJbOpenedN = 'admin.jb.opened_n';
+  /// After {n}
+  static const adminJbPhAfter = 'admin.jb.ph.after';
+  /// Before {n}
+  static const adminJbPhBefore = 'admin.jb.ph.before';
+  /// During {n}
+  static const adminJbPhDuring = 'admin.jb.ph.during';
+  /// Voice notes {n}
+  static const adminJbPhVoice = 'admin.jb.ph.voice';
+  /// Proof
+  static const adminJbProof = 'admin.jb.proof';
+  /// {done} of {total}
+  static const adminJbProofOf = 'admin.jb.proof_of';
+  /// Quick job
+  static const adminJbQuick = 'admin.jb.quick';
+  /// Report
+  static const adminJbReport = 'admin.jb.report';
+  /// Confirmed by customer
+  static const adminJbRsAcknowledged = 'admin.jb.rs.acknowledged';
+  /// Approved
+  static const adminJbRsApproved = 'admin.jb.rs.approved';
+  /// Changes asked
+  static const adminJbRsChangesRequested = 'admin.jb.rs.changes_requested';
+  /// Draft
+  static const adminJbRsDraft = 'admin.jb.rs.draft';
+  /// Being written
+  static const adminJbRsGenerating = 'admin.jb.rs.generating';
+  /// Writing failed
+  static const adminJbRsGenerationFailed = 'admin.jb.rs.generation_failed';
+  /// Waiting for approval
+  static const adminJbRsPendingReview = 'admin.jb.rs.pending_review';
+  /// Sent to customer
+  static const adminJbRsShared = 'admin.jb.rs.shared';
+  /// Scheduled
+  static const adminJbScheduled = 'admin.jb.scheduled';
+  /// Search job, customer, technician or J-number
+  static const adminJbSearch = 'admin.jb.search';
+  /// See all photos
+  static const adminJbSeePhotos = 'admin.jb.see_photos';
+  /// Someone
+  static const adminJbSomeone = 'admin.jb.someone';
+  /// Assigned
+  static const adminJbStAssigned = 'admin.jb.st.assigned';
+  /// Cancelled
+  static const adminJbStCancelled = 'admin.jb.st.cancelled';
+  /// Changes asked
+  static const adminJbStChangesRequested = 'admin.jb.st.changes_requested';
+  /// Completed
+  static const adminJbStCompleted = 'admin.jb.st.completed';
+  /// In progress
+  static const adminJbStInProgress = 'admin.jb.st.in_progress';
+  /// Pending review
+  static const adminJbStInReview = 'admin.jb.st.in_review';
+  /// Not assigned
+  static const adminJbStUnassigned = 'admin.jb.st.unassigned';
+  /// Started {m} m from the site — check this.
+  static const adminJbStartedFar = 'admin.jb.started_far';
+  /// Started with location on.
+  static const adminJbStartedGps = 'admin.jb.started_gps';
+  /// Started {m} m from the site.
+  static const adminJbStartedNear = 'admin.jb.started_near';
+  /// Technician
+  static const adminJbTechnician = 'admin.jb.technician';
+  /// Timeline
+  static const adminJbTimeline = 'admin.jb.timeline';
+  /// Customer confirmed the report ({who})
+  static const adminJbTlAcknowledged = 'admin.jb.tl.acknowledged';
+  /// Report approved by {who}
+  static const adminJbTlApproved = 'admin.jb.tl.approved';
+  /// Assigned to {name}
+  static const adminJbTlAssigned = 'admin.jb.tl.assigned';
+  /// Cancelled by {who}
+  static const adminJbTlCancelled = 'admin.jb.tl.cancelled';
+  /// Cancelled by {who}: {why}
+  static const adminJbTlCancelledWhy = 'admin.jb.tl.cancelled_why';
+  /// Changes asked by {who}
+  static const adminJbTlChanges = 'admin.jb.tl.changes';
+  /// Job created by {who}
+  static const adminJbTlCreated = 'admin.jb.tl.created';
+  /// Quick job started by {who}
+  static const adminJbTlCreatedQuick = 'admin.jb.tl.created_quick';
+  /// Job details changed by {who}
+  static const adminJbTlEdited = 'admin.jb.tl.edited';
+  /// After photos ({n})
+  static const adminJbTlPhotosAfter = 'admin.jb.tl.photos_after';
+  /// Before photos ({n})
+  static const adminJbTlPhotosBefore = 'admin.jb.tl.photos_before';
+  /// During photos ({n})
+  static const adminJbTlPhotosDuring = 'admin.jb.tl.photos_during';
+  /// Report sent to the customer
+  static const adminJbTlShared = 'admin.jb.tl.shared';
+  /// Started on site by {who}
+  static const adminJbTlStarted = 'admin.jb.tl.started';
+  /// Report sent for review by {who}
+  static const adminJbTlSubmitted = 'admin.jb.tl.submitted';
+  /// Unassigned by {who}
+  static const adminJbTlUnassigned = 'admin.jb.tl.unassigned';
+  /// Voice notes ({n})
+  static const adminJbTlVoice = 'admin.jb.tl.voice';
+  /// Today {time}
+  static const adminJbTodayAt = 'admin.jb.today_at';
+  /// Tomorrow
+  static const adminJbTomorrow = 'admin.jb.tomorrow';
+  /// Where
+  static const adminJbWhere = 'admin.jb.where';
+  /// Yesterday
+  static const adminJbYesterday = 'admin.jb.yesterday';
+  /// Language
+  static const adminLanguage = 'admin.language';
+  /// Every text here is checked in {lang}.
+  static const adminLcAllChecked = 'admin.lc.all_checked';
+  /// Import
+  static const adminLcApply = 'admin.lc.apply';
+  /// Area
+  static const adminLcArea = 'admin.lc.area';
+  /// Admin panel
+  static const adminLcAreaAdmin = 'admin.lc.area.admin';
+  /// Mobile app
+  static const adminLcAreaApp = 'admin.lc.area.app';
+  /// Website
+  static const adminLcAreaSite = 'admin.lc.area.site';
+  /// Use a CSV with a “key” column and language columns (en, hi, gu, es, fr), like Export makes.
+  static const adminLcBadFile = 'admin.lc.bad_file';
+  /// Checked by {who}, {ago}
+  static const adminLcBy = 'admin.lc.by';
+  /// Changed
+  static const adminLcChanged = 'admin.lc.changed';
+  /// {n} changed
+  static const adminLcChangedN = 'admin.lc.changed_n';
+  /// Checked
+  static const adminLcChecked = 'admin.lc.checked';
+  /// Close
+  static const adminLcClose = 'admin.lc.close';
+  /// {n} texts
+  static const adminLcCount = 'admin.lc.count';
+  /// 1 text
+  static const adminLcCountOne = 'admin.lc.count_one';
+  /// % = texts a person checked, out of {n} in this area. Pick a language to work on it.
+  static const adminLcCoverHint = 'admin.lc.cover_hint';
+  /// No texts match.
+  static const adminLcEmpty = 'admin.lc.empty';
+  /// This text also has a website change waiting in Website content.
+  static const adminLcHasDraft = 'admin.lc.has_draft';
+  /// Import file
+  static const adminLcImport = 'admin.lc.import';
+  /// {n} texts in {keys} keys will change and go live now. Imported translations are marked as checked.
+  static const adminLcImportBody = 'admin.lc.import_body';
+  /// Import texts?
+  static const adminLcImportTitle = 'admin.lc.import_title';
+  /// {n} texts imported.
+  static const adminLcImported = 'admin.lc.imported';
+  /// Key
+  static const adminLcKey = 'admin.lc.key';
+  /// Goes live when saved. Apps pick it up when they next open.
+  static const adminLcLiveNote = 'admin.lc.live_note';
+  /// Mark these {n} as checked in {lang}
+  static const adminLcMarkAll = 'admin.lc.mark_all';
+  /// Mark this one as checked in {lang}
+  static const adminLcMarkAllOne = 'admin.lc.mark_all_one';
+  /// {n} texts marked as checked in {lang}.
+  static const adminLcMarked = 'admin.lc.marked';
+  /// Needs review
+  static const adminLcNeedsReview = 'admin.lc.needs_review';
+  /// Nothing to change: the file matches what’s live.
+  static const adminLcNoChanges = 'admin.lc.no_changes';
+  /// Nothing to change. {n} rows had keys we don’t know.
+  static const adminLcNoChangesUnknown = 'admin.lc.no_changes_unknown';
+  /// Ready
+  static const adminLcReady = 'admin.lc.ready';
+  /// Save
+  static const adminLcSave = 'admin.lc.save';
+  /// Saved. It’s live now.
+  static const adminLcSaved = 'admin.lc.saved';
+  /// Search key or text
+  static const adminLcSearch = 'admin.lc.search';
+  /// Source
+  static const adminLcSource = 'admin.lc.source';
+  /// All
+  static const adminLcStAll = 'admin.lc.st.all';
+  /// Changed here
+  static const adminLcStChanged = 'admin.lc.st.changed';
+  /// Not checked in {lang}
+  static const adminLcStNotReviewed = 'admin.lc.st.not_reviewed';
+  /// Checked in {lang}
+  static const adminLcStReviewed = 'admin.lc.st.reviewed';
+  /// Status
+  static const adminLcStatus = 'admin.lc.status';
+  /// All leads
+  static const adminLdBack = 'admin.ld.back';
+  /// Call
+  static const adminLdCall = 'admin.ld.call';
+  /// Company
+  static const adminLdCompany = 'admin.ld.company';
+  /// Demo {when}
+  static const adminLdDemoAt = 'admin.ld.demo_at';
+  /// Email
+  static const adminLdEmail = 'admin.ld.email';
+  /// Nothing here.
+  static const adminLdEmpty = 'admin.ld.empty';
+  /// All caught up. New demo bookings and messages from the website appear here.
+  static const adminLdEmptyNew = 'admin.ld.empty_new';
+  /// Export emails (CSV)
+  static const adminLdExport = 'admin.ld.export';
+  /// Last changed by {name} · {when}
+  static const adminLdHandled = 'admin.ld.handled';
+  /// Message
+  static const adminLdKindContact = 'admin.ld.kind.contact';
+  /// Demo
+  static const adminLdKindDemo = 'admin.ld.kind.demo';
+  /// Newsletter
+  static const adminLdKindNewsletter = 'admin.ld.kind.newsletter';
+  /// Website language
+  static const adminLdLang = 'admin.ld.lang';
+  /// Message
+  static const adminLdMessage = 'admin.ld.message';
+  /// This lead doesn’t exist any more.
+  static const adminLdNotFound = 'admin.ld.not_found';
+  /// Team note (only staff see this)
+  static const adminLdNote = 'admin.ld.note';
+  /// {n} people
+  static const adminLdPeople = 'admin.ld.people';
+  /// Phone
+  static const adminLdPhone = 'admin.ld.phone';
+  /// Choose a lead to see it here.
+  static const adminLdPick = 'admin.ld.pick';
+  /// Received
+  static const adminLdReceived = 'admin.ld.received';
+  /// Reply by email
+  static const adminLdReply = 'admin.ld.reply';
+  /// Save
+  static const adminLdSave = 'admin.ld.save';
+  /// Saved
+  static const adminLdSaved = 'admin.ld.saved';
+  /// Search name, email, company, message or KN number
+  static const adminLdSearch = 'admin.ld.search';
+  /// Already signed up: {name}
+  static const adminLdSignedUp = 'admin.ld.signed_up';
+  /// Contacted
+  static const adminLdStContacted = 'admin.ld.st.contacted';
+  /// Done
+  static const adminLdStDone = 'admin.ld.st.done';
+  /// New
+  static const adminLdStNew = 'admin.ld.st.new';
+  /// Spam
+  static const adminLdStSpam = 'admin.ld.st.spam';
+  /// Status
+  static const adminLdStatus = 'admin.ld.status';
+  /// Messages
+  static const adminLdTabContact = 'admin.ld.tab.contact';
+  /// Demos
+  static const adminLdTabDemo = 'admin.ld.tab.demo';
+  /// Handled
+  static const adminLdTabDone = 'admin.ld.tab.done';
+  /// New
+  static const adminLdTabNew = 'admin.ld.tab.new';
+  /// Newsletter
+  static const adminLdTabNewsletter = 'admin.ld.tab.newsletter';
+  /// Leads
+  static const adminLdTabs = 'admin.ld.tabs';
+  /// Team size
+  static const adminLdTeam = 'admin.ld.team';
+  /// Topic
+  static const adminLdTopic = 'admin.ld.topic';
+  /// Trade
+  static const adminLdTrade = 'admin.ld.trade';
+  /// Demo time
+  static const adminLdWhen = 'admin.ld.when';
+  /// Use your staff account and the code from your authenticator app.
+  static const adminLoginBody = 'admin.login.body';
+  /// One-time code (from your authenticator app)
+  static const adminLoginCode = 'admin.login.code';
+  /// Digit {n} of 6
+  static const adminLoginDigit = 'admin.login.digit';
+  /// Email
+  static const adminLoginEmail = 'admin.login.email';
+  /// Fill in your email, password and the 6-digit code.
+  static const adminLoginErrFill = 'admin.login.err_fill';
+  /// Fill in your email, password and a recovery code.
+  static const adminLoginErrFillRecovery = 'admin.login.err_fill_recovery';
+  /// Email, password or code is wrong. {n} tries left before a 15-minute lock.
+  static const adminLoginErrInvalid = 'admin.login.err_invalid';
+  /// Email, password or code is wrong. 1 try left before a 15-minute lock.
+  static const adminLoginErrInvalidOne = 'admin.login.err_invalid_one';
+  /// Too many wrong tries. Try again after {time}.
+  static const adminLoginErrLocked = 'admin.login.err_locked';
+  /// Forgot password?
+  static const adminLoginForgot = 'admin.login.forgot';
+  /// Run the platform with confidence.
+  static const adminLoginHero = 'admin.login.hero';
+  /// Hide password
+  static const adminLoginHidePw = 'admin.login.hide_pw';
+  /// Password
+  static const adminLoginPassword = 'admin.login.password';
+  /// Recovery code
+  static const adminLoginRecovery = 'admin.login.recovery';
+  /// One of the 8 codes you saved when you set up. Each works once.
+  static const adminLoginRecoveryHint = 'admin.login.recovery_hint';
+  /// Show password
+  static const adminLoginShowPw = 'admin.login.show_pw';
+  /// Only KaamNishaan staff. Every login is recorded in the audit log.
+  static const adminLoginStaffOnly = 'admin.login.staff_only';
+  /// Log in
+  static const adminLoginSubmit = 'admin.login.submit';
+  /// Admin log in
+  static const adminLoginTitle = 'admin.login.title';
+  /// Use the authenticator code
+  static const adminLoginUseCode = 'admin.login.use_code';
+  /// Lost your authenticator?
+  static const adminLoginUseRecovery = 'admin.login.use_recovery';
+  /// Log out
+  static const adminLogout = 'admin.logout';
+  /// App
+  static const adminLzCApp = 'admin.lz.c_app';
+  /// Code
+  static const adminLzCCode = 'admin.lz.c_code';
+  /// Language
+  static const adminLzCLang = 'admin.lz.c_lang';
+  /// Reports
+  static const adminLzCReports = 'admin.lz.c_reports';
+  /// Website
+  static const adminLzCSite = 'admin.lz.c_site';
+  /// Voice input
+  static const adminLzCVoice = 'admin.lz.c_voice';
+  /// Prices
+  static const adminLzCurrency = 'admin.lz.currency';
+  /// Rupees in India, dollars elsewhere
+  static const adminLzCurrencyV = 'admin.lz.currency_v';
+  /// Dates and numbers
+  static const adminLzDates = 'admin.lz.dates';
+  /// Follow each person’s language
+  static const adminLzDatesV = 'admin.lz.dates_v';
+  /// Defaults
+  static const adminLzDefaults = 'admin.lz.defaults';
+  /// When a text is missing
+  static const adminLzFallback = 'admin.lz.fallback';
+  /// English is shown
+  static const adminLzFallbackV = 'admin.lz.fallback_v';
+  /// On
+  static const adminLzOn = 'admin.lz.on';
+  /// Machine-translate missing texts
+  static const adminLzRAuto = 'admin.lz.r.auto';
+  /// Off: every text is translated by people
+  static const adminLzRAutoHint = 'admin.lz.r.auto_hint';
+  /// Report language is set by the company
+  static const adminLzRCompany = 'admin.lz.r.company';
+  /// Notes in any language become one report in that language
+  static const adminLzRCompanyHint = 'admin.lz.r.company_hint';
+  /// Each person picks their app language
+  static const adminLzROwn = 'admin.lz.r.own';
+  /// At first launch, and any time in Me
+  static const adminLzROwnHint = 'admin.lz.r.own_hint';
+  /// Original voice recording is kept
+  static const adminLzRVoice = 'admin.lz.r.voice';
+  /// Next to the written words and their translation
+  static const adminLzRVoiceHint = 'admin.lz.r.voice_hint';
+  /// Checked
+  static const adminLzReady = 'admin.lz.ready';
+  /// Report language for new companies
+  static const adminLzReportLang = 'admin.lz.report_lang';
+  /// The language customers get reports in; owners can change it in Company settings.
+  static const adminLzReportLangHint = 'admin.lz.report_lang_hint';
+  /// Review · {n}% checked
+  static const adminLzReview = 'admin.lz.review';
+  /// How languages work
+  static const adminLzRules = 'admin.lz.rules';
+  /// Built into the app; shown so everyone knows.
+  static const adminLzRulesSub = 'admin.lz.rules_sub';
+  /// Save changes
+  static const adminLzSave = 'admin.lz.save';
+  /// Saved. New companies start with this report language.
+  static const adminLzSaved = 'admin.lz.saved';
+  /// Source language
+  static const adminLzSource = 'admin.lz.source';
+  /// All 5 languages are on everywhere. “Checked” is how much of each language a person has reviewed in
+  static const adminLzTableNote = 'admin.lz.table_note';
+  /// Email
+  static const adminMtChEmail = 'admin.mt.ch.email';
+  /// SMS
+  static const adminMtChSms = 'admin.mt.ch.sms';
+  /// WhatsApp
+  static const adminMtChWhatsapp = 'admin.mt.ch.whatsapp';
+  /// Channel
+  static const adminMtChannel = 'admin.mt.channel';
+  /// Marked as checked.
+  static const adminMtCheckedDone = 'admin.mt.checked_done';
+  /// {n} characters with a real link · {parts} SMS (costs {parts}×) · the STOP line is added for you
+  static const adminMtCount = 'admin.mt.count';
+  /// {n} of {max} characters with a real link · 1 SMS · the STOP line is added for you
+  static const adminMtCountOne = 'admin.mt.count_one';
+  /// {n} characters · the STOP line is added for you
+  static const adminMtCountWa = 'admin.mt.count_wa';
+  /// Discard changes
+  static const adminMtDiscard = 'admin.mt.discard';
+  /// In India every SMS must match a template registered on the DLT portal. Register a changed text there first, or the SMS won’t be delivered.
+  static const adminMtDlt = 'admin.mt.dlt';
+  /// Keep {{link}} so the customer can open it.
+  static const adminMtENeedsLink = 'admin.mt.e.needs_link';
+  /// Write the message.
+  static const adminMtERequired = 'admin.mt.e.required';
+  /// Leave out the STOP line; it is added for you.
+  static const adminMtEStopAddedAutomatically = 'admin.mt.e.stop_added_automatically';
+  /// Too long.
+  static const adminMtETooLong = 'admin.mt.e.too_long';
+  /// Use only the placeholders below.
+  static const adminMtEUnknownPlaceholder = 'admin.mt.e.unknown_placeholder';
+  /// Plain text. Empty lines start a new paragraph.
+  static const adminMtEmailNote = 'admin.mt.email_note';
+  /// Fix the message to publish it.
+  static const adminMtFix = 'admin.mt.fix';
+  /// Insert at the cursor
+  static const adminMtInsert = 'admin.mt.insert';
+  /// {lang} ✓
+  static const adminMtLangOk = 'admin.mt.lang_ok';
+  /// {lang} · review
+  static const adminMtLangReview = 'admin.mt.lang_review';
+  /// Language
+  static const adminMtLanguage = 'admin.mt.language';
+  /// Languages
+  static const adminMtLanguages = 'admin.mt.languages';
+  /// Edits apply to every company from the next message.
+  static const adminMtListNote = 'admin.mt.list_note';
+  /// Mark as checked
+  static const adminMtMarkChecked = 'admin.mt.mark_checked';
+  /// Message
+  static const adminMtMessage = 'admin.mt.message';
+  /// WhatsApp texts must be approved by Meta as a template before they can be sent. Submit a changed text for approval first.
+  static const adminMtMeta = 'admin.mt.meta';
+  /// Email isn’t switched on yet: emails are only logged, not delivered.
+  static const adminMtNotLiveEmail = 'admin.mt.not_live.email';
+  /// SMS isn’t connected yet: messages are only logged, not delivered.
+  static const adminMtNotLiveSms = 'admin.mt.not_live.sms';
+  /// WhatsApp isn’t connected yet: messages are only logged, not delivered.
+  static const adminMtNotLiveWhatsapp = 'admin.mt.not_live.whatsapp';
+  /// Preview · {company} → {customer}
+  static const adminMtPreview = 'admin.mt.preview';
+  /// Publish
+  static const adminMtPublish = 'admin.mt.publish';
+  /// Published. The next messages use this text.
+  static const adminMtPublished = 'admin.mt.published';
+  /// Back to the built-in text
+  static const adminMtReset = 'admin.mt.reset';
+  /// Back to the built-in text.
+  static const adminMtResetDone = 'admin.mt.reset_done';
+  /// Some languages need a check
+  static const adminMtSomeReview = 'admin.mt.some_review';
+  /// Checked
+  static const adminMtStChecked = 'admin.mt.st.checked';
+  /// Edited by KaamNishaan
+  static const adminMtStEdited = 'admin.mt.st.edited';
+  /// Needs a native speaker’s check
+  static const adminMtStReview = 'admin.mt.st.review';
+  /// Subject
+  static const adminMtSubject = 'admin.mt.subject';
+  /// Day 5 · SMS instead of the call
+  static const adminMtTDay5Sms = 'admin.mt.t.day5_sms';
+  /// Report link (no rating)
+  static const adminMtTReportLink = 'admin.mt.t.report_link';
+  /// Day 0 · Report + rating link
+  static const adminMtTReportReview = 'admin.mt.t.report_review';
+  /// Day 2 · Review reminder
+  static const adminMtTReviewReminder = 'admin.mt.t.review_reminder';
+  /// Send test
+  static const adminMtTest = 'admin.mt.test';
+  /// Enter a full phone number or email.
+  static const adminMtTestBadTo = 'admin.mt.test_bad_to';
+  /// The text on screen, filled with sample values, goes to you.
+  static const adminMtTestBody = 'admin.mt.test_body';
+  /// Your email
+  static const adminMtTestEmail = 'admin.mt.test_email';
+  /// Send
+  static const adminMtTestGo = 'admin.mt.test_go';
+  /// Not really sent to {to}: this channel isn’t connected yet. It was logged on the server.
+  static const adminMtTestLogged = 'admin.mt.test_logged';
+  /// Your phone number
+  static const adminMtTestPhone = 'admin.mt.test_phone';
+  /// Test sent to {to}.
+  static const adminMtTestSent = 'admin.mt.test_sent';
+  /// Send a test
+  static const adminMtTestTitle = 'admin.mt.test_title';
+  /// Not published yet
+  static const adminMtUnsaved = 'admin.mt.unsaved';
+  /// Sent on Day 5 instead of the AI call (no voice provider, or after a voicemail).
+  static const adminMtWhenDay5Sms = 'admin.mt.when.day5_sms';
+  /// Sent when a report is shared without asking for a rating, and when a customer asks for a new link.
+  static const adminMtWhenReportLink = 'admin.mt.when.report_link';
+  /// Sent when a manager approves a report and asks for a rating.
+  static const adminMtWhenReportReview = 'admin.mt.when.report_review';
+  /// Sent on Day 2 when the customer hasn’t rated yet.
+  static const adminMtWhenReviewReminder = 'admin.mt.when.review_reminder';
+  /// Account
+  static const adminNavAccount = 'admin.nav.account';
+  /// AI
+  static const adminNavAi = 'admin.nav.ai';
+  /// AI review calls
+  static const adminNavAiCalls = 'admin.nav.ai_calls';
+  /// AI configuration
+  static const adminNavAiConfig = 'admin.nav.ai_config';
+  /// AI usage & cost
+  static const adminNavAiUsage = 'admin.nav.ai_usage';
+  /// Analytics
+  static const adminNavAnalytics = 'admin.nav.analytics';
+  /// Audit logs
+  static const adminNavAudit = 'admin.nav.audit';
+  /// Blog
+  static const adminNavBlog = 'admin.nav.blog';
+  /// Checklist templates
+  static const adminNavChecklists = 'admin.nav.checklists';
+  /// Close menu
+  static const adminNavClose = 'admin.nav.close';
+  /// Companies
+  static const adminNavCompanies = 'admin.nav.companies';
+  /// Content
+  static const adminNavContent = 'admin.nav.content';
+  /// Customers
+  static const adminNavCustomers = 'admin.nav.customers';
+  /// Dashboard
+  static const adminNavDashboard = 'admin.nav.dashboard';
+  /// Email settings
+  static const adminNavEmail = 'admin.nav.email';
+  /// Evidence review
+  static const adminNavEvidence = 'admin.nav.evidence';
+  /// Help & messages
+  static const adminNavHelp = 'admin.nav.help';
+  /// Industries
+  static const adminNavIndustries = 'admin.nav.industries';
+  /// Jobs
+  static const adminNavJobs = 'admin.nav.jobs';
+  /// Website leads
+  static const adminNavLeads = 'admin.nav.leads';
+  /// Localization
+  static const adminNavLocalization = 'admin.nav.localization';
+  /// Notifications
+  static const adminNavNotifications = 'admin.nav.notifications';
+  /// Open menu
+  static const adminNavOpen = 'admin.nav.open';
+  /// Operations
+  static const adminNavOperations = 'admin.nav.operations';
+  /// Overview
+  static const adminNavOverview = 'admin.nav.overview';
+  /// Payments
+  static const adminNavPayments = 'admin.nav.payments';
+  /// Plans & pricing
+  static const adminNavPlans = 'admin.nav.plans';
+  /// My profile
+  static const adminNavProfile = 'admin.nav.profile';
+  /// Prompts
+  static const adminNavPrompts = 'admin.nav.prompts';
+  /// Reports
+  static const adminNavReports = 'admin.nav.reports';
+  /// Revenue
+  static const adminNavRevenue = 'admin.nav.revenue';
+  /// Reviews & ratings
+  static const adminNavReviews = 'admin.nav.reviews';
+  /// Roles & permissions
+  static const adminNavRoles = 'admin.nav.roles';
+  /// Platform settings
+  static const adminNavSettings = 'admin.nav.settings';
+  /// Storage
+  static const adminNavStorage = 'admin.nav.storage';
+  /// Subscriptions
+  static const adminNavSubscriptions = 'admin.nav.subscriptions';
+  /// Support tickets
+  static const adminNavSupport = 'admin.nav.support';
+  /// System
+  static const adminNavSystem = 'admin.nav.system';
+  /// Message templates
+  static const adminNavTemplates = 'admin.nav.templates';
+  /// Testimonials
+  static const adminNavTestimonials = 'admin.nav.testimonials';
+  /// Localized content
+  static const adminNavTexts = 'admin.nav.texts';
+  /// Usage & credits
+  static const adminNavUsage = 'admin.nav.usage';
+  /// Users
+  static const adminNavUsers = 'admin.nav.users';
+  /// Website content
+  static const adminNavWebsiteContent = 'admin.nav.website_content';
+  /// Send an announcement
+  static const adminNoAnnounce = 'admin.no.announce';
+  /// Shows in the app’s Messages, in each person’s language.
+  static const adminNoAnnounceSub = 'admin.no.announce_sub';
+  /// One company
+  static const adminNoAudCompany = 'admin.no.aud.company';
+  /// Everyone
+  static const adminNoAudEveryone = 'admin.no.aud.everyone';
+  /// Owners only
+  static const adminNoAudOwners = 'admin.no.aud.owners';
+  /// Owners and managers
+  static const adminNoAudOwnersManagers = 'admin.no.aud.owners_managers';
+  /// {who} ({n} people)
+  static const adminNoAudN = 'admin.no.aud_n';
+  /// Who gets it
+  static const adminNoAudience = 'admin.no.audience';
+  /// Automatic messages
+  static const adminNoAuto = 'admin.no.auto';
+  /// Turned off here, a message stops for every company.
+  static const adminNoAutoSub = 'admin.no.auto_sub';
+  /// Message
+  static const adminNoBody = 'admin.no.body';
+  /// Keep it short and clear.
+  static const adminNoBodyHint = 'admin.no.body_hint';
+  /// Cancel
+  static const adminNoCancel = 'admin.no.cancel';
+  /// Pick another company
+  static const adminNoChangeCompany = 'admin.no.change_company';
+  /// Check the title, message and company.
+  static const adminNoCheck = 'admin.no.check';
+  /// Company
+  static const adminNoCompany = 'admin.no.company';
+  /// Type at least 2 letters
+  static const adminNoCompanyHint = 'admin.no.company_hint';
+  /// In the app
+  static const adminNoInApp = 'admin.no.in_app';
+  /// Report needs changes
+  static const adminNoKindChangesRequested = 'admin.no.kind.changes_requested';
+  /// New job given
+  static const adminNoKindJobAssigned = 'admin.no.kind.job_assigned';
+  /// Low rating (1–3 stars)
+  static const adminNoKindLowRating = 'admin.no.kind.low_rating';
+  /// Plan limit almost reached
+  static const adminNoKindPlanLimit = 'admin.no.kind.plan_limit';
+  /// Report approved
+  static const adminNoKindReportApproved = 'admin.no.kind.report_approved';
+  /// Report sent to the customer
+  static const adminNoKindReportShared = 'admin.no.kind.report_shared';
+  /// Report waiting for approval
+  static const adminNoKindReportSubmitted = 'admin.no.kind.report_submitted';
+  /// Customer left a rating
+  static const adminNoKindReviewReceived = 'admin.no.kind.review_received';
+  /// Support replied
+  static const adminNoKindSupportReply = 'admin.no.kind.support_reply';
+  /// Technician asks a question
+  static const adminNoKindTechQuestion = 'admin.no.kind.tech_question';
+  /// Free trial ending
+  static const adminNoKindTrialEnding = 'admin.no.kind.trial_ending';
+  /// Weekly summary
+  static const adminNoKindWeeklySummary = 'admin.no.kind.weekly_summary';
+  /// English is needed. People whose language you leave empty get the English text.
+  static const adminNoLangHint = 'admin.no.lang_hint';
+  /// {n} languages
+  static const adminNoLangs = 'admin.no.langs';
+  /// Language
+  static const adminNoLanguage = 'admin.no.language';
+  /// Schedule
+  static const adminNoLater = 'admin.no.later';
+  /// Email · needs an email service (not connected)
+  static const adminNoNeedsEmail = 'admin.no.needs_email';
+  /// No announcements yet.
+  static const adminNoNone = 'admin.no.none';
+  /// Send now
+  static const adminNoNow = 'admin.no.now';
+  /// Reaches {n} people now.
+  static const adminNoReach = 'admin.no.reach';
+  /// Reaches everyone in the company.
+  static const adminNoReachCompany = 'admin.no.reach_company';
+  /// You can see these settings. An admin can change them.
+  static const adminNoReadOnly = 'admin.no.read_only';
+  /// Recent announcements
+  static const adminNoRecent = 'admin.no.recent';
+  /// Saved.
+  static const adminNoSaved = 'admin.no.saved';
+  /// Schedule
+  static const adminNoSchedule = 'admin.no.schedule';
+  /// Scheduled. It goes out at the time you picked.
+  static const adminNoScheduled = 'admin.no.scheduled';
+  /// Send
+  static const adminNoSend = 'admin.no.send';
+  /// Send on
+  static const adminNoSendAt = 'admin.no.send_at';
+  /// Sent to {n} people.
+  static const adminNoSent = 'admin.no.sent';
+  /// {n} people
+  static const adminNoSentTo = 'admin.no.sent_to';
+  /// Cancelled
+  static const adminNoStateCancelled = 'admin.no.state.cancelled';
+  /// Scheduled
+  static const adminNoStateScheduled = 'admin.no.state.scheduled';
+  /// Sent
+  static const adminNoStateSent = 'admin.no.state.sent';
+  /// Title
+  static const adminNoTitle = 'admin.no.title';
+  /// e.g. New: add photos from the gallery
+  static const adminNoTitleHint = 'admin.no.title_hint';
+  /// To owners and managers
+  static const adminNoToOffice = 'admin.no.to.office';
+  /// To the owner
+  static const adminNoToOwner = 'admin.no.to.owner';
+  /// To the person who asked
+  static const adminNoToPerson = 'admin.no.to.person';
+  /// To the technician
+  static const adminNoToTechnician = 'admin.no.to.technician';
+  /// When
+  static const adminNoWhen = 'admin.no.when';
+  /// Login alerts
+  static const adminPfAlerts = 'admin.pf.alerts';
+  /// Email when a new device logs in · needs an email service (not connected)
+  static const adminPfAlertsHint = 'admin.pf.alerts_hint';
+  /// Code from your authenticator app
+  static const adminPfCode = 'admin.pf.code';
+  /// Recovery codes
+  static const adminPfCodes = 'admin.pf.codes';
+  /// {n} unused codes left, for when you don’t have your phone.
+  static const adminPfCodesLeft = 'admin.pf.codes_left';
+  /// Get new codes
+  static const adminPfCodesNew = 'admin.pf.codes_new';
+  /// Save these now; they are shown only once and the old codes no longer work.
+  static const adminPfCodesOnce = 'admin.pf.codes_once';
+  /// Copied
+  static const adminPfCopied = 'admin.pf.copied';
+  /// Copy
+  static const adminPfCopy = 'admin.pf.copy';
+  /// Current
+  static const adminPfCurrent = 'admin.pf.current';
+  /// Details
+  static const adminPfDetails = 'admin.pf.details';
+  /// Your staff profile.
+  static const adminPfDetailsSub = 'admin.pf.details_sub';
+  /// Email
+  static const adminPfEmail = 'admin.pf.email';
+  /// Your login; it can’t be changed. For a new email, a super admin invites you again.
+  static const adminPfEmailHint = 'admin.pf.email_hint';
+  /// Log out
+  static const adminPfEnd = 'admin.pf.end';
+  /// Language
+  static const adminPfLang = 'admin.pf.lang';
+  /// Last used {ago}
+  static const adminPfLastUsed = 'admin.pf.last_used';
+  /// Name
+  static const adminPfName = 'admin.pf.name';
+  /// Change password
+  static const adminPfPw = 'admin.pf.pw';
+  /// Current password
+  static const adminPfPwCurrent = 'admin.pf.pw_current';
+  /// Password changed. Other devices were logged out.
+  static const adminPfPwDone = 'admin.pf.pw_done';
+  /// At least 8 characters with a letter and a number. Other devices are logged out.
+  static const adminPfPwHint = 'admin.pf.pw_hint';
+  /// New password
+  static const adminPfPwNew = 'admin.pf.pw_new';
+  /// Change password
+  static const adminPfPwSave = 'admin.pf.pw_save';
+  /// Lost your phone? Another super admin can send you a new setup link from
+  static const adminPfResetNote = 'admin.pf.reset_note';
+  /// Role
+  static const adminPfRole = 'admin.pf.role';
+  /// Save changes
+  static const adminPfSave = 'admin.pf.save';
+  /// Saved.
+  static const adminPfSaved = 'admin.pf.saved';
+  /// Security
+  static const adminPfSecurity = 'admin.pf.security';
+  /// Protect the admin panel.
+  static const adminPfSecuritySub = 'admin.pf.security_sub';
+  /// Active sessions
+  static const adminPfSessions = 'admin.pf.sessions';
+  /// Where you are logged in. Sessions end 12 hours after log in.
+  static const adminPfSessionsSub = 'admin.pf.sessions_sub';
+  /// This device
+  static const adminPfThisDevice = 'admin.pf.this_device';
+  /// 2-step login
+  static const adminPfTwoStep = 'admin.pf.two_step';
+  /// Authenticator app · required for all staff
+  static const adminPfTwoStepHint = 'admin.pf.two_step_hint';
+  /// Prices are in INR and USD. Changes are live at once for the website, sign-up and every company on the plan. No money is charged yet.
+  static const adminPlBanner = 'admin.pl.banner';
+  /// Only a super admin can change plans and prices.
+  static const adminPlBannerView = 'admin.pl.banner_view';
+  /// Card needed
+  static const adminPlCard = 'admin.pl.card';
+  /// No card is asked for until online payments are set up.
+  static const adminPlCardHint = 'admin.pl.card_hint';
+  /// No
+  static const adminPlCardNo = 'admin.pl.card_no';
+  /// {n} companies · {trials} on trial
+  static const adminPlCompanies = 'admin.pl.companies';
+  /// Custom
+  static const adminPlCustom = 'admin.pl.custom';
+  /// {n} days
+  static const adminPlDays = 'admin.pl.days';
+  /// Edit plan
+  static const adminPlEdit = 'admin.pl.edit';
+  /// Changes are live at once: the website, sign-up and every company on this plan.
+  static const adminPlEditBody = 'admin.pl.edit_body';
+  /// Edit {plan}
+  static const adminPlEditTitle = 'admin.pl.edit_title';
+  /// The trial must be a paid plan shown on the website.
+  static const adminPlErrBadTrialPlan = 'admin.pl.err.bad_trial_plan';
+  /// A free plan is free in every currency.
+  static const adminPlErrFreeMismatch = 'admin.pl.err.free_mismatch';
+  /// Check the numbers — something isn't valid.
+  static const adminPlErrInvalid = 'admin.pl.err.invalid';
+  /// An English name is needed.
+  static const adminPlErrName = 'admin.pl.err.name';
+  /// Give a price in every currency, or leave all empty for a custom price.
+  static const adminPlErrPrices = 'admin.pl.err.prices';
+  /// New companies start on this plan's trial. Pick another trial plan first.
+  static const adminPlErrTrialPlan = 'admin.pl.err.trial_plan';
+  /// Limits
+  static const adminPlFLimits = 'admin.pl.f_limits';
+  /// Leave empty for no limit.
+  static const adminPlFLimitsHint = 'admin.pl.f_limits_hint';
+  /// Plan name
+  static const adminPlFName = 'admin.pl.f_name';
+  /// Most popular
+  static const adminPlFPopular = 'admin.pl.f_popular';
+  /// Highlighted on the website. Only one plan can be.
+  static const adminPlFPopularHint = 'admin.pl.f_popular_hint';
+  /// Monthly price
+  static const adminPlFPrice = 'admin.pl.f_price';
+  /// Leave all empty for "Custom" (talk to us).
+  static const adminPlFPriceHint = 'admin.pl.f_price_hint';
+  /// Shown on the website
+  static const adminPlFPublic = 'admin.pl.f_public';
+  /// Hidden plans stay for companies already on them.
+  static const adminPlFPublicHint = 'admin.pl.f_public_hint';
+  /// AI questions: {n} / month
+  static const adminPlLAi = 'admin.pl.l.ai';
+  /// Unlimited AI questions
+  static const adminPlLAiAny = 'admin.pl.l.ai_any';
+  /// Credits: {n} / month
+  static const adminPlLCredits = 'admin.pl.l.credits';
+  /// Custom credits
+  static const adminPlLCreditsAny = 'admin.pl.l.credits_any';
+  /// Fair use reports
+  static const adminPlLFair = 'admin.pl.l.fair';
+  /// Reports: {n} / month
+  static const adminPlLReports = 'admin.pl.l.reports';
+  /// Technicians: {n}
+  static const adminPlLTechs = 'admin.pl.l.techs';
+  /// Unlimited technicians
+  static const adminPlLTechsAny = 'admin.pl.l.techs_any';
+  /// AI questions per month
+  static const adminPlLimAiQuestionsMonthly = 'admin.pl.lim.ai_questions_monthly';
+  /// Credits per month
+  static const adminPlLimMonthlyCredits = 'admin.pl.lim.monthly_credits';
+  /// Reports per month
+  static const adminPlLimReportLimitMonthly = 'admin.pl.lim.report_limit_monthly';
+  /// Technicians
+  static const adminPlLimTechnicianLimit = 'admin.pl.lim.technician_limit';
+  /// {price} / month
+  static const adminPlMonth = 'admin.pl.month';
+  /// No limit
+  static const adminPlNoLimit = 'admin.pl.no_limit';
+  /// On the website
+  static const adminPlOnSite = 'admin.pl.on_site';
+  /// {n} credits
+  static const adminPlPack = 'admin.pl.pack';
+  /// On sale
+  static const adminPlPackOn = 'admin.pl.pack_on';
+  /// Price of {n} credits in {c}
+  static const adminPlPackPrice = 'admin.pl.pack_price';
+  /// Top-up credit packs
+  static const adminPlPacks = 'admin.pl.packs';
+  /// Extra credits companies can buy (once online payments are on).
+  static const adminPlPacksSub = 'admin.pl.packs_sub';
+  /// Most popular
+  static const adminPlPopular = 'admin.pl.popular';
+  /// Preview pricing page
+  static const adminPlPreview = 'admin.pl.preview';
+  /// Save
+  static const adminPlSave = 'admin.pl.save';
+  /// Saved
+  static const adminPlSaved = 'admin.pl.saved';
+  /// Free trial
+  static const adminPlTrial = 'admin.pl.trial';
+  /// Trial length
+  static const adminPlTrialDays = 'admin.pl.trial_days';
+  /// Trial plan
+  static const adminPlTrialPlan = 'admin.pl.trial_plan';
+  /// New companies start here.
+  static const adminPlTrialSub = 'admin.pl.trial_sub';
+  /// Payments will run through {provider} once it's set up in the testing phase. Until then nothing is charged, and companies stay on their plan for free.
+  static const adminPmBody = 'admin.pm.body';
+  /// Card details are held by the payment provider. KaamNishaan never stores card numbers.
+  static const adminPmCards = 'admin.pm.cards';
+  /// Razorpay (UPI, cards)
+  static const adminPmProviderRazorpay = 'admin.pm.provider.razorpay';
+  /// Online payments aren't connected yet
+  static const adminPmTitle = 'admin.pm.title';
+  /// Failed payments and when they'll be tried again
+  static const adminPmWillFailed = 'admin.pm.will.failed';
+  /// Every invoice with its company, amount and date
+  static const adminPmWillInvoices = 'admin.pm.will.invoices';
+  /// How each company pays (card, UPI, bank transfer)
+  static const adminPmWillMethods = 'admin.pm.will.methods';
+  /// Refunds
+  static const adminPmWillRefunds = 'admin.pm.will.refunds';
+  /// Answers owners' and managers' questions about their own jobs.
+  static const adminPrAboutAssistant = 'admin.pr.about.assistant';
+  /// Writes the report from the job's photos, checklist answers and notes. The evidence is sent as a separate message.
+  static const adminPrAboutReportDraft = 'admin.pr.about.report_draft';
+  /// Translates checklist questions and voice notes into the report language.
+  static const adminPrAboutTranslation = 'admin.pr.about.translation';
+  /// Avg cost
+  static const adminPrAvgCost = 'admin.pr.avg_cost';
+  /// Avg tokens
+  static const adminPrAvgTokens = 'admin.pr.avg_tokens';
+  /// Discard draft
+  static const adminPrDiscard = 'admin.pr.discard';
+  /// Edit draft
+  static const adminPrEditDraft = 'admin.pr.edit_draft';
+  /// Edited by {who} · {when}
+  static const adminPrEdited = 'admin.pr.edited';
+  /// Keep {language} in the prompt — it's filled with the report language.
+  static const adminPrErrLanguage = 'admin.pr.err.language';
+  /// Make live again
+  static const adminPrGoBack = 'admin.pr.go_back';
+  /// Versions
+  static const adminPrHistory = 'admin.pr.history';
+  /// Start v{v}
+  static const adminPrNewDraft = 'admin.pr.new_draft';
+  /// Nothing live
+  static const adminPrNoneLive = 'admin.pr.none_live';
+  /// What changed
+  static const adminPrNote = 'admin.pr.note';
+  /// For example: shorter sentences
+  static const adminPrNoteHint = 'admin.pr.note_hint';
+  /// Change note: {note}
+  static const adminPrNoteWas = 'admin.pr.note_was';
+  /// Publish v{v}
+  static const adminPrPublish = 'admin.pr.publish';
+  /// Published by {who} · {when}
+  static const adminPrPublished = 'admin.pr.published';
+  /// Calls (30 days)
+  static const adminPrRuns = 'admin.pr.runs';
+  /// {ok} ok · {failed} failed
+  static const adminPrRunsV = 'admin.pr.runs_v';
+  /// Save draft
+  static const adminPrSaveDraft = 'admin.pr.save_draft';
+  /// KaamNishaan
+  static const adminPrSeed = 'admin.pr.seed';
+  /// showing draft v{v}
+  static const adminPrShowingDraft = 'admin.pr.showing_draft';
+  /// showing live v{v}
+  static const adminPrShowingLive = 'admin.pr.showing_live';
+  /// Draft
+  static const adminPrStDraft = 'admin.pr.st.draft';
+  /// Live
+  static const adminPrStLive = 'admin.pr.st.live';
+  /// Retired
+  static const adminPrStRetired = 'admin.pr.st.retired';
+  /// System prompt
+  static const adminPrSystem = 'admin.pr.system';
+  /// Answers questions in the app
+  static const adminPrTaskAssistant = 'admin.pr.task.assistant';
+  /// Writes the job report
+  static const adminPrTaskReportDraft = 'admin.pr.task.report_draft';
+  /// Translates checklists and notes
+  static const adminPrTaskTranslation = 'admin.pr.task.translation';
+  /// {n} reports · {flagged} with invented work
+  static const adminPrUsed = 'admin.pr.used';
+  /// v{v} draft
+  static const adminPrVDraft = 'admin.pr.v_draft';
+  /// v{v} live
+  static const adminPrVLive = 'admin.pr.v_live';
+  /// Variables
+  static const adminPrVars = 'admin.pr.vars';
+  /// Filled in when the AI is called. The job's evidence goes in its own message.
+  static const adminPrVarsHint = 'admin.pr.vars_hint';
+  /// Nobody can log in or sign up in the apps until you turn it off. People already logged in can keep working.
+  static const adminPsConfirmBody = 'admin.ps.confirm_body';
+  /// Turn on
+  static const adminPsConfirmGo = 'admin.ps.confirm_go';
+  /// Turn on maintenance mode?
+  static const adminPsConfirmTitle = 'admin.ps.confirm_title';
+  /// Default country
+  static const adminPsCountry = 'admin.ps.country';
+  /// Picked first on sign-up forms. A company’s currency follows its country.
+  static const adminPsCountryHint = 'admin.ps.country_hint';
+  /// Pick a country from the list.
+  static const adminPsEDefaultCountry = 'admin.ps.e.default_country';
+  /// Enter a number from 2 to 25.
+  static const adminPsEMaxPhotoMb = 'admin.ps.e.max_photo_mb';
+  /// Enter a valid email.
+  static const adminPsESupportEmail = 'admin.ps.e.support_email';
+  /// Enter a full phone number.
+  static const adminPsESupportWhatsapp = 'admin.ps.e.support_whatsapp';
+  /// Support email
+  static const adminPsEmail = 'admin.ps.email';
+  /// Leave a field empty to use the value set on the server (Render).
+  static const adminPsEmptyHint = 'admin.ps.empty_hint';
+  /// AI assistant
+  static const adminPsFAiAssistant = 'admin.ps.f.ai_assistant';
+  /// Chat about jobs in the office app.
+  static const adminPsFAiAssistantHint = 'admin.ps.f.ai_assistant_hint';
+  /// AI report drafting
+  static const adminPsFAiDrafting = 'admin.ps.f.ai_drafting';
+  /// Drafts reports from photos, checklists and voice. When off, reports use the plain template.
+  static const adminPsFAiDraftingHint = 'admin.ps.f.ai_drafting_hint';
+  /// Maintenance mode
+  static const adminPsFMaintenance = 'admin.ps.f.maintenance';
+  /// Shows a notice and blocks new logins and sign-ups. The admin panel keeps working.
+  static const adminPsFMaintenanceHint = 'admin.ps.f.maintenance_hint';
+  /// No OpenAI key is set on the server, so AI is off anyway.
+  static const adminPsFNoKey = 'admin.ps.f.no_key';
+  /// New company sign-ups
+  static const adminPsFSignups = 'admin.ps.f.signups';
+  /// Owners can start a free trial themselves. When off, only KaamNishaan staff can create companies.
+  static const adminPsFSignupsHint = 'admin.ps.f.signups_hint';
+  /// Features
+  static const adminPsFeatures = 'admin.ps.features';
+  /// Turn platform features on or off for every company.
+  static const adminPsFeaturesSub = 'admin.ps.features_sub';
+  /// Fix the highlighted fields to save.
+  static const adminPsFix = 'admin.ps.fix';
+  /// General
+  static const adminPsGeneral = 'admin.ps.general';
+  /// Name and contact shown across the apps and website.
+  static const adminPsGeneralSub = 'admin.ps.general_sub';
+  /// Limits
+  static const adminPsLimits = 'admin.ps.limits';
+  /// Report and technician limits per plan are set in Plans and pricing.
+  static const adminPsLimitsNote = 'admin.ps.limits_note';
+  /// Upload limits for every company.
+  static const adminPsLimitsSub = 'admin.ps.limits_sub';
+  /// Maintenance mode is on: nobody can log in or sign up in the apps. The admin panel still works.
+  static const adminPsMaintenanceOn = 'admin.ps.maintenance_on';
+  /// Platform name
+  static const adminPsName = 'admin.ps.name';
+  /// The brand name is part of the apps and can’t be changed here
+  static const adminPsNameLocked = 'admin.ps.name_locked';
+  /// Max photo size (MB)
+  static const adminPsPhoto = 'admin.ps.photo';
+  /// From 2 to 25. The app shrinks photos before upload, so 12 is plenty.
+  static const adminPsPhotoHint = 'admin.ps.photo_hint';
+  /// Save changes
+  static const adminPsSave = 'admin.ps.save';
+  /// Saved. It applies to every company now.
+  static const adminPsSaved = 'admin.ps.saved';
+  /// Server setting ({value})
+  static const adminPsServerValue = 'admin.ps.server_value';
+  /// Only a super admin can change platform settings.
+  static const adminPsSuperOnly = 'admin.ps.super_only';
+  /// Support WhatsApp
+  static const adminPsWhatsapp = 'admin.ps.whatsapp';
+  /// Last 30 days
+  static const adminRange30 = 'admin.range.30';
+  /// Last 7 days
+  static const adminRange7 = 'admin.range.7';
+  /// Last 90 days
+  static const adminRange90 = 'admin.range.90';
+  /// Time period
+  static const adminRangeLabel = 'admin.range.label';
+  /// You have {n} recovery codes left. Ask a super admin to reset your authenticator for new ones.
+  static const adminRecoveryLow = 'admin.recovery_low';
+  /// Try again
+  static const adminRetry = 'admin.retry';
+  /// Their password and authenticator are cleared and they're signed out. Use this for a lost phone or password.
+  static const adminRoAskLinkBody = 'admin.ro.ask.link.body';
+  /// Create link
+  static const adminRoAskLinkConfirm = 'admin.ro.ask.link.confirm';
+  /// New setup link for {name}?
+  static const adminRoAskLinkTitle = 'admin.ro.ask.link.title';
+  /// They'll be signed out at once and can't log in until you turn the account back on.
+  static const adminRoAskOffBody = 'admin.ro.ask.off.body';
+  /// Turn off
+  static const adminRoAskOffConfirm = 'admin.ro.ask.off.confirm';
+  /// Turn off {name}?
+  static const adminRoAskOffTitle = 'admin.ro.ask.off.title';
+  /// They'll be able to log in again.
+  static const adminRoAskOnBody = 'admin.ro.ask.on.body';
+  /// Turn on
+  static const adminRoAskOnConfirm = 'admin.ro.ask.on.confirm';
+  /// Turn on {name}?
+  static const adminRoAskOnTitle = 'admin.ro.ask.on.title';
+  /// {name} will become {role}. It takes effect on their next page load.
+  static const adminRoAskRoleBody = 'admin.ro.ask.role.body';
+  /// Change role
+  static const adminRoAskRoleConfirm = 'admin.ro.ask.role.confirm';
+  /// Change {name}'s role?
+  static const adminRoAskRoleTitle = 'admin.ro.ask.role.title';
+  /// Actions
+  static const adminRoCActions = 'admin.ro.c_actions';
+  /// Last login
+  static const adminRoCLogin = 'admin.ro.c_login';
+  /// Name
+  static const adminRoCName = 'admin.ro.c_name';
+  /// Permission
+  static const adminRoCPermission = 'admin.ro.c_permission';
+  /// Role
+  static const adminRoCRole = 'admin.ro.c_role';
+  /// Status
+  static const adminRoCStatus = 'admin.ro.c_status';
+  /// Admin
+  static const adminRoColAdmin = 'admin.ro.col.admin';
+  /// Customer
+  static const adminRoColCustomer = 'admin.ro.col.customer';
+  /// Manager
+  static const adminRoColManager = 'admin.ro.col.manager';
+  /// Owner
+  static const adminRoColOwner = 'admin.ro.col.owner';
+  /// Super admin
+  static const adminRoColSuperAdmin = 'admin.ro.col.super_admin';
+  /// Support
+  static const adminRoColSupport = 'admin.ro.col.support';
+  /// Technician
+  static const adminRoColTechnician = 'admin.ro.col.technician';
+  /// Copied
+  static const adminRoCopied = 'admin.ro.copied';
+  /// Copy link
+  static const adminRoCopy = 'admin.ro.copy';
+  /// Done
+  static const adminRoDone = 'admin.ro.done';
+  /// Enter a valid email.
+  static const adminRoErrEmail = 'admin.ro.err.email';
+  /// This email already has a staff account.
+  static const adminRoErrExists = 'admin.ro.err.exists';
+  /// Keep at least one super admin.
+  static const adminRoErrLastSuperAdmin = 'admin.ro.err.last_super_admin';
+  /// Enter their full name.
+  static const adminRoErrName = 'admin.ro.err.name';
+  /// Ask another super admin to change your own account.
+  static const adminRoErrNotYourself = 'admin.ro.err.not_yourself';
+  /// Turn the account back on first.
+  static const adminRoErrStaffDisabled = 'admin.ro.err.staff_disabled';
+  /// Work email
+  static const adminRoFEmail = 'admin.ro.f_email';
+  /// Full name
+  static const adminRoFName = 'admin.ro.f_name';
+  /// Role
+  static const adminRoFRole = 'admin.ro.f_role';
+  /// Invite staff
+  static const adminRoInvite = 'admin.ro.invite';
+  /// You'll get a setup link to share with them. It works for 72 hours.
+  static const adminRoInviteBody = 'admin.ro.invite_body';
+  /// Create setup link
+  static const adminRoInviteSend = 'admin.ro.invite_send';
+  /// Invite a staff member
+  static const adminRoInviteTitle = 'admin.ro.invite_title';
+  /// Send this link to {name}. They'll set a password and an authenticator app.
+  static const adminRoLinkBody = 'admin.ro.link_body';
+  /// This link is shown only once and works for 72 hours.
+  static const adminRoLinkNote = 'admin.ro.link_note';
+  /// Setup link ready
+  static const adminRoLinkTitle = 'admin.ro.link_title';
+  /// Read from the rules the server enforces. "If allowed" is a switch each company sets in the app.
+  static const adminRoMatrixSub = 'admin.ro.matrix_sub';
+  /// Who can do what
+  static const adminRoMatrixTitle = 'admin.ro.matrix_title';
+  /// New setup link
+  static const adminRoNewLink = 'admin.ro.new_link';
+  /// Not allowed
+  static const adminRoNo = 'admin.ro.no';
+  /// If allowed
+  static const adminRoNoteIfAllowed = 'admin.ro.note.if_allowed';
+  /// Own company
+  static const adminRoNoteOwnCompany = 'admin.ro.note.own_company';
+  /// Quick job
+  static const adminRoNoteQuickJob = 'admin.ro.note.quick_job';
+  /// Secure link
+  static const adminRoNoteSecureLink = 'admin.ro.note.secure_link';
+  /// Technicians
+  static const adminRoNoteTechnicians = 'admin.ro.note.technicians';
+  /// Invite staff, change roles, turn accounts off, or send a new setup link.
+  static const adminRoPeopleSub = 'admin.ro.people_sub';
+  /// Staff accounts
+  static const adminRoPeopleTitle = 'admin.ro.people_title';
+  /// Only a super admin can change staff accounts.
+  static const adminRoPeopleView = 'admin.ro.people_view';
+  /// Can change companies, users, reviews, credits and templates.
+  static const adminRoRoleHintAdmin = 'admin.ro.role_hint.admin';
+  /// Everything, including platform settings and staff accounts.
+  static const adminRoRoleHintSuperAdmin = 'admin.ro.role_hint.super_admin';
+  /// Can look at everything but can't change anything.
+  static const adminRoRoleHintSupport = 'admin.ro.role_hint.support';
+  /// Approve or reject reports
+  static const adminRoRowApprove = 'admin.ro.row.approve';
+  /// Audit logs
+  static const adminRoRowAudit = 'admin.ro.row.audit';
+  /// Capture photos, checklist, voice
+  static const adminRoRowCapture = 'admin.ro.row.capture';
+  /// Edit checklists
+  static const adminRoRowChecklists = 'admin.ro.row.checklists';
+  /// Company profile and billing
+  static const adminRoRowCompany = 'admin.ro.row.company';
+  /// Create and assign jobs
+  static const adminRoRowJobs = 'admin.ro.row.jobs';
+  /// Platform settings, plans, AI config
+  static const adminRoRowPlatform = 'admin.ro.row.platform';
+  /// Ask for reviews
+  static const adminRoRowReviews = 'admin.ro.row.reviews';
+  /// Share report link
+  static const adminRoRowShare = 'admin.ro.row.share';
+  /// Invite or remove users
+  static const adminRoRowUsers = 'admin.ro.row.users';
+  /// View report and acknowledge
+  static const adminRoRowViewReport = 'admin.ro.row.view_report';
+  /// Change companies, users, reviews, credits and templates
+  static const adminRoSrowChange = 'admin.ro.srow.change';
+  /// See every admin page
+  static const adminRoSrowLook = 'admin.ro.srow.look';
+  /// Platform settings, email and staff accounts
+  static const adminRoSrowPlatform = 'admin.ro.srow.platform';
+  /// Active
+  static const adminRoStActive = 'admin.ro.st.active';
+  /// Turned off
+  static const adminRoStDisabled = 'admin.ro.st.disabled';
+  /// Invited
+  static const adminRoStInvited = 'admin.ro.st.invited';
+  /// What each KaamNishaan staff role can do here.
+  static const adminRoStaffSub = 'admin.ro.staff_sub';
+  /// Admin panel roles
+  static const adminRoStaffTitle = 'admin.ro.staff_title';
+  /// Turn off
+  static const adminRoTurnOff = 'admin.ro.turn_off';
+  /// Turn on
+  static const adminRoTurnOn = 'admin.ro.turn_on';
+  /// Allowed
+  static const adminRoYes = 'admin.ro.yes';
+  /// (you)
+  static const adminRoYou = 'admin.ro.you';
+  /// Admin
+  static const adminRoleAdmin = 'admin.role.admin';
+  /// Super admin
+  static const adminRoleSuperAdmin = 'admin.role.super_admin';
+  /// Support
+  static const adminRoleSupport = 'admin.role.support';
+  /// AI checks
+  static const adminRpAiChecks = 'admin.rp.ai_checks';
+  /// Every sentence linked to proof
+  static const adminRpAllLinked = 'admin.rp.all_linked';
+  /// All reports
+  static const adminRpBack = 'admin.rp.back';
+  /// Drafted by AI
+  static const adminRpByAi = 'admin.rp.by.ai';
+  /// Made from the template
+  static const adminRpByTemplate = 'admin.rp.by.template';
+  /// AI check
+  static const adminRpCCheck = 'admin.rp.c_check';
+  /// Company
+  static const adminRpCCompany = 'admin.rp.c_company';
+  /// Language
+  static const adminRpCLanguage = 'admin.rp.c_language';
+  /// Report
+  static const adminRpCReport = 'admin.rp.c_report';
+  /// Sent
+  static const adminRpCSent = 'admin.rp.c_sent';
+  /// Status
+  static const adminRpCStatus = 'admin.rp.c_status';
+  /// Copied link
+  static const adminRpChCopy = 'admin.rp.ch.copy';
+  /// Email
+  static const adminRpChEmail = 'admin.rp.ch.email';
+  /// SMS
+  static const adminRpChSms = 'admin.rp.ch.sms';
+  /// WhatsApp
+  static const adminRpChWhatsapp = 'admin.rp.ch.whatsapp';
+  /// Checklist {n} of {total} passed
+  static const adminRpChecklist = 'admin.rp.checklist';
+  /// {n} check(s) failed
+  static const adminRpCkFailedCheck = 'admin.rp.ck.failed_check';
+  /// Missing proof ({n})
+  static const adminRpCkMissingEvidence = 'admin.rp.ck.missing_evidence';
+  /// Passed
+  static const adminRpCkPassed = 'admin.rp.ck.passed';
+  /// Invented work ({n})
+  static const adminRpCkUnsupportedClaim = 'admin.rp.ck.unsupported_claim';
+  /// {by} · edited by {who}
+  static const adminRpEdited = 'admin.rp.edited';
+  /// No reports match
+  static const adminRpEmptyTitle = 'admin.rp.empty_title';
+  /// Language
+  static const adminRpFLanguage = 'admin.rp.f_language';
+  /// {n} sentence(s) with no proof behind them
+  static const adminRpInvented = 'admin.rp.invented';
+  /// {n} of {total} sentences linked to proof
+  static const adminRpLinked = 'admin.rp.linked';
+  /// Customer links
+  static const adminRpLinks = 'admin.rp.links';
+  /// No invented work found
+  static const adminRpNoInvented = 'admin.rp.no_invented';
+  /// Not sent to the customer yet.
+  static const adminRpNoLinks = 'admin.rp.no_links';
+  /// No text yet.
+  static const adminRpNoText = 'admin.rp.no_text';
+  /// Reports appear here as soon as technicians make them.
+  static const adminRpNoneBody = 'admin.rp.none_body';
+  /// No reports yet
+  static const adminRpNoneTitle = 'admin.rp.none_title';
+  /// Not checked yet — the report is still being written or failed.
+  static const adminRpNotChecked = 'admin.rp.not_checked';
+  /// This report doesn't exist.
+  static const adminRpNotFound = 'admin.rp.not_found';
+  /// Not opened yet
+  static const adminRpNotOpened = 'admin.rp.not_opened';
+  /// Opened {n} times · last {when}
+  static const adminRpOpens = 'admin.rp.opens';
+  /// Download PDF
+  static const adminRpPdf = 'admin.rp.pdf';
+  /// Prompt: report-draft v{v} · {tokens} tokens · {cost}
+  static const adminRpPrompt = 'admin.rp.prompt';
+  /// failed checks not explained
+  static const adminRpReasonFailedCheckNotExplained = 'admin.rp.reason.failed_check_not_explained';
+  /// missing photos
+  static const adminRpReasonMissingPhotos = 'admin.rp.reason.missing_photos';
+  /// other
+  static const adminRpReasonOther = 'admin.rp.reason.other';
+  /// unclear text
+  static const adminRpReasonUnclearText = 'admin.rp.reason.unclear_text';
+  /// wrong details
+  static const adminRpReasonWrongDetails = 'admin.rp.reason.wrong_details';
+  /// Turned off
+  static const adminRpRevoked = 'admin.rp.revoked';
+  /// Search report, job, customer or company
+  static const adminRpSearch = 'admin.rp.search';
+  /// Advice
+  static const adminRpSecAdvice = 'admin.rp.sec.advice';
+  /// Summary
+  static const adminRpSecSummary = 'admin.rp.sec.summary';
+  /// Work done
+  static const adminRpSecWorkDone = 'admin.rp.sec.work_done';
+  /// Confirmed by the customer
+  static const adminRpStAcknowledged = 'admin.rp.st.acknowledged';
+  /// Approved
+  static const adminRpStApproved = 'admin.rp.st.approved';
+  /// Changes asked: {why}
+  static const adminRpStChanges = 'admin.rp.st.changes';
+  /// Report made
+  static const adminRpStCreated = 'admin.rp.st.created';
+  /// Sent to the customer
+  static const adminRpStShared = 'admin.rp.st.shared';
+  /// Sent for approval
+  static const adminRpStSubmitted = 'admin.rp.st.submitted';
+  /// Steps
+  static const adminRpSteps = 'admin.rp.steps';
+  /// Works until {when}
+  static const adminRpUntil = 'admin.rp.until';
+  /// Company
+  static const adminRvCCompany = 'admin.rv.c_company';
+  /// Rating
+  static const adminRvCRating = 'admin.rv.c_rating';
+  /// Review
+  static const adminRvCReview = 'admin.rv.c_review';
+  /// Status
+  static const adminRvCStatus = 'admin.rv.c_status';
+  /// Technician
+  static const adminRvCTech = 'admin.rv.c_tech';
+  /// When
+  static const adminRvCWhen = 'admin.rv.c_when';
+  /// Automatic check: abusive words found.
+  static const adminRvCheckAbuse = 'admin.rv.check.abuse';
+  /// Automatic check: a phone number or email was hidden.
+  static const adminRvCheckPersonalData = 'admin.rv.check.personal_data';
+  /// Automatic check: the same phone number left another review within a day.
+  static const adminRvCheckSpam = 'admin.rv.check.spam';
+  /// Checked by {name} {when}
+  static const adminRvDecided = 'admin.rv.decided';
+  /// Review hidden.
+  static const adminRvDoneHidden = 'admin.rv.done_hidden';
+  /// Published. The company can see it now.
+  static const adminRvDonePublished = 'admin.rv.done_published';
+  /// Review is shown again.
+  static const adminRvDoneRestored = 'admin.rv.done_restored';
+  /// No reviews match
+  static const adminRvEmptyTitle = 'admin.rv.empty_title';
+  /// Someone already dealt with this review. Refresh to see it.
+  static const adminRvErrDone = 'admin.rv.err_done';
+  /// Export
+  static const adminRvExport = 'admin.rv.export';
+  /// Flagged
+  static const adminRvFFlagged = 'admin.rv.f.flagged';
+  /// Manager following up
+  static const adminRvFFollowup = 'admin.rv.f.followup';
+  /// Hidden
+  static const adminRvFHidden = 'admin.rv.f.hidden';
+  /// Published
+  static const adminRvFPublished = 'admin.rv.f.published';
+  /// Replied
+  static const adminRvFReplied = 'admin.rv.f.replied';
+  /// Company
+  static const adminRvFCompany = 'admin.rv.f_company';
+  /// Rating
+  static const adminRvFRating = 'admin.rv.f_rating';
+  /// Status
+  static const adminRvFStatus = 'admin.rv.f_status';
+  /// Flagged first
+  static const adminRvFlaggedFirst = 'admin.rv.flagged_first';
+  /// Flagged · {why}
+  static const adminRvFlaggedWhy = 'admin.rv.flagged_why';
+  /// Abusive words
+  static const adminRvFoundAbuse = 'admin.rv.found.abuse';
+  /// Personal data found
+  static const adminRvFoundPersonalData = 'admin.rv.found.personal_data';
+  /// Repeat review
+  static const adminRvFoundSpam = 'admin.rv.found.spam';
+  /// Hide review
+  static const adminRvHide = 'admin.rv.hide';
+  /// The company and technician won’t see it. It is kept, and you can put it back later. Say why for the audit log.
+  static const adminRvHideBody = 'admin.rv.hide_body';
+  /// Hide this review?
+  static const adminRvHideTitle = 'admin.rv.hide_title';
+  /// Average rating
+  static const adminRvKAvg = 'admin.rv.k_avg';
+  /// All companies · 30 days
+  static const adminRvKAvgSub = 'admin.rv.k_avg_sub';
+  /// Reviews (30 d)
+  static const adminRvKCount = 'admin.rv.k_count';
+  /// {pct} of shared reports
+  static const adminRvKCountSub = 'admin.rv.k_count_sub';
+  /// Flagged for review
+  static const adminRvKFlagged = 'admin.rv.k_flagged';
+  /// Abuse, personal data or spam
+  static const adminRvKFlaggedSub = 'admin.rv.k_flagged_sub';
+  /// Low ratings
+  static const adminRvKLow = 'admin.rv.k_low';
+  /// 2 stars or less · {pct}
+  static const adminRvKLowSub = 'admin.rv.k_low_sub';
+  /// No reports shared yet
+  static const adminRvKNoShared = 'admin.rv.k_no_shared';
+  /// No comment, just stars
+  static const adminRvNoComment = 'admin.rv.no_comment';
+  /// Reviews appear here when customers rate a job from their report link.
+  static const adminRvNoneBody = 'admin.rv.none_body';
+  /// No reviews yet
+  static const adminRvNoneTitle = 'admin.rv.none_title';
+  /// Before hiding (only staff see this):
+  static const adminRvOriginal = 'admin.rv.original';
+  /// Review · {company}
+  static const adminRvPanel = 'admin.rv.panel';
+  /// Flagged review · {company}
+  static const adminRvPanelFlagged = 'admin.rv.panel_flagged';
+  /// Pick a review to see it here.
+  static const adminRvPick = 'admin.rv.pick';
+  /// Publish
+  static const adminRvPublish = 'admin.rv.publish';
+  /// Publish with edit
+  static const adminRvPublishEdit = 'admin.rv.publish_edit';
+  /// 2 stars or less
+  static const adminRvRLow = 'admin.rv.r_low';
+  /// Reply from {name}
+  static const adminRvReplyBy = 'admin.rv.reply_by';
+  /// Put back
+  static const adminRvRestore = 'admin.rv.restore';
+  /// Hold repeat reviews from one number
+  static const adminRvRuleBlockRepeats = 'admin.rv.rule.block_repeats';
+  /// Flag abusive words (5 languages)
+  static const adminRvRuleFlagAbuse = 'admin.rv.rule.flag_abuse';
+  /// Hide phone numbers and emails
+  static const adminRvRuleHideContact = 'admin.rv.rule.hide_contact';
+  /// Review rules
+  static const adminRvRules = 'admin.rv.rules';
+  /// Held reviews wait here until you publish or hide them. Companies can reply, but can’t delete or change a customer’s words.
+  static const adminRvRulesNote = 'admin.rv.rules_note';
+  /// Search company, customer or technician
+  static const adminRvSearch = 'admin.rv.search';
+  /// Manager following up
+  static const adminRvStFollowup = 'admin.rv.st.followup';
+  /// Hidden
+  static const adminRvStHidden = 'admin.rv.st.hidden';
+  /// Published
+  static const adminRvStPublished = 'admin.rv.st.published';
+  /// Published · replied
+  static const adminRvStReplied = 'admin.rv.st.replied';
+  /// {n} stars
+  static const adminRvStars = 'admin.rv.stars';
+  /// Support staff can look but not change reviews.
+  static const adminRvSupportOnly = 'admin.rv.support_only';
+  /// Unknown
+  static const adminRvUnknown = 'admin.rv.unknown';
+  /// abuse
+  static const adminRvWhyAbuse = 'admin.rv.why.abuse';
+  /// personal data
+  static const adminRvWhyPersonalData = 'admin.rv.why.personal_data';
+  /// spam
+  static const adminRvWhySpam = 'admin.rv.why.spam';
+  /// Company
+  static const adminSbCCompany = 'admin.sb.c_company';
+  /// Plan
+  static const adminSbCPlan = 'admin.sb.c_plan';
+  /// Price
+  static const adminSbCPrice = 'admin.sb.c_price';
+  /// Renews
+  static const adminSbCRenews = 'admin.sb.c_renews';
+  /// Seats
+  static const adminSbCSeats = 'admin.sb.c_seats';
+  /// Status
+  static const adminSbCStatus = 'admin.sb.c_status';
+  /// Cancelled (30 days)
+  static const adminSbChurn = 'admin.sb.churn';
+  /// No subscriptions match
+  static const adminSbEmptyTitle = 'admin.sb.empty_title';
+  /// Plan
+  static const adminSbFPlan = 'admin.sb.f_plan';
+  /// Monthly revenue
+  static const adminSbMrr = 'admin.sb.mrr';
+  /// Plan price of every active company
+  static const adminSbMrrNote = 'admin.sb.mrr_note';
+  /// No money is taken yet: revenue is the plan price of active companies. Online payments come in the testing phase.
+  static const adminSbNote = 'admin.sb.note';
+  /// {n} on Free
+  static const adminSbOnFree = 'admin.sb.on_free';
+  /// {n} past due
+  static const adminSbPastDue = 'admin.sb.past_due';
+  /// Paying companies
+  static const adminSbPaying = 'admin.sb.paying';
+  /// {price}/mo
+  static const adminSbPerMonth = 'admin.sb.per_month';
+  /// Business
+  static const adminSbPlanBusiness = 'admin.sb.plan.business';
+  /// Enterprise
+  static const adminSbPlanEnterprise = 'admin.sb.plan.enterprise';
+  /// Free
+  static const adminSbPlanFree = 'admin.sb.plan.free';
+  /// Professional
+  static const adminSbPlanProfessional = 'admin.sb.plan.professional';
+  /// Starter
+  static const adminSbPlanStarter = 'admin.sb.plan.starter';
+  /// {plan} trial
+  static const adminSbPlanTrial = 'admin.sb.plan_trial';
+  /// Search company or owner
+  static const adminSbSearch = 'admin.sb.search';
+  /// Trial · {n} days
+  static const adminSbTrialDays = 'admin.sb.trial_days';
+  /// Trials
+  static const adminSbTrials = 'admin.sb.trials';
+  /// {n} end this week
+  static const adminSbTrialsEnd = 'admin.sb.trials_end';
+  /// Your session ended. Please log in again.
+  static const adminSessionEnded = 'admin.session_ended';
+  /// Hi {name}. Choose a password, then connect an authenticator app such as Google Authenticator or Microsoft Authenticator.
+  static const adminSetupBody = 'admin.setup.body';
+  /// If you lose your phone, each code lets you log in once. They are shown only now, so keep them somewhere safe, like a password manager.
+  static const adminSetupCodesBody = 'admin.setup.codes_body';
+  /// Copy all codes
+  static const adminSetupCodesCopy = 'admin.setup.codes_copy';
+  /// Download as a file
+  static const adminSetupCodesDownload = 'admin.setup.codes_download';
+  /// I have saved these codes
+  static const adminSetupCodesSaved = 'admin.setup.codes_saved';
+  /// Save your recovery codes
+  static const adminSetupCodesTitle = 'admin.setup.codes_title';
+  /// Go to the dashboard
+  static const adminSetupContinue = 'admin.setup.continue';
+  /// Copied
+  static const adminSetupCopied = 'admin.setup.copied';
+  /// Copy key
+  static const adminSetupCopy = 'admin.setup.copy';
+  /// This code is wrong or expired. Open your app for a new one.
+  static const adminSetupErrCode = 'admin.setup.err_code';
+  /// This link doesn’t work any more. Ask a super admin for a new one.
+  static const adminSetupErrLink = 'admin.setup.err_link';
+  /// Too many wrong codes. Try again in 15 minutes.
+  static const adminSetupErrTries = 'admin.setup.err_tries';
+  /// Can’t scan? Type this key in the app:
+  static const adminSetupManual = 'admin.setup.manual';
+  /// At least 8 characters, with letters and numbers.
+  static const adminSetupPwRule = 'admin.setup.pw_rule';
+  /// QR code for your authenticator app
+  static const adminSetupQrAlt = 'admin.setup.qr_alt';
+  /// 1. Choose a password
+  static const adminSetupStep1 = 'admin.setup.step1';
+  /// 2. Scan this code with your authenticator app
+  static const adminSetupStep2 = 'admin.setup.step2';
+  /// 3. Type the 6-digit code the app shows
+  static const adminSetupStep3 = 'admin.setup.step3';
+  /// Finish setup
+  static const adminSetupSubmit = 'admin.setup.submit';
+  /// Set up your admin account
+  static const adminSetupTitle = 'admin.setup.title';
+  /// Set up your account again
+  static const adminSetupTitleReset = 'admin.setup.title_reset';
+  /// Back to the dashboard
+  static const adminSoonBack = 'admin.soon.back';
+  /// This page comes in a later step of the admin panel.
+  static const adminSoonBody = 'admin.soon.body';
+  /// {page} is coming soon
+  static const adminSoonTitle = 'admin.soon.title';
+  /// change in Platform settings
+  static const adminStChangeThere = 'admin.st.change_there';
+  /// ({n} files)
+  static const adminStFiles = 'admin.st.files';
+  /// Files
+  static const adminStFilesTitle = 'admin.st.files_title';
+  /// PDF reports
+  static const adminStKPdfs = 'admin.st.k.pdfs';
+  /// Photos
+  static const adminStKPhotos = 'admin.st.k.photos';
+  /// Voice notes
+  static const adminStKVoice = 'admin.st.k.voice';
+  /// Photos and voice notes are kept
+  static const adminStKeep = 'admin.st.keep';
+  /// As long as the company’s account exists
+  static const adminStKeepV = 'admin.st.keep_v';
+  /// File links work for
+  static const adminStLinks = 'admin.st.links';
+  /// {n} minutes
+  static const adminStLinksV = 'admin.st.links_v';
+  /// On the server (testing only)
+  static const adminStLocal = 'admin.st.local';
+  /// Files are on this server. The live service must use cloud storage (it won’t start without it).
+  static const adminStLocalWarn = 'admin.st.local_warn';
+  /// Max photo size
+  static const adminStMaxPhoto = 'admin.st.max_photo';
+  /// {n} MB
+  static const adminStMaxPhotoV = 'admin.st.max_photo_v';
+  /// Cloudflare R2 · {bucket}
+  static const adminStR2 = 'admin.st.r2';
+  /// Files encrypted at rest
+  static const adminStSEncrypt = 'admin.st.s.encrypt';
+  /// Cloudflare R2 encrypts every file (AES-256)
+  static const adminStSEncryptHint = 'admin.st.s.encrypt_hint';
+  /// Remove phone GPS from shared photos
+  static const adminStSGps = 'admin.st.s.gps';
+  /// Customers get copies without location data; the original keeps it as proof
+  static const adminStSGpsHint = 'admin.st.s.gps_hint';
+  /// Lock evidence when a report is sent for approval
+  static const adminStSLock = 'admin.st.s.lock';
+  /// Photos can no longer be changed or deleted ({n} locked now)
+  static const adminStSLockHint = 'admin.st.s.lock_hint';
+  /// Signed links only
+  static const adminStSSigned = 'admin.st.s.signed';
+  /// Files open only through links that end after {n} minutes
+  static const adminStSSignedHint = 'admin.st.s.signed_hint';
+  /// Security
+  static const adminStSecurity = 'admin.st.security';
+  /// Always on; built into how KaamNishaan stores proof.
+  static const adminStSecuritySub = 'admin.st.security_sub';
+  /// Companies using the most storage
+  static const adminStTop = 'admin.st.top';
+  /// Storage used
+  static const adminStUsed = 'admin.st.used';
+  /// Original files only; small copies, logos and website pictures add a little more.
+  static const adminStUsedNote = 'admin.st.used_note';
+  /// Where files are kept
+  static const adminStWhere = 'admin.st.where';
+  /// Add note
+  static const adminSuAddNote = 'admin.su.add_note';
+  /// App {v}
+  static const adminSuApp = 'admin.su.app';
+  /// All tickets
+  static const adminSuBack = 'admin.su.back';
+  /// Billing
+  static const adminSuCatBilling = 'admin.su.cat.billing';
+  /// Idea
+  static const adminSuCatFeature = 'admin.su.cat.feature';
+  /// Something isn’t working
+  static const adminSuCatProblem = 'admin.su.cat.problem';
+  /// Question
+  static const adminSuCatQuestion = 'admin.su.cat.question';
+  /// No tickets match.
+  static const adminSuEmpty = 'admin.su.empty';
+  /// No open help requests. Nice work.
+  static const adminSuEmptyOpen = 'admin.su.empty_open';
+  /// Urgent
+  static const adminSuHigh = 'admin.su.high';
+  /// {n} urgent
+  static const adminSuHighN = 'admin.su.high_n';
+  /// Job {n}
+  static const adminSuJob = 'admin.su.job';
+  /// Mark urgent
+  static const adminSuMakeHigh = 'admin.su.make_high';
+  /// Mark solved
+  static const adminSuMarkSolved = 'admin.su.mark_solved';
+  /// Not urgent
+  static const adminSuNormal = 'admin.su.normal';
+  /// Internal note by {who}
+  static const adminSuNoteBy = 'admin.su.note_by';
+  /// Only staff will see this…
+  static const adminSuNoteHint = 'admin.su.note_hint';
+  /// Not shown to the customer.
+  static const adminSuNoteInfo = 'admin.su.note_info';
+  /// Pick a ticket to read it and reply.
+  static const adminSuPick = 'admin.su.pick';
+  /// Open again
+  static const adminSuReopen = 'admin.su.reopen';
+  /// Reply
+  static const adminSuReply = 'admin.su.reply';
+  /// Reply from {who}
+  static const adminSuReplyBy = 'admin.su.reply_by';
+  /// Write your reply…
+  static const adminSuReplyHint = 'admin.su.reply_hint';
+  /// They’ll see it in the app’s Help and get a message.
+  static const adminSuReplyInfo = 'admin.su.reply_info';
+  /// Search ticket, subject or company
+  static const adminSuSearch = 'admin.su.search';
+  /// Send reply
+  static const adminSuSend = 'admin.su.send';
+  /// Send and mark solved
+  static const adminSuSendSolve = 'admin.su.send_solve';
+  /// Customer
+  static const adminSuSomeone = 'admin.su.someone';
+  /// Open · {ago}
+  static const adminSuStOpenFor = 'admin.su.st.open_for';
+  /// Solved
+  static const adminSuStSolved = 'admin.su.st.solved';
+  /// Waiting on them
+  static const adminSuStWaiting = 'admin.su.st.waiting';
+  /// All
+  static const adminSuTabAll = 'admin.su.tab.all';
+  /// Open
+  static const adminSuTabOpen = 'admin.su.tab.open';
+  /// Solved
+  static const adminSuTabSolved = 'admin.su.tab.solved';
+  /// Waiting on them
+  static const adminSuTabWaiting = 'admin.su.tab.waiting';
+  /// Internal note
+  static const adminSuTabNote = 'admin.su.tab_note';
+  /// Reply
+  static const adminSuTabReply = 'admin.su.tab_reply';
+  /// Ticket status
+  static const adminSuTabs = 'admin.su.tabs';
+  /// sign-up
+  static const adminTagSignup = 'admin.tag.signup';
+  /// staff
+  static const adminTagStaff = 'admin.tag.staff';
+  /// website
+  static const adminTagWebsite = 'admin.tag.website';
+  /// Add testimonial
+  static const adminTmAdd = 'admin.tm.add';
+  /// The customer approved this in writing
+  static const adminTmApproved = 'admin.tm.approved';
+  /// Their quote, name, photo and company may appear on the website.
+  static const adminTmApprovedHint = 'admin.tm.approved_hint';
+  /// Delete
+  static const adminTmDelete = 'admin.tm.delete';
+  /// Edit testimonial
+  static const adminTmEdit = 'admin.tm.edit';
+  /// City (optional)
+  static const adminTmFCity = 'admin.tm.f.city';
+  /// Company
+  static const adminTmFCompanyName = 'admin.tm.f.company_name';
+  /// Name
+  static const adminTmFPersonName = 'admin.tm.f.person_name';
+  /// Quote
+  static const adminTmFQuote = 'admin.tm.f.quote';
+  /// Role
+  static const adminTmFRole = 'admin.tm.f.role';
+  /// Needs the customer’s written approval first.
+  static const adminTmNeedsApproval = 'admin.tm.needs_approval';
+  /// No testimonials yet. The website hides this section until one is on.
+  static const adminTmNone = 'admin.tm.none';
+  /// How and when (e.g. email, 3 Nov)
+  static const adminTmNote = 'admin.tm.note';
+  /// Appears on the Home page within 5 minutes.
+  static const adminTmOnHint = 'admin.tm.on_hint';
+  /// Show on the website
+  static const adminTmOnWebsite = 'admin.tm.on_website';
+  /// Add photo
+  static const adminTmPhotoAdd = 'admin.tm.photo_add';
+  /// Change photo
+  static const adminTmPhotoChange = 'admin.tm.photo_change';
+  /// Remove photo
+  static const adminTmPhotoRemove = 'admin.tm.photo_remove';
+  /// Their words, as they approved them. Languages left empty show the English quote.
+  static const adminTmQuoteHint = 'admin.tm.quote_hint';
+  /// Only publish quotes that customers have approved in writing.
+  static const adminTmRule = 'admin.tm.rule';
+  /// Approved · hidden
+  static const adminTmStHidden = 'admin.tm.st.hidden';
+  /// On website
+  static const adminTmStOn = 'admin.tm.st.on';
+  /// Waiting for approval
+  static const adminTmStWaiting = 'admin.tm.st.waiting';
+  /// Deleted their account on {day}. Their details are wiped; their work stays with the company.
+  static const adminUdDeleted = 'admin.ud.deleted';
+  /// Added a customer
+  static const adminUsACustomerCreated = 'admin.us.a.customer.created';
+  /// Assigned a job
+  static const adminUsAJobAssigned = 'admin.us.a.job.assigned';
+  /// Cancelled a job
+  static const adminUsAJobCancelled = 'admin.us.a.job.cancelled';
+  /// Created a job
+  static const adminUsAJobCreated = 'admin.us.a.job.created';
+  /// Changed their password
+  static const adminUsAPasswordReset = 'admin.us.a.password.reset';
+  /// Approved a report
+  static const adminUsAReportApproved = 'admin.us.a.report.approved';
+  /// Asked for changes
+  static const adminUsAReportChangesRequested = 'admin.us.a.report.changes_requested';
+  /// Sent a report to a customer
+  static const adminUsAReportSent = 'admin.us.a.report.sent';
+  /// Sent a report for review
+  static const adminUsAReportSubmitted = 'admin.us.a.report.submitted';
+  /// Replied to a review
+  static const adminUsAReviewReplied = 'admin.us.a.review.replied';
+  /// Invited someone to the team
+  static const adminUsATeamInvited = 'admin.us.a.team.invited';
+  /// Joined the team
+  static const adminUsATeamJoined = 'admin.us.a.team.joined';
+  /// App language
+  static const adminUsAppLanguage = 'admin.us.app_language';
+  /// Users
+  static const adminUsBack = 'admin.us.back';
+  /// Last active
+  static const adminUsCActive = 'admin.us.c_active';
+  /// Company
+  static const adminUsCCompany = 'admin.us.c_company';
+  /// Language
+  static const adminUsCLanguage = 'admin.us.c_language';
+  /// Login
+  static const adminUsCLogin = 'admin.us.c_login';
+  /// Name
+  static const adminUsCName = 'admin.us.c_name';
+  /// Role
+  static const adminUsCRole = 'admin.us.c_role';
+  /// Cancel
+  static const adminUsCancel = 'admin.us.cancel';
+  /// Changes asked
+  static const adminUsChanges = 'admin.us.changes';
+  /// Show all companies
+  static const adminUsClearCompany = 'admin.us.clear_company';
+  /// Companies
+  static const adminUsCompanies = 'admin.us.companies';
+  /// Company: {name}
+  static const adminUsCompanyChip = 'admin.us.company_chip';
+  /// Turn off {name}?
+  static const adminUsConfirmOff = 'admin.us.confirm_off';
+  /// They are signed out and can’t log in to any company until you turn them back on. Their jobs and reports stay.
+  static const adminUsConfirmOffBody = 'admin.us.confirm_off_body';
+  /// Turn {name} back on?
+  static const adminUsConfirmOn = 'admin.us.confirm_on';
+  /// They can log in again to the companies they belong to.
+  static const adminUsConfirmOnBody = 'admin.us.confirm_on_body';
+  /// Sign {name} out everywhere?
+  static const adminUsConfirmSignOut = 'admin.us.confirm_sign_out';
+  /// Every phone and browser is signed out. They can log in again (for example after a lost phone).
+  static const adminUsConfirmSignOutBody = 'admin.us.confirm_sign_out_body';
+  /// Turn off
+  static const adminUsDeactivate = 'admin.us.deactivate';
+  /// Device
+  static const adminUsDevice = 'admin.us.device';
+  /// This person is turned off: they can’t log in to any company.
+  static const adminUsDisabledNote = 'admin.us.disabled_note';
+  /// Turned off.
+  static const adminUsDoneOff = 'admin.us.done_off';
+  /// Turned back on.
+  static const adminUsDoneOn = 'admin.us.done_on';
+  /// Signed out everywhere.
+  static const adminUsDoneSignOut = 'admin.us.done_sign_out';
+  /// Email
+  static const adminUsEmail = 'admin.us.email';
+  /// No people match
+  static const adminUsEmptyTitle = 'admin.us.empty_title';
+  /// Language
+  static const adminUsFLanguage = 'admin.us.f_language';
+  /// Status
+  static const adminUsFStatus = 'admin.us.f_status';
+  /// Invited {when}
+  static const adminUsInvitedAgo = 'admin.us.invited_ago';
+  /// Jobs
+  static const adminUsJobs = 'admin.us.jobs';
+  /// joined {date}
+  static const adminUsJoined = 'admin.us.joined';
+  /// Last 30 days
+  static const adminUsLast30 = 'admin.us.last30';
+  /// Login
+  static const adminUsLogin = 'admin.us.login';
+  /// Email + password
+  static const adminUsLoginEmail = 'admin.us.login.email';
+  /// Invite sent
+  static const adminUsLoginInvited = 'admin.us.login.invited';
+  /// Phone + OTP
+  static const adminUsLoginPhone = 'admin.us.login.phone';
+  /// Phone + OTP (no password)
+  static const adminUsLoginPhoneLong = 'admin.us.login_phone_long';
+  /// {n} devices
+  static const adminUsNDevices = 'admin.us.n_devices';
+  /// 1 device
+  static const adminUsNDevicesOne = 'admin.us.n_devices_one';
+  /// No activity in the last 30 days.
+  static const adminUsNoActivity = 'admin.us.no_activity';
+  /// No name yet
+  static const adminUsNoName = 'admin.us.no_name';
+  /// Nobody yet. People appear here when they sign up or join a team.
+  static const adminUsNoneYet = 'admin.us.none_yet';
+  /// Support staff can look but not change accounts.
+  static const adminUsNotAllowed = 'admin.us.not_allowed';
+  /// This person doesn’t exist any more.
+  static const adminUsNotFound = 'admin.us.not_found';
+  /// not verified
+  static const adminUsNotVerified = 'admin.us.not_verified';
+  /// On a job
+  static const adminUsOnJob = 'admin.us.on_job';
+  /// Phone
+  static const adminUsPhone = 'admin.us.phone';
+  /// Profile
+  static const adminUsProfile = 'admin.us.profile';
+  /// Turn back on
+  static const adminUsReactivate = 'admin.us.reactivate';
+  /// Reason (saved in the audit log)
+  static const adminUsReason = 'admin.us.reason';
+  /// Write a short reason (at least 3 characters).
+  static const adminUsReasonShort = 'admin.us.reason_short';
+  /// Report language
+  static const adminUsReportLanguage = 'admin.us.report_language';
+  /// Reports
+  static const adminUsReports = 'admin.us.reports';
+  /// Search name, phone, email or company
+  static const adminUsSearch = 'admin.us.search';
+  /// Signed in on
+  static const adminUsSessions = 'admin.us.sessions';
+  /// Sign out everywhere
+  static const adminUsSignOut = 'admin.us.sign_out';
+  /// Account since
+  static const adminUsSince = 'admin.us.since';
+  /// Active
+  static const adminUsStActive = 'admin.us.st.active';
+  /// Turned off
+  static const adminUsStDisabled = 'admin.us.st.disabled';
+  /// Invited
+  static const adminUsStInvited = 'admin.us.st.invited';
+  /// Removed from team
+  static const adminUsStRemoved = 'admin.us.st.removed';
+  /// Active
+  static const adminUsStatusActive = 'admin.us.status_active';
+  /// Active · on a job
+  static const adminUsStatusOnJob = 'admin.us.status_on_job';
+  /// Invited
+  static const adminUsTabInvited = 'admin.us.tab.invited';
+  /// Managers
+  static const adminUsTabManager = 'admin.us.tab.manager';
+  /// Owners
+  static const adminUsTabOwner = 'admin.us.tab.owner';
+  /// Technicians
+  static const adminUsTabTechnician = 'admin.us.tab.technician';
+  /// People by role
+  static const adminUsTabs = 'admin.us.tabs';
+  /// verified
+  static const adminUsVerified = 'admin.us.verified';
+  /// Original texts
+  static const adminWcBuiltIn = 'admin.wc.built_in';
+  /// {n} of {max} characters
+  static const adminWcChars = 'admin.wc.chars';
+  /// Discard drafts
+  static const adminWcDiscard = 'admin.wc.discard';
+  /// Drafts removed.
+  static const adminWcDiscarded = 'admin.wc.discarded';
+  /// {n} unpublished changes
+  static const adminWcDrafts = 'admin.wc.drafts';
+  /// 1 unpublished change
+  static const adminWcDraftsOne = 'admin.wc.drafts_one';
+  /// Published · edited {ago}
+  static const adminWcEdited = 'admin.wc.edited';
+  /// Answer {n}
+  static const adminWcFAnswer = 'admin.wc.f.answer';
+  /// Small label above the headline
+  static const adminWcFEyebrow = 'admin.wc.f.eyebrow';
+  /// Headline
+  static const adminWcFHeadline = 'admin.wc.f.headline';
+  /// Primary button
+  static const adminWcFPrimaryButton = 'admin.wc.f.primary_button';
+  /// Question {n}
+  static const adminWcFQuestion = 'admin.wc.f.question';
+  /// Secondary button
+  static const adminWcFSecondaryButton = 'admin.wc.f.secondary_button';
+  /// SEO description
+  static const adminWcFSeoDescription = 'admin.wc.f.seo_description';
+  /// SEO title
+  static const adminWcFSeoTitle = 'admin.wc.f.seo_title';
+  /// Sub-headline
+  static const adminWcFSubheadline = 'admin.wc.f.subheadline';
+  /// Keep {parts}
+  static const adminWcKeep = 'admin.wc.keep';
+  /// Last change {ago} by {who}
+  static const adminWcLast = 'admin.wc.last';
+  /// Everything is published.
+  static const adminWcNothing = 'admin.wc.nothing';
+  /// Use original
+  static const adminWcOriginal = 'admin.wc.original';
+  /// About
+  static const adminWcPageAbout = 'admin.wc.page.about';
+  /// Blog
+  static const adminWcPageBlog = 'admin.wc.page.blog';
+  /// Contact
+  static const adminWcPageContact = 'admin.wc.page.contact';
+  /// Book a demo
+  static const adminWcPageDemo = 'admin.wc.page.demo';
+  /// Features
+  static const adminWcPageFeatures = 'admin.wc.page.features';
+  /// Home
+  static const adminWcPageHome = 'admin.wc.page.home';
+  /// Industries / {trade}
+  static const adminWcPageIndustry = 'admin.wc.page.industry';
+  /// Pricing
+  static const adminWcPagePricing = 'admin.wc.page.pricing';
+  /// Website pages
+  static const adminWcPages = 'admin.wc.pages';
+  /// {n} changes waiting to be published
+  static const adminWcPending = 'admin.wc.pending';
+  /// 1 change waiting to be published
+  static const adminWcPendingOne = 'admin.wc.pending_one';
+  /// Preview
+  static const adminWcPreview = 'admin.wc.preview';
+  /// Publish
+  static const adminWcPublish = 'admin.wc.publish';
+  /// Published. The website shows it within a minute.
+  static const adminWcPublished = 'admin.wc.published';
+  /// You can see these texts. An admin can change them.
+  static const adminWcReadOnly = 'admin.wc.read_only';
+  /// Questions (FAQ)
+  static const adminWcSFaq = 'admin.wc.s.faq';
+  /// Closing call to action
+  static const adminWcSFinal = 'admin.wc.s.final';
+  /// Top of the page
+  static const adminWcSHero = 'admin.wc.s.hero';
+  /// How it works
+  static const adminWcSHow = 'admin.wc.s.how';
+  /// The problem
+  static const adminWcSProblem = 'admin.wc.s.problem';
+  /// Search engines
+  static const adminWcSSeo = 'admin.wc.s.seo';
+  /// Why we built it
+  static const adminWcSWhy = 'admin.wc.s.why';
+  /// Save draft
+  static const adminWcSave = 'admin.wc.save';
+  /// Draft saved. The website changes when you publish.
+  static const adminWcSaved = 'admin.wc.saved';
+  /// Shown in Google results and on the browser tab.
+  static const adminWcSeoHint = 'admin.wc.seo_hint';
+  /// Changed
+  static const adminWcStateChanged = 'admin.wc.state.changed';
+  /// Draft
+  static const adminWcStateDraft = 'admin.wc.state.draft';
+  /// Not saved
+  static const adminWcStateUnsaved = 'admin.wc.state.unsaved';
+  /// Cleaning
+  static const adminWcTradeCleaning = 'admin.wc.trade.cleaning';
+  /// HVAC
+  static const adminWcTradeHvac = 'admin.wc.trade.hvac';
+  /// Property maintenance
+  static const adminWcTradeMaintenance = 'admin.wc.trade.maintenance';
+  /// Pest control
+  static const adminWcTradePestControl = 'admin.wc.trade.pest_control';
+  /// Roofing
+  static const adminWcTradeRoofing = 'admin.wc.trade.roofing';
+  /// Solar
+  static const adminWcTradeSolar = 'admin.wc.trade.solar';
+  /// Undo edits
+  static const adminWcUndo = 'admin.wc.undo';
+  /// Unpublished changes
+  static const adminWcUnpublished = 'admin.wc.unpublished';
+  /// Yesterday
+  static const adminYesterday = 'admin.yesterday';
+  /// All proof is in
+  static const aiAllDone = 'ai.all_done';
   /// Last visit?
   static const aiChipLast = 'ai.chip_last';
   /// When did we last visit 
@@ -2142,500 +3848,2520 @@ abstract final class LangKeys {
   static const aiChipWeek = 'ai.chip_week';
   /// Which reports did we send this week?
   static const aiChipWeekText = 'ai.chip_week_text';
-  /// Ask about your jobs…
-  static const aiHint = 'ai.hint';
-  /// Chat is paused
-  static const aiPausedHint = 'ai.paused_hint';
-  /// Chat is paused
-  static const aiPaused = 'ai.paused';
-  /// Your company used this month's {n} AI questions. It starts again on {date}.
-  static const aiPausedBody = 'ai.paused_body';
-  /// {a} of {b} questions
-  static const aiUsed = 'ai.used';
-  /// Upgrade plan
-  static const aiUpgrade = 'ai.upgrade';
-  /// Not now
-  static const aiNotNow = 'ai.not_now';
-  /// Ask the owner to upgrade the plan.
-  static const aiOwnerUpgrade = 'ai.owner_upgrade';
-  /// The assistant isn't switched on yet.
-  static const aiUnavailable = 'ai.unavailable';
   /// Ask anything about your jobs
   static const aiEmpty = 'ai.empty';
   /// For example: when you last visited a customer, or what is still missing on a job.
   static const aiEmptyBody = 'ai.empty_body';
   /// From {sources}
   static const aiFrom = 'ai.from';
-  /// {n} reports
-  static const aiNReports = 'ai.n_reports';
-  /// 1 report
-  static const aiOneReport = 'ai.one_report';
-  /// {n} jobs
-  static const aiNJobs = 'ai.n_jobs';
-  /// 1 job
-  static const aiOneJob = 'ai.one_job';
-  /// {n} photos
-  static const aiNPhotos = 'ai.n_photos';
-  /// Report #{n}
-  static const aiReportN = 'ai.report_n';
+  /// Ask about your jobs…
+  static const aiHint = 'ai.hint';
   /// Missing: {steps}
   static const aiMissing = 'ai.missing';
-  /// before photo
-  static const aiStepBefore = 'ai.step_before';
-  /// photo while working
-  static const aiStepDuring = 'ai.step_during';
-  /// after photo
-  static const aiStepAfter = 'ai.step_after';
-  /// checklist
-  static const aiStepChecklists = 'ai.step_checklists';
-  /// voice note
-  static const aiStepVoice = 'ai.step_voice';
-  /// All proof is in
-  static const aiAllDone = 'ai.all_done';
+  /// {n} jobs
+  static const aiNJobs = 'ai.n_jobs';
+  /// {n} photos
+  static const aiNPhotos = 'ai.n_photos';
+  /// {n} reports
+  static const aiNReports = 'ai.n_reports';
+  /// Not now
+  static const aiNotNow = 'ai.not_now';
+  /// 1 job
+  static const aiOneJob = 'ai.one_job';
+  /// 1 report
+  static const aiOneReport = 'ai.one_report';
+  /// Ask the owner to upgrade the plan.
+  static const aiOwnerUpgrade = 'ai.owner_upgrade';
+  /// Chat is paused
+  static const aiPaused = 'ai.paused';
+  /// Your company used this month's {n} AI questions. It starts again on {date}.
+  static const aiPausedBody = 'ai.paused_body';
+  /// Chat is paused
+  static const aiPausedHint = 'ai.paused_hint';
+  /// Report #{n}
+  static const aiReportN = 'ai.report_n';
   /// Send
   static const aiSend = 'ai.send';
-  /// Verify email
-  static const veTitle = 've.title';
-  /// Step 1 of 2
-  static const veStep = 've.step';
-  /// Check your inbox
-  static const veHead = 've.head';
-  /// We sent a link to {email}. Tap it to confirm your email.
-  static const veBody = 've.body';
+  /// after photo
+  static const aiStepAfter = 'ai.step_after';
+  /// before photo
+  static const aiStepBefore = 'ai.step_before';
+  /// checklist
+  static const aiStepChecklists = 'ai.step_checklists';
+  /// photo while working
+  static const aiStepDuring = 'ai.step_during';
+  /// voice note
+  static const aiStepVoice = 'ai.step_voice';
+  /// Answers only from your company's jobs
+  static const aiSubtitle = 'ai.subtitle';
+  /// Ask KaamNishaan AI
+  static const aiTitle = 'ai.title';
+  /// The assistant isn't switched on yet.
+  static const aiUnavailable = 'ai.unavailable';
+  /// Upgrade plan
+  static const aiUpgrade = 'ai.upgrade';
+  /// {a} of {b} questions
+  static const aiUsed = 'ai.used';
   /// KaamNishaan
-  static const veMailFrom = 've.mail_from';
-  /// Just now
-  static const veMailWhen = 've.mail_when';
-  /// Verify your email
-  static const veMailSubject = 've.mail_subject';
-  /// Tap the button to confirm this email for KaamNishaan.
-  static const veMailBody = 've.mail_body';
-  /// Resend in {time}
-  static const veResendIn = 've.resend_in';
-  /// Wrong email?
-  static const veWrong = 've.wrong';
-  /// Change it
-  static const veChange = 've.change';
+  static const appName = 'app.name';
+  /// Every Job. Every Photo. Every Proof.
+  static const appTagline = 'app.tagline';
+  /// Ask for review
+  static const askAsk = 'ask.ask';
+  /// Day {n}
+  static const askDay = 'ask.day';
+  /// Rating link goes with the approved report
+  static const askDay0 = 'ask.day0';
+  /// Reminder by SMS and email
+  static const askDay2 = 'ask.day2';
+  /// One AI call if still no rating
+  static const askDay5 = 'ask.day5';
+  /// Not now
+  static const askNotNow = 'ask.not_now';
+  /// You will get a message when it is approved.
+  static const askSentBody = 'ask.sent_body';
+  /// Stops as soon as the customer rates, in any way.
+  static const askStops = 'ask.stops';
+  /// Ask {name} for a review?
+  static const askTitle = 'ask.title';
+  /// Your manager gets this question in their messages and can call you back.
+  static const askmgrBody = 'askmgr.body';
+  /// Add a note (optional)
+  static const askmgrNote = 'askmgr.note';
+  /// What are you unsure about?
+  static const askmgrNoteHint = 'askmgr.note_hint';
+  /// Send to my manager
+  static const askmgrSend = 'askmgr.send';
+  /// Sent. Your manager will get back to you.
+  static const askmgrSent = 'askmgr.sent';
+  /// Ask your manager
+  static const askmgrTitle = 'askmgr.title';
+  /// Can assign after joining
+  static const assignAfterJoining = 'assign.after_joining';
+  /// {name} has not joined yet. You can give jobs after they join.
+  static const assignAfterJoiningToast = 'assign.after_joining_toast';
+  /// Available on {day}
+  static const assignAvailableOn = 'assign.available_on';
+  /// Available today
+  static const assignAvailableToday = 'assign.available_today';
+  /// Assign {name}
+  static const assignButton = 'assign.button';
+  /// Job given to {name}
+  static const assignDone = 'assign.done';
+  /// Invite a technician first. They can take jobs as soon as they join.
+  static const assignEmptyBody = 'assign.empty_body';
+  /// No technicians yet
+  static const assignEmptyTitle = 'assign.empty_title';
+  /// Full day
+  static const assignFull = 'assign.full';
+  /// Invite technician
+  static const assignInvite = 'assign.invite';
+  /// Technician · invite sent
+  static const assignInviteSent = 'assign.invite_sent';
+  /// {n} jobs that day
+  static const assignJobsThatDay = 'assign.jobs_that_day';
+  /// {n} jobs today
+  static const assignJobsToday = 'assign.jobs_today';
+  /// {km} km away
+  static const assignKmAway = 'assign.km_away';
+  /// {n} of {max} jobs
+  static const assignLoad = 'assign.load';
+  /// Pick a technician
+  static const assignPick = 'assign.pick';
+  /// Save job without technician
+  static const assignSaveWithout = 'assign.save_without';
+  /// Pick who will do this job
+  static const assignSubtitle = 'assign.subtitle';
+  /// Assign technician
+  static const assignTitle = 'assign.title';
+  /// We fill the code for you when the SMS comes.
+  static const authAutofillHint = 'auth.autofill_hint';
+  /// Change
+  static const authChange = 'auth.change';
+  /// Change number
+  static const authChangeNumber = 'auth.change_number';
+  /// Choose country
+  static const authChooseCountry = 'auth.choose_country';
+  /// This code expired. Get a new one.
+  static const authCodeExpired = 'auth.code_expired';
+  /// We will send you a code by SMS.
+  static const authCodeSent = 'auth.code_sent';
+  /// Enter the code
+  static const authCodeTitle = 'auth.code_title';
+  /// Too many wrong codes. Get a new one.
+  static const authCodeTooMany = 'auth.code_too_many';
+  /// A code works for 10 minutes. We sent it at {time}.
+  static const authCodeValidFor = 'auth.code_valid_for';
+  /// Wrong code. {count} tries left.
+  static const authCodeWrong = 'auth.code_wrong';
+  /// Enter a {digits}-digit phone number
+  static const authPhoneInvalid = 'auth.phone_invalid';
+  /// Phone number
+  static const authPhoneLabel = 'auth.phone_label';
+  /// Only used to log in. We never share it.
+  static const authPhonePrivacy = 'auth.phone_privacy';
+  /// Your phone number
+  static const authPhoneTitle = 'auth.phone_title';
+  /// Send a new code in {time}
+  static const authResendIn = 'auth.resend_in';
+  /// Search country
+  static const authSearchCountry = 'auth.search_country';
+  /// Send again
+  static const authSendAgain = 'auth.send_again';
+  /// Send code
+  static const authSendCode = 'auth.send_code';
+  /// Send new code
+  static const authSendNewCode = 'auth.send_new_code';
+  /// Sent to {phone}
+  static const authSentTo = 'auth.sent_to';
+  /// Wait {seconds} seconds, then try again.
+  static const authWaitResend = 'auth.wait_resend';
+  /// AI questions
+  static const billAiQuestions = 'bill.ai_questions';
+  /// Custom price
+  static const billContact = 'bill.contact';
+  /// Follow-up credits
+  static const billCredits = 'bill.credits';
+  /// Most popular
+  static const billMostPopular = 'bill.most_popular';
+  /// {a} · no limit
+  static const billNoLimit = 'bill.no_limit';
+  /// {a} of {b}
+  static const billOf = 'bill.of';
+  /// Owner only
+  static const billOwnerOnly = 'bill.owner_only';
+  /// Only the owner can see the plan and billing.
+  static const billOwnerOnlyToast = 'bill.owner_only_toast';
+  /// Invoices and card payment come when online payment is switched on.
+  static const billPaymentsNote = 'bill.payments_note';
+  /// Online payment isn't switched on yet. Write to us to change your plan.
+  static const billPaymentsSoon = 'bill.payments_soon';
+  /// {price} / month
+  static const billPerMonth = 'bill.per_month';
+  /// {price}/mo · {techs} techs · {reports} reports
+  static const billPlanLine = 'bill.plan_line';
+  /// {price}/mo · {techs} techs · fair-use reports
+  static const billPlanLineFair = 'bill.plan_line_fair';
+  /// Renews {date}
+  static const billRenews = 'bill.renews';
+  /// Reports
+  static const billReports = 'bill.reports';
+  /// Technicians
+  static const billTechnicians = 'bill.technicians';
+  /// This month
+  static const billThisMonth = 'bill.this_month';
+  /// Plan and billing
+  static const billTitle = 'bill.title';
+  /// Trial ends {date}
+  static const billTrialEnds = 'bill.trial_ends';
+  /// Upgrade to {name}
+  static const billUpgrade = 'bill.upgrade';
+  /// {count} credits left
+  static const billingCreditsLeft = 'billing.credits_left';
+  /// Plan limit reached
+  static const billingPlanLimit = 'billing.plan_limit';
+  /// Close camera
+  static const cameraClose = 'camera.close';
+  /// Done
+  static const cameraDone = 'camera.done';
+  /// The photo was not taken. Try again.
+  static const cameraFailed = 'camera.failed';
+  /// Photos of this job
+  static const cameraGallery = 'camera.gallery';
+  /// Show or hide the photo guide
+  static const cameraHints = 'camera.hints';
+  /// Open phone settings
+  static const cameraHow1 = 'camera.how_1';
+  /// Tap Apps, then KaamNishaan
+  static const cameraHow2 = 'camera.how_2';
+  /// Turn on Camera
+  static const cameraHow3 = 'camera.how_3';
+  /// How to turn it on
+  static const cameraHowTitle = 'camera.how_title';
+  /// Not now
+  static const cameraNotNow = 'camera.not_now';
+  /// KaamNishaan needs the camera to take proof photos of your work.
+  static const cameraOffBody = 'camera.off_body';
+  /// Camera is off
+  static const cameraOffTitle = 'camera.off_title';
+  /// Open phone settings
+  static const cameraOpenSettings = 'camera.open_settings';
+  /// Saved on phone
+  static const cameraSaved = 'camera.saved';
+  /// Take photo
+  static const cameraShutter = 'camera.shutter';
+  /// AFTER
+  static const cameraStageAfter = 'camera.stage_after';
+  /// BEFORE
+  static const cameraStageBefore = 'camera.stage_before';
+  /// DURING
+  static const cameraStageDuring = 'camera.stage_during';
+  /// {stage} · photo {count}
+  static const cameraStagePhoto = 'camera.stage_photo';
+  /// The camera can't be opened on this phone.
+  static const cameraUnavailable = 'camera.unavailable';
+  /// All jobs
+  static const capAllJobs = 'cap.all_jobs';
+  /// Open a job to see or add its proof
+  static const capAllJobsSub = 'cap.all_jobs_sub';
+  /// New job
+  static const capNewJob = 'cap.new_job';
+  /// Make a job and give it to a technician
+  static const capNewJobSub = 'cap.new_job_sub';
+  /// Quick job
+  static const capQuickJob = 'cap.quick_job';
+  /// Work that wasn't planned: a customer asked on the spot
+  static const capQuickJobSub = 'cap.quick_job_sub';
+  /// No job is going on. Open one of today's jobs to start it, or start a quick job.
+  static const capSub = 'cap.sub';
+  /// Photos and checklists belong to a job. Make one, or open one from the list.
+  static const capSubManager = 'cap.sub_manager';
+  /// What are you working on?
+  static const capTitle = 'cap.title';
+  /// After photos
+  static const captureAfter = 'capture.after';
+  /// Before photos
+  static const captureBefore = 'capture.before';
+  /// Checklist
+  static const captureChecklist = 'capture.checklist';
+  /// During photos
+  static const captureDuring = 'capture.during';
+  /// Voice note
+  static const captureVoiceNote = 'capture.voice_note';
+  /// Add question
+  static const cbAdd = 'cb.add';
+  /// Answer type
+  static const cbAnswerType = 'cb.answer_type';
+  /// Don't offer on new jobs
+  static const cbArchive = 'cb.archive';
+  /// Not in new jobs
+  static const cbArchived = 'cb.archived';
+  /// It won't be offered on new jobs.
+  static const cbArchivedToast = 'cb.archived_toast';
+  /// By KaamNishaan
+  static const cbByKn = 'cb.by_kn';
+  /// Add a choice
+  static const cbChoiceAdd = 'cb.choice_add';
+  /// Choice {n}
+  static const cbChoiceHint = 'cb.choice_hint';
+  /// Remove choice
+  static const cbChoiceRemove = 'cb.choice_remove';
+  /// Choices
+  static const cbChoices = 'cb.choices';
+  /// Copied. Now you can change it.
+  static const cbCopied = 'cb.copied';
+  /// Copy to change it
+  static const cbCopy = 'cb.copy';
+  /// Create
+  static const cbCreate = 'cb.create';
+  /// Delete question
+  static const cbDeleteQ = 'cb.delete_q';
+  /// Question deleted
+  static const cbDeleted = 'cb.deleted';
+  /// Draft
+  static const cbDraft = 'cb.draft';
+  /// Draft · tap Save checklist so technicians can use it.
+  static const cbDraftNote = 'cb.draft_note';
+  /// Edit question
+  static const cbEdit = 'cb.edit';
+  /// No questions yet
+  static const cbEmpty = 'cb.empty';
+  /// Add the first thing the technician should check.
+  static const cbEmptyBody = 'cb.empty_body';
+  /// Checklist options
+  static const cbMenu = 'cb.menu';
+  /// {n} questions · used in {m} jobs
+  static const cbMeta = 'cb.meta';
+  /// Checklist name
+  static const cbName = 'cb.name';
+  /// e.g. AC service check
+  static const cbNameHint = 'cb.name_hint';
+  /// New checklist
+  static const cbNew = 'cb.new';
+  /// Optional
+  static const cbOptional = 'cb.optional';
+  /// Write at least 2 choices.
+  static const cbOptionsNeeded = 'cb.options_needed';
+  /// Photo needed every time
+  static const cbPhotoAlways = 'cb.photo_always';
+  /// Photo needed if Fail
+  static const cbPhotoIfFail = 'cb.photo_if_fail';
+  /// Photo needed if No
+  static const cbPhotoIfNo = 'cb.photo_if_no';
+  /// Technician must take a photo to go on.
+  static const cbPhotoSub = 'cb.photo_sub';
+  /// Preview
+  static const cbPreview = 'cb.preview';
+  /// {n} of {m} questions shown · tap answers to try the rules
+  static const cbPreviewCount = 'cb.preview_count';
+  /// Words or a voice note
+  static const cbPreviewWords = 'cb.preview_words';
+  /// Question
+  static const cbQuestion = 'cb.question';
+  /// Ask one thing
+  static const cbQuestionHint = 'cb.question_hint';
+  /// This checklist is by KaamNishaan. Copy it to make changes.
+  static const cbReadOnly = 'cb.read_only';
+  /// Reference photo
+  static const cbRef = 'cb.ref';
+  /// Add reference photo
+  static const cbRefAdd = 'cb.ref_add';
+  /// Change
+  static const cbRefChange = 'cb.ref_change';
+  /// The reference photo didn't upload. Try again.
+  static const cbRefFailed = 'cb.ref_failed';
+  /// Shows the technician what a good answer looks like.
+  static const cbRefHint = 'cb.ref_hint';
+  /// Remove
+  static const cbRefRemove = 'cb.ref_remove';
+  /// Rename
+  static const cbRename = 'cb.rename';
+  /// Answer needed
+  static const cbRequired = 'cb.required';
+  /// Off: the technician can skip it.
+  static const cbRequiredSub = 'cb.required_sub';
+  /// Show only if
+  static const cbRule = 'cb.rule';
+  /// Always
+  static const cbRuleAlways = 'cb.rule_always';
+  /// Only if Q{n} is {answer}
+  static const cbRuleNote = 'cb.rule_note';
+  /// Q{n}
+  static const cbRuleQ = 'cb.rule_q';
+  /// Ask this only after a certain answer.
+  static const cbRuleSub = 'cb.rule_sub';
+  /// When “{question}” is:
+  static const cbRuleWhen = 'cb.rule_when';
+  /// Save checklist
+  static const cbSave = 'cb.save';
+  /// Save question
+  static const cbSaveQ = 'cb.save_q';
+  /// Saved. Technicians can use it on new jobs.
+  static const cbSaved = 'cb.saved';
+  /// Choice
+  static const cbTChoice = 'cb.t_choice';
+  /// Number
+  static const cbTNumber = 'cb.t_number';
+  /// Pass / Fail
+  static const cbTPassFail = 'cb.t_pass_fail';
+  /// Photo
+  static const cbTPhoto = 'cb.t_photo';
+  /// Signature
+  static const cbTSignature = 'cb.t_signature';
+  /// Words
+  static const cbTText = 'cb.t_text';
+  /// Yes / No
+  static const cbTYesNo = 'cb.t_yes_no';
+  /// Checklists
+  static const cbTitle = 'cb.title';
+  /// Every question is ready in this language.
+  static const cbTrAllReady = 'cb.tr_all_ready';
+  /// Check it
+  static const cbTrCheck = 'cb.tr_check';
+  /// Type the words first.
+  static const cbTrEmpty = 'cb.tr_empty';
+  /// Type it in {lang}
+  static const cbTrHint = 'cb.tr_hint';
+  /// {n} to check
+  static const cbTrLeft = 'cb.tr_left';
+  /// Looks right
+  static const cbTrLooksRight = 'cb.tr_looks_right';
+  /// Missing
+  static const cbTrMissing = 'cb.tr_missing';
+  /// Check
+  static const cbTrOpen = 'cb.tr_open';
+  /// Translations: {n} of 5 languages ready
+  static const cbTrReady = 'cb.tr_ready';
+  /// Ready
+  static const cbTrReadyOne = 'cb.tr_ready_one';
+  /// Save
+  static const cbTrSave = 'cb.tr_save';
+  /// Translation saved.
+  static const cbTrSaved = 'cb.tr_saved';
+  /// Translations
+  static const cbTrTitle = 'cb.tr_title';
+  /// We translate it to 5 languages. You can check them later.
+  static const cbTranslateNote = 'cb.translate_note';
+  /// Offer on new jobs again
+  static const cbUnarchive = 'cb.unarchive';
+  /// Unit (optional)
+  static const cbUnit = 'cb.unit';
+  /// e.g. psi, °C
+  static const cbUnitHint = 'cb.unit_hint';
+  /// {type} · photo
+  static const cbWithPhoto = 'cb.with_photo';
+  /// They get a message and can fix it on their phone.
+  static const changesBody = 'changes.body';
+  /// Explain the failed checks ({n})
+  static const changesFailedChecks = 'changes.failed_checks';
+  /// Add the missing photos
+  static const changesMissingPhotos = 'changes.missing_photos';
+  /// Note for {name}
+  static const changesNote = 'changes.note';
+  /// Say what to fix
+  static const changesNoteHint = 'changes.note_hint';
+  /// Say what needs changing.
+  static const changesNoteRequired = 'changes.note_required';
+  /// Something else
+  static const changesOther = 'changes.other';
+  /// Add a photo of {what}
+  static const changesPhotoOf = 'changes.photo_of';
+  /// Choose what needs fixing.
+  static const changesPickOne = 'changes.pick_one';
+  /// Send to {name}
+  static const changesSend = 'changes.send';
+  /// Sent to {name}
+  static const changesSent = 'changes.sent';
+  /// Ask {name} for changes
+  static const changesTitle = 'changes.title';
+  /// Fix the work done text
+  static const changesUnclearText = 'changes.unclear_text';
+  /// What needs fixing?
+  static const changesWhat = 'changes.what';
+  /// Fix the job details
+  static const changesWrongDetails = 'changes.wrong_details';
+  /// Continue {name}
+  static const checklistContinue = 'checklist.continue';
+  /// {customer} · {count} lists
+  static const checklistCount = 'checklist.count';
+  /// {done} of {total} · done at {time}
+  static const checklistDoneAt = 'checklist.done_at';
+  /// {count} questions · about {minutes} min
+  static const checklistMeta = 'checklist.meta';
+  /// {count} questions
+  static const checklistMetaShort = 'checklist.meta_short';
+  /// No checklists for this job
+  static const checklistNone = 'checklist.none';
+  /// Every question can be read out loud.
+  static const checklistReadAloud = 'checklist.read_aloud';
+  /// Start {name}
+  static const checklistStart = 'checklist.start';
+  /// Checklists
+  static const checklistTitle = 'checklist.title';
+  /// Back
+  static const commonBack = 'common.back';
+  /// Cancel
+  static const commonCancel = 'common.cancel';
+  /// Close
+  static const commonClose = 'common.close';
+  /// This part comes in the next update.
+  static const commonComingSoon = 'common.coming_soon';
+  /// Continue
+  static const commonContinue = 'common.continue';
+  /// Hear it
+  static const commonHearIt = 'common.hear_it';
+  /// Keep
+  static const commonKeep = 'common.keep';
+  /// Log out
+  static const commonLogOut = 'common.log_out';
+  /// Next
+  static const commonNext = 'common.next';
+  /// Notifications
+  static const commonNotifications = 'common.notifications';
+  /// No internet. Your work is saved on the phone.
+  static const commonOfflineSaved = 'common.offline_saved';
+  /// Refresh
+  static const commonRefresh = 'common.refresh';
+  /// Try again
+  static const commonRetry = 'common.retry';
+  /// Save
+  static const commonSave = 'common.save';
+  /// See all
+  static const commonSeeAll = 'common.see_all';
+  /// Skip
+  static const commonSkip = 'common.skip';
+  /// v{version}
+  static const commonVersion = 'common.version';
+  /// Change
+  static const companyChangeLogo = 'company.change_logo';
+  /// You work for more than one company.
+  static const companyChooseSubtitle = 'company.choose_subtitle';
+  /// Choose company
+  static const companyChooseTitle = 'company.choose_title';
+  /// Country
+  static const companyCountryLabel = 'company.country_label';
+  /// Create company
+  static const companyCreate = 'company.create';
+  /// Shows on every report PDF.
+  static const companyLogoBody = 'company.logo_body';
+  /// Your company is ready, but the logo did not upload. Add it later in Settings.
+  static const companyLogoFailed = 'company.logo_failed';
+  /// Add company logo
+  static const companyLogoTitle = 'company.logo_title';
+  /// Company name
+  static const companyNameLabel = 'company.name_label';
+  /// Enter your company name
+  static const companyNameMissing = 'company.name_missing';
+  /// Your company name
+  static const companyNamePlaceholder = 'company.name_placeholder';
+  /// KaamNishaan has paused {company}. Your jobs, photos and reports are kept. Contact KaamNishaan support to turn it back on.
+  static const companyPausedBody = 'company.paused_body';
+  /// If you are the owner, the reason was shared with you by KaamNishaan.
+  static const companyPausedOwner = 'company.paused_owner';
+  /// Switch company
+  static const companyPausedSwitch = 'company.paused_switch';
+  /// This company is paused
+  static const companyPausedTitle = 'company.paused_title';
+  /// {trade} · {country} · Owner {name}
+  static const companyPreviewMeta = 'company.preview_meta';
+  /// Set up your company
+  static const companySetupTitle = 'company.setup_title';
+  /// Step 2 of 2 · Company
+  static const companyStep = 'company.step';
+  /// Trade
+  static const companyTradeLabel = 'company.trade_label';
+  /// Choose a trade
+  static const companyTradeMissing = 'company.trade_missing';
+  /// Choose your trade
+  static const companyTradePlaceholder = 'company.trade_placeholder';
+  /// Upload
+  static const companyUpload = 'company.upload';
+  /// 1 note
+  static const countNoteOne = 'count.note_one';
+  /// {n} notes
+  static const countNotes = 'count.notes';
+  /// 1 photo
+  static const countPhotoOne = 'count.photo_one';
+  /// {n} photos
+  static const countPhotos = 'count.photos';
+  /// AI review calls · {n} calls
+  static const credAiCalls = 'cred.ai_calls';
+  /// Includes {n} bought credits
+  static const credBoughtLeft = 'cred.bought_left';
+  /// Buy {n} credits · {price}
+  static const credBuy = 'cred.buy';
+  /// Buying credits starts when online payment is switched on.
+  static const credBuySoon = 'cred.buy_soon';
+  /// Emails
+  static const credEmails = 'cred.emails';
+  /// free
+  static const credFree = 'cred.free';
+  /// credits left
+  static const credLeft = 'cred.left';
+  /// credits left of {n}
+  static const credLeftOf = 'cred.left_of';
+  /// {n} credits
+  static const credN = 'cred.n';
+  /// No limit on your plan
+  static const credNoLimit = 'cred.no_limit';
+  /// ≈ {calls} AI calls or {msgs} messages
+  static const credPackHint = 'cred.pack_hint';
+  /// Reminders (WhatsApp, SMS)
+  static const credReminders = 'cred.reminders';
+  /// Save {n}%
+  static const credSave = 'cred.save';
+  /// {plan} · resets on {date}
+  static const credSub = 'cred.sub';
+  /// Top up
+  static const credTopUp = 'cred.top_up';
+  /// At 0 credits, reminders by SMS and WhatsApp pause and AI calls stop. Rating links in emails keep working.
+  static const credWarning = 'cred.warning';
+  /// All {n}
+  static const crevAll = 'crev.all';
+  /// Customer asked for a call
+  static const crevAskedCall = 'crev.asked_call';
+  /// Call me
+  static const crevCallMe = 'crev.call_me';
+  /// Call now
+  static const crevCallNow = 'crev.call_now';
+  /// within 1 working day
+  static const crevCallWithin = 'crev.call_within';
+  /// {n} reviews
+  static const crevCount = 'crev.count';
+  /// 1 review
+  static const crevCountOne = 'crev.count_one';
+  /// No reviews yet
+  static const crevEmpty = 'crev.empty';
+  /// Ask for a rating when you share a report. Reviews show here.
+  static const crevEmptyBody = 'crev.empty_body';
+  /// Follow up
+  static const crevFollowUp = 'crev.follow_up';
+  /// Review follow-ups
+  static const crevFollowups = 'crev.followups';
+  /// Low {n}
+  static const crevLow = 'crev.low';
+  /// Mark as resolved
+  static const crevMarkResolved = 'crev.mark_resolved';
+  /// Marked as resolved
+  static const crevMarkedResolved = 'crev.marked_resolved';
+  /// Reviews
+  static const crevMore = 'crev.more';
+  /// {n}-star review
+  static const crevNStar = 'crev.n_star';
+  /// Needs follow-up · {ago}
+  static const crevNeedsFollow = 'crev.needs_follow';
+  /// Needs reply {n}
+  static const crevNeedsReply = 'crev.needs_reply';
+  /// No phone number for this customer.
+  static const crevNoPhone = 'crev.no_phone';
+  /// Nothing here right now.
+  static const crevNoneHere = 'crev.none_here';
+  /// Private note for the team
+  static const crevNote = 'crev.note';
+  /// Only your team sees this
+  static const crevNoteHint = 'crev.note_hint';
+  /// Note saved
+  static const crevNoteSaved = 'crev.note_saved';
+  /// Reopen
+  static const crevReopen = 'crev.reopen';
+  /// Reply sent
+  static const crevReplied = 'crev.replied';
+  /// Reply
+  static const crevReply = 'crev.reply';
+  /// Write your reply
+  static const crevReplyHint = 'crev.reply_hint';
+  /// Your reply shows on the customer's report page and to {name}.
+  static const crevReplyNote = 'crev.reply_note';
+  /// Your reply shows on the customer's report page.
+  static const crevReplyNotePlain = 'crev.reply_note_plain';
+  /// Reply to {name}
+  static const crevReplyTo = 'crev.reply_to';
+  /// Report #{n}
+  static const crevReportN = 'crev.report_n';
+  /// Review requests
+  static const crevRequests = 'crev.requests';
+  /// Resolved
+  static const crevResolved = 'crev.resolved';
+  /// Resolved · {ago}
+  static const crevResolvedAgo = 'crev.resolved_ago';
+  /// Revisit job
+  static const crevRevisit = 'crev.revisit';
+  /// Save note
+  static const crevSaveNote = 'crev.save_note';
+  /// Send reply
+  static const crevSendReply = 'crev.send_reply';
+  /// Review settings
+  static const crevSettings = 'crev.settings';
+  /// Suggest a reply
+  static const crevSuggest = 'crev.suggest';
+  /// Customer reviews
+  static const crevTitle = 'crev.title';
+  /// Address
+  static const customerAddress = 'customer.address';
+  /// Email
+  static const customerEmail = 'customer.email';
+  /// Main contact
+  static const customerMainContact = 'customer.main_contact';
+  /// New job for this customer
+  static const customerNewJob = 'customer.new_job';
+  /// No jobs for this customer yet.
+  static const customerNoJobs = 'customer.no_jobs';
+  /// Not assigned
+  static const customerNotAssigned = 'customer.not_assigned';
+  /// Not saved
+  static const customerNotSaved = 'customer.not_saved';
+  /// Past jobs
+  static const customerPastJobs = 'customer.past_jobs';
+  /// Phone
+  static const customerPhone = 'customer.phone';
+  /// {title} · main contact
+  static const customerRoleMain = 'customer.role_main';
+  /// See all {n}
+  static const customerSeeAll = 'customer.see_all';
+  /// Show less
+  static const customerShowLess = 'customer.show_less';
+  /// Customer since {year} · {n} jobs
+  static const customerSince = 'customer.since';
+  /// Add customer
+  static const customersAdd = 'customers.add';
+  /// Customer added.
+  static const customersAdded = 'customers.added';
+  /// Main address
+  static const customersAddress = 'customers.address';
+  /// Type the house and street.
+  static const customersAddressNeeded = 'customers.address_needed';
+  /// City
+  static const customersCity = 'customers.city';
+  /// Edit customer
+  static const customersEdit = 'customers.edit';
+  /// Email
+  static const customersEmail = 'customers.email';
+  /// This email doesn't look right.
+  static const customersEmailBad = 'customers.email_bad';
+  /// For reports and review links
+  static const customersEmailHint = 'customers.email_hint';
+  /// Customers are added with each new job, or here with “Add customer”.
+  static const customersEmptyBody = 'customers.empty_body';
+  /// No customers yet
+  static const customersEmptyTitle = 'customers.empty_title';
+  /// 1 job
+  static const customersJobOne = 'customers.job_one';
+  /// {n} jobs
+  static const customersJobs = 'customers.jobs';
+  /// House, street
+  static const customersLine1 = 'customers.line1';
+  /// Where the work is done
+  static const customersLine1Hint = 'customers.line1_hint';
+  /// Area, landmark (optional)
+  static const customersLine2 = 'customers.line2';
+  /// Customer name
+  static const customersName = 'customers.name';
+  /// Person or business
+  static const customersNameHint = 'customers.name_hint';
+  /// Type the customer's name.
+  static const customersNameNeeded = 'customers.name_needed';
+  /// No jobs yet
+  static const customersNoJobs = 'customers.no_jobs';
+  /// No customer matches “{q}”.
+  static const customersNoResults = 'customers.no_results';
+  /// Note for your team
+  static const customersNote = 'customers.note';
+  /// Gate code, dog, best time to call… (customers don't see this)
+  static const customersNoteHint = 'customers.note_hint';
+  /// Phone
+  static const customersPhone = 'customers.phone';
+  /// This phone number doesn't look right.
+  static const customersPhoneBad = 'customers.phone_bad';
+  /// Mobile number
+  static const customersPhoneHint = 'customers.phone_hint';
+  /// PIN code
+  static const customersPostcode = 'customers.postcode';
+  /// How to reach them
+  static const customersReach = 'customers.reach';
+  /// Save changes
+  static const customersSave = 'customers.save';
+  /// Customer saved.
+  static const customersSaved = 'customers.saved';
+  /// Search name, phone or city
+  static const customersSearch = 'customers.search';
+  /// AI draft
+  static const dashAiDraft = 'dash.ai_draft';
+  /// Create
+  static const dashCreate = 'dash.create';
+  /// Done today
+  static const dashDoneToday = 'dash.done_today';
+  /// Your first reports this week
+  static const dashFirst = 'dash.first';
+  /// Free
+  static const dashFree = 'dash.free';
+  /// Get started
+  static const dashGetStarted = 'dash.get_started';
+  /// Technicians take photos
+  static const dashHow1 = 'dash.how_1';
+  /// AI writes the report
+  static const dashHow2 = 'dash.how_2';
+  /// You approve and send
+  static const dashHow3 = 'dash.how_3';
+  /// How KaamNishaan works
+  static const dashHowTitle = 'dash.how_title';
+  /// In progress
+  static const dashInProgress = 'dash.in_progress';
+  /// Invite
+  static const dashInvite = 'dash.invite';
+  /// Invite sent
+  static const dashInviteSent = 'dash.invite_sent';
+  /// {pct}% less than last week
+  static const dashLess = 'dash.less';
+  /// {pct}% more than last week
+  static const dashMore = 'dash.more';
+  /// No reports to review yet
+  static const dashNoReports = 'dash.no_reports';
+  /// Reports from your team will show here.
+  static const dashNoReportsBody = 'dash.no_reports_body';
+  /// On a job
+  static const dashOnJob = 'dash.on_job';
+  /// {count} photos
+  static const dashPhotos = 'dash.photos';
+  /// reports sent
+  static const dashReportsSent = 'dash.reports_sent';
+  /// {role} · {company}
+  static const dashRoleCompany = 'dash.role_company';
+  /// Same as last week
+  static const dashSame = 'dash.same';
+  /// Set up your team
+  static const dashSetUpTeam = 'dash.set_up_team';
+  /// Create company
+  static const dashStepCompany = 'dash.step_company';
+  /// Done · {company}
+  static const dashStepCompanyDone = 'dash.step_company_done';
+  /// Create first job
+  static const dashStepJob = 'dash.step_job';
+  /// Add one, assign it
+  static const dashStepJobBody = 'dash.step_job_body';
+  /// Invite your team
+  static const dashStepTeam = 'dash.step_team';
+  /// They join by SMS
+  static const dashStepTeamBody = 'dash.step_team_body';
+  /// {done} of {total} done
+  static const dashStepsDone = 'dash.steps_done';
+  /// Team right now
+  static const dashTeamNow = 'dash.team_now';
+  /// This week
+  static const dashThisWeek = 'dash.this_week';
+  /// To review
+  static const dashToReview = 'dash.to_review';
+  /// Waiting for your review
+  static const dashWaiting = 'dash.waiting';
+  /// Read what happens before you go.
+  static const delBody = 'del.body';
+  /// Delete my account
+  static const delButton = 'del.button';
+  /// You are the only person in {company}, so the company closes too.
+  static const delCloses = 'del.closes';
+  /// Your account is deleted. Thank you for using KaamNishaan.
+  static const delDone = 'del.done';
+  /// Tick the box to confirm.
+  static const delErrConfirm = 'del.err_confirm';
+  /// Something went wrong. Please try again.
+  static const delErrGeneric = 'del.err_generic';
+  /// Choose a new owner for your company first.
+  static const delErrOwner = 'del.err_owner';
+  /// Your name, phone, email and photo are wiped.
+  static const delFactDetails = 'del.fact_details';
+  /// This can’t be undone. To use KaamNishaan again you start a new account.
+  static const delFactForever = 'del.fact_forever';
+  /// {n} open jobs go back to the office to give to someone else.
+  static const delFactJobs = 'del.fact_jobs';
+  /// You are logged out on every phone and computer.
+  static const delFactLogout = 'del.fact_logout';
+  /// Jobs, photos and reports you made stay with {company}, shown as “Deleted user”.
+  static const delFactWork = 'del.fact_work';
+  /// Your team keeps working. The new owner gets billing and settings; you become a manager until you delete.
+  static const delOwnerBody = 'del.owner_body';
+  /// Make owner
+  static const delOwnerButton = 'del.owner_button';
+  /// {company} has a new owner.
+  static const delOwnerDone = 'del.owner_done';
+  /// Switch to this company in the app first, then choose the new owner here.
+  static const delOwnerSwitch = 'del.owner_switch';
+  /// Choose a new owner for {company}
+  static const delOwnerTitle = 'del.owner_title';
+  /// Why are you leaving? (optional)
+  static const delReason = 'del.reason';
+  /// It helps us do better.
+  static const delReasonHint = 'del.reason_hint';
+  /// Delete your account
+  static const delTitle = 'del.title';
+  /// I understand my account is deleted for good.
+  static const delUnderstood = 'del.understood';
+  /// Couldn't turn that into words. Try again, or type it.
+  static const dictateFailed = 'dictate.failed';
+  /// Listening… tap the square to stop
+  static const dictateListening = 'dictate.listening';
+  /// Speaking instead of typing isn't available right now. Please type it.
+  static const dictateNoAi = 'dictate.no_ai';
+  /// The microphone is off. Turn it on in the phone's settings, or type it.
+  static const dictateOff = 'dictate.off';
+  /// Speak instead of typing
+  static const dictateSpeak = 'dictate.speak';
+  /// Stop listening
+  static const dictateStop = 'dictate.stop';
+  /// Couldn't hear any words. Try again a little closer.
+  static const dictateUnclear = 'dictate.unclear';
+  /// Writing it down…
+  static const dictateWorking = 'dictate.working';
+  /// Your words in this part will be replaced.
+  static const editorAiBody = 'editor.ai_body';
+  /// Written again
+  static const editorAiDone = 'editor.ai_done';
+  /// Write {part} again with AI?
+  static const editorAiTitle = 'editor.ai_title';
+  /// Write again
+  static const editorAiYes = 'editor.ai_yes';
+  /// {part} can't be empty. Speak or type.
+  static const editorEmpty = 'editor.empty';
+  /// Say or type what you did
+  static const editorHint = 'editor.hint';
+  /// Leave
+  static const editorLeave = 'editor.leave';
+  /// Photos and checklist answers cannot be changed.
+  static const editorLockedNote = 'editor.locked_note';
+  /// Save changes
+  static const editorSave = 'editor.save';
+  /// Report saved
+  static const editorSaved = 'editor.saved';
+  /// {customer} · draft
+  static const editorSubtitle = 'editor.subtitle';
+  /// Edit report
+  static const editorTitle = 'editor.title';
+  /// Your changes will be lost.
+  static const editorUnsavedBody = 'editor.unsaved_body';
+  /// Leave without saving?
+  static const editorUnsavedTitle = 'editor.unsaved_title';
+  /// No internet. Check your connection and try again.
+  static const errorNoInternet = 'error.no_internet';
+  /// Please log in again.
+  static const errorSessionExpired = 'error.session_expired';
+  /// The server is slow. Try again.
+  static const errorTimeout = 'error.timeout';
+  /// Something went wrong. Try again.
+  static const errorUnknown = 'error.unknown';
+  /// Back to log in
+  static const forgotBackToLogin = 'forgot.back_to_login';
+  /// Enter your work email. We will send you a link to make a new password.
+  static const forgotBody = 'forgot.body';
+  /// We sent a link to {email}. Open it on this phone to make a new password.
+  static const forgotCheckBody = 'forgot.check_body';
+  /// Check your email
+  static const forgotCheckTitle = 'forgot.check_title';
+  /// From no-reply@kaamnishaan.app · now
+  static const forgotMailFrom = 'forgot.mail_from';
+  /// KaamNishaan · Reset your password
+  static const forgotMailSubject = 'forgot.mail_subject';
+  /// No email app found on this phone.
+  static const forgotNoMailApp = 'forgot.no_mail_app';
   /// Open email app
-  static const veOpenMail = 've.open_mail';
-  /// Resend link
-  static const veResend = 've.resend';
-  /// A new link is on its way.
-  static const veResent = 've.resent';
-  /// Do it later
-  static const veLater = 've.later';
-  /// Change email
-  static const veChangeTitle = 've.change_title';
-  /// Work email
-  static const veChangeLabel = 've.change_label';
+  static const forgotOpenMail = 'forgot.open_mail';
+  /// Did not get it? Check spam, or resend in {time}
+  static const forgotResendIn = 'forgot.resend_in';
+  /// Did not get it? Check spam, or
+  static const forgotResendNow = 'forgot.resend_now';
   /// Send link
-  static const veChangeSend = 've.change_send';
-  /// Email confirmed
-  static const veVerified = 've.verified';
-  /// You used {a} of {b} reports
-  static const plTitle = 'pl.title';
+  static const forgotSend = 'forgot.send';
+  /// We sent a new link.
+  static const forgotSentAgain = 'forgot.sent_again';
+  /// For your safety, the link works only once and ends in 30 minutes.
+  static const forgotTip = 'forgot.tip';
+  /// Forgot password?
+  static const forgotTitle = 'forgot.title';
+  /// Add photo
+  static const galleryAddPhoto = 'gallery.add_photo';
+  /// After
+  static const galleryAfter = 'gallery.after';
+  /// Before
+  static const galleryBefore = 'gallery.before';
+  /// During
+  static const galleryDuring = 'gallery.during';
+  /// No photos yet
+  static const galleryEmpty = 'gallery.empty';
+  /// Not sent
+  static const galleryNotSent = 'gallery.not_sent';
+  /// {stage} · {count}
+  static const gallerySection = 'gallery.section';
+  /// Sending…
+  static const gallerySending = 'gallery.sending';
+  /// {customer} · {count} photos
+  static const gallerySubtitle = 'gallery.subtitle';
+  /// Take photo
+  static const galleryTakePhoto = 'gallery.take_photo';
+  /// Photos
+  static const galleryTitle = 'gallery.title';
+  /// Waiting to send
+  static const galleryWaiting = 'gallery.waiting';
+  /// What is it about?
+  static const helpAbout = 'help.about';
+  /// Plan or billing
+  static const helpCatBilling = 'help.cat_billing';
+  /// Your plan, credits or a payment.
+  static const helpCatBillingHint = 'help.cat_billing_hint';
+  /// An idea
+  static const helpCatFeature = 'help.cat_feature';
+  /// Something you'd like the app to do.
+  static const helpCatFeatureHint = 'help.cat_feature_hint';
+  /// Something isn't working
+  static const helpCatProblem = 'help.cat_problem';
+  /// A screen, photo, report or message that doesn't work.
+  static const helpCatProblemHint = 'help.cat_problem_hint';
+  /// A question
+  static const helpCatQuestion = 'help.cat_question';
+  /// How to do something in the app.
+  static const helpCatQuestionHint = 'help.cat_question_hint';
+  /// No help requests yet
+  static const helpEmpty = 'help.empty';
+  /// Something not working, or a question? Send us a message and we'll reply here.
+  static const helpEmptyBody = 'help.empty_body';
+  /// Tell us a little more (10 letters or more).
+  static const helpErrMessage = 'help.err_message';
+  /// Write a short subject (3 letters or more).
+  static const helpErrSubject = 'help.err_subject';
+  /// Message
+  static const helpMessage = 'help.message';
+  /// What happened? Which job or screen? The more you tell us, the faster we can help.
+  static const helpMessageHint = 'help.message_hint';
+  /// New help request
+  static const helpNew = 'help.new';
+  /// Our team reads every message and replies here, usually within one working day.
+  static const helpNewBody = 'help.new_body';
+  /// New help request
+  static const helpNewTitle = 'help.new_title';
+  /// We'll reply here. You'll also get a message in Messages.
+  static const helpNoteOpen = 'help.note_open';
+  /// Marked as sorted. Write again any time to open it.
+  static const helpNoteSolved = 'help.note_solved';
+  /// Support replied. Write back, or tap "It's sorted" if all is well.
+  static const helpNoteWaiting = 'help.note_waiting';
+  /// Write a reply…
+  static const helpReplyHint = 'help.reply_hint';
+  /// Write to open it again…
+  static const helpReplyReopen = 'help.reply_reopen';
+  /// Send
+  static const helpSend = 'help.send';
+  /// Send reply
+  static const helpSendReply = 'help.send_reply';
+  /// Sent. We'll reply here.
+  static const helpSent = 'help.sent';
+  /// It's sorted
+  static const helpSolve = 'help.solve';
+  /// Thanks! Marked as sorted.
+  static const helpSolvedToast = 'help.solved_toast';
+  /// Open
+  static const helpStatusOpen = 'help.status_open';
+  /// Solved
+  static const helpStatusSolved = 'help.status_solved';
+  /// Support replied
+  static const helpStatusWaiting = 'help.status_waiting';
+  /// Subject
+  static const helpSubject = 'help.subject';
+  /// For example: Report stuck on "Making your report"
+  static const helpSubjectHint = 'help.subject_hint';
+  /// Ask KaamNishaan support
+  static const helpSubtitle = 'help.subtitle';
+  /// KaamNishaan support
+  static const helpSupport = 'help.support';
+  /// Help
+  static const helpTitle = 'help.title';
+  /// You
+  static const helpYou = 'help.you';
+  /// Your requests
+  static const helpYourRequests = 'help.your_requests';
+  /// No earlier jobs on this machine yet.
+  static const historyEmpty = 'history.empty';
+  /// {date} · {name}
+  static const historyLine = 'history.line';
+  /// Service history
+  static const historyTitle = 'history.title';
+  /// Your jobs for today will show here.
+  static const homeComingSoon = 'home.coming_soon';
+  /// Good afternoon
+  static const homeGoodAfternoon = 'home.good_afternoon';
+  /// Good evening
+  static const homeGoodEvening = 'home.good_evening';
+  /// Good morning
+  static const homeGoodMorning = 'home.good_morning';
+  /// Hello, {name}
+  static const homeHello = 'home.hello';
+  /// Welcome,
+  static const homeWelcome = 'home.welcome';
+  /// After photos
+  static const hubAfter = 'hub.after';
+  /// Before photos
+  static const hubBefore = 'hub.before';
+  /// Checklist
+  static const hubChecklist = 'hub.checklist';
+  /// During photos
+  static const hubDuring = 'hub.during';
+  /// Fix the report
+  static const hubFixReport = 'hub.fix_report';
+  /// Make report
+  static const hubMakeReport = 'hub.make_report';
+  /// Next
+  static const hubNext = 'hub.next';
+  /// No checklist for this job
+  static const hubNoChecklist = 'hub.no_checklist';
+  /// Not started
+  static const hubNotStarted = 'hub.not_started';
+  /// Not added yet
+  static const hubNotYet = 'hub.not_yet';
+  /// {count} voice notes
+  static const hubNotesAdded = 'hub.notes_added';
+  /// {done} of {total}
+  static const hubOf = 'hub.of';
+  /// Open report draft
+  static const hubOpenDraft = 'hub.open_draft';
+  /// Optional
+  static const hubOptional = 'hub.optional';
+  /// 1 photo added
+  static const hubPhotoAdded = 'hub.photo_added';
+  /// {count} photos added
+  static const hubPhotosAdded = 'hub.photos_added';
+  /// All done. Make the report.
+  static const hubReady = 'hub.ready';
+  /// Say what you did
+  static const hubSayWhat = 'hub.say_what';
+  /// See report
+  static const hubSeeReport = 'hub.see_report';
+  /// Report sent for review
+  static const hubSentForReview = 'hub.sent_for_review';
+  /// {done} of {total} steps done. {next}
+  static const hubSpeak = 'hub.speak';
+  /// Start the job first to add proof.
+  static const hubStartFirst = 'hub.start_first';
+  /// Start the job to begin.
+  static const hubStartToBegin = 'hub.start_to_begin';
+  /// {count} more steps, then make the report.
+  static const hubStepsLeft = 'hub.steps_left';
+  /// Take photos now
+  static const hubTakeNow = 'hub.take_now';
+  /// Add after photos to unlock
+  static const hubUnlockAfter = 'hub.unlock_after';
+  /// Add before photos to unlock
+  static const hubUnlockBefore = 'hub.unlock_before';
+  /// Finish the checklist to unlock
+  static const hubUnlockChecklist = 'hub.unlock_checklist';
+  /// Voice note
+  static const hubVoice = 'hub.voice';
+  /// {count} saved on phone, sending when online
+  static const hubWaitingUpload = 'hub.waiting_upload';
+  /// Your proof
+  static const hubYourProof = 'hub.your_proof';
+  /// Get started
+  static const introGetStarted = 'intro.get_started';
+  /// BEFORE · photo 1
+  static const introPhotosBadge = 'intro.photos_badge';
+  /// Before, during and after. Your photos show the customer a job done right.
+  static const introPhotosBody = 'intro.photos_body';
+  /// Saved as proof
+  static const introPhotosSaved = 'intro.photos_saved';
+  /// Take photos of your work
+  static const introPhotosTitle = 'intro.photos_title';
+  /// Report approved
+  static const introReportBadge = 'intro.report_badge';
+  /// Your manager checks the report and the customer gets it with all the photos.
+  static const introReportBody = 'intro.report_body';
+  /// Sent with {count} photos
+  static const introReportSent = 'intro.report_sent';
+  /// Send proof in one tap
+  static const introReportTitle = 'intro.report_title';
+  /// Recording 0:12
+  static const introVoiceBadge = 'intro.voice_badge';
+  /// Say what you did in your own language. We write it down for you.
+  static const introVoiceBody = 'intro.voice_body';
+  /// Speak, don't type
+  static const introVoiceTitle = 'intro.voice_title';
+  /// Gujarati → written for you
+  static const introVoiceWritten = 'intro.voice_written';
+  /// Already invited ({name}).
+  static const inviteAlreadyInvited = 'invite.already_invited';
+  /// Already in your team ({name}).
+  static const inviteInTeam = 'invite.in_team';
+  /// SMS language
+  static const inviteLanguage = 'invite.language';
+  /// Name
+  static const inviteName = 'invite.name';
+  /// Write their name
+  static const inviteNameMissing = 'invite.name_missing';
+  /// Mobile number
+  static const invitePhone = 'invite.phone';
+  /// Role
+  static const inviteRole = 'invite.role';
+  /// See {name} in Team
+  static const inviteSeeInTeam = 'invite.see_in_team';
+  /// Send invite
+  static const inviteSend = 'invite.send';
+  /// Invite sent to {name}
+  static const inviteSent = 'invite.sent';
+  /// They join with a link by SMS
+  static const inviteSubtitle = 'invite.subtitle';
+  /// They will get this SMS
+  static const inviteTheyGet = 'invite.they_get';
+  /// Invite person
+  static const inviteTitle = 'invite.title';
+  /// {name} will get this SMS
+  static const inviteWillGet = 'invite.will_get';
+  /// Cancelled
+  static const jfCancelled = 'jf.cancelled';
+  /// Clear
+  static const jfClear = 'jf.clear';
+  /// Done
+  static const jfDone = 'jf.done';
+  /// In progress
+  static const jfGoing = 'jf.going';
+  /// Show jobs
+  static const jfShow = 'jf.show';
+  /// State
+  static const jfState = 'jf.state';
+  /// Technician
+  static const jfTechnician = 'jf.technician';
+  /// To check
+  static const jfToCheck = 'jf.to_check';
+  /// Not started
+  static const jfWaiting = 'jf.waiting';
+  /// Assign technician
+  static const jobAssign = 'job.assign';
+  /// Call
+  static const jobCall = 'job.call';
+  /// Cancel job
+  static const jobCancel = 'job.cancel';
+  /// Say why. It goes on the job's timeline, and the technician sees the job is cancelled.
+  static const jobCancelBody = 'job.cancel_body';
+  /// Why is it cancelled?
+  static const jobCancelHint = 'job.cancel_hint';
+  /// Cancel this job?
+  static const jobCancelTitle = 'job.cancel_title';
+  /// Customer cancelled
+  static const jobCancelWhyCustomer = 'job.cancel_why_customer';
+  /// Moved to another day
+  static const jobCancelWhyMoved = 'job.cancel_why_moved';
+  /// Made twice by mistake
+  static const jobCancelWhyTwice = 'job.cancel_why_twice';
+  /// Job cancelled.
+  static const jobCancelled = 'job.cancelled';
+  /// Change technician
+  static const jobChangeTech = 'job.change_tech';
+  /// Continue job
+  static const jobContinue = 'job.continue';
+  /// Delete job
+  static const jobDelete = 'job.delete';
+  /// Nobody has started it. It goes from every list and can't be brought back.
+  static const jobDeleteBody = 'job.delete_body';
+  /// Delete this job?
+  static const jobDeleteTitle = 'job.delete_title';
+  /// Job deleted.
+  static const jobDeleted = 'job.deleted';
+  /// Equipment
+  static const jobEquipment = 'job.equipment';
+  /// last service {date}
+  static const jobLastService = 'job.last_service';
+  /// Job options
+  static const jobMenu = 'job.menu';
+  /// Navigate
+  static const jobNavigate = 'job.navigate';
+  /// No maps app found on this phone.
+  static const jobNoMapApp = 'job.no_map_app';
+  /// Problem
+  static const jobProblem = 'job.problem';
+  /// Read aloud
+  static const jobReadAloud = 'job.read_aloud';
+  /// {customer}. {address}. Problem: {problem}.
+  static const jobSpeak = 'job.speak';
+  /// Start job
+  static const jobStart = 'job.start';
+  /// {day} · {time}
+  static const jobWhen = 'job.when';
+  /// Clear filters
+  static const jobsClearFilters = 'jobs.clear_filters';
+  /// Clear search
+  static const jobsClearSearch = 'jobs.clear_search';
+  /// {date} · {count} jobs
+  static const jobsCountDay = 'jobs.count_day';
+  /// {date} · {count} jobs today
+  static const jobsCountToday = 'jobs.count_today';
+  /// This week · {count} found
+  static const jobsCountWeek = 'jobs.count_week';
+  /// Filters
+  static const jobsFilters = 'jobs.filters';
+  /// New job
+  static const jobsNewJob = 'jobs.new_job';
+  /// Try another customer name or address, or clear the filters.
+  static const jobsNoResultsBody = 'jobs.no_results_body';
+  /// No jobs for “{q}”
+  static const jobsNoResultsTitle = 'jobs.no_results_title';
+  /// New jobs will show here.
+  static const jobsNoneBody = 'jobs.none_body';
+  /// No jobs here
+  static const jobsNoneTitle = 'jobs.none_title';
+  /// Search customer or address
+  static const jobsSearch = 'jobs.search';
+  /// Jobs
+  static const jobsTitle = 'jobs.title';
+  /// Today
+  static const jobsToday = 'jobs.today';
+  /// Tomorrow
+  static const jobsTomorrow = 'jobs.tomorrow';
+  /// Unassigned
+  static const jobsUnassigned = 'jobs.unassigned';
+  /// Ask your manager to send a new invite
+  static const joinAskManager = 'join.ask_manager';
+  /// {name} can send it again from the Team screen. It comes by SMS.
+  static const joinAskManagerBody = 'join.ask_manager_body';
+  /// You see jobs from {company}
+  static const joinBenefitJobs = 'join.benefit_jobs';
+  /// Your photos and notes go with each job
+  static const joinBenefitPhotos = 'join.benefit_photos';
+  /// Your reports go to your manager
+  static const joinBenefitReports = 'join.benefit_reports';
+  /// Call manager
+  static const joinCallManager = 'join.call_manager';
+  /// Invites work for 7 days. This one ended on {date}, or was cancelled.
+  static const joinExpiredBody = 'join.expired_body';
+  /// This invite has expired
+  static const joinExpiredTitle = 'join.expired_title';
+  /// {name} invited you
+  static const joinInvitedYou = 'join.invited_you';
+  /// Join company
+  static const joinJoinButton = 'join.join_button';
+  /// Ask your manager to invite this phone number from the Team screen.
+  static const joinNoInviteBody = 'join.no_invite_body';
+  /// No invite for this number
+  static const joinNoInviteTitle = 'join.no_invite_title';
+  /// Not my company
+  static const joinNotMine = 'join.not_mine';
+  /// Join {company}?
+  static const joinTitle = 'join.title';
+  /// When you join
+  static const joinWhenYouJoin = 'join.when_you_join';
+  /// App language
+  static const langApp = 'lang.app';
+  /// English
+  static const langEn = 'lang.en';
+  /// Spanish
+  static const langEs = 'lang.es';
+  /// French
+  static const langFr = 'lang.fr';
+  /// Gujarati
+  static const langGu = 'lang.gu';
+  /// Hindi
+  static const langHi = 'lang.hi';
+  /// Reports for customers
+  static const langReports = 'lang.reports';
+  /// Speak in any language. Customers get the report in this language.
+  static const langReportsNote = 'lang.reports_note';
+  /// Your company owner chooses it.
+  static const langReportsOwner = 'lang.reports_owner';
+  /// Language saved
+  static const langSaved = 'lang.saved';
+  /// App and reports
+  static const langSubtitle = 'lang.subtitle';
+  /// Language
+  static const langTitle = 'lang.title';
+  /// Tap the speaker to hear it
+  static const languageHint = 'language.hint';
+  /// Choose your language
+  static const languageTitle = 'language.title';
+  /// Log in
+  static const loginButton = 'login.button';
+  /// Enter a valid email, like name@company.com
+  static const loginEmailInvalid = 'login.email_invalid';
+  /// Work email
+  static const loginEmailLabel = 'login.email_label';
+  /// Forgot password?
+  static const loginForgot = 'login.forgot';
+  /// Forgot password? Reset it
+  static const loginForgotReset = 'login.forgot_reset';
+  /// {count} wrong tries. Try again at {time}.
+  static const loginLockedBody = 'login.locked_body';
+  /// Locked for {minutes} minutes
+  static const loginLockedTitle = 'login.locked_title';
+  /// New here? Create a company account
+  static const loginNewHere = 'login.new_here';
+  /// or
+  static const loginOr = 'login.or';
+  /// Password
+  static const loginPasswordLabel = 'login.password_label';
+  /// Enter your password
+  static const loginPasswordMissing = 'login.password_missing';
+  /// Reset password
+  static const loginResetPassword = 'login.reset_password';
+  /// For managers and owners. Check and approve your team's reports.
+  static const loginSubtitle = 'login.subtitle';
+  /// Log in
+  static const loginTitle = 'login.title';
+  /// Log in with phone
+  static const loginWithPhone = 'login.with_phone';
+  /// Email or password is wrong. {count} tries left.
+  static const loginWrong = 'login.wrong';
+  /// Company settings
+  static const meCompanySettings = 'me.company_settings';
+  /// Customers
+  static const meCustomers = 'me.customers';
+  /// Delete account
+  static const meDeleteAccount = 'me.delete_account';
+  /// Edit profile
+  static const meEditProfile = 'me.edit_profile';
+  /// Help
+  static const meHelp = 'me.help';
+  /// Jobs done
+  static const meJobsDone = 'me.jobs_done';
+  /// Language
+  static const meLanguage = 'me.language';
+  /// Log out anyway
+  static const meLogoutAnyway = 'me.logout_anyway';
+  /// Log out?
+  static const meLogoutTitle = 'me.logout_title';
+  /// {n} items are not sent yet. If you log out now, they stay on this phone until you log in again.
+  static const meLogoutWaiting = 'me.logout_waiting';
+  /// Messages
+  static const meMessages = 'me.messages';
+  /// My reports
+  static const meMyReports = 'me.my_reports';
+  /// My reviews
+  static const meMyReviews = 'me.my_reviews';
+  /// {n} people
+  static const mePeople = 'me.people';
+  /// Photos
+  static const mePhotos = 'me.photos';
+  /// Reports
+  static const meReports = 'me.reports';
+  /// Reports sent
+  static const meReportsSent = 'me.reports_sent';
+  /// Send items first
+  static const meSendFirst = 'me.send_first';
+  /// Team
+  static const meTeam = 'me.team';
+  /// To review
+  static const meToReview = 'me.to_review';
+  /// Waiting to send
+  static const meWaiting = 'me.waiting';
+  /// No messages yet
+  static const messagesEmpty = 'messages.empty';
+  /// New jobs and report updates show here.
+  static const messagesEmptyBody = 'messages.empty_body';
+  /// {n} h
+  static const messagesHours = 'messages.hours';
+  /// Just now
+  static const messagesJustNow = 'messages.just_now';
+  /// {n} min
+  static const messagesMinutes = 'messages.minutes';
+  /// {n} new
+  static const messagesNew = 'messages.new';
+  /// All read
+  static const messagesNoneNew = 'messages.none_new';
+  /// Messages
+  static const messagesTitle = 'messages.title';
+  /// Today
+  static const messagesToday = 'messages.today';
+  /// Yesterday
+  static const messagesYesterday = 'messages.yesterday';
+  /// {customer} report was approved.
+  static const msgApprovedBody = 'msg.approved_body';
+  /// Report approved
+  static const msgApprovedTitle = 'msg.approved_title';
+  /// {who}: {customer} — {note}
+  static const msgChangesBody = 'msg.changes_body';
+  /// {who} asked for changes to the {customer} report.
+  static const msgChangesBodyPlain = 'msg.changes_body_plain';
+  /// Changes asked
+  static const msgChangesTitle = 'msg.changes_title';
+  /// New job
+  static const msgJobTitle = 'msg.job_title';
+  /// New job for today
+  static const msgJobTitleToday = 'msg.job_title_today';
+  /// {customer} gave {n}★. Follow up soon.
+  static const msgLowBody = 'msg.low_body';
+  /// Low rating
+  static const msgLowTitle = 'msg.low_title';
+  /// {technician} at {customer} isn’t sure: “{question}”
+  static const msgQuestionBody = 'msg.question_body';
+  /// {technician} at {customer} isn’t sure: “{question}” — {note}
+  static const msgQuestionBodyNote = 'msg.question_body_note';
+  /// Question from the job
+  static const msgQuestionTitle = 'msg.question_title';
+  /// {customer} rated you {n}★
+  static const msgReviewBody = 'msg.review_body';
+  /// New review
+  static const msgReviewTitle = 'msg.review_title';
+  /// {customer} report was sent to the customer.
+  static const msgSharedBody = 'msg.shared_body';
+  /// {technician} sent the {customer} report.
+  static const msgSubmittedBody = 'msg.submitted_body';
+  /// Report to review
+  static const msgSubmittedTitle = 'msg.submitted_title';
+  /// About "{subject}". Tap to read.
+  static const msgSupportBody = 'msg.support_body';
+  /// Support replied
+  static const msgSupportTitle = 'msg.support_title';
+  /// Your technician
+  static const msgTechnician = 'msg.technician';
+  /// Your manager
+  static const msgYourManager = 'msg.your_manager';
+  /// All {n}
+  static const myreportsAll = 'myreports.all';
+  /// Approved
+  static const myreportsApproved = 'myreports.approved';
+  /// Approved · sent to customer
+  static const myreportsApprovedSent = 'myreports.approved_sent';
+  /// Changes
+  static const myreportsChanges = 'myreports.changes';
+  /// Draft
+  static const myreportsDraft = 'myreports.draft';
+  /// Fix the report
+  static const myreportsFix = 'myreports.fix';
+  /// {title} · Report #{number}
+  static const myreportsMeta = 'myreports.meta';
+  /// No reports this week
+  static const myreportsNone = 'myreports.none';
+  /// Finish a job and make its report. It shows here.
+  static const myreportsNoneBody = 'myreports.none_body';
+  /// This week · {n} reports
+  static const myreportsSubtitle = 'myreports.subtitle';
+  /// Waiting
+  static const myreportsWaiting = 'myreports.waiting';
+  /// When a customer rates one of your jobs, it will show here.
+  static const myrevEmptyBody = 'myrev.empty_body';
+  /// No ratings yet
+  static const myrevEmptyHead = 'myrev.empty_head';
+  /// Your first one is on its way
+  static const myrevEmptySub = 'myrev.empty_sub';
+  /// No reviews yet
+  static const myrevEmptyTitle = 'myrev.empty_title';
+  /// {name} replied
+  static const myrevReplied = 'myrev.replied';
+  /// See jobs to ask about
+  static const myrevSeeJobs = 'myrev.see_jobs';
+  /// From customers · this year
+  static const myrevSubtitle = 'myrev.subtitle';
+  /// {n} reviews · {p}% gave 4★ or more
+  static const myrevSummary = 'myrev.summary';
+  /// {label} · {n}
+  static const myrevTagCount = 'myrev.tag_count';
+  /// Tip: clear before and after photos get more 5-star ratings.
+  static const myrevTip = 'myrev.tip';
+  /// Capture
+  static const navCapture = 'nav.capture';
+  /// Home
+  static const navHome = 'nav.home';
+  /// Jobs
+  static const navJobs = 'nav.jobs';
+  /// Me
+  static const navMe = 'nav.me';
+  /// Profile
+  static const navProfile = 'nav.profile';
+  /// Reports
+  static const navReports = 'nav.reports';
+  /// Today
+  static const navToday = 'nav.today';
+  /// Add “{name}” as new customer
+  static const newjobAddCustomer = 'newjob.add_customer';
+  /// Address
+  static const newjobAddress = 'newjob.address';
+  /// Street, area, city
+  static const newjobAddressHint = 'newjob.address_hint';
+  /// Assign
+  static const newjobAssign = 'newjob.assign';
+  /// Change
+  static const newjobChange = 'newjob.change';
+  /// Checklist
+  static const newjobChecklist = 'newjob.checklist';
+  /// No checklist
+  static const newjobChecklistNone = 'newjob.checklist_none';
+  /// Create job
+  static const newjobCreate = 'newjob.create';
+  /// Job created
+  static const newjobCreated = 'newjob.created';
+  /// Job given to {name}
+  static const newjobCreatedFor = 'newjob.created_for';
+  /// Customer
+  static const newjobCustomer = 'newjob.customer';
+  /// Search customer
+  static const newjobCustomerHint = 'newjob.customer_hint';
+  /// Choose a customer
+  static const newjobCustomerMissing = 'newjob.customer_missing';
+  /// Date
+  static const newjobDate = 'newjob.date';
+  /// {n} jobs
+  static const newjobJobsCount = 'newjob.jobs_count';
+  /// {n} things are missing. Please fill them in.
+  static const newjobMissingMany = 'newjob.missing_many';
+  /// 1 thing is missing. Please fill it in.
+  static const newjobMissingOne = 'newjob.missing_one';
+  /// New customer
+  static const newjobNewCustomer = 'newjob.new_customer';
+  /// No customers yet. Type a name to add one.
+  static const newjobNoCustomers = 'newjob.no_customers';
+  /// Not assigned yet
+  static const newjobNotAssigned = 'newjob.not_assigned';
+  /// Find a customer
+  static const newjobSearchCustomers = 'newjob.search_customers';
+  /// Tap to choose a technician
+  static const newjobTapToChoose = 'newjob.tap_to_choose';
+  /// Technician
+  static const newjobTechnician = 'newjob.technician';
+  /// Time
+  static const newjobTime = 'newjob.time';
+  /// Pick a time
+  static const newjobTimeHint = 'newjob.time_hint';
+  /// Choose a time
+  static const newjobTimeMissing = 'newjob.time_missing';
+  /// New job
+  static const newjobTitle = 'newjob.title';
+  /// Work to do
+  static const newjobWork = 'newjob.work';
+  /// AC not cooling in room 2
+  static const newjobWorkHint = 'newjob.work_hint';
+  /// Say what work to do
+  static const newjobWorkMissing = 'newjob.work_missing';
+  /// Your voice recording is always kept.
+  static const noteAlwaysKept = 'note.always_kept';
+  /// We could not write this note.
+  static const noteFailed = 'note.failed';
+  /// Hear it
+  static const noteHearIt = 'note.hear_it';
+  /// Report already sent. Notes cannot be changed.
+  static const noteLocked = 'note.locked';
+  /// {language} · not clear
+  static const noteNotClear = 'note.not_clear';
+  /// This note is still on the phone. It will be written down once it is sent.
+  static const noteOnPhone = 'note.on_phone';
+  /// Saved
+  static const noteSaved = 'note.saved';
+  /// Speak again
+  static const noteSpeakAgain = 'note.speak_again';
+  /// Speak to change
+  static const noteSpeakChange = 'note.speak_change';
+  /// {customer} · {time}
+  static const noteSubtitle = 'note.subtitle';
+  /// Try again
+  static const noteTryAgain = 'note.try_again';
+  /// Type instead
+  static const noteTypeInstead = 'note.type_instead';
+  /// Speak again in a quiet place.
+  static const noteUnclearBody = 'note.unclear_body';
+  /// Hold the phone close to your mouth.
+  static const noteUnclearTip1 = 'note.unclear_tip1';
+  /// Stop the AC or fan while you speak.
+  static const noteUnclearTip2 = 'note.unclear_tip2';
+  /// We couldn't hear clearly.
+  static const noteUnclearTitle = 'note.unclear_title';
+  /// What you said
+  static const noteWhatYouSaid = 'note.what_you_said';
+  /// What you wrote
+  static const noteWhatYouWrote = 'note.what_you_wrote';
+  /// We are writing it down. This takes a few seconds.
+  static const noteWriting = 'note.writing';
+  /// {language}, written in {target}
+  static const noteWrittenIn = 'note.written_in';
+  /// {customer} · {count} notes
+  static const notesCount = 'notes.count';
+  /// Delete note
+  static const notesDelete = 'notes.delete';
+  /// It will not be used in the report.
+  static const notesDeleteBody = 'notes.delete_body';
+  /// Delete this note?
+  static const notesDeleteTitle = 'notes.delete_title';
+  /// Note deleted
+  static const notesDeleted = 'notes.deleted';
+  /// Could not write
+  static const notesFailed = 'notes.failed';
+  /// Voice note {n}
+  static const notesItem = 'notes.item';
+  /// No voice notes yet
+  static const notesNone = 'notes.none';
+  /// Not sent · tap to try again
+  static const notesNotSent = 'notes.not_sent';
+  /// Saved on phone
+  static const notesOnPhone = 'notes.on_phone';
+  /// Record new note
+  static const notesRecordNew = 'notes.record_new';
+  /// Say the parts you used and your advice for the customer.
+  static const notesTipBody = 'notes.tip_body';
+  /// Tip
+  static const notesTipTitle = 'notes.tip_title';
+  /// Voice notes
+  static const notesTitle = 'notes.title';
+  /// Typed note {n}
+  static const notesTypedItem = 'notes.typed_item';
+  /// Not clear
+  static const notesUnclear = 'notes.unclear';
+  /// Writing…
+  static const notesWriting = 'notes.writing';
+  /// Written
+  static const notesWritten = 'notes.written';
+  /// Compare before and after
+  static const pairCompare = 'pair.compare';
+  /// Drag the line to compare
+  static const pairDrag = 'pair.drag';
+  /// In the report
+  static const pairInReport = 'pair.in_report';
+  /// Take a before and an after photo first.
+  static const pairNeedBoth = 'pair.need_both';
+  /// Retake
+  static const pairRetake = 'pair.retake';
+  /// Before and after: {what} · {when}
+  static const pairShareText = 'pair.share_text';
+  /// Before and after
+  static const pairTitle = 'pair.title';
+  /// Use in report
+  static const pairUse = 'pair.use';
+  /// Added to the report.
+  static const pairUsed = 'pair.used';
+  /// The photos are still being sent. Try again when they are on the server.
+  static const pairWaitUpload = 'pair.wait_upload';
+  /// Approved by {name}
+  static const pdfApprovedBy = 'pdf.approved_by';
+  /// Making the PDF…
+  static const pdfBuilding = 'pdf.building';
+  /// This takes a few seconds.
+  static const pdfBuildingBody = 'pdf.building_body';
+  /// Checklist · {a} of {b} passed
+  static const pdfChecklist = 'pdf.checklist';
+  /// Customer
+  static const pdfCustomer = 'pdf.customer';
+  /// Download
+  static const pdfDownload = 'pdf.download';
+  /// Could not make the PDF
+  static const pdfFailed = 'pdf.failed';
+  /// Page 1 of {n}
+  static const pdfPage = 'pdf.page';
+  /// Problem
+  static const pdfProblem = 'pdf.problem';
+  /// Service report
+  static const pdfServiceReport = 'pdf.service_report';
+  /// Share
+  static const pdfShare = 'pdf.share';
+  /// #{number} · {n} pages
+  static const pdfSubtitle = 'pdf.subtitle';
+  /// Technician
+  static const pdfTechnician = 'pdf.technician';
+  /// Report PDF
+  static const pdfTitle = 'pdf.title';
+  /// Try again
+  static const pdfTryAgain = 'pdf.try_again';
+  /// Everything is sent
+  static const pendingAllSent = 'pending.all_sent';
+  /// Your manager has all your photos and notes.
+  static const pendingAllSentBody = 'pending.all_sent_body';
+  /// {n} checklist answers
+  static const pendingAnswers = 'pending.answers';
+  /// We send them by ourselves when internet comes back.
+  static const pendingAuto = 'pending.auto';
+  /// Back to Today
+  static const pendingBackToday = 'pending.back_today';
+  /// No internet. We will send them when it comes back.
+  static const pendingNoInternet = 'pending.no_internet';
+  /// Not sent
+  static const pendingNotSent = 'pending.not_sent';
+  /// {stage} photo
+  static const pendingPhoto = 'pending.photo';
+  /// Send all now
+  static const pendingSendAll = 'pending.send_all';
+  /// Sending…
+  static const pendingSending = 'pending.sending';
+  /// Sent at {time}
+  static const pendingSentAt = 'pending.sent_at';
+  /// {n} items sent
+  static const pendingSentItems = 'pending.sent_items';
+  /// Saved on this phone
+  static const pendingSubtitle = 'pending.subtitle';
+  /// {n} items
+  static const pendingSummary = 'pending.summary';
+  /// {n} items · {failed} not sent
+  static const pendingSummaryFailed = 'pending.summary_failed';
+  /// Try again
+  static const pendingTryAgain = 'pending.try_again';
+  /// Typed note
+  static const pendingTyped = 'pending.typed';
+  /// Voice note
+  static const pendingVoice = 'pending.voice';
+  /// Waiting
+  static const pendingWaiting = 'pending.waiting';
+  /// Add a note
+  static const photoAddNote = 'photo.add_note';
+  /// By
+  static const photoBy = 'photo.by';
+  /// Delete photo
+  static const photoDelete = 'photo.delete';
+  /// Photo deleted.
+  static const photoDeleted = 'photo.deleted';
+  /// Proof photos cannot be changed.
+  static const photoLockedBody = 'photo.locked_body';
+  /// Locked. Report already sent.
+  static const photoLockedTitle = 'photo.locked_title';
+  /// Note
+  static const photoNote = 'photo.note';
+  /// What does this photo show?
+  static const photoNoteHint = 'photo.note_hint';
+  /// Place
+  static const photoPlace = 'photo.place';
+  /// Save note
+  static const photoSaveNote = 'photo.save_note';
+  /// Share
+  static const photoShare = 'photo.share';
+  /// Couldn't get the photo ready. Try again.
+  static const photoShareFailed = 'photo.share_failed';
+  /// Your company lets the office share photos. Ask your manager.
+  static const photoShareOffice = 'photo.share_office';
+  /// Stage
+  static const photoStage = 'photo.stage';
+  /// {stage} · photo {n} of {total}
+  static const photoStageOf = 'photo.stage_of';
+  /// Taken
+  static const photoTaken = 'photo.taken';
   /// Upgrade to keep sending reports this month. Nothing you captured is lost — photos and notes stay saved.
   static const plBodyOwner = 'pl.body_owner';
   /// Your company used this month's reports. Ask the owner to upgrade. Nothing you captured is lost — photos and notes stay saved.
   static const plBodyTeam = 'pl.body_team';
-  /// {plan} · resets on {date}
-  static const plResets = 'pl.resets';
-  /// {price} / mo
-  static const plPerMonth = 'pl.per_month';
-  /// {reports} reports · {techs} techs
-  static const plLimits = 'pl.limits';
-  /// Fair-use reports · {techs} techs
-  static const plFairUse = 'pl.fair_use';
   /// Current
   static const plCurrent = 'pl.current';
-  /// Recommended
-  static const plRecommended = 'pl.recommended';
-  /// Upgrade to {name} · {price}
-  static const plUpgrade = 'pl.upgrade';
+  /// Fair-use reports · {techs} techs
+  static const plFairUse = 'pl.fair_use';
   /// Remind me later
   static const plLater = 'pl.later';
+  /// {reports} reports · {techs} techs
+  static const plLimits = 'pl.limits';
   /// OK
   static const plOk = 'pl.ok';
-  /// Service report · secured by KaamNishaan
-  static const webRSubtitle = 'web.r.subtitle';
-  /// Download PDF
-  static const webRDownload = 'web.r.download';
-  /// PDF is being made…
-  static const webRPdfMaking = 'web.r.pdf_making';
-  /// Secure link · works until {date}
-  static const webRSecure = 'web.r.secure';
-  /// Approved by {name}
-  static const webRApprovedBy = 'web.r.approved_by';
-  /// Acknowledged by you
-  static const webRAcknowledgedBadge = 'web.r.acknowledged_badge';
-  /// Report #{n}
-  static const webRReportN = 'web.r.report_n';
-  /// Service report for {customer}
-  static const webRTitle = 'web.r.title';
-  /// {name}, technician
-  static const webRTechnician = 'web.r.technician';
-  /// Technician · {company}
-  static const webRTechLine = 'web.r.tech_line';
-  /// Notes translated from {language}
-  static const webRTranslated = 'web.r.translated';
-  /// Before and after
-  static const webRBeforeAfter = 'web.r.before_after';
-  /// Before
-  static const webRBefore = 'web.r.before';
-  /// After
-  static const webRAfter = 'web.r.after';
-  /// All photos
-  static const webRAllPhotos = 'web.r.all_photos';
-  /// {n} photos
-  static const webRNPhotos = 'web.r.n_photos';
-  /// Checklist results
-  static const webRChecklist = 'web.r.checklist';
-  /// {n} passed
-  static const webRPassed = 'web.r.passed';
-  /// {n} notes
-  static const webRNotes = 'web.r.notes';
-  /// 1 note
-  static const webROneNote = 'web.r.one_note';
-  /// Show all {n} checks
-  static const webRShowAll = 'web.r.show_all';
-  /// Work done
-  static const webRWorkDone = 'web.r.work_done';
-  /// Our advice
-  static const webRAdvice = 'web.r.advice';
-  /// Happy with the work?
-  static const webRHappy = 'web.r.happy';
-  /// Acknowledge this report so {company} knows you have seen it. No account or app needed.
-  static const webRHappyBody = 'web.r.happy_body';
-  /// Acknowledge report
-  static const webRAcknowledge = 'web.r.acknowledge';
+  /// {price} / mo
+  static const plPerMonth = 'pl.per_month';
+  /// Recommended
+  static const plRecommended = 'pl.recommended';
+  /// {plan} · resets on {date}
+  static const plResets = 'pl.resets';
+  /// You used {a} of {b} reports
+  static const plTitle = 'pl.title';
+  /// Upgrade to {name} · {price}
+  static const plUpgrade = 'pl.upgrade';
+  /// Change photo
+  static const profileChangePhoto = 'profile.change_photo';
+  /// Choose from gallery
+  static const profileChoosePhoto = 'profile.choose_photo';
   /// Your name
-  static const webRYourName = 'web.r.your_name';
-  /// Organisation (optional)
-  static const webRYourOrg = 'web.r.your_org';
-  /// Confirm
-  static const webRConfirm = 'web.r.confirm';
-  /// Thank you — report acknowledged
-  static const webRThanksAck = 'web.r.thanks_ack';
-  /// Acknowledged by {name} · {date}. {company} has been notified.
-  static const webRAckLine = 'web.r.ack_line';
-  /// Powered by KaamNishaan
-  static const webRPowered = 'web.r.powered';
-  /// Privacy
-  static const webRPrivacy = 'web.r.privacy';
-  /// This link has expired
-  static const webRExpiredTitle = 'web.r.expired_title';
-  /// Report links work for 30 days to keep your information safe. You can still get your report and rate the job.
-  static const webRExpiredBody = 'web.r.expired_body';
-  /// Send me a new link
-  static const webRNewLink = 'web.r.new_link';
-  /// A new link was sent to {to}.
-  static const webRNewLinkSent = 'web.r.new_link_sent';
-  /// {company} has been told and will send you a new link.
-  static const webRNewLinkTold = 'web.r.new_link_told';
-  /// Link looks broken? Open it from the original message, or check that the whole link was copied.
-  static const webRBroken = 'web.r.broken';
-  /// This link was turned off
-  static const webRRevokedTitle = 'web.r.revoked_title';
-  /// {company} turned this link off. Ask them for a new one.
-  static const webRRevokedBody = 'web.r.revoked_body';
-  /// We can't find this report
-  static const webRNotFoundTitle = 'web.r.not_found_title';
-  /// Something went wrong. Please try again.
-  static const webRError = 'web.r.error';
+  static const profileNameLabel = 'profile.name_label';
+  /// Add your name so your manager knows it's you
+  static const profileNameMissing = 'profile.name_missing';
+  /// Phone
+  static const profilePhoneLabel = 'profile.phone_label';
+  /// The photo did not upload. Try again.
+  static const profilePhotoFailed = 'profile.photo_failed';
+  /// Save and start
+  static const profileSaveStart = 'profile.save_start';
+  /// Profile saved
+  static const profileSaved = 'profile.saved';
+  /// Your manager and customers will see this.
+  static const profileSubtitle = 'profile.subtitle';
+  /// Take a photo
+  static const profileTakePhoto = 'profile.take_photo';
+  /// About you
+  static const profileTitle = 'profile.title';
+  /// Your work
+  static const profileWorkLabel = 'profile.work_label';
+  /// Address (optional)
+  static const qjAddress = 'qj.address';
+  /// Customer
+  static const qjCustomer = 'qj.customer';
+  /// Say or type the customer's name.
+  static const qjCustomerNeeded = 'qj.customer_needed';
+  /// Customer's phone (optional)
+  static const qjPhone = 'qj.phone';
+  /// For work that wasn't planned. It goes to your manager like any other job.
+  static const qjSub = 'qj.sub';
+  /// Quick job
+  static const qjTitle = 'qj.title';
+  /// What is the work?
+  static const qjWork = 'qj.work';
+  /// AC not cooling
+  static const qjWorkHint = 'qj.work_hint';
+  /// Say or type what the work is.
+  static const qjWorkNeeded = 'qj.work_needed';
+  /// Clear
+  static const questionClear = 'question.clear';
+  /// Fail
+  static const questionFail = 'question.fail';
+  /// Checklist done
+  static const questionFinished = 'question.finished';
+  /// Answers are locked: the report was sent.
+  static const questionLocked = 'question.locked';
+  /// Look for this
+  static const questionLook = 'question.look';
+  /// This question needs a photo. Take one to go on.
+  static const questionNeedsPhoto = 'question.needs_photo';
+  /// Next
+  static const questionNext = 'question.next';
+  /// No
+  static const questionNo = 'question.no';
+  /// Not sure? Take a photo and ask your manager.
+  static const questionNotSure = 'question.not_sure';
+  /// Type a number
+  static const questionNumberHint = 'question.number_hint';
+  /// Question {n} of {total}
+  static const questionOf = 'question.of';
+  /// Pass
+  static const questionPass = 'question.pass';
+  /// Photo added
+  static const questionPhotoAdded = 'question.photo_added';
+  /// Between {min} and {max}
+  static const questionRange = 'question.range';
+  /// Save signature
+  static const questionSaveSignature = 'question.save_signature';
+  /// Sign here
+  static const questionSignHere = 'question.sign_here';
+  /// Signatures need internet. Try again when online.
+  static const questionSignatureOnline = 'question.signature_online';
+  /// Skip
+  static const questionSkip = 'question.skip';
+  /// Type or speak your answer
+  static const questionTextHint = 'question.text_hint';
+  /// Yes
+  static const questionYes = 'question.yes';
+  /// AI draft ready
+  static const queueAiReady = 'queue.ai_ready';
+  /// Approved
+  static const queueApproved = 'queue.approved';
+  /// {n} approved this week
+  static const queueApprovedWeek = 'queue.approved_week';
+  /// Tap to see them
+  static const queueApprovedWeekBody = 'queue.approved_week_body';
+  /// Changes
+  static const queueChanges = 'queue.changes';
+  /// {n} days
+  static const queueDays = 'queue.days';
+  /// {n} days ago
+  static const queueDaysAgo = 'queue.days_ago';
+  /// Nothing to review
+  static const queueEmpty = 'queue.empty';
+  /// Reports your technicians send show here.
+  static const queueEmptyBody = 'queue.empty_body';
+  /// {n} h
+  static const queueH = 'queue.h';
+  /// {n} h ago
+  static const queueHAgo = 'queue.h_ago';
+  /// just now
+  static const queueJustNow = 'queue.just_now';
+  /// {n} min
+  static const queueMin = 'queue.min';
+  /// {n} min ago
+  static const queueMinAgo = 'queue.min_ago';
+  /// Oldest · {time}
+  static const queueOldest = 'queue.oldest';
+  /// Customer or report number
+  static const queueSearchHint = 'queue.search_hint';
+  /// {name} · sent {ago}
+  static const queueSentAgo = 'queue.sent_ago';
+  /// {n} waiting for your review
+  static const queueSubtitle = 'queue.subtitle';
+  /// Nothing waiting for review
+  static const queueSubtitleNone = 'queue.subtitle_none';
+  /// To review {n}
+  static const queueToReview = 'queue.to_review';
+  /// Waiting {time}
+  static const queueWaiting = 'queue.waiting';
+  /// Only you and your managers see this review.
+  static const rdPrivate = 'rd.private';
+  /// {name} replied · {ago}
+  static const rdRepliedAgo = 'rd.replied_ago';
+  /// The service
+  static const rdService = 'rd.service';
+  /// Report #{n}
+  static const rdSubtitle = 'rd.subtitle';
+  /// Review
+  static const rdTitle = 'rd.title';
+  /// You ({name})
+  static const rdYou = 'rd.you';
+  /// About 20 seconds
+  static const reportAboutSeconds = 'report.about_seconds';
+  /// Advice
+  static const reportAdvice = 'report.advice';
+  /// and
+  static const reportAnd = 'report.and';
+  /// Approve
+  static const reportApprove = 'report.approve';
+  /// Approved
+  static const reportApproved = 'report.approved';
+  /// Ask for changes
+  static const reportAskChanges = 'report.ask_changes';
+  /// Back to job
+  static const reportBackToJob = 'report.back_to_job';
+  /// You can leave. We will tell you when it is ready.
+  static const reportCanLeave = 'report.can_leave';
+  /// Changes asked
+  static const reportChangesAsked = 'report.changes_asked';
+  /// {n} checks passed
+  static const reportChecksPassed = 'report.checks_passed';
+  /// {n} answers
+  static const reportCountAnswers = 'report.count_answers';
+  /// {n} checklists
+  static const reportCountChecklists = 'report.count_checklists';
+  /// {n} voice notes
+  static const reportCountNotes = 'report.count_notes';
+  /// {n} photos
+  static const reportCountPhotos = 'report.count_photos';
+  /// Report draft
+  static const reportDraftTitle = 'report.draft_title';
+  /// Drafted by AI from {proof}. Check before sending.
+  static const reportDraftedAi = 'report.drafted_ai';
+  /// Drafted from {proof}. Check before sending.
+  static const reportDraftedPlain = 'report.drafted_plain';
+  /// Edit
+  static const reportEdit = 'report.edit';
+  /// Fill in the work done before sending.
+  static const reportEmptySection = 'report.empty_section';
+  /// Your photos and notes are safe.
+  static const reportFailedBody = 'report.failed_body';
+  /// Could not make the report
+  static const reportFailedTitle = 'report.failed_title';
+  /// Sent for review. It cannot be changed now.
+  static const reportLocked = 'report.locked';
+  /// Make report
+  static const reportMake = 'report.make';
+  /// Making your report…
+  static const reportMaking = 'report.making';
+  /// Missing: {what}
+  static const reportMissing = 'report.missing';
+  /// Photo added. Making the report again with it.
+  static const reportRedraftAfterPhoto = 'report.redraft_after_photo';
+  /// Saved
+  static const reportSaved = 'report.saved';
+  /// Send report
+  static const reportSend = 'report.send';
+  /// Send to manager
+  static const reportSendManager = 'report.send_manager';
+  /// Checking {n} checklists
+  static const reportStepChecklists = 'report.step_checklists';
+  /// Looking for missing proof
+  static const reportStepMissing = 'report.step_missing';
+  /// Writing from {n} voice notes
+  static const reportStepNotes = 'report.step_notes';
+  /// Reading {n} photos
+  static const reportStepPhotos = 'report.step_photos';
+  /// Writing the report
+  static const reportStepWrite = 'report.step_write';
+  /// {customer} · #{number}
+  static const reportSubtitle = 'report.subtitle';
+  /// Summary
+  static const reportSummary = 'report.summary';
+  /// Take photo
+  static const reportTakePhoto = 'report.take_photo';
+  /// Report
+  static const reportTitle = 'report.title';
+  /// {n} to fix
+  static const reportToFix = 'report.to_fix';
   /// Try again
-  static const webRTryAgain = 'web.r.try_again';
-  /// Loading your report…
-  static const webRLoading = 'web.r.loading';
-  /// Checklist {a} of {b}
-  static const webRChecklistN = 'web.r.checklist_n';
-  /// {n} photos · time-stamped
-  static const webRPhotosStamped = 'web.r.photos_stamped';
+  static const reportTryAgain = 'report.try_again';
+  /// Waiting for manager
+  static const reportWaitingReview = 'report.waiting_review';
+  /// Work done
+  static const reportWorkDone = 'report.work_done';
+  /// Your report
+  static const reportYourReport = 'report.your_report';
+  /// AI review call
+  static const reviewAiCall = 'review.ai_call';
+  /// AI check · {n} things to look at
+  static const reviewAiCheckMany = 'review.ai_check_many';
+  /// AI check · 1 thing to look at
+  static const reviewAiCheckOne = 'review.ai_check_one';
+  /// AI draft
+  static const reviewAiDraft = 'review.ai_draft';
+  /// All reminders stopped.
+  static const reviewAllStopped = 'review.all_stopped';
+  /// Approve
+  static const reviewApprove = 'review.approve';
+  /// Approved. Making the PDF…
+  static const reviewApproved = 'review.approved';
+  /// Ask for changes
+  static const reviewAskChanges = 'review.ask_changes';
+  /// Asked. The link goes with the approved report.
+  static const reviewAskedQueued = 'review.asked_queued';
+  /// Rating link sent to {name}
+  static const reviewAskedSent = 'review.asked_sent';
+  /// Requested by {name} · no need to ask again.
+  static const reviewByName = 'review.by_name';
+  /// Requested by you · no need to ask again.
+  static const reviewByYou = 'review.by_you';
+  /// Cancel request
+  static const reviewCancel = 'review.cancel';
+  /// Request cancelled
+  static const reviewCancelled = 'review.cancelled';
+  /// Checklist
+  static const reviewChecklist = 'review.checklist';
+  /// {date} · if still no rating
+  static const reviewIfNoRating = 'review.if_no_rating';
+  /// Link sent with report
+  static const reviewLinkSent = 'review.link_sent';
+  /// Add the customer's phone or email to ask for a review.
+  static const reviewNoContact = 'review.no_contact';
+  /// {what} · no photo
+  static const reviewNoPhoto = 'review.no_photo';
+  /// Your company asks for reviews itself.
+  static const reviewNotAllowed = 'review.not_allowed';
+  /// Not asked yet
+  static const reviewNotAsked = 'review.not_asked';
+  /// Send {name} a link to rate this job. Reminders and one AI call follow if needed.
+  static const reviewNotAskedBody = 'review.not_asked_body';
+  /// Send {name} a link to rate this job. A reminder follows if needed.
+  static const reviewNotAskedBodyNoCall = 'review.not_asked_body_no_call';
+  /// {a} of {b}
+  static const reviewOf = 'review.of';
+  /// Open review
+  static const reviewOpen = 'review.open';
+  /// Opted out
+  static const reviewOptedOut = 'review.opted_out';
+  /// Customer asked not to be contacted for reviews.
+  static const reviewOptedOutBody = 'review.opted_out_body';
+  /// Said “don't ask” on {date}. No more messages or calls.
+  static const reviewOptedOutLine = 'review.opted_out_line';
+  /// Paused · no credits
+  static const reviewPaused = 'review.paused';
+  /// Photos
+  static const reviewPhotos = 'review.photos';
+  /// Plain draft
+  static const reviewPlainDraft = 'review.plain_draft';
+  /// Queued
+  static const reviewQueued = 'review.queued';
+  /// Will send after your manager approves the report.
+  static const reviewQueuedBody = 'review.queued_body';
   /// Rate this job
-  static const webRateTitle = 'web.rate.title';
-  /// Your feedback goes to {company}. It takes 30 seconds.
-  static const webRateIntro = 'web.rate.intro';
-  /// How was the service?
-  static const webRateService = 'web.rate.service';
-  /// Rate {name}
-  static const webRateTech = 'web.rate.tech';
-  /// Very poor
-  static const webRateS1 = 'web.rate.s1';
-  /// Poor
-  static const webRateS2 = 'web.rate.s2';
-  /// OK
-  static const webRateS3 = 'web.rate.s3';
-  /// Very good
-  static const webRateS4 = 'web.rate.s4';
-  /// Excellent
-  static const webRateS5 = 'web.rate.s5';
-  /// What went well?
-  static const webRateWentWell = 'web.rate.went_well';
-  /// What went wrong?
-  static const webRateWentWrong = 'web.rate.went_wrong';
-  /// Tell us more (optional)
-  static const webRateMore = 'web.rate.more';
-  /// {company} can show my review on their website (first name only).
-  static const webRatePublic = 'web.rate.public';
-  /// Ask the manager to call me
-  static const webRateCallMe = 'web.rate.call_me';
-  /// The manager is told right away and calls you within 1 working day.
-  static const webRateCallMeSub = 'web.rate.call_me_sub';
-  /// Send review
-  static const webRateSend = 'web.rate.send';
-  /// Send feedback
-  static const webRateSendFeedback = 'web.rate.send_feedback';
-  /// Only {company} sees your review unless you allow it.
-  static const webRatePrivate = 'web.rate.private';
-  /// Pick a star rating first.
-  static const webRateMissing = 'web.rate.missing';
-  /// Thanks, {name}!
-  static const webRateThanks = 'web.rate.thanks';
-  /// Thank you!
-  static const webRateThanksPlain = 'web.rate.thanks_plain';
-  /// Your review was sent to {company}.
-  static const webRateSentBody = 'web.rate.sent_body';
-  /// Happy with the service?
-  static const webRateGoogleTitle = 'web.rate.google_title';
-  /// Help {company} by posting your review on Google too.
-  static const webRateGoogleBody = 'web.rate.google_body';
-  /// Post on Google
-  static const webRateGoogle = 'web.rate.google';
-  /// This job was already rated. Thank you!
-  static const webRateAlready = 'web.rate.already';
-  /// Don't ask me again
-  static const webRateStop = 'web.rate.stop';
-  /// Okay — we won't ask you again.
-  static const webRateStopped = 'web.rate.stopped';
-  /// English
-  static const webLangEn = 'web.lang.en';
-  /// हिन्दी
-  static const webLangHi = 'web.lang.hi';
-  /// ગુજરાતી
-  static const webLangGu = 'web.lang.gu';
-  /// Español
-  static const webLangEs = 'web.lang.es';
-  /// Français
-  static const webLangFr = 'web.lang.fr';
+  static const reviewRateJob = 'review.rate_job';
+  /// Rated
+  static const reviewRated = 'review.rated';
+  /// {n} · via {source} · {date}
+  static const reviewRatedLine = 'review.rated_line';
+  /// Reminder
+  static const reviewReminder = 'review.reminder';
+  /// Request review
+  static const reviewRequest = 'review.request';
+  /// See PDF
+  static const reviewSeePdf = 'review.see_pdf';
+  /// Sent {ago}
+  static const reviewSentAgo = 'review.sent_ago';
+  /// Share with customer
+  static const reviewShare = 'review.share';
+  /// Stopped
+  static const reviewStopped = 'review.stopped';
+  /// No rating came. Nothing more will be sent.
+  static const reviewStoppedBody = 'review.stopped_body';
+  /// the customer
+  static const reviewTheCustomer = 'review.the_customer';
+  /// Customer review
+  static const reviewTitle = 'review.title';
+  /// AI call
+  static const reviewViaAiCall = 'review.via_ai_call';
+  /// link
+  static const reviewViaLink = 'review.via_link';
+  /// message
+  static const reviewViaReply = 'review.via_reply';
+  /// Voice notes
+  static const reviewVoice = 'review.voice';
+  /// Waiting for rating
+  static const reviewWaiting = 'review.waiting';
+  /// AI review call
+  static const rfuAi = 'rfu.ai';
+  /// Customer's language
+  static const rfuAiLang = 'rfu.ai_lang';
+  /// AI calls are not live yet. We will tell you when they start.
+  static const rfuAiNotLive = 'rfu.ai_not_live';
+  /// Recorded · disclosed
+  static const rfuAiRecorded = 'rfu.ai_recorded';
+  /// One call + voicemail, {from} – {to}
+  static const rfuAiSub = 'rfu.ai_sub';
+  /// Day {n}
+  static const rfuDay = 'rfu.day';
+  /// Pick at least one way to send.
+  static const rfuPickOne = 'rfu.pick_one';
+  /// Reminder
+  static const rfuReminder = 'rfu.reminder';
+  /// Only if there is no rating yet
+  static const rfuReminderSub = 'rfu.reminder_sub';
+  /// Stops right away when the customer rates by any channel, or asks not to be contacted.
+  static const rfuStops = 'rfu.stops';
+  /// Technicians can request reviews
+  static const rfuTechs = 'rfu.techs';
+  /// Shows "Request review" in their app
+  static const rfuTechsSub = 'rfu.techs_sub';
+  /// With the report
+  static const rfuWithReport = 'rfu.with_report';
+  /// Rating link in the share message
+  static const rfuWithReportSub = 'rfu.with_report_sub';
+  /// Manager
+  static const roleManager = 'role.manager';
+  /// Owner
+  static const roleOwner = 'role.owner';
+  /// Technician
+  static const roleTechnician = 'role.technician';
+  /// Sends when the report is approved
+  static const rreqAfterApproval = 'rreq.after_approval';
+  /// AI call on {date}
+  static const rreqAiCallOn = 'rreq.ai_call_on';
+  /// AI call planned
+  static const rreqAiCallPlanned = 'rreq.ai_call_planned';
+  /// Nothing here yet
+  static const rreqEmpty = 'rreq.empty';
+  /// Requests show here once you ask a customer to rate a job.
+  static const rreqEmptyBody = 'rreq.empty_body';
+  /// Link sent
+  static const rreqLinkSent = 'rreq.link_sent';
+  /// No more contact
+  static const rreqNoContact = 'rreq.no_contact';
+  /// Opted out {n}
+  static const rreqOptedOut = 'rreq.opted_out';
+  /// Top up credits to send the reminder
+  static const rreqPausedLine = 'rreq.paused_line';
+  /// Rated {n}
+  static const rreqRated = 'rreq.rated';
+  /// Rated {n}★ via {source}
+  static const rreqRatedVia = 'rreq.rated_via';
+  /// Reminder on {date}
+  static const rreqReminderOn = 'rreq.reminder_on';
+  /// Reminder sent
+  static const rreqReminderSent = 'rreq.reminder_sent';
+  /// Follow-ups stopped
+  static const rreqStoppedLine = 'rreq.stopped_line';
+  /// Where each job's rating stands
+  static const rreqSubtitle = 'rreq.subtitle';
+  /// Waiting {n}
+  static const rreqWaiting = 'rreq.waiting';
+  /// Waiting for the customer
+  static const rreqWaitingLine = 'rreq.waiting_line';
+  /// Ask for a review
+  static const rsetAsk = 'rset.ask';
+  /// Add "Rate this job" to every shared report
+  static const rsetAskSub = 'rset.ask_sub';
+  /// Google review link (optional)
+  static const rsetGoogle = 'rset.google';
+  /// Happy customers get a button to post on Google too.
+  static const rsetGoogleHelp = 'rset.google_help';
+  /// Alert me for low ratings
+  static const rsetLow = 'rset.low';
+  /// {n} stars or less · in the app
+  static const rsetLowSub = 'rset.low_sub';
+  /// Show good reviews on our page
+  static const rsetPublic = 'rset.public';
+  /// 5-star reviews, only with customer permission
+  static const rsetPublicSub = 'rset.public_sub';
+  /// Send a reminder
+  static const rsetRemind = 'rset.remind';
+  /// If no review after {n} days, by {channels}
+  static const rsetRemindSub = 'rset.remind_sub';
+  /// Saved
+  static const rsetSaved = 'rset.saved';
+  /// Company settings · owner and managers
+  static const rsetSubtitle = 'rset.subtitle';
+  /// Technicians see their reviews
+  static const rsetTechsSee = 'rset.techs_see';
+  /// Shown in their app under Me
+  static const rsetTechsSeeSub = 'rset.techs_see_sub';
+  /// Sent {time}
+  static const sentAt = 'sent.at';
+  /// Back to Today
+  static const sentBackToday = 'sent.back_today';
+  /// You will get a message when it is approved.
+  static const sentBody = 'sent.body';
+  /// Report #{number} · {n} photos
+  static const sentMeta = 'sent.meta';
+  /// Review
+  static const sentReview = 'sent.review';
+  /// Your manager will review it
+  static const sentReviewer = 'sent.reviewer';
+  /// Proof is locked while they check
+  static const sentReviewerMeta = 'sent.reviewer_meta';
+  /// See report
+  static const sentSeeReport = 'sent.see_report';
+  /// Report sent to manager
+  static const sentTitle = 'sent.title';
+  /// Company
+  static const settingsCompany = 'settings.company';
+  /// Country
+  static const settingsCountry = 'settings.country';
+  /// The country sets prices and phone numbers, so it can't be changed here.
+  static const settingsCountryFixed = 'settings.country_fixed';
+  /// Logo
+  static const settingsLogo = 'settings.logo';
+  /// Logo saved
+  static const settingsLogoSaved = 'settings.logo_saved';
+  /// Owner only
+  static const settingsOwnerOnly = 'settings.owner_only';
+  /// Only the owner can change this.
+  static const settingsOwnerOnlyToast = 'settings.owner_only_toast';
+  /// Permissions
+  static const settingsPermissions = 'settings.permissions';
+  /// Plan
+  static const settingsPlan = 'settings.plan';
+  /// {name} · {price}/mo
+  static const settingsPlanPrice = 'settings.plan_price';
+  /// Saved
+  static const settingsSaved = 'settings.saved';
+  /// Only the owner can change these
+  static const settingsSubtitle = 'settings.subtitle';
+  /// Technicians can share reports
+  static const settingsTechShare = 'settings.tech_share';
+  /// If off, only managers can send reports to customers.
+  static const settingsTechShareHelp = 'settings.tech_share_help';
+  /// Company settings
+  static const settingsTitle = 'settings.title';
+  /// Trade
+  static const settingsTrade = 'settings.trade';
+  /// Trial ends {date}
+  static const settingsTrialEnds = 'settings.trial_ends';
+  /// Customer phone or email
+  static const shareAddContact = 'share.add_contact';
+  /// Sent {n} times
+  static const shareAlreadySent = 'share.already_sent';
+  /// Ask for a rating too
+  static const shareAskReview = 'share.ask_review';
+  /// Reminders follow if there is no rating
+  static const shareAskReviewSub = 'share.ask_review_sub';
+  /// Change
+  static const shareChange = 'share.change';
+  /// Who gets the report
+  static const shareContactTitle = 'share.contact_title';
+  /// Link copied
+  static const shareCopied = 'share.copied';
+  /// Copy
+  static const shareCopy = 'share.copy';
+  /// Edit
+  static const shareEdit = 'share.edit';
+  /// Email
+  static const shareEmail = 'share.email';
+  /// Email
+  static const shareEmailLabel = 'share.email_label';
   /// Email isn't switched on yet. Send by SMS or WhatsApp, or copy the link.
   static const shareEmailOff = 'share.email_off';
-  /// No phone number saved for this customer.
-  static const shareNoPhone = 'share.no_phone';
+  /// Make link
+  static const shareMakeLink = 'share.make_link';
+  /// More
+  static const shareMore = 'share.more';
+  /// Name
+  static const shareName = 'share.name';
+  /// No phone or email saved
+  static const shareNoContact = 'share.no_contact';
+  /// Add a phone or email to send this report
+  static const shareNoContactBody = 'share.no_contact_body';
   /// No email saved for this customer.
   static const shareNoEmail = 'share.no_email';
-  /// Make a new password
-  static const webAuthResetTitle = 'web.auth.reset_title';
-  /// Use at least {n} characters.
-  static const webAuthResetBody = 'web.auth.reset_body';
-  /// New password
-  static const webAuthNewPassword = 'web.auth.new_password';
-  /// Type it again
-  static const webAuthAgain = 'web.auth.again';
-  /// The two passwords are not the same.
-  static const webAuthMismatch = 'web.auth.mismatch';
-  /// Use at least {n} characters.
-  static const webAuthTooShort = 'web.auth.too_short';
-  /// Save new password
-  static const webAuthSave = 'web.auth.save';
-  /// Password changed
-  static const webAuthResetDone = 'web.auth.reset_done';
-  /// Open the KaamNishaan app and log in with your new password. You were logged out everywhere else.
-  static const webAuthResetDoneBody = 'web.auth.reset_done_body';
-  /// Confirming your email…
-  static const webAuthVerifyWorking = 'web.auth.verify_working';
-  /// Email confirmed
-  static const webAuthVerified = 'web.auth.verified';
-  /// You can go back to the KaamNishaan app now.
-  static const webAuthVerifiedBody = 'web.auth.verified_body';
-  /// This link has expired
-  static const webAuthLinkExpired = 'web.auth.link_expired';
-  /// Ask for a new one in the KaamNishaan app.
-  static const webAuthLinkExpiredBody = 'web.auth.link_expired_body';
-  /// This link doesn't work
-  static const webAuthLinkBad = 'web.auth.link_bad';
-  /// It was already used, or part of it is missing. Ask for a new one in the KaamNishaan app.
-  static const webAuthLinkBadBody = 'web.auth.link_bad_body';
-  /// KaamNishaan couldn't start
-  static const startupTitle = 'startup.title';
-  /// Check your internet and try again. Your saved photos and notes are safe.
-  static const startupBody = 'startup.body';
-  /// Try again
-  static const startupRetry = 'startup.retry';
-  /// New: AI reports in Hindi, Gujarati, Spanish and French
-  static const siteAnnText = 'site.ann.text';
+  /// No link yet
+  static const shareNoLink = 'share.no_link';
+  /// No phone number saved for this customer.
+  static const shareNoPhone = 'share.no_phone';
+  /// PDF · {size} · approved by {name}
+  static const sharePdfMeta = 'share.pdf_meta';
+  /// PDF · {size}
+  static const sharePdfMetaPlain = 'share.pdf_meta_plain';
+  /// Service report · {n} pages
+  static const sharePdfTitle = 'share.pdf_title';
+  /// Phone
+  static const sharePhone = 'share.phone';
+  /// Choose how to send it.
+  static const sharePickChannel = 'share.pick_channel';
+  /// A rating was already asked for this job.
+  static const shareReviewAsked = 'share.review_asked';
+  /// Secure link
+  static const shareSecure = 'share.secure';
+  /// Send to customer
+  static const shareSend = 'share.send';
+  /// Send by
+  static const shareSendBy = 'share.send_by';
+  /// Send to
+  static const shareSendTo = 'share.send_to';
+  /// Sent to {name}
+  static const shareSent = 'share.sent';
+  /// SMS
+  static const shareSms = 'share.sms';
+  /// Share report
+  static const shareTitle = 'share.title';
+  /// Turn off link
+  static const shareTurnOff = 'share.turn_off';
+  /// Link turned off
+  static const shareTurnedOff = 'share.turned_off';
+  /// Use this
+  static const shareUse = 'share.use';
+  /// WhatsApp
+  static const shareWhatsapp = 'share.whatsapp';
+  /// Works for 30 days. Only people with the link can open it.
+  static const shareWorks = 'share.works';
+  /// This email already has an account.
+  static const signupEmailTaken = 'signup.email_taken';
+  /// Log in instead
+  static const signupLogInInstead = 'signup.log_in_instead';
+  /// Full name
+  static const signupNameLabel = 'signup.name_label';
+  /// Add your name
+  static const signupNameMissing = 'signup.name_missing';
+  /// Add managers and technicians after this.
+  static const signupOwnerBody = 'signup.owner_body';
+  /// You are the owner
+  static const signupOwnerTitle = 'signup.owner_title';
+  /// At least 8 characters
+  static const signupPasswordHint = 'signup.password_hint';
+  /// Weak
+  static const signupPasswordWeak = 'signup.password_weak';
+  /// Done: {rule}
+  static const signupRuleDone = 'signup.rule_done';
+  /// 8 or more characters
+  static const signupRuleLength = 'signup.rule_length';
+  /// A letter
+  static const signupRuleLetter = 'signup.rule_letter';
+  /// Missing: {rule}
+  static const signupRuleMissing = 'signup.rule_missing';
+  /// A number
+  static const signupRuleNumber = 'signup.rule_number';
+  /// Step 1 of 2 · Your details
+  static const signupStep = 'signup.step';
+  /// I agree to the Terms and Privacy Policy
+  static const signupTerms = 'signup.terms';
+  /// Tick the box to agree to the Terms
+  static const signupTermsMissing = 'signup.terms_missing';
+  /// Create your account
+  static const signupTitle = 'signup.title';
+  /// A technician’s day and a voice note being recorded in the KaamNishaan app
+  static const siteAboutAlt = 'site.about.alt';
+  /// KaamNishaan means “mark of work”. We build simple tools that help field teams prove what they did — in their own language, on the phones they already use.
+  static const siteAboutBody = 'site.about.body';
+  /// Built for the people who do the work
+  static const siteAboutChip1 = 'site.about.chip1';
+  /// Technicians, installers, cleaners
+  static const siteAboutChip1Sub = 'site.about.chip1_sub';
+  /// Speak, don’t type
+  static const siteAboutChip2 = 'site.about.chip2';
+  /// Voice notes in 5 languages
+  static const siteAboutChip2Sub = 'site.about.chip2_sub';
+  /// Contact us
+  static const siteAboutContact = 'site.about.contact';
+  /// Company
+  static const siteAboutCrumb = 'site.about.crumb';
+  /// Talk to us — or work with us
+  static const siteAboutCta = 'site.about.cta';
+  /// Questions, partnerships or careers: write to us and a real person replies within one working day.
+  static const siteAboutCtaBody = 'site.about.cta_body';
+  /// Six trades today. Use our ready checklists where they exist, or build your own.
+  static const siteAboutIndBody = 'site.about.ind_body';
+  /// Industries
+  static const siteAboutIndEyebrow = 'site.about.ind_eyebrow';
+  /// Built for teams in
+  static const siteAboutIndTitle = 'site.about.ind_title';
+  /// The app, voice notes and reports work in {n} languages.
+  static const siteAboutLangBody = 'site.about.lang_body';
+  /// {lang} · app, voice, reports
+  static const siteAboutLangLine = 'site.about.lang_line';
+  /// Speak your language
+  static const siteAboutLangTitle = 'site.about.lang_title';
+  /// {n} languages
+  static const siteAboutLangs = 'site.about.langs';
+  /// About KaamNishaan
+  static const siteAboutPill = 'site.about.pill';
+  /// No typing needed
+  static const siteAboutTick1 = 'site.about.tick1';
+  /// Every Job. Every Photo. Every Proof.
+  static const siteAboutTitle = 'site.about.title';
+  /// Simple first
+  static const siteAboutV1 = 'site.about.v1';
+  /// If you can use WhatsApp, you can use KaamNishaan. Big buttons, few words, one step at a time.
+  static const siteAboutV1B = 'site.about.v1_b';
+  /// Honest AI
+  static const siteAboutV2 = 'site.about.v2';
+  /// AI never invents work. Every sentence links to a photo, an answer or a voice note.
+  static const siteAboutV2B = 'site.about.v2_b';
+  /// Your language
+  static const siteAboutV3 = 'site.about.v3';
+  /// Workers speak their own language. Reports go out in the customer’s.
+  static const siteAboutV3B = 'site.about.v3_b';
+  /// Proof protects everyone
+  static const siteAboutV4 = 'site.about.v4';
+  /// Clear records protect workers, owners and customers from disputes.
+  static const siteAboutV4B = 'site.about.v4_b';
+  /// Four ideas behind every screen we design.
+  static const siteAboutValuesBody = 'site.about.values_body';
+  /// What we believe
+  static const siteAboutValuesEyebrow = 'site.about.values_eyebrow';
+  /// Our values
+  static const siteAboutValuesTitle = 'site.about.values_title';
+  /// Whatever their reading level, and whatever language they speak.
+  static const siteAboutWhyBody = 'site.about.why_body';
+  /// The people we build for · illustrative photos, not real staff
+  static const siteAboutWhyCaption = 'site.about.why_caption';
+  /// Why we built it
+  static const siteAboutWhyEyebrow = 'site.about.why_eyebrow';
+  /// Most field software is built for office staff. It expects long forms, perfect spelling and English.
+  static const siteAboutWhyP1 = 'site.about.why_p1';
+  /// But the people doing the work — technicians, installers, cleaners — are often more comfortable speaking than typing, and many prefer their own language.
+  static const siteAboutWhyP2 = 'site.about.why_p2';
+  /// So we built KaamNishaan voice-first: big buttons, one question at a time, and voice notes in English, Hindi, Gujarati, Spanish or French. The app turns what they say and photograph into a report the customer can trust.
+  static const siteAboutWhyP3 = 'site.about.why_p3';
+  /// Simple tools for every field worker
+  static const siteAboutWhyTitle = 'site.about.why_title';
   /// See how it works
   static const siteAnnLink = 'site.ann.link';
-  /// Product
-  static const siteNavProduct = 'site.nav.product';
-  /// Industries
-  static const siteNavIndustries = 'site.nav.industries';
-  /// Pricing
-  static const siteNavPricing = 'site.nav.pricing';
-  /// Book a demo
-  static const siteNavDemo = 'site.nav.demo';
-  /// Log in
-  static const siteNavLogin = 'site.nav.login';
-  /// Start free trial
-  static const siteNavTrial = 'site.nav.trial';
-  /// Menu
-  static const siteNavMenu = 'site.nav.menu';
-  /// Close menu
-  static const siteNavClose = 'site.nav.close';
-  /// KaamNishaan home
-  static const siteNavHome = 'site.nav.home';
-  /// How it works
-  static const siteMenuHow = 'site.menu.how';
-  /// All features
-  static const siteMenuFeatures = 'site.menu.features';
-  /// AI reports
-  static const siteMenuReports = 'site.menu.reports';
-  /// Before and after
-  static const siteMenuCompare = 'site.menu.compare';
-  /// AI assistant
-  static const siteMenuAssistant = 'site.menu.assistant';
-  /// Built for HVAC, roofing and solar teams
-  static const siteHeroPill = 'site.hero.pill';
-  /// Every Job Deserves Proof.
-  static const siteHeroTitle = 'site.hero.title';
-  /// Capture photos, checklists and voice notes on site. AI turns them into a professional report your manager approves and your customer trusts.
-  static const siteHeroBody = 'site.hero.body';
-  /// Start Free Trial
-  static const siteCtaTrial = 'site.cta.trial';
-  /// Book a Demo
-  static const siteCtaDemo = 'site.cta.demo';
-  /// {n}-day free trial
-  static const siteHeroTrialDays = 'site.hero.trial_days';
-  /// No card needed
-  static const siteHeroNoCard = 'site.hero.no_card';
-  /// Works offline
-  static const siteHeroOffline = 'site.hero.offline';
-  /// Report approved
-  static const siteHeroChipApproved = 'site.hero.chip_approved';
-  /// Sent to customer · 4:12 pm
-  static const siteHeroChipApprovedSub = 'site.hero.chip_approved_sub';
-  /// 6 photos · timestamped
-  static const siteHeroChipPhotos = 'site.hero.chip_photos';
-  /// Before, during, after
-  static const siteHeroChipPhotosSub = 'site.hero.chip_photos_sub';
-  /// Hindi · Gujarati · Spanish
-  static const siteHeroChipLangs = 'site.hero.chip_langs';
-  /// A technician on a rooftop, with the KaamNishaan app showing today's jobs and an AI report draft
-  static const siteHeroAlt = 'site.hero.alt';
-  /// Photos in WhatsApp are not proof
-  static const siteProblemTitle = 'site.problem.title';
-  /// Scattered photos and missing reports cost you disputes, warranty claims and late payments.
-  static const siteProblemBody = 'site.problem.body';
-  /// Before KaamNishaan
-  static const siteProblemBeforeTitle = 'site.problem.before_title';
-  /// Photos lost in chats, reports written late or never, and customers who doubt the work.
-  static const siteProblemBeforeBody = 'site.problem.before_body';
-  /// With KaamNishaan
-  static const siteProblemAfterTitle = 'site.problem.after_title';
-  /// Every photo, checklist and note lives in one job, and turns into a report in minutes.
-  static const siteProblemAfterBody = 'site.problem.after_body';
-  /// Chat messages asking for site photos, a photo that did not download and a late report
-  static const siteProblemBeforeAlt = 'site.problem.before_alt';
-  /// One approved job with before, during and after photos, checks passed and a PDF sent
-  static const siteProblemAfterAlt = 'site.problem.after_alt';
-  /// Three steps. No typing.
-  static const siteHowTitle = 'site.how.title';
-  /// Your technicians already take photos. KaamNishaan turns them into proof your customer can read.
-  static const siteHowBody = 'site.how.body';
-  /// Take photos
-  static const siteHowS1Title = 'site.how.s1_title';
-  /// Before, during and after. Each photo is timestamped and filed to the right job.
-  static const siteHowS1Body = 'site.how.s1_body';
-  /// Speak your notes
-  static const siteHowS2Title = 'site.how.s2_title';
-  /// Talk in your own language. KaamNishaan transcribes it word for word.
-  static const siteHowS2Body = 'site.how.s2_body';
-  /// Send the report
-  static const siteHowS3Title = 'site.how.s3_title';
-  /// AI writes the report from your evidence. Your manager approves and sends it.
-  static const siteHowS3Body = 'site.how.s3_body';
-  /// Everything you need to prove the work
-  static const siteFeatTitle = 'site.feat.title';
-  /// One app for the technician on the roof and the manager in the office.
-  static const siteFeatBody = 'site.feat.body';
-  /// AI reports
-  static const siteFeatReportsTitle = 'site.feat.reports_title';
-  /// A clean, customer-ready report drafted from your photos, checklist and voice notes. It only describes work you recorded. Nothing is invented.
-  static const siteFeatReportsBody = 'site.feat.reports_body';
-  /// Never invents work
-  static const siteFeatReportsTag1 = 'site.feat.reports_tag1';
-  /// Manager approves
-  static const siteFeatReportsTag2 = 'site.feat.reports_tag2';
-  /// A technician showing a customer the report on his phone
-  static const siteFeatReportsAlt = 'site.feat.reports_alt';
-  /// Evidence capture
-  static const siteFeatCaptureTitle = 'site.feat.capture_title';
-  /// Timestamped photos sorted by before, during and after, filed to the right job automatically.
-  static const siteFeatCaptureBody = 'site.feat.capture_body';
-  /// A technician photographing an indoor AC unit with his phone
-  static const siteFeatCaptureAlt = 'site.feat.capture_alt';
-  /// Voice notes
-  static const siteFeatVoiceTitle = 'site.feat.voice_title';
-  /// Speak in Hindi, Gujarati, Spanish or English. AI writes it up.
-  static const siteFeatVoiceBody = 'site.feat.voice_body';
-  /// Checklists
-  static const siteFeatChecklistsTitle = 'site.feat.checklists_title';
-  /// Ready HVAC templates your team can follow on every visit.
-  static const siteFeatChecklistsBody = 'site.feat.checklists_body';
-  /// PDF reports
-  static const siteFeatPdfTitle = 'site.feat.pdf_title';
-  /// Branded PDF or share link, in your customer’s language.
-  static const siteFeatPdfBody = 'site.feat.pdf_body';
-  /// Offline first
-  static const siteFeatOfflineTitle = 'site.feat.offline_title';
-  /// Works on rooftops and in basements. Syncs when signal returns.
-  static const siteFeatOfflineBody = 'site.feat.offline_body';
-  /// Built for your trade
-  static const siteIndTitle = 'site.ind.title';
-  /// Ready checklists and report templates for the work your team does every day.
-  static const siteIndBody = 'site.ind.body';
-  /// {n} checklists
-  static const siteIndCount = 'site.ind.count';
-  /// 1 checklist
-  static const siteIndCountOne = 'site.ind.count_one';
-  /// Learn more
-  static const siteIndLearn = 'site.ind.learn';
-  /// Service checks, repairs and installs with before and after proof.
-  static const siteIndHvac = 'site.ind.hvac';
-  /// Inspections, repairs and warranty proof for every roof.
-  static const siteIndRoofing = 'site.ind.roofing';
-  /// Installs, panel cleaning and inverter checks.
-  static const siteIndSolar = 'site.ind.solar';
-  /// Work orders, move-in and move-out reports.
-  static const siteIndMaintenance = 'site.ind.maintenance';
-  /// Treatment records and follow-up visits.
-  static const siteIndPestControl = 'site.ind.pest_control';
-  /// Shift checklists with photo proof.
-  static const siteIndCleaning = 'site.ind.cleaning';
-  /// See the difference
-  static const siteCompareTitle = 'site.compare.title';
-  /// Drag the line to compare. Every report shows your customer exactly what changed.
-  static const siteCompareBody = 'site.compare.body';
-  /// Before
-  static const siteCompareBefore = 'site.compare.before';
-  /// After
-  static const siteCompareAfter = 'site.compare.after';
-  /// Drag to compare before and after
-  static const siteCompareHandle = 'site.compare.handle';
-  /// A dusty AC filter before cleaning
-  static const siteCompareBeforeAlt = 'site.compare.before_alt';
-  /// The same AC filter after cleaning
-  static const siteCompareAfterAlt = 'site.compare.after_alt';
-  /// Green Valley Clinic, room 2
-  static const siteCompareWhere = 'site.compare.where';
-  /// Before 10:41 · After 11:42, 31 Oct
-  static const siteCompareWhen = 'site.compare.when';
-  /// Ramesh Patel, technician
-  static const siteCompareWho = 'site.compare.who';
-  /// From voice note to report in seconds
-  static const siteDemoTitle = 'site.demo.title';
-  /// Ramesh speaks in Gujarati on site. The customer receives a clear report in English.
-  static const siteDemoBody = 'site.demo.body';
-  /// Ask about any job
-  static const siteAskTitle = 'site.ask.title';
+  /// New: AI reports in Hindi, Gujarati, Spanish and French
+  static const siteAnnText = 'site.ann.text';
+  /// GET IT ON
+  static const siteAppPlaySmall = 'site.app.play_small';
+  /// The app is coming soon to Google Play and the App Store.
+  static const siteAppSoon = 'site.app.soon';
+  /// Download on the
+  static const siteAppStoreSmall = 'site.app.store_small';
+  /// Get the app
+  static const siteAppTitle = 'site.app.title';
+  /// Manager approvals and branded PDF reports
+  static const siteAsideApprovals = 'site.aside.approvals';
+  /// Reports in 5 languages
+  static const siteAsideLangs = 'site.aside.langs';
+  /// {techs} technicians and {reports} AI reports a month
+  static const siteAsideLimits = 'site.aside.limits';
+  /// No card needed — keep Free after the trial
+  static const siteAsideNoCard = 'site.aside.no_card';
+  /// Works offline on any Android phone or iPhone
+  static const siteAsideOffline = 'site.aside.offline';
+  /// Everything in {plan}, free for {n} days
+  static const siteAsideTitle = 'site.aside.title';
+  /// The KaamNishaan AI answering when a site was last serviced, with links to the report and photos
+  static const siteAskAlt = 'site.ask.alt';
   /// Search every photo, note and report in plain language. Every answer links back to the evidence.
   static const siteAskBody = 'site.ask.body';
   /// When did we last service this site?
@@ -2644,480 +6370,8 @@ abstract final class LangKeys {
   static const siteAskQ2 = 'site.ask.q2';
   /// Show me every photo of the outdoor unit.
   static const siteAskQ3 = 'site.ask.q3';
-  /// The KaamNishaan AI answering when a site was last serviced, with links to the report and photos
-  static const siteAskAlt = 'site.ask.alt';
-  /// Why teams switch
-  static const siteWhyTitle = 'site.why.title';
-  /// Proof on every job pays for itself the first time a customer questions the work.
-  static const siteWhyBody = 'site.why.body';
-  /// 15 min
-  static const siteWhyS1 = 'site.why.s1';
-  /// to set up your team
-  static const siteWhyS1L = 'site.why.s1_l';
-  /// 5 languages
-  static const siteWhyS2 = 'site.why.s2';
-  /// for voice notes and reports
-  static const siteWhyS2L = 'site.why.s2_l';
-  /// 0 typing
-  static const siteWhyS3 = 'site.why.s3';
-  /// for technicians on site
-  static const siteWhyS3L = 'site.why.s3_l';
-  /// 1 tap
-  static const siteWhyS4 = 'site.why.s4';
-  /// to send an approved report
-  static const siteWhyS4L = 'site.why.s4_l';
-  /// Win disputes
-  static const siteWhyB1 = 'site.why.b1';
-  /// Timestamped proof for every job, ready when a customer questions the work.
-  static const siteWhyB1Body = 'site.why.b1_body';
-  /// Get paid faster
-  static const siteWhyB2 = 'site.why.b2';
-  /// Customers see the finished work, so invoices are approved sooner.
-  static const siteWhyB2Body = 'site.why.b2_body';
-  /// Save office time
-  static const siteWhyB3 = 'site.why.b3';
-  /// No more chasing technicians for photos and notes at the end of the day.
-  static const siteWhyB3Body = 'site.why.b3_body';
-  /// Look professional
-  static const siteWhyB4 = 'site.why.b4';
-  /// Branded reports in your customer’s language, sent the same day.
-  static const siteWhyB4Body = 'site.why.b4_body';
-  /// Simple monthly pricing
-  static const sitePriceTitle = 'site.price.title';
-  /// Prices in {currency}. AI reports and follow-up credits on every plan. Try {plan} free for {n} days.
-  static const sitePriceBody = 'site.price.body';
-  /// /month
-  static const sitePriceMonth = 'site.price.month';
-  /// /year
-  static const sitePriceYear = 'site.price.year';
-  /// forever
-  static const sitePriceForever = 'site.price.forever';
-  /// {n} technicians
-  static const sitePriceTechs = 'site.price.techs';
-  /// 1 technician
-  static const sitePriceTechOne = 'site.price.tech_one';
-  /// {n} reports
-  static const sitePriceReports = 'site.price.reports';
-  /// {n} AI reports/month
-  static const sitePriceAiReports = 'site.price.ai_reports';
-  /// fair use
-  static const sitePriceFair = 'site.price.fair';
-  /// {n} follow-up credits / month
-  static const sitePriceCredits = 'site.price.credits';
-  /// Most popular
-  static const sitePricePopular = 'site.price.popular';
-  /// Custom
-  static const sitePriceCustom = 'site.price.custom';
-  /// For large teams
-  static const sitePriceLarge = 'site.price.large';
-  /// Annual contract
-  static const sitePriceAnnualContract = 'site.price.annual_contract';
-  /// Contact sales
-  static const sitePriceContact = 'site.price.contact';
-  /// Start free
-  static const sitePriceStartFree = 'site.price.start_free';
-  /// or {price}/year — 2 months free
-  static const sitePriceOrYear = 'site.price.or_year';
-  /// billed {price} a year
-  static const sitePriceBilledYear = 'site.price.billed_year';
-  /// No card needed
-  static const sitePriceNoCard = 'site.price.no_card';
-  /// Free forever for 1 technician
-  static const sitePriceFreeTitle = 'site.price.free_title';
-  /// {n} AI reports a month. No card needed. Upgrade any time.
-  static const sitePriceFreeBody = 'site.price.free_body';
-  /// Everything in {plan}
-  static const sitePriceEverything = 'site.price.everything';
-  /// Loading prices…
-  static const sitePriceLoading = 'site.price.loading';
-  /// Prices could not load. Check your connection and try again.
-  static const sitePriceError = 'site.price.error';
-  /// Try again
-  static const sitePriceRetry = 'site.price.retry';
-  /// Compare every plan
-  static const sitePriceSeeAll = 'site.price.see_all';
-  /// Pricing
-  static const sitePpEyebrow = 'site.pp.eyebrow';
-  /// Simple pricing that grows with your team
-  static const sitePpTitle = 'site.pp.title';
-  /// Prices in {currency}. AI reports and follow-up credits on every plan. Try {plan} free for {n} days — no card needed.
-  static const sitePpBody = 'site.pp.body';
-  /// Monthly
-  static const sitePpMonthly = 'site.pp.monthly';
-  /// Annual
-  static const sitePpAnnual = 'site.pp.annual';
-  /// 2 months free
-  static const sitePpTwoFree = 'site.pp.two_free';
-  /// Prices in {currency}
-  static const sitePpN1 = 'site.pp.n1';
-  /// AI reports and follow-up credits on every plan.
-  static const sitePpN2 = 'site.pp.n2';
-  /// {n}-day free trial of {plan}
-  static const sitePpN3 = 'site.pp.n3';
-  /// Cancel any time
-  static const sitePpN4 = 'site.pp.n4';
-  /// Follow-up credits
-  static const siteCrTitle = 'site.cr.title';
-  /// Used for review reminders and AI review calls. Unused credits reset each month. Top up any time.
-  static const siteCrBody = 'site.cr.body';
-  /// 1 credit
-  static const siteCrOne = 'site.cr.one';
-  /// {n} credits
-  static const siteCrMany = 'site.cr.many';
-  /// Free
-  static const siteCrFree = 'site.cr.free';
-  /// SMS or WhatsApp message
-  static const siteCrSms = 'site.cr.sms';
-  /// AI review call
-  static const siteCrCall = 'site.cr.call';
-  /// Email
-  static const siteCrEmail = 'site.cr.email';
-  /// for {n} extra credits
-  static const siteCrPack = 'site.cr.pack';
-  /// Compare every feature
-  static const siteCmpTitle = 'site.cmp.title';
-  /// Every plan includes AI reports, offline capture and customer report links.
-  static const siteCmpBody = 'site.cmp.body';
-  /// {price}/mo
-  static const siteCmpPerMo = 'site.cmp.per_mo';
-  /// Feature
-  static const siteCmpFeature = 'site.cmp.feature';
-  /// Included
-  static const siteCmpYes = 'site.cmp.yes';
-  /// Not included
-  static const siteCmpNo = 'site.cmp.no';
-  /// Team and usage
-  static const siteCmpGTeam = 'site.cmp.g_team';
-  /// Capture and reports
-  static const siteCmpGCapture = 'site.cmp.g_capture';
-  /// Team and approvals
-  static const siteCmpGApprovals = 'site.cmp.g_approvals';
-  /// Security and support
-  static const siteCmpGSecurity = 'site.cmp.g_security';
-  /// Technicians
-  static const siteCmpTechnicians = 'site.cmp.technicians';
-  /// AI reports per month
-  static const siteCmpReports = 'site.cmp.reports';
-  /// Fair use
-  static const siteCmpFair = 'site.cmp.fair';
-  /// Support
-  static const siteCmpSupport = 'site.cmp.support';
-  /// Photos, checklists and voice notes
-  static const siteFCapture = 'site.f.capture';
-  /// Works offline
-  static const siteFOffline = 'site.f.offline';
-  /// AI reports in 5 languages
-  static const siteFAiReports = 'site.f.ai_reports';
-  /// Customer report links
-  static const siteFReportLinks = 'site.f.report_links';
-  /// Branded PDF reports
-  static const siteFBrandedPdf = 'site.f.branded_pdf';
-  /// Manager approvals
-  static const siteFManagerApprovals = 'site.f.manager_approvals';
-  /// AI assistant search
-  static const siteFAiAssistant = 'site.f.ai_assistant';
-  /// Custom checklists
-  static const siteFCustomChecklists = 'site.f.custom_checklists';
-  /// SSO and audit logs
-  static const siteFSsoAudit = 'site.f.sso_audit';
-  /// Custom integrations
-  static const siteFCustomIntegrations = 'site.f.custom_integrations';
-  /// Email
-  static const siteSupportEmail = 'site.support.email';
-  /// Email and chat
-  static const siteSupportEmailChat = 'site.support.email_chat';
-  /// Priority
-  static const siteSupportPriority = 'site.support.priority';
-  /// Dedicated
-  static const siteSupportDedicated = 'site.support.dedicated';
-  /// Email and chat support
-  static const siteSupportLineEmailChat = 'site.support_line.email_chat';
-  /// Priority support
-  static const siteSupportLinePriority = 'site.support_line.priority';
-  /// Dedicated onboarding and support
-  static const siteSupportLineDedicated = 'site.support_line.dedicated';
-  /// Questions
-  static const siteFaqTitle = 'site.faq.title';
-  /// Can’t find what you need? Our team answers within one working day.
-  static const siteFaqBody = 'site.faq.body';
-  /// Talk to us
-  static const siteFaqTalk = 'site.faq.talk';
-  /// Does it work without internet?
-  static const siteFaqQ1 = 'site.faq.q1';
-  /// Yes. Photos, checklists and voice notes save on the phone and sync automatically when the signal returns, so rooftops and basements are no problem.
-  static const siteFaqA1 = 'site.faq.a1';
-  /// Which languages are supported?
-  static const siteFaqQ2 = 'site.faq.q2';
-  /// English, Hindi, Gujarati, Spanish and French — for the app, voice notes and reports. A technician can speak in one language and the customer can read the report in another.
-  static const siteFaqA2 = 'site.faq.a2';
-  /// Can AI invent work that was not done?
-  static const siteFaqQ3 = 'site.faq.q3';
-  /// No. The report is drafted only from the photos, checklist answers and voice notes recorded on the job. A manager checks and approves every report before the customer sees it.
-  static const siteFaqA3 = 'site.faq.a3';
-  /// How does the free trial work?
-  static const siteFaqQ4 = 'site.faq.q4';
-  /// You get {plan} free for {n} days, with no card needed. At the end, pick a plan or stay on Free — your jobs and reports stay safe either way.
-  static const siteFaqA4 = 'site.faq.a4';
-  /// Can customers see reports without an app?
-  static const siteFaqQ5 = 'site.faq.q5';
-  /// Yes. Customers get a secure link by SMS or WhatsApp that opens in any browser, with photos, the checklist and a PDF to download.
-  static const siteFaqA5 = 'site.faq.a5';
-  /// Pricing questions
-  static const sitePfaqTitle = 'site.pfaq.title';
-  /// Still deciding? Our team answers within one working day.
-  static const sitePfaqBody = 'site.pfaq.body';
-  /// What happens after the {n}-day trial?
-  static const sitePfaqQ1 = 'site.pfaq.q1';
-  /// Pick a plan or move to Free. Your jobs, photos and reports stay safe either way — we never charge without asking.
-  static const sitePfaqA1 = 'site.pfaq.a1';
-  /// Can I change plans later?
-  static const sitePfaqQ2 = 'site.pfaq.q2';
-  /// Yes. Move up or down at any time from Plan and billing in the app. Your data moves with you.
-  static const sitePfaqA2 = 'site.pfaq.a2';
-  /// What counts as an AI report?
-  static const sitePfaqQ3 = 'site.pfaq.q3';
-  /// Each job report that AI drafts counts once, however many times you edit it before sending.
-  static const sitePfaqA3 = 'site.pfaq.a3';
-  /// How does annual billing work?
-  static const sitePfaqQ4 = 'site.pfaq.q4';
-  /// Pay for 10 months and get 12 — that is 2 months free. Your monthly reports and credits stay the same.
-  static const sitePfaqA4 = 'site.pfaq.a4';
-  /// Which payment methods do you accept?
-  static const sitePfaqQ5 = 'site.pfaq.q5';
-  /// Cards everywhere, and UPI in India. Enterprise plans can pay by invoice.
-  static const sitePfaqA5 = 'site.pfaq.a5';
-  /// Start proving your work today
-  static const siteFinalTitle = 'site.final.title';
-  /// {n}-day free trial. Set up your team in 15 minutes. No card needed.
-  static const siteFinalBody = 'site.final.body';
-  /// The manager home screen with reports waiting for review
-  static const siteFinalAlt = 'site.final.alt';
-  /// Every Job. Every Photo. Every Proof.
-  static const siteFootTagline = 'site.foot.tagline';
-  /// Product
-  static const siteFootProduct = 'site.foot.product';
-  /// Industries
-  static const siteFootIndustries = 'site.foot.industries';
-  /// Company
-  static const siteFootCompany = 'site.foot.company';
-  /// Legal
-  static const siteFootLegal = 'site.foot.legal';
-  /// Features
-  static const siteFootFeatures = 'site.foot.features';
-  /// Offline mode
-  static const siteFootOffline = 'site.foot.offline';
-  /// About
-  static const siteFootAbout = 'site.foot.about';
-  /// Contact
-  static const siteFootContact = 'site.foot.contact';
-  /// Blog
-  static const siteFootBlog = 'site.foot.blog';
-  /// Privacy
-  static const siteFootPrivacy = 'site.foot.privacy';
-  /// Terms
-  static const siteFootTerms = 'site.foot.terms';
-  /// © {year} KaamNishaan. All rights reserved.
-  static const siteFootRights = 'site.foot.rights';
-  /// Made for field teams who do the work.
-  static const siteFootMade = 'site.foot.made';
-  /// This page is coming soon
-  static const siteSoonTitle = 'site.soon.title';
-  /// We are still building it. In the meantime, see how KaamNishaan works or check our prices.
-  static const siteSoonBody = 'site.soon.body';
-  /// Go to home
-  static const siteSoonHome = 'site.soon.home';
-  /// AI drafts the report
-  static const siteDemoStep = 'site.demo.step';
-  /// A voice note in Gujarati with 6 photos
-  static const siteDemoVoiceAlt = 'site.demo.voice_alt';
-  /// The approved service report in English
-  static const siteDemoReportAlt = 'site.demo.report_alt';
-  /// {n}-day free trial
-  static const siteTrialEyebrow = 'site.trial.eyebrow';
-  /// Start your free trial
-  static const siteTrialTitle = 'site.trial.title';
-  /// No card needed. Set up your company and first job in 15 minutes.
-  static const siteTrialBody = 'site.trial.body';
-  /// Your name
-  static const siteTrialName = 'site.trial.name';
-  /// Full name
-  static const siteTrialNameHint = 'site.trial.name_hint';
-  /// Work email
-  static const siteTrialEmail = 'site.trial.email';
-  /// Password
-  static const siteTrialPassword = 'site.trial.password';
-  /// Show
-  static const siteTrialShow = 'site.trial.show';
-  /// Hide
-  static const siteTrialHide = 'site.trial.hide';
-  /// Strong password
-  static const siteTrialStrong = 'site.trial.strong';
-  /// Weak password
-  static const siteTrialWeak = 'site.trial.weak';
-  /// At least {min} characters (you have {n})
-  static const siteTrialRuleLen = 'site.trial.rule_len';
-  /// Contains a letter and a number
-  static const siteTrialRuleMix = 'site.trial.rule_mix';
-  /// Does not include your name or email
-  static const siteTrialRuleName = 'site.trial.rule_name';
-  /// Company name
-  static const siteTrialCompany = 'site.trial.company';
-  /// Trade
-  static const siteTrialTrade = 'site.trial.trade';
-  /// Choose your trade
-  static const siteTrialTradeHint = 'site.trial.trade_hint';
-  /// Country
-  static const siteTrialCountry = 'site.trial.country';
-  /// Create my workspace
-  static const siteTrialSubmit = 'site.trial.submit';
-  /// By continuing you agree to the {terms} and {privacy}.
-  static const siteTrialTerms = 'site.trial.terms';
-  /// Terms
-  static const siteTrialTermsLink = 'site.trial.terms_link';
-  /// Privacy policy
-  static const siteTrialPrivacyLink = 'site.trial.privacy_link';
-  /// Already have a workspace?
-  static const siteTrialHave = 'site.trial.have';
-  /// 1 thing to fix before we create your workspace.
-  static const siteTrialFixOne = 'site.trial.fix_one';
-  /// {n} things to fix before we create your workspace.
-  static const siteTrialFixMany = 'site.trial.fix_many';
-  /// This email already has a KaamNishaan workspace.
-  static const siteTrialTaken = 'site.trial.taken';
-  /// Is this you?
-  static const siteTrialIsYou = 'site.trial.is_you';
-  /// Log in instead
-  static const siteTrialLoginInstead = 'site.trial.login_instead';
-  /// Enter your name
-  static const siteErrName = 'site.err.name';
-  /// Enter a full email address, like name@company.com
-  static const siteErrEmail = 'site.err.email';
-  /// Enter your company name
-  static const siteErrCompany = 'site.err.company';
-  /// Choose your trade
-  static const siteErrTrade = 'site.err.trade';
-  /// Choose a stronger password
-  static const siteErrPassword = 'site.err.password';
-  /// Something went wrong. Please try again.
-  static const siteErrGeneric = 'site.err.generic';
-  /// No connection. Check your internet and try again.
-  static const siteErrOffline = 'site.err.offline';
-  /// Too many tries. Wait a few minutes and try again.
-  static const siteErrWait = 'site.err.wait';
-  /// Everything in {plan}, free for {n} days
-  static const siteAsideTitle = 'site.aside.title';
-  /// {techs} technicians and {reports} AI reports a month
-  static const siteAsideLimits = 'site.aside.limits';
-  /// Manager approvals and branded PDF reports
-  static const siteAsideApprovals = 'site.aside.approvals';
-  /// Works offline on any Android phone or iPhone
-  static const siteAsideOffline = 'site.aside.offline';
-  /// No card needed — keep Free after the trial
-  static const siteAsideNoCard = 'site.aside.no_card';
-  /// Reports in 5 languages
-  static const siteAsideLangs = 'site.aside.langs';
-  /// Workspace ready
-  static const siteReadyEyebrow = 'site.ready.eyebrow';
-  /// Check your email
-  static const siteReadyTitleEmail = 'site.ready.title_email';
-  /// We sent a confirmation link to {email}. Open it on this computer or your phone.
-  static const siteReadyBodyEmail = 'site.ready.body_email';
-  /// You’re all set
-  static const siteReadyTitle = 'site.ready.title';
-  /// Log in on the KaamNishaan app with {email} and your password.
-  static const siteReadyBody = 'site.ready.body';
-  /// Ready
-  static const siteReadyBadge = 'site.ready.badge';
-  /// {plan} trial · ends {date}
-  static const siteReadyTrialEnds = 'site.ready.trial_ends';
-  /// Next steps
-  static const siteReadyNext = 'site.ready.next';
-  /// Confirm your email
-  static const siteReadySConfirm = 'site.ready.s_confirm';
-  /// Tap the link we just sent — it expires in 24 hours.
-  static const siteReadySConfirmB = 'site.ready.s_confirm_b';
-  /// Get the app on your phone
-  static const siteReadySApp = 'site.ready.s_app';
-  /// Technicians capture photos, checklists and voice notes on site.
-  static const siteReadySAppB = 'site.ready.s_app_b';
-  /// Invite your technicians
-  static const siteReadySInvite = 'site.ready.s_invite';
-  /// Send a WhatsApp or SMS invite from the app.
-  static const siteReadySInviteB = 'site.ready.s_invite_b';
-  /// Create your first job
-  static const siteReadySJob = 'site.ready.s_job';
-  /// We will guide you — it takes about 2 minutes.
-  static const siteReadySJobB = 'site.ready.s_job_b';
-  /// Resend email
-  static const siteReadyResend = 'site.ready.resend';
-  /// Didn’t get it? Check your spam folder or resend in {n} seconds.
-  static const siteReadyResendWait = 'site.ready.resend_wait';
-  /// Didn’t get it? Check your spam folder or resend it now.
-  static const siteReadyResendNow = 'site.ready.resend_now';
-  /// Sent again to {email}.
-  static const siteReadyResent = 'site.ready.resent';
-  /// Get the app
-  static const siteAppTitle = 'site.app.title';
-  /// GET IT ON
-  static const siteAppPlaySmall = 'site.app.play_small';
-  /// Download on the
-  static const siteAppStoreSmall = 'site.app.store_small';
-  /// The app is coming soon to Google Play and the App Store.
-  static const siteAppSoon = 'site.app.soon';
-  /// Welcome back.
-  static const siteLoginWelcome = 'site.login.welcome';
-  /// Every job, every photo, every proof.
-  static const siteLoginTagline = 'site.login.tagline';
-  /// Log in
-  static const siteLoginTitle = 'site.login.title';
-  /// Open your KaamNishaan workspace with your work email.
-  static const siteLoginBody = 'site.login.body';
-  /// Forgot password?
-  static const siteLoginForgot = 'site.login.forgot';
-  /// Log in
-  static const siteLoginSubmit = 'site.login.submit';
-  /// or
-  static const siteLoginOr = 'site.login.or';
-  /// Log in with phone (technicians)
-  static const siteLoginPhone = 'site.login.phone';
-  /// Technicians log in on the KaamNishaan app with their phone number — no password needed.
-  static const siteLoginPhoneNote = 'site.login.phone_note';
-  /// New to KaamNishaan?
-  static const siteLoginNew = 'site.login.new';
-  /// Email or password is wrong.
-  static const siteLoginWrong = 'site.login.wrong';
-  /// Email or password is wrong. {n} tries left.
-  static const siteLoginWrongLeft = 'site.login.wrong_left';
-  /// Too many wrong tries. Try again after {time}, or reset your password.
-  static const siteLoginLocked = 'site.login.locked';
-  /// This account is turned off. Ask your company owner.
-  static const siteLoginDisabled = 'site.login.disabled';
-  /// Enter a valid email, like name@company.com.
-  static const siteLoginErrEmail = 'site.login.err_email';
-  /// Enter your password.
-  static const siteLoginErrPassword = 'site.login.err_password';
-  /// You’re logged in, {name}
-  static const siteLoginOkTitle = 'site.login.ok_title';
-  /// Your workspace{company} opens in the KaamNishaan app. Log in there with the same email and password.
-  static const siteLoginOkBody = 'site.login.ok_body';
-  /// Use another account
-  static const siteLoginOkAgain = 'site.login.ok_again';
-  /// Reset your password
-  static const siteForgotTitle = 'site.forgot.title';
-  /// Enter your work email and we will send you a link to choose a new password.
-  static const siteForgotBody = 'site.forgot.body';
-  /// Send link
-  static const siteForgotSubmit = 'site.forgot.submit';
-  /// If {email} has a KaamNishaan account, a link is on its way. It works for 30 minutes.
-  static const siteForgotSent = 'site.forgot.sent';
-  /// Email isn’t switched on yet, so we can’t send the link. Contact support and we will reset it for you.
-  static const siteForgotNoEmail = 'site.forgot.no_email';
-  /// Back to log in
-  static const siteForgotBack = 'site.forgot.back';
-  /// See KaamNishaan on your own jobs
-  static const siteBdTitle = 'site.bd.title';
-  /// A {n}-minute call with our team. Bring a manager or a technician — we will set up a real job from your trade and show the report your customer gets.
-  static const siteBdBody = 'site.bd.body';
+  /// Ask about any job
+  static const siteAskTitle = 'site.ask.title';
   /// Live walkthrough for your trade
   static const siteBdB1 = 'site.bd.b1';
   /// Photos, checklist and voice note to finished report in minutes.
@@ -3130,10 +6384,24 @@ abstract final class LangKeys {
   static const siteBdB3 = 'site.bd.b3';
   /// Plans from {price}. AI reports and follow-up credits on every plan.
   static const siteBdB3B = 'site.bd.b3_b';
-  /// A technician checking an outdoor AC unit with pressure gauges
-  static const siteBdPhotoAlt = 'site.bd.photo_alt';
-  /// What to expect
-  static const siteBdExpect = 'site.bd.expect';
+  /// Before the call
+  static const siteBdBefore = 'site.bd.before';
+  /// Think of one recent job you would like to see as a report
+  static const siteBdBefore1 = 'site.bd.before1';
+  /// Invite a manager or technician to join you
+  static const siteBdBefore2 = 'site.bd.before2';
+  /// Keep your phone handy to try the app live
+  static const siteBdBefore3 = 'site.bd.before3';
+  /// A {n}-minute call with our team. Bring a manager or a technician — we will set up a real job from your trade and show the report your customer gets.
+  static const siteBdBody = 'site.bd.body';
+  /// KaamNishaan demo
+  static const siteBdCalTitle = 'site.bd.cal_title';
+  /// Add to calendar
+  static const siteBdCalendar = 'site.bd.calendar';
+  /// Need to change something? Contact us and quote {ticket}.
+  static const siteBdChange = 'site.bd.change';
+  /// Preferred day
+  static const siteBdDay = 'site.bd.day';
   /// {n}-minute video call
   static const siteBdE1 = 'site.bd.e1';
   /// Pick a time that suits you. We call on Google Meet or Zoom.
@@ -3146,6 +6414,18 @@ abstract final class LangKeys {
   static const siteBdE3 = 'site.bd.e3';
   /// Clear next steps and a {n}-day trial of {plan} for your team.
   static const siteBdE3B = 'site.bd.e3_b';
+  /// This number looks too short — enter at least 10 digits
+  static const siteBdErrPhone = 'site.bd.err_phone';
+  /// Someone just booked that time. Pick another.
+  static const siteBdErrTaken = 'site.bd.err_taken';
+  /// Pick a time
+  static const siteBdErrTime = 'site.bd.err_time';
+  /// What to expect
+  static const siteBdExpect = 'site.bd.expect';
+  /// {n} fields need your attention before we can book your demo.
+  static const siteBdFixMany = 'site.bd.fix_many';
+  /// 1 field needs your attention before we can book your demo.
+  static const siteBdFixOne = 'site.bd.fix_one';
   /// Book your demo
   static const siteBdForm = 'site.bd.form';
   /// Takes under a minute. We confirm your time within one working day.
@@ -3154,8 +6434,26 @@ abstract final class LangKeys {
   static const siteBdName = 'site.bd.name';
   /// Your name
   static const siteBdNameHint = 'site.bd.name_hint';
+  /// No free times on this day. Pick another day.
+  static const siteBdNoSlots = 'site.bd.no_slots';
+  /// You’re booked, {name}!
+  static const siteBdOk = 'site.bd.ok';
+  /// We will confirm your time and send the video link to {email} within one working day.
+  static const siteBdOkB = 'site.bd.ok_b';
+  /// {start} – {end} {tz} ({n} minutes)
+  static const siteBdOkRange = 'site.bd.ok_range';
+  /// With the KaamNishaan product team
+  static const siteBdOkTeam = 'site.bd.ok_team';
+  /// Video call · link in your email
+  static const siteBdOkVideo = 'site.bd.ok_video';
   /// Phone
   static const siteBdPhone = 'site.bd.phone';
+  /// A technician checking an outdoor AC unit with pressure gauges
+  static const siteBdPhotoAlt = 'site.bd.photo_alt';
+  /// We never share your details. See our {privacy}.
+  static const siteBdPrivacy = 'site.bd.privacy';
+  /// Book my demo
+  static const siteBdSubmit = 'site.bd.submit';
   /// Team size
   static const siteBdTeam = 'site.bd.team';
   /// 1–5 technicians
@@ -3166,54 +6464,154 @@ abstract final class LangKeys {
   static const siteBdTeam3 = 'site.bd.team_3';
   /// More than 50 technicians
   static const siteBdTeam4 = 'site.bd.team_4';
-  /// Preferred day
-  static const siteBdDay = 'site.bd.day';
   /// Preferred time ({tz})
   static const siteBdTime = 'site.bd.time';
-  /// No free times on this day. Pick another day.
-  static const siteBdNoSlots = 'site.bd.no_slots';
-  /// Book my demo
-  static const siteBdSubmit = 'site.bd.submit';
-  /// We never share your details. See our {privacy}.
-  static const siteBdPrivacy = 'site.bd.privacy';
-  /// 1 field needs your attention before we can book your demo.
-  static const siteBdFixOne = 'site.bd.fix_one';
-  /// {n} fields need your attention before we can book your demo.
-  static const siteBdFixMany = 'site.bd.fix_many';
-  /// This number looks too short — enter at least 10 digits
-  static const siteBdErrPhone = 'site.bd.err_phone';
-  /// Pick a time
-  static const siteBdErrTime = 'site.bd.err_time';
-  /// Someone just booked that time. Pick another.
-  static const siteBdErrTaken = 'site.bd.err_taken';
-  /// You’re booked, {name}!
-  static const siteBdOk = 'site.bd.ok';
-  /// We will confirm your time and send the video link to {email} within one working day.
-  static const siteBdOkB = 'site.bd.ok_b';
-  /// {start} – {end} {tz} ({n} minutes)
-  static const siteBdOkRange = 'site.bd.ok_range';
-  /// Video call · link in your email
-  static const siteBdOkVideo = 'site.bd.ok_video';
-  /// With the KaamNishaan product team
-  static const siteBdOkTeam = 'site.bd.ok_team';
-  /// Add to calendar
-  static const siteBdCalendar = 'site.bd.calendar';
-  /// KaamNishaan demo
-  static const siteBdCalTitle = 'site.bd.cal_title';
-  /// Before the call
-  static const siteBdBefore = 'site.bd.before';
-  /// Think of one recent job you would like to see as a report
-  static const siteBdBefore1 = 'site.bd.before1';
-  /// Invite a manager or technician to join you
-  static const siteBdBefore2 = 'site.bd.before2';
-  /// Keep your phone handy to try the app live
-  static const siteBdBefore3 = 'site.bd.before3';
-  /// Need to change something? Contact us and quote {ticket}.
-  static const siteBdChange = 'site.bd.change';
-  /// Contact
-  static const siteCtEyebrow = 'site.ct.eyebrow';
-  /// We’re here to help
-  static const siteCtTitle = 'site.ct.title';
+  /// See KaamNishaan on your own jobs
+  static const siteBdTitle = 'site.bd.title';
+  /// All
+  static const siteBlogAll = 'site.blog.all';
+  /// All guides
+  static const siteBlogAllPosts = 'site.blog.all_posts';
+  /// Practical how-tos on photo proof, checklists and reports — for HVAC, roofing, solar, maintenance, pest control and cleaning teams.
+  static const siteBlogBody = 'site.blog.body';
+  /// Turn every job into a report like this
+  static const siteBlogBoxTitle = 'site.blog.box_title';
+  /// Cleaning
+  static const siteBlogCatCleaning = 'site.blog.cat.cleaning';
+  /// HVAC
+  static const siteBlogCatHvac = 'site.blog.cat.hvac';
+  /// Maintenance
+  static const siteBlogCatMaintenance = 'site.blog.cat.maintenance';
+  /// Pest control
+  static const siteBlogCatPest = 'site.blog.cat.pest';
+  /// Reports
+  static const siteBlogCatReports = 'site.blog.cat.reports';
+  /// Roofing
+  static const siteBlogCatRoofing = 'site.blog.cat.roofing';
+  /// Solar
+  static const siteBlogCatSolar = 'site.blog.cat.solar';
+  /// Tips
+  static const siteBlogCatTips = 'site.blog.cat.tips';
+  /// Voice notes
+  static const siteBlogCatVoice = 'site.blog.cat.voice';
+  /// Link copied
+  static const siteBlogCopied = 'site.blog.copied';
+  /// Copy link
+  static const siteBlogCopy = 'site.blog.copy';
+  /// Put these guides to work
+  static const siteBlogCta = 'site.blog.cta';
+  /// Email
+  static const siteBlogEmail = 'site.blog.email';
+  /// No guides on this topic yet.
+  static const siteBlogEmpty = 'site.blog.empty';
+  /// Blog
+  static const siteBlogEyebrow = 'site.blog.eyebrow';
+  /// Featured
+  static const siteBlogFeatured = 'site.blog.featured';
+  /// Filter guides by topic
+  static const siteBlogFilter = 'site.blog.filter';
+  /// In {lang}
+  static const siteBlogInLang = 'site.blog.in_lang';
+  /// Keep reading
+  static const siteBlogKeep = 'site.blog.keep';
+  /// Latest
+  static const siteBlogLatest = 'site.blog.latest';
+  /// {n} min read
+  static const siteBlogMinutes = 'site.blog.minutes';
+  /// This guide doesn’t exist
+  static const siteBlogMissing = 'site.blog.missing';
+  /// More guides for field teams
+  static const siteBlogMore = 'site.blog.more';
+  /// Field service tips, checklists and report ideas when we publish new guides. No spam.
+  static const siteBlogNewsBody = 'site.blog.news_body';
+  /// You’re on the list. Thank you!
+  static const siteBlogNewsDone = 'site.blog.news_done';
+  /// Newsletter
+  static const siteBlogNewsEyebrow = 'site.blog.news_eyebrow';
+  /// We’ll only use your email to send the newsletter. See our
+  static const siteBlogNewsNote = 'site.blog.news_note';
+  /// Get new guides by email
+  static const siteBlogNewsTitle = 'site.blog.news_title';
+  /// Read article
+  static const siteBlogRead = 'site.blog.read';
+  /// Read more
+  static const siteBlogReadMore = 'site.blog.read_more';
+  /// Related guides
+  static const siteBlogRelated = 'site.blog.related';
+  /// Share this guide
+  static const siteBlogShare = 'site.blog.share';
+  /// Subscribe
+  static const siteBlogSubscribe = 'site.blog.subscribe';
+  /// KaamNishaan team
+  static const siteBlogTeam = 'site.blog.team';
+  /// Guides for field service teams
+  static const siteBlogTitle = 'site.blog.title';
+  /// Every plan includes AI reports, offline capture and customer report links.
+  static const siteCmpBody = 'site.cmp.body';
+  /// Fair use
+  static const siteCmpFair = 'site.cmp.fair';
+  /// Feature
+  static const siteCmpFeature = 'site.cmp.feature';
+  /// Team and approvals
+  static const siteCmpGApprovals = 'site.cmp.g_approvals';
+  /// Capture and reports
+  static const siteCmpGCapture = 'site.cmp.g_capture';
+  /// Security and support
+  static const siteCmpGSecurity = 'site.cmp.g_security';
+  /// Team and usage
+  static const siteCmpGTeam = 'site.cmp.g_team';
+  /// Not included
+  static const siteCmpNo = 'site.cmp.no';
+  /// {price}/mo
+  static const siteCmpPerMo = 'site.cmp.per_mo';
+  /// AI reports per month
+  static const siteCmpReports = 'site.cmp.reports';
+  /// Support
+  static const siteCmpSupport = 'site.cmp.support';
+  /// Technicians
+  static const siteCmpTechnicians = 'site.cmp.technicians';
+  /// Compare every feature
+  static const siteCmpTitle = 'site.cmp.title';
+  /// Included
+  static const siteCmpYes = 'site.cmp.yes';
+  /// After
+  static const siteCompareAfter = 'site.compare.after';
+  /// The same AC filter after cleaning
+  static const siteCompareAfterAlt = 'site.compare.after_alt';
+  /// Before
+  static const siteCompareBefore = 'site.compare.before';
+  /// A dusty AC filter before cleaning
+  static const siteCompareBeforeAlt = 'site.compare.before_alt';
+  /// Drag the line to compare. Every report shows your customer exactly what changed.
+  static const siteCompareBody = 'site.compare.body';
+  /// Drag to compare before and after
+  static const siteCompareHandle = 'site.compare.handle';
+  /// See the difference
+  static const siteCompareTitle = 'site.compare.title';
+  /// Before 10:41 · After 11:42, 31 Oct
+  static const siteCompareWhen = 'site.compare.when';
+  /// Green Valley Clinic, room 2
+  static const siteCompareWhere = 'site.compare.where';
+  /// Ramesh Patel, technician
+  static const siteCompareWho = 'site.compare.who';
+  /// Used for review reminders and AI review calls. Unused credits reset each month. Top up any time.
+  static const siteCrBody = 'site.cr.body';
+  /// AI review call
+  static const siteCrCall = 'site.cr.call';
+  /// Email
+  static const siteCrEmail = 'site.cr.email';
+  /// Free
+  static const siteCrFree = 'site.cr.free';
+  /// {n} credits
+  static const siteCrMany = 'site.cr.many';
+  /// 1 credit
+  static const siteCrOne = 'site.cr.one';
+  /// for {n} extra credits
+  static const siteCrPack = 'site.cr.pack';
+  /// SMS or WhatsApp message
+  static const siteCrSms = 'site.cr.sms';
+  /// Follow-up credits
+  static const siteCrTitle = 'site.cr.title';
   /// Questions about KaamNishaan? We reply within one working day — in English, Hindi or Gujarati.
   static const siteCtBody = 'site.ct.body';
   /// Email support
@@ -3222,12 +6620,22 @@ abstract final class LangKeys {
   static const siteCtEmailB = 'site.ct.email_b';
   /// Write to us
   static const siteCtEmailCta = 'site.ct.email_cta';
-  /// WhatsApp or call
-  static const siteCtWa = 'site.ct.wa';
-  /// Fastest for urgent field issues
-  static const siteCtWaB = 'site.ct.wa_b';
-  /// Start a WhatsApp chat
-  static const siteCtWaCta = 'site.ct.wa_cta';
+  /// Email
+  static const siteCtEmailF = 'site.ct.email_f';
+  /// Add a few more details — at least {n} characters
+  static const siteCtErrMessage = 'site.ct.err_message';
+  /// Pick a topic so the right person replies
+  static const siteCtErrTopic = 'site.ct.err_topic';
+  /// Contact
+  static const siteCtEyebrow = 'site.ct.eyebrow';
+  /// {n} fields need your attention before we can send this.
+  static const siteCtFixMany = 'site.ct.fix_many';
+  /// 1 field needs your attention before we can send this.
+  static const siteCtFixOne = 'site.ct.fix_one';
+  /// Send us a message
+  static const siteCtForm = 'site.ct.form';
+  /// Tell us a little about your team and we will point you to the right person.
+  static const siteCtFormB = 'site.ct.form_b';
   /// Help centre
   static const siteCtHelp = 'site.ct.help';
   /// Guides for setup, jobs and reports
@@ -3236,52 +6644,18 @@ abstract final class LangKeys {
   static const siteCtHelpB2 = 'site.ct.help_b2';
   /// Visit help centre
   static const siteCtHelpCta = 'site.ct.help_cta';
+  /// Back to home
+  static const siteCtHome = 'site.ct.home';
   /// {days}, {open} – {close} {tz}
   static const siteCtHours = 'site.ct.hours';
-  /// Send us a message
-  static const siteCtForm = 'site.ct.form';
-  /// Tell us a little about your team and we will point you to the right person.
-  static const siteCtFormB = 'site.ct.form_b';
-  /// Name
-  static const siteCtName = 'site.ct.name';
-  /// Email
-  static const siteCtEmailF = 'site.ct.email_f';
-  /// Topic
-  static const siteCtTopic = 'site.ct.topic';
-  /// Choose a topic
-  static const siteCtTopicHint = 'site.ct.topic_hint';
-  /// Sales
-  static const siteCtTopicSales = 'site.ct.topic.sales';
-  /// Help with the app
-  static const siteCtTopicSupport = 'site.ct.topic.support';
-  /// Billing
-  static const siteCtTopicBilling = 'site.ct.topic.billing';
-  /// Partnership
-  static const siteCtTopicPartnership = 'site.ct.topic.partnership';
-  /// Something else
-  static const siteCtTopicOther = 'site.ct.topic.other';
+  /// Map of the office area
+  static const siteCtMapAlt = 'site.ct.map_alt';
   /// Message
   static const siteCtMessage = 'site.ct.message';
   /// How can we help? Tell us about your team and what you need.
   static const siteCtMessageHint = 'site.ct.message_hint';
-  /// Send message
-  static const siteCtSubmit = 'site.ct.submit';
-  /// We only use your details to reply. See our {privacy}.
-  static const siteCtPrivacy = 'site.ct.privacy';
-  /// 1 field needs your attention before we can send this.
-  static const siteCtFixOne = 'site.ct.fix_one';
-  /// {n} fields need your attention before we can send this.
-  static const siteCtFixMany = 'site.ct.fix_many';
-  /// Pick a topic so the right person replies
-  static const siteCtErrTopic = 'site.ct.err_topic';
-  /// Add a few more details — at least {n} characters
-  static const siteCtErrMessage = 'site.ct.err_message';
-  /// Message sent
-  static const siteCtSent = 'site.ct.sent';
-  /// Thanks, {name}. We will reply to {email} within one working day.
-  static const siteCtSentB = 'site.ct.sent_b';
-  /// Ticket {ticket}
-  static const siteCtTicket = 'site.ct.ticket';
+  /// Name
+  static const siteCtName = 'site.ct.name';
   /// What happens next
   static const siteCtNext = 'site.ct.next';
   /// A real person from our team reads every message
@@ -3290,64 +6664,792 @@ abstract final class LangKeys {
   static const siteCtNext2 = 'site.ct.next2';
   /// Urgent field issue? WhatsApp us for the fastest answer
   static const siteCtNext3 = 'site.ct.next3';
-  /// Back to home
-  static const siteCtHome = 'site.ct.home';
   /// Office
   static const siteCtOffice = 'site.ct.office';
-  /// Support hours {hours}
-  static const siteCtSupportHours = 'site.ct.support_hours';
+  /// We only use your details to reply. See our {privacy}.
+  static const siteCtPrivacy = 'site.ct.privacy';
   /// Teams we support
   static const siteCtRegions = 'site.ct.regions';
   /// Talking to sales?
   static const siteCtSales = 'site.ct.sales';
   /// Book a {n}-minute demo instead
   static const siteCtSalesB = 'site.ct.sales_b';
-  /// Map of the office area
-  static const siteCtMapAlt = 'site.ct.map_alt';
+  /// Message sent
+  static const siteCtSent = 'site.ct.sent';
+  /// Thanks, {name}. We will reply to {email} within one working day.
+  static const siteCtSentB = 'site.ct.sent_b';
+  /// Send message
+  static const siteCtSubmit = 'site.ct.submit';
+  /// Support hours {hours}
+  static const siteCtSupportHours = 'site.ct.support_hours';
+  /// Ticket {ticket}
+  static const siteCtTicket = 'site.ct.ticket';
+  /// We’re here to help
+  static const siteCtTitle = 'site.ct.title';
+  /// Topic
+  static const siteCtTopic = 'site.ct.topic';
+  /// Billing
+  static const siteCtTopicBilling = 'site.ct.topic.billing';
+  /// Something else
+  static const siteCtTopicOther = 'site.ct.topic.other';
+  /// Partnership
+  static const siteCtTopicPartnership = 'site.ct.topic.partnership';
+  /// Sales
+  static const siteCtTopicSales = 'site.ct.topic.sales';
+  /// Help with the app
+  static const siteCtTopicSupport = 'site.ct.topic.support';
+  /// Choose a topic
+  static const siteCtTopicHint = 'site.ct.topic_hint';
+  /// WhatsApp or call
+  static const siteCtWa = 'site.ct.wa';
+  /// Fastest for urgent field issues
+  static const siteCtWaB = 'site.ct.wa_b';
+  /// Start a WhatsApp chat
+  static const siteCtWaCta = 'site.ct.wa_cta';
+  /// Book a Demo
+  static const siteCtaDemo = 'site.cta.demo';
+  /// Start Free Trial
+  static const siteCtaTrial = 'site.cta.trial';
+  /// Ramesh speaks in Gujarati on site. The customer receives a clear report in English.
+  static const siteDemoBody = 'site.demo.body';
+  /// The approved service report in English
+  static const siteDemoReportAlt = 'site.demo.report_alt';
+  /// AI drafts the report
+  static const siteDemoStep = 'site.demo.step';
+  /// From voice note to report in seconds
+  static const siteDemoTitle = 'site.demo.title';
+  /// A voice note in Gujarati with 6 photos
+  static const siteDemoVoiceAlt = 'site.demo.voice_alt';
+  /// Enter your company name
+  static const siteErrCompany = 'site.err.company';
+  /// Enter a full email address, like name@company.com
+  static const siteErrEmail = 'site.err.email';
+  /// Something went wrong. Please try again.
+  static const siteErrGeneric = 'site.err.generic';
+  /// Enter your name
+  static const siteErrName = 'site.err.name';
+  /// No connection. Check your internet and try again.
+  static const siteErrOffline = 'site.err.offline';
+  /// Choose a stronger password
+  static const siteErrPassword = 'site.err.password';
+  /// Choose your trade
+  static const siteErrTrade = 'site.err.trade';
+  /// Too many tries. Wait a few minutes and try again.
+  static const siteErrWait = 'site.err.wait';
+  /// AI assistant search
+  static const siteFAiAssistant = 'site.f.ai_assistant';
+  /// AI reports in 5 languages
+  static const siteFAiReports = 'site.f.ai_reports';
+  /// Branded PDF reports
+  static const siteFBrandedPdf = 'site.f.branded_pdf';
+  /// Photos, checklists and voice notes
+  static const siteFCapture = 'site.f.capture';
+  /// Custom checklists
+  static const siteFCustomChecklists = 'site.f.custom_checklists';
+  /// Custom integrations
+  static const siteFCustomIntegrations = 'site.f.custom_integrations';
+  /// Manager approvals
+  static const siteFManagerApprovals = 'site.f.manager_approvals';
+  /// Works offline
+  static const siteFOffline = 'site.f.offline';
+  /// Customer report links
+  static const siteFReportLinks = 'site.f.report_links';
+  /// SSO and audit logs
+  static const siteFSsoAudit = 'site.f.sso_audit';
+  /// Yes. Photos, checklists and voice notes save on the phone and sync automatically when the signal returns, so rooftops and basements are no problem.
+  static const siteFaqA1 = 'site.faq.a1';
+  /// English, Hindi, Gujarati, Spanish and French — for the app, voice notes and reports. A technician can speak in one language and the customer can read the report in another.
+  static const siteFaqA2 = 'site.faq.a2';
+  /// No. The report is drafted only from the photos, checklist answers and voice notes recorded on the job. A manager checks and approves every report before the customer sees it.
+  static const siteFaqA3 = 'site.faq.a3';
+  /// You get {plan} free for {n} days, with no card needed. At the end, pick a plan or stay on Free — your jobs and reports stay safe either way.
+  static const siteFaqA4 = 'site.faq.a4';
+  /// Yes. Customers get a secure link by SMS or WhatsApp that opens in any browser, with photos, the checklist and a PDF to download.
+  static const siteFaqA5 = 'site.faq.a5';
+  /// Can’t find what you need? Our team answers within one working day.
+  static const siteFaqBody = 'site.faq.body';
+  /// Does it work without internet?
+  static const siteFaqQ1 = 'site.faq.q1';
+  /// Which languages are supported?
+  static const siteFaqQ2 = 'site.faq.q2';
+  /// Can AI invent work that was not done?
+  static const siteFaqQ3 = 'site.faq.q3';
+  /// How does the free trial work?
+  static const siteFaqQ4 = 'site.faq.q4';
+  /// Can customers see reports without an app?
+  static const siteFaqQ5 = 'site.faq.q5';
+  /// Talk to us
+  static const siteFaqTalk = 'site.faq.talk';
+  /// Questions
+  static const siteFaqTitle = 'site.faq.title';
+  /// One app for the technician on the roof and the manager in the office.
+  static const siteFeatBody = 'site.feat.body';
+  /// A technician photographing an indoor AC unit with his phone
+  static const siteFeatCaptureAlt = 'site.feat.capture_alt';
+  /// Timestamped photos sorted by before, during and after, filed to the right job automatically.
+  static const siteFeatCaptureBody = 'site.feat.capture_body';
+  /// Evidence capture
+  static const siteFeatCaptureTitle = 'site.feat.capture_title';
+  /// Ready HVAC templates your team can follow on every visit.
+  static const siteFeatChecklistsBody = 'site.feat.checklists_body';
+  /// Checklists
+  static const siteFeatChecklistsTitle = 'site.feat.checklists_title';
+  /// Works on rooftops and in basements. Syncs when signal returns.
+  static const siteFeatOfflineBody = 'site.feat.offline_body';
+  /// Offline first
+  static const siteFeatOfflineTitle = 'site.feat.offline_title';
+  /// Branded PDF or share link, in your customer’s language.
+  static const siteFeatPdfBody = 'site.feat.pdf_body';
+  /// PDF reports
+  static const siteFeatPdfTitle = 'site.feat.pdf_title';
+  /// A technician showing a customer the report on his phone
+  static const siteFeatReportsAlt = 'site.feat.reports_alt';
+  /// A clean, customer-ready report drafted from your photos, checklist and voice notes. It only describes work you recorded. Nothing is invented.
+  static const siteFeatReportsBody = 'site.feat.reports_body';
+  /// Never invents work
+  static const siteFeatReportsTag1 = 'site.feat.reports_tag1';
+  /// Manager approves
+  static const siteFeatReportsTag2 = 'site.feat.reports_tag2';
+  /// AI reports
+  static const siteFeatReportsTitle = 'site.feat.reports_title';
+  /// Everything you need to prove the work
+  static const siteFeatTitle = 'site.feat.title';
+  /// Speak in Hindi, Gujarati, Spanish or English. AI writes it up.
+  static const siteFeatVoiceBody = 'site.feat.voice_body';
+  /// Voice notes
+  static const siteFeatVoiceTitle = 'site.feat.voice_title';
+  /// The manager home screen with reports waiting for review
+  static const siteFinalAlt = 'site.final.alt';
+  /// {n}-day free trial. Set up your team in 15 minutes. No card needed.
+  static const siteFinalBody = 'site.final.body';
+  /// Start proving your work today
+  static const siteFinalTitle = 'site.final.title';
+  /// About
+  static const siteFootAbout = 'site.foot.about';
+  /// Blog
+  static const siteFootBlog = 'site.foot.blog';
+  /// Company
+  static const siteFootCompany = 'site.foot.company';
+  /// Contact
+  static const siteFootContact = 'site.foot.contact';
+  /// Features
+  static const siteFootFeatures = 'site.foot.features';
+  /// Industries
+  static const siteFootIndustries = 'site.foot.industries';
+  /// Legal
+  static const siteFootLegal = 'site.foot.legal';
+  /// Made for field teams who do the work.
+  static const siteFootMade = 'site.foot.made';
+  /// Offline mode
+  static const siteFootOffline = 'site.foot.offline';
+  /// Privacy
+  static const siteFootPrivacy = 'site.foot.privacy';
+  /// Product
+  static const siteFootProduct = 'site.foot.product';
+  /// © {year} KaamNishaan. All rights reserved.
+  static const siteFootRights = 'site.foot.rights';
+  /// Every Job. Every Photo. Every Proof.
+  static const siteFootTagline = 'site.foot.tagline';
+  /// Terms
+  static const siteFootTerms = 'site.foot.terms';
+  /// Back to log in
+  static const siteForgotBack = 'site.forgot.back';
+  /// Enter your work email and we will send you a link to choose a new password.
+  static const siteForgotBody = 'site.forgot.body';
+  /// Email isn’t switched on yet, so we can’t send the link. Contact support and we will reset it for you.
+  static const siteForgotNoEmail = 'site.forgot.no_email';
+  /// If {email} has a KaamNishaan account, a link is on its way. It works for 30 minutes.
+  static const siteForgotSent = 'site.forgot.sent';
+  /// Send link
+  static const siteForgotSubmit = 'site.forgot.submit';
+  /// Reset your password
+  static const siteForgotTitle = 'site.forgot.title';
+  /// See all features
+  static const siteFpAll = 'site.fp.all';
+  /// {name} in the KaamNishaan app
+  static const siteFpAltHero = 'site.fp.alt_hero';
+  /// See it in the app
+  static const siteFpApp = 'site.fp.app';
+  /// Owners and managers, from the Me tab in the app.
+  static const siteFpAssistantAns1 = 'site.fp.assistant.ans1';
+  /// It depends on your plan: {free} includes {ai_free} questions a month and {plan} includes {ai_pro}. A question that fails is not counted.
+  static const siteFpAssistantAns2 = 'site.fp.assistant.ans2';
+  /// English, Hindi, Gujarati, Spanish and French. The answer comes in your app’s language.
+  static const siteFpAssistantAns3 = 'site.fp.assistant.ans3';
+  /// No. Only your own company’s jobs are used to answer your questions.
+  static const siteFpAssistantAns4 = 'site.fp.assistant.ans4';
+  /// Plain questions, short answers, and the reports they came from.
+  static const siteFpAssistantAppBody = 'site.fp.assistant.app_body';
+  /// Try it: ask about any job
+  static const siteFpAssistantAppTitle = 'site.fp.assistant.app_title';
+  /// When did we last visit Green Valley Clinic?
+  static const siteFpAssistantAsk1 = 'site.fp.assistant.ask1';
+  /// Which jobs are still missing proof?
+  static const siteFpAssistantAsk2 = 'site.fp.assistant.ask2';
+  /// Which reports are waiting for approval?
+  static const siteFpAssistantAsk3 = 'site.fp.assistant.ask3';
+  /// Ask a question like “When did we last visit Green Valley Clinic?” KaamNishaan AI looks through your company’s jobs and reports and tells you which ones it used.
+  static const siteFpAssistantBody = 'site.fp.assistant.body';
+  /// Ask in plain language
+  static const siteFpAssistantC1 = 'site.fp.assistant.c1';
+  /// No filters or search codes. Ready chips like “What is missing?” help you start.
+  static const siteFpAssistantC1B = 'site.fp.assistant.c1_b';
+  /// Every answer has a source
+  static const siteFpAssistantC2 = 'site.fp.assistant.c2';
+  /// Answers name the report and job numbers they used. Numbers it can’t find are dropped.
+  static const siteFpAssistantC2B = 'site.fp.assistant.c2_b';
+  /// Knows what is missing
+  static const siteFpAssistantC3 = 'site.fp.assistant.c3';
+  /// Ask which jobs still need photos or a report, and see them in one answer.
+  static const siteFpAssistantC3B = 'site.fp.assistant.c3_b';
+  /// Answers in your language
+  static const siteFpAssistantC4 = 'site.fp.assistant.c4';
+  /// Ask in English, Hindi, Gujarati, Spanish or French and get the answer in the same language.
+  static const siteFpAssistantC4B = 'site.fp.assistant.c4_b';
+  /// Your data stays yours
+  static const siteFpAssistantC5 = 'site.fp.assistant.c5';
+  /// Only your own company’s jobs are used. Nothing from other companies.
+  static const siteFpAssistantC5B = 'site.fp.assistant.c5_b';
+  /// For owners and managers
+  static const siteFpAssistantC6 = 'site.fp.assistant.c6';
+  /// The office asks; technicians keep their app simple and focused on today’s jobs.
+  static const siteFpAssistantC6B = 'site.fp.assistant.c6_b';
+  /// The assistant only answers from your own job records.
+  static const siteFpAssistantCapBody = 'site.fp.assistant.cap_body';
+  /// Answers you can check
+  static const siteFpAssistantCapTitle = 'site.fp.assistant.cap_title';
+  /// Ask anything about your jobs and reports.
+  static const siteFpAssistantCard = 'site.fp.assistant.card';
+  /// Answer from Report #R-0988
+  static const siteFpAssistantChip1 = 'site.fp.assistant.chip1';
+  /// 12 Aug · approved by Priya
+  static const siteFpAssistantChip1Sub = 'site.fp.assistant.chip1_sub';
+  /// Looks through recent jobs
+  static const siteFpAssistantChip2 = 'site.fp.assistant.chip2';
+  /// Customers, status and reports
+  static const siteFpAssistantChip2Sub = 'site.fp.assistant.chip2_sub';
+  /// Find any job’s answer in seconds
+  static const siteFpAssistantCta = 'site.fp.assistant.cta';
+  /// Four steps from a question to an answer you can check.
+  static const siteFpAssistantHowBody = 'site.fp.assistant.how_body';
+  /// How the AI assistant works
+  static const siteFpAssistantHowTitle = 'site.fp.assistant.how_title';
+  /// AI assistant
+  static const siteFpAssistantName = 'site.fp.assistant.name';
+  /// Who can use the AI assistant?
+  static const siteFpAssistantQ1 = 'site.fp.assistant.q1';
+  /// How many questions can I ask?
+  static const siteFpAssistantQ2 = 'site.fp.assistant.q2';
+  /// Which languages can I ask in?
+  static const siteFpAssistantQ3 = 'site.fp.assistant.q3';
+  /// Is my data shared with other companies?
+  static const siteFpAssistantQ4 = 'site.fp.assistant.q4';
+  /// Ask a question
+  static const siteFpAssistantS1 = 'site.fp.assistant.s1';
+  /// Type it, or use your phone’s voice typing, the way you would ask a colleague.
+  static const siteFpAssistantS1B = 'site.fp.assistant.s1_b';
+  /// It looks through your jobs
+  static const siteFpAssistantS2 = 'site.fp.assistant.s2';
+  /// Your recent jobs, plus older ones that match the customer or job you named.
+  static const siteFpAssistantS2B = 'site.fp.assistant.s2_b';
+  /// Get a short answer
+  static const siteFpAssistantS3 = 'site.fp.assistant.s3';
+  /// A plain answer in your app’s language — not a list of files to dig through.
+  static const siteFpAssistantS3B = 'site.fp.assistant.s3_b';
+  /// See the source
+  static const siteFpAssistantS4 = 'site.fp.assistant.s4';
+  /// Each answer names the reports and jobs it came from.
+  static const siteFpAssistantS4B = 'site.fp.assistant.s4_b';
+  /// Sources named
+  static const siteFpAssistantTag = 'site.fp.assistant.tag';
+  /// Answers name their sources
+  static const siteFpAssistantTick1 = 'site.fp.assistant.tick1';
+  /// Only your company’s data
+  static const siteFpAssistantTick2 = 'site.fp.assistant.tick2';
+  /// Ask about any job — get answers with sources
+  static const siteFpAssistantTitle = 'site.fp.assistant.title';
+  /// Last visits, open jobs and missing proof — for every kind of field team.
+  static const siteFpAssistantUseBody = 'site.fp.assistant.use_body';
+  /// Questions every trade asks
+  static const siteFpAssistantUseTitle = 'site.fp.assistant.use_title';
+  /// Build your own checklist
+  static const siteFpBuildOwn = 'site.fp.build_own';
+  /// Capabilities
+  static const siteFpCaps = 'site.fp.caps';
+  /// Yes. Copy a KaamNishaan checklist, then change, reorder or remove any question and add your own. Your copy is saved for your team.
+  static const siteFpChecklistsAns1 = 'site.fp.checklists.ans1';
+  /// The list above shows it live. HVAC comes first; more trades are being added. Any team can build its own checklist today.
+  static const siteFpChecklistsAns2 = 'site.fp.checklists.ans2';
+  /// Running jobs keep the questions they started with. Your change applies to new jobs.
+  static const siteFpChecklistsAns3 = 'site.fp.checklists.ans3';
+  /// Yes. The customer sees each answer and reading, with the photos taken for it.
+  static const siteFpChecklistsAns4 = 'site.fp.checklists.ans4';
+  /// Job → checklist → answers → report. One tap per question.
+  static const siteFpChecklistsAppBody = 'site.fp.checklists.app_body';
+  /// A checklist, start to finish
+  static const siteFpChecklistsAppTitle = 'site.fp.checklists.app_title';
+  /// Start from a ready template or build your own, ask for photos where they matter, and let technicians answer with one tap — in their own language. Every answer goes straight into the report.
+  static const siteFpChecklistsBody = 'site.fp.checklists.body';
+  /// Ready templates
+  static const siteFpChecklistsC1 = 'site.fp.checklists.c1';
+  /// KaamNishaan checklists are ready on day one. Copy one to make it your own.
+  static const siteFpChecklistsC1B = 'site.fp.checklists.c1_b';
+  /// Photo rules
+  static const siteFpChecklistsC2 = 'site.fp.checklists.c2';
+  /// Ask for a photo every time, or only when the answer is No or Fail.
+  static const siteFpChecklistsC2B = 'site.fp.checklists.c2_b';
+  /// The right kind of answer
+  static const siteFpChecklistsC3 = 'site.fp.checklists.c3';
+  /// Yes / No, Pass / Fail, a number with its unit, a few words or a photo.
+  static const siteFpChecklistsC3B = 'site.fp.checklists.c3_b';
+  /// One question at a time
+  static const siteFpChecklistsC4 = 'site.fp.checklists.c4';
+  /// Large text and buttons that are easy to use on a roof or in bright sun.
+  static const siteFpChecklistsC4B = 'site.fp.checklists.c4_b';
+  /// In the technician’s language
+  static const siteFpChecklistsC5 = 'site.fp.checklists.c5';
+  /// KaamNishaan’s ready checklists come in English, Hindi, Gujarati, Spanish and French.
+  static const siteFpChecklistsC5B = 'site.fp.checklists.c5_b';
+  /// Can’t skip, can’t forget
+  static const siteFpChecklistsC6 = 'site.fp.checklists.c6';
+  /// Required questions, and their photos, must be done before the report can be made.
+  static const siteFpChecklistsC6B = 'site.fp.checklists.c6_b';
+  /// Every visit follows the same steps — and nothing gets skipped.
+  static const siteFpChecklistsCapBody = 'site.fp.checklists.cap_body';
+  /// Simple for technicians, complete for managers
+  static const siteFpChecklistsCapTitle = 'site.fp.checklists.cap_title';
+  /// Ready templates, answered on site with one tap.
+  static const siteFpChecklistsCard = 'site.fp.checklists.card';
+  /// Question 3 of 12
+  static const siteFpChecklistsChip1 = 'site.fp.checklists.chip1';
+  /// Is the air filter clean?
+  static const siteFpChecklistsChip1Sub = 'site.fp.checklists.chip1_sub';
+  /// Photo needed
+  static const siteFpChecklistsChip2 = 'site.fp.checklists.chip2';
+  /// The report waits for it
+  static const siteFpChecklistsChip2Sub = 'site.fp.checklists.chip2_sub';
+  /// Make every visit follow the same steps
+  static const siteFpChecklistsCta = 'site.fp.checklists.cta';
+  /// Four steps from a template to answers in the report.
+  static const siteFpChecklistsHowBody = 'site.fp.checklists.how_body';
+  /// How checklists work
+  static const siteFpChecklistsHowTitle = 'site.fp.checklists.how_title';
+  /// Checklists
+  static const siteFpChecklistsName = 'site.fp.checklists.name';
+  /// Open the job
+  static const siteFpChecklistsP1 = 'site.fp.checklists.p1';
+  /// The checklist is already attached.
+  static const siteFpChecklistsP1B = 'site.fp.checklists.p1_b';
+  /// See the checklist
+  static const siteFpChecklistsP2 = 'site.fp.checklists.p2';
+  /// Progress at a glance.
+  static const siteFpChecklistsP2B = 'site.fp.checklists.p2_b';
+  /// Answer one question
+  static const siteFpChecklistsP3 = 'site.fp.checklists.p3';
+  /// Yes, No, or take a photo.
+  static const siteFpChecklistsP3B = 'site.fp.checklists.p3_b';
+  /// Results in the report
+  static const siteFpChecklistsP4 = 'site.fp.checklists.p4';
+  /// Answers land next to the photos.
+  static const siteFpChecklistsP4B = 'site.fp.checklists.p4_b';
+  /// Can I edit the ready templates?
+  static const siteFpChecklistsQ1 = 'site.fp.checklists.q1';
+  /// Which trades have ready checklists?
+  static const siteFpChecklistsQ2 = 'site.fp.checklists.q2';
+  /// What if I change a checklist while jobs are running?
+  static const siteFpChecklistsQ3 = 'site.fp.checklists.q3';
+  /// Do checklist answers show in the report?
+  static const siteFpChecklistsQ4 = 'site.fp.checklists.q4';
+  /// Pick a template
+  static const siteFpChecklistsS1 = 'site.fp.checklists.s1';
+  /// Start from a ready KaamNishaan checklist, or build your own in minutes.
+  static const siteFpChecklistsS1B = 'site.fp.checklists.s1_b';
+  /// Attach it to the job
+  static const siteFpChecklistsS2 = 'site.fp.checklists.s2';
+  /// Choose the checklist when you create the job. Later edits never change a running job.
+  static const siteFpChecklistsS2B = 'site.fp.checklists.s2_b';
+  /// Answer on site
+  static const siteFpChecklistsS3 = 'site.fp.checklists.s3';
+  /// One question at a time, with big buttons and photo prompts.
+  static const siteFpChecklistsS3B = 'site.fp.checklists.s3_b';
+  /// Results in the report
+  static const siteFpChecklistsS4 = 'site.fp.checklists.s4';
+  /// Every answer and reading appears in the report next to its photo.
+  static const siteFpChecklistsS4B = 'site.fp.checklists.s4_b';
+  /// Required
+  static const siteFpChecklistsTag = 'site.fp.checklists.tag';
+  /// Photo rules per question
+  static const siteFpChecklistsTick1 = 'site.fp.checklists.tick1';
+  /// Can’t be skipped
+  static const siteFpChecklistsTick2 = 'site.fp.checklists.tick2';
+  /// Checklists your team actually finishes
+  static const siteFpChecklistsTitle = 'site.fp.checklists.title';
+  /// See which trades have ready checklists today. For the others, build your own in minutes.
+  static const siteFpChecklistsUseBody = 'site.fp.checklists.use_body';
+  /// Checklists for every trade
+  static const siteFpChecklistsUseTitle = 'site.fp.checklists.use_title';
   /// Features
   static const siteFpCrumb = 'site.fp.crumb';
   /// Breadcrumb
   static const siteFpCrumbLabel = 'site.fp.crumb_label';
-  /// Overview
-  static const siteFpOverview = 'site.fp.overview';
-  /// Feature · {name}
-  static const siteFpEyebrow = 'site.fp.eyebrow';
   /// Included on every plan
   static const siteFpEveryPlan = 'site.fp.every_plan';
-  /// How it works
-  static const siteFpHow = 'site.fp.how';
-  /// Capabilities
-  static const siteFpCaps = 'site.fp.caps';
-  /// See it in the app
-  static const siteFpApp = 'site.fp.app';
-  /// Use cases
-  static const siteFpUse = 'site.fp.use';
-  /// View industry
-  static const siteFpViewIndustry = 'site.fp.view_industry';
+  /// No. Once the report is sent for review, photos are locked: their time, place and who took them can’t change. A manager can still add notes.
+  static const siteFpEvidenceAns1 = 'site.fp.evidence.ans1';
+  /// No. Photos are made smaller on the phone before they are sent, so a job uses little data.
+  static const siteFpEvidenceAns2 = 'site.fp.evidence.ans2';
+  /// Keep working. Photos wait on the phone and are sent once you are back online — each one only once.
+  static const siteFpEvidenceAns3 = 'site.fp.evidence.ans3';
+  /// Yes, the ones in the approved report. Customers get a copy without the location data hidden in the file.
+  static const siteFpEvidenceAns4 = 'site.fp.evidence.ans4';
+  /// Open the job → take photos → check → report. No sorting, no uploading.
+  static const siteFpEvidenceAppBody = 'site.fp.evidence.app_body';
+  /// From the first photo to the report
+  static const siteFpEvidenceAppTitle = 'site.fp.evidence.app_title';
+  /// Before, during and after photos keep the time and place they were taken and go straight to the right job. When a customer asks “was it really done?”, the answer is one tap away.
+  static const siteFpEvidenceBody = 'site.fp.evidence.body';
+  /// Time and place saved
+  static const siteFpEvidenceC1 = 'site.fp.evidence.c1';
+  /// Every photo keeps when and where it was taken. No settings to remember.
+  static const siteFpEvidenceC1B = 'site.fp.evidence.c1_b';
+  /// Filed to the right job
+  static const siteFpEvidenceC2 = 'site.fp.evidence.c2';
+  /// Photos go straight to the job — never to a personal gallery or chat.
+  static const siteFpEvidenceC2B = 'site.fp.evidence.c2_b';
+  /// Before and after, side by side
+  static const siteFpEvidenceC3 = 'site.fp.evidence.c3';
+  /// Matching shots are paired in the report so customers see the difference.
+  static const siteFpEvidenceC3B = 'site.fp.evidence.c3_b';
+  /// Works with no signal
+  static const siteFpEvidenceC4 = 'site.fp.evidence.c4';
+  /// Photos are saved on the phone and sent when you are back online.
+  static const siteFpEvidenceC4B = 'site.fp.evidence.c4_b';
+  /// Can’t be changed later
+  static const siteFpEvidenceC5 = 'site.fp.evidence.c5';
+  /// Once the report is in, photos are locked with a fingerprint. Notes can still be added.
+  static const siteFpEvidenceC5B = 'site.fp.evidence.c5_b';
+  /// Easy to find later
+  static const siteFpEvidenceC6 = 'site.fp.evidence.c6';
+  /// Search jobs by customer or address and open the photos months later.
+  static const siteFpEvidenceC6B = 'site.fp.evidence.c6_b';
+  /// Simple enough for any technician. Strong enough to settle a dispute.
+  static const siteFpEvidenceCapBody = 'site.fp.evidence.cap_body';
+  /// Proof nobody can argue with
+  static const siteFpEvidenceCapTitle = 'site.fp.evidence.cap_title';
+  /// Timestamped before, during and after photos.
+  static const siteFpEvidenceCard = 'site.fp.evidence.card';
+  /// Before and after paired
+  static const siteFpEvidenceChip1 = 'site.fp.evidence.chip1';
+  /// Air filter · room 2
+  static const siteFpEvidenceChip1Sub = 'site.fp.evidence.chip1_sub';
+  /// 6 photos · timestamped
+  static const siteFpEvidenceChip2 = 'site.fp.evidence.chip2';
+  /// 31 Oct, 11:42 AM · on site
+  static const siteFpEvidenceChip2Sub = 'site.fp.evidence.chip2_sub';
+  /// Give every job its photo proof
+  static const siteFpEvidenceCta = 'site.fp.evidence.cta';
+  /// Four steps from the first photo to proof your customer can see.
+  static const siteFpEvidenceHowBody = 'site.fp.evidence.how_body';
+  /// How evidence capture works
+  static const siteFpEvidenceHowTitle = 'site.fp.evidence.how_title';
+  /// Evidence capture
+  static const siteFpEvidenceName = 'site.fp.evidence.name';
+  /// Open the proof steps
+  static const siteFpEvidenceP1 = 'site.fp.evidence.p1';
+  /// See which photos the job needs.
+  static const siteFpEvidenceP1B = 'site.fp.evidence.p1_b';
+  /// Take the photo
+  static const siteFpEvidenceP2 = 'site.fp.evidence.p2';
+  /// Big buttons, one hand, any light.
+  static const siteFpEvidenceP2B = 'site.fp.evidence.p2_b';
+  /// Check the photos
+  static const siteFpEvidenceP3 = 'site.fp.evidence.p3';
+  /// Before, during and after, in order.
+  static const siteFpEvidenceP3B = 'site.fp.evidence.p3_b';
+  /// Ready for the report
+  static const siteFpEvidenceP4 = 'site.fp.evidence.p4';
+  /// Photos flow into the report review.
+  static const siteFpEvidenceP4B = 'site.fp.evidence.p4_b';
+  /// Can photos be edited or replaced after the job?
+  static const siteFpEvidenceQ1 = 'site.fp.evidence.q1';
+  /// Do photos use a lot of mobile data?
+  static const siteFpEvidenceQ2 = 'site.fp.evidence.q2';
+  /// What happens if there is no signal on site?
+  static const siteFpEvidenceQ3 = 'site.fp.evidence.q3';
+  /// Can customers see the photos?
+  static const siteFpEvidenceQ4 = 'site.fp.evidence.q4';
+  /// Open the job
+  static const siteFpEvidenceS1 = 'site.fp.evidence.s1';
+  /// The app shows which photos this job needs — before, during and after.
+  static const siteFpEvidenceS1B = 'site.fp.evidence.s1_b';
+  /// Take before photos
+  static const siteFpEvidenceS2 = 'site.fp.evidence.s2';
+  /// Photograph the problem first. Time and place are saved automatically.
+  static const siteFpEvidenceS2B = 'site.fp.evidence.s2_b';
+  /// Do the work
+  static const siteFpEvidenceS3 = 'site.fp.evidence.s3';
+  /// Add during photos as you go. Nothing to name, sort or upload.
+  static const siteFpEvidenceS3B = 'site.fp.evidence.s3_b';
+  /// Show the after
+  static const siteFpEvidenceS4 = 'site.fp.evidence.s4';
+  /// After photos are paired with the before shots for a side-by-side view.
+  static const siteFpEvidenceS4B = 'site.fp.evidence.s4_b';
+  /// Automatic
+  static const siteFpEvidenceTag = 'site.fp.evidence.tag';
+  /// Time and place on every photo
+  static const siteFpEvidenceTick1 = 'site.fp.evidence.tick1';
+  /// Works offline
+  static const siteFpEvidenceTick2 = 'site.fp.evidence.tick2';
+  /// Photo proof for every job — timestamped and filed
+  static const siteFpEvidenceTitle = 'site.fp.evidence.title';
+  /// Whatever the work, the before and after tell the story.
+  static const siteFpEvidenceUseBody = 'site.fp.evidence.use_body';
+  /// Photo proof for every trade
+  static const siteFpEvidenceUseTitle = 'site.fp.evidence.use_title';
   /// Keep exploring
   static const siteFpExplore = 'site.fp.explore';
-  /// Related features
-  static const siteFpRelated = 'site.fp.related';
-  /// See all features
-  static const siteFpAll = 'site.fp.all';
+  /// Feature · {name}
+  static const siteFpEyebrow = 'site.fp.eyebrow';
+  /// How it works
+  static const siteFpHow = 'site.fp.how';
+  /// Yes. Technicians see the jobs given to them. Owners and managers see every job, can filter by technician or status, and search by customer or address.
+  static const siteFpJobsAns1 = 'site.fp.jobs.ans1';
+  /// Yes, until the technician starts it. After that the job stays with that technician, so all its proof comes from one person.
+  static const siteFpJobsAns2 = 'site.fp.jobs.ans2';
+  /// Yes. A technician can start a quick job on site — for example when the customer asks for one more unit to be checked.
+  static const siteFpJobsAns3 = 'site.fp.jobs.ans3';
+  /// No. Customers get the report as a secure link or a PDF. Only your team uses the app.
+  static const siteFpJobsAns4 = 'site.fp.jobs.ans4';
+  /// Create → assign → work → review. Everyone sees the same job.
+  static const siteFpJobsAppBody = 'site.fp.jobs.app_body';
+  /// A job, from booking to done
+  static const siteFpJobsAppTitle = 'site.fp.jobs.app_title';
+  /// Create a job in seconds, assign the right technician and follow it live. Photos, checklists, voice notes and the report stay attached to the job — no more lost WhatsApp threads.
+  static const siteFpJobsBody = 'site.fp.jobs.body';
+  /// Create a job in under a minute
+  static const siteFpJobsC1 = 'site.fp.jobs.c1';
+  /// Customer, address, work to do, date and checklist on one screen. Technicians can add a quick job on site too.
+  static const siteFpJobsC1B = 'site.fp.jobs.c1_b';
+  /// Assign the right person
+  static const siteFpJobsC2 = 'site.fp.jobs.c2';
+  /// See who is free and how many jobs they have. The technician gets a message in the app.
+  static const siteFpJobsC2B = 'site.fp.jobs.c2_b';
+  /// Live job status
+  static const siteFpJobsC3 = 'site.fp.jobs.c3';
+  /// Unassigned, assigned, in progress, in review, changes asked, done — updated as the work happens.
+  static const siteFpJobsC3B = 'site.fp.jobs.c3_b';
+  /// A simple Today view
+  static const siteFpJobsC4 = 'site.fp.jobs.c4';
+  /// Each technician opens the app to today’s jobs, in order, in their own language.
+  static const siteFpJobsC4B = 'site.fp.jobs.c4_b';
+  /// Directions and calls
+  static const siteFpJobsC5 = 'site.fp.jobs.c5';
+  /// One tap opens Google Maps or calls the customer, right from the job.
+  static const siteFpJobsC5B = 'site.fp.jobs.c5_b';
+  /// Everything filed to the job
+  static const siteFpJobsC6 = 'site.fp.jobs.c6';
+  /// Photos, checklist, voice notes and the report stay attached and easy to find later.
+  static const siteFpJobsC6B = 'site.fp.jobs.c6_b';
+  /// Everything a dispatcher needs, simple enough for every technician.
+  static const siteFpJobsCapBody = 'site.fp.jobs.cap_body';
+  /// Run the day without the phone calls
+  static const siteFpJobsCapTitle = 'site.fp.jobs.cap_title';
+  /// Schedule, assign and track every visit.
+  static const siteFpJobsCard = 'site.fp.jobs.card';
+  /// Assigned to Ramesh Patel
+  static const siteFpJobsChip1 = 'site.fp.jobs.chip1';
+  /// Green Valley Clinic · 11:00 AM
+  static const siteFpJobsChip1Sub = 'site.fp.jobs.chip1_sub';
+  /// In progress
+  static const siteFpJobsChip2 = 'site.fp.jobs.chip2';
+  /// 3 of 5 proof steps done
+  static const siteFpJobsChip2Sub = 'site.fp.jobs.chip2_sub';
+  /// Put every job in one place
+  static const siteFpJobsCta = 'site.fp.jobs.cta';
+  /// Four steps from booking to a closed job — everyone sees the same live status.
+  static const siteFpJobsHowBody = 'site.fp.jobs.how_body';
+  /// How jobs work
+  static const siteFpJobsHowTitle = 'site.fp.jobs.how_title';
+  /// Jobs
+  static const siteFpJobsName = 'site.fp.jobs.name';
+  /// Create the job
+  static const siteFpJobsP1 = 'site.fp.jobs.p1';
+  /// Customer, address and checklist in one screen.
+  static const siteFpJobsP1B = 'site.fp.jobs.p1_b';
+  /// Assign a technician
+  static const siteFpJobsP2 = 'site.fp.jobs.p2';
+  /// Pick who is free; they get a message.
+  static const siteFpJobsP2B = 'site.fp.jobs.p2_b';
+  /// The technician’s day
+  static const siteFpJobsP3 = 'site.fp.jobs.p3';
+  /// Today’s jobs, in order, in their language.
+  static const siteFpJobsP3B = 'site.fp.jobs.p3_b';
+  /// Track every job
+  static const siteFpJobsP4 = 'site.fp.jobs.p4';
+  /// The manager’s home shows what needs review.
+  static const siteFpJobsP4B = 'site.fp.jobs.p4_b';
+  /// Can technicians see only their own jobs?
+  static const siteFpJobsQ1 = 'site.fp.jobs.q1';
+  /// Can I reassign a job?
+  static const siteFpJobsQ2 = 'site.fp.jobs.q2';
+  /// Can technicians add a job themselves?
+  static const siteFpJobsQ3 = 'site.fp.jobs.q3';
+  /// Does the customer need the app?
+  static const siteFpJobsQ4 = 'site.fp.jobs.q4';
+  /// Create the job
+  static const siteFpJobsS1 = 'site.fp.jobs.s1';
+  /// Add the customer, address, work to do and checklist in under a minute.
+  static const siteFpJobsS1B = 'site.fp.jobs.s1_b';
+  /// Assign a technician
+  static const siteFpJobsS2 = 'site.fp.jobs.s2';
+  /// Pick who is free. The job appears on their phone with the address and details.
+  static const siteFpJobsS2B = 'site.fp.jobs.s2_b';
+  /// Work on site
+  static const siteFpJobsS3 = 'site.fp.jobs.s3';
+  /// The technician follows the job: photos, checklist and a voice note.
+  static const siteFpJobsS3B = 'site.fp.jobs.s3_b';
+  /// Close with proof
+  static const siteFpJobsS4 = 'site.fp.jobs.s4';
+  /// The manager reviews the report and the job is marked done.
+  static const siteFpJobsS4B = 'site.fp.jobs.s4_b';
+  /// In-app message
+  static const siteFpJobsTag = 'site.fp.jobs.tag';
+  /// Live job status
+  static const siteFpJobsTick1 = 'site.fp.jobs.tick1';
+  /// Works offline
+  static const siteFpJobsTick2 = 'site.fp.jobs.tick2';
+  /// Every job in one place — from booking to proof
+  static const siteFpJobsTitle = 'site.fp.jobs.title';
+  /// The same simple job flow works for every kind of field team.
+  static const siteFpJobsUseBody = 'site.fp.jobs.use_body';
+  /// Jobs for every trade
+  static const siteFpJobsUseTitle = 'site.fp.jobs.use_title';
   /// Learn more
   static const siteFpLearn = 'site.fp.learn';
-  /// Coming soon
-  static const siteFpSoon = 'site.fp.soon';
-  /// {name} in the KaamNishaan app
-  static const siteFpAltHero = 'site.fp.alt_hero';
-  /// Build your own checklist
-  static const siteFpBuildOwn = 'site.fp.build_own';
-  /// Features · Overview
-  static const siteFpOvPill = 'site.fp.ov.pill';
-  /// {n} tools. One app. Proof for every job.
-  static const siteFpOvTitle = 'site.fp.ov.title';
-  /// From the first photo to a customer review: jobs, photo proof, checklists, voice notes, AI reports, an AI assistant, PDF reports, customer sharing, offline mode and reviews — in one simple app your whole team can use.
-  static const siteFpOvBody = 'site.fp.ov.body';
-  /// {n} report languages
-  static const siteFpOvLangs = 'site.fp.ov.langs';
+  /// No. Each item has its own tag, so even if the signal drops in the middle of sending, the server keeps only one copy.
+  static const siteFpOfflineAns1 = 'site.fp.offline.ans1';
+  /// Your work is still there. The queue is kept on the phone and continues when the app opens again.
+  static const siteFpOfflineAns2 = 'site.fp.offline.ans2';
+  /// Yes. The recording is saved on the phone and written down after it is sent.
+  static const siteFpOfflineAns3 = 'site.fp.offline.ans3';
+  /// Yes, including {free}. Nothing to switch on.
+  static const siteFpOfflineAns4 = 'site.fp.offline.ans4';
+  /// Offline → capture → queue → sent. Nothing lost, nothing doubled.
+  static const siteFpOfflineAppBody = 'site.fp.offline.app_body';
+  /// A job with no signal
+  static const siteFpOfflineAppTitle = 'site.fp.offline.app_title';
+  /// Rooftops, basements and plant rooms rarely have signal. KaamNishaan saves every photo, answer and voice note on the phone, keeps it safe in a queue and sends it when you’re back online — nothing lost, nothing sent twice.
+  static const siteFpOfflineBody = 'site.fp.offline.body';
+  /// Keep working on the job
+  static const siteFpOfflineC1 = 'site.fp.offline.c1';
+  /// Photos, checklist answers, voice notes and typed notes all work with no connection.
+  static const siteFpOfflineC1B = 'site.fp.offline.c1_b';
+  /// Automatic sending
+  static const siteFpOfflineC2 = 'site.fp.offline.c2';
+  /// When signal returns, everything is sent in the background.
+  static const siteFpOfflineC2B = 'site.fp.offline.c2_b';
+  /// Nothing sent twice
+  static const siteFpOfflineC3 = 'site.fp.offline.c3';
+  /// Each photo and answer has its own tag, so it is saved once even if the signal drops mid-send.
+  static const siteFpOfflineC3B = 'site.fp.offline.c3_b';
+  /// See what’s waiting
+  static const siteFpOfflineC4 = 'site.fp.offline.c4';
+  /// Items still on the phone show “Saved on phone”, so you know what hasn’t been sent yet.
+  static const siteFpOfflineC4B = 'site.fp.offline.c4_b';
+  /// Safe if the app closes
+  static const siteFpOfflineC5 = 'site.fp.offline.c5';
+  /// The queue is kept in the app’s storage, so it survives a restart.
+  static const siteFpOfflineC5B = 'site.fp.offline.c5_b';
+  /// Easy on mobile data
+  static const siteFpOfflineC6 = 'site.fp.offline.c6';
+  /// Photos are made smaller on the phone before they are sent.
+  static const siteFpOfflineC6B = 'site.fp.offline.c6_b';
+  /// No more lost photos or half-sent reports.
+  static const siteFpOfflineCapBody = 'site.fp.offline.cap_body';
+  /// Built for places without signal
+  static const siteFpOfflineCapTitle = 'site.fp.offline.cap_title';
+  /// Works on rooftops and in basements.
+  static const siteFpOfflineCard = 'site.fp.offline.card';
+  /// Saved on this phone
+  static const siteFpOfflineChip1 = 'site.fp.offline.chip1';
+  /// 4 photos · 1 voice note waiting
+  static const siteFpOfflineChip1Sub = 'site.fp.offline.chip1_sub';
+  /// Sent at 4:12 PM
+  static const siteFpOfflineChip2 = 'site.fp.offline.chip2';
+  /// Each item sent once
+  static const siteFpOfflineChip2Sub = 'site.fp.offline.chip2_sub';
+  /// Keep working, even with no signal
+  static const siteFpOfflineCta = 'site.fp.offline.cta';
+  /// Four steps from no signal to everything safely sent.
+  static const siteFpOfflineHowBody = 'site.fp.offline.how_body';
+  /// How offline mode works
+  static const siteFpOfflineHowTitle = 'site.fp.offline.how_title';
+  /// Offline mode
+  static const siteFpOfflineName = 'site.fp.offline.name';
+  /// No signal
+  static const siteFpOfflineP1 = 'site.fp.offline.p1';
+  /// The app keeps working.
+  static const siteFpOfflineP1B = 'site.fp.offline.p1_b';
+  /// Capture as usual
+  static const siteFpOfflineP2 = 'site.fp.offline.p2';
+  /// Photos, checklist and voice.
+  static const siteFpOfflineP2B = 'site.fp.offline.p2_b';
+  /// Waiting to send
+  static const siteFpOfflineP3 = 'site.fp.offline.p3';
+  /// See what is still on the phone.
+  static const siteFpOfflineP3B = 'site.fp.offline.p3_b';
+  /// Sent
+  static const siteFpOfflineP4 = 'site.fp.offline.p4';
+  /// The manager gets it once.
+  static const siteFpOfflineP4B = 'site.fp.offline.p4_b';
+  /// Can anything be sent twice?
+  static const siteFpOfflineQ1 = 'site.fp.offline.q1';
+  /// What if the phone restarts before it sends?
+  static const siteFpOfflineQ2 = 'site.fp.offline.q2';
+  /// Do voice notes work offline too?
+  static const siteFpOfflineQ3 = 'site.fp.offline.q3';
+  /// Does offline mode work on every plan?
+  static const siteFpOfflineQ4 = 'site.fp.offline.q4';
+  /// Lose signal
+  static const siteFpOfflineS1 = 'site.fp.offline.s1';
+  /// The app tells you your work is being saved on the phone, and keeps working.
+  static const siteFpOfflineS1B = 'site.fp.offline.s1_b';
+  /// Keep working
+  static const siteFpOfflineS2 = 'site.fp.offline.s2';
+  /// Take photos, answer the checklist and record voice notes as usual.
+  static const siteFpOfflineS2B = 'site.fp.offline.s2_b';
+  /// Saved in a queue
+  static const siteFpOfflineS3 = 'site.fp.offline.s3';
+  /// Everything waits on the phone and shows “Saved on phone”.
+  static const siteFpOfflineS3B = 'site.fp.offline.s3_b';
+  /// Sent once
+  static const siteFpOfflineS4 = 'site.fp.offline.s4';
+  /// Back online, each item is sent once and the server confirms it.
+  static const siteFpOfflineS4B = 'site.fp.offline.s4_b';
+  /// Automatic
+  static const siteFpOfflineTag = 'site.fp.offline.tag';
+  /// Nothing lost
+  static const siteFpOfflineTick1 = 'site.fp.offline.tick1';
+  /// Nothing sent twice
+  static const siteFpOfflineTick2 = 'site.fp.offline.tick2';
+  /// Works with no signal. Syncs when you’re back.
+  static const siteFpOfflineTitle = 'site.fp.offline.title';
+  /// Built for the places field teams actually work.
+  static const siteFpOfflineUseBody = 'site.fp.offline.use_body';
+  /// Offline for every trade
+  static const siteFpOfflineUseTitle = 'site.fp.offline.use_title';
   /// The technician’s day and an approved report in the KaamNishaan app
   static const siteFpOvAlt = 'site.fp.ov.alt';
+  /// No. Every plan includes every feature, so use only what your team needs. Most teams start with jobs, photos and checklists, then add AI reports.
+  static const siteFpOvAns1 = 'site.fp.ov.ans1';
+  /// Not the features. Plans differ in how many technicians you can add, reports a month, AI questions a month and follow-up credits. See the pricing page for the numbers.
+  static const siteFpOvAns2 = 'site.fp.ov.ans2';
+  /// Yes. Photos, checklist answers and voice notes are saved on the phone and sent once the signal is back — each item only once.
+  static const siteFpOvAns3 = 'site.fp.ov.ans3';
+  /// Yes. You get {plan} free for {trial} days, with no card needed. After that, pick a plan or stay on {free}.
+  static const siteFpOvAns4 = 'site.fp.ov.ans4';
+  /// From the first photo to a customer review: jobs, photo proof, checklists, voice notes, AI reports, an AI assistant, PDF reports, customer sharing, offline mode and reviews — in one simple app your whole team can use.
+  static const siteFpOvBody = 'site.fp.ov.body';
   /// Report drafted from proof
   static const siteFpOvChip1 = 'site.fp.ov.chip1';
   /// Photos, checklist, voice note
@@ -3356,14 +7458,8 @@ abstract final class LangKeys {
   static const siteFpOvChip2 = 'site.fp.ov.chip2';
   /// Report sent in English
   static const siteFpOvChip2Sub = 'site.fp.ov.chip2_sub';
-  /// {n} tools, one app
-  static const siteFpOvGridEyebrow = 'site.fp.ov.grid_eyebrow';
-  /// Every feature, in one simple app
-  static const siteFpOvGridTitle = 'site.fp.ov.grid_title';
-  /// One job, start to finish
-  static const siteFpOvFitTitle = 'site.fp.ov.fit_title';
-  /// Every feature hands off to the next, so the proof builds itself while your team works.
-  static const siteFpOvFitBody = 'site.fp.ov.fit_body';
+  /// See every feature in action
+  static const siteFpOvCta = 'site.fp.ov.cta';
   /// Job
   static const siteFpOvF1 = 'site.fp.ov.f1';
   /// Create and assign it
@@ -3392,698 +7488,44 @@ abstract final class LangKeys {
   static const siteFpOvF7 = 'site.fp.ov.f7';
   /// Secure link or PDF
   static const siteFpOvF7B = 'site.fp.ov.f7_b';
+  /// Every feature hands off to the next, so the proof builds itself while your team works.
+  static const siteFpOvFitBody = 'site.fp.ov.fit_body';
+  /// One job, start to finish
+  static const siteFpOvFitTitle = 'site.fp.ov.fit_title';
+  /// {n} tools, one app
+  static const siteFpOvGridEyebrow = 'site.fp.ov.grid_eyebrow';
+  /// Every feature, in one simple app
+  static const siteFpOvGridTitle = 'site.fp.ov.grid_title';
+  /// {n} report languages
+  static const siteFpOvLangs = 'site.fp.ov.langs';
+  /// Features · Overview
+  static const siteFpOvPill = 'site.fp.ov.pill';
   /// Do I need to use every feature?
   static const siteFpOvQ1 = 'site.fp.ov.q1';
-  /// No. Every plan includes every feature, so use only what your team needs. Most teams start with jobs, photos and checklists, then add AI reports.
-  static const siteFpOvAns1 = 'site.fp.ov.ans1';
   /// What is different between the plans?
   static const siteFpOvQ2 = 'site.fp.ov.q2';
-  /// Not the features. Plans differ in how many technicians you can add, reports a month, AI questions a month and follow-up credits. See the pricing page for the numbers.
-  static const siteFpOvAns2 = 'site.fp.ov.ans2';
   /// Does it work without mobile signal?
   static const siteFpOvQ3 = 'site.fp.ov.q3';
-  /// Yes. Photos, checklist answers and voice notes are saved on the phone and sent once the signal is back — each item only once.
-  static const siteFpOvAns3 = 'site.fp.ov.ans3';
   /// Can I try every feature for free?
   static const siteFpOvQ4 = 'site.fp.ov.q4';
-  /// Yes. You get {plan} free for {trial} days, with no card needed. After that, pick a plan or stay on {free}.
-  static const siteFpOvAns4 = 'site.fp.ov.ans4';
-  /// See every feature in action
-  static const siteFpOvCta = 'site.fp.ov.cta';
-  /// Jobs
-  static const siteFpJobsName = 'site.fp.jobs.name';
-  /// Schedule, assign and track every visit.
-  static const siteFpJobsCard = 'site.fp.jobs.card';
-  /// Every job in one place — from booking to proof
-  static const siteFpJobsTitle = 'site.fp.jobs.title';
-  /// Create a job in seconds, assign the right technician and follow it live. Photos, checklists, voice notes and the report stay attached to the job — no more lost WhatsApp threads.
-  static const siteFpJobsBody = 'site.fp.jobs.body';
-  /// Live job status
-  static const siteFpJobsTick1 = 'site.fp.jobs.tick1';
-  /// Works offline
-  static const siteFpJobsTick2 = 'site.fp.jobs.tick2';
-  /// Assigned to Ramesh Patel
-  static const siteFpJobsChip1 = 'site.fp.jobs.chip1';
-  /// Green Valley Clinic · 11:00 AM
-  static const siteFpJobsChip1Sub = 'site.fp.jobs.chip1_sub';
-  /// In progress
-  static const siteFpJobsChip2 = 'site.fp.jobs.chip2';
-  /// 3 of 5 proof steps done
-  static const siteFpJobsChip2Sub = 'site.fp.jobs.chip2_sub';
-  /// How jobs work
-  static const siteFpJobsHowTitle = 'site.fp.jobs.how_title';
-  /// Four steps from booking to a closed job — everyone sees the same live status.
-  static const siteFpJobsHowBody = 'site.fp.jobs.how_body';
-  /// Create the job
-  static const siteFpJobsS1 = 'site.fp.jobs.s1';
-  /// Add the customer, address, work to do and checklist in under a minute.
-  static const siteFpJobsS1B = 'site.fp.jobs.s1_b';
-  /// Assign a technician
-  static const siteFpJobsS2 = 'site.fp.jobs.s2';
-  /// Pick who is free. The job appears on their phone with the address and details.
-  static const siteFpJobsS2B = 'site.fp.jobs.s2_b';
-  /// Work on site
-  static const siteFpJobsS3 = 'site.fp.jobs.s3';
-  /// The technician follows the job: photos, checklist and a voice note.
-  static const siteFpJobsS3B = 'site.fp.jobs.s3_b';
-  /// Close with proof
-  static const siteFpJobsS4 = 'site.fp.jobs.s4';
-  /// The manager reviews the report and the job is marked done.
-  static const siteFpJobsS4B = 'site.fp.jobs.s4_b';
-  /// Run the day without the phone calls
-  static const siteFpJobsCapTitle = 'site.fp.jobs.cap_title';
-  /// Everything a dispatcher needs, simple enough for every technician.
-  static const siteFpJobsCapBody = 'site.fp.jobs.cap_body';
-  /// Create a job in under a minute
-  static const siteFpJobsC1 = 'site.fp.jobs.c1';
-  /// Customer, address, work to do, date and checklist on one screen. Technicians can add a quick job on site too.
-  static const siteFpJobsC1B = 'site.fp.jobs.c1_b';
-  /// Assign the right person
-  static const siteFpJobsC2 = 'site.fp.jobs.c2';
-  /// See who is free and how many jobs they have. The technician gets a message in the app.
-  static const siteFpJobsC2B = 'site.fp.jobs.c2_b';
-  /// In-app message
-  static const siteFpJobsTag = 'site.fp.jobs.tag';
-  /// Live job status
-  static const siteFpJobsC3 = 'site.fp.jobs.c3';
-  /// Unassigned, assigned, in progress, in review, changes asked, done — updated as the work happens.
-  static const siteFpJobsC3B = 'site.fp.jobs.c3_b';
-  /// A simple Today view
-  static const siteFpJobsC4 = 'site.fp.jobs.c4';
-  /// Each technician opens the app to today’s jobs, in order, in their own language.
-  static const siteFpJobsC4B = 'site.fp.jobs.c4_b';
-  /// Directions and calls
-  static const siteFpJobsC5 = 'site.fp.jobs.c5';
-  /// One tap opens Google Maps or calls the customer, right from the job.
-  static const siteFpJobsC5B = 'site.fp.jobs.c5_b';
-  /// Everything filed to the job
-  static const siteFpJobsC6 = 'site.fp.jobs.c6';
-  /// Photos, checklist, voice notes and the report stay attached and easy to find later.
-  static const siteFpJobsC6B = 'site.fp.jobs.c6_b';
-  /// A job, from booking to done
-  static const siteFpJobsAppTitle = 'site.fp.jobs.app_title';
-  /// Create → assign → work → review. Everyone sees the same job.
-  static const siteFpJobsAppBody = 'site.fp.jobs.app_body';
-  /// Create the job
-  static const siteFpJobsP1 = 'site.fp.jobs.p1';
-  /// Customer, address and checklist in one screen.
-  static const siteFpJobsP1B = 'site.fp.jobs.p1_b';
-  /// Assign a technician
-  static const siteFpJobsP2 = 'site.fp.jobs.p2';
-  /// Pick who is free; they get a message.
-  static const siteFpJobsP2B = 'site.fp.jobs.p2_b';
-  /// The technician’s day
-  static const siteFpJobsP3 = 'site.fp.jobs.p3';
-  /// Today’s jobs, in order, in their language.
-  static const siteFpJobsP3B = 'site.fp.jobs.p3_b';
-  /// Track every job
-  static const siteFpJobsP4 = 'site.fp.jobs.p4';
-  /// The manager’s home shows what needs review.
-  static const siteFpJobsP4B = 'site.fp.jobs.p4_b';
-  /// Jobs for every trade
-  static const siteFpJobsUseTitle = 'site.fp.jobs.use_title';
-  /// The same simple job flow works for every kind of field team.
-  static const siteFpJobsUseBody = 'site.fp.jobs.use_body';
-  /// Can technicians see only their own jobs?
-  static const siteFpJobsQ1 = 'site.fp.jobs.q1';
-  /// Yes. Technicians see the jobs given to them. Owners and managers see every job, can filter by technician or status, and search by customer or address.
-  static const siteFpJobsAns1 = 'site.fp.jobs.ans1';
-  /// Can I reassign a job?
-  static const siteFpJobsQ2 = 'site.fp.jobs.q2';
-  /// Yes, until the technician starts it. After that the job stays with that technician, so all its proof comes from one person.
-  static const siteFpJobsAns2 = 'site.fp.jobs.ans2';
-  /// Can technicians add a job themselves?
-  static const siteFpJobsQ3 = 'site.fp.jobs.q3';
-  /// Yes. A technician can start a quick job on site — for example when the customer asks for one more unit to be checked.
-  static const siteFpJobsAns3 = 'site.fp.jobs.ans3';
-  /// Does the customer need the app?
-  static const siteFpJobsQ4 = 'site.fp.jobs.q4';
-  /// No. Customers get the report as a secure link or a PDF. Only your team uses the app.
-  static const siteFpJobsAns4 = 'site.fp.jobs.ans4';
-  /// Put every job in one place
-  static const siteFpJobsCta = 'site.fp.jobs.cta';
-  /// Evidence capture
-  static const siteFpEvidenceName = 'site.fp.evidence.name';
-  /// Timestamped before, during and after photos.
-  static const siteFpEvidenceCard = 'site.fp.evidence.card';
-  /// Photo proof for every job — timestamped and filed
-  static const siteFpEvidenceTitle = 'site.fp.evidence.title';
-  /// Before, during and after photos keep the time and place they were taken and go straight to the right job. When a customer asks “was it really done?”, the answer is one tap away.
-  static const siteFpEvidenceBody = 'site.fp.evidence.body';
-  /// Time and place on every photo
-  static const siteFpEvidenceTick1 = 'site.fp.evidence.tick1';
-  /// Works offline
-  static const siteFpEvidenceTick2 = 'site.fp.evidence.tick2';
-  /// Before and after paired
-  static const siteFpEvidenceChip1 = 'site.fp.evidence.chip1';
-  /// Air filter · room 2
-  static const siteFpEvidenceChip1Sub = 'site.fp.evidence.chip1_sub';
-  /// 6 photos · timestamped
-  static const siteFpEvidenceChip2 = 'site.fp.evidence.chip2';
-  /// 31 Oct, 11:42 AM · on site
-  static const siteFpEvidenceChip2Sub = 'site.fp.evidence.chip2_sub';
-  /// How evidence capture works
-  static const siteFpEvidenceHowTitle = 'site.fp.evidence.how_title';
-  /// Four steps from the first photo to proof your customer can see.
-  static const siteFpEvidenceHowBody = 'site.fp.evidence.how_body';
-  /// Open the job
-  static const siteFpEvidenceS1 = 'site.fp.evidence.s1';
-  /// The app shows which photos this job needs — before, during and after.
-  static const siteFpEvidenceS1B = 'site.fp.evidence.s1_b';
-  /// Take before photos
-  static const siteFpEvidenceS2 = 'site.fp.evidence.s2';
-  /// Photograph the problem first. Time and place are saved automatically.
-  static const siteFpEvidenceS2B = 'site.fp.evidence.s2_b';
-  /// Do the work
-  static const siteFpEvidenceS3 = 'site.fp.evidence.s3';
-  /// Add during photos as you go. Nothing to name, sort or upload.
-  static const siteFpEvidenceS3B = 'site.fp.evidence.s3_b';
-  /// Show the after
-  static const siteFpEvidenceS4 = 'site.fp.evidence.s4';
-  /// After photos are paired with the before shots for a side-by-side view.
-  static const siteFpEvidenceS4B = 'site.fp.evidence.s4_b';
-  /// Proof nobody can argue with
-  static const siteFpEvidenceCapTitle = 'site.fp.evidence.cap_title';
-  /// Simple enough for any technician. Strong enough to settle a dispute.
-  static const siteFpEvidenceCapBody = 'site.fp.evidence.cap_body';
-  /// Time and place saved
-  static const siteFpEvidenceC1 = 'site.fp.evidence.c1';
-  /// Every photo keeps when and where it was taken. No settings to remember.
-  static const siteFpEvidenceC1B = 'site.fp.evidence.c1_b';
-  /// Automatic
-  static const siteFpEvidenceTag = 'site.fp.evidence.tag';
-  /// Filed to the right job
-  static const siteFpEvidenceC2 = 'site.fp.evidence.c2';
-  /// Photos go straight to the job — never to a personal gallery or chat.
-  static const siteFpEvidenceC2B = 'site.fp.evidence.c2_b';
-  /// Before and after, side by side
-  static const siteFpEvidenceC3 = 'site.fp.evidence.c3';
-  /// Matching shots are paired in the report so customers see the difference.
-  static const siteFpEvidenceC3B = 'site.fp.evidence.c3_b';
-  /// Works with no signal
-  static const siteFpEvidenceC4 = 'site.fp.evidence.c4';
-  /// Photos are saved on the phone and sent when you are back online.
-  static const siteFpEvidenceC4B = 'site.fp.evidence.c4_b';
-  /// Can’t be changed later
-  static const siteFpEvidenceC5 = 'site.fp.evidence.c5';
-  /// Once the report is in, photos are locked with a fingerprint. Notes can still be added.
-  static const siteFpEvidenceC5B = 'site.fp.evidence.c5_b';
-  /// Easy to find later
-  static const siteFpEvidenceC6 = 'site.fp.evidence.c6';
-  /// Search jobs by customer or address and open the photos months later.
-  static const siteFpEvidenceC6B = 'site.fp.evidence.c6_b';
-  /// From the first photo to the report
-  static const siteFpEvidenceAppTitle = 'site.fp.evidence.app_title';
-  /// Open the job → take photos → check → report. No sorting, no uploading.
-  static const siteFpEvidenceAppBody = 'site.fp.evidence.app_body';
-  /// Open the proof steps
-  static const siteFpEvidenceP1 = 'site.fp.evidence.p1';
-  /// See which photos the job needs.
-  static const siteFpEvidenceP1B = 'site.fp.evidence.p1_b';
-  /// Take the photo
-  static const siteFpEvidenceP2 = 'site.fp.evidence.p2';
-  /// Big buttons, one hand, any light.
-  static const siteFpEvidenceP2B = 'site.fp.evidence.p2_b';
-  /// Check the photos
-  static const siteFpEvidenceP3 = 'site.fp.evidence.p3';
-  /// Before, during and after, in order.
-  static const siteFpEvidenceP3B = 'site.fp.evidence.p3_b';
-  /// Ready for the report
-  static const siteFpEvidenceP4 = 'site.fp.evidence.p4';
-  /// Photos flow into the report review.
-  static const siteFpEvidenceP4B = 'site.fp.evidence.p4_b';
-  /// Photo proof for every trade
-  static const siteFpEvidenceUseTitle = 'site.fp.evidence.use_title';
-  /// Whatever the work, the before and after tell the story.
-  static const siteFpEvidenceUseBody = 'site.fp.evidence.use_body';
-  /// Can photos be edited or replaced after the job?
-  static const siteFpEvidenceQ1 = 'site.fp.evidence.q1';
-  /// No. Once the report is sent for review, photos are locked: their time, place and who took them can’t change. A manager can still add notes.
-  static const siteFpEvidenceAns1 = 'site.fp.evidence.ans1';
-  /// Do photos use a lot of mobile data?
-  static const siteFpEvidenceQ2 = 'site.fp.evidence.q2';
-  /// No. Photos are made smaller on the phone before they are sent, so a job uses little data.
-  static const siteFpEvidenceAns2 = 'site.fp.evidence.ans2';
-  /// What happens if there is no signal on site?
-  static const siteFpEvidenceQ3 = 'site.fp.evidence.q3';
-  /// Keep working. Photos wait on the phone and are sent once you are back online — each one only once.
-  static const siteFpEvidenceAns3 = 'site.fp.evidence.ans3';
-  /// Can customers see the photos?
-  static const siteFpEvidenceQ4 = 'site.fp.evidence.q4';
-  /// Yes, the ones in the approved report. Customers get a copy without the location data hidden in the file.
-  static const siteFpEvidenceAns4 = 'site.fp.evidence.ans4';
-  /// Give every job its photo proof
-  static const siteFpEvidenceCta = 'site.fp.evidence.cta';
-  /// Checklists
-  static const siteFpChecklistsName = 'site.fp.checklists.name';
-  /// Ready templates, answered on site with one tap.
-  static const siteFpChecklistsCard = 'site.fp.checklists.card';
-  /// Checklists your team actually finishes
-  static const siteFpChecklistsTitle = 'site.fp.checklists.title';
-  /// Start from a ready template or build your own, ask for photos where they matter, and let technicians answer with one tap — in their own language. Every answer goes straight into the report.
-  static const siteFpChecklistsBody = 'site.fp.checklists.body';
-  /// Photo rules per question
-  static const siteFpChecklistsTick1 = 'site.fp.checklists.tick1';
-  /// Can’t be skipped
-  static const siteFpChecklistsTick2 = 'site.fp.checklists.tick2';
-  /// Question 3 of 12
-  static const siteFpChecklistsChip1 = 'site.fp.checklists.chip1';
-  /// Is the air filter clean?
-  static const siteFpChecklistsChip1Sub = 'site.fp.checklists.chip1_sub';
-  /// Photo needed
-  static const siteFpChecklistsChip2 = 'site.fp.checklists.chip2';
-  /// The report waits for it
-  static const siteFpChecklistsChip2Sub = 'site.fp.checklists.chip2_sub';
-  /// How checklists work
-  static const siteFpChecklistsHowTitle = 'site.fp.checklists.how_title';
-  /// Four steps from a template to answers in the report.
-  static const siteFpChecklistsHowBody = 'site.fp.checklists.how_body';
-  /// Pick a template
-  static const siteFpChecklistsS1 = 'site.fp.checklists.s1';
-  /// Start from a ready KaamNishaan checklist, or build your own in minutes.
-  static const siteFpChecklistsS1B = 'site.fp.checklists.s1_b';
-  /// Attach it to the job
-  static const siteFpChecklistsS2 = 'site.fp.checklists.s2';
-  /// Choose the checklist when you create the job. Later edits never change a running job.
-  static const siteFpChecklistsS2B = 'site.fp.checklists.s2_b';
-  /// Answer on site
-  static const siteFpChecklistsS3 = 'site.fp.checklists.s3';
-  /// One question at a time, with big buttons and photo prompts.
-  static const siteFpChecklistsS3B = 'site.fp.checklists.s3_b';
-  /// Results in the report
-  static const siteFpChecklistsS4 = 'site.fp.checklists.s4';
-  /// Every answer and reading appears in the report next to its photo.
-  static const siteFpChecklistsS4B = 'site.fp.checklists.s4_b';
-  /// Simple for technicians, complete for managers
-  static const siteFpChecklistsCapTitle = 'site.fp.checklists.cap_title';
-  /// Every visit follows the same steps — and nothing gets skipped.
-  static const siteFpChecklistsCapBody = 'site.fp.checklists.cap_body';
-  /// Ready templates
-  static const siteFpChecklistsC1 = 'site.fp.checklists.c1';
-  /// KaamNishaan checklists are ready on day one. Copy one to make it your own.
-  static const siteFpChecklistsC1B = 'site.fp.checklists.c1_b';
-  /// Photo rules
-  static const siteFpChecklistsC2 = 'site.fp.checklists.c2';
-  /// Ask for a photo every time, or only when the answer is No or Fail.
-  static const siteFpChecklistsC2B = 'site.fp.checklists.c2_b';
-  /// Required
-  static const siteFpChecklistsTag = 'site.fp.checklists.tag';
-  /// The right kind of answer
-  static const siteFpChecklistsC3 = 'site.fp.checklists.c3';
-  /// Yes / No, Pass / Fail, a number with its unit, a few words or a photo.
-  static const siteFpChecklistsC3B = 'site.fp.checklists.c3_b';
-  /// One question at a time
-  static const siteFpChecklistsC4 = 'site.fp.checklists.c4';
-  /// Large text and buttons that are easy to use on a roof or in bright sun.
-  static const siteFpChecklistsC4B = 'site.fp.checklists.c4_b';
-  /// In the technician’s language
-  static const siteFpChecklistsC5 = 'site.fp.checklists.c5';
-  /// KaamNishaan’s ready checklists come in English, Hindi, Gujarati, Spanish and French.
-  static const siteFpChecklistsC5B = 'site.fp.checklists.c5_b';
-  /// Can’t skip, can’t forget
-  static const siteFpChecklistsC6 = 'site.fp.checklists.c6';
-  /// Required questions, and their photos, must be done before the report can be made.
-  static const siteFpChecklistsC6B = 'site.fp.checklists.c6_b';
-  /// A checklist, start to finish
-  static const siteFpChecklistsAppTitle = 'site.fp.checklists.app_title';
-  /// Job → checklist → answers → report. One tap per question.
-  static const siteFpChecklistsAppBody = 'site.fp.checklists.app_body';
-  /// Open the job
-  static const siteFpChecklistsP1 = 'site.fp.checklists.p1';
-  /// The checklist is already attached.
-  static const siteFpChecklistsP1B = 'site.fp.checklists.p1_b';
-  /// See the checklist
-  static const siteFpChecklistsP2 = 'site.fp.checklists.p2';
-  /// Progress at a glance.
-  static const siteFpChecklistsP2B = 'site.fp.checklists.p2_b';
-  /// Answer one question
-  static const siteFpChecklistsP3 = 'site.fp.checklists.p3';
-  /// Yes, No, or take a photo.
-  static const siteFpChecklistsP3B = 'site.fp.checklists.p3_b';
-  /// Results in the report
-  static const siteFpChecklistsP4 = 'site.fp.checklists.p4';
-  /// Answers land next to the photos.
-  static const siteFpChecklistsP4B = 'site.fp.checklists.p4_b';
-  /// Checklists for every trade
-  static const siteFpChecklistsUseTitle = 'site.fp.checklists.use_title';
-  /// See which trades have ready checklists today. For the others, build your own in minutes.
-  static const siteFpChecklistsUseBody = 'site.fp.checklists.use_body';
-  /// Can I edit the ready templates?
-  static const siteFpChecklistsQ1 = 'site.fp.checklists.q1';
-  /// Yes. Copy a KaamNishaan checklist, then change, reorder or remove any question and add your own. Your copy is saved for your team.
-  static const siteFpChecklistsAns1 = 'site.fp.checklists.ans1';
-  /// Which trades have ready checklists?
-  static const siteFpChecklistsQ2 = 'site.fp.checklists.q2';
-  /// The list above shows it live. HVAC comes first; more trades are being added. Any team can build its own checklist today.
-  static const siteFpChecklistsAns2 = 'site.fp.checklists.ans2';
-  /// What if I change a checklist while jobs are running?
-  static const siteFpChecklistsQ3 = 'site.fp.checklists.q3';
-  /// Running jobs keep the questions they started with. Your change applies to new jobs.
-  static const siteFpChecklistsAns3 = 'site.fp.checklists.ans3';
-  /// Do checklist answers show in the report?
-  static const siteFpChecklistsQ4 = 'site.fp.checklists.q4';
-  /// Yes. The customer sees each answer and reading, with the photos taken for it.
-  static const siteFpChecklistsAns4 = 'site.fp.checklists.ans4';
-  /// Make every visit follow the same steps
-  static const siteFpChecklistsCta = 'site.fp.checklists.cta';
-  /// Voice notes
-  static const siteFpVoiceName = 'site.fp.voice.name';
-  /// Speak in your language. It is written down for the report.
-  static const siteFpVoiceCard = 'site.fp.voice.card';
-  /// Speak your notes. We write them down.
-  static const siteFpVoiceTitle = 'site.fp.voice.title';
-  /// Technicians record a quick voice note in Hindi, Gujarati, Spanish, French or English. KaamNishaan writes down what they said, and the AI report uses it — in the language your customer reads.
-  static const siteFpVoiceBody = 'site.fp.voice.body';
-  /// No typing on site
-  static const siteFpVoiceTick1 = 'site.fp.voice.tick1';
-  /// Works offline
-  static const siteFpVoiceTick2 = 'site.fp.voice.tick2';
-  /// Voice note · 0:42
-  static const siteFpVoiceChip1 = 'site.fp.voice.chip1';
-  /// Spoken in Gujarati
-  static const siteFpVoiceChip1Sub = 'site.fp.voice.chip1_sub';
-  /// Written down
-  static const siteFpVoiceChip2 = 'site.fp.voice.chip2';
-  /// Original recording kept
-  static const siteFpVoiceChip2Sub = 'site.fp.voice.chip2_sub';
-  /// How voice notes work
-  static const siteFpVoiceHowTitle = 'site.fp.voice.how_title';
-  /// Four steps from a spoken note to a clear line in the report.
-  static const siteFpVoiceHowBody = 'site.fp.voice.how_body';
-  /// Tap and speak
-  static const siteFpVoiceS1 = 'site.fp.voice.s1';
-  /// Press the big mic button and say what you did, in your own words.
-  static const siteFpVoiceS1B = 'site.fp.voice.s1_b';
-  /// Any of 5 languages
-  static const siteFpVoiceS2 = 'site.fp.voice.s2';
-  /// Hindi, Gujarati, Spanish, French or English. The language is found for you.
-  static const siteFpVoiceS2B = 'site.fp.voice.s2_b';
-  /// Written down
-  static const siteFpVoiceS3 = 'site.fp.voice.s3';
-  /// The note is written down word for word. You can fix a word if needed.
-  static const siteFpVoiceS3B = 'site.fp.voice.s3_b';
-  /// Into the report
-  static const siteFpVoiceS4 = 'site.fp.voice.s4';
-  /// The AI report uses it, and the manager can play the original recording.
-  static const siteFpVoiceS4B = 'site.fp.voice.s4_b';
-  /// Built for people who would rather talk than type
-  static const siteFpVoiceCapTitle = 'site.fp.voice.cap_title';
-  /// The fastest way to record what happened on site.
-  static const siteFpVoiceCapBody = 'site.fp.voice.cap_body';
-  /// Speak in your language
-  static const siteFpVoiceC1 = 'site.fp.voice.c1';
-  /// Technicians talk the way they normally do. No spelling, no typing.
-  static const siteFpVoiceC1B = 'site.fp.voice.c1_b';
-  /// Recording always kept
-  static const siteFpVoiceC2 = 'site.fp.voice.c2';
-  /// The original audio stays with the job, next to the written version, and is never changed.
-  static const siteFpVoiceC2B = 'site.fp.voice.c2_b';
-  /// Original kept
-  static const siteFpVoiceTag = 'site.fp.voice.tag';
-  /// Word for word
-  static const siteFpVoiceC3 = 'site.fp.voice.c3';
-  /// What was said is written down as it was said. The AI report turns it into clear sentences.
-  static const siteFpVoiceC3B = 'site.fp.voice.c3_b';
-  /// Report in the customer’s language
-  static const siteFpVoiceC4 = 'site.fp.voice.c4';
-  /// Speak Gujarati, send English — or any of the 5 languages.
-  static const siteFpVoiceC4B = 'site.fp.voice.c4_b';
-  /// Speak to change
-  static const siteFpVoiceC5 = 'site.fp.voice.c5';
-  /// Missed something? Record again. The earlier note stays until you delete it.
-  static const siteFpVoiceC5B = 'site.fp.voice.c5_b';
-  /// Works offline
-  static const siteFpVoiceC6 = 'site.fp.voice.c6';
-  /// Record with no signal. The note is saved on the phone and sent when you are back online.
-  static const siteFpVoiceC6B = 'site.fp.voice.c6_b';
-  /// Speak Gujarati. Send English.
-  static const siteFpVoiceAppTitle = 'site.fp.voice.app_title';
-  /// Ramesh speaks Gujarati on site. The AI drafts the report in English from his voice note and photos.
-  static const siteFpVoiceAppBody = 'site.fp.voice.app_body';
-  /// Voice notes for every trade
-  static const siteFpVoiceUseTitle = 'site.fp.voice.use_title';
-  /// Hands busy or gloves on? Say it instead of typing it.
-  static const siteFpVoiceUseBody = 'site.fp.voice.use_body';
-  /// Which languages can technicians speak in?
-  static const siteFpVoiceQ1 = 'site.fp.voice.q1';
-  /// English, Hindi, Gujarati, Spanish and French. They can pick the language before recording, or let KaamNishaan find it.
-  static const siteFpVoiceAns1 = 'site.fp.voice.ans1';
-  /// Is the original recording kept?
-  static const siteFpVoiceQ2 = 'site.fp.voice.q2';
-  /// Yes. The audio is part of the job’s proof. It is never changed, and managers can play it next to the written version.
-  static const siteFpVoiceAns2 = 'site.fp.voice.ans2';
-  /// Can I correct what was written down?
-  static const siteFpVoiceQ3 = 'site.fp.voice.q3';
-  /// Yes. Fix any word in the written version. The recording itself stays as it was.
-  static const siteFpVoiceAns3 = 'site.fp.voice.ans3';
-  /// How long can a voice note be?
-  static const siteFpVoiceQ4 = 'site.fp.voice.q4';
-  /// Up to 10 minutes. Most notes are under a minute. You can record more than one note per job.
-  static const siteFpVoiceAns4 = 'site.fp.voice.ans4';
-  /// Let your team speak their language
-  static const siteFpVoiceCta = 'site.fp.voice.cta';
-  /// AI reports
-  static const siteFpReportsName = 'site.fp.reports.name';
-  /// Drafted from real proof. Never invents work.
-  static const siteFpReportsCard = 'site.fp.reports.card';
-  /// Reports that write themselves — from real proof
-  static const siteFpReportsTitle = 'site.fp.reports.title';
-  /// KaamNishaan AI turns the photos, checklist answers and voice notes from a job into a clear, customer-ready report. Every sentence links back to its proof, and nothing is sent until a manager approves.
-  static const siteFpReportsBody = 'site.fp.reports.body';
-  /// Never invents work
-  static const siteFpReportsTick1 = 'site.fp.reports.tick1';
-  /// 5 report languages
-  static const siteFpReportsTick2 = 'site.fp.reports.tick2';
-  /// Every sentence linked
-  static const siteFpReportsChip1 = 'site.fp.reports.chip1';
-  /// 6 photos · 11 checks · 1 voice note
-  static const siteFpReportsChip1Sub = 'site.fp.reports.chip1_sub';
-  /// Spoken in Gujarati
-  static const siteFpReportsChip2 = 'site.fp.reports.chip2';
-  /// Report written in English
-  static const siteFpReportsChip2Sub = 'site.fp.reports.chip2_sub';
-  /// How AI reports work
-  static const siteFpReportsHowTitle = 'site.fp.reports.how_title';
-  /// Four steps from the job site to your customer — your technician never types a paragraph.
-  static const siteFpReportsHowBody = 'site.fp.reports.how_body';
-  /// Capture the proof
-  static const siteFpReportsS1 = 'site.fp.reports.s1';
-  /// Before, during and after photos are saved with time and place and filed to the job.
-  static const siteFpReportsS1B = 'site.fp.reports.s1_b';
-  /// Speak your notes
-  static const siteFpReportsS2 = 'site.fp.reports.s2';
-  /// Record a voice note in Hindi, Gujarati, Spanish, French or English.
-  static const siteFpReportsS2B = 'site.fp.reports.s2_b';
-  /// AI drafts the report
-  static const siteFpReportsS3 = 'site.fp.reports.s3';
-  /// Photos, checklist answers and the voice note become a clear draft.
-  static const siteFpReportsS3B = 'site.fp.reports.s3_b';
-  /// Approve and send
-  static const siteFpReportsS4 = 'site.fp.reports.s4';
-  /// A manager reviews and approves, then shares a secure link or PDF.
-  static const siteFpReportsS4B = 'site.fp.reports.s4_b';
-  /// Built to be trusted, not just fast
-  static const siteFpReportsCapTitle = 'site.fp.reports.cap_title';
-  /// AI that only writes what your team can prove.
-  static const siteFpReportsCapBody = 'site.fp.reports.cap_body';
-  /// Drafts from photos, checklist and voice
-  static const siteFpReportsC1 = 'site.fp.reports.c1';
-  /// One tap turns a job’s proof into a summary, the work done and advice for the customer.
-  static const siteFpReportsC1B = 'site.fp.reports.c1_b';
-  /// Never invents work
-  static const siteFpReportsC2 = 'site.fp.reports.c2';
-  /// Every sentence links to the photo, checklist answer or voice note it came from.
-  static const siteFpReportsC2B = 'site.fp.reports.c2_b';
-  /// Linked to proof
-  static const siteFpReportsTag = 'site.fp.reports.tag';
-  /// Easy to edit
-  static const siteFpReportsC3 = 'site.fp.reports.c3';
-  /// Change any part in your own words — or with your phone’s voice typing — or ask the AI to write one part again.
-  static const siteFpReportsC3B = 'site.fp.reports.c3_b';
-  /// Choose the report language
-  static const siteFpReportsC4 = 'site.fp.reports.c4';
-  /// Technicians speak their language. Reports go out in English, Hindi, Gujarati, Spanish or French.
-  static const siteFpReportsC4B = 'site.fp.reports.c4_b';
-  /// Missing-proof check
-  static const siteFpReportsC5 = 'site.fp.reports.c5';
-  /// Flags a missing after photo or an unanswered question before the report goes for review.
-  static const siteFpReportsC5B = 'site.fp.reports.c5_b';
-  /// Manager approval
-  static const siteFpReportsC6 = 'site.fp.reports.c6';
-  /// Nothing reaches the customer until a manager approves — or asks for changes.
-  static const siteFpReportsC6B = 'site.fp.reports.c6_b';
-  /// From a voice note to a finished report
-  static const siteFpReportsAppTitle = 'site.fp.reports.app_title';
-  /// Ramesh speaks Gujarati on site. The AI drafts the report in English, linked to his photos and checklist answers.
-  static const siteFpReportsAppBody = 'site.fp.reports.app_body';
-  /// AI reports for every trade
-  static const siteFpReportsUseTitle = 'site.fp.reports.use_title';
-  /// The report is written from the job’s own proof, whatever the work.
-  static const siteFpReportsUseBody = 'site.fp.reports.use_body';
-  /// Can the AI invent work that wasn’t done?
-  static const siteFpReportsQ1 = 'site.fp.reports.q1';
-  /// No. The draft only describes what is in the job’s photos, checklist answers and voice notes. Every sentence links to its proof, and a manager approves the report before the customer sees it.
-  static const siteFpReportsAns1 = 'site.fp.reports.ans1';
-  /// Which languages can reports be written in?
-  static const siteFpReportsQ2 = 'site.fp.reports.q2';
-  /// English, Hindi, Gujarati, Spanish and French. The technician can speak one language and the customer can read another.
-  static const siteFpReportsAns2 = 'site.fp.reports.ans2';
-  /// Can I edit the draft before it’s sent?
-  static const siteFpReportsQ3 = 'site.fp.reports.q3';
-  /// Yes. The technician can change any part before sending it for review, and the manager can ask for changes before approving.
-  static const siteFpReportsAns3 = 'site.fp.reports.ans3';
-  /// Do AI reports cost extra?
-  static const siteFpReportsQ4 = 'site.fp.reports.q4';
-  /// No. AI reports are included on every plan. Plans differ in how many reports you can make each month.
-  static const siteFpReportsAns4 = 'site.fp.reports.ans4';
-  /// Let AI write your next report
-  static const siteFpReportsCta = 'site.fp.reports.cta';
-  /// AI assistant
-  static const siteFpAssistantName = 'site.fp.assistant.name';
-  /// Ask anything about your jobs and reports.
-  static const siteFpAssistantCard = 'site.fp.assistant.card';
-  /// Ask about any job — get answers with sources
-  static const siteFpAssistantTitle = 'site.fp.assistant.title';
-  /// Ask a question like “When did we last visit Green Valley Clinic?” KaamNishaan AI looks through your company’s jobs and reports and tells you which ones it used.
-  static const siteFpAssistantBody = 'site.fp.assistant.body';
-  /// Answers name their sources
-  static const siteFpAssistantTick1 = 'site.fp.assistant.tick1';
-  /// Only your company’s data
-  static const siteFpAssistantTick2 = 'site.fp.assistant.tick2';
-  /// Answer from Report #R-0988
-  static const siteFpAssistantChip1 = 'site.fp.assistant.chip1';
-  /// 12 Aug · approved by Priya
-  static const siteFpAssistantChip1Sub = 'site.fp.assistant.chip1_sub';
-  /// Looks through recent jobs
-  static const siteFpAssistantChip2 = 'site.fp.assistant.chip2';
-  /// Customers, status and reports
-  static const siteFpAssistantChip2Sub = 'site.fp.assistant.chip2_sub';
-  /// How the AI assistant works
-  static const siteFpAssistantHowTitle = 'site.fp.assistant.how_title';
-  /// Four steps from a question to an answer you can check.
-  static const siteFpAssistantHowBody = 'site.fp.assistant.how_body';
-  /// Ask a question
-  static const siteFpAssistantS1 = 'site.fp.assistant.s1';
-  /// Type it, or use your phone’s voice typing, the way you would ask a colleague.
-  static const siteFpAssistantS1B = 'site.fp.assistant.s1_b';
-  /// It looks through your jobs
-  static const siteFpAssistantS2 = 'site.fp.assistant.s2';
-  /// Your recent jobs, plus older ones that match the customer or job you named.
-  static const siteFpAssistantS2B = 'site.fp.assistant.s2_b';
-  /// Get a short answer
-  static const siteFpAssistantS3 = 'site.fp.assistant.s3';
-  /// A plain answer in your app’s language — not a list of files to dig through.
-  static const siteFpAssistantS3B = 'site.fp.assistant.s3_b';
-  /// See the source
-  static const siteFpAssistantS4 = 'site.fp.assistant.s4';
-  /// Each answer names the reports and jobs it came from.
-  static const siteFpAssistantS4B = 'site.fp.assistant.s4_b';
-  /// Answers you can check
-  static const siteFpAssistantCapTitle = 'site.fp.assistant.cap_title';
-  /// The assistant only answers from your own job records.
-  static const siteFpAssistantCapBody = 'site.fp.assistant.cap_body';
-  /// Ask in plain language
-  static const siteFpAssistantC1 = 'site.fp.assistant.c1';
-  /// No filters or search codes. Ready chips like “What is missing?” help you start.
-  static const siteFpAssistantC1B = 'site.fp.assistant.c1_b';
-  /// Every answer has a source
-  static const siteFpAssistantC2 = 'site.fp.assistant.c2';
-  /// Answers name the report and job numbers they used. Numbers it can’t find are dropped.
-  static const siteFpAssistantC2B = 'site.fp.assistant.c2_b';
-  /// Sources named
-  static const siteFpAssistantTag = 'site.fp.assistant.tag';
-  /// Knows what is missing
-  static const siteFpAssistantC3 = 'site.fp.assistant.c3';
-  /// Ask which jobs still need photos or a report, and see them in one answer.
-  static const siteFpAssistantC3B = 'site.fp.assistant.c3_b';
-  /// Answers in your language
-  static const siteFpAssistantC4 = 'site.fp.assistant.c4';
-  /// Ask in English, Hindi, Gujarati, Spanish or French and get the answer in the same language.
-  static const siteFpAssistantC4B = 'site.fp.assistant.c4_b';
-  /// Your data stays yours
-  static const siteFpAssistantC5 = 'site.fp.assistant.c5';
-  /// Only your own company’s jobs are used. Nothing from other companies.
-  static const siteFpAssistantC5B = 'site.fp.assistant.c5_b';
-  /// For owners and managers
-  static const siteFpAssistantC6 = 'site.fp.assistant.c6';
-  /// The office asks; technicians keep their app simple and focused on today’s jobs.
-  static const siteFpAssistantC6B = 'site.fp.assistant.c6_b';
-  /// Try it: ask about any job
-  static const siteFpAssistantAppTitle = 'site.fp.assistant.app_title';
-  /// Plain questions, short answers, and the reports they came from.
-  static const siteFpAssistantAppBody = 'site.fp.assistant.app_body';
-  /// When did we last visit Green Valley Clinic?
-  static const siteFpAssistantAsk1 = 'site.fp.assistant.ask1';
-  /// Which jobs are still missing proof?
-  static const siteFpAssistantAsk2 = 'site.fp.assistant.ask2';
-  /// Which reports are waiting for approval?
-  static const siteFpAssistantAsk3 = 'site.fp.assistant.ask3';
-  /// Questions every trade asks
-  static const siteFpAssistantUseTitle = 'site.fp.assistant.use_title';
-  /// Last visits, open jobs and missing proof — for every kind of field team.
-  static const siteFpAssistantUseBody = 'site.fp.assistant.use_body';
-  /// Who can use the AI assistant?
-  static const siteFpAssistantQ1 = 'site.fp.assistant.q1';
-  /// Owners and managers, from the Me tab in the app.
-  static const siteFpAssistantAns1 = 'site.fp.assistant.ans1';
-  /// How many questions can I ask?
-  static const siteFpAssistantQ2 = 'site.fp.assistant.q2';
-  /// It depends on your plan: {free} includes {ai_free} questions a month and {plan} includes {ai_pro}. A question that fails is not counted.
-  static const siteFpAssistantAns2 = 'site.fp.assistant.ans2';
-  /// Which languages can I ask in?
-  static const siteFpAssistantQ3 = 'site.fp.assistant.q3';
-  /// English, Hindi, Gujarati, Spanish and French. The answer comes in your app’s language.
-  static const siteFpAssistantAns3 = 'site.fp.assistant.ans3';
-  /// Is my data shared with other companies?
-  static const siteFpAssistantQ4 = 'site.fp.assistant.q4';
-  /// No. Only your own company’s jobs are used to answer your questions.
-  static const siteFpAssistantAns4 = 'site.fp.assistant.ans4';
-  /// Find any job’s answer in seconds
-  static const siteFpAssistantCta = 'site.fp.assistant.cta';
-  /// PDF reports
-  static const siteFpPdfName = 'site.fp.pdf.name';
-  /// A clean PDF with your logo, in your customer’s language.
-  static const siteFpPdfCard = 'site.fp.pdf.card';
-  /// PDF reports your customers keep
-  static const siteFpPdfTitle = 'site.fp.pdf.title';
+  /// {n} tools. One app. Proof for every job.
+  static const siteFpOvTitle = 'site.fp.ov.title';
+  /// Overview
+  static const siteFpOverview = 'site.fp.overview';
+  /// Yes. The owner adds the logo once in company settings, and every PDF report uses it.
+  static const siteFpPdfAns1 = 'site.fp.pdf.ans1';
+  /// The same language as the approved report: English, Hindi, Gujarati, Spanish or French. Hindi and Gujarati letters print correctly.
+  static const siteFpPdfAns2 = 'site.fp.pdf.ans2';
+  /// Yes. The report link you send has a Download PDF button.
+  static const siteFpPdfAns3 = 'site.fp.pdf.ans3';
+  /// No. The PDF is made from the approved report, and its fingerprint is saved so anyone can see it was not changed.
+  static const siteFpPdfAns4 = 'site.fp.pdf.ans4';
+  /// Draft → review → PDF → send. Approved in one tap.
+  static const siteFpPdfAppBody = 'site.fp.pdf.app_body';
+  /// From draft to PDF
+  static const siteFpPdfAppTitle = 'site.fp.pdf.app_title';
   /// Every approved report becomes a clean PDF with your logo, before and after photos, checklist results and the work done — in your customer’s language. Download it, print it or send it.
   static const siteFpPdfBody = 'site.fp.pdf.body';
-  /// Your logo and details
-  static const siteFpPdfTick1 = 'site.fp.pdf.tick1';
-  /// Hindi and Gujarati script
-  static const siteFpPdfTick2 = 'site.fp.pdf.tick2';
-  /// Report #R-1042 · PDF
-  static const siteFpPdfChip1 = 'site.fp.pdf.chip1';
-  /// 3 pages · 6 photos
-  static const siteFpPdfChip1Sub = 'site.fp.pdf.chip1_sub';
-  /// Approved by Priya
-  static const siteFpPdfChip2 = 'site.fp.pdf.chip2';
-  /// Ready to send
-  static const siteFpPdfChip2Sub = 'site.fp.pdf.chip2_sub';
-  /// How PDF reports work
-  static const siteFpPdfHowTitle = 'site.fp.pdf.how_title';
-  /// Four steps from an approved job to a PDF in your customer’s hands.
-  static const siteFpPdfHowBody = 'site.fp.pdf.how_body';
-  /// Finish the job
-  static const siteFpPdfS1 = 'site.fp.pdf.s1';
-  /// Photos, checklist and voice notes are collected on site.
-  static const siteFpPdfS1B = 'site.fp.pdf.s1_b';
-  /// AI drafts the report
-  static const siteFpPdfS2 = 'site.fp.pdf.s2';
-  /// The draft is written from the job’s proof.
-  static const siteFpPdfS2B = 'site.fp.pdf.s2_b';
-  /// Manager approves
-  static const siteFpPdfS3 = 'site.fp.pdf.s3';
-  /// Check the draft, ask for changes, then approve. The PDF is made right away.
-  static const siteFpPdfS3B = 'site.fp.pdf.s3_b';
-  /// Download or send
-  static const siteFpPdfS4 = 'site.fp.pdf.s4';
-  /// Get the PDF, print it, or send it with a secure link.
-  static const siteFpPdfS4B = 'site.fp.pdf.s4_b';
-  /// Reports that look like your business
-  static const siteFpPdfCapTitle = 'site.fp.pdf.cap_title';
-  /// Professional, the same every time, and backed by the proof.
-  static const siteFpPdfCapBody = 'site.fp.pdf.cap_body';
   /// Photos in the report
   static const siteFpPdfC1 = 'site.fp.pdf.c1';
   /// Before and after photos side by side, with the date and time.
@@ -4092,8 +7534,6 @@ abstract final class LangKeys {
   static const siteFpPdfC2 = 'site.fp.pdf.c2';
   /// The owner adds your logo once in company settings. Every PDF uses it.
   static const siteFpPdfC2B = 'site.fp.pdf.c2_b';
-  /// Your brand
-  static const siteFpPdfTag = 'site.fp.pdf.tag';
   /// Checklist results included
   static const siteFpPdfC3 = 'site.fp.pdf.c3';
   /// Every answer and reading, with how many checks passed.
@@ -4110,10 +7550,28 @@ abstract final class LangKeys {
   static const siteFpPdfC6 = 'site.fp.pdf.c6';
   /// Clean A4 pages that open on any phone or computer.
   static const siteFpPdfC6B = 'site.fp.pdf.c6_b';
-  /// From draft to PDF
-  static const siteFpPdfAppTitle = 'site.fp.pdf.app_title';
-  /// Draft → review → PDF → send. Approved in one tap.
-  static const siteFpPdfAppBody = 'site.fp.pdf.app_body';
+  /// Professional, the same every time, and backed by the proof.
+  static const siteFpPdfCapBody = 'site.fp.pdf.cap_body';
+  /// Reports that look like your business
+  static const siteFpPdfCapTitle = 'site.fp.pdf.cap_title';
+  /// A clean PDF with your logo, in your customer’s language.
+  static const siteFpPdfCard = 'site.fp.pdf.card';
+  /// Report #R-1042 · PDF
+  static const siteFpPdfChip1 = 'site.fp.pdf.chip1';
+  /// 3 pages · 6 photos
+  static const siteFpPdfChip1Sub = 'site.fp.pdf.chip1_sub';
+  /// Approved by Priya
+  static const siteFpPdfChip2 = 'site.fp.pdf.chip2';
+  /// Ready to send
+  static const siteFpPdfChip2Sub = 'site.fp.pdf.chip2_sub';
+  /// Send reports that look as good as your work
+  static const siteFpPdfCta = 'site.fp.pdf.cta';
+  /// Four steps from an approved job to a PDF in your customer’s hands.
+  static const siteFpPdfHowBody = 'site.fp.pdf.how_body';
+  /// How PDF reports work
+  static const siteFpPdfHowTitle = 'site.fp.pdf.how_title';
+  /// PDF reports
+  static const siteFpPdfName = 'site.fp.pdf.name';
   /// AI draft
   static const siteFpPdfP1 = 'site.fp.pdf.p1';
   /// Built from the job’s proof.
@@ -4130,286 +7588,152 @@ abstract final class LangKeys {
   static const siteFpPdfP4 = 'site.fp.pdf.p4';
   /// As a PDF or a secure link.
   static const siteFpPdfP4B = 'site.fp.pdf.p4_b';
-  /// PDF reports for every trade
-  static const siteFpPdfUseTitle = 'site.fp.pdf.use_title';
-  /// A record your customer can keep, file or show an auditor.
-  static const siteFpPdfUseBody = 'site.fp.pdf.use_body';
   /// Can I add my own logo to the PDF?
   static const siteFpPdfQ1 = 'site.fp.pdf.q1';
-  /// Yes. The owner adds the logo once in company settings, and every PDF report uses it.
-  static const siteFpPdfAns1 = 'site.fp.pdf.ans1';
   /// Which languages can the PDF be in?
   static const siteFpPdfQ2 = 'site.fp.pdf.q2';
-  /// The same language as the approved report: English, Hindi, Gujarati, Spanish or French. Hindi and Gujarati letters print correctly.
-  static const siteFpPdfAns2 = 'site.fp.pdf.ans2';
   /// Can customers download the PDF themselves?
   static const siteFpPdfQ3 = 'site.fp.pdf.q3';
-  /// Yes. The report link you send has a Download PDF button.
-  static const siteFpPdfAns3 = 'site.fp.pdf.ans3';
   /// Can the PDF be changed after it is sent?
   static const siteFpPdfQ4 = 'site.fp.pdf.q4';
-  /// No. The PDF is made from the approved report, and its fingerprint is saved so anyone can see it was not changed.
-  static const siteFpPdfAns4 = 'site.fp.pdf.ans4';
-  /// Send reports that look as good as your work
-  static const siteFpPdfCta = 'site.fp.pdf.cta';
-  /// Customer sharing
-  static const siteFpSharingName = 'site.fp.sharing.name';
-  /// Send a secure link and get an acknowledgement.
-  static const siteFpSharingCard = 'site.fp.sharing.card';
-  /// Share the report with one secure link
-  static const siteFpSharingTitle = 'site.fp.sharing.title';
-  /// Send customers a secure link by WhatsApp, SMS or email. They see the photos, checklist results and report on any phone — no app, no login — and tap once to confirm they’ve seen it.
-  static const siteFpSharingBody = 'site.fp.sharing.body';
-  /// No app or login
-  static const siteFpSharingTick1 = 'site.fp.sharing.tick1';
-  /// See when it’s opened
-  static const siteFpSharingTick2 = 'site.fp.sharing.tick2';
-  /// Link sent on WhatsApp
-  static const siteFpSharingChip1 = 'site.fp.sharing.chip1';
-  /// Opened by the customer
-  static const siteFpSharingChip1Sub = 'site.fp.sharing.chip1_sub';
-  /// Acknowledged by Dr. Rao
-  static const siteFpSharingChip2 = 'site.fp.sharing.chip2';
-  /// 31 Oct · 4:26 PM
-  static const siteFpSharingChip2Sub = 'site.fp.sharing.chip2_sub';
-  /// How customer sharing works
-  static const siteFpSharingHowTitle = 'site.fp.sharing.how_title';
-  /// Four steps from an approved report to your customer’s acknowledgement.
-  static const siteFpSharingHowBody = 'site.fp.sharing.how_body';
-  /// Approve the report
-  static const siteFpSharingS1 = 'site.fp.sharing.s1';
-  /// The manager checks the AI draft and approves it.
-  static const siteFpSharingS1B = 'site.fp.sharing.s1_b';
-  /// Send a secure link
-  static const siteFpSharingS2 = 'site.fp.sharing.s2';
-  /// Share by WhatsApp, SMS or email — or copy the link.
-  static const siteFpSharingS2B = 'site.fp.sharing.s2_b';
-  /// Customer opens it
-  static const siteFpSharingS3 = 'site.fp.sharing.s3';
-  /// Photos, checklist and report open on any phone, no app needed.
-  static const siteFpSharingS3B = 'site.fp.sharing.s3_b';
-  /// Tap to acknowledge
-  static const siteFpSharingS4 = 'site.fp.sharing.s4';
-  /// The customer confirms they’ve seen it. You see it in the job.
-  static const siteFpSharingS4B = 'site.fp.sharing.s4_b';
-  /// Proof your customer can open anywhere
-  static const siteFpSharingCapTitle = 'site.fp.sharing.cap_title';
-  /// Simple for the customer, clear for your records.
-  static const siteFpSharingCapBody = 'site.fp.sharing.cap_body';
-  /// Secure, private link
-  static const siteFpSharingC1 = 'site.fp.sharing.c1';
-  /// Each report gets its own hard-to-guess link. Only people you send it to can open it.
-  static const siteFpSharingC1B = 'site.fp.sharing.c1_b';
-  /// No app, no login
-  static const siteFpSharingC2 = 'site.fp.sharing.c2';
-  /// Customers open the report in their phone’s browser in seconds.
-  static const siteFpSharingC2B = 'site.fp.sharing.c2_b';
-  /// No login
-  static const siteFpSharingTag = 'site.fp.sharing.tag';
-  /// One-tap acknowledgement
-  static const siteFpSharingC3 = 'site.fp.sharing.c3';
-  /// The customer confirms with their name, and the time is recorded.
-  static const siteFpSharingC3B = 'site.fp.sharing.c3_b';
-  /// Know when it’s opened
-  static const siteFpSharingC4 = 'site.fp.sharing.c4';
-  /// See when the link was first opened and acknowledged, right in the job.
-  static const siteFpSharingC4B = 'site.fp.sharing.c4_b';
-  /// Links that expire
-  static const siteFpSharingC5 = 'site.fp.sharing.c5';
-  /// A link works for 30 days, and you can turn it off at any time.
-  static const siteFpSharingC5B = 'site.fp.sharing.c5_b';
-  /// Download the PDF
-  static const siteFpSharingC6 = 'site.fp.sharing.c6';
-  /// Customers can save or print a PDF copy for their records.
-  static const siteFpSharingC6B = 'site.fp.sharing.c6_b';
-  /// From approval to acknowledgement
-  static const siteFpSharingAppTitle = 'site.fp.sharing.app_title';
-  /// Approve → share → customer views → acknowledged.
-  static const siteFpSharingAppBody = 'site.fp.sharing.app_body';
-  /// Approve
-  static const siteFpSharingP1 = 'site.fp.sharing.p1';
-  /// The manager approves the report.
-  static const siteFpSharingP1B = 'site.fp.sharing.p1_b';
-  /// Share the link
-  static const siteFpSharingP2 = 'site.fp.sharing.p2';
-  /// WhatsApp, SMS, email or copy.
-  static const siteFpSharingP2B = 'site.fp.sharing.p2_b';
-  /// Customer views it
-  static const siteFpSharingP3 = 'site.fp.sharing.p3';
-  /// On any phone, no app needed.
-  static const siteFpSharingP3B = 'site.fp.sharing.p3_b';
-  /// Acknowledged
-  static const siteFpSharingP4 = 'site.fp.sharing.p4';
-  /// The time is saved in the job.
-  static const siteFpSharingP4B = 'site.fp.sharing.p4_b';
-  /// Customer sharing for every trade
-  static const siteFpSharingUseTitle = 'site.fp.sharing.use_title';
-  /// Homeowners, landlords and facility managers all get the same clear proof.
-  static const siteFpSharingUseBody = 'site.fp.sharing.use_body';
-  /// Do customers need to download an app?
-  static const siteFpSharingQ1 = 'site.fp.sharing.q1';
-  /// No. The report opens in any phone or computer browser. There is nothing to install and no account to create.
-  static const siteFpSharingAns1 = 'site.fp.sharing.ans1';
-  /// What happens when a link expires?
-  static const siteFpSharingQ2 = 'site.fp.sharing.q2';
-  /// The customer can ask for a new one. It is sent only to the phone or email the report first went to, never to whoever asks.
-  static const siteFpSharingAns2 = 'site.fp.sharing.ans2';
-  /// Can I see if the customer opened the report?
-  static const siteFpSharingQ3 = 'site.fp.sharing.q3';
-  /// Yes. The job shows when the link was first opened and when the customer acknowledged it.
-  static const siteFpSharingAns3 = 'site.fp.sharing.ans3';
-  /// Can a link be turned off?
-  static const siteFpSharingQ4 = 'site.fp.sharing.q4';
-  /// Yes. Turn it off at any time and it stops working straight away. Sharing again makes a new link.
-  static const siteFpSharingAns4 = 'site.fp.sharing.ans4';
-  /// Send proof your customers can open anywhere
-  static const siteFpSharingCta = 'site.fp.sharing.cta';
-  /// Offline mode
-  static const siteFpOfflineName = 'site.fp.offline.name';
-  /// Works on rooftops and in basements.
-  static const siteFpOfflineCard = 'site.fp.offline.card';
-  /// Works with no signal. Syncs when you’re back.
-  static const siteFpOfflineTitle = 'site.fp.offline.title';
-  /// Rooftops, basements and plant rooms rarely have signal. KaamNishaan saves every photo, answer and voice note on the phone, keeps it safe in a queue and sends it when you’re back online — nothing lost, nothing sent twice.
-  static const siteFpOfflineBody = 'site.fp.offline.body';
-  /// Nothing lost
-  static const siteFpOfflineTick1 = 'site.fp.offline.tick1';
-  /// Nothing sent twice
-  static const siteFpOfflineTick2 = 'site.fp.offline.tick2';
-  /// Saved on this phone
-  static const siteFpOfflineChip1 = 'site.fp.offline.chip1';
-  /// 4 photos · 1 voice note waiting
-  static const siteFpOfflineChip1Sub = 'site.fp.offline.chip1_sub';
-  /// Sent at 4:12 PM
-  static const siteFpOfflineChip2 = 'site.fp.offline.chip2';
-  /// Each item sent once
-  static const siteFpOfflineChip2Sub = 'site.fp.offline.chip2_sub';
-  /// How offline mode works
-  static const siteFpOfflineHowTitle = 'site.fp.offline.how_title';
-  /// Four steps from no signal to everything safely sent.
-  static const siteFpOfflineHowBody = 'site.fp.offline.how_body';
-  /// Lose signal
-  static const siteFpOfflineS1 = 'site.fp.offline.s1';
-  /// The app tells you your work is being saved on the phone, and keeps working.
-  static const siteFpOfflineS1B = 'site.fp.offline.s1_b';
-  /// Keep working
-  static const siteFpOfflineS2 = 'site.fp.offline.s2';
-  /// Take photos, answer the checklist and record voice notes as usual.
-  static const siteFpOfflineS2B = 'site.fp.offline.s2_b';
-  /// Saved in a queue
-  static const siteFpOfflineS3 = 'site.fp.offline.s3';
-  /// Everything waits on the phone and shows “Saved on phone”.
-  static const siteFpOfflineS3B = 'site.fp.offline.s3_b';
-  /// Sent once
-  static const siteFpOfflineS4 = 'site.fp.offline.s4';
-  /// Back online, each item is sent once and the server confirms it.
-  static const siteFpOfflineS4B = 'site.fp.offline.s4_b';
-  /// Built for places without signal
-  static const siteFpOfflineCapTitle = 'site.fp.offline.cap_title';
-  /// No more lost photos or half-sent reports.
-  static const siteFpOfflineCapBody = 'site.fp.offline.cap_body';
-  /// Keep working on the job
-  static const siteFpOfflineC1 = 'site.fp.offline.c1';
-  /// Photos, checklist answers, voice notes and typed notes all work with no connection.
-  static const siteFpOfflineC1B = 'site.fp.offline.c1_b';
-  /// Automatic sending
-  static const siteFpOfflineC2 = 'site.fp.offline.c2';
-  /// When signal returns, everything is sent in the background.
-  static const siteFpOfflineC2B = 'site.fp.offline.c2_b';
-  /// Automatic
-  static const siteFpOfflineTag = 'site.fp.offline.tag';
-  /// Nothing sent twice
-  static const siteFpOfflineC3 = 'site.fp.offline.c3';
-  /// Each photo and answer has its own tag, so it is saved once even if the signal drops mid-send.
-  static const siteFpOfflineC3B = 'site.fp.offline.c3_b';
-  /// See what’s waiting
-  static const siteFpOfflineC4 = 'site.fp.offline.c4';
-  /// Items still on the phone show “Saved on phone”, so you know what hasn’t been sent yet.
-  static const siteFpOfflineC4B = 'site.fp.offline.c4_b';
-  /// Safe if the app closes
-  static const siteFpOfflineC5 = 'site.fp.offline.c5';
-  /// The queue is kept in the app’s storage, so it survives a restart.
-  static const siteFpOfflineC5B = 'site.fp.offline.c5_b';
-  /// Easy on mobile data
-  static const siteFpOfflineC6 = 'site.fp.offline.c6';
-  /// Photos are made smaller on the phone before they are sent.
-  static const siteFpOfflineC6B = 'site.fp.offline.c6_b';
-  /// A job with no signal
-  static const siteFpOfflineAppTitle = 'site.fp.offline.app_title';
-  /// Offline → capture → queue → sent. Nothing lost, nothing doubled.
-  static const siteFpOfflineAppBody = 'site.fp.offline.app_body';
-  /// No signal
-  static const siteFpOfflineP1 = 'site.fp.offline.p1';
-  /// The app keeps working.
-  static const siteFpOfflineP1B = 'site.fp.offline.p1_b';
-  /// Capture as usual
-  static const siteFpOfflineP2 = 'site.fp.offline.p2';
-  /// Photos, checklist and voice.
-  static const siteFpOfflineP2B = 'site.fp.offline.p2_b';
-  /// Waiting to send
-  static const siteFpOfflineP3 = 'site.fp.offline.p3';
-  /// See what is still on the phone.
-  static const siteFpOfflineP3B = 'site.fp.offline.p3_b';
-  /// Sent
-  static const siteFpOfflineP4 = 'site.fp.offline.p4';
-  /// The manager gets it once.
-  static const siteFpOfflineP4B = 'site.fp.offline.p4_b';
-  /// Offline for every trade
-  static const siteFpOfflineUseTitle = 'site.fp.offline.use_title';
-  /// Built for the places field teams actually work.
-  static const siteFpOfflineUseBody = 'site.fp.offline.use_body';
-  /// Can anything be sent twice?
-  static const siteFpOfflineQ1 = 'site.fp.offline.q1';
-  /// No. Each item has its own tag, so even if the signal drops in the middle of sending, the server keeps only one copy.
-  static const siteFpOfflineAns1 = 'site.fp.offline.ans1';
-  /// What if the phone restarts before it sends?
-  static const siteFpOfflineQ2 = 'site.fp.offline.q2';
-  /// Your work is still there. The queue is kept on the phone and continues when the app opens again.
-  static const siteFpOfflineAns2 = 'site.fp.offline.ans2';
-  /// Do voice notes work offline too?
-  static const siteFpOfflineQ3 = 'site.fp.offline.q3';
-  /// Yes. The recording is saved on the phone and written down after it is sent.
-  static const siteFpOfflineAns3 = 'site.fp.offline.ans3';
-  /// Does offline mode work on every plan?
-  static const siteFpOfflineQ4 = 'site.fp.offline.q4';
-  /// Yes, including {free}. Nothing to switch on.
-  static const siteFpOfflineAns4 = 'site.fp.offline.ans4';
-  /// Keep working, even with no signal
-  static const siteFpOfflineCta = 'site.fp.offline.cta';
-  /// Reviews & follow-ups
-  static const siteFpReviewsName = 'site.fp.reviews.name';
-  /// Ask every customer for a rating, and follow up on low ones.
-  static const siteFpReviewsCard = 'site.fp.reviews.card';
-  /// Get a review for every job — automatically
-  static const siteFpReviewsTitle = 'site.fp.reviews.title';
-  /// Customers rate the job right from the report link. If they forget, KaamNishaan sends one friendly reminder by WhatsApp, SMS or email — and a low rating alerts your managers straight away.
-  static const siteFpReviewsBody = 'site.fp.reviews.body';
-  /// No app for your customer
-  static const siteFpReviewsTick1 = 'site.fp.reviews.tick1';
-  /// Stops when they rate
-  static const siteFpReviewsTick2 = 'site.fp.reviews.tick2';
+  /// Finish the job
+  static const siteFpPdfS1 = 'site.fp.pdf.s1';
+  /// Photos, checklist and voice notes are collected on site.
+  static const siteFpPdfS1B = 'site.fp.pdf.s1_b';
+  /// AI drafts the report
+  static const siteFpPdfS2 = 'site.fp.pdf.s2';
+  /// The draft is written from the job’s proof.
+  static const siteFpPdfS2B = 'site.fp.pdf.s2_b';
+  /// Manager approves
+  static const siteFpPdfS3 = 'site.fp.pdf.s3';
+  /// Check the draft, ask for changes, then approve. The PDF is made right away.
+  static const siteFpPdfS3B = 'site.fp.pdf.s3_b';
+  /// Download or send
+  static const siteFpPdfS4 = 'site.fp.pdf.s4';
+  /// Get the PDF, print it, or send it with a secure link.
+  static const siteFpPdfS4B = 'site.fp.pdf.s4_b';
+  /// Your brand
+  static const siteFpPdfTag = 'site.fp.pdf.tag';
+  /// Your logo and details
+  static const siteFpPdfTick1 = 'site.fp.pdf.tick1';
+  /// Hindi and Gujarati script
+  static const siteFpPdfTick2 = 'site.fp.pdf.tick2';
+  /// PDF reports your customers keep
+  static const siteFpPdfTitle = 'site.fp.pdf.title';
+  /// A record your customer can keep, file or show an auditor.
+  static const siteFpPdfUseBody = 'site.fp.pdf.use_body';
+  /// PDF reports for every trade
+  static const siteFpPdfUseTitle = 'site.fp.pdf.use_title';
+  /// Related features
+  static const siteFpRelated = 'site.fp.related';
+  /// No. The draft only describes what is in the job’s photos, checklist answers and voice notes. Every sentence links to its proof, and a manager approves the report before the customer sees it.
+  static const siteFpReportsAns1 = 'site.fp.reports.ans1';
+  /// English, Hindi, Gujarati, Spanish and French. The technician can speak one language and the customer can read another.
+  static const siteFpReportsAns2 = 'site.fp.reports.ans2';
+  /// Yes. The technician can change any part before sending it for review, and the manager can ask for changes before approving.
+  static const siteFpReportsAns3 = 'site.fp.reports.ans3';
+  /// No. AI reports are included on every plan. Plans differ in how many reports you can make each month.
+  static const siteFpReportsAns4 = 'site.fp.reports.ans4';
+  /// Ramesh speaks Gujarati on site. The AI drafts the report in English, linked to his photos and checklist answers.
+  static const siteFpReportsAppBody = 'site.fp.reports.app_body';
+  /// From a voice note to a finished report
+  static const siteFpReportsAppTitle = 'site.fp.reports.app_title';
+  /// KaamNishaan AI turns the photos, checklist answers and voice notes from a job into a clear, customer-ready report. Every sentence links back to its proof, and nothing is sent until a manager approves.
+  static const siteFpReportsBody = 'site.fp.reports.body';
+  /// Drafts from photos, checklist and voice
+  static const siteFpReportsC1 = 'site.fp.reports.c1';
+  /// One tap turns a job’s proof into a summary, the work done and advice for the customer.
+  static const siteFpReportsC1B = 'site.fp.reports.c1_b';
+  /// Never invents work
+  static const siteFpReportsC2 = 'site.fp.reports.c2';
+  /// Every sentence links to the photo, checklist answer or voice note it came from.
+  static const siteFpReportsC2B = 'site.fp.reports.c2_b';
+  /// Easy to edit
+  static const siteFpReportsC3 = 'site.fp.reports.c3';
+  /// Change any part in your own words — or with your phone’s voice typing — or ask the AI to write one part again.
+  static const siteFpReportsC3B = 'site.fp.reports.c3_b';
+  /// Choose the report language
+  static const siteFpReportsC4 = 'site.fp.reports.c4';
+  /// Technicians speak their language. Reports go out in English, Hindi, Gujarati, Spanish or French.
+  static const siteFpReportsC4B = 'site.fp.reports.c4_b';
+  /// Missing-proof check
+  static const siteFpReportsC5 = 'site.fp.reports.c5';
+  /// Flags a missing after photo or an unanswered question before the report goes for review.
+  static const siteFpReportsC5B = 'site.fp.reports.c5_b';
+  /// Manager approval
+  static const siteFpReportsC6 = 'site.fp.reports.c6';
+  /// Nothing reaches the customer until a manager approves — or asks for changes.
+  static const siteFpReportsC6B = 'site.fp.reports.c6_b';
+  /// AI that only writes what your team can prove.
+  static const siteFpReportsCapBody = 'site.fp.reports.cap_body';
+  /// Built to be trusted, not just fast
+  static const siteFpReportsCapTitle = 'site.fp.reports.cap_title';
+  /// Drafted from real proof. Never invents work.
+  static const siteFpReportsCard = 'site.fp.reports.card';
+  /// Every sentence linked
+  static const siteFpReportsChip1 = 'site.fp.reports.chip1';
+  /// 6 photos · 11 checks · 1 voice note
+  static const siteFpReportsChip1Sub = 'site.fp.reports.chip1_sub';
+  /// Spoken in Gujarati
+  static const siteFpReportsChip2 = 'site.fp.reports.chip2';
+  /// Report written in English
+  static const siteFpReportsChip2Sub = 'site.fp.reports.chip2_sub';
+  /// Let AI write your next report
+  static const siteFpReportsCta = 'site.fp.reports.cta';
+  /// Four steps from the job site to your customer — your technician never types a paragraph.
+  static const siteFpReportsHowBody = 'site.fp.reports.how_body';
+  /// How AI reports work
+  static const siteFpReportsHowTitle = 'site.fp.reports.how_title';
+  /// AI reports
+  static const siteFpReportsName = 'site.fp.reports.name';
+  /// Can the AI invent work that wasn’t done?
+  static const siteFpReportsQ1 = 'site.fp.reports.q1';
+  /// Which languages can reports be written in?
+  static const siteFpReportsQ2 = 'site.fp.reports.q2';
+  /// Can I edit the draft before it’s sent?
+  static const siteFpReportsQ3 = 'site.fp.reports.q3';
+  /// Do AI reports cost extra?
+  static const siteFpReportsQ4 = 'site.fp.reports.q4';
+  /// Capture the proof
+  static const siteFpReportsS1 = 'site.fp.reports.s1';
+  /// Before, during and after photos are saved with time and place and filed to the job.
+  static const siteFpReportsS1B = 'site.fp.reports.s1_b';
+  /// Speak your notes
+  static const siteFpReportsS2 = 'site.fp.reports.s2';
+  /// Record a voice note in Hindi, Gujarati, Spanish, French or English.
+  static const siteFpReportsS2B = 'site.fp.reports.s2_b';
+  /// AI drafts the report
+  static const siteFpReportsS3 = 'site.fp.reports.s3';
+  /// Photos, checklist answers and the voice note become a clear draft.
+  static const siteFpReportsS3B = 'site.fp.reports.s3_b';
+  /// Approve and send
+  static const siteFpReportsS4 = 'site.fp.reports.s4';
+  /// A manager reviews and approves, then shares a secure link or PDF.
+  static const siteFpReportsS4B = 'site.fp.reports.s4_b';
+  /// Linked to proof
+  static const siteFpReportsTag = 'site.fp.reports.tag';
+  /// Never invents work
+  static const siteFpReportsTick1 = 'site.fp.reports.tick1';
+  /// 5 report languages
+  static const siteFpReportsTick2 = 'site.fp.reports.tick2';
+  /// Reports that write themselves — from real proof
+  static const siteFpReportsTitle = 'site.fp.reports.title';
+  /// The report is written from the job’s own proof, whatever the work.
+  static const siteFpReportsUseBody = 'site.fp.reports.use_body';
+  /// AI reports for every trade
+  static const siteFpReportsUseTitle = 'site.fp.reports.use_title';
   /// A customer’s rating on the report page and the office’s review list
   static const siteFpReviewsAlt = 'site.fp.reviews.alt';
-  /// Three steps. Stops the moment they rate.
-  static const siteFpReviewsHowTitle = 'site.fp.reviews.how_title';
-  /// Day {n}
-  static const siteFpReviewsDay = 'site.fp.reviews.day';
-  /// Rating link with the report
-  static const siteFpReviewsS1 = 'site.fp.reviews.s1';
-  /// When the manager shares the approved report, the customer can rate the service and the technician on the same page.
-  static const siteFpReviewsS1B = 'site.fp.reviews.s1_b';
-  /// Friendly reminder
-  static const siteFpReviewsS2 = 'site.fp.reviews.s2';
-  /// No rating yet? One reminder goes out by the channels you choose: WhatsApp, SMS or email.
-  static const siteFpReviewsS2B = 'site.fp.reviews.s2_b';
-  /// One AI review call
-  static const siteFpReviewsS3 = 'site.fp.reviews.s3';
-  /// Still nothing? An AI assistant will call once, say it is an AI and ask for a 1–5 rating. You can switch it on now; calls start when the voice service goes live.
-  static const siteFpReviewsS3B = 'site.fp.reviews.s3_b';
-  /// Any rating stops every reminder. “Don’t ask me again” is always respected.
-  static const siteFpReviewsNote = 'site.fp.reviews.note';
-  /// Everything around the review, handled
-  static const siteFpReviewsCapTitle = 'site.fp.reviews.cap_title';
+  /// No. The rating form is on the report page, which opens in any phone browser.
+  static const siteFpReviewsAns1 = 'site.fp.reviews.ans1';
+  /// Then nothing else is sent. Any rating stops every reminder for that job.
+  static const siteFpReviewsAns2 = 'site.fp.reviews.ans2';
+  /// An SMS reminder uses {sms} credit, WhatsApp {whatsapp} and email none. An AI call will use {ai_call}. {plan} includes {credits_pro} credits a month.
+  static const siteFpReviewsAns3 = 'site.fp.reviews.ans3';
+  /// No. Reviews stay as the customer wrote them. You can reply, call the customer and plan a revisit from the follow-up.
+  static const siteFpReviewsAns4 = 'site.fp.reviews.ans4';
+  /// Customers rate the job right from the report link. If they forget, KaamNishaan sends one friendly reminder by WhatsApp, SMS or email — and a low rating alerts your managers straight away.
+  static const siteFpReviewsBody = 'site.fp.reviews.body';
   /// Rate from the report
   static const siteFpReviewsC1 = 'site.fp.reviews.c1';
   /// Customers see the proof first — photos, checklist, work done — then rate the service and the technician, with quick tags and a few words.
@@ -4434,12 +7758,18 @@ abstract final class LangKeys {
   static const siteFpReviewsC6 = 'site.fp.reviews.c6';
   /// Write one reply per review. It shows on the customer’s report page and to the technician.
   static const siteFpReviewsC6B = 'site.fp.reviews.c6_b';
-  /// The last step
-  static const siteFpReviewsCallEyebrow = 'site.fp.reviews.call_eyebrow';
-  /// An AI call that respects your customer
-  static const siteFpReviewsCallTitle = 'site.fp.reviews.call_title';
+  /// AI
+  static const siteFpReviewsCallAi = 'site.fp.reviews.call_ai';
+  /// Example of an AI review call where the customer gives 4 stars
+  static const siteFpReviewsCallAlt = 'site.fp.reviews.call_alt';
   /// One call, only if there is still no rating. Polite, short and honest about being an AI. You can switch it on today; calls start when the voice service goes live.
   static const siteFpReviewsCallBody = 'site.fp.reviews.call_body';
+  /// Customer
+  static const siteFpReviewsCallCustomer = 'site.fp.reviews.call_customer';
+  /// The last step
+  static const siteFpReviewsCallEyebrow = 'site.fp.reviews.call_eyebrow';
+  /// AI review call · example
+  static const siteFpReviewsCallHead = 'site.fp.reviews.call_head';
   /// Says it is an AI and that the call is recorded
   static const siteFpReviewsCallL1 = 'site.fp.reviews.call_l1';
   /// Calls only at sensible hours, in the customer’s time
@@ -4450,14 +7780,6 @@ abstract final class LangKeys {
   static const siteFpReviewsCallL4 = 'site.fp.reviews.call_l4';
   /// Uses follow-up credits from your plan
   static const siteFpReviewsCallL5 = 'site.fp.reviews.call_l5';
-  /// Example of an AI review call where the customer gives 4 stars
-  static const siteFpReviewsCallAlt = 'site.fp.reviews.call_alt';
-  /// AI review call · example
-  static const siteFpReviewsCallHead = 'site.fp.reviews.call_head';
-  /// AI
-  static const siteFpReviewsCallAi = 'site.fp.reviews.call_ai';
-  /// Customer
-  static const siteFpReviewsCallCustomer = 'site.fp.reviews.call_customer';
   /// Hi, this is BrightAir’s virtual assistant — I’m an AI, and this call is recorded. Do you have a minute about Ramesh’s visit?
   static const siteFpReviewsCallM1 = 'site.fp.reviews.call_m1';
   /// Yes, go ahead.
@@ -4470,492 +7792,344 @@ abstract final class LangKeys {
   static const siteFpReviewsCallM5 = 'site.fp.reviews.call_m5';
   /// Saved: 4★ · reminders stopped
   static const siteFpReviewsCallSaved = 'site.fp.reviews.call_saved';
-  /// Questions about reviews
-  static const siteFpReviewsFaqTitle = 'site.fp.reviews.faq_title';
-  /// Does the customer need an app?
-  static const siteFpReviewsQ1 = 'site.fp.reviews.q1';
-  /// No. The rating form is on the report page, which opens in any phone browser.
-  static const siteFpReviewsAns1 = 'site.fp.reviews.ans1';
-  /// What if the customer already rated?
-  static const siteFpReviewsQ2 = 'site.fp.reviews.q2';
-  /// Then nothing else is sent. Any rating stops every reminder for that job.
-  static const siteFpReviewsAns2 = 'site.fp.reviews.ans2';
-  /// How many credits do reminders use?
-  static const siteFpReviewsQ3 = 'site.fp.reviews.q3';
-  /// An SMS reminder uses {sms} credit, WhatsApp {whatsapp} and email none. An AI call will use {ai_call}. {plan} includes {credits_pro} credits a month.
-  static const siteFpReviewsAns3 = 'site.fp.reviews.ans3';
-  /// Can we delete bad reviews?
-  static const siteFpReviewsQ4 = 'site.fp.reviews.q4';
-  /// No. Reviews stay as the customer wrote them. You can reply, call the customer and plan a revisit from the follow-up.
-  static const siteFpReviewsAns4 = 'site.fp.reviews.ans4';
+  /// An AI call that respects your customer
+  static const siteFpReviewsCallTitle = 'site.fp.reviews.call_title';
+  /// Everything around the review, handled
+  static const siteFpReviewsCapTitle = 'site.fp.reviews.cap_title';
+  /// Ask every customer for a rating, and follow up on low ones.
+  static const siteFpReviewsCard = 'site.fp.reviews.card';
   /// Turn every finished job into a review
   static const siteFpReviewsCta = 'site.fp.reviews.cta';
-  /// Industries
-  static const siteIndpCrumb = 'site.indp.crumb';
-  /// Industry · {trade}
-  static const siteIndpPill = 'site.indp.pill';
+  /// Day {n}
+  static const siteFpReviewsDay = 'site.fp.reviews.day';
+  /// Questions about reviews
+  static const siteFpReviewsFaqTitle = 'site.fp.reviews.faq_title';
+  /// Three steps. Stops the moment they rate.
+  static const siteFpReviewsHowTitle = 'site.fp.reviews.how_title';
+  /// Reviews & follow-ups
+  static const siteFpReviewsName = 'site.fp.reviews.name';
+  /// Any rating stops every reminder. “Don’t ask me again” is always respected.
+  static const siteFpReviewsNote = 'site.fp.reviews.note';
+  /// Does the customer need an app?
+  static const siteFpReviewsQ1 = 'site.fp.reviews.q1';
+  /// What if the customer already rated?
+  static const siteFpReviewsQ2 = 'site.fp.reviews.q2';
+  /// How many credits do reminders use?
+  static const siteFpReviewsQ3 = 'site.fp.reviews.q3';
+  /// Can we delete bad reviews?
+  static const siteFpReviewsQ4 = 'site.fp.reviews.q4';
+  /// Rating link with the report
+  static const siteFpReviewsS1 = 'site.fp.reviews.s1';
+  /// When the manager shares the approved report, the customer can rate the service and the technician on the same page.
+  static const siteFpReviewsS1B = 'site.fp.reviews.s1_b';
+  /// Friendly reminder
+  static const siteFpReviewsS2 = 'site.fp.reviews.s2';
+  /// No rating yet? One reminder goes out by the channels you choose: WhatsApp, SMS or email.
+  static const siteFpReviewsS2B = 'site.fp.reviews.s2_b';
+  /// One AI review call
+  static const siteFpReviewsS3 = 'site.fp.reviews.s3';
+  /// Still nothing? An AI assistant will call once, say it is an AI and ask for a 1–5 rating. You can switch it on now; calls start when the voice service goes live.
+  static const siteFpReviewsS3B = 'site.fp.reviews.s3_b';
+  /// No app for your customer
+  static const siteFpReviewsTick1 = 'site.fp.reviews.tick1';
+  /// Stops when they rate
+  static const siteFpReviewsTick2 = 'site.fp.reviews.tick2';
+  /// Get a review for every job — automatically
+  static const siteFpReviewsTitle = 'site.fp.reviews.title';
+  /// No. The report opens in any phone or computer browser. There is nothing to install and no account to create.
+  static const siteFpSharingAns1 = 'site.fp.sharing.ans1';
+  /// The customer can ask for a new one. It is sent only to the phone or email the report first went to, never to whoever asks.
+  static const siteFpSharingAns2 = 'site.fp.sharing.ans2';
+  /// Yes. The job shows when the link was first opened and when the customer acknowledged it.
+  static const siteFpSharingAns3 = 'site.fp.sharing.ans3';
+  /// Yes. Turn it off at any time and it stops working straight away. Sharing again makes a new link.
+  static const siteFpSharingAns4 = 'site.fp.sharing.ans4';
+  /// Approve → share → customer views → acknowledged.
+  static const siteFpSharingAppBody = 'site.fp.sharing.app_body';
+  /// From approval to acknowledgement
+  static const siteFpSharingAppTitle = 'site.fp.sharing.app_title';
+  /// Send customers a secure link by WhatsApp, SMS or email. They see the photos, checklist results and report on any phone — no app, no login — and tap once to confirm they’ve seen it.
+  static const siteFpSharingBody = 'site.fp.sharing.body';
+  /// Secure, private link
+  static const siteFpSharingC1 = 'site.fp.sharing.c1';
+  /// Each report gets its own hard-to-guess link. Only people you send it to can open it.
+  static const siteFpSharingC1B = 'site.fp.sharing.c1_b';
+  /// No app, no login
+  static const siteFpSharingC2 = 'site.fp.sharing.c2';
+  /// Customers open the report in their phone’s browser in seconds.
+  static const siteFpSharingC2B = 'site.fp.sharing.c2_b';
+  /// One-tap acknowledgement
+  static const siteFpSharingC3 = 'site.fp.sharing.c3';
+  /// The customer confirms with their name, and the time is recorded.
+  static const siteFpSharingC3B = 'site.fp.sharing.c3_b';
+  /// Know when it’s opened
+  static const siteFpSharingC4 = 'site.fp.sharing.c4';
+  /// See when the link was first opened and acknowledged, right in the job.
+  static const siteFpSharingC4B = 'site.fp.sharing.c4_b';
+  /// Links that expire
+  static const siteFpSharingC5 = 'site.fp.sharing.c5';
+  /// A link works for 30 days, and you can turn it off at any time.
+  static const siteFpSharingC5B = 'site.fp.sharing.c5_b';
+  /// Download the PDF
+  static const siteFpSharingC6 = 'site.fp.sharing.c6';
+  /// Customers can save or print a PDF copy for their records.
+  static const siteFpSharingC6B = 'site.fp.sharing.c6_b';
+  /// Simple for the customer, clear for your records.
+  static const siteFpSharingCapBody = 'site.fp.sharing.cap_body';
+  /// Proof your customer can open anywhere
+  static const siteFpSharingCapTitle = 'site.fp.sharing.cap_title';
+  /// Send a secure link and get an acknowledgement.
+  static const siteFpSharingCard = 'site.fp.sharing.card';
+  /// Link sent on WhatsApp
+  static const siteFpSharingChip1 = 'site.fp.sharing.chip1';
+  /// Opened by the customer
+  static const siteFpSharingChip1Sub = 'site.fp.sharing.chip1_sub';
+  /// Acknowledged by Dr. Rao
+  static const siteFpSharingChip2 = 'site.fp.sharing.chip2';
+  /// 31 Oct · 4:26 PM
+  static const siteFpSharingChip2Sub = 'site.fp.sharing.chip2_sub';
+  /// Send proof your customers can open anywhere
+  static const siteFpSharingCta = 'site.fp.sharing.cta';
+  /// Four steps from an approved report to your customer’s acknowledgement.
+  static const siteFpSharingHowBody = 'site.fp.sharing.how_body';
+  /// How customer sharing works
+  static const siteFpSharingHowTitle = 'site.fp.sharing.how_title';
+  /// Customer sharing
+  static const siteFpSharingName = 'site.fp.sharing.name';
+  /// Approve
+  static const siteFpSharingP1 = 'site.fp.sharing.p1';
+  /// The manager approves the report.
+  static const siteFpSharingP1B = 'site.fp.sharing.p1_b';
+  /// Share the link
+  static const siteFpSharingP2 = 'site.fp.sharing.p2';
+  /// WhatsApp, SMS, email or copy.
+  static const siteFpSharingP2B = 'site.fp.sharing.p2_b';
+  /// Customer views it
+  static const siteFpSharingP3 = 'site.fp.sharing.p3';
+  /// On any phone, no app needed.
+  static const siteFpSharingP3B = 'site.fp.sharing.p3_b';
+  /// Acknowledged
+  static const siteFpSharingP4 = 'site.fp.sharing.p4';
+  /// The time is saved in the job.
+  static const siteFpSharingP4B = 'site.fp.sharing.p4_b';
+  /// Do customers need to download an app?
+  static const siteFpSharingQ1 = 'site.fp.sharing.q1';
+  /// What happens when a link expires?
+  static const siteFpSharingQ2 = 'site.fp.sharing.q2';
+  /// Can I see if the customer opened the report?
+  static const siteFpSharingQ3 = 'site.fp.sharing.q3';
+  /// Can a link be turned off?
+  static const siteFpSharingQ4 = 'site.fp.sharing.q4';
+  /// Approve the report
+  static const siteFpSharingS1 = 'site.fp.sharing.s1';
+  /// The manager checks the AI draft and approves it.
+  static const siteFpSharingS1B = 'site.fp.sharing.s1_b';
+  /// Send a secure link
+  static const siteFpSharingS2 = 'site.fp.sharing.s2';
+  /// Share by WhatsApp, SMS or email — or copy the link.
+  static const siteFpSharingS2B = 'site.fp.sharing.s2_b';
+  /// Customer opens it
+  static const siteFpSharingS3 = 'site.fp.sharing.s3';
+  /// Photos, checklist and report open on any phone, no app needed.
+  static const siteFpSharingS3B = 'site.fp.sharing.s3_b';
+  /// Tap to acknowledge
+  static const siteFpSharingS4 = 'site.fp.sharing.s4';
+  /// The customer confirms they’ve seen it. You see it in the job.
+  static const siteFpSharingS4B = 'site.fp.sharing.s4_b';
+  /// No login
+  static const siteFpSharingTag = 'site.fp.sharing.tag';
+  /// No app or login
+  static const siteFpSharingTick1 = 'site.fp.sharing.tick1';
+  /// See when it’s opened
+  static const siteFpSharingTick2 = 'site.fp.sharing.tick2';
+  /// Share the report with one secure link
+  static const siteFpSharingTitle = 'site.fp.sharing.title';
+  /// Homeowners, landlords and facility managers all get the same clear proof.
+  static const siteFpSharingUseBody = 'site.fp.sharing.use_body';
+  /// Customer sharing for every trade
+  static const siteFpSharingUseTitle = 'site.fp.sharing.use_title';
+  /// Coming soon
+  static const siteFpSoon = 'site.fp.soon';
+  /// Use cases
+  static const siteFpUse = 'site.fp.use';
+  /// View industry
+  static const siteFpViewIndustry = 'site.fp.view_industry';
+  /// English, Hindi, Gujarati, Spanish and French. They can pick the language before recording, or let KaamNishaan find it.
+  static const siteFpVoiceAns1 = 'site.fp.voice.ans1';
+  /// Yes. The audio is part of the job’s proof. It is never changed, and managers can play it next to the written version.
+  static const siteFpVoiceAns2 = 'site.fp.voice.ans2';
+  /// Yes. Fix any word in the written version. The recording itself stays as it was.
+  static const siteFpVoiceAns3 = 'site.fp.voice.ans3';
+  /// Up to 10 minutes. Most notes are under a minute. You can record more than one note per job.
+  static const siteFpVoiceAns4 = 'site.fp.voice.ans4';
+  /// Ramesh speaks Gujarati on site. The AI drafts the report in English from his voice note and photos.
+  static const siteFpVoiceAppBody = 'site.fp.voice.app_body';
+  /// Speak Gujarati. Send English.
+  static const siteFpVoiceAppTitle = 'site.fp.voice.app_title';
+  /// Technicians record a quick voice note in Hindi, Gujarati, Spanish, French or English. KaamNishaan writes down what they said, and the AI report uses it — in the language your customer reads.
+  static const siteFpVoiceBody = 'site.fp.voice.body';
+  /// Speak in your language
+  static const siteFpVoiceC1 = 'site.fp.voice.c1';
+  /// Technicians talk the way they normally do. No spelling, no typing.
+  static const siteFpVoiceC1B = 'site.fp.voice.c1_b';
+  /// Recording always kept
+  static const siteFpVoiceC2 = 'site.fp.voice.c2';
+  /// The original audio stays with the job, next to the written version, and is never changed.
+  static const siteFpVoiceC2B = 'site.fp.voice.c2_b';
+  /// Word for word
+  static const siteFpVoiceC3 = 'site.fp.voice.c3';
+  /// What was said is written down as it was said. The AI report turns it into clear sentences.
+  static const siteFpVoiceC3B = 'site.fp.voice.c3_b';
+  /// Report in the customer’s language
+  static const siteFpVoiceC4 = 'site.fp.voice.c4';
+  /// Speak Gujarati, send English — or any of the 5 languages.
+  static const siteFpVoiceC4B = 'site.fp.voice.c4_b';
+  /// Speak to change
+  static const siteFpVoiceC5 = 'site.fp.voice.c5';
+  /// Missed something? Record again. The earlier note stays until you delete it.
+  static const siteFpVoiceC5B = 'site.fp.voice.c5_b';
+  /// Works offline
+  static const siteFpVoiceC6 = 'site.fp.voice.c6';
+  /// Record with no signal. The note is saved on the phone and sent when you are back online.
+  static const siteFpVoiceC6B = 'site.fp.voice.c6_b';
+  /// The fastest way to record what happened on site.
+  static const siteFpVoiceCapBody = 'site.fp.voice.cap_body';
+  /// Built for people who would rather talk than type
+  static const siteFpVoiceCapTitle = 'site.fp.voice.cap_title';
+  /// Speak in your language. It is written down for the report.
+  static const siteFpVoiceCard = 'site.fp.voice.card';
+  /// Voice note · 0:42
+  static const siteFpVoiceChip1 = 'site.fp.voice.chip1';
+  /// Spoken in Gujarati
+  static const siteFpVoiceChip1Sub = 'site.fp.voice.chip1_sub';
+  /// Written down
+  static const siteFpVoiceChip2 = 'site.fp.voice.chip2';
+  /// Original recording kept
+  static const siteFpVoiceChip2Sub = 'site.fp.voice.chip2_sub';
+  /// Let your team speak their language
+  static const siteFpVoiceCta = 'site.fp.voice.cta';
+  /// Four steps from a spoken note to a clear line in the report.
+  static const siteFpVoiceHowBody = 'site.fp.voice.how_body';
+  /// How voice notes work
+  static const siteFpVoiceHowTitle = 'site.fp.voice.how_title';
+  /// Voice notes
+  static const siteFpVoiceName = 'site.fp.voice.name';
+  /// Which languages can technicians speak in?
+  static const siteFpVoiceQ1 = 'site.fp.voice.q1';
+  /// Is the original recording kept?
+  static const siteFpVoiceQ2 = 'site.fp.voice.q2';
+  /// Can I correct what was written down?
+  static const siteFpVoiceQ3 = 'site.fp.voice.q3';
+  /// How long can a voice note be?
+  static const siteFpVoiceQ4 = 'site.fp.voice.q4';
+  /// Tap and speak
+  static const siteFpVoiceS1 = 'site.fp.voice.s1';
+  /// Press the big mic button and say what you did, in your own words.
+  static const siteFpVoiceS1B = 'site.fp.voice.s1_b';
+  /// Any of 5 languages
+  static const siteFpVoiceS2 = 'site.fp.voice.s2';
+  /// Hindi, Gujarati, Spanish, French or English. The language is found for you.
+  static const siteFpVoiceS2B = 'site.fp.voice.s2_b';
+  /// Written down
+  static const siteFpVoiceS3 = 'site.fp.voice.s3';
+  /// The note is written down word for word. You can fix a word if needed.
+  static const siteFpVoiceS3B = 'site.fp.voice.s3_b';
+  /// Into the report
+  static const siteFpVoiceS4 = 'site.fp.voice.s4';
+  /// The AI report uses it, and the manager can play the original recording.
+  static const siteFpVoiceS4B = 'site.fp.voice.s4_b';
+  /// Original kept
+  static const siteFpVoiceTag = 'site.fp.voice.tag';
+  /// No typing on site
+  static const siteFpVoiceTick1 = 'site.fp.voice.tick1';
+  /// Works offline
+  static const siteFpVoiceTick2 = 'site.fp.voice.tick2';
+  /// Speak your notes. We write them down.
+  static const siteFpVoiceTitle = 'site.fp.voice.title';
+  /// Hands busy or gloves on? Say it instead of typing it.
+  static const siteFpVoiceUseBody = 'site.fp.voice.use_body';
+  /// Voice notes for every trade
+  static const siteFpVoiceUseTitle = 'site.fp.voice.use_title';
+  /// A technician on a rooftop, with the KaamNishaan app showing today's jobs and an AI report draft
+  static const siteHeroAlt = 'site.hero.alt';
+  /// Capture photos, checklists and voice notes on site. AI turns them into a professional report your manager approves and your customer trusts.
+  static const siteHeroBody = 'site.hero.body';
+  /// Report approved
+  static const siteHeroChipApproved = 'site.hero.chip_approved';
+  /// Sent to customer · 4:12 pm
+  static const siteHeroChipApprovedSub = 'site.hero.chip_approved_sub';
+  /// Hindi · Gujarati · Spanish
+  static const siteHeroChipLangs = 'site.hero.chip_langs';
+  /// 6 photos · timestamped
+  static const siteHeroChipPhotos = 'site.hero.chip_photos';
+  /// Before, during, after
+  static const siteHeroChipPhotosSub = 'site.hero.chip_photos_sub';
+  /// No card needed
+  static const siteHeroNoCard = 'site.hero.no_card';
+  /// Works offline
+  static const siteHeroOffline = 'site.hero.offline';
+  /// Built for HVAC, roofing and solar teams
+  static const siteHeroPill = 'site.hero.pill';
+  /// Every Job Deserves Proof.
+  static const siteHeroTitle = 'site.hero.title';
+  /// {n}-day free trial
+  static const siteHeroTrialDays = 'site.hero.trial_days';
+  /// Your technicians already take photos. KaamNishaan turns them into proof your customer can read.
+  static const siteHowBody = 'site.how.body';
+  /// Before, during and after. Each photo is timestamped and filed to the right job.
+  static const siteHowS1Body = 'site.how.s1_body';
+  /// Take photos
+  static const siteHowS1Title = 'site.how.s1_title';
+  /// Talk in your own language. KaamNishaan transcribes it word for word.
+  static const siteHowS2Body = 'site.how.s2_body';
+  /// Speak your notes
+  static const siteHowS2Title = 'site.how.s2_title';
+  /// AI writes the report from your evidence. Your manager approves and sends it.
+  static const siteHowS3Body = 'site.how.s3_body';
+  /// Send the report
+  static const siteHowS3Title = 'site.how.s3_title';
+  /// Three steps. No typing.
+  static const siteHowTitle = 'site.how.title';
+  /// Ready checklists and report templates for the work your team does every day.
+  static const siteIndBody = 'site.ind.body';
+  /// Shift checklists with photo proof.
+  static const siteIndCleaning = 'site.ind.cleaning';
+  /// {n} checklists
+  static const siteIndCount = 'site.ind.count';
+  /// 1 checklist
+  static const siteIndCountOne = 'site.ind.count_one';
+  /// Service checks, repairs and installs with before and after proof.
+  static const siteIndHvac = 'site.ind.hvac';
+  /// Learn more
+  static const siteIndLearn = 'site.ind.learn';
+  /// Work orders, move-in and move-out reports.
+  static const siteIndMaintenance = 'site.ind.maintenance';
+  /// Treatment records and follow-up visits.
+  static const siteIndPestControl = 'site.ind.pest_control';
+  /// Inspections, repairs and warranty proof for every roof.
+  static const siteIndRoofing = 'site.ind.roofing';
+  /// Installs, panel cleaning and inverter checks.
+  static const siteIndSolar = 'site.ind.solar';
+  /// Built for your trade
+  static const siteIndTitle = 'site.ind.title';
+  /// After
+  static const siteIndpAfter = 'site.indp.after';
   /// A {trade} technician answering a checklist in the KaamNishaan app
   static const siteIndpAlt = 'site.indp.alt';
-  /// Problems we solve
-  static const siteIndpPains = 'site.indp.pains';
-  /// Ready-made checklists
-  static const siteIndpReadyEyebrow = 'site.indp.ready_eyebrow';
-  /// Ready {trade} checklists, day one
-  static const siteIndpReadyTitle = 'site.indp.ready_title';
-  /// Written by KaamNishaan for this work. Copy one and change any question, or build your own.
-  static const siteIndpReadyBody = 'site.indp.ready_body';
-  /// Ready checklist
-  static const siteIndpReadyTag = 'site.indp.ready_tag';
-  /// 1 ready checklist
-  static const siteIndpReadyOne = 'site.indp.ready_one';
-  /// {n} ready checklists
-  static const siteIndpReadyN = 'site.indp.ready_n';
-  /// {n} questions · {l} languages
-  static const siteIndpTplMeta = 'site.indp.tpl_meta';
-  /// photo prompts
-  static const siteIndpTplPhotos = 'site.indp.tpl_photos';
-  /// + {n} more
-  static const siteIndpMore = 'site.indp.more';
-  /// Preview checklist
-  static const siteIndpPreview = 'site.indp.preview';
-  /// Close
-  static const siteIndpClose = 'site.indp.close';
-  /// In the app, copy it and change any question.
-  static const siteIndpTplCopy = 'site.indp.tpl_copy';
-  /// Try again
-  static const siteIndpRetry = 'site.indp.retry';
-  /// Ready {trade} checklists are on the way
-  static const siteIndpNoneTitle = 'site.indp.none_title';
-  /// Until then, build your own in a few minutes — with the questions your team already asks. A question can ask for:
-  static const siteIndpNoneBody = 'site.indp.none_body';
-  /// Yes / No
-  static const siteIndpTypeYesNo = 'site.indp.type_yes_no';
-  /// Pass / Fail
-  static const siteIndpTypePassFail = 'site.indp.type_pass_fail';
-  /// A number and unit
-  static const siteIndpTypeNumber = 'site.indp.type_number';
-  /// A few words
-  static const siteIndpTypeText = 'site.indp.type_text';
-  /// A photo
-  static const siteIndpTypePhoto = 'site.indp.type_photo';
-  /// A choice
-  static const siteIndpTypeChoice = 'site.indp.type_choice';
-  /// A signature
-  static const siteIndpTypeSignature = 'site.indp.type_signature';
-  /// May ask for a photo
-  static const siteIndpPhotoRule = 'site.indp.photo_rule';
-  /// How checklists work
-  static const siteIndpHowChecklists = 'site.indp.how_checklists';
-  /// Sample report
-  static const siteIndpSample = 'site.indp.sample';
-  /// See what your customer receives
-  static const siteIndpSampleTitle = 'site.indp.sample_title';
-  /// Sample
-  static const siteIndpSampleLabel = 'site.indp.sample_label';
+  /// Yes. Copy a ready checklist and change, reorder or remove any question — or build your own from scratch. Jobs already running keep the questions they started with.
+  static const siteIndpAns2 = 'site.indp.ans2';
+  /// Yes. Photos, answers and voice notes are saved on the phone and sent once the signal is back — each one only once.
+  static const siteIndpAns3 = 'site.indp.ans3';
+  /// Yes. They get a secure link that opens in any phone browser, with a PDF they can download.
+  static const siteIndpAns4 = 'site.indp.ans4';
   /// Approved
   static const siteIndpApproved = 'site.indp.approved';
   /// Before
   static const siteIndpBefore = 'site.indp.before';
-  /// After
-  static const siteIndpAfter = 'site.indp.after';
-  /// Work done
-  static const siteIndpWorkDone = 'site.indp.work_done';
-  /// Written in {lang}
-  static const siteIndpWrittenIn = 'site.indp.written_in';
-  /// Linked to evidence
-  static const siteIndpLinked = 'site.indp.linked';
-  /// Written in the customer’s language
-  static const siteIndpRB3 = 'site.indp.r_b3';
-  /// Approved by your manager before it’s sent
-  static const siteIndpRB4 = 'site.indp.r_b4';
-  /// A job, start to finish
-  static const siteIndpFlowEyebrow = 'site.indp.flow_eyebrow';
-  /// Photos → checklist → voice → report. Your team does the work; the app builds the proof.
-  static const siteIndpFlowBody = 'site.indp.flow_body';
-  /// Take before photos
-  static const siteIndpF1 = 'site.indp.f1';
-  /// Questions with photo prompts, answered with one tap.
-  static const siteIndpF2B = 'site.indp.f2_b';
-  /// Speak a voice note
-  static const siteIndpF3 = 'site.indp.f3';
-  /// In Gujarati, Hindi, Spanish, French or English. It is written down for the report.
-  static const siteIndpF3B = 'site.indp.f3_b';
-  /// Approve and send
-  static const siteIndpF4 = 'site.indp.f4';
-  /// The manager reviews the AI draft and sends it to the customer.
-  static const siteIndpF4B = 'site.indp.f4_b';
-  /// Can I edit the ready checklists or add my own?
-  static const siteIndpQ2 = 'site.indp.q2';
-  /// Yes. Copy a ready checklist and change, reorder or remove any question — or build your own from scratch. Jobs already running keep the questions they started with.
-  static const siteIndpAns2 = 'site.indp.ans2';
-  /// Does it work where there is no signal?
-  static const siteIndpQ3 = 'site.indp.q3';
-  /// Yes. Photos, answers and voice notes are saved on the phone and sent once the signal is back — each one only once.
-  static const siteIndpAns3 = 'site.indp.ans3';
-  /// Can customers see reports without an app?
-  static const siteIndpQ4 = 'site.indp.q4';
-  /// Yes. They get a secure link that opens in any phone browser, with a PDF they can download.
-  static const siteIndpAns4 = 'site.indp.ans4';
-  /// Proof of work for HVAC teams
-  static const siteIndpHvacTitle = 'site.indp.hvac.title';
-  /// Service reports your customers trust — made on site from timestamped photos, ready AC checklists and a voice note, in minutes.
-  static const siteIndpHvacBody = 'site.indp.hvac.body';
-  /// Before & after photos
-  static const siteIndpHvacTick = 'site.indp.hvac.tick';
-  /// Split AC service done
-  static const siteIndpHvacChip1 = 'site.indp.hvac.chip1';
-  /// 9 of 9 questions · 4:12 PM
-  static const siteIndpHvacChip1Sub = 'site.indp.hvac.chip1_sub';
-  /// Filter: before & after
-  static const siteIndpHvacChip2 = 'site.indp.hvac.chip2';
-  /// 2 photos · timestamped on site
-  static const siteIndpHvacChip2Sub = 'site.indp.hvac.chip2_sub';
-  /// What slows HVAC teams down
-  static const siteIndpHvacPainTitle = 'site.indp.hvac.pain_title';
-  /// Three problems HVAC owners tell us about — and how KaamNishaan fixes each one.
-  static const siteIndpHvacPainBody = 'site.indp.hvac.pain_body';
-  /// Disputed repairs
-  static const siteIndpHvacP1 = 'site.indp.hvac.p1';
-  /// “Was the filter really cleaned?” Customers question work they didn’t see.
-  static const siteIndpHvacP1B = 'site.indp.hvac.p1_b';
-  /// Timestamped before and after photos on every visit settle it in seconds.
-  static const siteIndpHvacP1Fix = 'site.indp.hvac.p1_fix';
-  /// Slow reports
-  static const siteIndpHvacP2 = 'site.indp.hvac.p2';
-  /// Technicians write reports at night from memory, days after the job.
-  static const siteIndpHvacP2B = 'site.indp.hvac.p2_b';
-  /// AI drafts the report on site, so it can go out the same day.
-  static const siteIndpHvacP2Fix = 'site.indp.hvac.p2_fix';
-  /// Mixed-language crews
-  static const siteIndpHvacP3 = 'site.indp.hvac.p3';
-  /// Your technicians speak Hindi, Gujarati or Spanish. Customers want English.
-  static const siteIndpHvacP3B = 'site.indp.hvac.p3_b';
-  /// Each technician speaks their own language; the report goes out in the customer’s.
-  static const siteIndpHvacP3Fix = 'site.indp.hvac.p3_fix';
-  /// A clean, branded service report with the proof built in — sent as a PDF or a secure link the customer can acknowledge.
-  static const siteIndpHvacRBody = 'site.indp.hvac.r_body';
-  /// Before and after filter photos, timestamped on site
-  static const siteIndpHvacRB1 = 'site.indp.hvac.r_b1';
-  /// Checklist results with temperature and current readings
-  static const siteIndpHvacRB2 = 'site.indp.hvac.r_b2';
-  /// BrightAir Services
-  static const siteIndpHvacRCompany = 'site.indp.hvac.r_company';
-  /// AC service report: Green Valley Clinic
-  static const siteIndpHvacRTitle = 'site.indp.hvac.r_title';
-  /// Report #R-1042 · 31 Oct · Technician Ramesh Patel
-  static const siteIndpHvacRMeta = 'site.indp.hvac.r_meta';
-  /// Cleaned the indoor filter, refilled gas and tested cooling for 15 minutes. The room now cools to 22°C.
-  static const siteIndpHvacRWork = 'site.indp.hvac.r_work';
-  /// 9 checks passed
-  static const siteIndpHvacRChecks = 'site.indp.hvac.r_checks';
-  /// One AC service visit in KaamNishaan
-  static const siteIndpHvacFlowTitle = 'site.indp.hvac.flow_title';
-  /// Dirty filter, gauges and unit plate — timestamped and filed to the job.
-  static const siteIndpHvacF1B = 'site.indp.hvac.f1_b';
-  /// Run the split AC service
-  static const siteIndpHvacF2 = 'site.indp.hvac.f2';
-  /// Features HVAC teams use most
-  static const siteIndpHvacFeatEyebrow = 'site.indp.hvac.feat_eyebrow';
-  /// Everything for the service visit
-  static const siteIndpHvacFeatTitle = 'site.indp.hvac.feat_title';
-  /// Plans for HVAC teams of every size
-  static const siteIndpHvacPriceTitle = 'site.indp.hvac.price_title';
-  /// Do the checklists record temperature and current readings?
-  static const siteIndpHvacQ1 = 'site.indp.hvac.q1';
-  /// Yes. A question can ask for a number with its unit, a photo or a yes/no answer, so readings appear in the report next to the photos that prove them.
-  static const siteIndpHvacAns1 = 'site.indp.hvac.ans1';
-  /// Give every HVAC job its proof
-  static const siteIndpHvacCta = 'site.indp.hvac.cta';
-  /// Proof of work for roofing teams
-  static const siteIndpRoofingTitle = 'site.indp.roofing.title';
-  /// Inspection and repair reports your customers trust — made on the roof from timestamped photos, checklists and a voice note.
-  static const siteIndpRoofingBody = 'site.indp.roofing.body';
-  /// Damage & repair photos
-  static const siteIndpRoofingTick = 'site.indp.roofing.tick';
-  /// Roof inspection done
-  static const siteIndpRoofingChip1 = 'site.indp.roofing.chip1';
-  /// 15 of 15 questions · 3:40 PM
-  static const siteIndpRoofingChip1Sub = 'site.indp.roofing.chip1_sub';
-  /// Ridge: before & after
-  static const siteIndpRoofingChip2 = 'site.indp.roofing.chip2';
-  /// 4 photos · timestamped on site
-  static const siteIndpRoofingChip2Sub = 'site.indp.roofing.chip2_sub';
-  /// What slows roofing teams down
-  static const siteIndpRoofingPainTitle = 'site.indp.roofing.pain_title';
-  /// Three problems roofing owners tell us about — and how KaamNishaan fixes each one.
-  static const siteIndpRoofingPainBody = 'site.indp.roofing.pain_body';
-  /// Disputed damage
-  static const siteIndpRoofingP1 = 'site.indp.roofing.p1';
-  /// “Was the roof already damaged?” Customers and insurers question what they can’t see.
-  static const siteIndpRoofingP1B = 'site.indp.roofing.p1_b';
-  /// Timestamped photos of every slope and repair, before and after.
-  static const siteIndpRoofingP1Fix = 'site.indp.roofing.p1_fix';
-  /// Slow inspection reports
-  static const siteIndpRoofingP2 = 'site.indp.roofing.p2';
-  /// Inspectors write up findings at the office, days after the climb.
-  static const siteIndpRoofingP2B = 'site.indp.roofing.p2_b';
-  /// AI drafts the report from the roof’s proof, so it can go out the same day.
-  static const siteIndpRoofingP2Fix = 'site.indp.roofing.p2_fix';
-  /// Proof for warranties
-  static const siteIndpRoofingP3 = 'site.indp.roofing.p3';
-  /// Warranty claims stall when there’s no record of how the job was done.
-  static const siteIndpRoofingP3B = 'site.indp.roofing.p3_b';
-  /// Every job keeps its photos, checklist answers and notes, ready when you need them.
-  static const siteIndpRoofingP3Fix = 'site.indp.roofing.p3_fix';
-  /// A clean, branded inspection and repair report with the proof built in — sent as a PDF or a secure link.
-  static const siteIndpRoofingRBody = 'site.indp.roofing.r_body';
-  /// Before and after photos of every repaired area
-  static const siteIndpRoofingRB1 = 'site.indp.roofing.r_b1';
-  /// Checklist results for every part of the roof
-  static const siteIndpRoofingRB2 = 'site.indp.roofing.r_b2';
-  /// Summit Roofing Co.
-  static const siteIndpRoofingRCompany = 'site.indp.roofing.r_company';
-  /// Roof repair report: Hill Road residence
-  static const siteIndpRoofingRTitle = 'site.indp.roofing.r_title';
-  /// Report #R-2087 · 31 Oct · Technician Ramesh Patel
-  static const siteIndpRoofingRMeta = 'site.indp.roofing.r_meta';
-  /// Replaced three cracked shingles near the chimney and resealed the flashing. A 20-minute water test showed no leaks.
-  static const siteIndpRoofingRWork = 'site.indp.roofing.r_work';
-  /// 14 checks passed
-  static const siteIndpRoofingRChecks = 'site.indp.roofing.r_checks';
-  /// One roof repair in KaamNishaan
-  static const siteIndpRoofingFlowTitle = 'site.indp.roofing.flow_title';
-  /// Every slope, the damage and the flashing — timestamped and filed to the job.
-  static const siteIndpRoofingF1B = 'site.indp.roofing.f1_b';
-  /// Run the roof inspection
-  static const siteIndpRoofingF2 = 'site.indp.roofing.f2';
-  /// Features roofing teams use most
-  static const siteIndpRoofingFeatEyebrow = 'site.indp.roofing.feat_eyebrow';
-  /// Everything for the job on the roof
-  static const siteIndpRoofingFeatTitle = 'site.indp.roofing.feat_title';
-  /// Plans for roofing teams of every size
-  static const siteIndpRoofingPriceTitle = 'site.indp.roofing.price_title';
-  /// Can photos show which part of the roof they belong to?
-  static const siteIndpRoofingQ1 = 'site.indp.roofing.q1';
-  /// Yes. Photos taken for a checklist question stay with that question — “Photo of the north slope?” keeps its own photos — and every photo keeps the time and place it was taken.
-  static const siteIndpRoofingAns1 = 'site.indp.roofing.ans1';
-  /// Give every roofing job its proof
-  static const siteIndpRoofingCta = 'site.indp.roofing.cta';
-  /// Proof of work for solar teams
-  static const siteIndpSolarTitle = 'site.indp.solar.title';
-  /// Install handovers and cleaning reports your customers trust — made on site from timestamped photos, checklists and a voice note.
-  static const siteIndpSolarBody = 'site.indp.solar.body';
-  /// Panel & inverter photos
-  static const siteIndpSolarTick = 'site.indp.solar.tick';
-  /// Install handover done
-  static const siteIndpSolarChip1 = 'site.indp.solar.chip1';
-  /// 20 of 20 questions · 5:05 PM
-  static const siteIndpSolarChip1Sub = 'site.indp.solar.chip1_sub';
-  /// Panels: before & after
-  static const siteIndpSolarChip2 = 'site.indp.solar.chip2';
-  /// 6 photos · timestamped on site
-  static const siteIndpSolarChip2Sub = 'site.indp.solar.chip2_sub';
-  /// What slows solar teams down
-  static const siteIndpSolarPainTitle = 'site.indp.solar.pain_title';
-  /// Three problems solar owners tell us about — and how KaamNishaan fixes each one.
-  static const siteIndpSolarPainBody = 'site.indp.solar.pain_body';
-  /// Handover disputes
-  static const siteIndpSolarP1 = 'site.indp.solar.p1';
-  /// “Is it really producing what you promised?” Customers question the install.
-  static const siteIndpSolarP1B = 'site.indp.solar.p1_b';
-  /// Inverter readings and panel photos are recorded at handover, with the time.
-  static const siteIndpSolarP1Fix = 'site.indp.solar.p1_fix';
-  /// Paper handover packs
-  static const siteIndpSolarP2 = 'site.indp.solar.p2';
-  /// Serial numbers, readings and photos end up in different places.
-  static const siteIndpSolarP2B = 'site.indp.solar.p2_b';
-  /// One job holds every reading, serial number and photo — sent as one report.
-  static const siteIndpSolarP2Fix = 'site.indp.solar.p2_fix';
-  /// Cleaning proof
-  static const siteIndpSolarP3 = 'site.indp.solar.p3';
-  /// Panel cleaning is hard to prove once the crew has left the roof.
-  static const siteIndpSolarP3B = 'site.indp.solar.p3_b';
-  /// Before and after photos of every row show the difference.
-  static const siteIndpSolarP3Fix = 'site.indp.solar.p3_fix';
-  /// A clean, branded cleaning and handover report with the proof built in — sent as a PDF or a secure link.
-  static const siteIndpSolarRBody = 'site.indp.solar.r_body';
-  /// Panel photos before and after, timestamped on site
-  static const siteIndpSolarRB1 = 'site.indp.solar.r_b1';
-  /// Checklist results with inverter readings and serial numbers
-  static const siteIndpSolarRB2 = 'site.indp.solar.r_b2';
-  /// SunPeak Energy
-  static const siteIndpSolarRCompany = 'site.indp.solar.r_company';
-  /// Panel cleaning report: Patel residence
-  static const siteIndpSolarRTitle = 'site.indp.solar.r_title';
-  /// Report #R-3124 · 31 Oct · Technician Ramesh Patel
-  static const siteIndpSolarRMeta = 'site.indp.solar.r_meta';
-  /// Cleaned 24 panels with water and a soft brush. Output at noon went from 3.6 kW to 4.2 kW.
-  static const siteIndpSolarRWork = 'site.indp.solar.r_work';
-  /// 8 checks passed
-  static const siteIndpSolarRChecks = 'site.indp.solar.r_checks';
-  /// One solar install in KaamNishaan
-  static const siteIndpSolarFlowTitle = 'site.indp.solar.flow_title';
-  /// Roof, panels and the inverter — timestamped and filed to the job.
-  static const siteIndpSolarF1B = 'site.indp.solar.f1_b';
-  /// Run the install handover
-  static const siteIndpSolarF2 = 'site.indp.solar.f2';
-  /// Features solar teams use most
-  static const siteIndpSolarFeatEyebrow = 'site.indp.solar.feat_eyebrow';
-  /// Everything from survey to handover
-  static const siteIndpSolarFeatTitle = 'site.indp.solar.feat_title';
-  /// Plans for solar teams of every size
-  static const siteIndpSolarPriceTitle = 'site.indp.solar.price_title';
-  /// Can checklists record inverter readings and serial numbers?
-  static const siteIndpSolarQ1 = 'site.indp.solar.q1';
-  /// Yes. A question can ask for a number with its unit, a few words such as a serial number, or a photo — so readings sit next to the photos that prove them.
-  static const siteIndpSolarAns1 = 'site.indp.solar.ans1';
-  /// Give every solar job its proof
-  static const siteIndpSolarCta = 'site.indp.solar.cta';
-  /// Proof of work for property maintenance teams
-  static const siteIndpMaintenanceTitle = 'site.indp.maintenance.title';
-  /// Work orders and condition reports owners and tenants trust — made on site from timestamped photos, checklists and a voice note.
-  static const siteIndpMaintenanceBody = 'site.indp.maintenance.body';
-  /// Before & after photos
-  static const siteIndpMaintenanceTick = 'site.indp.maintenance.tick';
-  /// Work order closed
-  static const siteIndpMaintenanceChip1 = 'site.indp.maintenance.chip1';
-  /// 9 of 9 questions · 2:15 PM
-  static const siteIndpMaintenanceChip1Sub = 'site.indp.maintenance.chip1_sub';
-  /// Kitchen tap: before & after
-  static const siteIndpMaintenanceChip2 = 'site.indp.maintenance.chip2';
-  /// 2 photos · timestamped on site
-  static const siteIndpMaintenanceChip2Sub = 'site.indp.maintenance.chip2_sub';
-  /// What slows maintenance teams down
-  static const siteIndpMaintenancePainTitle = 'site.indp.maintenance.pain_title';
-  /// Three problems property managers tell us about — and how KaamNishaan fixes each one.
-  static const siteIndpMaintenancePainBody = 'site.indp.maintenance.pain_body';
-  /// Deposit disputes
-  static const siteIndpMaintenanceP1 = 'site.indp.maintenance.p1';
-  /// “That damage was there when I moved in.” Move-out arguments with no proof.
-  static const siteIndpMaintenanceP1B = 'site.indp.maintenance.p1_b';
-  /// Dated move-in and move-out photos of every room settle it.
-  static const siteIndpMaintenanceP1Fix = 'site.indp.maintenance.p1_fix';
-  /// Work orders lost in chats
-  static const siteIndpMaintenanceP2 = 'site.indp.maintenance.p2';
-  /// Requests and updates are scattered across calls and WhatsApp.
-  static const siteIndpMaintenanceP2B = 'site.indp.maintenance.p2_b';
-  /// Every work order is one job, with a status, photos and a report.
-  static const siteIndpMaintenanceP2Fix = 'site.indp.maintenance.p2_fix';
-  /// Owners want updates
-  static const siteIndpMaintenanceP3 = 'site.indp.maintenance.p3';
-  /// Owners ask what was done, and when, across many units.
-  static const siteIndpMaintenanceP3B = 'site.indp.maintenance.p3_b';
-  /// Share each finished job’s report with the owner as a link or PDF.
-  static const siteIndpMaintenanceP3Fix = 'site.indp.maintenance.p3_fix';
-  /// A clean, branded work-order report with the proof built in — sent as a PDF or a secure link.
-  static const siteIndpMaintenanceRBody = 'site.indp.maintenance.r_body';
-  /// Before and after photos of every repair, timestamped on site
-  static const siteIndpMaintenanceRB1 = 'site.indp.maintenance.r_b1';
-  /// Checklist results for every room
-  static const siteIndpMaintenanceRB2 = 'site.indp.maintenance.r_b2';
-  /// Urban Nest Property Care
-  static const siteIndpMaintenanceRCompany = 'site.indp.maintenance.r_company';
-  /// Work order report: Flat 4B, Lake View
-  static const siteIndpMaintenanceRTitle = 'site.indp.maintenance.r_title';
-  /// Report #R-4410 · 31 Oct · Technician Ramesh Patel
-  static const siteIndpMaintenanceRMeta = 'site.indp.maintenance.r_meta';
-  /// Found a leak under the kitchen sink. Replaced the tap washer and the waste pipe seal. No leak after a 10-minute test.
-  static const siteIndpMaintenanceRWork = 'site.indp.maintenance.r_work';
-  /// 9 checks passed
-  static const siteIndpMaintenanceRChecks = 'site.indp.maintenance.r_checks';
-  /// One work order in KaamNishaan
-  static const siteIndpMaintenanceFlowTitle = 'site.indp.maintenance.flow_title';
-  /// The problem, the room and the unit — timestamped and filed to the job.
-  static const siteIndpMaintenanceF1B = 'site.indp.maintenance.f1_b';
-  /// Run the work order check
-  static const siteIndpMaintenanceF2 = 'site.indp.maintenance.f2';
-  /// Features maintenance teams use most
-  static const siteIndpMaintenanceFeatEyebrow = 'site.indp.maintenance.feat_eyebrow';
-  /// Everything for every unit
-  static const siteIndpMaintenanceFeatTitle = 'site.indp.maintenance.feat_title';
-  /// Plans for maintenance teams of every size
-  static const siteIndpMaintenancePriceTitle = 'site.indp.maintenance.price_title';
-  /// Can I do move-in and move-out reports for the same flat?
-  static const siteIndpMaintenanceQ1 = 'site.indp.maintenance.q1';
-  /// Yes. Make a job for each visit at the same customer and address. Both reports keep their dated photos, so you can open them side by side when a tenant leaves.
-  static const siteIndpMaintenanceAns1 = 'site.indp.maintenance.ans1';
-  /// Give every work order its proof
-  static const siteIndpMaintenanceCta = 'site.indp.maintenance.cta';
-  /// Proof of work for pest control teams
-  static const siteIndpPestControlTitle = 'site.indp.pest_control.title';
-  /// Treatment records your customers and auditors trust — made on site from timestamped photos, checklists and a voice note.
-  static const siteIndpPestControlBody = 'site.indp.pest_control.body';
-  /// Treatment photos
-  static const siteIndpPestControlTick = 'site.indp.pest_control.tick';
-  /// Treatment check done
-  static const siteIndpPestControlChip1 = 'site.indp.pest_control.chip1';
-  /// 11 of 11 questions · 10:20 AM
-  static const siteIndpPestControlChip1Sub = 'site.indp.pest_control.chip1_sub';
-  /// Bait station 3: checked
-  static const siteIndpPestControlChip2 = 'site.indp.pest_control.chip2';
-  /// 2 photos · timestamped on site
-  static const siteIndpPestControlChip2Sub = 'site.indp.pest_control.chip2_sub';
-  /// What slows pest control teams down
-  static const siteIndpPestControlPainTitle = 'site.indp.pest_control.pain_title';
-  /// Three problems pest control owners tell us about — and how KaamNishaan fixes each one.
-  static const siteIndpPestControlPainBody = 'site.indp.pest_control.pain_body';
-  /// Audit paperwork
-  static const siteIndpPestControlP1 = 'site.indp.pest_control.p1';
-  /// Food businesses need treatment records for audits — paper logs go missing.
-  static const siteIndpPestControlP1B = 'site.indp.pest_control.p1_b';
-  /// Every visit becomes a dated report with products, areas and photos.
-  static const siteIndpPestControlP1Fix = 'site.indp.pest_control.p1_fix';
-  /// “Did you even come?”
-  static const siteIndpPestControlP2 = 'site.indp.pest_control.p2';
-  /// Treatments are often invisible, so customers doubt the visit happened.
-  static const siteIndpPestControlP2B = 'site.indp.pest_control.p2_b';
-  /// Timestamped photos of each bait station and treated area prove it.
-  static const siteIndpPestControlP2Fix = 'site.indp.pest_control.p2_fix';
-  /// Missed follow-ups
-  static const siteIndpPestControlP3 = 'site.indp.pest_control.p3';
-  /// Follow-up visits are forgotten when they live in someone’s notebook.
-  static const siteIndpPestControlP3B = 'site.indp.pest_control.p3_b';
-  /// Book the follow-up as its own job, with the right checklist and a date.
-  static const siteIndpPestControlP3Fix = 'site.indp.pest_control.p3_fix';
-  /// A clean, branded treatment record with the proof built in — sent as a PDF or a secure link.
-  static const siteIndpPestControlRBody = 'site.indp.pest_control.r_body';
-  /// Photos of each treated area and bait station, timestamped on site
-  static const siteIndpPestControlRB1 = 'site.indp.pest_control.r_b1';
-  /// Products, amounts and treated areas, from the checklist
-  static const siteIndpPestControlRB2 = 'site.indp.pest_control.r_b2';
-  /// ShieldPest Services
-  static const siteIndpPestControlRCompany = 'site.indp.pest_control.r_company';
-  /// Treatment record: Sunrise Bakery
-  static const siteIndpPestControlRTitle = 'site.indp.pest_control.r_title';
-  /// Report #R-5034 · 31 Oct · Technician Ramesh Patel
-  static const siteIndpPestControlRMeta = 'site.indp.pest_control.r_meta';
-  /// Checked 6 bait stations and replaced bait in station 3. Gel applied in the kitchen and store room.
-  static const siteIndpPestControlRWork = 'site.indp.pest_control.r_work';
-  /// 11 checks passed
-  static const siteIndpPestControlRChecks = 'site.indp.pest_control.r_checks';
-  /// Treated area
-  static const siteIndpPestControlRPhoto1 = 'site.indp.pest_control.r_photo1';
-  /// Bait station
-  static const siteIndpPestControlRPhoto2 = 'site.indp.pest_control.r_photo2';
-  /// One treatment visit in KaamNishaan
-  static const siteIndpPestControlFlowTitle = 'site.indp.pest_control.flow_title';
-  /// Signs of pests, bait stations and entry points — timestamped and filed.
-  static const siteIndpPestControlF1B = 'site.indp.pest_control.f1_b';
-  /// Run the treatment checklist
-  static const siteIndpPestControlF2 = 'site.indp.pest_control.f2';
-  /// Features pest control teams use most
-  static const siteIndpPestControlFeatEyebrow = 'site.indp.pest_control.feat_eyebrow';
-  /// Everything for every treatment
-  static const siteIndpPestControlFeatTitle = 'site.indp.pest_control.feat_title';
-  /// Plans for pest control teams of every size
-  static const siteIndpPestControlPriceTitle = 'site.indp.pest_control.price_title';
-  /// Can checklists record the products and amounts used?
-  static const siteIndpPestControlQ1 = 'site.indp.pest_control.q1';
-  /// Yes. A question can ask for a product name, an amount with its unit or a photo, so every treatment record lists what was used and where.
-  static const siteIndpPestControlAns1 = 'site.indp.pest_control.ans1';
-  /// Give every treatment its proof
-  static const siteIndpPestControlCta = 'site.indp.pest_control.cta';
-  /// Proof of work for commercial cleaning teams
-  static const siteIndpCleaningTitle = 'site.indp.cleaning.title';
+  /// Yes. The job shows its status and how many proof steps are done, and photos arrive as they are sent from the phone.
+  static const siteIndpCleaningAns1 = 'site.indp.cleaning.ans1';
   /// Shift reports facility managers trust — made on site from timestamped photos, checklists and a voice note.
   static const siteIndpCleaningBody = 'site.indp.cleaning.body';
-  /// Photo proof per area
-  static const siteIndpCleaningTick = 'site.indp.cleaning.tick';
   /// Night shift complete
   static const siteIndpCleaningChip1 = 'site.indp.cleaning.chip1';
   /// 16 of 16 questions · 6:00 AM
@@ -4964,10 +8138,18 @@ abstract final class LangKeys {
   static const siteIndpCleaningChip2 = 'site.indp.cleaning.chip2';
   /// 2 photos · timestamped on site
   static const siteIndpCleaningChip2Sub = 'site.indp.cleaning.chip2_sub';
-  /// What slows cleaning teams down
-  static const siteIndpCleaningPainTitle = 'site.indp.cleaning.pain_title';
-  /// Three problems cleaning company owners tell us about — and how KaamNishaan fixes each one.
-  static const siteIndpCleaningPainBody = 'site.indp.cleaning.pain_body';
+  /// Give every shift its proof
+  static const siteIndpCleaningCta = 'site.indp.cleaning.cta';
+  /// Each floor, washroom and the lobby — timestamped and filed to the job.
+  static const siteIndpCleaningF1B = 'site.indp.cleaning.f1_b';
+  /// Run the shift check
+  static const siteIndpCleaningF2 = 'site.indp.cleaning.f2';
+  /// Features cleaning teams use most
+  static const siteIndpCleaningFeatEyebrow = 'site.indp.cleaning.feat_eyebrow';
+  /// Everything for every shift
+  static const siteIndpCleaningFeatTitle = 'site.indp.cleaning.feat_title';
+  /// One night shift in KaamNishaan
+  static const siteIndpCleaningFlowTitle = 'site.indp.cleaning.flow_title';
   /// “That area was missed”
   static const siteIndpCleaningP1 = 'site.indp.cleaning.p1';
   /// Facility managers complain about areas they think were skipped.
@@ -4986,4526 +8168,1370 @@ abstract final class LangKeys {
   static const siteIndpCleaningP3B = 'site.indp.cleaning.p3_b';
   /// Simple checklists in their own language show exactly what to do.
   static const siteIndpCleaningP3Fix = 'site.indp.cleaning.p3_fix';
-  /// A clean, branded shift report with the proof built in — sent as a PDF or a secure link.
-  static const siteIndpCleaningRBody = 'site.indp.cleaning.r_body';
-  /// Before and after photos of every area, timestamped on site
-  static const siteIndpCleaningRB1 = 'site.indp.cleaning.r_b1';
-  /// Checklist results for every floor and washroom
-  static const siteIndpCleaningRB2 = 'site.indp.cleaning.r_b2';
-  /// Sparkle Facility Services
-  static const siteIndpCleaningRCompany = 'site.indp.cleaning.r_company';
-  /// Night shift report: Block B offices
-  static const siteIndpCleaningRTitle = 'site.indp.cleaning.r_title';
-  /// Report #R-6201 · 31 Oct · Cleaner Sunita Rao
-  static const siteIndpCleaningRMeta = 'site.indp.cleaning.r_meta';
-  /// Cleaned all 4 floors and 8 washrooms, refilled supplies and mopped the lobby. One broken soap dispenser reported on floor 2.
-  static const siteIndpCleaningRWork = 'site.indp.cleaning.r_work';
-  /// 16 checks passed
-  static const siteIndpCleaningRChecks = 'site.indp.cleaning.r_checks';
-  /// One night shift in KaamNishaan
-  static const siteIndpCleaningFlowTitle = 'site.indp.cleaning.flow_title';
-  /// Each floor, washroom and the lobby — timestamped and filed to the job.
-  static const siteIndpCleaningF1B = 'site.indp.cleaning.f1_b';
-  /// Run the shift check
-  static const siteIndpCleaningF2 = 'site.indp.cleaning.f2';
-  /// Features cleaning teams use most
-  static const siteIndpCleaningFeatEyebrow = 'site.indp.cleaning.feat_eyebrow';
-  /// Everything for every shift
-  static const siteIndpCleaningFeatTitle = 'site.indp.cleaning.feat_title';
+  /// Three problems cleaning company owners tell us about — and how KaamNishaan fixes each one.
+  static const siteIndpCleaningPainBody = 'site.indp.cleaning.pain_body';
+  /// What slows cleaning teams down
+  static const siteIndpCleaningPainTitle = 'site.indp.cleaning.pain_title';
   /// Plans for cleaning teams of every size
   static const siteIndpCleaningPriceTitle = 'site.indp.cleaning.price_title';
   /// Can I see a shift’s progress while it’s happening?
   static const siteIndpCleaningQ1 = 'site.indp.cleaning.q1';
-  /// Yes. The job shows its status and how many proof steps are done, and photos arrive as they are sent from the phone.
-  static const siteIndpCleaningAns1 = 'site.indp.cleaning.ans1';
-  /// Give every shift its proof
-  static const siteIndpCleaningCta = 'site.indp.cleaning.cta';
-  /// Company
-  static const siteAboutCrumb = 'site.about.crumb';
-  /// About KaamNishaan
-  static const siteAboutPill = 'site.about.pill';
-  /// Every Job. Every Photo. Every Proof.
-  static const siteAboutTitle = 'site.about.title';
-  /// KaamNishaan means “mark of work”. We build simple tools that help field teams prove what they did — in their own language, on the phones they already use.
-  static const siteAboutBody = 'site.about.body';
-  /// No typing needed
-  static const siteAboutTick1 = 'site.about.tick1';
-  /// {n} languages
-  static const siteAboutLangs = 'site.about.langs';
-  /// A technician’s day and a voice note being recorded in the KaamNishaan app
-  static const siteAboutAlt = 'site.about.alt';
-  /// Built for the people who do the work
-  static const siteAboutChip1 = 'site.about.chip1';
-  /// Technicians, installers, cleaners
-  static const siteAboutChip1Sub = 'site.about.chip1_sub';
-  /// Speak, don’t type
-  static const siteAboutChip2 = 'site.about.chip2';
-  /// Voice notes in 5 languages
-  static const siteAboutChip2Sub = 'site.about.chip2_sub';
-  /// Why we built it
-  static const siteAboutWhyEyebrow = 'site.about.why_eyebrow';
-  /// Simple tools for every field worker
-  static const siteAboutWhyTitle = 'site.about.why_title';
-  /// Whatever their reading level, and whatever language they speak.
-  static const siteAboutWhyBody = 'site.about.why_body';
-  /// Most field software is built for office staff. It expects long forms, perfect spelling and English.
-  static const siteAboutWhyP1 = 'site.about.why_p1';
-  /// But the people doing the work — technicians, installers, cleaners — are often more comfortable speaking than typing, and many prefer their own language.
-  static const siteAboutWhyP2 = 'site.about.why_p2';
-  /// So we built KaamNishaan voice-first: big buttons, one question at a time, and voice notes in English, Hindi, Gujarati, Spanish or French. The app turns what they say and photograph into a report the customer can trust.
-  static const siteAboutWhyP3 = 'site.about.why_p3';
-  /// The people we build for · illustrative photos, not real staff
-  static const siteAboutWhyCaption = 'site.about.why_caption';
-  /// What we believe
-  static const siteAboutValuesEyebrow = 'site.about.values_eyebrow';
-  /// Our values
-  static const siteAboutValuesTitle = 'site.about.values_title';
-  /// Four ideas behind every screen we design.
-  static const siteAboutValuesBody = 'site.about.values_body';
-  /// Simple first
-  static const siteAboutV1 = 'site.about.v1';
-  /// If you can use WhatsApp, you can use KaamNishaan. Big buttons, few words, one step at a time.
-  static const siteAboutV1B = 'site.about.v1_b';
-  /// Honest AI
-  static const siteAboutV2 = 'site.about.v2';
-  /// AI never invents work. Every sentence links to a photo, an answer or a voice note.
-  static const siteAboutV2B = 'site.about.v2_b';
-  /// Your language
-  static const siteAboutV3 = 'site.about.v3';
-  /// Workers speak their own language. Reports go out in the customer’s.
-  static const siteAboutV3B = 'site.about.v3_b';
-  /// Proof protects everyone
-  static const siteAboutV4 = 'site.about.v4';
-  /// Clear records protect workers, owners and customers from disputes.
-  static const siteAboutV4B = 'site.about.v4_b';
+  /// Before and after photos of every area, timestamped on site
+  static const siteIndpCleaningRB1 = 'site.indp.cleaning.r_b1';
+  /// Checklist results for every floor and washroom
+  static const siteIndpCleaningRB2 = 'site.indp.cleaning.r_b2';
+  /// A clean, branded shift report with the proof built in — sent as a PDF or a secure link.
+  static const siteIndpCleaningRBody = 'site.indp.cleaning.r_body';
+  /// 16 checks passed
+  static const siteIndpCleaningRChecks = 'site.indp.cleaning.r_checks';
+  /// Sparkle Facility Services
+  static const siteIndpCleaningRCompany = 'site.indp.cleaning.r_company';
+  /// Report #R-6201 · 31 Oct · Cleaner Sunita Rao
+  static const siteIndpCleaningRMeta = 'site.indp.cleaning.r_meta';
+  /// Night shift report: Block B offices
+  static const siteIndpCleaningRTitle = 'site.indp.cleaning.r_title';
+  /// Cleaned all 4 floors and 8 washrooms, refilled supplies and mopped the lobby. One broken soap dispenser reported on floor 2.
+  static const siteIndpCleaningRWork = 'site.indp.cleaning.r_work';
+  /// Photo proof per area
+  static const siteIndpCleaningTick = 'site.indp.cleaning.tick';
+  /// Proof of work for commercial cleaning teams
+  static const siteIndpCleaningTitle = 'site.indp.cleaning.title';
+  /// Close
+  static const siteIndpClose = 'site.indp.close';
   /// Industries
-  static const siteAboutIndEyebrow = 'site.about.ind_eyebrow';
-  /// Built for teams in
-  static const siteAboutIndTitle = 'site.about.ind_title';
-  /// Six trades today. Use our ready checklists where they exist, or build your own.
-  static const siteAboutIndBody = 'site.about.ind_body';
-  /// Speak your language
-  static const siteAboutLangTitle = 'site.about.lang_title';
-  /// The app, voice notes and reports work in {n} languages.
-  static const siteAboutLangBody = 'site.about.lang_body';
-  /// {lang} · app, voice, reports
-  static const siteAboutLangLine = 'site.about.lang_line';
-  /// Talk to us — or work with us
-  static const siteAboutCta = 'site.about.cta';
-  /// Questions, partnerships or careers: write to us and a real person replies within one working day.
-  static const siteAboutCtaBody = 'site.about.cta_body';
-  /// Contact us
-  static const siteAboutContact = 'site.about.contact';
-  /// Blog
-  static const siteBlogEyebrow = 'site.blog.eyebrow';
-  /// Guides for field service teams
-  static const siteBlogTitle = 'site.blog.title';
-  /// Practical how-tos on photo proof, checklists and reports — for HVAC, roofing, solar, maintenance, pest control and cleaning teams.
-  static const siteBlogBody = 'site.blog.body';
-  /// Filter guides by topic
-  static const siteBlogFilter = 'site.blog.filter';
-  /// All
-  static const siteBlogAll = 'site.blog.all';
-  /// Featured
-  static const siteBlogFeatured = 'site.blog.featured';
-  /// KaamNishaan team
-  static const siteBlogTeam = 'site.blog.team';
-  /// {n} min read
-  static const siteBlogMinutes = 'site.blog.minutes';
-  /// Read article
-  static const siteBlogRead = 'site.blog.read';
-  /// Read more
-  static const siteBlogReadMore = 'site.blog.read_more';
-  /// In {lang}
-  static const siteBlogInLang = 'site.blog.in_lang';
-  /// Latest
-  static const siteBlogLatest = 'site.blog.latest';
-  /// More guides for field teams
-  static const siteBlogMore = 'site.blog.more';
-  /// No guides on this topic yet.
-  static const siteBlogEmpty = 'site.blog.empty';
-  /// HVAC
-  static const siteBlogCatHvac = 'site.blog.cat.hvac';
-  /// Roofing
-  static const siteBlogCatRoofing = 'site.blog.cat.roofing';
-  /// Solar
-  static const siteBlogCatSolar = 'site.blog.cat.solar';
-  /// Maintenance
-  static const siteBlogCatMaintenance = 'site.blog.cat.maintenance';
-  /// Pest control
-  static const siteBlogCatPest = 'site.blog.cat.pest';
-  /// Cleaning
-  static const siteBlogCatCleaning = 'site.blog.cat.cleaning';
-  /// Reports
-  static const siteBlogCatReports = 'site.blog.cat.reports';
-  /// Tips
-  static const siteBlogCatTips = 'site.blog.cat.tips';
-  /// Voice notes
-  static const siteBlogCatVoice = 'site.blog.cat.voice';
-  /// Newsletter
-  static const siteBlogNewsEyebrow = 'site.blog.news_eyebrow';
-  /// Get new guides by email
-  static const siteBlogNewsTitle = 'site.blog.news_title';
-  /// Field service tips, checklists and report ideas when we publish new guides. No spam.
-  static const siteBlogNewsBody = 'site.blog.news_body';
-  /// Subscribe
-  static const siteBlogSubscribe = 'site.blog.subscribe';
-  /// You’re on the list. Thank you!
-  static const siteBlogNewsDone = 'site.blog.news_done';
-  /// We’ll only use your email to send the newsletter. See our
-  static const siteBlogNewsNote = 'site.blog.news_note';
-  /// Put these guides to work
-  static const siteBlogCta = 'site.blog.cta';
-  /// Share this guide
-  static const siteBlogShare = 'site.blog.share';
-  /// Copy link
-  static const siteBlogCopy = 'site.blog.copy';
-  /// Link copied
-  static const siteBlogCopied = 'site.blog.copied';
-  /// Email
-  static const siteBlogEmail = 'site.blog.email';
-  /// Turn every job into a report like this
-  static const siteBlogBoxTitle = 'site.blog.box_title';
-  /// Keep reading
-  static const siteBlogKeep = 'site.blog.keep';
-  /// Related guides
-  static const siteBlogRelated = 'site.blog.related';
-  /// All guides
-  static const siteBlogAllPosts = 'site.blog.all_posts';
-  /// This guide doesn’t exist
-  static const siteBlogMissing = 'site.blog.missing';
+  static const siteIndpCrumb = 'site.indp.crumb';
+  /// Take before photos
+  static const siteIndpF1 = 'site.indp.f1';
+  /// Questions with photo prompts, answered with one tap.
+  static const siteIndpF2B = 'site.indp.f2_b';
+  /// Speak a voice note
+  static const siteIndpF3 = 'site.indp.f3';
+  /// In Gujarati, Hindi, Spanish, French or English. It is written down for the report.
+  static const siteIndpF3B = 'site.indp.f3_b';
+  /// Approve and send
+  static const siteIndpF4 = 'site.indp.f4';
+  /// The manager reviews the AI draft and sends it to the customer.
+  static const siteIndpF4B = 'site.indp.f4_b';
+  /// Photos → checklist → voice → report. Your team does the work; the app builds the proof.
+  static const siteIndpFlowBody = 'site.indp.flow_body';
+  /// A job, start to finish
+  static const siteIndpFlowEyebrow = 'site.indp.flow_eyebrow';
+  /// How checklists work
+  static const siteIndpHowChecklists = 'site.indp.how_checklists';
+  /// Yes. A question can ask for a number with its unit, a photo or a yes/no answer, so readings appear in the report next to the photos that prove them.
+  static const siteIndpHvacAns1 = 'site.indp.hvac.ans1';
+  /// Service reports your customers trust — made on site from timestamped photos, ready AC checklists and a voice note, in minutes.
+  static const siteIndpHvacBody = 'site.indp.hvac.body';
+  /// Split AC service done
+  static const siteIndpHvacChip1 = 'site.indp.hvac.chip1';
+  /// 9 of 9 questions · 4:12 PM
+  static const siteIndpHvacChip1Sub = 'site.indp.hvac.chip1_sub';
+  /// Filter: before & after
+  static const siteIndpHvacChip2 = 'site.indp.hvac.chip2';
+  /// 2 photos · timestamped on site
+  static const siteIndpHvacChip2Sub = 'site.indp.hvac.chip2_sub';
+  /// Give every HVAC job its proof
+  static const siteIndpHvacCta = 'site.indp.hvac.cta';
+  /// Dirty filter, gauges and unit plate — timestamped and filed to the job.
+  static const siteIndpHvacF1B = 'site.indp.hvac.f1_b';
+  /// Run the split AC service
+  static const siteIndpHvacF2 = 'site.indp.hvac.f2';
+  /// Features HVAC teams use most
+  static const siteIndpHvacFeatEyebrow = 'site.indp.hvac.feat_eyebrow';
+  /// Everything for the service visit
+  static const siteIndpHvacFeatTitle = 'site.indp.hvac.feat_title';
+  /// One AC service visit in KaamNishaan
+  static const siteIndpHvacFlowTitle = 'site.indp.hvac.flow_title';
+  /// Disputed repairs
+  static const siteIndpHvacP1 = 'site.indp.hvac.p1';
+  /// “Was the filter really cleaned?” Customers question work they didn’t see.
+  static const siteIndpHvacP1B = 'site.indp.hvac.p1_b';
+  /// Timestamped before and after photos on every visit settle it in seconds.
+  static const siteIndpHvacP1Fix = 'site.indp.hvac.p1_fix';
+  /// Slow reports
+  static const siteIndpHvacP2 = 'site.indp.hvac.p2';
+  /// Technicians write reports at night from memory, days after the job.
+  static const siteIndpHvacP2B = 'site.indp.hvac.p2_b';
+  /// AI drafts the report on site, so it can go out the same day.
+  static const siteIndpHvacP2Fix = 'site.indp.hvac.p2_fix';
+  /// Mixed-language crews
+  static const siteIndpHvacP3 = 'site.indp.hvac.p3';
+  /// Your technicians speak Hindi, Gujarati or Spanish. Customers want English.
+  static const siteIndpHvacP3B = 'site.indp.hvac.p3_b';
+  /// Each technician speaks their own language; the report goes out in the customer’s.
+  static const siteIndpHvacP3Fix = 'site.indp.hvac.p3_fix';
+  /// Three problems HVAC owners tell us about — and how KaamNishaan fixes each one.
+  static const siteIndpHvacPainBody = 'site.indp.hvac.pain_body';
+  /// What slows HVAC teams down
+  static const siteIndpHvacPainTitle = 'site.indp.hvac.pain_title';
+  /// Plans for HVAC teams of every size
+  static const siteIndpHvacPriceTitle = 'site.indp.hvac.price_title';
+  /// Do the checklists record temperature and current readings?
+  static const siteIndpHvacQ1 = 'site.indp.hvac.q1';
+  /// Before and after filter photos, timestamped on site
+  static const siteIndpHvacRB1 = 'site.indp.hvac.r_b1';
+  /// Checklist results with temperature and current readings
+  static const siteIndpHvacRB2 = 'site.indp.hvac.r_b2';
+  /// A clean, branded service report with the proof built in — sent as a PDF or a secure link the customer can acknowledge.
+  static const siteIndpHvacRBody = 'site.indp.hvac.r_body';
+  /// 9 checks passed
+  static const siteIndpHvacRChecks = 'site.indp.hvac.r_checks';
+  /// BrightAir Services
+  static const siteIndpHvacRCompany = 'site.indp.hvac.r_company';
+  /// Report #R-1042 · 31 Oct · Technician Ramesh Patel
+  static const siteIndpHvacRMeta = 'site.indp.hvac.r_meta';
+  /// AC service report: Green Valley Clinic
+  static const siteIndpHvacRTitle = 'site.indp.hvac.r_title';
+  /// Cleaned the indoor filter, refilled gas and tested cooling for 15 minutes. The room now cools to 22°C.
+  static const siteIndpHvacRWork = 'site.indp.hvac.r_work';
+  /// Before & after photos
+  static const siteIndpHvacTick = 'site.indp.hvac.tick';
+  /// Proof of work for HVAC teams
+  static const siteIndpHvacTitle = 'site.indp.hvac.title';
+  /// Linked to evidence
+  static const siteIndpLinked = 'site.indp.linked';
+  /// Yes. Make a job for each visit at the same customer and address. Both reports keep their dated photos, so you can open them side by side when a tenant leaves.
+  static const siteIndpMaintenanceAns1 = 'site.indp.maintenance.ans1';
+  /// Work orders and condition reports owners and tenants trust — made on site from timestamped photos, checklists and a voice note.
+  static const siteIndpMaintenanceBody = 'site.indp.maintenance.body';
+  /// Work order closed
+  static const siteIndpMaintenanceChip1 = 'site.indp.maintenance.chip1';
+  /// 9 of 9 questions · 2:15 PM
+  static const siteIndpMaintenanceChip1Sub = 'site.indp.maintenance.chip1_sub';
+  /// Kitchen tap: before & after
+  static const siteIndpMaintenanceChip2 = 'site.indp.maintenance.chip2';
+  /// 2 photos · timestamped on site
+  static const siteIndpMaintenanceChip2Sub = 'site.indp.maintenance.chip2_sub';
+  /// Give every work order its proof
+  static const siteIndpMaintenanceCta = 'site.indp.maintenance.cta';
+  /// The problem, the room and the unit — timestamped and filed to the job.
+  static const siteIndpMaintenanceF1B = 'site.indp.maintenance.f1_b';
+  /// Run the work order check
+  static const siteIndpMaintenanceF2 = 'site.indp.maintenance.f2';
+  /// Features maintenance teams use most
+  static const siteIndpMaintenanceFeatEyebrow = 'site.indp.maintenance.feat_eyebrow';
+  /// Everything for every unit
+  static const siteIndpMaintenanceFeatTitle = 'site.indp.maintenance.feat_title';
+  /// One work order in KaamNishaan
+  static const siteIndpMaintenanceFlowTitle = 'site.indp.maintenance.flow_title';
+  /// Deposit disputes
+  static const siteIndpMaintenanceP1 = 'site.indp.maintenance.p1';
+  /// “That damage was there when I moved in.” Move-out arguments with no proof.
+  static const siteIndpMaintenanceP1B = 'site.indp.maintenance.p1_b';
+  /// Dated move-in and move-out photos of every room settle it.
+  static const siteIndpMaintenanceP1Fix = 'site.indp.maintenance.p1_fix';
+  /// Work orders lost in chats
+  static const siteIndpMaintenanceP2 = 'site.indp.maintenance.p2';
+  /// Requests and updates are scattered across calls and WhatsApp.
+  static const siteIndpMaintenanceP2B = 'site.indp.maintenance.p2_b';
+  /// Every work order is one job, with a status, photos and a report.
+  static const siteIndpMaintenanceP2Fix = 'site.indp.maintenance.p2_fix';
+  /// Owners want updates
+  static const siteIndpMaintenanceP3 = 'site.indp.maintenance.p3';
+  /// Owners ask what was done, and when, across many units.
+  static const siteIndpMaintenanceP3B = 'site.indp.maintenance.p3_b';
+  /// Share each finished job’s report with the owner as a link or PDF.
+  static const siteIndpMaintenanceP3Fix = 'site.indp.maintenance.p3_fix';
+  /// Three problems property managers tell us about — and how KaamNishaan fixes each one.
+  static const siteIndpMaintenancePainBody = 'site.indp.maintenance.pain_body';
+  /// What slows maintenance teams down
+  static const siteIndpMaintenancePainTitle = 'site.indp.maintenance.pain_title';
+  /// Plans for maintenance teams of every size
+  static const siteIndpMaintenancePriceTitle = 'site.indp.maintenance.price_title';
+  /// Can I do move-in and move-out reports for the same flat?
+  static const siteIndpMaintenanceQ1 = 'site.indp.maintenance.q1';
+  /// Before and after photos of every repair, timestamped on site
+  static const siteIndpMaintenanceRB1 = 'site.indp.maintenance.r_b1';
+  /// Checklist results for every room
+  static const siteIndpMaintenanceRB2 = 'site.indp.maintenance.r_b2';
+  /// A clean, branded work-order report with the proof built in — sent as a PDF or a secure link.
+  static const siteIndpMaintenanceRBody = 'site.indp.maintenance.r_body';
+  /// 9 checks passed
+  static const siteIndpMaintenanceRChecks = 'site.indp.maintenance.r_checks';
+  /// Urban Nest Property Care
+  static const siteIndpMaintenanceRCompany = 'site.indp.maintenance.r_company';
+  /// Report #R-4410 · 31 Oct · Technician Ramesh Patel
+  static const siteIndpMaintenanceRMeta = 'site.indp.maintenance.r_meta';
+  /// Work order report: Flat 4B, Lake View
+  static const siteIndpMaintenanceRTitle = 'site.indp.maintenance.r_title';
+  /// Found a leak under the kitchen sink. Replaced the tap washer and the waste pipe seal. No leak after a 10-minute test.
+  static const siteIndpMaintenanceRWork = 'site.indp.maintenance.r_work';
+  /// Before & after photos
+  static const siteIndpMaintenanceTick = 'site.indp.maintenance.tick';
+  /// Proof of work for property maintenance teams
+  static const siteIndpMaintenanceTitle = 'site.indp.maintenance.title';
+  /// + {n} more
+  static const siteIndpMore = 'site.indp.more';
+  /// Until then, build your own in a few minutes — with the questions your team already asks. A question can ask for:
+  static const siteIndpNoneBody = 'site.indp.none_body';
+  /// Ready {trade} checklists are on the way
+  static const siteIndpNoneTitle = 'site.indp.none_title';
+  /// Problems we solve
+  static const siteIndpPains = 'site.indp.pains';
+  /// Yes. A question can ask for a product name, an amount with its unit or a photo, so every treatment record lists what was used and where.
+  static const siteIndpPestControlAns1 = 'site.indp.pest_control.ans1';
+  /// Treatment records your customers and auditors trust — made on site from timestamped photos, checklists and a voice note.
+  static const siteIndpPestControlBody = 'site.indp.pest_control.body';
+  /// Treatment check done
+  static const siteIndpPestControlChip1 = 'site.indp.pest_control.chip1';
+  /// 11 of 11 questions · 10:20 AM
+  static const siteIndpPestControlChip1Sub = 'site.indp.pest_control.chip1_sub';
+  /// Bait station 3: checked
+  static const siteIndpPestControlChip2 = 'site.indp.pest_control.chip2';
+  /// 2 photos · timestamped on site
+  static const siteIndpPestControlChip2Sub = 'site.indp.pest_control.chip2_sub';
+  /// Give every treatment its proof
+  static const siteIndpPestControlCta = 'site.indp.pest_control.cta';
+  /// Signs of pests, bait stations and entry points — timestamped and filed.
+  static const siteIndpPestControlF1B = 'site.indp.pest_control.f1_b';
+  /// Run the treatment checklist
+  static const siteIndpPestControlF2 = 'site.indp.pest_control.f2';
+  /// Features pest control teams use most
+  static const siteIndpPestControlFeatEyebrow = 'site.indp.pest_control.feat_eyebrow';
+  /// Everything for every treatment
+  static const siteIndpPestControlFeatTitle = 'site.indp.pest_control.feat_title';
+  /// One treatment visit in KaamNishaan
+  static const siteIndpPestControlFlowTitle = 'site.indp.pest_control.flow_title';
+  /// Audit paperwork
+  static const siteIndpPestControlP1 = 'site.indp.pest_control.p1';
+  /// Food businesses need treatment records for audits — paper logs go missing.
+  static const siteIndpPestControlP1B = 'site.indp.pest_control.p1_b';
+  /// Every visit becomes a dated report with products, areas and photos.
+  static const siteIndpPestControlP1Fix = 'site.indp.pest_control.p1_fix';
+  /// “Did you even come?”
+  static const siteIndpPestControlP2 = 'site.indp.pest_control.p2';
+  /// Treatments are often invisible, so customers doubt the visit happened.
+  static const siteIndpPestControlP2B = 'site.indp.pest_control.p2_b';
+  /// Timestamped photos of each bait station and treated area prove it.
+  static const siteIndpPestControlP2Fix = 'site.indp.pest_control.p2_fix';
+  /// Missed follow-ups
+  static const siteIndpPestControlP3 = 'site.indp.pest_control.p3';
+  /// Follow-up visits are forgotten when they live in someone’s notebook.
+  static const siteIndpPestControlP3B = 'site.indp.pest_control.p3_b';
+  /// Book the follow-up as its own job, with the right checklist and a date.
+  static const siteIndpPestControlP3Fix = 'site.indp.pest_control.p3_fix';
+  /// Three problems pest control owners tell us about — and how KaamNishaan fixes each one.
+  static const siteIndpPestControlPainBody = 'site.indp.pest_control.pain_body';
+  /// What slows pest control teams down
+  static const siteIndpPestControlPainTitle = 'site.indp.pest_control.pain_title';
+  /// Plans for pest control teams of every size
+  static const siteIndpPestControlPriceTitle = 'site.indp.pest_control.price_title';
+  /// Can checklists record the products and amounts used?
+  static const siteIndpPestControlQ1 = 'site.indp.pest_control.q1';
+  /// Photos of each treated area and bait station, timestamped on site
+  static const siteIndpPestControlRB1 = 'site.indp.pest_control.r_b1';
+  /// Products, amounts and treated areas, from the checklist
+  static const siteIndpPestControlRB2 = 'site.indp.pest_control.r_b2';
+  /// A clean, branded treatment record with the proof built in — sent as a PDF or a secure link.
+  static const siteIndpPestControlRBody = 'site.indp.pest_control.r_body';
+  /// 11 checks passed
+  static const siteIndpPestControlRChecks = 'site.indp.pest_control.r_checks';
+  /// ShieldPest Services
+  static const siteIndpPestControlRCompany = 'site.indp.pest_control.r_company';
+  /// Report #R-5034 · 31 Oct · Technician Ramesh Patel
+  static const siteIndpPestControlRMeta = 'site.indp.pest_control.r_meta';
+  /// Treated area
+  static const siteIndpPestControlRPhoto1 = 'site.indp.pest_control.r_photo1';
+  /// Bait station
+  static const siteIndpPestControlRPhoto2 = 'site.indp.pest_control.r_photo2';
+  /// Treatment record: Sunrise Bakery
+  static const siteIndpPestControlRTitle = 'site.indp.pest_control.r_title';
+  /// Checked 6 bait stations and replaced bait in station 3. Gel applied in the kitchen and store room.
+  static const siteIndpPestControlRWork = 'site.indp.pest_control.r_work';
+  /// Treatment photos
+  static const siteIndpPestControlTick = 'site.indp.pest_control.tick';
+  /// Proof of work for pest control teams
+  static const siteIndpPestControlTitle = 'site.indp.pest_control.title';
+  /// May ask for a photo
+  static const siteIndpPhotoRule = 'site.indp.photo_rule';
+  /// Industry · {trade}
+  static const siteIndpPill = 'site.indp.pill';
+  /// Preview checklist
+  static const siteIndpPreview = 'site.indp.preview';
+  /// Can I edit the ready checklists or add my own?
+  static const siteIndpQ2 = 'site.indp.q2';
+  /// Does it work where there is no signal?
+  static const siteIndpQ3 = 'site.indp.q3';
+  /// Can customers see reports without an app?
+  static const siteIndpQ4 = 'site.indp.q4';
+  /// Written in the customer’s language
+  static const siteIndpRB3 = 'site.indp.r_b3';
+  /// Approved by your manager before it’s sent
+  static const siteIndpRB4 = 'site.indp.r_b4';
+  /// Written by KaamNishaan for this work. Copy one and change any question, or build your own.
+  static const siteIndpReadyBody = 'site.indp.ready_body';
+  /// Ready-made checklists
+  static const siteIndpReadyEyebrow = 'site.indp.ready_eyebrow';
+  /// {n} ready checklists
+  static const siteIndpReadyN = 'site.indp.ready_n';
+  /// 1 ready checklist
+  static const siteIndpReadyOne = 'site.indp.ready_one';
+  /// Ready checklist
+  static const siteIndpReadyTag = 'site.indp.ready_tag';
+  /// Ready {trade} checklists, day one
+  static const siteIndpReadyTitle = 'site.indp.ready_title';
+  /// Try again
+  static const siteIndpRetry = 'site.indp.retry';
+  /// Yes. Photos taken for a checklist question stay with that question — “Photo of the north slope?” keeps its own photos — and every photo keeps the time and place it was taken.
+  static const siteIndpRoofingAns1 = 'site.indp.roofing.ans1';
+  /// Inspection and repair reports your customers trust — made on the roof from timestamped photos, checklists and a voice note.
+  static const siteIndpRoofingBody = 'site.indp.roofing.body';
+  /// Roof inspection done
+  static const siteIndpRoofingChip1 = 'site.indp.roofing.chip1';
+  /// 15 of 15 questions · 3:40 PM
+  static const siteIndpRoofingChip1Sub = 'site.indp.roofing.chip1_sub';
+  /// Ridge: before & after
+  static const siteIndpRoofingChip2 = 'site.indp.roofing.chip2';
+  /// 4 photos · timestamped on site
+  static const siteIndpRoofingChip2Sub = 'site.indp.roofing.chip2_sub';
+  /// Give every roofing job its proof
+  static const siteIndpRoofingCta = 'site.indp.roofing.cta';
+  /// Every slope, the damage and the flashing — timestamped and filed to the job.
+  static const siteIndpRoofingF1B = 'site.indp.roofing.f1_b';
+  /// Run the roof inspection
+  static const siteIndpRoofingF2 = 'site.indp.roofing.f2';
+  /// Features roofing teams use most
+  static const siteIndpRoofingFeatEyebrow = 'site.indp.roofing.feat_eyebrow';
+  /// Everything for the job on the roof
+  static const siteIndpRoofingFeatTitle = 'site.indp.roofing.feat_title';
+  /// One roof repair in KaamNishaan
+  static const siteIndpRoofingFlowTitle = 'site.indp.roofing.flow_title';
+  /// Disputed damage
+  static const siteIndpRoofingP1 = 'site.indp.roofing.p1';
+  /// “Was the roof already damaged?” Customers and insurers question what they can’t see.
+  static const siteIndpRoofingP1B = 'site.indp.roofing.p1_b';
+  /// Timestamped photos of every slope and repair, before and after.
+  static const siteIndpRoofingP1Fix = 'site.indp.roofing.p1_fix';
+  /// Slow inspection reports
+  static const siteIndpRoofingP2 = 'site.indp.roofing.p2';
+  /// Inspectors write up findings at the office, days after the climb.
+  static const siteIndpRoofingP2B = 'site.indp.roofing.p2_b';
+  /// AI drafts the report from the roof’s proof, so it can go out the same day.
+  static const siteIndpRoofingP2Fix = 'site.indp.roofing.p2_fix';
+  /// Proof for warranties
+  static const siteIndpRoofingP3 = 'site.indp.roofing.p3';
+  /// Warranty claims stall when there’s no record of how the job was done.
+  static const siteIndpRoofingP3B = 'site.indp.roofing.p3_b';
+  /// Every job keeps its photos, checklist answers and notes, ready when you need them.
+  static const siteIndpRoofingP3Fix = 'site.indp.roofing.p3_fix';
+  /// Three problems roofing owners tell us about — and how KaamNishaan fixes each one.
+  static const siteIndpRoofingPainBody = 'site.indp.roofing.pain_body';
+  /// What slows roofing teams down
+  static const siteIndpRoofingPainTitle = 'site.indp.roofing.pain_title';
+  /// Plans for roofing teams of every size
+  static const siteIndpRoofingPriceTitle = 'site.indp.roofing.price_title';
+  /// Can photos show which part of the roof they belong to?
+  static const siteIndpRoofingQ1 = 'site.indp.roofing.q1';
+  /// Before and after photos of every repaired area
+  static const siteIndpRoofingRB1 = 'site.indp.roofing.r_b1';
+  /// Checklist results for every part of the roof
+  static const siteIndpRoofingRB2 = 'site.indp.roofing.r_b2';
+  /// A clean, branded inspection and repair report with the proof built in — sent as a PDF or a secure link.
+  static const siteIndpRoofingRBody = 'site.indp.roofing.r_body';
+  /// 14 checks passed
+  static const siteIndpRoofingRChecks = 'site.indp.roofing.r_checks';
+  /// Summit Roofing Co.
+  static const siteIndpRoofingRCompany = 'site.indp.roofing.r_company';
+  /// Report #R-2087 · 31 Oct · Technician Ramesh Patel
+  static const siteIndpRoofingRMeta = 'site.indp.roofing.r_meta';
+  /// Roof repair report: Hill Road residence
+  static const siteIndpRoofingRTitle = 'site.indp.roofing.r_title';
+  /// Replaced three cracked shingles near the chimney and resealed the flashing. A 20-minute water test showed no leaks.
+  static const siteIndpRoofingRWork = 'site.indp.roofing.r_work';
+  /// Damage & repair photos
+  static const siteIndpRoofingTick = 'site.indp.roofing.tick';
+  /// Proof of work for roofing teams
+  static const siteIndpRoofingTitle = 'site.indp.roofing.title';
+  /// Sample report
+  static const siteIndpSample = 'site.indp.sample';
+  /// Sample
+  static const siteIndpSampleLabel = 'site.indp.sample_label';
+  /// See what your customer receives
+  static const siteIndpSampleTitle = 'site.indp.sample_title';
+  /// Yes. A question can ask for a number with its unit, a few words such as a serial number, or a photo — so readings sit next to the photos that prove them.
+  static const siteIndpSolarAns1 = 'site.indp.solar.ans1';
+  /// Install handovers and cleaning reports your customers trust — made on site from timestamped photos, checklists and a voice note.
+  static const siteIndpSolarBody = 'site.indp.solar.body';
+  /// Install handover done
+  static const siteIndpSolarChip1 = 'site.indp.solar.chip1';
+  /// 20 of 20 questions · 5:05 PM
+  static const siteIndpSolarChip1Sub = 'site.indp.solar.chip1_sub';
+  /// Panels: before & after
+  static const siteIndpSolarChip2 = 'site.indp.solar.chip2';
+  /// 6 photos · timestamped on site
+  static const siteIndpSolarChip2Sub = 'site.indp.solar.chip2_sub';
+  /// Give every solar job its proof
+  static const siteIndpSolarCta = 'site.indp.solar.cta';
+  /// Roof, panels and the inverter — timestamped and filed to the job.
+  static const siteIndpSolarF1B = 'site.indp.solar.f1_b';
+  /// Run the install handover
+  static const siteIndpSolarF2 = 'site.indp.solar.f2';
+  /// Features solar teams use most
+  static const siteIndpSolarFeatEyebrow = 'site.indp.solar.feat_eyebrow';
+  /// Everything from survey to handover
+  static const siteIndpSolarFeatTitle = 'site.indp.solar.feat_title';
+  /// One solar install in KaamNishaan
+  static const siteIndpSolarFlowTitle = 'site.indp.solar.flow_title';
+  /// Handover disputes
+  static const siteIndpSolarP1 = 'site.indp.solar.p1';
+  /// “Is it really producing what you promised?” Customers question the install.
+  static const siteIndpSolarP1B = 'site.indp.solar.p1_b';
+  /// Inverter readings and panel photos are recorded at handover, with the time.
+  static const siteIndpSolarP1Fix = 'site.indp.solar.p1_fix';
+  /// Paper handover packs
+  static const siteIndpSolarP2 = 'site.indp.solar.p2';
+  /// Serial numbers, readings and photos end up in different places.
+  static const siteIndpSolarP2B = 'site.indp.solar.p2_b';
+  /// One job holds every reading, serial number and photo — sent as one report.
+  static const siteIndpSolarP2Fix = 'site.indp.solar.p2_fix';
+  /// Cleaning proof
+  static const siteIndpSolarP3 = 'site.indp.solar.p3';
+  /// Panel cleaning is hard to prove once the crew has left the roof.
+  static const siteIndpSolarP3B = 'site.indp.solar.p3_b';
+  /// Before and after photos of every row show the difference.
+  static const siteIndpSolarP3Fix = 'site.indp.solar.p3_fix';
+  /// Three problems solar owners tell us about — and how KaamNishaan fixes each one.
+  static const siteIndpSolarPainBody = 'site.indp.solar.pain_body';
+  /// What slows solar teams down
+  static const siteIndpSolarPainTitle = 'site.indp.solar.pain_title';
+  /// Plans for solar teams of every size
+  static const siteIndpSolarPriceTitle = 'site.indp.solar.price_title';
+  /// Can checklists record inverter readings and serial numbers?
+  static const siteIndpSolarQ1 = 'site.indp.solar.q1';
+  /// Panel photos before and after, timestamped on site
+  static const siteIndpSolarRB1 = 'site.indp.solar.r_b1';
+  /// Checklist results with inverter readings and serial numbers
+  static const siteIndpSolarRB2 = 'site.indp.solar.r_b2';
+  /// A clean, branded cleaning and handover report with the proof built in — sent as a PDF or a secure link.
+  static const siteIndpSolarRBody = 'site.indp.solar.r_body';
+  /// 8 checks passed
+  static const siteIndpSolarRChecks = 'site.indp.solar.r_checks';
+  /// SunPeak Energy
+  static const siteIndpSolarRCompany = 'site.indp.solar.r_company';
+  /// Report #R-3124 · 31 Oct · Technician Ramesh Patel
+  static const siteIndpSolarRMeta = 'site.indp.solar.r_meta';
+  /// Panel cleaning report: Patel residence
+  static const siteIndpSolarRTitle = 'site.indp.solar.r_title';
+  /// Cleaned 24 panels with water and a soft brush. Output at noon went from 3.6 kW to 4.2 kW.
+  static const siteIndpSolarRWork = 'site.indp.solar.r_work';
+  /// Panel & inverter photos
+  static const siteIndpSolarTick = 'site.indp.solar.tick';
+  /// Proof of work for solar teams
+  static const siteIndpSolarTitle = 'site.indp.solar.title';
+  /// In the app, copy it and change any question.
+  static const siteIndpTplCopy = 'site.indp.tpl_copy';
+  /// {n} questions · {l} languages
+  static const siteIndpTplMeta = 'site.indp.tpl_meta';
+  /// photo prompts
+  static const siteIndpTplPhotos = 'site.indp.tpl_photos';
+  /// A choice
+  static const siteIndpTypeChoice = 'site.indp.type_choice';
+  /// A number and unit
+  static const siteIndpTypeNumber = 'site.indp.type_number';
+  /// Pass / Fail
+  static const siteIndpTypePassFail = 'site.indp.type_pass_fail';
+  /// A photo
+  static const siteIndpTypePhoto = 'site.indp.type_photo';
+  /// A signature
+  static const siteIndpTypeSignature = 'site.indp.type_signature';
+  /// A few words
+  static const siteIndpTypeText = 'site.indp.type_text';
+  /// Yes / No
+  static const siteIndpTypeYesNo = 'site.indp.type_yes_no';
+  /// Work done
+  static const siteIndpWorkDone = 'site.indp.work_done';
+  /// Written in {lang}
+  static const siteIndpWrittenIn = 'site.indp.written_in';
+  /// Draft: the company details on this page have not been filled in yet, and the text is still being checked. It is not in force yet.
+  static const siteLegalDraft = 'site.legal.draft';
   /// Legal
   static const siteLegalEyebrow = 'site.legal.eyebrow';
-  /// Last updated {date}
-  static const siteLegalUpdated = 'site.legal.updated';
   /// About {n} min read
   static const siteLegalMinutes = 'site.legal.minutes';
   /// Print or save as PDF
   static const siteLegalPrint = 'site.legal.print';
-  /// On this page
-  static const siteLegalToc = 'site.legal.toc';
-  /// Back to top
-  static const siteLegalTop = 'site.legal.top';
-  /// Draft: the company details on this page have not been filled in yet, and the text is still being checked. It is not in force yet.
-  static const siteLegalDraft = 'site.legal.draft';
-  /// This is a translation for your convenience. If it differs from the English version, the English version applies.
-  static const siteLegalTranslation = 'site.legal.translation';
+  /// Our team answers within one working day.
+  static const siteLegalQBody = 'site.legal.q_body';
   /// Questions about this policy?
   static const siteLegalQPrivacy = 'site.legal.q_privacy';
   /// Questions about these terms?
   static const siteLegalQTerms = 'site.legal.q_terms';
-  /// Our team answers within one working day.
-  static const siteLegalQBody = 'site.legal.q_body';
-  /// Admin console
-  static const adminConsole = 'admin.console';
-  /// Run the platform with confidence.
-  static const adminLoginHero = 'admin.login.hero';
-  /// Only KaamNishaan staff. Every login is recorded in the audit log.
-  static const adminLoginStaffOnly = 'admin.login.staff_only';
-  /// Admin log in
-  static const adminLoginTitle = 'admin.login.title';
-  /// Use your staff account and the code from your authenticator app.
-  static const adminLoginBody = 'admin.login.body';
-  /// Email
-  static const adminLoginEmail = 'admin.login.email';
-  /// Password
-  static const adminLoginPassword = 'admin.login.password';
-  /// Show password
-  static const adminLoginShowPw = 'admin.login.show_pw';
-  /// Hide password
-  static const adminLoginHidePw = 'admin.login.hide_pw';
-  /// One-time code (from your authenticator app)
-  static const adminLoginCode = 'admin.login.code';
-  /// Digit {n} of 6
-  static const adminLoginDigit = 'admin.login.digit';
-  /// Recovery code
-  static const adminLoginRecovery = 'admin.login.recovery';
-  /// One of the 8 codes you saved when you set up. Each works once.
-  static const adminLoginRecoveryHint = 'admin.login.recovery_hint';
-  /// Lost your authenticator?
-  static const adminLoginUseRecovery = 'admin.login.use_recovery';
-  /// Use the authenticator code
-  static const adminLoginUseCode = 'admin.login.use_code';
-  /// Log in
-  static const adminLoginSubmit = 'admin.login.submit';
+  /// On this page
+  static const siteLegalToc = 'site.legal.toc';
+  /// Back to top
+  static const siteLegalTop = 'site.legal.top';
+  /// This is a translation for your convenience. If it differs from the English version, the English version applies.
+  static const siteLegalTranslation = 'site.legal.translation';
+  /// Last updated {date}
+  static const siteLegalUpdated = 'site.legal.updated';
+  /// Open your KaamNishaan workspace with your work email.
+  static const siteLoginBody = 'site.login.body';
+  /// This account is turned off. Ask your company owner.
+  static const siteLoginDisabled = 'site.login.disabled';
+  /// Enter a valid email, like name@company.com.
+  static const siteLoginErrEmail = 'site.login.err_email';
+  /// Enter your password.
+  static const siteLoginErrPassword = 'site.login.err_password';
   /// Forgot password?
-  static const adminLoginForgot = 'admin.login.forgot';
-  /// Email, password or code is wrong. {n} tries left before a 15-minute lock.
-  static const adminLoginErrInvalid = 'admin.login.err_invalid';
-  /// Email, password or code is wrong. 1 try left before a 15-minute lock.
-  static const adminLoginErrInvalidOne = 'admin.login.err_invalid_one';
-  /// Too many wrong tries. Try again after {time}.
-  static const adminLoginErrLocked = 'admin.login.err_locked';
-  /// Fill in your email, password and the 6-digit code.
-  static const adminLoginErrFill = 'admin.login.err_fill';
-  /// Fill in your email, password and a recovery code.
-  static const adminLoginErrFillRecovery = 'admin.login.err_fill_recovery';
-  /// Back to log in
-  static const adminForgotBack = 'admin.forgot.back';
-  /// Reset password
-  static const adminForgotTitle = 'admin.forgot.title';
-  /// Email isn’t switched on yet, so we can’t send you a reset link. Ask a super admin for a new setup link: you will choose a new password and connect your authenticator again.
-  static const adminForgotBody = 'admin.forgot.body';
-  /// The only super admin? Run the reset command on the server: python scripts/staff.py reset --email you@example.com
-  static const adminForgotOnlySuper = 'admin.forgot.only_super';
-  /// Set up your admin account
-  static const adminSetupTitle = 'admin.setup.title';
-  /// Set up your account again
-  static const adminSetupTitleReset = 'admin.setup.title_reset';
-  /// Hi {name}. Choose a password, then connect an authenticator app such as Google Authenticator or Microsoft Authenticator.
-  static const adminSetupBody = 'admin.setup.body';
-  /// 1. Choose a password
-  static const adminSetupStep1 = 'admin.setup.step1';
-  /// At least 8 characters, with letters and numbers.
-  static const adminSetupPwRule = 'admin.setup.pw_rule';
-  /// 2. Scan this code with your authenticator app
-  static const adminSetupStep2 = 'admin.setup.step2';
-  /// QR code for your authenticator app
-  static const adminSetupQrAlt = 'admin.setup.qr_alt';
-  /// Can’t scan? Type this key in the app:
-  static const adminSetupManual = 'admin.setup.manual';
-  /// Copy key
-  static const adminSetupCopy = 'admin.setup.copy';
-  /// Copied
-  static const adminSetupCopied = 'admin.setup.copied';
-  /// 3. Type the 6-digit code the app shows
-  static const adminSetupStep3 = 'admin.setup.step3';
-  /// Finish setup
-  static const adminSetupSubmit = 'admin.setup.submit';
-  /// This link doesn’t work any more. Ask a super admin for a new one.
-  static const adminSetupErrLink = 'admin.setup.err_link';
-  /// This code is wrong or expired. Open your app for a new one.
-  static const adminSetupErrCode = 'admin.setup.err_code';
-  /// Too many wrong codes. Try again in 15 minutes.
-  static const adminSetupErrTries = 'admin.setup.err_tries';
-  /// Save your recovery codes
-  static const adminSetupCodesTitle = 'admin.setup.codes_title';
-  /// If you lose your phone, each code lets you log in once. They are shown only now, so keep them somewhere safe, like a password manager.
-  static const adminSetupCodesBody = 'admin.setup.codes_body';
-  /// Copy all codes
-  static const adminSetupCodesCopy = 'admin.setup.codes_copy';
-  /// Download as a file
-  static const adminSetupCodesDownload = 'admin.setup.codes_download';
-  /// I have saved these codes
-  static const adminSetupCodesSaved = 'admin.setup.codes_saved';
-  /// Go to the dashboard
-  static const adminSetupContinue = 'admin.setup.continue';
-  /// Overview
-  static const adminNavOverview = 'admin.nav.overview';
-  /// Customers
-  static const adminNavCustomers = 'admin.nav.customers';
-  /// Content
-  static const adminNavContent = 'admin.nav.content';
-  /// System
-  static const adminNavSystem = 'admin.nav.system';
-  /// Dashboard
-  static const adminNavDashboard = 'admin.nav.dashboard';
-  /// AI usage & cost
-  static const adminNavAiUsage = 'admin.nav.ai_usage';
-  /// Companies
-  static const adminNavCompanies = 'admin.nav.companies';
-  /// Users
-  static const adminNavUsers = 'admin.nav.users';
-  /// Reviews & ratings
-  static const adminNavReviews = 'admin.nav.reviews';
-  /// AI review calls
-  static const adminNavAiCalls = 'admin.nav.ai_calls';
-  /// Message templates
-  static const adminNavTemplates = 'admin.nav.templates';
-  /// Usage & credits
-  static const adminNavUsage = 'admin.nav.usage';
-  /// Checklist templates
-  static const adminNavChecklists = 'admin.nav.checklists';
-  /// Audit logs
-  static const adminNavAudit = 'admin.nav.audit';
-  /// Platform settings
-  static const adminNavSettings = 'admin.nav.settings';
-  /// Email settings
-  static const adminNavEmail = 'admin.nav.email';
-  /// Open menu
-  static const adminNavOpen = 'admin.nav.open';
-  /// Close menu
-  static const adminNavClose = 'admin.nav.close';
-  /// Super admin
-  static const adminRoleSuperAdmin = 'admin.role.super_admin';
-  /// Admin
-  static const adminRoleAdmin = 'admin.role.admin';
-  /// Support
-  static const adminRoleSupport = 'admin.role.support';
-  /// Log out
-  static const adminLogout = 'admin.logout';
-  /// Language
-  static const adminLanguage = 'admin.language';
-  /// {page} is coming soon
-  static const adminSoonTitle = 'admin.soon.title';
-  /// This page comes in a later step of the admin panel.
-  static const adminSoonBody = 'admin.soon.body';
-  /// Back to the dashboard
-  static const adminSoonBack = 'admin.soon.back';
-  /// You have {n} recovery codes left. Ask a super admin to reset your authenticator for new ones.
-  static const adminRecoveryLow = 'admin.recovery_low';
-  /// Your session ended. Please log in again.
-  static const adminSessionEnded = 'admin.session_ended';
-  /// Couldn’t load this. Check your connection and try again.
-  static const adminErrLoad = 'admin.err.load';
-  /// No internet connection. Check it and try again.
-  static const adminErrOffline = 'admin.err.offline';
-  /// Something went wrong. Please try again.
-  static const adminErrGeneric = 'admin.err.generic';
-  /// Try again
-  static const adminRetry = 'admin.retry';
-  /// Dashboard
-  static const adminDashTitle = 'admin.dash.title';
-  /// Time period
-  static const adminRangeLabel = 'admin.range.label';
-  /// Last 7 days
-  static const adminRange7 = 'admin.range.7';
-  /// Last 30 days
-  static const adminRange30 = 'admin.range.30';
-  /// Last 90 days
-  static const adminRange90 = 'admin.range.90';
-  /// Active companies
-  static const adminDashCompanies = 'admin.dash.companies';
-  /// Technicians
-  static const adminDashTechnicians = 'admin.dash.technicians';
-  /// Reports sent
-  static const adminDashReports = 'admin.dash.reports';
-  /// Monthly revenue
-  static const adminDashRevenue = 'admin.dash.revenue';
-  /// AI cost
-  static const adminDashAiCost = 'admin.dash.ai_cost';
-  /// +{n} in the last {days} days
-  static const adminDashNewIn = 'admin.dash.new_in';
-  /// None new in the last {days} days
-  static const adminDashNoneNew = 'admin.dash.none_new';
-  /// {change} vs the {days} days before
-  static const adminDashVs = 'admin.dash.vs';
-  /// None in the {days} days before
-  static const adminDashVsNone = 'admin.dash.vs_none';
-  /// {cost} per report
-  static const adminDashPerReport = 'admin.dash.per_report';
-  /// From the plans of paying companies
-  static const adminDashRevenueNote = 'admin.dash.revenue_note';
-  /// No paying companies yet
-  static const adminDashRevenueNone = 'admin.dash.revenue_none';
-  /// Reports per day
-  static const adminDashPerDay = 'admin.dash.per_day';
-  /// Approved reports and AI drafts across all companies
-  static const adminDashPerDayBody = 'admin.dash.per_day_body';
-  /// Approved
-  static const adminDashApproved = 'admin.dash.approved';
-  /// AI drafts
-  static const adminDashDrafts = 'admin.dash.drafts';
-  /// {date}: {approved} approved, {drafts} AI drafts
-  static const adminDashBar = 'admin.dash.bar';
-  /// No reports in this period yet.
-  static const adminDashNoReports = 'admin.dash.no_reports';
-  /// Plan mix
-  static const adminDashPlanMix = 'admin.dash.plan_mix';
-  /// {n} companies
-  static const adminDashNCompanies = 'admin.dash.n_companies';
-  /// 1 company
-  static const adminDashNCompaniesOne = 'admin.dash.n_companies_one';
-  /// Free
-  static const adminDashFree = 'admin.dash.free';
-  /// Needs attention
-  static const adminDashAttention = 'admin.dash.attention';
-  /// Nothing needs attention right now.
-  static const adminDashAllClear = 'admin.dash.all_clear';
-  /// {n} companies near report limit
-  static const adminDashNearLimit = 'admin.dash.near_limit';
-  /// 1 company near report limit
-  static const adminDashNearLimitOne = 'admin.dash.near_limit_one';
-  /// {name} · {used} of {limit}
-  static const adminDashOf = 'admin.dash.of';
-  /// {n} payments failed
-  static const adminDashPastDue = 'admin.dash.past_due';
-  /// 1 payment failed
-  static const adminDashPastDueOne = 'admin.dash.past_due_one';
-  /// {n} trials end this week
-  static const adminDashTrials = 'admin.dash.trials';
-  /// 1 trial ends this week
-  static const adminDashTrialsOne = 'admin.dash.trials_one';
-  /// First: {name}. Convert or remind owners.
-  static const adminDashTrialsDetail = 'admin.dash.trials_detail';
-  /// {n} new demo requests and messages
-  static const adminDashLeads = 'admin.dash.leads';
-  /// 1 new demo request or message
-  static const adminDashLeadsOne = 'admin.dash.leads_one';
-  /// Latest: {name}
-  static const adminDashLatest = 'admin.dash.latest';
-  /// Top companies by reports
-  static const adminDashTop = 'admin.dash.top';
-  /// {n} reports
-  static const adminDashNReports = 'admin.dash.n_reports';
-  /// 1 report
-  static const adminDashNReportsOne = 'admin.dash.n_reports_one';
-  /// Recent activity
-  static const adminDashActivity = 'admin.dash.activity';
-  /// Nothing has happened yet.
-  static const adminDashNoActivity = 'admin.dash.no_activity';
-  /// New company: {title}
-  static const adminActCompanyCreated = 'admin.act.company_created';
-  /// Demo requested: {title}
-  static const adminActLeadDemo = 'admin.act.lead_demo';
-  /// New message: {title}
-  static const adminActLeadContact = 'admin.act.lead_contact';
-  /// Newsletter sign-up: {title}
-  static const adminActLeadNewsletter = 'admin.act.lead_newsletter';
-  /// {title} set up an admin account
-  static const adminActStaffJoined = 'admin.act.staff_joined';
-  /// sign-up
-  static const adminTagSignup = 'admin.tag.signup';
-  /// website
-  static const adminTagWebsite = 'admin.tag.website';
-  /// staff
-  static const adminTagStaff = 'admin.tag.staff';
-  /// Yesterday
-  static const adminYesterday = 'admin.yesterday';
-  /// All
-  static const adminCoTabAll = 'admin.co.tab_all';
-  /// Trial
-  static const adminCoStTrial = 'admin.co.st.trial';
-  /// Active
-  static const adminCoStActive = 'admin.co.st.active';
-  /// Past due
-  static const adminCoStPastDue = 'admin.co.st.past_due';
-  /// Suspended
-  static const adminCoStSuspended = 'admin.co.st.suspended';
-  /// Cancelled
-  static const adminCoStCancelled = 'admin.co.st.cancelled';
-  /// Near limit
-  static const adminCoStNearLimit = 'admin.co.st.near_limit';
-  /// Trial · {n} days left
-  static const adminCoTrialLeft = 'admin.co.trial_left';
-  /// Trial · 1 day left
-  static const adminCoTrialLeftOne = 'admin.co.trial_left_one';
-  /// Trial ended
-  static const adminCoTrialEnded = 'admin.co.trial_ended';
-  /// Company status
-  static const adminCoTabs = 'admin.co.tabs';
-  /// Search company, owner or email
-  static const adminCoSearch = 'admin.co.search';
-  /// Plan
-  static const adminCoFPlan = 'admin.co.f_plan';
-  /// Industry
-  static const adminCoFIndustry = 'admin.co.f_industry';
-  /// Country
-  static const adminCoFCountry = 'admin.co.f_country';
-  /// Status
-  static const adminCoFStatus = 'admin.co.f_status';
-  /// All
-  static const adminCoFAll = 'admin.co.f_all';
-  /// Export CSV
-  static const adminCoExport = 'admin.co.export';
-  /// Company
-  static const adminCoCCompany = 'admin.co.c_company';
-  /// Industry
-  static const adminCoCIndustry = 'admin.co.c_industry';
-  /// Plan
-  static const adminCoCPlan = 'admin.co.c_plan';
-  /// Technicians
-  static const adminCoCTechs = 'admin.co.c_techs';
-  /// Reports (30 d)
-  static const adminCoCReports = 'admin.co.c_reports';
-  /// Status
-  static const adminCoCStatus = 'admin.co.c_status';
-  /// Sort by {col}
-  static const adminCoSortBy = 'admin.co.sort_by';
-  /// View
-  static const adminCoView = 'admin.co.view';
-  /// View {name}
-  static const adminCoViewName = 'admin.co.view_name';
-  /// No owner
-  static const adminCoNoOwner = 'admin.co.no_owner';
-  /// Showing {from}–{to} of {total}
-  static const adminCoShowing = 'admin.co.showing';
-  /// Previous page
-  static const adminCoPrev = 'admin.co.prev';
-  /// Next page
-  static const adminCoNext = 'admin.co.next';
-  /// Page {n}
-  static const adminCoPage = 'admin.co.page';
-  /// No companies match
-  static const adminCoEmptyTitle = 'admin.co.empty_title';
-  /// Try another name, or clear the filters.
-  static const adminCoEmptyBody = 'admin.co.empty_body';
-  /// No companies yet. They appear here when owners sign up in the app.
-  static const adminCoNoneYet = 'admin.co.none_yet';
-  /// Clear filters
-  static const adminCoClear = 'admin.co.clear';
-  /// Companies
-  static const adminCoBack = 'admin.co.back';
-  /// Owner: {name}
-  static const adminCoOwner = 'admin.co.owner';
-  /// Customer since {date}
-  static const adminCoSince = 'admin.co.since';
-  /// {price}/mo
-  static const adminCoPerMonth = 'admin.co.per_month';
-  /// Health
-  static const adminCoHealth = 'admin.co.health';
-  /// Good
-  static const adminCoHGood = 'admin.co.h.good';
-  /// Quiet
-  static const adminCoHQuiet = 'admin.co.h.quiet';
-  /// At risk
-  static const adminCoHAtRisk = 'admin.co.h.at_risk';
-  /// At risk: payment late or suspended. Quiet: nobody active for 14 days.
-  static const adminCoHRule = 'admin.co.h_rule';
-  /// Jobs this month
-  static const adminCoJobsMonth = 'admin.co.jobs_month';
-  /// Last active
-  static const adminCoLastActive = 'admin.co.last_active';
-  /// Never
-  static const adminCoNever = 'admin.co.never';
-  /// {n} of {limit}
-  static const adminCoTechsOf = 'admin.co.techs_of';
-  /// Seat limit reached
-  static const adminCoSeatsFull = 'admin.co.seats_full';
-  /// Seat limit reached · suggest {plan}
-  static const adminCoSeatsFullSuggest = 'admin.co.seats_full_suggest';
-  /// {n} seats free
-  static const adminCoSeatsFree = 'admin.co.seats_free';
-  /// 1 seat free
-  static const adminCoSeatsFreeOne = 'admin.co.seats_free_one';
-  /// No seat limit
-  static const adminCoNoSeatLimit = 'admin.co.no_seat_limit';
-  /// Reports this month
-  static const adminCoReportsMonth = 'admin.co.reports_month';
-  /// Over plan · fair-use review
-  static const adminCoOverPlan = 'admin.co.over_plan';
-  /// {n} left this month
-  static const adminCoReportsLeft = 'admin.co.reports_left';
-  /// Fair use, no fixed limit
-  static const adminCoFairUse = 'admin.co.fair_use';
-  /// Approval time
-  static const adminCoApproval = 'admin.co.approval';
-  /// Median, job done → approved (30 d)
-  static const adminCoApprovalSub = 'admin.co.approval_sub';
-  /// No approvals in 30 days
-  static const adminCoNoApprovals = 'admin.co.no_approvals';
-  /// {n} min
-  static const adminCoMinutes = 'admin.co.minutes';
-  /// {n} h
-  static const adminCoHours = 'admin.co.hours';
-  /// AI cost (30 d)
-  static const adminCoAiCost = 'admin.co.ai_cost';
-  /// No AI use in 30 days
-  static const adminCoNoAi = 'admin.co.no_ai';
-  /// Team
-  static const adminCoTeam = 'admin.co.team';
-  /// {n} people
-  static const adminCoPeople = 'admin.co.people';
-  /// 1 person
-  static const adminCoPeopleOne = 'admin.co.people_one';
-  /// Owner
-  static const adminCoRoleOwner = 'admin.co.role.owner';
-  /// Manager
-  static const adminCoRoleManager = 'admin.co.role.manager';
-  /// Technician
-  static const adminCoRoleTechnician = 'admin.co.role.technician';
-  /// email login
-  static const adminCoLoginEmail = 'admin.co.login.email';
-  /// phone + OTP
-  static const adminCoLoginPhone = 'admin.co.login.phone';
-  /// Invited
-  static const adminCoInvited = 'admin.co.invited';
-  /// Active {when}
-  static const adminCoActiveWhen = 'admin.co.active_when';
-  /// Nobody has joined yet.
-  static const adminCoNoTeam = 'admin.co.no_team';
-  /// Subscription
-  static const adminCoSub = 'admin.co.sub';
-  /// Plan
-  static const adminCoSubPlan = 'admin.co.sub_plan';
-  /// Status
-  static const adminCoSubStatus = 'admin.co.sub_status';
-  /// Trial ends {date}
-  static const adminCoSubTrialEnds = 'admin.co.sub_trial_ends';
-  /// Billing
-  static const adminCoSubBilling = 'admin.co.sub_billing';
-  /// No payments yet
-  static const adminCoSubNoPayments = 'admin.co.sub_no_payments';
-  /// This month
-  static const adminCoSubMonth = 'admin.co.sub_month';
-  /// Usage
-  static const adminCoSubUsage = 'admin.co.sub_usage';
-  /// {reports} reports · {seats} seats
-  static const adminCoUsageLine = 'admin.co.usage_line';
-  /// This plan’s limit is reached. Suggest {plan} ({price}).
-  static const adminCoSuggest = 'admin.co.suggest';
-  /// This plan’s limit is reached, and there is no bigger plan. Talk to the owner.
-  static const adminCoTopPlan = 'admin.co.top_plan';
-  /// This company doesn’t exist any more.
-  static const adminCoNotFound = 'admin.co.not_found';
-  /// Technicians
-  static const adminUsTabTechnician = 'admin.us.tab.technician';
-  /// Managers
-  static const adminUsTabManager = 'admin.us.tab.manager';
-  /// Owners
-  static const adminUsTabOwner = 'admin.us.tab.owner';
-  /// Invited
-  static const adminUsTabInvited = 'admin.us.tab.invited';
-  /// People by role
-  static const adminUsTabs = 'admin.us.tabs';
-  /// Search name, phone, email or company
-  static const adminUsSearch = 'admin.us.search';
-  /// Status
-  static const adminUsFStatus = 'admin.us.f_status';
-  /// Language
-  static const adminUsFLanguage = 'admin.us.f_language';
-  /// Active
-  static const adminUsStActive = 'admin.us.st.active';
-  /// Invited
-  static const adminUsStInvited = 'admin.us.st.invited';
-  /// Removed from team
-  static const adminUsStRemoved = 'admin.us.st.removed';
-  /// Turned off
-  static const adminUsStDisabled = 'admin.us.st.disabled';
-  /// Company: {name}
-  static const adminUsCompanyChip = 'admin.us.company_chip';
-  /// Show all companies
-  static const adminUsClearCompany = 'admin.us.clear_company';
-  /// Name
-  static const adminUsCName = 'admin.us.c_name';
-  /// Company
-  static const adminUsCCompany = 'admin.us.c_company';
-  /// Role
-  static const adminUsCRole = 'admin.us.c_role';
-  /// Login
-  static const adminUsCLogin = 'admin.us.c_login';
-  /// Language
-  static const adminUsCLanguage = 'admin.us.c_language';
-  /// Last active
-  static const adminUsCActive = 'admin.us.c_active';
-  /// Email + password
-  static const adminUsLoginEmail = 'admin.us.login.email';
-  /// Phone + OTP
-  static const adminUsLoginPhone = 'admin.us.login.phone';
-  /// Invite sent
-  static const adminUsLoginInvited = 'admin.us.login.invited';
-  /// On a job
-  static const adminUsOnJob = 'admin.us.on_job';
-  /// Invited {when}
-  static const adminUsInvitedAgo = 'admin.us.invited_ago';
-  /// No people match
-  static const adminUsEmptyTitle = 'admin.us.empty_title';
-  /// Nobody yet. People appear here when they sign up or join a team.
-  static const adminUsNoneYet = 'admin.us.none_yet';
-  /// No name yet
-  static const adminUsNoName = 'admin.us.no_name';
-  /// Users
-  static const adminUsBack = 'admin.us.back';
-  /// joined {date}
-  static const adminUsJoined = 'admin.us.joined';
-  /// Active
-  static const adminUsStatusActive = 'admin.us.status_active';
-  /// Active · on a job
-  static const adminUsStatusOnJob = 'admin.us.status_on_job';
-  /// Profile
-  static const adminUsProfile = 'admin.us.profile';
-  /// Phone
-  static const adminUsPhone = 'admin.us.phone';
-  /// Email
-  static const adminUsEmail = 'admin.us.email';
-  /// verified
-  static const adminUsVerified = 'admin.us.verified';
-  /// not verified
-  static const adminUsNotVerified = 'admin.us.not_verified';
-  /// Login
-  static const adminUsLogin = 'admin.us.login';
-  /// Phone + OTP (no password)
-  static const adminUsLoginPhoneLong = 'admin.us.login_phone_long';
-  /// App language
-  static const adminUsAppLanguage = 'admin.us.app_language';
-  /// Report language
-  static const adminUsReportLanguage = 'admin.us.report_language';
-  /// Device
-  static const adminUsDevice = 'admin.us.device';
-  /// Signed in on
-  static const adminUsSessions = 'admin.us.sessions';
-  /// {n} devices
-  static const adminUsNDevices = 'admin.us.n_devices';
-  /// 1 device
-  static const adminUsNDevicesOne = 'admin.us.n_devices_one';
-  /// Account since
-  static const adminUsSince = 'admin.us.since';
-  /// Companies
-  static const adminUsCompanies = 'admin.us.companies';
-  /// Last 30 days
-  static const adminUsLast30 = 'admin.us.last30';
-  /// Jobs
-  static const adminUsJobs = 'admin.us.jobs';
-  /// Reports
-  static const adminUsReports = 'admin.us.reports';
-  /// Changes asked
-  static const adminUsChanges = 'admin.us.changes';
-  /// No activity in the last 30 days.
-  static const adminUsNoActivity = 'admin.us.no_activity';
-  /// Created a job
-  static const adminUsAJobCreated = 'admin.us.a.job.created';
-  /// Assigned a job
-  static const adminUsAJobAssigned = 'admin.us.a.job.assigned';
-  /// Cancelled a job
-  static const adminUsAJobCancelled = 'admin.us.a.job.cancelled';
-  /// Sent a report for review
-  static const adminUsAReportSubmitted = 'admin.us.a.report.submitted';
-  /// Approved a report
-  static const adminUsAReportApproved = 'admin.us.a.report.approved';
-  /// Asked for changes
-  static const adminUsAReportChangesRequested = 'admin.us.a.report.changes_requested';
-  /// Sent a report to a customer
-  static const adminUsAReportSent = 'admin.us.a.report.sent';
-  /// Added a customer
-  static const adminUsACustomerCreated = 'admin.us.a.customer.created';
-  /// Invited someone to the team
-  static const adminUsATeamInvited = 'admin.us.a.team.invited';
-  /// Joined the team
-  static const adminUsATeamJoined = 'admin.us.a.team.joined';
-  /// Replied to a review
-  static const adminUsAReviewReplied = 'admin.us.a.review.replied';
-  /// Changed their password
-  static const adminUsAPasswordReset = 'admin.us.a.password.reset';
-  /// Sign out everywhere
-  static const adminUsSignOut = 'admin.us.sign_out';
-  /// Turn off
-  static const adminUsDeactivate = 'admin.us.deactivate';
-  /// Turn back on
-  static const adminUsReactivate = 'admin.us.reactivate';
-  /// This person is turned off: they can’t log in to any company.
-  static const adminUsDisabledNote = 'admin.us.disabled_note';
-  /// Sign {name} out everywhere?
-  static const adminUsConfirmSignOut = 'admin.us.confirm_sign_out';
-  /// Every phone and browser is signed out. They can log in again (for example after a lost phone).
-  static const adminUsConfirmSignOutBody = 'admin.us.confirm_sign_out_body';
-  /// Turn off {name}?
-  static const adminUsConfirmOff = 'admin.us.confirm_off';
-  /// They are signed out and can’t log in to any company until you turn them back on. Their jobs and reports stay.
-  static const adminUsConfirmOffBody = 'admin.us.confirm_off_body';
-  /// Turn {name} back on?
-  static const adminUsConfirmOn = 'admin.us.confirm_on';
-  /// They can log in again to the companies they belong to.
-  static const adminUsConfirmOnBody = 'admin.us.confirm_on_body';
-  /// Reason (saved in the audit log)
-  static const adminUsReason = 'admin.us.reason';
-  /// Write a short reason (at least 3 characters).
-  static const adminUsReasonShort = 'admin.us.reason_short';
-  /// Cancel
-  static const adminUsCancel = 'admin.us.cancel';
-  /// Signed out everywhere.
-  static const adminUsDoneSignOut = 'admin.us.done_sign_out';
-  /// Turned off.
-  static const adminUsDoneOff = 'admin.us.done_off';
-  /// Turned back on.
-  static const adminUsDoneOn = 'admin.us.done_on';
-  /// Support staff can look but not change accounts.
-  static const adminUsNotAllowed = 'admin.us.not_allowed';
-  /// This person doesn’t exist any more.
-  static const adminUsNotFound = 'admin.us.not_found';
-  /// View all
-  static const adminCoViewAll = 'admin.co.view_all';
-  /// Website leads
-  static const adminNavLeads = 'admin.nav.leads';
-  /// New
-  static const adminLdTabNew = 'admin.ld.tab.new';
-  /// Demos
-  static const adminLdTabDemo = 'admin.ld.tab.demo';
-  /// Messages
-  static const adminLdTabContact = 'admin.ld.tab.contact';
-  /// Newsletter
-  static const adminLdTabNewsletter = 'admin.ld.tab.newsletter';
-  /// Handled
-  static const adminLdTabDone = 'admin.ld.tab.done';
-  /// Leads
-  static const adminLdTabs = 'admin.ld.tabs';
-  /// Search name, email, company, message or KN number
-  static const adminLdSearch = 'admin.ld.search';
-  /// Demo
-  static const adminLdKindDemo = 'admin.ld.kind.demo';
-  /// Message
-  static const adminLdKindContact = 'admin.ld.kind.contact';
-  /// Newsletter
-  static const adminLdKindNewsletter = 'admin.ld.kind.newsletter';
-  /// New
-  static const adminLdStNew = 'admin.ld.st.new';
-  /// Contacted
-  static const adminLdStContacted = 'admin.ld.st.contacted';
-  /// Done
-  static const adminLdStDone = 'admin.ld.st.done';
-  /// Spam
-  static const adminLdStSpam = 'admin.ld.st.spam';
-  /// Demo {when}
-  static const adminLdDemoAt = 'admin.ld.demo_at';
-  /// Export emails (CSV)
-  static const adminLdExport = 'admin.ld.export';
-  /// Nothing here.
-  static const adminLdEmpty = 'admin.ld.empty';
-  /// All caught up. New demo bookings and messages from the website appear here.
-  static const adminLdEmptyNew = 'admin.ld.empty_new';
-  /// Choose a lead to see it here.
-  static const adminLdPick = 'admin.ld.pick';
-  /// All leads
-  static const adminLdBack = 'admin.ld.back';
-  /// Email
-  static const adminLdEmail = 'admin.ld.email';
-  /// Phone
-  static const adminLdPhone = 'admin.ld.phone';
-  /// Company
-  static const adminLdCompany = 'admin.ld.company';
-  /// Team size
-  static const adminLdTeam = 'admin.ld.team';
-  /// Trade
-  static const adminLdTrade = 'admin.ld.trade';
-  /// Topic
-  static const adminLdTopic = 'admin.ld.topic';
-  /// Demo time
-  static const adminLdWhen = 'admin.ld.when';
-  /// Website language
-  static const adminLdLang = 'admin.ld.lang';
-  /// Received
-  static const adminLdReceived = 'admin.ld.received';
-  /// {n} people
-  static const adminLdPeople = 'admin.ld.people';
-  /// Already signed up: {name}
-  static const adminLdSignedUp = 'admin.ld.signed_up';
-  /// Message
-  static const adminLdMessage = 'admin.ld.message';
-  /// Status
-  static const adminLdStatus = 'admin.ld.status';
-  /// Team note (only staff see this)
-  static const adminLdNote = 'admin.ld.note';
-  /// Save
-  static const adminLdSave = 'admin.ld.save';
-  /// Saved
-  static const adminLdSaved = 'admin.ld.saved';
-  /// Last changed by {name} · {when}
-  static const adminLdHandled = 'admin.ld.handled';
-  /// Reply by email
-  static const adminLdReply = 'admin.ld.reply';
-  /// Call
-  static const adminLdCall = 'admin.ld.call';
-  /// This lead doesn’t exist any more.
-  static const adminLdNotFound = 'admin.ld.not_found';
-  /// Company created
-  static const adminAuACompanyCreated = 'admin.au.a.company.created';
-  /// Company edited
-  static const adminAuACompanyUpdated = 'admin.au.a.company.updated';
-  /// Settings changed
-  static const adminAuACompanySettingsChanged = 'admin.au.a.company.settings_changed';
-  /// Customer added
-  static const adminAuACustomerCreated = 'admin.au.a.customer.created';
-  /// Customer edited
-  static const adminAuACustomerUpdated = 'admin.au.a.customer.updated';
-  /// Email check sent
-  static const adminAuAEmailVerifySent = 'admin.au.a.email.verify_sent';
-  /// Password reset sent
-  static const adminAuAPasswordResetSent = 'admin.au.a.password.reset_sent';
-  /// Password changed
-  static const adminAuAPasswordReset = 'admin.au.a.password.reset';
-  /// Old sign-in reused
-  static const adminAuASessionReuseDetected = 'admin.au.a.session.reuse_detected';
-  /// Photo deleted
-  static const adminAuAEvidenceDeleted = 'admin.au.a.evidence.deleted';
-  /// Voice note deleted
-  static const adminAuAVoiceNoteDeleted = 'admin.au.a.voice_note.deleted';
-  /// Checklist created
-  static const adminAuAChecklistCreated = 'admin.au.a.checklist.created';
-  /// Job created
-  static const adminAuAJobCreated = 'admin.au.a.job.created';
-  /// Job edited
-  static const adminAuAJobUpdated = 'admin.au.a.job.updated';
-  /// Job assigned
-  static const adminAuAJobAssigned = 'admin.au.a.job.assigned';
-  /// Job cancelled
-  static const adminAuAJobCancelled = 'admin.au.a.job.cancelled';
-  /// Job deleted
-  static const adminAuAJobDeleted = 'admin.au.a.job.deleted';
-  /// Report sent for review
-  static const adminAuAReportSubmitted = 'admin.au.a.report.submitted';
-  /// Report approved
-  static const adminAuAReportApproved = 'admin.au.a.report.approved';
-  /// Changes asked
-  static const adminAuAReportChangesRequested = 'admin.au.a.report.changes_requested';
-  /// Report sent
-  static const adminAuAReportSent = 'admin.au.a.report.sent';
-  /// Customer confirmed report
-  static const adminAuAReportAcknowledged = 'admin.au.a.report.acknowledged';
-  /// Report link made
-  static const adminAuAShareLinkCreated = 'admin.au.a.share_link.created';
-  /// Report link stopped
-  static const adminAuAShareLinkRevoked = 'admin.au.a.share_link.revoked';
-  /// Review asked
-  static const adminAuAReviewRequested = 'admin.au.a.review.requested';
-  /// Review replied
-  static const adminAuAReviewReplied = 'admin.au.a.review.replied';
-  /// Review settings changed
-  static const adminAuAReviewSettingsUpdated = 'admin.au.a.review_settings.updated';
-  /// Person invited
-  static const adminAuATeamInvited = 'admin.au.a.team.invited';
-  /// Joined the team
-  static const adminAuATeamJoined = 'admin.au.a.team.joined';
-  /// Invite declined
-  static const adminAuATeamInviteDeclined = 'admin.au.a.team.invite_declined';
-  /// Invite cancelled
-  static const adminAuATeamInviteRevoked = 'admin.au.a.team.invite_revoked';
-  /// Removed from team
-  static const adminAuATeamRemoved = 'admin.au.a.team.removed';
-  /// Role changed
-  static const adminAuATeamRoleChanged = 'admin.au.a.team.role_changed';
-  /// Admin logged in
-  static const adminAuAStaffLogin = 'admin.au.a.staff.login';
-  /// Admin log in failed
-  static const adminAuAStaffLoginFailed = 'admin.au.a.staff.login_failed';
-  /// Admin logged out
-  static const adminAuAStaffLogout = 'admin.au.a.staff.logout';
-  /// Staff invited
-  static const adminAuAStaffInvited = 'admin.au.a.staff.invited';
-  /// Staff set up account
-  static const adminAuAStaffSetupDone = 'admin.au.a.staff.setup_done';
-  /// Staff account reset
-  static const adminAuAStaffReset = 'admin.au.a.staff.reset';
-  /// Old admin sign-in reused
-  static const adminAuAStaffSessionReuse = 'admin.au.a.staff.session_reuse';
-  /// Data exported
-  static const adminAuAStaffExport = 'admin.au.a.staff.export';
-  /// Person turned off
-  static const adminAuAStaffUserDisabled = 'admin.au.a.staff.user_disabled';
-  /// Person turned back on
-  static const adminAuAStaffUserEnabled = 'admin.au.a.staff.user_enabled';
-  /// Signed out everywhere
-  static const adminAuAStaffUserSignedOut = 'admin.au.a.staff.user_signed_out';
-  /// Lead updated
-  static const adminAuAStaffLeadUpdated = 'admin.au.a.staff.lead_updated';
-  /// Search person, action, target or IP
-  static const adminAuSearch = 'admin.au.search';
-  /// Actor
-  static const adminAuFActor = 'admin.au.f_actor';
-  /// Action
-  static const adminAuFAction = 'admin.au.f_action';
-  /// Date
-  static const adminAuFDate = 'admin.au.f_date';
-  /// KaamNishaan staff
-  static const adminAuActorStaff = 'admin.au.actor.staff';
-  /// App users
-  static const adminAuActorUser = 'admin.au.actor.user';
-  /// System
-  static const adminAuActorSystem = 'admin.au.actor.system';
-  /// Log in and security
-  static const adminAuGSecurity = 'admin.au.g.security';
-  /// Admin actions
-  static const adminAuGAdmin = 'admin.au.g.admin';
-  /// Companies
-  static const adminAuGCompany = 'admin.au.g.company';
-  /// Teams
-  static const adminAuGTeam = 'admin.au.g.team';
-  /// Jobs and customers
-  static const adminAuGJobs = 'admin.au.g.jobs';
-  /// Reports and reviews
-  static const adminAuGReports = 'admin.au.g.reports';
-  /// Last 24 hours
-  static const adminAuD1 = 'admin.au.d.1';
-  /// Last 7 days
-  static const adminAuD7 = 'admin.au.d.7';
-  /// Last 30 days
-  static const adminAuD30 = 'admin.au.d.30';
-  /// Last 90 days
-  static const adminAuD90 = 'admin.au.d.90';
-  /// Last 12 months
-  static const adminAuD365 = 'admin.au.d.365';
-  /// Export CSV
-  static const adminAuExport = 'admin.au.export';
-  /// Time
-  static const adminAuCTime = 'admin.au.c_time';
-  /// Actor
-  static const adminAuCActor = 'admin.au.c_actor';
-  /// Action
-  static const adminAuCAction = 'admin.au.c_action';
-  /// Target
-  static const adminAuCTarget = 'admin.au.c_target';
-  /// Company
-  static const adminAuCCompany = 'admin.au.c_company';
-  /// IP
-  static const adminAuCIp = 'admin.au.c_ip';
-  /// System
-  static const adminAuSystem = 'admin.au.system';
-  /// Automatic
-  static const adminAuSystemSub = 'admin.au.system_sub';
-  /// Unknown
-  static const adminAuUnknown = 'admin.au.unknown';
-  /// No account with this email
-  static const adminAuUnknownSub = 'admin.au.unknown_sub';
-  /// Platform
-  static const adminAuPlatform = 'admin.au.platform';
-  /// Details
-  static const adminAuDetails = 'admin.au.details';
-  /// Show details
-  static const adminAuShow = 'admin.au.show';
-  /// No more details were saved.
-  static const adminAuNoDetails = 'admin.au.no_details';
-  /// Full IP
-  static const adminAuFullIp = 'admin.au.full_ip';
-  /// Nothing was recorded for these filters.
-  static const adminAuEmpty = 'admin.au.empty';
-  /// Entries can’t be changed or deleted.
-  static const adminAuNote = 'admin.au.note';
-  /// Companies list
-  static const adminAuTCompanies = 'admin.au.t.companies';
-  /// Audit log
-  static const adminAuTAuditLogs = 'admin.au.t.audit_logs';
-  /// Newsletter list
-  static const adminAuTNewsletter = 'admin.au.t.newsletter';
-  /// Sign-in
-  static const adminAuTSession = 'admin.au.t.session';
-  /// Admin sign-in
-  static const adminAuTStaffSession = 'admin.au.t.staff_session';
-  /// Photo
-  static const adminAuTEvidence = 'admin.au.t.evidence';
-  /// Voice note
-  static const adminAuTVoiceNote = 'admin.au.t.voice_note';
-  /// Review
-  static const adminAuTReview = 'admin.au.t.review';
-  /// Checklist
-  static const adminAuTChecklistTemplate = 'admin.au.t.checklist_template';
-  /// Audit log
-  static const adminAuAuditLink = 'admin.au.audit_link';
-  /// Command line
-  static const adminAuViaCommandLine = 'admin.au.via.command_line';
-  /// Server start
-  static const adminAuViaStartUp = 'admin.au.via.start_up';
-  /// New template
-  static const adminClNew = 'admin.cl.new';
-  /// Global templates
-  static const adminClTabAll = 'admin.cl.tab.all';
-  /// By trade
-  static const adminClTabByTrade = 'admin.cl.tab.by_trade';
-  /// Needs translation
-  static const adminClTabNeedsTranslation = 'admin.cl.tab.needs_translation';
-  /// Drafts
-  static const adminClTabDrafts = 'admin.cl.tab.drafts';
-  /// Search templates
-  static const adminClSearch = 'admin.cl.search';
-  /// Trade
-  static const adminClFTrade = 'admin.cl.f_trade';
-  /// Language status
-  static const adminClFLang = 'admin.cl.f_lang';
-  /// A language is missing
-  static const adminClLsMissing = 'admin.cl.ls.missing';
-  /// Needs checking
-  static const adminClLsReview = 'admin.cl.ls.review';
-  /// Has checked languages
-  static const adminClLsReady = 'admin.cl.ls.ready';
-  /// Template
-  static const adminClCTemplate = 'admin.cl.c_template';
-  /// Trade
-  static const adminClCTrade = 'admin.cl.c_trade';
-  /// Questions
-  static const adminClCQuestions = 'admin.cl.c_questions';
-  /// Translations
-  static const adminClCTranslations = 'admin.cl.c_translations';
-  /// Used by
-  static const adminClCUsed = 'admin.cl.c_used';
-  /// Updated
-  static const adminClCUpdated = 'admin.cl.c_updated';
-  /// {n} questions
-  static const adminClNQuestions = 'admin.cl.n_questions';
-  /// 1 question
-  static const adminClNQuestionsOne = 'admin.cl.n_questions_one';
-  /// {n} need photos
-  static const adminClNPhotos = 'admin.cl.n_photos';
-  /// 5 of 5 languages
-  static const adminClLangsAll = 'admin.cl.langs_all';
-  /// {n} of 5 · {missing} missing
-  static const adminClLangsSome = 'admin.cl.langs_some';
-  /// {langs} to check
-  static const adminClLangsReview = 'admin.cl.langs_review';
-  /// Draft
-  static const adminClStDraft = 'admin.cl.st.draft';
-  /// Published
-  static const adminClStPublished = 'admin.cl.st.published';
-  /// Archived
-  static const adminClStArchived = 'admin.cl.st.archived';
-  /// No templates match.
-  static const adminClEmpty = 'admin.cl.empty';
-  /// Checklist templates
-  static const adminClBack = 'admin.cl.back';
-  /// New checklist template
-  static const adminClCreateTitle = 'admin.cl.create_title';
-  /// Write it in English. Other languages are added after.
-  static const adminClCreateBody = 'admin.cl.create_body';
-  /// Name (English)
-  static const adminClName = 'admin.cl.name';
-  /// Name in {lang}
-  static const adminClNameIn = 'admin.cl.name_in';
-  /// Minutes to fill
-  static const adminClMinutes = 'admin.cl.minutes';
-  /// Create draft
-  static const adminClCreate = 'admin.cl.create';
-  /// Used by {n} companies
-  static const adminClUsedBy = 'admin.cl.used_by';
-  /// Publish
-  static const adminClPublish = 'admin.cl.publish';
-  /// Move to draft
-  static const adminClUnpublish = 'admin.cl.unpublish';
-  /// Archive
-  static const adminClArchive = 'admin.cl.archive';
-  /// Draft: companies don’t see it yet. Publish when the questions are ready.
-  static const adminClDraftNote = 'admin.cl.draft_note';
-  /// Published: companies can pick it for new jobs. Changes never touch jobs that already have it.
-  static const adminClLiveNote = 'admin.cl.live_note';
-  /// Translate missing with AI
-  static const adminClTranslate = 'admin.cl.translate';
-  /// {n} questions sent for translation. Refresh in a minute.
-  static const adminClTranslateSent = 'admin.cl.translate_sent';
-  /// Nothing is missing.
-  static const adminClTranslateNone = 'admin.cl.translate_none';
-  /// AI isn’t set up (KN_OPENAI_API_KEY), so translations can only be typed here.
-  static const adminClNoAi = 'admin.cl.no_ai';
-  /// Mark all {lang} as checked
-  static const adminClApprove = 'admin.cl.approve';
-  /// Written in
-  static const adminClSource = 'admin.cl.source';
-  /// Checked
-  static const adminClLstateReady = 'admin.cl.lstate.ready';
-  /// Machine translated · check
-  static const adminClLstateReview = 'admin.cl.lstate.review';
-  /// Missing
-  static const adminClLstateMissing = 'admin.cl.lstate.missing';
-  /// Translation
-  static const adminClTranslation = 'admin.cl.translation';
-  /// Save translation
-  static const adminClSaveTr = 'admin.cl.save_tr';
-  /// Help text (optional)
-  static const adminClHelp = 'admin.cl.help';
-  /// Choices
-  static const adminClOptions = 'admin.cl.options';
-  /// Add choice
-  static const adminClAddOption = 'admin.cl.add_option';
-  /// Remove choice {n}
-  static const adminClRemoveOption = 'admin.cl.remove_option';
-  /// Lowest
-  static const adminClMin = 'admin.cl.min';
-  /// Highest
-  static const adminClMax = 'admin.cl.max';
-  /// Photo
-  static const adminClPhoto = 'admin.cl.photo';
-  /// No photo needed
-  static const adminClPhotoNone = 'admin.cl.photo_none';
-  /// Must be answered
-  static const adminClRequired = 'admin.cl.required';
-  /// Optional
-  static const adminClOptional = 'admin.cl.optional';
-  /// Show only if
-  static const adminClShowIf = 'admin.cl.show_if';
-  /// Always show
-  static const adminClAlways = 'admin.cl.always';
-  /// answer is
-  static const adminClAnswerIs = 'admin.cl.answer_is';
-  /// Shown if Q{n} is “{v}”
-  static const adminClShownIf = 'admin.cl.shown_if';
-  /// Edit
-  static const adminClEdit = 'admin.cl.edit';
-  /// Cancel
-  static const adminClCancel = 'admin.cl.cancel';
-  /// Delete this question? Jobs that already have it keep it.
-  static const adminClDeleteConfirm = 'admin.cl.delete_confirm';
-  /// Yes
-  static const adminClYes = 'admin.cl.yes';
-  /// No
-  static const adminClNo = 'admin.cl.no';
-  /// Pass
-  static const adminClPass = 'admin.cl.pass';
-  /// Fail
-  static const adminClFail = 'admin.cl.fail';
-  /// Questions are written in English. Switch to English to add or change them.
-  static const adminClOnlySource = 'admin.cl.only_source';
-  /// Support staff can look but not change checklists.
-  static const adminClReadOnly = 'admin.cl.read_only';
-  /// This checklist doesn’t exist any more.
-  static const adminClNotFound = 'admin.cl.not_found';
-  /// Saved
-  static const adminClSaved = 'admin.cl.saved';
-  /// Languages
-  static const adminClLanguages = 'admin.cl.languages';
-  /// Mark as checked
-  static const adminClMarkChecked = 'admin.cl.mark_checked';
-  /// Create company
-  static const adminCfCreateTitle = 'admin.cf.create_title';
-  /// Edit company
-  static const adminCfEditTitle = 'admin.cf.edit_title';
-  /// Create company
-  static const adminCfCreate = 'admin.cf.create';
-  /// Save changes
-  static const adminCfSave = 'admin.cf.save';
-  /// Company
-  static const adminCfCompany = 'admin.cf.company';
-  /// Shown on reports and the customer link.
-  static const adminCfCompanySub = 'admin.cf.company_sub';
-  /// Company name
-  static const adminCfName = 'admin.cf.name';
-  /// Industry
-  static const adminCfIndustry = 'admin.cf.industry';
-  /// Country
-  static const adminCfCountry = 'admin.cf.country';
-  /// Default report language
-  static const adminCfLanguage = 'admin.cf.language';
-  /// Owner
-  static const adminCfOwner = 'admin.cf.owner';
-  /// The owner gets an invite by SMS. They log in to the app with this phone number (one-time code) and accept it.
-  static const adminCfOwnerSubCreate = 'admin.cf.owner_sub_create';
-  /// Owners change their own details in the app. You can see them on their user page.
-  static const adminCfOwnerSubEdit = 'admin.cf.owner_sub_edit';
-  /// Owner name
-  static const adminCfOwnerName = 'admin.cf.owner_name';
-  /// Owner phone
-  static const adminCfOwnerPhone = 'admin.cf.owner_phone';
-  /// Owner email (optional)
-  static const adminCfOwnerEmail = 'admin.cf.owner_email';
-  /// Plan
-  static const adminCfPlan = 'admin.cf.plan';
-  /// Starts with a {n}-day trial. You can change the plan later.
-  static const adminCfPlanSubCreate = 'admin.cf.plan_sub_create';
-  /// A new plan applies straight away. No payments are taken yet.
-  static const adminCfPlanSubEdit = 'admin.cf.plan_sub_edit';
-  /// {plan} · {n}-day trial
-  static const adminCfPlanTrial = 'admin.cf.plan_trial';
-  /// {plan} · contact us
-  static const adminCfPlanContact = 'admin.cf.plan_contact';
-  /// Trial ends on
-  static const adminCfTrialEnds = 'admin.cf.trial_ends';
-  /// Fix {n} fields to save. Everything you typed is kept.
-  static const adminCfFix = 'admin.cf.fix';
-  /// Fix 1 field to save. Everything you typed is kept.
-  static const adminCfFixOne = 'admin.cf.fix_one';
-  /// Add the company name
-  static const adminCfEName = 'admin.cf.e.name';
-  /// Add the owner’s name
-  static const adminCfEOwnerName = 'admin.cf.e.owner_name';
-  /// Enter a full phone number
-  static const adminCfEOwnerPhone = 'admin.cf.e.owner_phone';
-  /// This number belongs to a turned-off account
-  static const adminCfEPhoneDisabled = 'admin.cf.e.phone_disabled';
-  /// Enter a valid email, like name@company.com
-  static const adminCfEOwnerEmail = 'admin.cf.e.owner_email';
-  /// Another account already uses this email
-  static const adminCfEEmailTaken = 'admin.cf.e.email_taken';
-  /// Pick an industry
-  static const adminCfETrade = 'admin.cf.e.trade';
-  /// Pick a plan
-  static const adminCfEPlan = 'admin.cf.e.plan';
-  /// Only a company in trial has an end date
-  static const adminCfETrial = 'admin.cf.e.trial';
-  /// Company created
-  static const adminCfCreatedTitle = 'admin.cf.created_title';
-  /// {name} logs in to the app with {phone} and accepts the invite. The link works for 7 days.
-  static const adminCfCreatedBody = 'admin.cf.created_body';
-  /// If SMS isn’t set up yet, send this message yourself (for example on WhatsApp). It is shown only now.
-  static const adminCfSmsNote = 'admin.cf.sms_note';
-  /// Copy link
-  static const adminCfCopyLink = 'admin.cf.copy_link';
-  /// Copy message
-  static const adminCfCopySms = 'admin.cf.copy_sms';
-  /// Send on WhatsApp
-  static const adminCfWhatsapp = 'admin.cf.whatsapp';
-  /// Open company
-  static const adminCfOpen = 'admin.cf.open';
-  /// Suspend company
-  static const adminCfSuspendTitle = 'admin.cf.suspend_title';
-  /// Nobody in the company can work in the app while it is suspended. Jobs, photos and reports are kept, and report links already sent to customers keep working.
-  static const adminCfSuspendBody = 'admin.cf.suspend_body';
-  /// Suspend
-  static const adminCfSuspend = 'admin.cf.suspend';
-  /// Suspend {name}?
-  static const adminCfConfirmSuspend = 'admin.cf.confirm_suspend';
-  /// Turn the company back on
-  static const adminCfReactivateTitle = 'admin.cf.reactivate_title';
-  /// Turn back on
-  static const adminCfReactivate = 'admin.cf.reactivate';
-  /// Turn {name} back on?
-  static const adminCfConfirmReactivate = 'admin.cf.confirm_reactivate';
-  /// Everyone in the company can work in the app again.
-  static const adminCfConfirmReactivateBody = 'admin.cf.confirm_reactivate_body';
-  /// Suspended on {date}: {reason}
-  static const adminCfSuspended = 'admin.cf.suspended';
-  /// Suspended on {date} · {reason}. Nobody can work in the app until it’s turned back on.
-  static const adminCfSuspendedBanner = 'admin.cf.suspended_banner';
-  /// Company suspended.
-  static const adminCfDoneSuspend = 'admin.cf.done_suspend';
-  /// Company turned back on.
-  static const adminCfDoneReactivate = 'admin.cf.done_reactivate';
-  /// Changes saved.
-  static const adminCfDoneSaved = 'admin.cf.done_saved';
-  /// {name} hasn’t joined yet. They log in with {phone} and accept the invite.
-  static const adminCfOwnerPending = 'admin.cf.owner_pending';
-  /// New invite link
-  static const adminCfNewLink = 'admin.cf.new_link';
-  /// New link made. Older links stop working.
-  static const adminCfNewLinkDone = 'admin.cf.new_link_done';
-  /// Edit
-  static const adminCfEdit = 'admin.cf.edit';
-  /// Open user page
-  static const adminCfOpenUser = 'admin.cf.open_user';
-  /// Support staff can look but not change companies.
-  static const adminCfNotAllowed = 'admin.cf.not_allowed';
-  /// Company created by staff
-  static const adminAuAStaffCompanyCreated = 'admin.au.a.staff.company_created';
-  /// Company edited by staff
-  static const adminAuAStaffCompanyUpdated = 'admin.au.a.staff.company_updated';
-  /// Company suspended
-  static const adminAuAStaffCompanySuspended = 'admin.au.a.staff.company_suspended';
-  /// Company turned back on
-  static const adminAuAStaffCompanyReactivated = 'admin.au.a.staff.company_reactivated';
-  /// Owner invite link made
-  static const adminAuAStaffOwnerInvited = 'admin.au.a.staff.owner_invited';
-  /// Checklist created by staff
-  static const adminAuAStaffChecklistCreated = 'admin.au.a.staff.checklist_created';
-  /// Checklist changed by staff
-  static const adminAuAStaffChecklistUpdated = 'admin.au.a.staff.checklist_updated';
-  /// This company is paused
-  static const companyPausedTitle = 'company.paused_title';
-  /// KaamNishaan has paused {company}. Your jobs, photos and reports are kept. Contact KaamNishaan support to turn it back on.
-  static const companyPausedBody = 'company.paused_body';
-  /// If you are the owner, the reason was shared with you by KaamNishaan.
-  static const companyPausedOwner = 'company.paused_owner';
-  /// Switch company
-  static const companyPausedSwitch = 'company.paused_switch';
-  /// Total AI cost
-  static const adminAiTotal = 'admin.ai.total';
-  /// Cost per report
-  static const adminAiPerReport = 'admin.ai.per_report';
-  /// Reports drafted
-  static const adminAiDrafted = 'admin.ai.drafted';
-  /// Voice minutes
-  static const adminAiVoice = 'admin.ai.voice';
-  /// Last {days} days
-  static const adminAiLastDays = 'admin.ai.last_days';
-  /// Last {days} days · budget {budget}
-  static const adminAiLastDaysBudget = 'admin.ai.last_days_budget';
-  /// Target under {cost}
-  static const adminAiTarget = 'admin.ai.target';
-  /// Above the {cost} target
-  static const adminAiOverTarget = 'admin.ai.over_target';
-  /// All AI cost ÷ reports drafted
-  static const adminAiPerReportHow = 'admin.ai.per_report_how';
-  /// {pct} success
-  static const adminAiSuccess = 'admin.ai.success';
-  /// No AI report drafts yet
-  static const adminAiNoDrafts = 'admin.ai.no_drafts';
-  /// Cost per day by task
-  static const adminAiPerDay = 'admin.ai.per_day';
-  /// Estimated from OpenAI’s prices per token and per audio minute.
-  static const adminAiEstimate = 'admin.ai.estimate';
-  /// Cost by company
-  static const adminAiByCompany = 'admin.ai.by_company';
-  /// All others ({n})
-  static const adminAiOthers = 'admin.ai.others';
-  /// No AI use in this period.
-  static const adminAiNoUse = 'admin.ai.no_use';
-  /// Model usage
-  static const adminAiModels = 'admin.ai.models';
-  /// Task
-  static const adminAiColTask = 'admin.ai.col_task';
-  /// Model
-  static const adminAiColModel = 'admin.ai.col_model';
-  /// Calls ({days} d)
-  static const adminAiColCalls = 'admin.ai.col_calls';
-  /// Avg. cost
-  static const adminAiColAvg = 'admin.ai.col_avg';
-  /// Errors
-  static const adminAiColErrors = 'admin.ai.col_errors';
-  /// {cost} / min
-  static const adminAiPerMin = 'admin.ai.per_min';
-  /// Report drafts
-  static const adminAiTaskReportDraft = 'admin.ai.task.report_draft';
-  /// Transcription
-  static const adminAiTaskTranscription = 'admin.ai.task.transcription';
-  /// Translation
-  static const adminAiTaskTranslation = 'admin.ai.task.translation';
-  /// Assistant
-  static const adminAiTaskAssistant = 'admin.ai.task.assistant';
-  /// AI is off.
-  static const adminAiOffTitle = 'admin.ai.off_title';
-  /// No OpenAI key is set, so nothing is sent to AI. Voice notes wait for transcription and reports use the plain template.
-  static const adminAiOffBody = 'admin.ai.off_body';
-  /// Export
-  static const adminRvExport = 'admin.rv.export';
-  /// {n} stars
-  static const adminRvStars = 'admin.rv.stars';
-  /// 2 stars or less
-  static const adminRvRLow = 'admin.rv.r_low';
-  /// Average rating
-  static const adminRvKAvg = 'admin.rv.k_avg';
-  /// All companies · 30 days
-  static const adminRvKAvgSub = 'admin.rv.k_avg_sub';
-  /// Reviews (30 d)
-  static const adminRvKCount = 'admin.rv.k_count';
-  /// {pct} of shared reports
-  static const adminRvKCountSub = 'admin.rv.k_count_sub';
-  /// No reports shared yet
-  static const adminRvKNoShared = 'admin.rv.k_no_shared';
-  /// Low ratings
-  static const adminRvKLow = 'admin.rv.k_low';
-  /// 2 stars or less · {pct}
-  static const adminRvKLowSub = 'admin.rv.k_low_sub';
-  /// Flagged for review
-  static const adminRvKFlagged = 'admin.rv.k_flagged';
-  /// Abuse, personal data or spam
-  static const adminRvKFlaggedSub = 'admin.rv.k_flagged_sub';
-  /// Search company, customer or technician
-  static const adminRvSearch = 'admin.rv.search';
-  /// Rating
-  static const adminRvFRating = 'admin.rv.f_rating';
-  /// Status
-  static const adminRvFStatus = 'admin.rv.f_status';
-  /// Company
-  static const adminRvFCompany = 'admin.rv.f_company';
-  /// Flagged first
-  static const adminRvFlaggedFirst = 'admin.rv.flagged_first';
-  /// Flagged
-  static const adminRvFFlagged = 'admin.rv.f.flagged';
-  /// Published
-  static const adminRvFPublished = 'admin.rv.f.published';
-  /// Manager following up
-  static const adminRvFFollowup = 'admin.rv.f.followup';
-  /// Replied
-  static const adminRvFReplied = 'admin.rv.f.replied';
-  /// Hidden
-  static const adminRvFHidden = 'admin.rv.f.hidden';
-  /// Review
-  static const adminRvCReview = 'admin.rv.c_review';
-  /// Company
-  static const adminRvCCompany = 'admin.rv.c_company';
-  /// Technician
-  static const adminRvCTech = 'admin.rv.c_tech';
-  /// Rating
-  static const adminRvCRating = 'admin.rv.c_rating';
-  /// Status
-  static const adminRvCStatus = 'admin.rv.c_status';
-  /// When
-  static const adminRvCWhen = 'admin.rv.c_when';
-  /// Flagged · {why}
-  static const adminRvFlaggedWhy = 'admin.rv.flagged_why';
-  /// personal data
-  static const adminRvWhyPersonalData = 'admin.rv.why.personal_data';
-  /// abuse
-  static const adminRvWhyAbuse = 'admin.rv.why.abuse';
-  /// spam
-  static const adminRvWhySpam = 'admin.rv.why.spam';
-  /// Personal data found
-  static const adminRvFoundPersonalData = 'admin.rv.found.personal_data';
-  /// Abusive words
-  static const adminRvFoundAbuse = 'admin.rv.found.abuse';
-  /// Repeat review
-  static const adminRvFoundSpam = 'admin.rv.found.spam';
-  /// Automatic check: a phone number or email was hidden.
-  static const adminRvCheckPersonalData = 'admin.rv.check.personal_data';
-  /// Automatic check: abusive words found.
-  static const adminRvCheckAbuse = 'admin.rv.check.abuse';
-  /// Automatic check: the same phone number left another review within a day.
-  static const adminRvCheckSpam = 'admin.rv.check.spam';
-  /// Published
-  static const adminRvStPublished = 'admin.rv.st.published';
-  /// Published · replied
-  static const adminRvStReplied = 'admin.rv.st.replied';
-  /// Manager following up
-  static const adminRvStFollowup = 'admin.rv.st.followup';
-  /// Hidden
-  static const adminRvStHidden = 'admin.rv.st.hidden';
-  /// No comment, just stars
-  static const adminRvNoComment = 'admin.rv.no_comment';
-  /// Unknown
-  static const adminRvUnknown = 'admin.rv.unknown';
-  /// Flagged review · {company}
-  static const adminRvPanelFlagged = 'admin.rv.panel_flagged';
-  /// Review · {company}
-  static const adminRvPanel = 'admin.rv.panel';
-  /// Before hiding (only staff see this):
-  static const adminRvOriginal = 'admin.rv.original';
-  /// Reply from {name}
-  static const adminRvReplyBy = 'admin.rv.reply_by';
-  /// Checked by {name} {when}
-  static const adminRvDecided = 'admin.rv.decided';
-  /// Publish
-  static const adminRvPublish = 'admin.rv.publish';
-  /// Publish with edit
-  static const adminRvPublishEdit = 'admin.rv.publish_edit';
-  /// Hide review
-  static const adminRvHide = 'admin.rv.hide';
-  /// Put back
-  static const adminRvRestore = 'admin.rv.restore';
-  /// Hide this review?
-  static const adminRvHideTitle = 'admin.rv.hide_title';
-  /// The company and technician won’t see it. It is kept, and you can put it back later. Say why for the audit log.
-  static const adminRvHideBody = 'admin.rv.hide_body';
-  /// Published. The company can see it now.
-  static const adminRvDonePublished = 'admin.rv.done_published';
-  /// Review hidden.
-  static const adminRvDoneHidden = 'admin.rv.done_hidden';
-  /// Review is shown again.
-  static const adminRvDoneRestored = 'admin.rv.done_restored';
-  /// Someone already dealt with this review. Refresh to see it.
-  static const adminRvErrDone = 'admin.rv.err_done';
-  /// Support staff can look but not change reviews.
-  static const adminRvSupportOnly = 'admin.rv.support_only';
-  /// Pick a review to see it here.
-  static const adminRvPick = 'admin.rv.pick';
-  /// Review rules
-  static const adminRvRules = 'admin.rv.rules';
-  /// Hide phone numbers and emails
-  static const adminRvRuleHideContact = 'admin.rv.rule.hide_contact';
-  /// Flag abusive words (5 languages)
-  static const adminRvRuleFlagAbuse = 'admin.rv.rule.flag_abuse';
-  /// Hold repeat reviews from one number
-  static const adminRvRuleBlockRepeats = 'admin.rv.rule.block_repeats';
-  /// Held reviews wait here until you publish or hide them. Companies can reply, but can’t delete or change a customer’s words.
-  static const adminRvRulesNote = 'admin.rv.rules_note';
-  /// No reviews match
-  static const adminRvEmptyTitle = 'admin.rv.empty_title';
-  /// No reviews yet
-  static const adminRvNoneTitle = 'admin.rv.none_title';
-  /// Reviews appear here when customers rate a job from their report link.
-  static const adminRvNoneBody = 'admin.rv.none_body';
-  /// Published a held review
-  static const adminAuAStaffReviewPublished = 'admin.au.a.staff.review_published';
-  /// Hid a review
-  static const adminAuAStaffReviewHidden = 'admin.au.a.staff.review_hidden';
-  /// Showed a hidden review again
-  static const adminAuAStaffReviewRestored = 'admin.au.a.staff.review_restored';
-  /// Changed the review rules
-  static const adminAuAStaffReviewRulesUpdated = 'admin.au.a.staff.review_rules_updated';
-  /// Reviews
-  static const adminAuTReviews = 'admin.au.t.reviews';
-  /// Platform
-  static const adminAuTPlatform = 'admin.au.t.platform';
-  /// Write at least {n} characters.
-  static const adminErrTooShort = 'admin.err.too_short';
-  /// Test call to my phone
-  static const adminAcTest = 'admin.ac.test';
-  /// Save changes
-  static const adminAcSave = 'admin.ac.save';
-  /// Saved. The next calls use these settings.
-  static const adminAcSaved = 'admin.ac.saved';
-  /// No voice provider is connected yet.
-  static const adminAcOffTitle = 'admin.ac.off_title';
-  /// No calls are placed. When a Day 5 call is due, the customer gets the rating link by SMS instead. Calls start once a provider is added.
-  static const adminAcOffBody = 'admin.ac.off_body';
-  /// Voice provider not responding since {time}
-  static const adminAcDownTitle = 'admin.ac.down_title';
-  /// AI review calls are paused and {n} calls are waiting. Customers get the rating link by SMS instead.
-  static const adminAcDownBody = 'admin.ac.down_body';
-  /// Retry now
-  static const adminAcRetry = 'admin.ac.retry';
-  /// Calls (30 d)
-  static const adminAcKCalls = 'admin.ac.k_calls';
-  /// Only jobs with no rating by Day 5
-  static const adminAcKCallsSub = 'admin.ac.k_calls_sub';
-  /// {n} sent by SMS instead
-  static const adminAcKSms = 'admin.ac.k_sms';
-  /// Answered
-  static const adminAcKAnswered = 'admin.ac.k_answered';
-  /// Voicemail + SMS for the rest
-  static const adminAcKAnsweredSub = 'admin.ac.k_answered_sub';
-  /// Rated on the call
-  static const adminAcKRated = 'admin.ac.k_rated';
-  /// Of answered calls
-  static const adminAcKRatedSub = 'admin.ac.k_rated_sub';
-  /// Opted out
-  static const adminAcKOpted = 'admin.ac.k_opted';
-  /// Never called again
-  static const adminAcKOptedSub = 'admin.ac.k_opted_sub';
-  /// Cost
-  static const adminAcKCost = 'admin.ac.k_cost';
-  /// Per call, average
-  static const adminAcKCostSub = 'admin.ac.k_cost_sub';
-  /// Voice agent
-  static const adminAcAgent = 'admin.ac.agent';
-  /// Voice
-  static const adminAcVoice = 'admin.ac.voice';
-  /// Warm · calm · neutral accent
-  static const adminAcVoiceWarm = 'admin.ac.voice.warm';
-  /// Bright · friendly
-  static const adminAcVoiceBright = 'admin.ac.voice.bright';
-  /// Clear · formal
-  static const adminAcVoiceFormal = 'admin.ac.voice.formal';
-  /// Language
-  static const adminAcLanguage = 'admin.ac.language';
-  /// Customer’s report language
-  static const adminAcLangReport = 'admin.ac.lang.report';
-  /// Always English
-  static const adminAcLangEn = 'admin.ac.lang.en';
-  /// Opening line (required)
-  static const adminAcOpening = 'admin.ac.opening';
-  /// Locked switches show how KaamNishaan always works.
-  static const adminAcLocked = 'admin.ac.locked';
-  /// Every call starts with this. It cannot be removed.
-  static const adminAcOpeningNote = 'admin.ac.opening_note';
-  /// Calling hours
-  static const adminAcHours = 'admin.ac.hours';
-  /// {from} – {to}, company time
-  static const adminAcHoursV = 'admin.ac.hours_v';
-  /// Attempts
-  static const adminAcAttempts = 'admin.ac.attempts';
-  /// 1 call + 1 voicemail
-  static const adminAcAttCallVoicemail = 'admin.ac.att.call_voicemail';
-  /// 2 calls, a day apart
-  static const adminAcAttTwoCalls = 'admin.ac.att.two_calls';
-  /// 1 call, no voicemail
-  static const adminAcAttCallOnly = 'admin.ac.att.call_only';
-  /// Skip do-not-call / DND numbers
-  static const adminAcDnd = 'admin.ac.dnd';
-  /// Checked before every call. Always on.
-  static const adminAcDndHint = 'admin.ac.dnd_hint';
-  /// Record calls
-  static const adminAcRecord = 'admin.ac.record';
-  /// Recording and transcript saved with the review
-  static const adminAcRecordHint = 'admin.ac.record_hint';
-  /// Call only if still no rating
-  static const adminAcOnly = 'admin.ac.only';
-  /// Cancelled the moment any rating arrives. Always on.
-  static const adminAcOnlyHint = 'admin.ac.only_hint';
-  /// Call script
-  static const adminAcScript = 'admin.ac.script';
-  /// v{n} live
-  static const adminAcLive = 'admin.ac.live';
-  /// The steps are written in English; the agent speaks the customer’s language.
-  static const adminAcScriptNote = 'admin.ac.script_note';
-  /// Greeting + AI and recording disclosure
-  static const adminAcStepGreeting = 'admin.ac.step.greeting';
-  /// Not a good time → callback or send link
-  static const adminAcStepBadTime = 'admin.ac.step.bad_time';
-  /// "Don’t call" → opt out for good
-  static const adminAcStepDontCall = 'admin.ac.step.dont_call';
-  /// Ask for a 1–5 rating
-  static const adminAcStepAskRating = 'admin.ac.step.ask_rating';
-  /// 3–5 → what went well, public OK?
-  static const adminAcStepGood = 'admin.ac.step.good';
-  /// 1–2 → what went wrong, manager call?
-  static const adminAcStepBad = 'admin.ac.step.bad';
-  /// Read back, save, thank-you SMS
-  static const adminAcStepConfirm = 'admin.ac.step.confirm';
-  /// No answer → voicemail + SMS
-  static const adminAcStepNoAnswer = 'admin.ac.step.no_answer';
-  /// Wrong person → mark contact invalid
-  static const adminAcStepWrongPerson = 'admin.ac.step.wrong_person';
-  /// Edit “{step}”
-  static const adminAcEditStep = 'admin.ac.edit_step';
-  /// What the voice agent should do at this step, in plain English. Saving makes a new script version, used from the next call.
-  static const adminAcEditBody = 'admin.ac.edit_body';
-  /// Instructions for the agent
-  static const adminAcEditLabel = 'admin.ac.edit_label';
-  /// Save step
-  static const adminAcSaveStep = 'admin.ac.save_step';
-  /// Saved. Script v{n} is live.
-  static const adminAcStepSaved = 'admin.ac.step_saved';
-  /// Keep {job} in the greeting so the customer knows which job it is about.
-  static const adminAcNeedsJob = 'admin.ac.needs_job';
-  /// Test call to my phone
-  static const adminAcTestTitle = 'admin.ac.test_title';
-  /// The agent calls you with the live script and a sample job. It isn’t recorded.
-  static const adminAcTestBody = 'admin.ac.test_body';
-  /// No voice provider is connected yet, so test calls can’t be made.
-  static const adminAcTestOff = 'admin.ac.test_off';
-  /// Your phone number
-  static const adminAcTestPhone = 'admin.ac.test_phone';
-  /// Call me
-  static const adminAcTestGo = 'admin.ac.test_go';
-  /// Test call finished ({length}).
-  static const adminAcTestDone = 'admin.ac.test_done';
-  /// Enter a full phone number.
-  static const adminAcTestBadPhone = 'admin.ac.test_bad_phone';
-  /// Time
-  static const adminAcCTime = 'admin.ac.c_time';
-  /// Company
-  static const adminAcCCompany = 'admin.ac.c_company';
-  /// Customer
-  static const adminAcCCustomer = 'admin.ac.c_customer';
-  /// Language
-  static const adminAcCLanguage = 'admin.ac.c_language';
-  /// Length
-  static const adminAcCLength = 'admin.ac.c_length';
-  /// Outcome
-  static const adminAcCOutcome = 'admin.ac.c_outcome';
-  /// Cost
-  static const adminAcCCost = 'admin.ac.c_cost';
-  /// Today {time}
-  static const adminAcToday = 'admin.ac.today';
-  /// No calls yet
-  static const adminAcEmptyTitle = 'admin.ac.empty_title';
-  /// Day 5 calls, and SMS sent instead of them, appear here.
-  static const adminAcEmptyBody = 'admin.ac.empty_body';
-  /// Rated {n}★
-  static const adminAcORated = 'admin.ac.o.rated';
-  /// Rated {n}★ · manager call asked
-  static const adminAcORatedCall = 'admin.ac.o.rated_call';
-  /// Call back later
-  static const adminAcOCallBack = 'admin.ac.o.call_back';
-  /// Call back {time}
-  static const adminAcOCallBackAt = 'admin.ac.o.call_back_at';
-  /// Voicemail + SMS sent
-  static const adminAcOVoicemailSms = 'admin.ac.o.voicemail_sms';
-  /// No answer
-  static const adminAcONoAnswer = 'admin.ac.o.no_answer';
-  /// Opted out
-  static const adminAcOOptedOut = 'admin.ac.o.opted_out';
-  /// Wrong person
-  static const adminAcOWrongPerson = 'admin.ac.o.wrong_person';
-  /// Skipped · do-not-call list
-  static const adminAcOSkippedDnd = 'admin.ac.o.skipped_dnd';
-  /// Failed · provider down → SMS sent
-  static const adminAcOFailedSms = 'admin.ac.o.failed_sms';
-  /// No voice provider → SMS sent
-  static const adminAcONoProviderSms = 'admin.ac.o.no_provider_sms';
-  /// No call credits → SMS sent
-  static const adminAcONoCreditsSms = 'admin.ac.o.no_credits_sms';
-  /// Nothing sent
-  static const adminAcONotSent = 'admin.ac.o.not_sent';
-  /// Changed the AI call settings
-  static const adminAuAStaffAiCallSettingsUpdated = 'admin.au.a.staff.ai_call_settings_updated';
-  /// Changed the AI call script
-  static const adminAuAStaffAiCallScriptUpdated = 'admin.au.a.staff.ai_call_script_updated';
-  /// Made a test AI call
-  static const adminAuAStaffAiCallTest = 'admin.au.a.staff.ai_call_test';
-  /// Day 0 · Report + rating link
-  static const adminMtTReportReview = 'admin.mt.t.report_review';
-  /// Day 2 · Review reminder
-  static const adminMtTReviewReminder = 'admin.mt.t.review_reminder';
-  /// Day 5 · SMS instead of the call
-  static const adminMtTDay5Sms = 'admin.mt.t.day5_sms';
-  /// Report link (no rating)
-  static const adminMtTReportLink = 'admin.mt.t.report_link';
-  /// Sent when a manager approves a report and asks for a rating.
-  static const adminMtWhenReportReview = 'admin.mt.when.report_review';
-  /// Sent on Day 2 when the customer hasn’t rated yet.
-  static const adminMtWhenReviewReminder = 'admin.mt.when.review_reminder';
-  /// Sent on Day 5 instead of the AI call (no voice provider, or after a voicemail).
-  static const adminMtWhenDay5Sms = 'admin.mt.when.day5_sms';
-  /// Sent when a report is shared without asking for a rating, and when a customer asks for a new link.
-  static const adminMtWhenReportLink = 'admin.mt.when.report_link';
-  /// SMS
-  static const adminMtChSms = 'admin.mt.ch.sms';
-  /// WhatsApp
-  static const adminMtChWhatsapp = 'admin.mt.ch.whatsapp';
-  /// Email
-  static const adminMtChEmail = 'admin.mt.ch.email';
-  /// Some languages need a check
-  static const adminMtSomeReview = 'admin.mt.some_review';
-  /// Edits apply to every company from the next message.
-  static const adminMtListNote = 'admin.mt.list_note';
-  /// Checked
-  static const adminMtStChecked = 'admin.mt.st.checked';
-  /// Edited by KaamNishaan
-  static const adminMtStEdited = 'admin.mt.st.edited';
-  /// Needs a native speaker’s check
-  static const adminMtStReview = 'admin.mt.st.review';
-  /// Channel
-  static const adminMtChannel = 'admin.mt.channel';
-  /// Language
-  static const adminMtLanguage = 'admin.mt.language';
-  /// Languages
-  static const adminMtLanguages = 'admin.mt.languages';
-  /// Not published yet
-  static const adminMtUnsaved = 'admin.mt.unsaved';
-  /// In India every SMS must match a template registered on the DLT portal. Register a changed text there first, or the SMS won’t be delivered.
-  static const adminMtDlt = 'admin.mt.dlt';
-  /// WhatsApp texts must be approved by Meta as a template before they can be sent. Submit a changed text for approval first.
-  static const adminMtMeta = 'admin.mt.meta';
-  /// SMS isn’t connected yet: messages are only logged, not delivered.
-  static const adminMtNotLiveSms = 'admin.mt.not_live.sms';
-  /// WhatsApp isn’t connected yet: messages are only logged, not delivered.
-  static const adminMtNotLiveWhatsapp = 'admin.mt.not_live.whatsapp';
-  /// Email isn’t switched on yet: emails are only logged, not delivered.
-  static const adminMtNotLiveEmail = 'admin.mt.not_live.email';
-  /// Subject
-  static const adminMtSubject = 'admin.mt.subject';
-  /// Message
-  static const adminMtMessage = 'admin.mt.message';
-  /// {n} of {max} characters with a real link · 1 SMS · the STOP line is added for you
-  static const adminMtCountOne = 'admin.mt.count_one';
-  /// {n} characters with a real link · {parts} SMS (costs {parts}×) · the STOP line is added for you
-  static const adminMtCount = 'admin.mt.count';
-  /// {n} characters · the STOP line is added for you
-  static const adminMtCountWa = 'admin.mt.count_wa';
-  /// Plain text. Empty lines start a new paragraph.
-  static const adminMtEmailNote = 'admin.mt.email_note';
-  /// Insert at the cursor
-  static const adminMtInsert = 'admin.mt.insert';
-  /// Preview · {company} → {customer}
-  static const adminMtPreview = 'admin.mt.preview';
-  /// {lang} ✓
-  static const adminMtLangOk = 'admin.mt.lang_ok';
-  /// {lang} · review
-  static const adminMtLangReview = 'admin.mt.lang_review';
-  /// Publish
-  static const adminMtPublish = 'admin.mt.publish';
-  /// Published. The next messages use this text.
-  static const adminMtPublished = 'admin.mt.published';
-  /// Fix the message to publish it.
-  static const adminMtFix = 'admin.mt.fix';
-  /// Discard changes
-  static const adminMtDiscard = 'admin.mt.discard';
-  /// Mark as checked
-  static const adminMtMarkChecked = 'admin.mt.mark_checked';
-  /// Marked as checked.
-  static const adminMtCheckedDone = 'admin.mt.checked_done';
-  /// Back to the built-in text
-  static const adminMtReset = 'admin.mt.reset';
-  /// Back to the built-in text.
-  static const adminMtResetDone = 'admin.mt.reset_done';
-  /// Write the message.
-  static const adminMtERequired = 'admin.mt.e.required';
-  /// Too long.
-  static const adminMtETooLong = 'admin.mt.e.too_long';
-  /// Use only the placeholders below.
-  static const adminMtEUnknownPlaceholder = 'admin.mt.e.unknown_placeholder';
-  /// Keep {{link}} so the customer can open it.
-  static const adminMtENeedsLink = 'admin.mt.e.needs_link';
-  /// Leave out the STOP line; it is added for you.
-  static const adminMtEStopAddedAutomatically = 'admin.mt.e.stop_added_automatically';
-  /// Send test
-  static const adminMtTest = 'admin.mt.test';
-  /// Send a test
-  static const adminMtTestTitle = 'admin.mt.test_title';
-  /// The text on screen, filled with sample values, goes to you.
-  static const adminMtTestBody = 'admin.mt.test_body';
-  /// Your phone number
-  static const adminMtTestPhone = 'admin.mt.test_phone';
-  /// Your email
-  static const adminMtTestEmail = 'admin.mt.test_email';
-  /// Send
-  static const adminMtTestGo = 'admin.mt.test_go';
-  /// Test sent to {to}.
-  static const adminMtTestSent = 'admin.mt.test_sent';
-  /// Not really sent to {to}: this channel isn’t connected yet. It was logged on the server.
-  static const adminMtTestLogged = 'admin.mt.test_logged';
-  /// Enter a full phone number or email.
-  static const adminMtTestBadTo = 'admin.mt.test_bad_to';
-  /// Published a message template
-  static const adminAuAStaffTemplateUpdated = 'admin.au.a.staff.template_updated';
-  /// Marked a message template as checked
-  static const adminAuAStaffTemplateChecked = 'admin.au.a.staff.template_checked';
-  /// Reset a message template
-  static const adminAuAStaffTemplateReset = 'admin.au.a.staff.template_reset';
-  /// Message template
-  static const adminAuTMessageTemplate = 'admin.au.t.message_template';
-  /// Export
-  static const adminCrExport = 'admin.cr.export';
-  /// Save rules
-  static const adminCrSave = 'admin.cr.save';
-  /// Saved. Message and call prices apply from the next one; plan credits from each company’s next month.
-  static const adminCrSaved = 'admin.cr.saved';
-  /// Fix the highlighted numbers to save.
-  static const adminCrFix = 'admin.cr.fix';
-  /// Credits used (30 d)
-  static const adminCrKUsed = 'admin.cr.k_used';
-  /// {pct} of included
-  static const adminCrKUsedSub = 'admin.cr.k_used_sub';
-  /// Extra credits added (30 d)
-  static const adminCrKTopups = 'admin.cr.k_topups';
-  /// {n} packs bought · no payments yet
-  static const adminCrKTopupsSub = 'admin.cr.k_topups_sub';
-  /// Messages and calls (30 d)
-  static const adminCrKSent = 'admin.cr.k_sent';
-  /// {sms} SMS · {wa} WhatsApp · {calls} calls
-  static const adminCrKSentSub = 'admin.cr.k_sent_sub';
-  /// Companies out of credits
-  static const adminCrKOut = 'admin.cr.k_out';
-  /// {n} reminders paused
-  static const adminCrKOutSub = 'admin.cr.k_out_sub';
-  /// Credit rules
-  static const adminCrRules = 'admin.cr.rules';
-  /// SMS message
-  static const adminCrRuleSms = 'admin.cr.rule.sms';
-  /// WhatsApp message
-  static const adminCrRuleWhatsapp = 'admin.cr.rule.whatsapp';
-  /// AI review call (up to 3 min)
-  static const adminCrRuleAiCall = 'admin.cr.rule.ai_call';
-  /// Email
-  static const adminCrRuleEmail = 'admin.cr.rule.email';
-  /// credits
-  static const adminCrCreditsUnit = 'admin.cr.credits_unit';
-  /// Free
-  static const adminCrFree = 'admin.cr.free';
-  /// Credits roll over
-  static const adminCrRollover = 'admin.cr.rollover';
-  /// No · reset monthly (extra credits stay)
-  static const adminCrRolloverV = 'admin.cr.rollover_v';
-  /// At 0 credits
-  static const adminCrAtZero = 'admin.cr.at_zero';
-  /// Pause reminders and AI calls
-  static const adminCrZPause = 'admin.cr.z.pause';
-  /// They go when credits are back. Always on.
-  static const adminCrZPauseHint = 'admin.cr.z.pause_hint';
-  /// Keep rating links in emails
-  static const adminCrZEmail = 'admin.cr.z.email';
-  /// Email is free. Always on.
-  static const adminCrZEmailHint = 'admin.cr.z.email_hint';
-  /// Email owner at 80% and 100%
-  static const adminCrZWarn = 'admin.cr.z.warn';
-  /// Needs an email service, which isn’t set up yet. Owners see it in the app.
-  static const adminCrZWarnHint = 'admin.cr.z.warn_hint';
-  /// Included per plan
-  static const adminCrPerPlan = 'admin.cr.per_plan';
-  /// {n} companies
-  static const adminCrCompanies = 'admin.cr.companies';
-  /// 1 company
-  static const adminCrCompaniesOne = 'admin.cr.companies_one';
-  /// No limit
-  static const adminCrNoLimit = 'admin.cr.no_limit';
-  /// / month
-  static const adminCrPerMonth = 'admin.cr.per_month';
-  /// Leave empty for no limit. A new amount applies from each company’s next month.
-  static const adminCrPlanNote = 'admin.cr.plan_note';
-  /// Top-up packs
-  static const adminCrPacks = 'admin.cr.packs';
-  /// {n} for {price}
-  static const adminCrPack = 'admin.cr.pack';
-  /// Search company
-  static const adminCrSearch = 'admin.cr.search';
-  /// No companies yet.
-  static const adminCrNone = 'admin.cr.none';
-  /// No company matches.
-  static const adminCrNoneMatch = 'admin.cr.none_match';
-  /// Company
-  static const adminCrCCompany = 'admin.cr.c_company';
-  /// Plan
-  static const adminCrCPlan = 'admin.cr.c_plan';
-  /// Included
-  static const adminCrCIncluded = 'admin.cr.c_included';
-  /// Used this month
-  static const adminCrCUsed = 'admin.cr.c_used';
-  /// Extra credits
-  static const adminCrCTopups = 'admin.cr.c_topups';
-  /// Status
-  static const adminCrCStatus = 'admin.cr.c_status';
-  /// {n} top-ups
-  static const adminCrTopups = 'admin.cr.topups';
-  /// 1 top-up
-  static const adminCrTopupsOne = 'admin.cr.topups_one';
-  /// {n} left
-  static const adminCrLeft = 'admin.cr.left';
-  /// OK
-  static const adminCrStOk = 'admin.cr.st.ok';
-  /// {pct} used
-  static const adminCrStLow = 'admin.cr.st.low';
-  /// Out of credits · paused
-  static const adminCrStOut = 'admin.cr.st.out';
-  /// No limit
-  static const adminCrStUnlimited = 'admin.cr.st.unlimited';
-  /// Adjust
-  static const adminCrAdjust = 'admin.cr.adjust';
-  /// Adjust credits · {company}
-  static const adminCrAdjustTitle = 'admin.cr.adjust_title';
-  /// Add extra credits (for example as a goodwill gift), or take some back with a minus sign. Extra credits stay until used. It has {n} now.
-  static const adminCrAdjustBody = 'admin.cr.adjust_body';
-  /// Credits (+ or −)
-  static const adminCrAdjustCredits = 'admin.cr.adjust_credits';
-  /// Save
-  static const adminCrAdjustGo = 'admin.cr.adjust_go';
-  /// Credits changed for {company}.
-  static const adminCrAdjusted = 'admin.cr.adjusted';
-  /// Enter a whole number other than 0, e.g. 500 or -100.
-  static const adminCrENumber = 'admin.cr.e.number';
-  /// It only has {n} extra credits to take back.
-  static const adminCrENotEnough = 'admin.cr.e.not_enough';
-  /// Changed the credit rules
-  static const adminAuAStaffCreditRulesUpdated = 'admin.au.a.staff.credit_rules_updated';
-  /// Adjusted a company’s credits
-  static const adminAuAStaffCreditsAdjusted = 'admin.au.a.staff.credits_adjusted';
-  /// Credits list
-  static const adminAuTCredits = 'admin.au.t.credits';
-  /// Save changes
-  static const adminPsSave = 'admin.ps.save';
-  /// Saved. It applies to every company now.
-  static const adminPsSaved = 'admin.ps.saved';
-  /// Fix the highlighted fields to save.
-  static const adminPsFix = 'admin.ps.fix';
-  /// Only a super admin can change platform settings.
-  static const adminPsSuperOnly = 'admin.ps.super_only';
-  /// Maintenance mode is on: nobody can log in or sign up in the apps. The admin panel still works.
-  static const adminPsMaintenanceOn = 'admin.ps.maintenance_on';
-  /// General
-  static const adminPsGeneral = 'admin.ps.general';
-  /// Name and contact shown across the apps and website.
-  static const adminPsGeneralSub = 'admin.ps.general_sub';
-  /// Platform name
-  static const adminPsName = 'admin.ps.name';
-  /// The brand name is part of the apps and can’t be changed here
-  static const adminPsNameLocked = 'admin.ps.name_locked';
-  /// Default country
-  static const adminPsCountry = 'admin.ps.country';
-  /// Picked first on sign-up forms. A company’s currency follows its country.
-  static const adminPsCountryHint = 'admin.ps.country_hint';
-  /// Server setting ({value})
-  static const adminPsServerValue = 'admin.ps.server_value';
-  /// Support email
-  static const adminPsEmail = 'admin.ps.email';
-  /// Support WhatsApp
-  static const adminPsWhatsapp = 'admin.ps.whatsapp';
-  /// Leave a field empty to use the value set on the server (Render).
-  static const adminPsEmptyHint = 'admin.ps.empty_hint';
-  /// Enter a valid email.
-  static const adminPsESupportEmail = 'admin.ps.e.support_email';
-  /// Enter a full phone number.
-  static const adminPsESupportWhatsapp = 'admin.ps.e.support_whatsapp';
-  /// Pick a country from the list.
-  static const adminPsEDefaultCountry = 'admin.ps.e.default_country';
-  /// Enter a number from 2 to 25.
-  static const adminPsEMaxPhotoMb = 'admin.ps.e.max_photo_mb';
-  /// Features
-  static const adminPsFeatures = 'admin.ps.features';
-  /// Turn platform features on or off for every company.
-  static const adminPsFeaturesSub = 'admin.ps.features_sub';
-  /// New company sign-ups
-  static const adminPsFSignups = 'admin.ps.f.signups';
-  /// Owners can start a free trial themselves. When off, only KaamNishaan staff can create companies.
-  static const adminPsFSignupsHint = 'admin.ps.f.signups_hint';
-  /// AI report drafting
-  static const adminPsFAiDrafting = 'admin.ps.f.ai_drafting';
-  /// Drafts reports from photos, checklists and voice. When off, reports use the plain template.
-  static const adminPsFAiDraftingHint = 'admin.ps.f.ai_drafting_hint';
+  static const siteLoginForgot = 'site.login.forgot';
+  /// Too many wrong tries. Try again after {time}, or reset your password.
+  static const siteLoginLocked = 'site.login.locked';
+  /// New to KaamNishaan?
+  static const siteLoginNew = 'site.login.new';
+  /// Use another account
+  static const siteLoginOkAgain = 'site.login.ok_again';
+  /// Your workspace{company} opens in the KaamNishaan app. Log in there with the same email and password.
+  static const siteLoginOkBody = 'site.login.ok_body';
+  /// You’re logged in, {name}
+  static const siteLoginOkTitle = 'site.login.ok_title';
+  /// or
+  static const siteLoginOr = 'site.login.or';
+  /// Log in with phone (technicians)
+  static const siteLoginPhone = 'site.login.phone';
+  /// Technicians log in on the KaamNishaan app with their phone number — no password needed.
+  static const siteLoginPhoneNote = 'site.login.phone_note';
+  /// Log in
+  static const siteLoginSubmit = 'site.login.submit';
+  /// Every job, every photo, every proof.
+  static const siteLoginTagline = 'site.login.tagline';
+  /// Log in
+  static const siteLoginTitle = 'site.login.title';
+  /// Welcome back.
+  static const siteLoginWelcome = 'site.login.welcome';
+  /// Email or password is wrong.
+  static const siteLoginWrong = 'site.login.wrong';
+  /// Email or password is wrong. {n} tries left.
+  static const siteLoginWrongLeft = 'site.login.wrong_left';
   /// AI assistant
-  static const adminPsFAiAssistant = 'admin.ps.f.ai_assistant';
-  /// Chat about jobs in the office app.
-  static const adminPsFAiAssistantHint = 'admin.ps.f.ai_assistant_hint';
-  /// No OpenAI key is set on the server, so AI is off anyway.
-  static const adminPsFNoKey = 'admin.ps.f.no_key';
-  /// Maintenance mode
-  static const adminPsFMaintenance = 'admin.ps.f.maintenance';
-  /// Shows a notice and blocks new logins and sign-ups. The admin panel keeps working.
-  static const adminPsFMaintenanceHint = 'admin.ps.f.maintenance_hint';
-  /// Limits
-  static const adminPsLimits = 'admin.ps.limits';
-  /// Upload limits for every company.
-  static const adminPsLimitsSub = 'admin.ps.limits_sub';
-  /// Max photo size (MB)
-  static const adminPsPhoto = 'admin.ps.photo';
-  /// From 2 to 25. The app shrinks photos before upload, so 12 is plenty.
-  static const adminPsPhotoHint = 'admin.ps.photo_hint';
-  /// Report and technician limits per plan are set in Plans and pricing.
-  static const adminPsLimitsNote = 'admin.ps.limits_note';
-  /// Turn on maintenance mode?
-  static const adminPsConfirmTitle = 'admin.ps.confirm_title';
-  /// Nobody can log in or sign up in the apps until you turn it off. People already logged in can keep working.
-  static const adminPsConfirmBody = 'admin.ps.confirm_body';
-  /// Turn on
-  static const adminPsConfirmGo = 'admin.ps.confirm_go';
-  /// Changed platform settings
-  static const adminAuAStaffPlatformUpdated = 'admin.au.a.staff.platform_updated';
-  /// Turned maintenance mode on
-  static const adminAuAStaffMaintenanceOn = 'admin.au.a.staff.maintenance_on';
-  /// Turned maintenance mode off
-  static const adminAuAStaffMaintenanceOff = 'admin.au.a.staff.maintenance_off';
+  static const siteMenuAssistant = 'site.menu.assistant';
+  /// Before and after
+  static const siteMenuCompare = 'site.menu.compare';
+  /// All features
+  static const siteMenuFeatures = 'site.menu.features';
+  /// How it works
+  static const siteMenuHow = 'site.menu.how';
+  /// AI reports
+  static const siteMenuReports = 'site.menu.reports';
+  /// Close menu
+  static const siteNavClose = 'site.nav.close';
+  /// Book a demo
+  static const siteNavDemo = 'site.nav.demo';
+  /// KaamNishaan home
+  static const siteNavHome = 'site.nav.home';
+  /// Industries
+  static const siteNavIndustries = 'site.nav.industries';
+  /// Log in
+  static const siteNavLogin = 'site.nav.login';
+  /// Menu
+  static const siteNavMenu = 'site.nav.menu';
+  /// Pricing
+  static const siteNavPricing = 'site.nav.pricing';
+  /// Product
+  static const siteNavProduct = 'site.nav.product';
+  /// Start free trial
+  static const siteNavTrial = 'site.nav.trial';
   /// KaamNishaan is down for a short update. Logging in and signing up will work again soon.
   static const siteNoticeMaintenance = 'site.notice.maintenance';
   /// New sign-ups are paused right now. Please contact KaamNishaan support and we’ll set up your company.
   static const siteNoticeSignupsClosed = 'site.notice.signups_closed';
-  /// Save changes
-  static const adminEmSave = 'admin.em.save';
-  /// Saved. Email is still off.
-  static const adminEmSaved = 'admin.em.saved';
-  /// Saved. Emails now go out with these settings. Send a test to check.
-  static const adminEmSavedLive = 'admin.em.saved_live';
-  /// Fix the highlighted fields to save.
-  static const adminEmFix = 'admin.em.fix';
-  /// Only a super admin can change email settings.
-  static const adminEmSuperOnly = 'admin.em.super_only';
-  /// Email is on. Emails go out from {from}.
-  static const adminEmLive = 'admin.em.live';
-  /// Email is off.
-  static const adminEmOffTitle = 'admin.em.off_title';
-  /// Everything still works without it: logins use phone codes, reports go by SMS, WhatsApp or link. Connect an email service below and switch it on when you’re ready.
-  static const adminEmOffBody = 'admin.em.off_body';
-  /// Sender
-  static const adminEmSender = 'admin.em.sender';
-  /// Who customers and teams see emails from.
-  static const adminEmSenderSub = 'admin.em.sender_sub';
-  /// From name
-  static const adminEmFromName = 'admin.em.from_name';
-  /// From email
-  static const adminEmFromEmail = 'admin.em.from_email';
-  /// Email service (SMTP)
-  static const adminEmSmtp = 'admin.em.smtp';
-  /// Any provider works (Brevo, SendGrid, Zoho, Amazon SES…). The password is stored encrypted.
-  static const adminEmSmtpSub = 'admin.em.smtp_sub';
-  /// SMTP host
-  static const adminEmHost = 'admin.em.host';
-  /// Port
-  static const adminEmPort = 'admin.em.port';
-  /// Security
-  static const adminEmSecurity = 'admin.em.security';
-  /// Username
-  static const adminEmUsername = 'admin.em.username';
-  /// Password
-  static const adminEmPassword = 'admin.em.password';
-  /// •••••••• (saved, type to change)
-  static const adminEmPasswordSet = 'admin.em.password_set';
-  /// Remove the saved password
-  static const adminEmPasswordClear = 'admin.em.password_clear';
-  /// Your provider shows these details. Port 587 uses STARTTLS; port 465 uses SSL/TLS.
-  static const adminEmSmtpNote = 'admin.em.smtp_note';
-  /// Emails
-  static const adminEmEmails = 'admin.em.emails';
-  /// What the platform sends by email, in the 5 languages.
-  static const adminEmEmailsSub = 'admin.em.emails_sub';
-  /// Send emails
-  static const adminEmEnabled = 'admin.em.enabled';
-  /// Needs the host and from email above.
-  static const adminEmEnabledHint = 'admin.em.enabled_hint';
-  /// Account emails
-  static const adminEmGAccount = 'admin.em.g.account';
-  /// Confirm email and password reset (link works for 30 minutes).
-  static const adminEmGAccountHint = 'admin.em.g.account_hint';
-  /// Reports to customers
-  static const adminEmGReports = 'admin.em.g.reports';
-  /// The report link, and the rating link with it.
-  static const adminEmGReportsHint = 'admin.em.g.reports_hint';
-  /// Review reminders
-  static const adminEmGReminders = 'admin.em.g.reminders';
-  /// Day 2 reminder when a customer hasn’t rated.
-  static const adminEmGRemindersHint = 'admin.em.g.reminders_hint';
-  /// Team notices
-  static const adminEmGTeam = 'admin.em.g.team';
-  /// To owners and managers, e.g. a customer asked for a new link.
-  static const adminEmGTeamHint = 'admin.em.g.team_hint';
-  /// Fill this in.
-  static const adminEmERequired = 'admin.em.e.required';
-  /// Enter a port from 1 to 65535.
-  static const adminEmEInvalid = 'admin.em.e.invalid';
-  /// Enter a valid email.
-  static const adminEmEValueError = 'admin.em.e.value_error';
-  /// Enter a valid email.
-  static const adminEmEEmail = 'admin.em.e.email';
-  /// Send test email
-  static const adminEmTest = 'admin.em.test';
-  /// Save the settings first.
-  static const adminEmSaveFirst = 'admin.em.save_first';
-  /// Send a test email
-  static const adminEmTestTitle = 'admin.em.test_title';
-  /// Uses the saved settings, even while sending is off, so you can check them first.
-  static const adminEmTestBody = 'admin.em.test_body';
-  /// Send to
-  static const adminEmTestTo = 'admin.em.test_to';
-  /// Send
-  static const adminEmTestGo = 'admin.em.test_go';
-  /// Test email sent to {to}. Check the inbox (and spam).
-  static const adminEmTestSent = 'admin.em.test_sent';
-  /// It didn’t send. The email service said: {reason}
-  static const adminEmTestFailed = 'admin.em.test_failed';
-  /// Changed email settings
-  static const adminAuAStaffEmailSettingsUpdated = 'admin.au.a.staff.email_settings_updated';
-  /// Sent a test email
-  static const adminAuAStaffEmailTest = 'admin.au.a.staff.email_test';
-  /// Roles & permissions
-  static const adminNavRoles = 'admin.nav.roles';
-  /// Allowed
-  static const adminRoYes = 'admin.ro.yes';
-  /// Not allowed
-  static const adminRoNo = 'admin.ro.no';
-  /// Permission
-  static const adminRoCPermission = 'admin.ro.c_permission';
-  /// Super admin
-  static const adminRoColSuperAdmin = 'admin.ro.col.super_admin';
-  /// Owner
-  static const adminRoColOwner = 'admin.ro.col.owner';
-  /// Manager
-  static const adminRoColManager = 'admin.ro.col.manager';
-  /// Technician
-  static const adminRoColTechnician = 'admin.ro.col.technician';
-  /// Customer
-  static const adminRoColCustomer = 'admin.ro.col.customer';
-  /// Admin
-  static const adminRoColAdmin = 'admin.ro.col.admin';
-  /// Support
-  static const adminRoColSupport = 'admin.ro.col.support';
-  /// Technicians
-  static const adminRoNoteTechnicians = 'admin.ro.note.technicians';
-  /// Quick job
-  static const adminRoNoteQuickJob = 'admin.ro.note.quick_job';
-  /// If allowed
-  static const adminRoNoteIfAllowed = 'admin.ro.note.if_allowed';
-  /// Secure link
-  static const adminRoNoteSecureLink = 'admin.ro.note.secure_link';
-  /// Own company
-  static const adminRoNoteOwnCompany = 'admin.ro.note.own_company';
-  /// Platform settings, plans, AI config
-  static const adminRoRowPlatform = 'admin.ro.row.platform';
-  /// Company profile and billing
-  static const adminRoRowCompany = 'admin.ro.row.company';
-  /// Invite or remove users
-  static const adminRoRowUsers = 'admin.ro.row.users';
-  /// Create and assign jobs
-  static const adminRoRowJobs = 'admin.ro.row.jobs';
-  /// Capture photos, checklist, voice
-  static const adminRoRowCapture = 'admin.ro.row.capture';
-  /// Approve or reject reports
-  static const adminRoRowApprove = 'admin.ro.row.approve';
-  /// Share report link
-  static const adminRoRowShare = 'admin.ro.row.share';
-  /// Ask for reviews
-  static const adminRoRowReviews = 'admin.ro.row.reviews';
-  /// Edit checklists
-  static const adminRoRowChecklists = 'admin.ro.row.checklists';
-  /// View report and acknowledge
-  static const adminRoRowViewReport = 'admin.ro.row.view_report';
-  /// Audit logs
-  static const adminRoRowAudit = 'admin.ro.row.audit';
-  /// See every admin page
-  static const adminRoSrowLook = 'admin.ro.srow.look';
-  /// Change companies, users, reviews, credits and templates
-  static const adminRoSrowChange = 'admin.ro.srow.change';
-  /// Platform settings, email and staff accounts
-  static const adminRoSrowPlatform = 'admin.ro.srow.platform';
-  /// Who can do what
-  static const adminRoMatrixTitle = 'admin.ro.matrix_title';
-  /// Read from the rules the server enforces. "If allowed" is a switch each company sets in the app.
-  static const adminRoMatrixSub = 'admin.ro.matrix_sub';
-  /// Admin panel roles
-  static const adminRoStaffTitle = 'admin.ro.staff_title';
-  /// What each KaamNishaan staff role can do here.
-  static const adminRoStaffSub = 'admin.ro.staff_sub';
-  /// Staff accounts
-  static const adminRoPeopleTitle = 'admin.ro.people_title';
-  /// Invite staff, change roles, turn accounts off, or send a new setup link.
-  static const adminRoPeopleSub = 'admin.ro.people_sub';
-  /// Only a super admin can change staff accounts.
-  static const adminRoPeopleView = 'admin.ro.people_view';
-  /// Name
-  static const adminRoCName = 'admin.ro.c_name';
-  /// Role
-  static const adminRoCRole = 'admin.ro.c_role';
-  /// Status
-  static const adminRoCStatus = 'admin.ro.c_status';
-  /// Last login
-  static const adminRoCLogin = 'admin.ro.c_login';
-  /// Actions
-  static const adminRoCActions = 'admin.ro.c_actions';
-  /// (you)
-  static const adminRoYou = 'admin.ro.you';
-  /// Active
-  static const adminRoStActive = 'admin.ro.st.active';
-  /// Invited
-  static const adminRoStInvited = 'admin.ro.st.invited';
-  /// Turned off
-  static const adminRoStDisabled = 'admin.ro.st.disabled';
-  /// Invite staff
-  static const adminRoInvite = 'admin.ro.invite';
-  /// Invite a staff member
-  static const adminRoInviteTitle = 'admin.ro.invite_title';
-  /// You'll get a setup link to share with them. It works for 72 hours.
-  static const adminRoInviteBody = 'admin.ro.invite_body';
-  /// Create setup link
-  static const adminRoInviteSend = 'admin.ro.invite_send';
-  /// Full name
-  static const adminRoFName = 'admin.ro.f_name';
-  /// Work email
-  static const adminRoFEmail = 'admin.ro.f_email';
-  /// Role
-  static const adminRoFRole = 'admin.ro.f_role';
-  /// Everything, including platform settings and staff accounts.
-  static const adminRoRoleHintSuperAdmin = 'admin.ro.role_hint.super_admin';
-  /// Can change companies, users, reviews, credits and templates.
-  static const adminRoRoleHintAdmin = 'admin.ro.role_hint.admin';
-  /// Can look at everything but can't change anything.
-  static const adminRoRoleHintSupport = 'admin.ro.role_hint.support';
-  /// Enter their full name.
-  static const adminRoErrName = 'admin.ro.err.name';
-  /// Enter a valid email.
-  static const adminRoErrEmail = 'admin.ro.err.email';
-  /// This email already has a staff account.
-  static const adminRoErrExists = 'admin.ro.err.exists';
-  /// Keep at least one super admin.
-  static const adminRoErrLastSuperAdmin = 'admin.ro.err.last_super_admin';
-  /// Ask another super admin to change your own account.
-  static const adminRoErrNotYourself = 'admin.ro.err.not_yourself';
-  /// Turn the account back on first.
-  static const adminRoErrStaffDisabled = 'admin.ro.err.staff_disabled';
-  /// Setup link ready
-  static const adminRoLinkTitle = 'admin.ro.link_title';
-  /// Send this link to {name}. They'll set a password and an authenticator app.
-  static const adminRoLinkBody = 'admin.ro.link_body';
-  /// This link is shown only once and works for 72 hours.
-  static const adminRoLinkNote = 'admin.ro.link_note';
-  /// Copy link
-  static const adminRoCopy = 'admin.ro.copy';
-  /// Copied
-  static const adminRoCopied = 'admin.ro.copied';
-  /// Done
-  static const adminRoDone = 'admin.ro.done';
-  /// New setup link
-  static const adminRoNewLink = 'admin.ro.new_link';
-  /// Turn off
-  static const adminRoTurnOff = 'admin.ro.turn_off';
-  /// Turn on
-  static const adminRoTurnOn = 'admin.ro.turn_on';
-  /// Turn off {name}?
-  static const adminRoAskOffTitle = 'admin.ro.ask.off.title';
-  /// They'll be signed out at once and can't log in until you turn the account back on.
-  static const adminRoAskOffBody = 'admin.ro.ask.off.body';
-  /// Turn off
-  static const adminRoAskOffConfirm = 'admin.ro.ask.off.confirm';
-  /// Turn on {name}?
-  static const adminRoAskOnTitle = 'admin.ro.ask.on.title';
-  /// They'll be able to log in again.
-  static const adminRoAskOnBody = 'admin.ro.ask.on.body';
-  /// Turn on
-  static const adminRoAskOnConfirm = 'admin.ro.ask.on.confirm';
-  /// New setup link for {name}?
-  static const adminRoAskLinkTitle = 'admin.ro.ask.link.title';
-  /// Their password and authenticator are cleared and they're signed out. Use this for a lost phone or password.
-  static const adminRoAskLinkBody = 'admin.ro.ask.link.body';
-  /// Create link
-  static const adminRoAskLinkConfirm = 'admin.ro.ask.link.confirm';
-  /// Change {name}'s role?
-  static const adminRoAskRoleTitle = 'admin.ro.ask.role.title';
-  /// {name} will become {role}. It takes effect on their next page load.
-  static const adminRoAskRoleBody = 'admin.ro.ask.role.body';
-  /// Change role
-  static const adminRoAskRoleConfirm = 'admin.ro.ask.role.confirm';
-  /// Operations
-  static const adminNavOperations = 'admin.nav.operations';
-  /// Jobs
-  static const adminNavJobs = 'admin.nav.jobs';
-  /// Search job, customer, technician or J-number
-  static const adminJbSearch = 'admin.jb.search';
-  /// Date
-  static const adminJbFDate = 'admin.jb.f_date';
-  /// Any day
-  static const adminJbDAny = 'admin.jb.d.any';
-  /// Today
-  static const adminJbDToday = 'admin.jb.d.today';
-  /// Yesterday
-  static const adminJbDYesterday = 'admin.jb.d.yesterday';
-  /// Tomorrow
-  static const adminJbDTomorrow = 'admin.jb.d.tomorrow';
-  /// Last 7 days
-  static const adminJbDLast7 = 'admin.jb.d.last7';
-  /// Next 7 days
-  static const adminJbDNext7 = 'admin.jb.d.next7';
-  /// Not assigned
-  static const adminJbStUnassigned = 'admin.jb.st.unassigned';
-  /// Assigned
-  static const adminJbStAssigned = 'admin.jb.st.assigned';
-  /// In progress
-  static const adminJbStInProgress = 'admin.jb.st.in_progress';
-  /// Pending review
-  static const adminJbStInReview = 'admin.jb.st.in_review';
-  /// Changes asked
-  static const adminJbStChangesRequested = 'admin.jb.st.changes_requested';
-  /// Completed
-  static const adminJbStCompleted = 'admin.jb.st.completed';
-  /// Cancelled
-  static const adminJbStCancelled = 'admin.jb.st.cancelled';
-  /// Today {time}
-  static const adminJbTodayAt = 'admin.jb.today_at';
-  /// Yesterday
-  static const adminJbYesterday = 'admin.jb.yesterday';
-  /// Tomorrow
-  static const adminJbTomorrow = 'admin.jb.tomorrow';
-  /// No jobs match
-  static const adminJbEmptyTitle = 'admin.jb.empty_title';
-  /// No jobs yet
-  static const adminJbNoneTitle = 'admin.jb.none_title';
-  /// Jobs appear here as soon as any company creates one.
-  static const adminJbNoneBody = 'admin.jb.none_body';
-  /// Job
-  static const adminJbCJob = 'admin.jb.c_job';
-  /// Company
-  static const adminJbCCompany = 'admin.jb.c_company';
-  /// Technician
-  static const adminJbCTech = 'admin.jb.c_tech';
-  /// Status
-  static const adminJbCStatus = 'admin.jb.c_status';
-  /// Proof
-  static const adminJbCProof = 'admin.jb.c_proof';
-  /// When
-  static const adminJbCWhen = 'admin.jb.c_when';
-  /// Quick job
-  static const adminJbQuick = 'admin.jb.quick';
-  /// Not assigned
-  static const adminJbNobody = 'admin.jb.nobody';
-  /// {done} of {total}
-  static const adminJbProofOf = 'admin.jb.proof_of';
-  /// Someone
-  static const adminJbSomeone = 'admin.jb.someone';
-  /// Job created by {who}
-  static const adminJbTlCreated = 'admin.jb.tl.created';
-  /// Quick job started by {who}
-  static const adminJbTlCreatedQuick = 'admin.jb.tl.created_quick';
-  /// Assigned to {name}
-  static const adminJbTlAssigned = 'admin.jb.tl.assigned';
-  /// Unassigned by {who}
-  static const adminJbTlUnassigned = 'admin.jb.tl.unassigned';
-  /// Started on site by {who}
-  static const adminJbTlStarted = 'admin.jb.tl.started';
-  /// Job details changed by {who}
-  static const adminJbTlEdited = 'admin.jb.tl.edited';
-  /// Cancelled by {who}
-  static const adminJbTlCancelled = 'admin.jb.tl.cancelled';
-  /// Cancelled by {who}: {why}
-  static const adminJbTlCancelledWhy = 'admin.jb.tl.cancelled_why';
-  /// Before photos ({n})
-  static const adminJbTlPhotosBefore = 'admin.jb.tl.photos_before';
-  /// During photos ({n})
-  static const adminJbTlPhotosDuring = 'admin.jb.tl.photos_during';
-  /// After photos ({n})
-  static const adminJbTlPhotosAfter = 'admin.jb.tl.photos_after';
-  /// Voice notes ({n})
-  static const adminJbTlVoice = 'admin.jb.tl.voice';
-  /// Report sent for review by {who}
-  static const adminJbTlSubmitted = 'admin.jb.tl.submitted';
-  /// Changes asked by {who}
-  static const adminJbTlChanges = 'admin.jb.tl.changes';
-  /// Report approved by {who}
-  static const adminJbTlApproved = 'admin.jb.tl.approved';
-  /// Report sent to the customer
-  static const adminJbTlShared = 'admin.jb.tl.shared';
-  /// Customer confirmed the report ({who})
-  static const adminJbTlAcknowledged = 'admin.jb.tl.acknowledged';
-  /// All jobs
-  static const adminJbBack = 'admin.jb.back';
-  /// This job doesn't exist or was deleted.
-  static const adminJbNotFound = 'admin.jb.not_found';
-  /// Customer
-  static const adminJbCustomer = 'admin.jb.customer';
-  /// Address
-  static const adminJbAddress = 'admin.jb.address';
-  /// Technician
-  static const adminJbTechnician = 'admin.jb.technician';
-  /// Scheduled
-  static const adminJbScheduled = 'admin.jb.scheduled';
-  /// Not scheduled
-  static const adminJbNotScheduled = 'admin.jb.not_scheduled';
-  /// {n} min
-  static const adminJbMinutes = 'admin.jb.minutes';
-  /// Checklist
-  static const adminJbChecklist = 'admin.jb.checklist';
-  /// {name} · {done} of {total}
-  static const adminJbClLine = 'admin.jb.cl_line';
-  /// No checklist
-  static const adminJbNoChecklist = 'admin.jb.no_checklist';
-  /// Completed
-  static const adminJbCompleted = 'admin.jb.completed';
-  /// Why cancelled
-  static const adminJbCancelReason = 'admin.jb.cancel_reason';
-  /// Where
-  static const adminJbWhere = 'admin.jb.where';
-  /// No address
-  static const adminJbNoAddress = 'admin.jb.no_address';
-  /// Not started yet.
-  static const adminJbNotStarted = 'admin.jb.not_started';
-  /// Started, but the phone didn't share its location.
-  static const adminJbNoStartGps = 'admin.jb.no_start_gps';
-  /// Started with location on.
-  static const adminJbStartedGps = 'admin.jb.started_gps';
-  /// Started {m} m from the site.
-  static const adminJbStartedNear = 'admin.jb.started_near';
-  /// Started {m} m from the site — check this.
-  static const adminJbStartedFar = 'admin.jb.started_far';
-  /// Open site in Maps
-  static const adminJbMapSite = 'admin.jb.map_site';
-  /// Open start point in Maps
-  static const adminJbMapStart = 'admin.jb.map_start';
-  /// Proof
-  static const adminJbProof = 'admin.jb.proof';
-  /// Before {n}
-  static const adminJbPhBefore = 'admin.jb.ph.before';
-  /// During {n}
-  static const adminJbPhDuring = 'admin.jb.ph.during';
-  /// After {n}
-  static const adminJbPhAfter = 'admin.jb.ph.after';
-  /// Voice notes {n}
-  static const adminJbPhVoice = 'admin.jb.ph.voice';
-  /// Report
-  static const adminJbReport = 'admin.jb.report';
-  /// No report yet.
-  static const adminJbNoReport = 'admin.jb.no_report';
-  /// Being written
-  static const adminJbRsGenerating = 'admin.jb.rs.generating';
-  /// Writing failed
-  static const adminJbRsGenerationFailed = 'admin.jb.rs.generation_failed';
-  /// Draft
-  static const adminJbRsDraft = 'admin.jb.rs.draft';
-  /// Waiting for approval
-  static const adminJbRsPendingReview = 'admin.jb.rs.pending_review';
-  /// Changes asked
-  static const adminJbRsChangesRequested = 'admin.jb.rs.changes_requested';
-  /// Approved
-  static const adminJbRsApproved = 'admin.jb.rs.approved';
-  /// Sent to customer
-  static const adminJbRsShared = 'admin.jb.rs.shared';
-  /// Confirmed by customer
-  static const adminJbRsAcknowledged = 'admin.jb.rs.acknowledged';
-  /// {n} change requests
-  static const adminJbChangesN = 'admin.jb.changes_n';
-  /// Opened {n} times
-  static const adminJbOpenedN = 'admin.jb.opened_n';
-  /// Customer confirmed
-  static const adminJbAcked = 'admin.jb.acked';
-  /// Timeline
-  static const adminJbTimeline = 'admin.jb.timeline';
-  /// Evidence review
-  static const adminNavEvidence = 'admin.nav.evidence';
-  /// See all photos
-  static const adminJbSeePhotos = 'admin.jb.see_photos';
-  /// Before
-  static const adminEvStageBefore = 'admin.ev.stage.before';
-  /// During
-  static const adminEvStageDuring = 'admin.ev.stage.during';
-  /// After
-  static const adminEvStageAfter = 'admin.ev.stage.after';
-  /// Flagged
-  static const adminEvFlagged = 'admin.ev.flagged';
-  /// Same photo used twice
-  static const adminEvCkDuplicate = 'admin.ev.ck.duplicate';
-  /// No GPS
-  static const adminEvCkNoGps = 'admin.ev.ck.no_gps';
-  /// Far from site
-  static const adminEvCkFar = 'admin.ev.ck.far';
-  /// Taken before the job
-  static const adminEvCkEarly = 'admin.ev.ck.early';
-  /// Photo
-  static const adminEvPhoto = 'admin.ev.photo';
-  /// Close
-  static const adminEvClose = 'admin.ev.close';
-  /// {stage} photo for {job}
-  static const adminEvAlt = 'admin.ev.alt';
-  /// Flagged by {who} · {when}
-  static const adminEvFlagBy = 'admin.ev.flag_by';
-  /// Job
-  static const adminEvJob = 'admin.ev.job';
-  /// Company
-  static const adminEvCompany = 'admin.ev.company';
-  /// Taken
-  static const adminEvTaken = 'admin.ev.taken';
-  /// Job created
-  static const adminEvJobCreated = 'admin.ev.job_created';
-  /// Location
-  static const adminEvPlace = 'admin.ev.place';
-  /// The phone didn't share its location
-  static const adminEvNoGps = 'admin.ev.no_gps';
-  /// GPS on
-  static const adminEvGpsOn = 'admin.ev.gps_on';
-  /// {m} m from the site
-  static const adminEvFromSite = 'admin.ev.from_site';
-  /// File
-  static const adminEvFile = 'admin.ev.file';
-  /// locked
-  static const adminEvLocked = 'admin.ev.locked';
-  /// Fingerprint
-  static const adminEvFingerprint = 'admin.ev.fingerprint';
-  /// The same file is on {n} other photo(s)
-  static const adminEvTwins = 'admin.ev.twins';
-  /// Remove flag
-  static const adminEvUnflag = 'admin.ev.unflag';
-  /// Flag for support
-  static const adminEvFlag = 'admin.ev.flag';
-  /// Flag this photo for support
-  static const adminEvFlagTitle = 'admin.ev.flag_title';
-  /// Only KaamNishaan staff see this flag. Say what looks wrong.
-  static const adminEvFlagBody = 'admin.ev.flag_body';
-  /// What looks wrong?
-  static const adminEvFlagNote = 'admin.ev.flag_note';
-  /// {n} photos need a look
-  static const adminEvNeeds = 'admin.ev.needs';
-  /// Show them
-  static const adminEvShow = 'admin.ev.show';
-  /// Photos from one job:
-  static const adminEvOneJob = 'admin.ev.one_job';
-  /// Search job, customer, company or J-number
-  static const adminEvSearch = 'admin.ev.search';
-  /// Stage
-  static const adminEvFStage = 'admin.ev.f_stage';
-  /// Checks
-  static const adminEvFFlag = 'admin.ev.f_flag';
-  /// Any
-  static const adminEvFAny = 'admin.ev.f_any';
-  /// Needs a look
-  static const adminEvFNeedsLook = 'admin.ev.f.needs_look';
-  /// Flagged by staff
-  static const adminEvFStaff = 'admin.ev.f.staff';
-  /// Same photo used twice
-  static const adminEvFDuplicate = 'admin.ev.f.duplicate';
-  /// No GPS
-  static const adminEvFNoGps = 'admin.ev.f.no_gps';
-  /// Far from site (over 500 m)
-  static const adminEvFFar = 'admin.ev.f.far';
-  /// Taken before the job
-  static const adminEvFEarly = 'admin.ev.f.early';
-  /// No problems found
-  static const adminEvFClean = 'admin.ev.f.clean';
-  /// No photos match
-  static const adminEvEmptyTitle = 'admin.ev.empty_title';
-  /// No photos yet
-  static const adminEvNoneTitle = 'admin.ev.none_title';
-  /// Photos appear here as soon as technicians take them.
-  static const adminEvNoneBody = 'admin.ev.none_body';
-  /// Still processing
-  static const adminEvProcessing = 'admin.ev.processing';
-  /// GPS ✓
-  static const adminEvGpsYes = 'admin.ev.gps_yes';
-  /// No GPS
-  static const adminEvGpsNo = 'admin.ev.gps_no';
-  /// Reports
-  static const adminNavReports = 'admin.nav.reports';
-  /// Search report, job, customer or company
-  static const adminRpSearch = 'admin.rp.search';
-  /// Language
-  static const adminRpFLanguage = 'admin.rp.f_language';
-  /// Passed
-  static const adminRpCkPassed = 'admin.rp.ck.passed';
-  /// {n} check(s) failed
-  static const adminRpCkFailedCheck = 'admin.rp.ck.failed_check';
-  /// Missing proof ({n})
-  static const adminRpCkMissingEvidence = 'admin.rp.ck.missing_evidence';
-  /// Invented work ({n})
-  static const adminRpCkUnsupportedClaim = 'admin.rp.ck.unsupported_claim';
-  /// Report
-  static const adminRpCReport = 'admin.rp.c_report';
-  /// Company
-  static const adminRpCCompany = 'admin.rp.c_company';
-  /// Language
-  static const adminRpCLanguage = 'admin.rp.c_language';
-  /// AI check
-  static const adminRpCCheck = 'admin.rp.c_check';
-  /// Status
-  static const adminRpCStatus = 'admin.rp.c_status';
-  /// Sent
-  static const adminRpCSent = 'admin.rp.c_sent';
-  /// No reports match
-  static const adminRpEmptyTitle = 'admin.rp.empty_title';
-  /// No reports yet
-  static const adminRpNoneTitle = 'admin.rp.none_title';
-  /// Reports appear here as soon as technicians make them.
-  static const adminRpNoneBody = 'admin.rp.none_body';
-  /// All reports
-  static const adminRpBack = 'admin.rp.back';
-  /// This report doesn't exist.
-  static const adminRpNotFound = 'admin.rp.not_found';
-  /// Drafted by AI
-  static const adminRpByAi = 'admin.rp.by.ai';
-  /// Made from the template
-  static const adminRpByTemplate = 'admin.rp.by.template';
-  /// {by} · edited by {who}
-  static const adminRpEdited = 'admin.rp.edited';
-  /// No text yet.
-  static const adminRpNoText = 'admin.rp.no_text';
-  /// Summary
-  static const adminRpSecSummary = 'admin.rp.sec.summary';
-  /// Work done
-  static const adminRpSecWorkDone = 'admin.rp.sec.work_done';
-  /// Advice
-  static const adminRpSecAdvice = 'admin.rp.sec.advice';
-  /// AI checks
-  static const adminRpAiChecks = 'admin.rp.ai_checks';
-  /// Not checked yet — the report is still being written or failed.
-  static const adminRpNotChecked = 'admin.rp.not_checked';
-  /// Every sentence linked to proof
-  static const adminRpAllLinked = 'admin.rp.all_linked';
-  /// {n} of {total} sentences linked to proof
-  static const adminRpLinked = 'admin.rp.linked';
-  /// Checklist {n} of {total} passed
-  static const adminRpChecklist = 'admin.rp.checklist';
-  /// No invented work found
-  static const adminRpNoInvented = 'admin.rp.no_invented';
-  /// {n} sentence(s) with no proof behind them
-  static const adminRpInvented = 'admin.rp.invented';
-  /// Prompt: report-draft v{v} · {tokens} tokens · {cost}
-  static const adminRpPrompt = 'admin.rp.prompt';
-  /// Steps
-  static const adminRpSteps = 'admin.rp.steps';
-  /// Report made
-  static const adminRpStCreated = 'admin.rp.st.created';
-  /// Sent for approval
-  static const adminRpStSubmitted = 'admin.rp.st.submitted';
-  /// Changes asked: {why}
-  static const adminRpStChanges = 'admin.rp.st.changes';
-  /// Approved
-  static const adminRpStApproved = 'admin.rp.st.approved';
-  /// Sent to the customer
-  static const adminRpStShared = 'admin.rp.st.shared';
-  /// Confirmed by the customer
-  static const adminRpStAcknowledged = 'admin.rp.st.acknowledged';
-  /// missing photos
-  static const adminRpReasonMissingPhotos = 'admin.rp.reason.missing_photos';
-  /// wrong details
-  static const adminRpReasonWrongDetails = 'admin.rp.reason.wrong_details';
-  /// unclear text
-  static const adminRpReasonUnclearText = 'admin.rp.reason.unclear_text';
-  /// failed checks not explained
-  static const adminRpReasonFailedCheckNotExplained = 'admin.rp.reason.failed_check_not_explained';
-  /// other
-  static const adminRpReasonOther = 'admin.rp.reason.other';
-  /// Customer links
-  static const adminRpLinks = 'admin.rp.links';
-  /// Not sent to the customer yet.
-  static const adminRpNoLinks = 'admin.rp.no_links';
-  /// SMS
-  static const adminRpChSms = 'admin.rp.ch.sms';
-  /// WhatsApp
-  static const adminRpChWhatsapp = 'admin.rp.ch.whatsapp';
-  /// Email
-  static const adminRpChEmail = 'admin.rp.ch.email';
-  /// Copied link
-  static const adminRpChCopy = 'admin.rp.ch.copy';
-  /// Turned off
-  static const adminRpRevoked = 'admin.rp.revoked';
-  /// Works until {when}
-  static const adminRpUntil = 'admin.rp.until';
-  /// Opened {n} times · last {when}
-  static const adminRpOpens = 'admin.rp.opens';
-  /// Not opened yet
-  static const adminRpNotOpened = 'admin.rp.not_opened';
-  /// Download PDF
-  static const adminRpPdf = 'admin.rp.pdf';
-  /// Revenue
-  static const adminNavRevenue = 'admin.nav.revenue';
-  /// Subscriptions
-  static const adminNavSubscriptions = 'admin.nav.subscriptions';
-  /// Plans & pricing
-  static const adminNavPlans = 'admin.nav.plans';
-  /// Payments
-  static const adminNavPayments = 'admin.nav.payments';
-  /// Monthly revenue
-  static const adminSbMrr = 'admin.sb.mrr';
-  /// Plan price of every active company
-  static const adminSbMrrNote = 'admin.sb.mrr_note';
-  /// Paying companies
-  static const adminSbPaying = 'admin.sb.paying';
-  /// {n} on Free
-  static const adminSbOnFree = 'admin.sb.on_free';
-  /// Trials
-  static const adminSbTrials = 'admin.sb.trials';
-  /// {n} end this week
-  static const adminSbTrialsEnd = 'admin.sb.trials_end';
-  /// Cancelled (30 days)
-  static const adminSbChurn = 'admin.sb.churn';
-  /// {n} past due
-  static const adminSbPastDue = 'admin.sb.past_due';
-  /// Search company or owner
-  static const adminSbSearch = 'admin.sb.search';
-  /// Plan
-  static const adminSbFPlan = 'admin.sb.f_plan';
-  /// Free
-  static const adminSbPlanFree = 'admin.sb.plan.free';
-  /// Starter
-  static const adminSbPlanStarter = 'admin.sb.plan.starter';
-  /// Professional
-  static const adminSbPlanProfessional = 'admin.sb.plan.professional';
-  /// Business
-  static const adminSbPlanBusiness = 'admin.sb.plan.business';
-  /// Enterprise
-  static const adminSbPlanEnterprise = 'admin.sb.plan.enterprise';
-  /// No subscriptions match
-  static const adminSbEmptyTitle = 'admin.sb.empty_title';
-  /// Company
-  static const adminSbCCompany = 'admin.sb.c_company';
-  /// Plan
-  static const adminSbCPlan = 'admin.sb.c_plan';
-  /// Price
-  static const adminSbCPrice = 'admin.sb.c_price';
-  /// Status
-  static const adminSbCStatus = 'admin.sb.c_status';
-  /// Renews
-  static const adminSbCRenews = 'admin.sb.c_renews';
-  /// Seats
-  static const adminSbCSeats = 'admin.sb.c_seats';
-  /// {plan} trial
-  static const adminSbPlanTrial = 'admin.sb.plan_trial';
-  /// {price}/mo
-  static const adminSbPerMonth = 'admin.sb.per_month';
-  /// Trial · {n} days
-  static const adminSbTrialDays = 'admin.sb.trial_days';
-  /// No money is taken yet: revenue is the plan price of active companies. Online payments come in the testing phase.
-  static const adminSbNote = 'admin.sb.note';
-  /// Custom
-  static const adminPlCustom = 'admin.pl.custom';
-  /// New companies start on this plan's trial. Pick another trial plan first.
-  static const adminPlErrTrialPlan = 'admin.pl.err.trial_plan';
-  /// A free plan is free in every currency.
-  static const adminPlErrFreeMismatch = 'admin.pl.err.free_mismatch';
-  /// The trial must be a paid plan shown on the website.
-  static const adminPlErrBadTrialPlan = 'admin.pl.err.bad_trial_plan';
-  /// Check the numbers — something isn't valid.
-  static const adminPlErrInvalid = 'admin.pl.err.invalid';
-  /// An English name is needed.
-  static const adminPlErrName = 'admin.pl.err.name';
-  /// Give a price in every currency, or leave all empty for a custom price.
-  static const adminPlErrPrices = 'admin.pl.err.prices';
-  /// Edit {plan}
-  static const adminPlEditTitle = 'admin.pl.edit_title';
-  /// Changes are live at once: the website, sign-up and every company on this plan.
-  static const adminPlEditBody = 'admin.pl.edit_body';
-  /// Plan name
-  static const adminPlFName = 'admin.pl.f_name';
-  /// Monthly price
-  static const adminPlFPrice = 'admin.pl.f_price';
-  /// Leave all empty for "Custom" (talk to us).
-  static const adminPlFPriceHint = 'admin.pl.f_price_hint';
-  /// Limits
-  static const adminPlFLimits = 'admin.pl.f_limits';
-  /// Leave empty for no limit.
-  static const adminPlFLimitsHint = 'admin.pl.f_limits_hint';
-  /// Technicians
-  static const adminPlLimTechnicianLimit = 'admin.pl.lim.technician_limit';
-  /// Reports per month
-  static const adminPlLimReportLimitMonthly = 'admin.pl.lim.report_limit_monthly';
-  /// Credits per month
-  static const adminPlLimMonthlyCredits = 'admin.pl.lim.monthly_credits';
-  /// AI questions per month
-  static const adminPlLimAiQuestionsMonthly = 'admin.pl.lim.ai_questions_monthly';
-  /// No limit
-  static const adminPlNoLimit = 'admin.pl.no_limit';
-  /// Most popular
-  static const adminPlFPopular = 'admin.pl.f_popular';
-  /// Highlighted on the website. Only one plan can be.
-  static const adminPlFPopularHint = 'admin.pl.f_popular_hint';
-  /// Shown on the website
-  static const adminPlFPublic = 'admin.pl.f_public';
-  /// Hidden plans stay for companies already on them.
-  static const adminPlFPublicHint = 'admin.pl.f_public_hint';
-  /// Save
-  static const adminPlSave = 'admin.pl.save';
-  /// {price} / month
-  static const adminPlMonth = 'admin.pl.month';
-  /// Technicians: {n}
-  static const adminPlLTechs = 'admin.pl.l.techs';
-  /// Unlimited technicians
-  static const adminPlLTechsAny = 'admin.pl.l.techs_any';
-  /// Reports: {n} / month
-  static const adminPlLReports = 'admin.pl.l.reports';
-  /// Fair use reports
-  static const adminPlLFair = 'admin.pl.l.fair';
-  /// AI questions: {n} / month
-  static const adminPlLAi = 'admin.pl.l.ai';
-  /// Unlimited AI questions
-  static const adminPlLAiAny = 'admin.pl.l.ai_any';
-  /// Credits: {n} / month
-  static const adminPlLCredits = 'admin.pl.l.credits';
-  /// Custom credits
-  static const adminPlLCreditsAny = 'admin.pl.l.credits_any';
-  /// Most popular
-  static const adminPlPopular = 'admin.pl.popular';
-  /// {n} companies · {trials} on trial
-  static const adminPlCompanies = 'admin.pl.companies';
-  /// On the website
-  static const adminPlOnSite = 'admin.pl.on_site';
-  /// Edit plan
-  static const adminPlEdit = 'admin.pl.edit';
-  /// Saved
-  static const adminPlSaved = 'admin.pl.saved';
-  /// Preview pricing page
-  static const adminPlPreview = 'admin.pl.preview';
-  /// Prices are in INR and USD. Changes are live at once for the website, sign-up and every company on the plan. No money is charged yet.
-  static const adminPlBanner = 'admin.pl.banner';
-  /// Only a super admin can change plans and prices.
-  static const adminPlBannerView = 'admin.pl.banner_view';
-  /// Free trial
-  static const adminPlTrial = 'admin.pl.trial';
-  /// New companies start here.
-  static const adminPlTrialSub = 'admin.pl.trial_sub';
-  /// Trial plan
-  static const adminPlTrialPlan = 'admin.pl.trial_plan';
-  /// Trial length
-  static const adminPlTrialDays = 'admin.pl.trial_days';
-  /// {n} days
-  static const adminPlDays = 'admin.pl.days';
-  /// Card needed
-  static const adminPlCard = 'admin.pl.card';
-  /// No
-  static const adminPlCardNo = 'admin.pl.card_no';
-  /// No card is asked for until online payments are set up.
-  static const adminPlCardHint = 'admin.pl.card_hint';
-  /// Top-up credit packs
-  static const adminPlPacks = 'admin.pl.packs';
-  /// Extra credits companies can buy (once online payments are on).
-  static const adminPlPacksSub = 'admin.pl.packs_sub';
-  /// {n} credits
-  static const adminPlPack = 'admin.pl.pack';
-  /// Price of {n} credits in {c}
-  static const adminPlPackPrice = 'admin.pl.pack_price';
-  /// On sale
-  static const adminPlPackOn = 'admin.pl.pack_on';
-  /// Online payments aren't connected yet
-  static const adminPmTitle = 'admin.pm.title';
-  /// Payments will run through {provider} once it's set up in the testing phase. Until then nothing is charged, and companies stay on their plan for free.
-  static const adminPmBody = 'admin.pm.body';
-  /// Razorpay (UPI, cards)
-  static const adminPmProviderRazorpay = 'admin.pm.provider.razorpay';
-  /// Every invoice with its company, amount and date
-  static const adminPmWillInvoices = 'admin.pm.will.invoices';
-  /// How each company pays (card, UPI, bank transfer)
-  static const adminPmWillMethods = 'admin.pm.will.methods';
-  /// Failed payments and when they'll be tried again
-  static const adminPmWillFailed = 'admin.pm.will.failed';
-  /// Refunds
-  static const adminPmWillRefunds = 'admin.pm.will.refunds';
-  /// Card details are held by the payment provider. KaamNishaan never stores card numbers.
-  static const adminPmCards = 'admin.pm.cards';
-  /// AI
-  static const adminNavAi = 'admin.nav.ai';
-  /// AI configuration
-  static const adminNavAiConfig = 'admin.nav.ai_config';
-  /// Prompts
-  static const adminNavPrompts = 'admin.nav.prompts';
-  /// Industries
-  static const adminNavIndustries = 'admin.nav.industries';
-  /// The AI key is set on the server. It is never shown here.
-  static const adminAcKeyOn = 'admin.ac.key_on';
-  /// No AI key on the server yet: reports are written from the template, and voice notes wait.
-  static const adminAcKeyOff = 'admin.ac.key_off';
-  /// Only a super admin can change these.
-  static const adminAcViewOnly = 'admin.ac.view_only';
-  /// Models
-  static const adminAcModels = 'admin.ac.models';
-  /// Report writing model
-  static const adminAcTextModel = 'admin.ac.text_model';
-  /// Also used by the assistant and for translations. Called from the server only.
-  static const adminAcTextModelHint = 'admin.ac.text_model_hint';
-  /// Speech to text
-  static const adminAcSpeechModel = 'admin.ac.speech_model';
-  /// Turns technicians' voice notes into text.
-  static const adminAcSpeechModelHint = 'admin.ac.speech_model_hint';
-  /// Photo check model
-  static const adminAcPhotoModel = 'admin.ac.photo_model';
-  /// Photos aren't checked by AI yet. It comes in a later version.
-  static const adminAcPhotoModelHint = 'admin.ac.photo_model_hint';
-  /// Not used yet
-  static const adminAcNotUsed = 'admin.ac.not_used';
-  /// When the AI fails while writing a report
-  static const adminAcFallback = 'admin.ac.fallback';
-  /// The technician sees an error and can try again. Photos and notes are kept.
-  static const adminAcFallbackHintError = 'admin.ac.fallback_hint.error';
-  /// The report is written from the template instead, so the technician isn't stuck.
-  static const adminAcFallbackHintTemplate = 'admin.ac.fallback_hint.template';
-  /// Show an error, try again
-  static const adminAcFbError = 'admin.ac.fb.error';
-  /// Write from the template
-  static const adminAcFbTemplate = 'admin.ac.fb.template';
-  /// Limits and safety
-  static const adminAcLimits = 'admin.ac.limits';
-  /// Monthly AI budget
-  static const adminAcBudget = 'admin.ac.budget';
-  /// No limit · spent this month {spent}
-  static const adminAcBudgetNone = 'admin.ac.budget_none';
-  /// Spent this month {spent} ({pct}%). At the limit, reports are written from the template and the assistant pauses; voice notes keep working.
-  static const adminAcBudgetNow = 'admin.ac.budget_now';
-  /// The budget is used up: reports are written from the template and the assistant is paused until next month.
-  static const adminAcOver = 'admin.ac.over';
-  /// Over 80% of this month's budget is used.
-  static const adminAcNear = 'admin.ac.near';
-  /// Max tokens per report
-  static const adminAcTokens = 'admin.ac.tokens';
-  /// 500 to 16,000. Longer reports cost more.
-  static const adminAcTokensHint = 'admin.ac.tokens_hint';
-  /// Only use evidence from the job
-  static const adminAcEvidence = 'admin.ac.evidence';
-  /// Every sentence is linked to a photo, note or answer.
-  static const adminAcEvidenceHint = 'admin.ac.evidence_hint';
-  /// Flag invented work
-  static const adminAcInvented = 'admin.ac.invented';
-  /// Sentences with no evidence are flagged for the manager before approval.
-  static const adminAcInventedHint = 'admin.ac.invented_hint';
-  /// Remove personal data from prompts
-  static const adminAcMask = 'admin.ac.mask';
-  /// Phone numbers and emails in notes are hidden before sending.
-  static const adminAcMaskHint = 'admin.ac.mask_hint';
-  /// Use customer data to train models
-  static const adminAcTrain = 'admin.ac.train';
-  /// Never — off for all companies.
-  static const adminAcTrainHint = 'admin.ac.train_hint';
-  /// Publish v{v}
-  static const adminPrPublish = 'admin.pr.publish';
-  /// v{v} live
-  static const adminPrVLive = 'admin.pr.v_live';
-  /// Nothing live
-  static const adminPrNoneLive = 'admin.pr.none_live';
-  /// v{v} draft
-  static const adminPrVDraft = 'admin.pr.v_draft';
-  /// Writes the job report
-  static const adminPrTaskReportDraft = 'admin.pr.task.report_draft';
-  /// Answers questions in the app
-  static const adminPrTaskAssistant = 'admin.pr.task.assistant';
-  /// Translates checklists and notes
-  static const adminPrTaskTranslation = 'admin.pr.task.translation';
-  /// Writes the report from the job's photos, checklist answers and notes. The evidence is sent as a separate message.
-  static const adminPrAboutReportDraft = 'admin.pr.about.report_draft';
-  /// Answers owners' and managers' questions about their own jobs.
-  static const adminPrAboutAssistant = 'admin.pr.about.assistant';
-  /// Translates checklist questions and voice notes into the report language.
-  static const adminPrAboutTranslation = 'admin.pr.about.translation';
-  /// System prompt
-  static const adminPrSystem = 'admin.pr.system';
-  /// showing draft v{v}
-  static const adminPrShowingDraft = 'admin.pr.showing_draft';
-  /// showing live v{v}
-  static const adminPrShowingLive = 'admin.pr.showing_live';
-  /// Keep {language} in the prompt — it's filled with the report language.
-  static const adminPrErrLanguage = 'admin.pr.err.language';
-  /// What changed
-  static const adminPrNote = 'admin.pr.note';
-  /// For example: shorter sentences
-  static const adminPrNoteHint = 'admin.pr.note_hint';
-  /// Change note: {note}
-  static const adminPrNoteWas = 'admin.pr.note_was';
-  /// Variables
-  static const adminPrVars = 'admin.pr.vars';
-  /// Filled in when the AI is called. The job's evidence goes in its own message.
-  static const adminPrVarsHint = 'admin.pr.vars_hint';
-  /// Save draft
-  static const adminPrSaveDraft = 'admin.pr.save_draft';
-  /// Edit draft
-  static const adminPrEditDraft = 'admin.pr.edit_draft';
-  /// Start v{v}
-  static const adminPrNewDraft = 'admin.pr.new_draft';
-  /// Discard draft
-  static const adminPrDiscard = 'admin.pr.discard';
-  /// Calls (30 days)
-  static const adminPrRuns = 'admin.pr.runs';
-  /// {ok} ok · {failed} failed
-  static const adminPrRunsV = 'admin.pr.runs_v';
-  /// Avg tokens
-  static const adminPrAvgTokens = 'admin.pr.avg_tokens';
-  /// Avg cost
-  static const adminPrAvgCost = 'admin.pr.avg_cost';
-  /// Versions
-  static const adminPrHistory = 'admin.pr.history';
-  /// Draft
-  static const adminPrStDraft = 'admin.pr.st.draft';
-  /// Live
-  static const adminPrStLive = 'admin.pr.st.live';
-  /// Retired
-  static const adminPrStRetired = 'admin.pr.st.retired';
-  /// Published by {who} · {when}
-  static const adminPrPublished = 'admin.pr.published';
-  /// Edited by {who} · {when}
-  static const adminPrEdited = 'admin.pr.edited';
-  /// KaamNishaan
-  static const adminPrSeed = 'admin.pr.seed';
-  /// {n} reports · {flagged} with invented work
-  static const adminPrUsed = 'admin.pr.used';
-  /// Make live again
-  static const adminPrGoBack = 'admin.pr.go_back';
-  /// Use 3–48 small letters, numbers or dashes.
-  static const adminInErrSlug = 'admin.in.err.slug';
-  /// That industry already exists.
-  static const adminInErrExists = 'admin.in.err.exists';
-  /// Edit {name}
-  static const adminInEditTitle = 'admin.in.edit_title';
-  /// Add industry
-  static const adminInAddTitle = 'admin.in.add_title';
-  /// Name
-  static const adminInFName = 'admin.in.f_name';
-  /// Web address name
-  static const adminInFSlug = 'admin.in.f_slug';
-  /// Can't be changed: companies and checklists use it.
-  static const adminInSlugFixed = 'admin.in.slug_fixed';
-  /// Small letters, numbers and dashes, e.g. pest-control.
-  static const adminInSlugHint = 'admin.in.slug_hint';
-  /// Order in lists
-  static const adminInFSort = 'admin.in.f_sort';
-  /// Offered at sign-up
-  static const adminInFLive = 'admin.in.f_live';
-  /// Hidden industries stay for companies already in them.
-  static const adminInFLiveHint = 'admin.in.f_live_hint';
-  /// Add industry
-  static const adminInAdd = 'admin.in.add';
-  /// Industry
-  static const adminInCIndustry = 'admin.in.c_industry';
-  /// Default checklist
-  static const adminInCChecklist = 'admin.in.c_checklist';
-  /// Ready checklists
-  static const adminInCReady = 'admin.in.c_ready';
-  /// Companies
-  static const adminInCCompanies = 'admin.in.c_companies';
-  /// Status
-  static const adminInCStatus = 'admin.in.c_status';
-  /// {name} · {n} questions
-  static const adminInChecklist = 'admin.in.checklist';
-  /// Not set
-  static const adminInNotSet = 'admin.in.not_set';
-  /// Live
-  static const adminInStLive = 'admin.in.st.live';
-  /// Draft
-  static const adminInStDraft = 'admin.in.st.draft';
-  /// Industry pages on the website come later. Ready-made checklists are managed in Checklist templates.
-  static const adminInNote = 'admin.in.note';
-  /// Help
-  static const helpTitle = 'help.title';
-  /// Ask KaamNishaan support
-  static const helpSubtitle = 'help.subtitle';
-  /// New help request
-  static const helpNew = 'help.new';
-  /// No help requests yet
-  static const helpEmpty = 'help.empty';
-  /// Something not working, or a question? Send us a message and we'll reply here.
-  static const helpEmptyBody = 'help.empty_body';
-  /// Your requests
-  static const helpYourRequests = 'help.your_requests';
-  /// Open
-  static const helpStatusOpen = 'help.status_open';
-  /// Support replied
-  static const helpStatusWaiting = 'help.status_waiting';
-  /// Solved
-  static const helpStatusSolved = 'help.status_solved';
-  /// You
-  static const helpYou = 'help.you';
-  /// KaamNishaan support
-  static const helpSupport = 'help.support';
-  /// Something isn't working
-  static const helpCatProblem = 'help.cat_problem';
-  /// A screen, photo, report or message that doesn't work.
-  static const helpCatProblemHint = 'help.cat_problem_hint';
-  /// A question
-  static const helpCatQuestion = 'help.cat_question';
-  /// How to do something in the app.
-  static const helpCatQuestionHint = 'help.cat_question_hint';
-  /// Plan or billing
-  static const helpCatBilling = 'help.cat_billing';
-  /// Your plan, credits or a payment.
-  static const helpCatBillingHint = 'help.cat_billing_hint';
-  /// An idea
-  static const helpCatFeature = 'help.cat_feature';
-  /// Something you'd like the app to do.
-  static const helpCatFeatureHint = 'help.cat_feature_hint';
-  /// New help request
-  static const helpNewTitle = 'help.new_title';
-  /// Our team reads every message and replies here, usually within one working day.
-  static const helpNewBody = 'help.new_body';
-  /// What is it about?
-  static const helpAbout = 'help.about';
-  /// Subject
-  static const helpSubject = 'help.subject';
-  /// For example: Report stuck on "Making your report"
-  static const helpSubjectHint = 'help.subject_hint';
-  /// Message
-  static const helpMessage = 'help.message';
-  /// What happened? Which job or screen? The more you tell us, the faster we can help.
-  static const helpMessageHint = 'help.message_hint';
-  /// Send
-  static const helpSend = 'help.send';
-  /// Sent. We'll reply here.
-  static const helpSent = 'help.sent';
-  /// Write a short subject (3 letters or more).
-  static const helpErrSubject = 'help.err_subject';
-  /// Tell us a little more (10 letters or more).
-  static const helpErrMessage = 'help.err_message';
-  /// We'll reply here. You'll also get a message in Messages.
-  static const helpNoteOpen = 'help.note_open';
-  /// Support replied. Write back, or tap "It's sorted" if all is well.
-  static const helpNoteWaiting = 'help.note_waiting';
-  /// Marked as sorted. Write again any time to open it.
-  static const helpNoteSolved = 'help.note_solved';
-  /// It's sorted
-  static const helpSolve = 'help.solve';
-  /// Thanks! Marked as sorted.
-  static const helpSolvedToast = 'help.solved_toast';
-  /// Write a reply…
-  static const helpReplyHint = 'help.reply_hint';
-  /// Write to open it again…
-  static const helpReplyReopen = 'help.reply_reopen';
-  /// Send reply
-  static const helpSendReply = 'help.send_reply';
-  /// Support replied
-  static const msgSupportTitle = 'msg.support_title';
-  /// About "{subject}". Tap to read.
-  static const msgSupportBody = 'msg.support_body';
-  /// Help & messages
-  static const adminNavHelp = 'admin.nav.help';
-  /// Support tickets
-  static const adminNavSupport = 'admin.nav.support';
-  /// Notifications
-  static const adminNavNotifications = 'admin.nav.notifications';
-  /// Ticket status
-  static const adminSuTabs = 'admin.su.tabs';
-  /// Open
-  static const adminSuTabOpen = 'admin.su.tab.open';
-  /// Waiting on them
-  static const adminSuTabWaiting = 'admin.su.tab.waiting';
-  /// Solved
-  static const adminSuTabSolved = 'admin.su.tab.solved';
-  /// All
-  static const adminSuTabAll = 'admin.su.tab.all';
-  /// {n} urgent
-  static const adminSuHighN = 'admin.su.high_n';
-  /// Urgent
-  static const adminSuHigh = 'admin.su.high';
-  /// Open · {ago}
-  static const adminSuStOpenFor = 'admin.su.st.open_for';
-  /// Waiting on them
-  static const adminSuStWaiting = 'admin.su.st.waiting';
-  /// Solved
-  static const adminSuStSolved = 'admin.su.st.solved';
-  /// Search ticket, subject or company
-  static const adminSuSearch = 'admin.su.search';
-  /// No open help requests. Nice work.
-  static const adminSuEmptyOpen = 'admin.su.empty_open';
-  /// No tickets match.
-  static const adminSuEmpty = 'admin.su.empty';
-  /// Pick a ticket to read it and reply.
-  static const adminSuPick = 'admin.su.pick';
-  /// All tickets
-  static const adminSuBack = 'admin.su.back';
-  /// Something isn’t working
-  static const adminSuCatProblem = 'admin.su.cat.problem';
-  /// Question
-  static const adminSuCatQuestion = 'admin.su.cat.question';
-  /// Billing
-  static const adminSuCatBilling = 'admin.su.cat.billing';
-  /// Idea
-  static const adminSuCatFeature = 'admin.su.cat.feature';
-  /// Job {n}
-  static const adminSuJob = 'admin.su.job';
-  /// App {v}
-  static const adminSuApp = 'admin.su.app';
-  /// Customer
-  static const adminSuSomeone = 'admin.su.someone';
-  /// Reply from {who}
-  static const adminSuReplyBy = 'admin.su.reply_by';
-  /// Internal note by {who}
-  static const adminSuNoteBy = 'admin.su.note_by';
-  /// Reply
-  static const adminSuReply = 'admin.su.reply';
-  /// Reply
-  static const adminSuTabReply = 'admin.su.tab_reply';
-  /// Internal note
-  static const adminSuTabNote = 'admin.su.tab_note';
-  /// Write your reply…
-  static const adminSuReplyHint = 'admin.su.reply_hint';
-  /// Only staff will see this…
-  static const adminSuNoteHint = 'admin.su.note_hint';
-  /// They’ll see it in the app’s Help and get a message.
-  static const adminSuReplyInfo = 'admin.su.reply_info';
-  /// Not shown to the customer.
-  static const adminSuNoteInfo = 'admin.su.note_info';
-  /// Send reply
-  static const adminSuSend = 'admin.su.send';
-  /// Add note
-  static const adminSuAddNote = 'admin.su.add_note';
-  /// Send and mark solved
-  static const adminSuSendSolve = 'admin.su.send_solve';
-  /// Mark solved
-  static const adminSuMarkSolved = 'admin.su.mark_solved';
-  /// Open again
-  static const adminSuReopen = 'admin.su.reopen';
-  /// Mark urgent
-  static const adminSuMakeHigh = 'admin.su.make_high';
-  /// Not urgent
-  static const adminSuNormal = 'admin.su.normal';
-  /// You can see these settings. An admin can change them.
-  static const adminNoReadOnly = 'admin.no.read_only';
-  /// Automatic messages
-  static const adminNoAuto = 'admin.no.auto';
-  /// Turned off here, a message stops for every company.
-  static const adminNoAutoSub = 'admin.no.auto_sub';
-  /// Saved.
-  static const adminNoSaved = 'admin.no.saved';
-  /// In the app
-  static const adminNoInApp = 'admin.no.in_app';
-  /// Email · needs an email service (not connected)
-  static const adminNoNeedsEmail = 'admin.no.needs_email';
-  /// To the technician
-  static const adminNoToTechnician = 'admin.no.to.technician';
-  /// To owners and managers
-  static const adminNoToOffice = 'admin.no.to.office';
-  /// To the owner
-  static const adminNoToOwner = 'admin.no.to.owner';
-  /// To the person who asked
-  static const adminNoToPerson = 'admin.no.to.person';
-  /// New job given
-  static const adminNoKindJobAssigned = 'admin.no.kind.job_assigned';
-  /// Report waiting for approval
-  static const adminNoKindReportSubmitted = 'admin.no.kind.report_submitted';
-  /// Report needs changes
-  static const adminNoKindChangesRequested = 'admin.no.kind.changes_requested';
-  /// Report approved
-  static const adminNoKindReportApproved = 'admin.no.kind.report_approved';
-  /// Report sent to the customer
-  static const adminNoKindReportShared = 'admin.no.kind.report_shared';
-  /// Customer left a rating
-  static const adminNoKindReviewReceived = 'admin.no.kind.review_received';
-  /// Low rating (1–3 stars)
-  static const adminNoKindLowRating = 'admin.no.kind.low_rating';
-  /// Support replied
-  static const adminNoKindSupportReply = 'admin.no.kind.support_reply';
-  /// Plan limit almost reached
-  static const adminNoKindPlanLimit = 'admin.no.kind.plan_limit';
-  /// Free trial ending
-  static const adminNoKindTrialEnding = 'admin.no.kind.trial_ending';
-  /// Weekly summary
-  static const adminNoKindWeeklySummary = 'admin.no.kind.weekly_summary';
-  /// Send an announcement
-  static const adminNoAnnounce = 'admin.no.announce';
-  /// Shows in the app’s Messages, in each person’s language.
-  static const adminNoAnnounceSub = 'admin.no.announce_sub';
-  /// Who gets it
-  static const adminNoAudience = 'admin.no.audience';
-  /// Everyone
-  static const adminNoAudEveryone = 'admin.no.aud.everyone';
-  /// Owners and managers
-  static const adminNoAudOwnersManagers = 'admin.no.aud.owners_managers';
-  /// Owners only
-  static const adminNoAudOwners = 'admin.no.aud.owners';
-  /// One company
-  static const adminNoAudCompany = 'admin.no.aud.company';
-  /// {who} ({n} people)
-  static const adminNoAudN = 'admin.no.aud_n';
-  /// Company
-  static const adminNoCompany = 'admin.no.company';
-  /// Type at least 2 letters
-  static const adminNoCompanyHint = 'admin.no.company_hint';
-  /// Pick another company
-  static const adminNoChangeCompany = 'admin.no.change_company';
-  /// Language
-  static const adminNoLanguage = 'admin.no.language';
-  /// English is needed. People whose language you leave empty get the English text.
-  static const adminNoLangHint = 'admin.no.lang_hint';
-  /// Title
-  static const adminNoTitle = 'admin.no.title';
-  /// e.g. New: add photos from the gallery
-  static const adminNoTitleHint = 'admin.no.title_hint';
-  /// Message
-  static const adminNoBody = 'admin.no.body';
-  /// Keep it short and clear.
-  static const adminNoBodyHint = 'admin.no.body_hint';
-  /// When
-  static const adminNoWhen = 'admin.no.when';
-  /// Send now
-  static const adminNoNow = 'admin.no.now';
-  /// Schedule
-  static const adminNoLater = 'admin.no.later';
-  /// Send on
-  static const adminNoSendAt = 'admin.no.send_at';
-  /// Reaches {n} people now.
-  static const adminNoReach = 'admin.no.reach';
-  /// Reaches everyone in the company.
-  static const adminNoReachCompany = 'admin.no.reach_company';
-  /// Send
-  static const adminNoSend = 'admin.no.send';
-  /// Schedule
-  static const adminNoSchedule = 'admin.no.schedule';
-  /// Sent to {n} people.
-  static const adminNoSent = 'admin.no.sent';
-  /// Scheduled. It goes out at the time you picked.
-  static const adminNoScheduled = 'admin.no.scheduled';
-  /// Check the title, message and company.
-  static const adminNoCheck = 'admin.no.check';
-  /// Recent announcements
-  static const adminNoRecent = 'admin.no.recent';
-  /// No announcements yet.
-  static const adminNoNone = 'admin.no.none';
-  /// Sent
-  static const adminNoStateSent = 'admin.no.state.sent';
-  /// Scheduled
-  static const adminNoStateScheduled = 'admin.no.state.scheduled';
-  /// Cancelled
-  static const adminNoStateCancelled = 'admin.no.state.cancelled';
-  /// {n} people
-  static const adminNoSentTo = 'admin.no.sent_to';
-  /// {n} languages
-  static const adminNoLangs = 'admin.no.langs';
-  /// Cancel
-  static const adminNoCancel = 'admin.no.cancel';
-  /// Replied to a help request
-  static const adminAuASupportReplied = 'admin.au.a.support.replied';
-  /// Added a note to a help request
-  static const adminAuASupportNote = 'admin.au.a.support.note';
-  /// Changed a help request
-  static const adminAuASupportUpdated = 'admin.au.a.support.updated';
-  /// Changed automatic messages
-  static const adminAuANotificationsRules = 'admin.au.a.notifications.rules';
-  /// Sent an announcement
-  static const adminAuAAnnouncementCreated = 'admin.au.a.announcement.created';
-  /// Cancelled an announcement
-  static const adminAuAAnnouncementCancelled = 'admin.au.a.announcement.cancelled';
-  /// Help request
-  static const adminAuTSupportTicket = 'admin.au.t.support_ticket';
-  /// Announcement
-  static const adminAuTAnnouncement = 'admin.au.t.announcement';
-  /// KaamNishaan — Proof of work for field service teams
-  static const siteSeoHomeTitle = 'site.seo.home.title';
-  /// Photos, checklists and voice notes become a clear AI report your customer can trust — in 5 languages. Free trial, no card needed.
-  static const siteSeoHomeDescription = 'site.seo.home.description';
-  /// Pricing — KaamNishaan
-  static const siteSeoPricingTitle = 'site.seo.pricing.title';
-  /// Simple monthly plans for field service teams. AI reports and follow-up credits on every plan. Start with a free trial.
-  static const siteSeoPricingDescription = 'site.seo.pricing.description';
-  /// Features — KaamNishaan
-  static const siteSeoFeaturesTitle = 'site.seo.features.title';
-  /// Jobs, photo proof, checklists, voice notes, AI reports, PDF and customer sharing — one simple app that works offline.
-  static const siteSeoFeaturesDescription = 'site.seo.features.description';
-  /// About us — KaamNishaan
-  static const siteSeoAboutTitle = 'site.seo.about.title';
-  /// KaamNishaan means “mark of work”. We build simple tools that help field workers prove their work, in their own language.
-  static const siteSeoAboutDescription = 'site.seo.about.description';
-  /// Contact us — KaamNishaan
-  static const siteSeoContactTitle = 'site.seo.contact.title';
-  /// Questions about KaamNishaan? Email, WhatsApp or call us. We reply within one working day.
-  static const siteSeoContactDescription = 'site.seo.contact.description';
-  /// Book a demo — KaamNishaan
-  static const siteSeoDemoTitle = 'site.seo.demo.title';
-  /// See KaamNishaan on your own jobs in a short video call with our team.
-  static const siteSeoDemoDescription = 'site.seo.demo.description';
-  /// Blog — guides for field service teams
-  static const siteSeoBlogTitle = 'site.seo.blog.title';
-  /// Practical how-tos on photo proof, checklists and service reports for HVAC, roofing, solar and more.
-  static const siteSeoBlogDescription = 'site.seo.blog.description';
-  /// HVAC service reports — KaamNishaan
-  static const siteSeoIndHvacTitle = 'site.seo.ind_hvac.title';
-  /// Photo proof, checklists and AI reports made for HVAC teams. Settle disputes and get paid faster.
-  static const siteSeoIndHvacDescription = 'site.seo.ind_hvac.description';
-  /// Roofing service reports — KaamNishaan
-  static const siteSeoIndRoofingTitle = 'site.seo.ind_roofing.title';
-  /// Photo proof, checklists and AI reports made for roofing teams. Settle disputes and get paid faster.
-  static const siteSeoIndRoofingDescription = 'site.seo.ind_roofing.description';
-  /// Solar service reports — KaamNishaan
-  static const siteSeoIndSolarTitle = 'site.seo.ind_solar.title';
-  /// Photo proof, checklists and AI reports made for solar teams. Settle disputes and get paid faster.
-  static const siteSeoIndSolarDescription = 'site.seo.ind_solar.description';
-  /// Property maintenance service reports — KaamNishaan
-  static const siteSeoIndMaintenanceTitle = 'site.seo.ind_maintenance.title';
-  /// Photo proof, checklists and AI reports made for property maintenance teams. Settle disputes and get paid faster.
-  static const siteSeoIndMaintenanceDescription = 'site.seo.ind_maintenance.description';
-  /// Pest control service reports — KaamNishaan
-  static const siteSeoIndPestControlTitle = 'site.seo.ind_pest_control.title';
-  /// Photo proof, checklists and AI reports made for pest control teams. Settle disputes and get paid faster.
-  static const siteSeoIndPestControlDescription = 'site.seo.ind_pest_control.description';
-  /// Cleaning service reports — KaamNishaan
-  static const siteSeoIndCleaningTitle = 'site.seo.ind_cleaning.title';
-  /// Photo proof, checklists and AI reports made for cleaning teams. Settle disputes and get paid faster.
-  static const siteSeoIndCleaningDescription = 'site.seo.ind_cleaning.description';
+  /// Pick a plan or move to Free. Your jobs, photos and reports stay safe either way — we never charge without asking.
+  static const sitePfaqA1 = 'site.pfaq.a1';
+  /// Yes. Move up or down at any time from Plan and billing in the app. Your data moves with you.
+  static const sitePfaqA2 = 'site.pfaq.a2';
+  /// Each job report that AI drafts counts once, however many times you edit it before sending.
+  static const sitePfaqA3 = 'site.pfaq.a3';
+  /// Pay for 10 months and get 12 — that is 2 months free. Your monthly reports and credits stay the same.
+  static const sitePfaqA4 = 'site.pfaq.a4';
+  /// Cards everywhere, and UPI in India. Enterprise plans can pay by invoice.
+  static const sitePfaqA5 = 'site.pfaq.a5';
+  /// Still deciding? Our team answers within one working day.
+  static const sitePfaqBody = 'site.pfaq.body';
+  /// What happens after the {n}-day trial?
+  static const sitePfaqQ1 = 'site.pfaq.q1';
+  /// Can I change plans later?
+  static const sitePfaqQ2 = 'site.pfaq.q2';
+  /// What counts as an AI report?
+  static const sitePfaqQ3 = 'site.pfaq.q3';
+  /// How does annual billing work?
+  static const sitePfaqQ4 = 'site.pfaq.q4';
+  /// Which payment methods do you accept?
+  static const sitePfaqQ5 = 'site.pfaq.q5';
+  /// Pricing questions
+  static const sitePfaqTitle = 'site.pfaq.title';
+  /// Annual
+  static const sitePpAnnual = 'site.pp.annual';
+  /// Prices in {currency}. AI reports and follow-up credits on every plan. Try {plan} free for {n} days — no card needed.
+  static const sitePpBody = 'site.pp.body';
+  /// Pricing
+  static const sitePpEyebrow = 'site.pp.eyebrow';
+  /// Monthly
+  static const sitePpMonthly = 'site.pp.monthly';
+  /// Prices in {currency}
+  static const sitePpN1 = 'site.pp.n1';
+  /// AI reports and follow-up credits on every plan.
+  static const sitePpN2 = 'site.pp.n2';
+  /// {n}-day free trial of {plan}
+  static const sitePpN3 = 'site.pp.n3';
+  /// Cancel any time
+  static const sitePpN4 = 'site.pp.n4';
+  /// Simple pricing that grows with your team
+  static const sitePpTitle = 'site.pp.title';
+  /// 2 months free
+  static const sitePpTwoFree = 'site.pp.two_free';
   /// Preview — these changes are not on the live website yet.
   static const sitePreview = 'site.preview';
-  /// Website content
-  static const adminNavWebsiteContent = 'admin.nav.website_content';
-  /// Localized content
-  static const adminNavTexts = 'admin.nav.texts';
-  /// Website pages
-  static const adminWcPages = 'admin.wc.pages';
-  /// Home
-  static const adminWcPageHome = 'admin.wc.page.home';
-  /// Pricing
-  static const adminWcPagePricing = 'admin.wc.page.pricing';
-  /// Features
-  static const adminWcPageFeatures = 'admin.wc.page.features';
-  /// About
-  static const adminWcPageAbout = 'admin.wc.page.about';
-  /// Contact
-  static const adminWcPageContact = 'admin.wc.page.contact';
-  /// Book a demo
-  static const adminWcPageDemo = 'admin.wc.page.demo';
-  /// Blog
-  static const adminWcPageBlog = 'admin.wc.page.blog';
-  /// Industries / {trade}
-  static const adminWcPageIndustry = 'admin.wc.page.industry';
-  /// HVAC
-  static const adminWcTradeHvac = 'admin.wc.trade.hvac';
-  /// Roofing
-  static const adminWcTradeRoofing = 'admin.wc.trade.roofing';
-  /// Solar
-  static const adminWcTradeSolar = 'admin.wc.trade.solar';
-  /// Property maintenance
-  static const adminWcTradeMaintenance = 'admin.wc.trade.maintenance';
-  /// Pest control
-  static const adminWcTradePestControl = 'admin.wc.trade.pest_control';
-  /// Cleaning
-  static const adminWcTradeCleaning = 'admin.wc.trade.cleaning';
-  /// {n} unpublished changes
-  static const adminWcDrafts = 'admin.wc.drafts';
-  /// Published · edited {ago}
-  static const adminWcEdited = 'admin.wc.edited';
-  /// Original texts
-  static const adminWcBuiltIn = 'admin.wc.built_in';
-  /// Unpublished changes
-  static const adminWcUnpublished = 'admin.wc.unpublished';
-  /// Last change {ago} by {who}
-  static const adminWcLast = 'admin.wc.last';
-  /// You can see these texts. An admin can change them.
-  static const adminWcReadOnly = 'admin.wc.read_only';
-  /// Top of the page
-  static const adminWcSHero = 'admin.wc.s.hero';
-  /// The problem
-  static const adminWcSProblem = 'admin.wc.s.problem';
-  /// How it works
-  static const adminWcSHow = 'admin.wc.s.how';
-  /// Questions (FAQ)
-  static const adminWcSFaq = 'admin.wc.s.faq';
-  /// Closing call to action
-  static const adminWcSFinal = 'admin.wc.s.final';
-  /// Why we built it
-  static const adminWcSWhy = 'admin.wc.s.why';
-  /// Search engines
-  static const adminWcSSeo = 'admin.wc.s.seo';
-  /// Shown in Google results and on the browser tab.
-  static const adminWcSeoHint = 'admin.wc.seo_hint';
-  /// Small label above the headline
-  static const adminWcFEyebrow = 'admin.wc.f.eyebrow';
-  /// Headline
-  static const adminWcFHeadline = 'admin.wc.f.headline';
-  /// Sub-headline
-  static const adminWcFSubheadline = 'admin.wc.f.subheadline';
-  /// Primary button
-  static const adminWcFPrimaryButton = 'admin.wc.f.primary_button';
-  /// Secondary button
-  static const adminWcFSecondaryButton = 'admin.wc.f.secondary_button';
-  /// Question {n}
-  static const adminWcFQuestion = 'admin.wc.f.question';
-  /// Answer {n}
-  static const adminWcFAnswer = 'admin.wc.f.answer';
-  /// SEO title
-  static const adminWcFSeoTitle = 'admin.wc.f.seo_title';
-  /// SEO description
-  static const adminWcFSeoDescription = 'admin.wc.f.seo_description';
-  /// Not saved
-  static const adminWcStateUnsaved = 'admin.wc.state.unsaved';
-  /// Draft
-  static const adminWcStateDraft = 'admin.wc.state.draft';
-  /// Changed
-  static const adminWcStateChanged = 'admin.wc.state.changed';
-  /// Use original
-  static const adminWcOriginal = 'admin.wc.original';
-  /// {n} of {max} characters
-  static const adminWcChars = 'admin.wc.chars';
-  /// Keep {parts}
-  static const adminWcKeep = 'admin.wc.keep';
-  /// Preview
-  static const adminWcPreview = 'admin.wc.preview';
-  /// Publish
-  static const adminWcPublish = 'admin.wc.publish';
-  /// Save draft
-  static const adminWcSave = 'admin.wc.save';
-  /// Draft saved. The website changes when you publish.
-  static const adminWcSaved = 'admin.wc.saved';
-  /// Published. The website shows it within a minute.
-  static const adminWcPublished = 'admin.wc.published';
-  /// Discard drafts
-  static const adminWcDiscard = 'admin.wc.discard';
-  /// Drafts removed.
-  static const adminWcDiscarded = 'admin.wc.discarded';
-  /// Undo edits
-  static const adminWcUndo = 'admin.wc.undo';
-  /// {n} changes waiting to be published
-  static const adminWcPending = 'admin.wc.pending';
-  /// Everything is published.
-  static const adminWcNothing = 'admin.wc.nothing';
-  /// Search key or text
-  static const adminLcSearch = 'admin.lc.search';
-  /// Area
-  static const adminLcArea = 'admin.lc.area';
-  /// Mobile app
-  static const adminLcAreaApp = 'admin.lc.area.app';
-  /// Website
-  static const adminLcAreaSite = 'admin.lc.area.site';
-  /// Admin panel
-  static const adminLcAreaAdmin = 'admin.lc.area.admin';
-  /// Status
-  static const adminLcStatus = 'admin.lc.status';
-  /// Not checked in {lang}
-  static const adminLcStNotReviewed = 'admin.lc.st.not_reviewed';
-  /// Checked in {lang}
-  static const adminLcStReviewed = 'admin.lc.st.reviewed';
-  /// Changed here
-  static const adminLcStChanged = 'admin.lc.st.changed';
-  /// All
-  static const adminLcStAll = 'admin.lc.st.all';
-  /// Source
-  static const adminLcSource = 'admin.lc.source';
+  /// {n} AI reports/month
+  static const sitePriceAiReports = 'site.price.ai_reports';
+  /// Annual contract
+  static const sitePriceAnnualContract = 'site.price.annual_contract';
+  /// billed {price} a year
+  static const sitePriceBilledYear = 'site.price.billed_year';
+  /// Prices in {currency}. AI reports and follow-up credits on every plan. Try {plan} free for {n} days.
+  static const sitePriceBody = 'site.price.body';
+  /// Contact sales
+  static const sitePriceContact = 'site.price.contact';
+  /// {n} follow-up credits / month
+  static const sitePriceCredits = 'site.price.credits';
+  /// Custom
+  static const sitePriceCustom = 'site.price.custom';
+  /// Prices could not load. Check your connection and try again.
+  static const sitePriceError = 'site.price.error';
+  /// Everything in {plan}
+  static const sitePriceEverything = 'site.price.everything';
+  /// fair use
+  static const sitePriceFair = 'site.price.fair';
+  /// forever
+  static const sitePriceForever = 'site.price.forever';
+  /// {n} AI reports a month. No card needed. Upgrade any time.
+  static const sitePriceFreeBody = 'site.price.free_body';
+  /// Free forever for 1 technician
+  static const sitePriceFreeTitle = 'site.price.free_title';
+  /// For large teams
+  static const sitePriceLarge = 'site.price.large';
+  /// Loading prices…
+  static const sitePriceLoading = 'site.price.loading';
+  /// /month
+  static const sitePriceMonth = 'site.price.month';
+  /// No card needed
+  static const sitePriceNoCard = 'site.price.no_card';
+  /// or {price}/year — 2 months free
+  static const sitePriceOrYear = 'site.price.or_year';
+  /// Most popular
+  static const sitePricePopular = 'site.price.popular';
+  /// {n} reports
+  static const sitePriceReports = 'site.price.reports';
+  /// Try again
+  static const sitePriceRetry = 'site.price.retry';
+  /// Compare every plan
+  static const sitePriceSeeAll = 'site.price.see_all';
+  /// Start free
+  static const sitePriceStartFree = 'site.price.start_free';
+  /// 1 technician
+  static const sitePriceTechOne = 'site.price.tech_one';
+  /// {n} technicians
+  static const sitePriceTechs = 'site.price.techs';
+  /// Simple monthly pricing
+  static const sitePriceTitle = 'site.price.title';
+  /// /year
+  static const sitePriceYear = 'site.price.year';
+  /// One approved job with before, during and after photos, checks passed and a PDF sent
+  static const siteProblemAfterAlt = 'site.problem.after_alt';
+  /// Every photo, checklist and note lives in one job, and turns into a report in minutes.
+  static const siteProblemAfterBody = 'site.problem.after_body';
+  /// With KaamNishaan
+  static const siteProblemAfterTitle = 'site.problem.after_title';
+  /// Chat messages asking for site photos, a photo that did not download and a late report
+  static const siteProblemBeforeAlt = 'site.problem.before_alt';
+  /// Photos lost in chats, reports written late or never, and customers who doubt the work.
+  static const siteProblemBeforeBody = 'site.problem.before_body';
+  /// Before KaamNishaan
+  static const siteProblemBeforeTitle = 'site.problem.before_title';
+  /// Scattered photos and missing reports cost you disputes, warranty claims and late payments.
+  static const siteProblemBody = 'site.problem.body';
+  /// Photos in WhatsApp are not proof
+  static const siteProblemTitle = 'site.problem.title';
   /// Ready
-  static const adminLcReady = 'admin.lc.ready';
-  /// Needs review
-  static const adminLcNeedsReview = 'admin.lc.needs_review';
-  /// {n} changed
-  static const adminLcChangedN = 'admin.lc.changed_n';
-  /// % = texts a person checked, out of {n} in this area. Pick a language to work on it.
-  static const adminLcCoverHint = 'admin.lc.cover_hint';
-  /// {n} texts
-  static const adminLcCount = 'admin.lc.count';
-  /// Mark these {n} as checked in {lang}
-  static const adminLcMarkAll = 'admin.lc.mark_all';
-  /// {n} texts marked as checked in {lang}.
-  static const adminLcMarked = 'admin.lc.marked';
-  /// Key
-  static const adminLcKey = 'admin.lc.key';
-  /// Changed
-  static const adminLcChanged = 'admin.lc.changed';
-  /// Checked
-  static const adminLcChecked = 'admin.lc.checked';
-  /// Checked by {who}, {ago}
-  static const adminLcBy = 'admin.lc.by';
-  /// No texts match.
-  static const adminLcEmpty = 'admin.lc.empty';
-  /// Every text here is checked in {lang}.
-  static const adminLcAllChecked = 'admin.lc.all_checked';
-  /// Close
-  static const adminLcClose = 'admin.lc.close';
-  /// This text also has a website change waiting in Website content.
-  static const adminLcHasDraft = 'admin.lc.has_draft';
-  /// Goes live when saved. Apps pick it up when they next open.
-  static const adminLcLiveNote = 'admin.lc.live_note';
-  /// Save
-  static const adminLcSave = 'admin.lc.save';
-  /// Saved. It’s live now.
-  static const adminLcSaved = 'admin.lc.saved';
-  /// Import file
-  static const adminLcImport = 'admin.lc.import';
-  /// Use a CSV with a “key” column and language columns (en, hi, gu, es, fr), like Export makes.
-  static const adminLcBadFile = 'admin.lc.bad_file';
-  /// Nothing to change: the file matches what’s live.
-  static const adminLcNoChanges = 'admin.lc.no_changes';
-  /// Nothing to change. {n} rows had keys we don’t know.
-  static const adminLcNoChangesUnknown = 'admin.lc.no_changes_unknown';
-  /// Import texts?
-  static const adminLcImportTitle = 'admin.lc.import_title';
-  /// {n} texts in {keys} keys will change and go live now. Imported translations are marked as checked.
-  static const adminLcImportBody = 'admin.lc.import_body';
-  /// Import
-  static const adminLcApply = 'admin.lc.apply';
-  /// {n} texts imported.
-  static const adminLcImported = 'admin.lc.imported';
-  /// Saved website text drafts
-  static const adminAuAWebsiteDraftSaved = 'admin.au.a.website.draft_saved';
-  /// Published website texts
-  static const adminAuAWebsitePublished = 'admin.au.a.website.published';
-  /// Discarded website drafts
-  static const adminAuAWebsiteDiscarded = 'admin.au.a.website.discarded';
-  /// Changed or checked texts
-  static const adminAuATextsUpdated = 'admin.au.a.texts.updated';
-  /// Website page
-  static const adminAuTWebsitePage = 'admin.au.t.website_page';
-  /// Texts
-  static const adminAuTTexts = 'admin.au.t.texts';
-  /// 1 text
-  static const adminLcCountOne = 'admin.lc.count_one';
-  /// Mark this one as checked in {lang}
-  static const adminLcMarkAllOne = 'admin.lc.mark_all_one';
-  /// 1 unpublished change
-  static const adminWcDraftsOne = 'admin.wc.drafts_one';
-  /// 1 change waiting to be published
-  static const adminWcPendingOne = 'admin.wc.pending_one';
-  /// What owners say
-  static const siteSayTitle = 'site.say.title';
+  static const siteReadyBadge = 'site.ready.badge';
+  /// Log in on the KaamNishaan app with {email} and your password.
+  static const siteReadyBody = 'site.ready.body';
+  /// We sent a confirmation link to {email}. Open it on this computer or your phone.
+  static const siteReadyBodyEmail = 'site.ready.body_email';
+  /// Workspace ready
+  static const siteReadyEyebrow = 'site.ready.eyebrow';
+  /// Next steps
+  static const siteReadyNext = 'site.ready.next';
+  /// Resend email
+  static const siteReadyResend = 'site.ready.resend';
+  /// Didn’t get it? Check your spam folder or resend it now.
+  static const siteReadyResendNow = 'site.ready.resend_now';
+  /// Didn’t get it? Check your spam folder or resend in {n} seconds.
+  static const siteReadyResendWait = 'site.ready.resend_wait';
+  /// Sent again to {email}.
+  static const siteReadyResent = 'site.ready.resent';
+  /// Get the app on your phone
+  static const siteReadySApp = 'site.ready.s_app';
+  /// Technicians capture photos, checklists and voice notes on site.
+  static const siteReadySAppB = 'site.ready.s_app_b';
+  /// Confirm your email
+  static const siteReadySConfirm = 'site.ready.s_confirm';
+  /// Tap the link we just sent — it expires in 24 hours.
+  static const siteReadySConfirmB = 'site.ready.s_confirm_b';
+  /// Invite your technicians
+  static const siteReadySInvite = 'site.ready.s_invite';
+  /// Send a WhatsApp or SMS invite from the app.
+  static const siteReadySInviteB = 'site.ready.s_invite_b';
+  /// Create your first job
+  static const siteReadySJob = 'site.ready.s_job';
+  /// We will guide you — it takes about 2 minutes.
+  static const siteReadySJobB = 'site.ready.s_job_b';
+  /// You’re all set
+  static const siteReadyTitle = 'site.ready.title';
+  /// Check your email
+  static const siteReadyTitleEmail = 'site.ready.title_email';
+  /// {plan} trial · ends {date}
+  static const siteReadyTrialEnds = 'site.ready.trial_ends';
   /// Field-service owners on running their teams with KaamNishaan.
   static const siteSayBody = 'site.say.body';
-  /// Blog
-  static const adminNavBlog = 'admin.nav.blog';
-  /// Testimonials
-  static const adminNavTestimonials = 'admin.nav.testimonials';
-  /// New post
-  static const adminBlNew = 'admin.bl.new';
-  /// Search posts
-  static const adminBlSearch = 'admin.bl.search';
-  /// Status
-  static const adminBlFState = 'admin.bl.f_state';
-  /// Language
-  static const adminBlFLang = 'admin.bl.f_lang';
-  /// All
-  static const adminBlAll = 'admin.bl.all';
-  /// Post
-  static const adminBlCPost = 'admin.bl.c_post';
-  /// Author
-  static const adminBlCAuthor = 'admin.bl.c_author';
-  /// Languages
-  static const adminBlCLang = 'admin.bl.c_lang';
-  /// Status
-  static const adminBlCState = 'admin.bl.c_state';
-  /// Date
-  static const adminBlCDate = 'admin.bl.c_date';
-  /// Published
-  static const adminBlStPublished = 'admin.bl.st.published';
-  /// Scheduled
-  static const adminBlStScheduled = 'admin.bl.st.scheduled';
-  /// Scheduled · {day}
-  static const adminBlStScheduledOn = 'admin.bl.st.scheduled_on';
-  /// Draft
-  static const adminBlStDraft = 'admin.bl.st.draft';
-  /// No posts yet.
-  static const adminBlNone = 'admin.bl.none';
-  /// No posts match.
-  static const adminBlNoneMatch = 'admin.bl.none_match';
-  /// Featured post
-  static const adminBlFeatured = 'admin.bl.featured';
-  /// Shown large at the top of the blog. Only one post at a time.
-  static const adminBlFeaturedHint = 'admin.bl.featured_hint';
-  /// English is needed. A language left empty shows the English post, marked “In English”.
-  static const adminBlLangHint = 'admin.bl.lang_hint';
-  /// Title
-  static const adminBlTitle = 'admin.bl.title';
-  /// Summary
-  static const adminBlSummary = 'admin.bl.summary';
-  /// Author
-  static const adminBlAuthor = 'admin.bl.author';
-  /// Article
-  static const adminBlBody = 'admin.bl.body';
-  /// Add the first paragraph below.
-  static const adminBlEmptyBody = 'admin.bl.empty_body';
-  /// Add:
-  static const adminBlAdd = 'admin.bl.add';
-  /// Paragraph
-  static const adminBlBP = 'admin.bl.b.p';
-  /// Heading
-  static const adminBlBH2 = 'admin.bl.b.h2';
-  /// Checklist box
-  static const adminBlBList = 'admin.bl.b.list';
-  /// Quote
-  static const adminBlBQuote = 'admin.bl.b.quote';
-  /// Picture
-  static const adminBlBImage = 'admin.bl.b.image';
-  /// Who said it
-  static const adminBlBy = 'admin.bl.by';
-  /// Box heading
-  static const adminBlListTitle = 'admin.bl.list_title';
-  /// One line per item
-  static const adminBlListItems = 'admin.bl.list_items';
-  /// Caption
-  static const adminBlCaption = 'admin.bl.caption';
-  /// Move up
-  static const adminBlUp = 'admin.bl.up';
-  /// Move down
-  static const adminBlDown = 'admin.bl.down';
-  /// Remove
-  static const adminBlRemove = 'admin.bl.remove';
-  /// Upload picture
-  static const adminBlUpload = 'admin.bl.upload';
-  /// Change picture
-  static const adminBlReplace = 'admin.bl.replace';
-  /// Publishing
-  static const adminBlPublishing = 'admin.bl.publishing';
-  /// Last saved {ago} by {who}
-  static const adminBlLast = 'admin.bl.last';
-  /// Publish now
-  static const adminBlPublishNow = 'admin.bl.publish_now';
-  /// Publish on
-  static const adminBlWhen = 'admin.bl.when';
-  /// Schedule
-  static const adminBlSchedule = 'admin.bl.schedule';
-  /// Every language you started must have a title, summary and article.
-  static const adminBlPublishHint = 'admin.bl.publish_hint';
-  /// Published. It’s on the blog within 5 minutes.
-  static const adminBlPublished = 'admin.bl.published';
-  /// Scheduled. It goes on the blog at the time you picked.
-  static const adminBlScheduled = 'admin.bl.scheduled';
-  /// Unpublish
-  static const adminBlUnpublish = 'admin.bl.unpublish';
-  /// Back to draft. It’s off the website.
-  static const adminBlUnpublished = 'admin.bl.unpublished';
-  /// Delete post
-  static const adminBlDelete = 'admin.bl.delete';
-  /// Delete this post for good?
-  static const adminBlDeleteQ = 'admin.bl.delete_q';
-  /// Delete
-  static const adminBlDeleteYes = 'admin.bl.delete_yes';
-  /// Save draft
-  static const adminBlSave = 'admin.bl.save';
-  /// Save changes
-  static const adminBlSaveLive = 'admin.bl.save_live';
-  /// Saved.
-  static const adminBlSaved = 'admin.bl.saved';
-  /// View on website
-  static const adminBlView = 'admin.bl.view';
-  /// Post settings
-  static const adminBlSettings = 'admin.bl.settings';
-  /// Cover picture
-  static const adminBlCover = 'admin.bl.cover';
-  /// No cover yet
-  static const adminBlNoCover = 'admin.bl.no_cover';
-  /// Topic
-  static const adminBlCategory = 'admin.bl.category';
-  /// Web address
-  static const adminBlSlug = 'admin.bl.slug';
-  /// Unpublish to change the address, so shared links don’t break.
-  static const adminBlSlugLocked = 'admin.bl.slug_locked';
-  /// Add testimonial
-  static const adminTmAdd = 'admin.tm.add';
-  /// Edit testimonial
-  static const adminTmEdit = 'admin.tm.edit';
-  /// Only publish quotes that customers have approved in writing.
-  static const adminTmRule = 'admin.tm.rule';
-  /// No testimonials yet. The website hides this section until one is on.
-  static const adminTmNone = 'admin.tm.none';
-  /// Quote
-  static const adminTmFQuote = 'admin.tm.f.quote';
-  /// Name
-  static const adminTmFPersonName = 'admin.tm.f.person_name';
-  /// Role
-  static const adminTmFRole = 'admin.tm.f.role';
-  /// Company
-  static const adminTmFCompanyName = 'admin.tm.f.company_name';
-  /// City (optional)
-  static const adminTmFCity = 'admin.tm.f.city';
-  /// Their words, as they approved them. Languages left empty show the English quote.
-  static const adminTmQuoteHint = 'admin.tm.quote_hint';
-  /// Add photo
-  static const adminTmPhotoAdd = 'admin.tm.photo_add';
-  /// Change photo
-  static const adminTmPhotoChange = 'admin.tm.photo_change';
-  /// Remove photo
-  static const adminTmPhotoRemove = 'admin.tm.photo_remove';
-  /// The customer approved this in writing
-  static const adminTmApproved = 'admin.tm.approved';
-  /// Their quote, name, photo and company may appear on the website.
-  static const adminTmApprovedHint = 'admin.tm.approved_hint';
-  /// How and when (e.g. email, 3 Nov)
-  static const adminTmNote = 'admin.tm.note';
-  /// Show on the website
-  static const adminTmOnWebsite = 'admin.tm.on_website';
-  /// Appears on the Home page within 5 minutes.
-  static const adminTmOnHint = 'admin.tm.on_hint';
-  /// Needs the customer’s written approval first.
-  static const adminTmNeedsApproval = 'admin.tm.needs_approval';
-  /// Delete
-  static const adminTmDelete = 'admin.tm.delete';
-  /// On website
-  static const adminTmStOn = 'admin.tm.st.on';
-  /// Approved · hidden
-  static const adminTmStHidden = 'admin.tm.st.hidden';
-  /// Waiting for approval
-  static const adminTmStWaiting = 'admin.tm.st.waiting';
-  /// Started a blog post
-  static const adminAuABlogCreated = 'admin.au.a.blog.created';
-  /// Edited a blog post
-  static const adminAuABlogUpdated = 'admin.au.a.blog.updated';
-  /// Published a blog post
-  static const adminAuABlogPublished = 'admin.au.a.blog.published';
-  /// Unpublished a blog post
-  static const adminAuABlogUnpublished = 'admin.au.a.blog.unpublished';
-  /// Deleted a blog post
-  static const adminAuABlogDeleted = 'admin.au.a.blog.deleted';
-  /// Added a testimonial
-  static const adminAuATestimonialCreated = 'admin.au.a.testimonial.created';
-  /// Edited a testimonial
-  static const adminAuATestimonialUpdated = 'admin.au.a.testimonial.updated';
-  /// Put a testimonial on the website
-  static const adminAuATestimonialShown = 'admin.au.a.testimonial.shown';
-  /// Took a testimonial off the website
-  static const adminAuATestimonialHidden = 'admin.au.a.testimonial.hidden';
-  /// Deleted a testimonial
-  static const adminAuATestimonialDeleted = 'admin.au.a.testimonial.deleted';
-  /// Blog post
-  static const adminAuTBlogPost = 'admin.au.t.blog_post';
-  /// Testimonial
-  static const adminAuTTestimonial = 'admin.au.t.testimonial';
-  /// Analytics
-  static const adminNavAnalytics = 'admin.nav.analytics';
-  /// Storage
-  static const adminNavStorage = 'admin.nav.storage';
-  /// Localization
-  static const adminNavLocalization = 'admin.nav.localization';
-  /// Account
-  static const adminNavAccount = 'admin.nav.account';
-  /// My profile
-  static const adminNavProfile = 'admin.nav.profile';
-  /// Reports sent
-  static const adminAnSent = 'admin.an.sent';
-  /// Typical review time
-  static const adminAnReview = 'admin.an.review';
-  /// Approved first time
-  static const adminAnFirst = 'admin.an.first';
-  /// Active technicians
-  static const adminAnActive = 'admin.an.active';
-  /// {change} vs the {days} days before
-  static const adminAnVs = 'admin.an.vs';
-  /// Same as the {days} days before
-  static const adminAnSame = 'admin.an.same';
-  /// Nothing to compare in the {days} days before
-  static const adminAnNoBefore = 'admin.an.no_before';
-  /// No reports in this period yet
-  static const adminAnNoData = 'admin.an.no_data';
-  /// {n} pts
-  static const adminAnPts = 'admin.an.pts';
-  /// {n} min
-  static const adminAnMin = 'admin.an.min';
-  /// {n} h
-  static const adminAnHours = 'admin.an.hours';
-  /// {n} days
-  static const adminAnDays = 'admin.an.days';
-  /// Reports sent per week
-  static const adminAnPerWeek = 'admin.an.per_week';
-  /// Reports sent per day
-  static const adminAnPerDay = 'admin.an.per_day';
-  /// Reports companies sent to their customers.
-  static const adminAnPerSub = 'admin.an.per_sub';
-  /// Bar chart: {n} reports sent in this period
-  static const adminAnChartLabel = 'admin.an.chart_label';
-  /// Week of {day}: {n}
-  static const adminAnTipWeek = 'admin.an.tip_week';
-  /// {day}: {n}
-  static const adminAnTipDay = 'admin.an.tip_day';
-  /// Voice notes by language
-  static const adminAnVoice = 'admin.an.voice';
-  /// {n} voice notes in this period
-  static const adminAnVoiceSub = 'admin.an.voice_sub';
-  /// No voice notes in this period.
-  static const adminAnVoiceNone = 'admin.an.voice_none';
-  /// Other
-  static const adminAnOther = 'admin.an.other';
-  /// Reports sent by industry
-  static const adminAnByIndustry = 'admin.an.by_industry';
-  /// No industry
-  static const adminAnNoIndustry = 'admin.an.no_industry';
-  /// No reports sent in this period.
-  static const adminAnSentNone = 'admin.an.sent_none';
-  /// Review time is the middle value from “sent for approval” to “approved”. Active technicians took at least one photo or voice note. Days are counted in India time.
-  static const adminAnNote = 'admin.an.note';
-  /// Storage used
-  static const adminStUsed = 'admin.st.used';
-  /// Photos
-  static const adminStKPhotos = 'admin.st.k.photos';
-  /// Voice notes
-  static const adminStKVoice = 'admin.st.k.voice';
-  /// PDF reports
-  static const adminStKPdfs = 'admin.st.k.pdfs';
-  /// ({n} files)
-  static const adminStFiles = 'admin.st.files';
-  /// Original files only; small copies, logos and website pictures add a little more.
-  static const adminStUsedNote = 'admin.st.used_note';
-  /// Files
-  static const adminStFilesTitle = 'admin.st.files_title';
-  /// Where files are kept
-  static const adminStWhere = 'admin.st.where';
-  /// Cloudflare R2 · {bucket}
-  static const adminStR2 = 'admin.st.r2';
-  /// On the server (testing only)
-  static const adminStLocal = 'admin.st.local';
-  /// Files are on this server. The live service must use cloud storage (it won’t start without it).
-  static const adminStLocalWarn = 'admin.st.local_warn';
-  /// Max photo size
-  static const adminStMaxPhoto = 'admin.st.max_photo';
-  /// {n} MB
-  static const adminStMaxPhotoV = 'admin.st.max_photo_v';
-  /// change in Platform settings
-  static const adminStChangeThere = 'admin.st.change_there';
-  /// Photos and voice notes are kept
-  static const adminStKeep = 'admin.st.keep';
-  /// As long as the company’s account exists
-  static const adminStKeepV = 'admin.st.keep_v';
-  /// File links work for
-  static const adminStLinks = 'admin.st.links';
-  /// {n} minutes
-  static const adminStLinksV = 'admin.st.links_v';
-  /// Security
-  static const adminStSecurity = 'admin.st.security';
-  /// Always on; built into how KaamNishaan stores proof.
-  static const adminStSecuritySub = 'admin.st.security_sub';
-  /// Files encrypted at rest
-  static const adminStSEncrypt = 'admin.st.s.encrypt';
-  /// Cloudflare R2 encrypts every file (AES-256)
-  static const adminStSEncryptHint = 'admin.st.s.encrypt_hint';
-  /// Signed links only
-  static const adminStSSigned = 'admin.st.s.signed';
-  /// Files open only through links that end after {n} minutes
-  static const adminStSSignedHint = 'admin.st.s.signed_hint';
-  /// Lock evidence when a report is sent for approval
-  static const adminStSLock = 'admin.st.s.lock';
-  /// Photos can no longer be changed or deleted ({n} locked now)
-  static const adminStSLockHint = 'admin.st.s.lock_hint';
-  /// Remove phone GPS from shared photos
-  static const adminStSGps = 'admin.st.s.gps';
-  /// Customers get copies without location data; the original keeps it as proof
-  static const adminStSGpsHint = 'admin.st.s.gps_hint';
-  /// Companies using the most storage
-  static const adminStTop = 'admin.st.top';
-  /// Language
-  static const adminLzCLang = 'admin.lz.c_lang';
-  /// Code
-  static const adminLzCCode = 'admin.lz.c_code';
-  /// App
-  static const adminLzCApp = 'admin.lz.c_app';
-  /// Website
-  static const adminLzCSite = 'admin.lz.c_site';
-  /// Reports
-  static const adminLzCReports = 'admin.lz.c_reports';
-  /// Voice input
-  static const adminLzCVoice = 'admin.lz.c_voice';
-  /// Source language
-  static const adminLzSource = 'admin.lz.source';
-  /// On
-  static const adminLzOn = 'admin.lz.on';
-  /// Checked
-  static const adminLzReady = 'admin.lz.ready';
-  /// Review · {n}% checked
-  static const adminLzReview = 'admin.lz.review';
-  /// All 5 languages are on everywhere. “Checked” is how much of each language a person has reviewed in
-  static const adminLzTableNote = 'admin.lz.table_note';
-  /// Defaults
-  static const adminLzDefaults = 'admin.lz.defaults';
-  /// Report language for new companies
-  static const adminLzReportLang = 'admin.lz.report_lang';
-  /// The language customers get reports in; owners can change it in Company settings.
-  static const adminLzReportLangHint = 'admin.lz.report_lang_hint';
-  /// When a text is missing
-  static const adminLzFallback = 'admin.lz.fallback';
-  /// English is shown
-  static const adminLzFallbackV = 'admin.lz.fallback_v';
-  /// Dates and numbers
-  static const adminLzDates = 'admin.lz.dates';
-  /// Follow each person’s language
-  static const adminLzDatesV = 'admin.lz.dates_v';
-  /// Prices
-  static const adminLzCurrency = 'admin.lz.currency';
-  /// Rupees in India, dollars elsewhere
-  static const adminLzCurrencyV = 'admin.lz.currency_v';
-  /// How languages work
-  static const adminLzRules = 'admin.lz.rules';
-  /// Built into the app; shown so everyone knows.
-  static const adminLzRulesSub = 'admin.lz.rules_sub';
-  /// Each person picks their app language
-  static const adminLzROwn = 'admin.lz.r.own';
-  /// At first launch, and any time in Me
-  static const adminLzROwnHint = 'admin.lz.r.own_hint';
-  /// Report language is set by the company
-  static const adminLzRCompany = 'admin.lz.r.company';
-  /// Notes in any language become one report in that language
-  static const adminLzRCompanyHint = 'admin.lz.r.company_hint';
-  /// Original voice recording is kept
-  static const adminLzRVoice = 'admin.lz.r.voice';
-  /// Next to the written words and their translation
-  static const adminLzRVoiceHint = 'admin.lz.r.voice_hint';
-  /// Machine-translate missing texts
-  static const adminLzRAuto = 'admin.lz.r.auto';
-  /// Off: every text is translated by people
-  static const adminLzRAutoHint = 'admin.lz.r.auto_hint';
-  /// Save changes
-  static const adminLzSave = 'admin.lz.save';
-  /// Saved. New companies start with this report language.
-  static const adminLzSaved = 'admin.lz.saved';
-  /// Save changes
-  static const adminPfSave = 'admin.pf.save';
-  /// Saved.
-  static const adminPfSaved = 'admin.pf.saved';
-  /// Details
-  static const adminPfDetails = 'admin.pf.details';
-  /// Your staff profile.
-  static const adminPfDetailsSub = 'admin.pf.details_sub';
-  /// Name
-  static const adminPfName = 'admin.pf.name';
+  /// What owners say
+  static const siteSayTitle = 'site.say.title';
+  /// KaamNishaan means “mark of work”. We build simple tools that help field workers prove their work, in their own language.
+  static const siteSeoAboutDescription = 'site.seo.about.description';
+  /// About us — KaamNishaan
+  static const siteSeoAboutTitle = 'site.seo.about.title';
+  /// Practical how-tos on photo proof, checklists and service reports for HVAC, roofing, solar and more.
+  static const siteSeoBlogDescription = 'site.seo.blog.description';
+  /// Blog — guides for field service teams
+  static const siteSeoBlogTitle = 'site.seo.blog.title';
+  /// Questions about KaamNishaan? Email, WhatsApp or call us. We reply within one working day.
+  static const siteSeoContactDescription = 'site.seo.contact.description';
+  /// Contact us — KaamNishaan
+  static const siteSeoContactTitle = 'site.seo.contact.title';
+  /// See KaamNishaan on your own jobs in a short video call with our team.
+  static const siteSeoDemoDescription = 'site.seo.demo.description';
+  /// Book a demo — KaamNishaan
+  static const siteSeoDemoTitle = 'site.seo.demo.title';
+  /// Jobs, photo proof, checklists, voice notes, AI reports, PDF and customer sharing — one simple app that works offline.
+  static const siteSeoFeaturesDescription = 'site.seo.features.description';
+  /// Features — KaamNishaan
+  static const siteSeoFeaturesTitle = 'site.seo.features.title';
+  /// Photos, checklists and voice notes become a clear AI report your customer can trust — in 5 languages. Free trial, no card needed.
+  static const siteSeoHomeDescription = 'site.seo.home.description';
+  /// KaamNishaan — Proof of work for field service teams
+  static const siteSeoHomeTitle = 'site.seo.home.title';
+  /// Photo proof, checklists and AI reports made for cleaning teams. Settle disputes and get paid faster.
+  static const siteSeoIndCleaningDescription = 'site.seo.ind_cleaning.description';
+  /// Cleaning service reports — KaamNishaan
+  static const siteSeoIndCleaningTitle = 'site.seo.ind_cleaning.title';
+  /// Photo proof, checklists and AI reports made for HVAC teams. Settle disputes and get paid faster.
+  static const siteSeoIndHvacDescription = 'site.seo.ind_hvac.description';
+  /// HVAC service reports — KaamNishaan
+  static const siteSeoIndHvacTitle = 'site.seo.ind_hvac.title';
+  /// Photo proof, checklists and AI reports made for property maintenance teams. Settle disputes and get paid faster.
+  static const siteSeoIndMaintenanceDescription = 'site.seo.ind_maintenance.description';
+  /// Property maintenance service reports — KaamNishaan
+  static const siteSeoIndMaintenanceTitle = 'site.seo.ind_maintenance.title';
+  /// Photo proof, checklists and AI reports made for pest control teams. Settle disputes and get paid faster.
+  static const siteSeoIndPestControlDescription = 'site.seo.ind_pest_control.description';
+  /// Pest control service reports — KaamNishaan
+  static const siteSeoIndPestControlTitle = 'site.seo.ind_pest_control.title';
+  /// Photo proof, checklists and AI reports made for roofing teams. Settle disputes and get paid faster.
+  static const siteSeoIndRoofingDescription = 'site.seo.ind_roofing.description';
+  /// Roofing service reports — KaamNishaan
+  static const siteSeoIndRoofingTitle = 'site.seo.ind_roofing.title';
+  /// Photo proof, checklists and AI reports made for solar teams. Settle disputes and get paid faster.
+  static const siteSeoIndSolarDescription = 'site.seo.ind_solar.description';
+  /// Solar service reports — KaamNishaan
+  static const siteSeoIndSolarTitle = 'site.seo.ind_solar.title';
+  /// Simple monthly plans for field service teams. AI reports and follow-up credits on every plan. Start with a free trial.
+  static const siteSeoPricingDescription = 'site.seo.pricing.description';
+  /// Pricing — KaamNishaan
+  static const siteSeoPricingTitle = 'site.seo.pricing.title';
+  /// We are still building it. In the meantime, see how KaamNishaan works or check our prices.
+  static const siteSoonBody = 'site.soon.body';
+  /// Go to home
+  static const siteSoonHome = 'site.soon.home';
+  /// This page is coming soon
+  static const siteSoonTitle = 'site.soon.title';
+  /// Dedicated
+  static const siteSupportDedicated = 'site.support.dedicated';
   /// Email
-  static const adminPfEmail = 'admin.pf.email';
-  /// Your login; it can’t be changed. For a new email, a super admin invites you again.
-  static const adminPfEmailHint = 'admin.pf.email_hint';
-  /// Language
-  static const adminPfLang = 'admin.pf.lang';
-  /// Role
-  static const adminPfRole = 'admin.pf.role';
-  /// Security
-  static const adminPfSecurity = 'admin.pf.security';
-  /// Protect the admin panel.
-  static const adminPfSecuritySub = 'admin.pf.security_sub';
-  /// 2-step login
-  static const adminPfTwoStep = 'admin.pf.two_step';
-  /// Authenticator app · required for all staff
-  static const adminPfTwoStepHint = 'admin.pf.two_step_hint';
-  /// Login alerts
-  static const adminPfAlerts = 'admin.pf.alerts';
-  /// Email when a new device logs in · needs an email service (not connected)
-  static const adminPfAlertsHint = 'admin.pf.alerts_hint';
-  /// Change password
-  static const adminPfPw = 'admin.pf.pw';
-  /// Current password
-  static const adminPfPwCurrent = 'admin.pf.pw_current';
-  /// New password
-  static const adminPfPwNew = 'admin.pf.pw_new';
-  /// Code from your authenticator app
-  static const adminPfCode = 'admin.pf.code';
-  /// At least 8 characters with a letter and a number. Other devices are logged out.
-  static const adminPfPwHint = 'admin.pf.pw_hint';
-  /// Change password
-  static const adminPfPwSave = 'admin.pf.pw_save';
-  /// Password changed. Other devices were logged out.
-  static const adminPfPwDone = 'admin.pf.pw_done';
-  /// Recovery codes
-  static const adminPfCodes = 'admin.pf.codes';
-  /// {n} unused codes left, for when you don’t have your phone.
-  static const adminPfCodesLeft = 'admin.pf.codes_left';
-  /// Get new codes
-  static const adminPfCodesNew = 'admin.pf.codes_new';
-  /// Save these now; they are shown only once and the old codes no longer work.
-  static const adminPfCodesOnce = 'admin.pf.codes_once';
-  /// Copy
-  static const adminPfCopy = 'admin.pf.copy';
-  /// Copied
-  static const adminPfCopied = 'admin.pf.copied';
-  /// Active sessions
-  static const adminPfSessions = 'admin.pf.sessions';
-  /// Where you are logged in. Sessions end 12 hours after log in.
-  static const adminPfSessionsSub = 'admin.pf.sessions_sub';
-  /// This device
-  static const adminPfThisDevice = 'admin.pf.this_device';
-  /// Last used {ago}
-  static const adminPfLastUsed = 'admin.pf.last_used';
-  /// Current
-  static const adminPfCurrent = 'admin.pf.current';
-  /// Log out
-  static const adminPfEnd = 'admin.pf.end';
-  /// Lost your phone? Another super admin can send you a new setup link from
-  static const adminPfResetNote = 'admin.pf.reset_note';
-  /// Changed the report language for new companies
-  static const adminAuALocalizationUpdated = 'admin.au.a.localization.updated';
-  /// Changed their profile
-  static const adminAuAStaffProfileUpdated = 'admin.au.a.staff.profile_updated';
-  /// Changed their password
-  static const adminAuAStaffPasswordChanged = 'admin.au.a.staff.password_changed';
-  /// Made new recovery codes
-  static const adminAuAStaffRecoveryCodesNew = 'admin.au.a.staff.recovery_codes_new';
-  /// Logged out another device
-  static const adminAuAStaffSessionEnded = 'admin.au.a.staff.session_ended';
-  /// No approved reports with times yet
-  static const adminAnNoReview = 'admin.an.no_review';
-  /// Delete account
-  static const meDeleteAccount = 'me.delete_account';
-  /// Delete your account
-  static const delTitle = 'del.title';
-  /// Read what happens before you go.
-  static const delBody = 'del.body';
-  /// Your name, phone, email and photo are wiped.
-  static const delFactDetails = 'del.fact_details';
-  /// You are logged out on every phone and computer.
-  static const delFactLogout = 'del.fact_logout';
-  /// Jobs, photos and reports you made stay with {company}, shown as “Deleted user”.
-  static const delFactWork = 'del.fact_work';
-  /// {n} open jobs go back to the office to give to someone else.
-  static const delFactJobs = 'del.fact_jobs';
-  /// This can’t be undone. To use KaamNishaan again you start a new account.
-  static const delFactForever = 'del.fact_forever';
-  /// You are the only person in {company}, so the company closes too.
-  static const delCloses = 'del.closes';
-  /// Choose a new owner for {company}
-  static const delOwnerTitle = 'del.owner_title';
-  /// Your team keeps working. The new owner gets billing and settings; you become a manager until you delete.
-  static const delOwnerBody = 'del.owner_body';
-  /// Switch to this company in the app first, then choose the new owner here.
-  static const delOwnerSwitch = 'del.owner_switch';
-  /// Make owner
-  static const delOwnerButton = 'del.owner_button';
-  /// {company} has a new owner.
-  static const delOwnerDone = 'del.owner_done';
-  /// Why are you leaving? (optional)
-  static const delReason = 'del.reason';
-  /// It helps us do better.
-  static const delReasonHint = 'del.reason_hint';
-  /// I understand my account is deleted for good.
-  static const delUnderstood = 'del.understood';
-  /// Delete my account
-  static const delButton = 'del.button';
-  /// Tick the box to confirm.
-  static const delErrConfirm = 'del.err_confirm';
-  /// Choose a new owner for your company first.
-  static const delErrOwner = 'del.err_owner';
-  /// Something went wrong. Please try again.
-  static const delErrGeneric = 'del.err_generic';
-  /// Your account is deleted. Thank you for using KaamNishaan.
-  static const delDone = 'del.done';
-  /// Deleted their account on {day}. Their details are wiped; their work stays with the company.
-  static const adminUdDeleted = 'admin.ud.deleted';
-  /// Deleted their account
-  static const adminAuAAccountDeleted = 'admin.au.a.account.deleted';
-  /// Left the company (account deleted)
-  static const adminAuATeamLeft = 'admin.au.a.team.left';
-  /// Handed the company to a new owner
-  static const adminAuATeamOwnerChanged = 'admin.au.a.team.owner_changed';
-  /// Closed the company when deleting their account
-  static const adminAuACompanyClosedByOwner = 'admin.au.a.company.closed_by_owner';
-  /// Reference photo
-  static const cbRef = 'cb.ref';
-  /// Shows the technician what a good answer looks like.
-  static const cbRefHint = 'cb.ref_hint';
-  /// Add reference photo
-  static const cbRefAdd = 'cb.ref_add';
-  /// Change
-  static const cbRefChange = 'cb.ref_change';
-  /// Remove
-  static const cbRefRemove = 'cb.ref_remove';
-  /// The reference photo didn't upload. Try again.
-  static const cbRefFailed = 'cb.ref_failed';
-  /// Reference photo
-  static const adminClRef = 'admin.cl.ref';
-  /// Reference photo saved.
-  static const adminClRefSaved = 'admin.cl.ref_saved';
-  /// Change reference photo
-  static const adminClRefChange = 'admin.cl.ref_change';
-  /// Add reference photo
-  static const adminClRefAdd = 'admin.cl.ref_add';
-  /// Reference photo removed.
-  static const adminClRefRemoved = 'admin.cl.ref_removed';
-  /// Remove
-  static const adminClRefRemove = 'admin.cl.ref_remove';
-  /// Shows technicians what a good answer looks like. Companies that already copied this template keep their photo.
-  static const adminClRefHint = 'admin.cl.ref_hint';
-  /// Reference photo set
-  static const adminAuAChecklistReferenceSet = 'admin.au.a.checklist.reference_set';
-  /// Reference photo removed
-  static const adminAuAChecklistReferenceRemoved = 'admin.au.a.checklist.reference_removed';
-  /// Choices
-  static const cbChoices = 'cb.choices';
-  /// Choice {n}
-  static const cbChoiceHint = 'cb.choice_hint';
-  /// Add a choice
-  static const cbChoiceAdd = 'cb.choice_add';
-  /// Remove choice
-  static const cbChoiceRemove = 'cb.choice_remove';
-  /// Write at least 2 choices.
-  static const cbOptionsNeeded = 'cb.options_needed';
-  /// Answer needed
-  static const cbRequired = 'cb.required';
-  /// Off: the technician can skip it.
-  static const cbRequiredSub = 'cb.required_sub';
-  /// Optional
-  static const cbOptional = 'cb.optional';
-  /// Show only if
-  static const cbRule = 'cb.rule';
-  /// Ask this only after a certain answer.
-  static const cbRuleSub = 'cb.rule_sub';
-  /// Always
-  static const cbRuleAlways = 'cb.rule_always';
-  /// Q{n}
-  static const cbRuleQ = 'cb.rule_q';
-  /// When “{question}” is:
-  static const cbRuleWhen = 'cb.rule_when';
-  /// Only if Q{n} is {answer}
-  static const cbRuleNote = 'cb.rule_note';
-  /// Preview
-  static const cbPreview = 'cb.preview';
-  /// {n} of {m} questions shown · tap answers to try the rules
-  static const cbPreviewCount = 'cb.preview_count';
-  /// Words or a voice note
-  static const cbPreviewWords = 'cb.preview_words';
-  /// Translations
-  static const cbTrTitle = 'cb.tr_title';
-  /// Check
-  static const cbTrOpen = 'cb.tr_open';
-  /// Every question is ready in this language.
-  static const cbTrAllReady = 'cb.tr_all_ready';
-  /// {n} to check
-  static const cbTrLeft = 'cb.tr_left';
-  /// Ready
-  static const cbTrReadyOne = 'cb.tr_ready_one';
-  /// Check it
-  static const cbTrCheck = 'cb.tr_check';
-  /// Missing
-  static const cbTrMissing = 'cb.tr_missing';
-  /// Type it in {lang}
-  static const cbTrHint = 'cb.tr_hint';
-  /// Save
-  static const cbTrSave = 'cb.tr_save';
-  /// Looks right
-  static const cbTrLooksRight = 'cb.tr_looks_right';
-  /// Translation saved.
-  static const cbTrSaved = 'cb.tr_saved';
-  /// Type the words first.
-  static const cbTrEmpty = 'cb.tr_empty';
-  /// Speak instead of typing
-  static const dictateSpeak = 'dictate.speak';
-  /// Stop listening
-  static const dictateStop = 'dictate.stop';
-  /// Listening… tap the square to stop
-  static const dictateListening = 'dictate.listening';
-  /// Writing it down…
-  static const dictateWorking = 'dictate.working';
-  /// The microphone is off. Turn it on in the phone's settings, or type it.
-  static const dictateOff = 'dictate.off';
-  /// Couldn't hear any words. Try again a little closer.
-  static const dictateUnclear = 'dictate.unclear';
-  /// Speaking instead of typing isn't available right now. Please type it.
-  static const dictateNoAi = 'dictate.no_ai';
-  /// Couldn't turn that into words. Try again, or type it.
-  static const dictateFailed = 'dictate.failed';
-  /// Search name, phone or city
-  static const customersSearch = 'customers.search';
-  /// Add customer
-  static const customersAdd = 'customers.add';
-  /// Edit customer
-  static const customersEdit = 'customers.edit';
-  /// Save changes
-  static const customersSave = 'customers.save';
-  /// Customer added.
-  static const customersAdded = 'customers.added';
-  /// Customer saved.
-  static const customersSaved = 'customers.saved';
-  /// {n} jobs
-  static const customersJobs = 'customers.jobs';
-  /// 1 job
-  static const customersJobOne = 'customers.job_one';
-  /// No jobs yet
-  static const customersNoJobs = 'customers.no_jobs';
-  /// No customer matches “{q}”.
-  static const customersNoResults = 'customers.no_results';
-  /// No customers yet
-  static const customersEmptyTitle = 'customers.empty_title';
-  /// Customers are added with each new job, or here with “Add customer”.
-  static const customersEmptyBody = 'customers.empty_body';
-  /// Customer name
-  static const customersName = 'customers.name';
-  /// Person or business
-  static const customersNameHint = 'customers.name_hint';
-  /// Type the customer's name.
-  static const customersNameNeeded = 'customers.name_needed';
-  /// How to reach them
-  static const customersReach = 'customers.reach';
-  /// Phone
-  static const customersPhone = 'customers.phone';
-  /// Mobile number
-  static const customersPhoneHint = 'customers.phone_hint';
-  /// This phone number doesn't look right.
-  static const customersPhoneBad = 'customers.phone_bad';
-  /// Email
-  static const customersEmail = 'customers.email';
-  /// For reports and review links
-  static const customersEmailHint = 'customers.email_hint';
-  /// This email doesn't look right.
-  static const customersEmailBad = 'customers.email_bad';
-  /// Main address
-  static const customersAddress = 'customers.address';
-  /// House, street
-  static const customersLine1 = 'customers.line1';
-  /// Where the work is done
-  static const customersLine1Hint = 'customers.line1_hint';
-  /// Area, landmark (optional)
-  static const customersLine2 = 'customers.line2';
-  /// City
-  static const customersCity = 'customers.city';
-  /// PIN code
-  static const customersPostcode = 'customers.postcode';
-  /// Type the house and street.
-  static const customersAddressNeeded = 'customers.address_needed';
-  /// Note for your team
-  static const customersNote = 'customers.note';
-  /// Gate code, dog, best time to call… (customers don't see this)
-  static const customersNoteHint = 'customers.note_hint';
-  /// Keep
-  static const commonKeep = 'common.keep';
-  /// Call
-  static const tmCall = 'tm.call';
-  /// Joined {date}
-  static const tmJoined = 'tm.joined';
-  /// Invite sent {ago}
-  static const tmInvited = 'tm.invited';
-  /// Not started
-  static const tmWaiting = 'tm.waiting';
+  static const siteSupportEmail = 'site.support.email';
+  /// Email and chat
+  static const siteSupportEmailChat = 'site.support.email_chat';
+  /// Priority
+  static const siteSupportPriority = 'site.support.priority';
+  /// Dedicated onboarding and support
+  static const siteSupportLineDedicated = 'site.support_line.dedicated';
+  /// Email and chat support
+  static const siteSupportLineEmailChat = 'site.support_line.email_chat';
+  /// Priority support
+  static const siteSupportLinePriority = 'site.support_line.priority';
+  /// No card needed. Set up your company and first job in 15 minutes.
+  static const siteTrialBody = 'site.trial.body';
+  /// Company name
+  static const siteTrialCompany = 'site.trial.company';
+  /// Country
+  static const siteTrialCountry = 'site.trial.country';
+  /// Work email
+  static const siteTrialEmail = 'site.trial.email';
+  /// {n}-day free trial
+  static const siteTrialEyebrow = 'site.trial.eyebrow';
+  /// {n} things to fix before we create your workspace.
+  static const siteTrialFixMany = 'site.trial.fix_many';
+  /// 1 thing to fix before we create your workspace.
+  static const siteTrialFixOne = 'site.trial.fix_one';
+  /// Already have a workspace?
+  static const siteTrialHave = 'site.trial.have';
+  /// Hide
+  static const siteTrialHide = 'site.trial.hide';
+  /// Is this you?
+  static const siteTrialIsYou = 'site.trial.is_you';
+  /// Log in instead
+  static const siteTrialLoginInstead = 'site.trial.login_instead';
+  /// Your name
+  static const siteTrialName = 'site.trial.name';
+  /// Full name
+  static const siteTrialNameHint = 'site.trial.name_hint';
+  /// Password
+  static const siteTrialPassword = 'site.trial.password';
+  /// Privacy policy
+  static const siteTrialPrivacyLink = 'site.trial.privacy_link';
+  /// At least {min} characters (you have {n})
+  static const siteTrialRuleLen = 'site.trial.rule_len';
+  /// Contains a letter and a number
+  static const siteTrialRuleMix = 'site.trial.rule_mix';
+  /// Does not include your name or email
+  static const siteTrialRuleName = 'site.trial.rule_name';
+  /// Show
+  static const siteTrialShow = 'site.trial.show';
+  /// Strong password
+  static const siteTrialStrong = 'site.trial.strong';
+  /// Create my workspace
+  static const siteTrialSubmit = 'site.trial.submit';
+  /// This email already has a KaamNishaan workspace.
+  static const siteTrialTaken = 'site.trial.taken';
+  /// By continuing you agree to the {terms} and {privacy}.
+  static const siteTrialTerms = 'site.trial.terms';
+  /// Terms
+  static const siteTrialTermsLink = 'site.trial.terms_link';
+  /// Start your free trial
+  static const siteTrialTitle = 'site.trial.title';
+  /// Trade
+  static const siteTrialTrade = 'site.trial.trade';
+  /// Choose your trade
+  static const siteTrialTradeHint = 'site.trial.trade_hint';
+  /// Weak password
+  static const siteTrialWeak = 'site.trial.weak';
+  /// Win disputes
+  static const siteWhyB1 = 'site.why.b1';
+  /// Timestamped proof for every job, ready when a customer questions the work.
+  static const siteWhyB1Body = 'site.why.b1_body';
+  /// Get paid faster
+  static const siteWhyB2 = 'site.why.b2';
+  /// Customers see the finished work, so invoices are approved sooner.
+  static const siteWhyB2Body = 'site.why.b2_body';
+  /// Save office time
+  static const siteWhyB3 = 'site.why.b3';
+  /// No more chasing technicians for photos and notes at the end of the day.
+  static const siteWhyB3Body = 'site.why.b3_body';
+  /// Look professional
+  static const siteWhyB4 = 'site.why.b4';
+  /// Branded reports in your customer’s language, sent the same day.
+  static const siteWhyB4Body = 'site.why.b4_body';
+  /// Proof on every job pays for itself the first time a customer questions the work.
+  static const siteWhyBody = 'site.why.body';
+  /// 15 min
+  static const siteWhyS1 = 'site.why.s1';
+  /// to set up your team
+  static const siteWhyS1L = 'site.why.s1_l';
+  /// 5 languages
+  static const siteWhyS2 = 'site.why.s2';
+  /// for voice notes and reports
+  static const siteWhyS2L = 'site.why.s2_l';
+  /// 0 typing
+  static const siteWhyS3 = 'site.why.s3';
+  /// for technicians on site
+  static const siteWhyS3L = 'site.why.s3_l';
+  /// 1 tap
+  static const siteWhyS4 = 'site.why.s4';
+  /// to send an approved report
+  static const siteWhyS4L = 'site.why.s4_l';
+  /// Why teams switch
+  static const siteWhyTitle = 'site.why.title';
+  /// Proof of work for field technicians
+  static const splashSubtitle = 'splash.subtitle';
+  /// After
+  static const stageAfter = 'stage.after';
+  /// Before
+  static const stageBefore = 'stage.before';
+  /// During
+  static const stageDuring = 'stage.during';
+  /// Check your internet and try again. Your saved photos and notes are safe.
+  static const startupBody = 'startup.body';
+  /// Try again
+  static const startupRetry = 'startup.retry';
+  /// KaamNishaan couldn't start
+  static const startupTitle = 'startup.title';
+  /// Assigned
+  static const statusAssigned = 'status.assigned';
+  /// Cancelled
+  static const statusCancelled = 'status.cancelled';
+  /// Changes asked
+  static const statusChangesRequested = 'status.changes_requested';
+  /// Done
+  static const statusCompleted = 'status.completed';
+  /// In progress
+  static const statusInProgress = 'status.in_progress';
+  /// Review
+  static const statusInReview = 'status.in_review';
+  /// Unassigned
+  static const statusUnassigned = 'status.unassigned';
+  /// Waiting to send
+  static const syncWaiting = 'sync.waiting';
+  /// Clean work
+  static const tagCleanWork = 'tag.clean_work';
+  /// Explained clearly
+  static const tagExplainedClearly = 'tag.explained_clearly';
+  /// Fixed first time
+  static const tagFixedFirstTime = 'tag.fixed_first_time';
+  /// Late
+  static const tagLate = 'tag.late';
+  /// Messy
+  static const tagMessy = 'tag.messy';
+  /// Not explained
+  static const tagNotExplained = 'tag.not_explained';
+  /// Not fixed
+  static const tagNotFixed = 'tag.not_fixed';
+  /// On time
+  static const tagOnTime = 'tag.on_time';
+  /// Polite
+  static const tagPolite = 'tag.polite';
+  /// Rude
+  static const tagRude = 'tag.rude';
+  /// All {n}
+  static const teamAll = 'team.all';
+  /// Driving
+  static const teamDriving = 'team.driving';
+  /// Invite your technicians. They join with a link by SMS.
+  static const teamEmptyBody = 'team.empty_body';
+  /// Only you so far
+  static const teamEmptyTitle = 'team.empty_title';
+  /// Free
+  static const teamFree = 'team.free';
+  /// Invite person
+  static const teamInvitePerson = 'team.invite_person';
+  /// {role} · {n} jobs
+  static const teamJobsToday = 'team.jobs_today';
+  /// Managers {n}
+  static const teamManagers = 'team.managers';
+  /// No one called “{q}”
+  static const teamNoResults = 'team.no_results';
+  /// On a job
+  static const teamOnJob = 'team.on_job';
+  /// Online
+  static const teamOnline = 'team.online';
+  /// Resend
+  static const teamResend = 'team.resend';
+  /// Invite sent again to {name}
+  static const teamResent = 'team.resent';
+  /// Search name or phone
+  static const teamSearch = 'team.search';
+  /// {role} · SMS sent {ago}
+  static const teamSmsSent = 'team.sms_sent';
+  /// {company} · {n} people
+  static const teamSubtitle = 'team.subtitle';
+  /// Technicians {n}
+  static const teamTechnicians = 'team.technicians';
+  /// Team
+  static const teamTitle = 'team.title';
+  /// Waiting to join
+  static const teamWaiting = 'team.waiting';
+  /// {name} (you)
+  static const teamYou = 'team.you';
+  /// {count} days ago
+  static const timeDaysAgo = 'time.days_ago';
+  /// {count} h ago
+  static const timeHoursAgo = 'time.hours_ago';
+  /// just now
+  static const timeJustNow = 'time.just_now';
+  /// {count} min ago
+  static const timeMinutesAgo = 'time.minutes_ago';
+  /// today
+  static const timeToday = 'time.today';
   /// Going on
   static const tmActive = 'tm.active';
+  /// Call
+  static const tmCall = 'tm.call';
+  /// Cancel invite
+  static const tmCancelInvite = 'tm.cancel_invite';
+  /// The link in their SMS will stop working. You can invite them again later.
+  static const tmCancelInviteBody = 'tm.cancel_invite_body';
+  /// Cancel {name}'s invite?
+  static const tmCancelInviteTitle = 'tm.cancel_invite_title';
   /// Done in 30 days
   static const tmDone = 'tm.done';
+  /// {name}'s invite is cancelled.
+  static const tmInviteCancelled = 'tm.invite_cancelled';
+  /// Invite sent {ago}
+  static const tmInvited = 'tm.invited';
+  /// Joined {date}
+  static const tmJoined = 'tm.joined';
   /// Make manager
   static const tmMakeManager = 'tm.make_manager';
-  /// Make technician
-  static const tmMakeTechnician = 'tm.make_technician';
-  /// Make {name} a manager?
-  static const tmMakeManagerTitle = 'tm.make_manager_title';
-  /// Make {name} a technician?
-  static const tmMakeTechnicianTitle = 'tm.make_technician_title';
   /// Managers see every job, check reports before they go to customers, and invite technicians.
   static const tmMakeManagerBody = 'tm.make_manager_body';
+  /// Make {name} a manager?
+  static const tmMakeManagerTitle = 'tm.make_manager_title';
+  /// Make technician
+  static const tmMakeTechnician = 'tm.make_technician';
   /// They will see only the jobs given to them. Their manager rights stop at once.
   static const tmMakeTechnicianBody = 'tm.make_technician_body';
-  /// {name}'s role is now {role}.
-  static const tmRoleChanged = 'tm.role_changed';
+  /// Make {name} a technician?
+  static const tmMakeTechnicianTitle = 'tm.make_technician_title';
+  /// Only the owner can change or remove managers.
+  static const tmOwnerOnly = 'tm.owner_only';
   /// Remove from team
   static const tmRemove = 'tm.remove';
-  /// Remove {name} from the team?
-  static const tmRemoveTitle = 'tm.remove_title';
   /// They can't open your company's jobs any more. Their finished work stays.
   static const tmRemoveBody = 'tm.remove_body';
   /// Their {n} jobs not started go back to Unassigned, so you can give them to someone else. Jobs they started stay with them, and their finished work stays.
   static const tmRemoveBodyJobs = 'tm.remove_body_jobs';
   /// They can't open your company's jobs or reports any more. Their past work stays.
   static const tmRemoveBodyManager = 'tm.remove_body_manager';
+  /// Remove {name} from the team?
+  static const tmRemoveTitle = 'tm.remove_title';
   /// {name} is no longer on the team.
   static const tmRemoved = 'tm.removed';
-  /// Cancel invite
-  static const tmCancelInvite = 'tm.cancel_invite';
-  /// Cancel {name}'s invite?
-  static const tmCancelInviteTitle = 'tm.cancel_invite_title';
-  /// The link in their SMS will stop working. You can invite them again later.
-  static const tmCancelInviteBody = 'tm.cancel_invite_body';
-  /// {name}'s invite is cancelled.
-  static const tmInviteCancelled = 'tm.invite_cancelled';
-  /// Only the owner can change or remove managers.
-  static const tmOwnerOnly = 'tm.owner_only';
-  /// Assign technician
-  static const jobAssign = 'job.assign';
-  /// Change technician
-  static const jobChangeTech = 'job.change_tech';
-  /// Job options
-  static const jobMenu = 'job.menu';
-  /// Cancel job
-  static const jobCancel = 'job.cancel';
-  /// Cancel this job?
-  static const jobCancelTitle = 'job.cancel_title';
-  /// Say why. It goes on the job's timeline, and the technician sees the job is cancelled.
-  static const jobCancelBody = 'job.cancel_body';
-  /// Why is it cancelled?
-  static const jobCancelHint = 'job.cancel_hint';
-  /// Customer cancelled
-  static const jobCancelWhyCustomer = 'job.cancel_why_customer';
-  /// Moved to another day
-  static const jobCancelWhyMoved = 'job.cancel_why_moved';
-  /// Made twice by mistake
-  static const jobCancelWhyTwice = 'job.cancel_why_twice';
-  /// Job cancelled.
-  static const jobCancelled = 'job.cancelled';
-  /// Delete job
-  static const jobDelete = 'job.delete';
-  /// Delete this job?
-  static const jobDeleteTitle = 'job.delete_title';
-  /// Nobody has started it. It goes from every list and can't be brought back.
-  static const jobDeleteBody = 'job.delete_body';
-  /// Job deleted.
-  static const jobDeleted = 'job.deleted';
-  /// State
-  static const jfState = 'jf.state';
-  /// Technician
-  static const jfTechnician = 'jf.technician';
+  /// {name}'s role is now {role}.
+  static const tmRoleChanged = 'tm.role_changed';
   /// Not started
-  static const jfWaiting = 'jf.waiting';
-  /// In progress
-  static const jfGoing = 'jf.going';
-  /// To check
-  static const jfToCheck = 'jf.to_check';
+  static const tmWaiting = 'tm.waiting';
+  /// Call {name}, your manager.
+  static const todayCallManager = 'today.call_manager';
+  /// Continue job
+  static const todayContinueJob = 'today.continue_job';
   /// Done
-  static const jfDone = 'jf.done';
-  /// Cancelled
-  static const jfCancelled = 'jf.cancelled';
-  /// Clear
-  static const jfClear = 'jf.clear';
-  /// Show jobs
-  static const jfShow = 'jf.show';
-  /// What are you working on?
-  static const capTitle = 'cap.title';
-  /// No job is going on. Open one of today's jobs to start it, or start a quick job.
-  static const capSub = 'cap.sub';
-  /// Photos and checklists belong to a job. Make one, or open one from the list.
-  static const capSubManager = 'cap.sub_manager';
-  /// Quick job
-  static const capQuickJob = 'cap.quick_job';
-  /// Work that wasn't planned: a customer asked on the spot
-  static const capQuickJobSub = 'cap.quick_job_sub';
-  /// New job
-  static const capNewJob = 'cap.new_job';
-  /// Make a job and give it to a technician
-  static const capNewJobSub = 'cap.new_job_sub';
-  /// All jobs
-  static const capAllJobs = 'cap.all_jobs';
-  /// Open a job to see or add its proof
-  static const capAllJobsSub = 'cap.all_jobs_sub';
-  /// Quick job
-  static const qjTitle = 'qj.title';
-  /// For work that wasn't planned. It goes to your manager like any other job.
-  static const qjSub = 'qj.sub';
-  /// What is the work?
-  static const qjWork = 'qj.work';
-  /// AC not cooling
-  static const qjWorkHint = 'qj.work_hint';
-  /// Say or type what the work is.
-  static const qjWorkNeeded = 'qj.work_needed';
-  /// Customer
-  static const qjCustomer = 'qj.customer';
-  /// Say or type the customer's name.
-  static const qjCustomerNeeded = 'qj.customer_needed';
-  /// Customer's phone (optional)
-  static const qjPhone = 'qj.phone';
-  /// Address (optional)
-  static const qjAddress = 'qj.address';
-  /// Your company lets the office share photos. Ask your manager.
-  static const photoShareOffice = 'photo.share_office';
-  /// Couldn't get the photo ready. Try again.
-  static const photoShareFailed = 'photo.share_failed';
-  /// Before and after: {what} · {when}
-  static const pairShareText = 'pair.share_text';
+  static const todayDone = 'today.done';
+  /// New jobs from your manager will show here.
+  static const todayEmptyBody = 'today.empty_body';
+  /// No jobs today
+  static const todayEmptyTitle = 'today.empty_title';
+  /// Expecting a job?
+  static const todayExpecting = 'today.expecting';
+  /// {title} · done
+  static const todayJobDone = 'today.job_done';
+  /// Jobs today
+  static const todayJobs = 'today.jobs';
+  /// Loading your jobs…
+  static const todayLoading = 'today.loading';
+  /// Next up
+  static const todayNextUp = 'today.next_up';
+  /// NOW · In progress
+  static const todayNow = 'today.now';
+  /// Photos
+  static const todayPhotos = 'today.photos';
+  /// Proof
+  static const todayProof = 'today.proof';
+  /// {done} of {total} steps
+  static const todayProofSteps = 'today.proof_steps';
+  /// Saved on phone
+  static const todaySavedOnPhone = 'today.saved_on_phone';
+  /// We sent a link to {email}. Tap it to confirm your email.
+  static const veBody = 've.body';
+  /// Change it
+  static const veChange = 've.change';
+  /// Work email
+  static const veChangeLabel = 've.change_label';
+  /// Send link
+  static const veChangeSend = 've.change_send';
+  /// Change email
+  static const veChangeTitle = 've.change_title';
+  /// Check your inbox
+  static const veHead = 've.head';
+  /// Do it later
+  static const veLater = 've.later';
+  /// Tap the button to confirm this email for KaamNishaan.
+  static const veMailBody = 've.mail_body';
+  /// KaamNishaan
+  static const veMailFrom = 've.mail_from';
+  /// Verify your email
+  static const veMailSubject = 've.mail_subject';
+  /// Just now
+  static const veMailWhen = 've.mail_when';
+  /// Open email app
+  static const veOpenMail = 've.open_mail';
+  /// Resend link
+  static const veResend = 've.resend';
+  /// Resend in {time}
+  static const veResendIn = 've.resend_in';
+  /// A new link is on its way.
+  static const veResent = 've.resent';
+  /// Step 1 of 2
+  static const veStep = 've.step';
+  /// Verify email
+  static const veTitle = 've.title';
+  /// Email confirmed
+  static const veVerified = 've.verified';
+  /// Wrong email?
+  static const veWrong = 've.wrong';
+  /// Speak in any language
+  static const voiceAnyLanguage = 'voice.any_language';
+  /// 10 minutes is the most for one note. It was saved.
+  static const voiceMaxReached = 'voice.max_reached';
+  /// The microphone did not start. Try again.
+  static const voiceMicFailed = 'voice.mic_failed';
+  /// Turn it on to record voice notes. You can also type your notes instead.
+  static const voiceOffBody = 'voice.off_body';
+  /// How to turn it on
+  static const voiceOffHow = 'voice.off_how';
+  /// Open phone settings
+  static const voiceOffStep1 = 'voice.off_step1';
+  /// Tap Apps, then KaamNishaan
+  static const voiceOffStep2 = 'voice.off_step2';
+  /// Turn on Microphone
+  static const voiceOffStep3 = 'voice.off_step3';
+  /// Microphone is off
+  static const voiceOffTitle = 'voice.off_title';
+  /// Open phone settings
+  static const voiceOpenSettings = 'voice.open_settings';
+  /// Pause
+  static const voicePause = 'voice.pause';
+  /// Paused {time}
+  static const voicePaused = 'voice.paused';
+  /// What was wrong, what you fixed, any advice.
+  static const voicePromptBody = 'voice.prompt_body';
+  /// Tell us what you did
+  static const voicePromptTitle = 'voice.prompt_title';
+  /// Recording {time}
+  static const voiceRecording = 'voice.recording';
+  /// Go on
+  static const voiceResume = 'voice.resume';
+  /// Voice note saved
+  static const voiceSaved = 'voice.saved';
+  /// Starting…
+  static const voiceStarting = 'voice.starting';
+  /// Stop and save
+  static const voiceStopSave = 'voice.stop_save';
+  /// Voice note
+  static const voiceTitle = 'voice.title';
+  /// Too short. Speak a little longer.
+  static const voiceTooShort = 'voice.too_short';
+  /// Type notes instead
+  static const voiceTypeInstead = 'voice.type_instead';
+  /// Save note
+  static const voiceTypeSave = 'voice.type_save';
+  /// Type your note
+  static const voiceTypeTitle = 'voice.type_title';
+  /// Note saved
+  static const voiceTypedSaved = 'voice.typed_saved';
+  /// Type it again
+  static const webAuthAgain = 'web.auth.again';
+  /// This link doesn't work
+  static const webAuthLinkBad = 'web.auth.link_bad';
+  /// It was already used, or part of it is missing. Ask for a new one in the KaamNishaan app.
+  static const webAuthLinkBadBody = 'web.auth.link_bad_body';
+  /// This link has expired
+  static const webAuthLinkExpired = 'web.auth.link_expired';
+  /// Ask for a new one in the KaamNishaan app.
+  static const webAuthLinkExpiredBody = 'web.auth.link_expired_body';
+  /// The two passwords are not the same.
+  static const webAuthMismatch = 'web.auth.mismatch';
+  /// New password
+  static const webAuthNewPassword = 'web.auth.new_password';
+  /// Use at least {n} characters.
+  static const webAuthResetBody = 'web.auth.reset_body';
+  /// Password changed
+  static const webAuthResetDone = 'web.auth.reset_done';
+  /// Open the KaamNishaan app and log in with your new password. You were logged out everywhere else.
+  static const webAuthResetDoneBody = 'web.auth.reset_done_body';
+  /// Make a new password
+  static const webAuthResetTitle = 'web.auth.reset_title';
+  /// Save new password
+  static const webAuthSave = 'web.auth.save';
+  /// Use at least {n} characters.
+  static const webAuthTooShort = 'web.auth.too_short';
+  /// Email confirmed
+  static const webAuthVerified = 'web.auth.verified';
+  /// You can go back to the KaamNishaan app now.
+  static const webAuthVerifiedBody = 'web.auth.verified_body';
+  /// Confirming your email…
+  static const webAuthVerifyWorking = 'web.auth.verify_working';
+  /// English
+  static const webLangEn = 'web.lang.en';
+  /// Español
+  static const webLangEs = 'web.lang.es';
+  /// Français
+  static const webLangFr = 'web.lang.fr';
+  /// ગુજરાતી
+  static const webLangGu = 'web.lang.gu';
+  /// हिन्दी
+  static const webLangHi = 'web.lang.hi';
+  /// Acknowledged by {name} · {date}. {company} has been notified.
+  static const webRAckLine = 'web.r.ack_line';
+  /// Acknowledge report
+  static const webRAcknowledge = 'web.r.acknowledge';
+  /// Acknowledged by you
+  static const webRAcknowledgedBadge = 'web.r.acknowledged_badge';
+  /// Our advice
+  static const webRAdvice = 'web.r.advice';
+  /// After
+  static const webRAfter = 'web.r.after';
+  /// All photos
+  static const webRAllPhotos = 'web.r.all_photos';
+  /// Approved by {name}
+  static const webRApprovedBy = 'web.r.approved_by';
+  /// Before
+  static const webRBefore = 'web.r.before';
+  /// Before and after
+  static const webRBeforeAfter = 'web.r.before_after';
+  /// Link looks broken? Open it from the original message, or check that the whole link was copied.
+  static const webRBroken = 'web.r.broken';
+  /// Checklist results
+  static const webRChecklist = 'web.r.checklist';
+  /// Checklist {a} of {b}
+  static const webRChecklistN = 'web.r.checklist_n';
+  /// Confirm
+  static const webRConfirm = 'web.r.confirm';
+  /// Download PDF
+  static const webRDownload = 'web.r.download';
+  /// Something went wrong. Please try again.
+  static const webRError = 'web.r.error';
+  /// Report links work for 30 days to keep your information safe. You can still get your report and rate the job.
+  static const webRExpiredBody = 'web.r.expired_body';
+  /// This link has expired
+  static const webRExpiredTitle = 'web.r.expired_title';
+  /// Happy with the work?
+  static const webRHappy = 'web.r.happy';
+  /// Acknowledge this report so {company} knows you have seen it. No account or app needed.
+  static const webRHappyBody = 'web.r.happy_body';
+  /// Loading your report…
+  static const webRLoading = 'web.r.loading';
+  /// {n} photos
+  static const webRNPhotos = 'web.r.n_photos';
+  /// Send me a new link
+  static const webRNewLink = 'web.r.new_link';
+  /// A new link was sent to {to}.
+  static const webRNewLinkSent = 'web.r.new_link_sent';
+  /// {company} has been told and will send you a new link.
+  static const webRNewLinkTold = 'web.r.new_link_told';
+  /// We can't find this report
+  static const webRNotFoundTitle = 'web.r.not_found_title';
+  /// {n} notes
+  static const webRNotes = 'web.r.notes';
+  /// 1 note
+  static const webROneNote = 'web.r.one_note';
+  /// {n} passed
+  static const webRPassed = 'web.r.passed';
+  /// PDF is being made…
+  static const webRPdfMaking = 'web.r.pdf_making';
+  /// {n} photos · time-stamped
+  static const webRPhotosStamped = 'web.r.photos_stamped';
+  /// Powered by KaamNishaan
+  static const webRPowered = 'web.r.powered';
+  /// Privacy
+  static const webRPrivacy = 'web.r.privacy';
+  /// Report #{n}
+  static const webRReportN = 'web.r.report_n';
+  /// {company} turned this link off. Ask them for a new one.
+  static const webRRevokedBody = 'web.r.revoked_body';
+  /// This link was turned off
+  static const webRRevokedTitle = 'web.r.revoked_title';
+  /// Secure link · works until {date}
+  static const webRSecure = 'web.r.secure';
+  /// Show all {n} checks
+  static const webRShowAll = 'web.r.show_all';
+  /// Service report · secured by KaamNishaan
+  static const webRSubtitle = 'web.r.subtitle';
+  /// Technician · {company}
+  static const webRTechLine = 'web.r.tech_line';
+  /// {name}, technician
+  static const webRTechnician = 'web.r.technician';
+  /// Thank you — report acknowledged
+  static const webRThanksAck = 'web.r.thanks_ack';
+  /// Service report for {customer}
+  static const webRTitle = 'web.r.title';
+  /// Notes translated from {language}
+  static const webRTranslated = 'web.r.translated';
+  /// Try again
+  static const webRTryAgain = 'web.r.try_again';
+  /// Work done
+  static const webRWorkDone = 'web.r.work_done';
+  /// Your name
+  static const webRYourName = 'web.r.your_name';
+  /// Organisation (optional)
+  static const webRYourOrg = 'web.r.your_org';
+  /// This job was already rated. Thank you!
+  static const webRateAlready = 'web.rate.already';
+  /// Ask the manager to call me
+  static const webRateCallMe = 'web.rate.call_me';
+  /// The manager is told right away and calls you within 1 working day.
+  static const webRateCallMeSub = 'web.rate.call_me_sub';
+  /// Post on Google
+  static const webRateGoogle = 'web.rate.google';
+  /// Help {company} by posting your review on Google too.
+  static const webRateGoogleBody = 'web.rate.google_body';
+  /// Happy with the service?
+  static const webRateGoogleTitle = 'web.rate.google_title';
+  /// Your feedback goes to {company}. It takes 30 seconds.
+  static const webRateIntro = 'web.rate.intro';
+  /// Pick a star rating first.
+  static const webRateMissing = 'web.rate.missing';
+  /// Tell us more (optional)
+  static const webRateMore = 'web.rate.more';
+  /// Only {company} sees your review unless you allow it.
+  static const webRatePrivate = 'web.rate.private';
+  /// {company} can show my review on their website (first name only).
+  static const webRatePublic = 'web.rate.public';
+  /// Very poor
+  static const webRateS1 = 'web.rate.s1';
+  /// Poor
+  static const webRateS2 = 'web.rate.s2';
+  /// OK
+  static const webRateS3 = 'web.rate.s3';
+  /// Very good
+  static const webRateS4 = 'web.rate.s4';
+  /// Excellent
+  static const webRateS5 = 'web.rate.s5';
+  /// Send review
+  static const webRateSend = 'web.rate.send';
+  /// Send feedback
+  static const webRateSendFeedback = 'web.rate.send_feedback';
+  /// Your review was sent to {company}.
+  static const webRateSentBody = 'web.rate.sent_body';
+  /// How was the service?
+  static const webRateService = 'web.rate.service';
+  /// Don't ask me again
+  static const webRateStop = 'web.rate.stop';
+  /// Okay — we won't ask you again.
+  static const webRateStopped = 'web.rate.stopped';
+  /// Rate {name}
+  static const webRateTech = 'web.rate.tech';
+  /// Thanks, {name}!
+  static const webRateThanks = 'web.rate.thanks';
+  /// Thank you!
+  static const webRateThanksPlain = 'web.rate.thanks_plain';
+  /// Rate this job
+  static const webRateTitle = 'web.rate.title';
+  /// What went well?
+  static const webRateWentWell = 'web.rate.went_well';
+  /// What went wrong?
+  static const webRateWentWrong = 'web.rate.went_wrong';
+  /// Set up your company and invite your team.
+  static const welcomeBusinessBody = 'welcome.business_body';
+  /// Start my business
+  static const welcomeBusinessTitle = 'welcome.business_title';
+  /// Already have an account?
+  static const welcomeHaveAccount = 'welcome.have_account';
+  /// Your company sent you an SMS or an invite card.
+  static const welcomeInviteBody = 'welcome.invite_body';
+  /// Most technicians
+  static const welcomeInviteTag = 'welcome.invite_tag';
+  /// I have an invite
+  static const welcomeInviteTitle = 'welcome.invite_title';
+  /// Log in
+  static const welcomeLogIn = 'welcome.log_in';
+  /// How do you want to start?
+  static const welcomeSubtitle = 'welcome.subtitle';
+  /// Welcome
+  static const welcomeTitle = 'welcome.title';
 }

@@ -8,6 +8,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.deps import Principal, get_db, get_principal
 from app.core.errors import Forbidden
 from app.schemas.work import (
+    AskManagerBody,
     AssignableList,
     AssignBody,
     CancelBody,
@@ -132,6 +133,26 @@ async def cancel(
     job_id: uuid.UUID, body: CancelBody, p: Principal = Depends(member), db: AsyncSession = Depends(get_db)
 ) -> JobOut:
     return await svc.job_out(db, p, await svc.cancel(db, p, job_id, body.reason))
+
+
+@router.get("/{job_id}/equipment-history", response_model=JobList)
+async def equipment_history(
+    job_id: uuid.UUID, p: Principal = Depends(member), db: AsyncSession = Depends(get_db)
+) -> JobList:
+    """Earlier jobs on this job's machine (M15 "Service history"), newest first, up to 20."""
+    return await svc.equipment_history(db, p, job_id)
+
+
+@router.post("/{job_id}/ask-manager", status_code=status.HTTP_204_NO_CONTENT)
+async def ask_manager(
+    job_id: uuid.UUID,
+    body: AskManagerBody,
+    p: Principal = Depends(member),
+    db: AsyncSession = Depends(get_db),
+) -> Response:
+    """The technician on the job asks the owners and managers about a checklist question (a message)."""
+    await svc.ask_manager(db, p, job_id, body.question, body.note)
+    return Response(status_code=204)
 
 
 @router.get("/{job_id}/timeline", response_model=Timeline)

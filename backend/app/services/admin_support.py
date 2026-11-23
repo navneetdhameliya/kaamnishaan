@@ -284,6 +284,7 @@ RULE_TO = {
     "report_shared": "technician",
     "review_received": "technician",
     "low_rating": "office",
+    "tech_question": "office",
     "support_reply": "person",
 }
 EMAIL_ONLY = ("plan_limit", "trial_ending", "weekly_summary")  # need the email service (D-96)

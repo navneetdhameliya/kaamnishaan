@@ -119,6 +119,7 @@ void main() {
       return ChecklistQuestionController(dictation: fakeDictation(), 
         checklists: checklists,
         files: files,
+        jobs: jobs,
         queue: queue,
         speech: FakeSpeech(),
         translation: translation,
@@ -176,6 +177,30 @@ void main() {
       await c.onSubmitTyped();
       expect(queue.answersFor('c1')['q3']?.value, 118.0);
       expect(c.current?.id, 'q4');
+      c.onClose();
+    });
+
+    test('"Not sure?" sends the question and the note to the manager', () async {
+      when(() => jobs.askManager(any(), question: any(named: 'question'), note: any(named: 'note')))
+          .thenAnswer((_) async => const ApiSuccess<void>(null));
+      final c = open(questions());
+      await c.load();
+      c.askNote.text = 'The filter looks new already';
+      await _ignoreToast(c.onAskManager); // "Sent" needs the toast overlay
+      verify(() => jobs.askManager('j1', question: 'Is the air filter clean?', note: 'The filter looks new already')).called(1);
+      expect(c.asking.value, isFalse);
+      c.onClose();
+    });
+
+    test('"Not sure?" can be tried again when sending fails', () async {
+      when(() => jobs.askManager(any(), question: any(named: 'question'), note: any(named: 'note')))
+          .thenAnswer((_) async => const ApiFailure<void>(ApiException(code: 'network', message: 'No internet')));
+      final c = open(questions());
+      await c.load();
+      await _ignoreToast(c.onAskManager); // the error toast needs the app's overlay
+      expect(c.asking.value, isFalse);
+      await _ignoreToast(c.onAskManager);
+      verify(() => jobs.askManager('j1', question: any(named: 'question'), note: any(named: 'note'))).called(2);
       c.onClose();
     });
   });

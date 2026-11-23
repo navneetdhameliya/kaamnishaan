@@ -65,3 +65,58 @@ async def test_reading_messages(client, ready):
     # someone else's message id changes nothing
     r = await client.post("/api/v1/notifications/read", json={}, headers=auth(ready["owner"]))
     assert r.json() == {"unread": 0}
+
+
+async def test_not_sure_asks_the_office(client, ready):
+    owner, tech, j = ready["owner"], ready["tech"], ready["job"]
+    url = f"/api/v1/jobs/{j['id']}/ask-manager"
+    body = {"question": "Is the condensate drain clear?", "note": "  Water is standing in the tray  "}
+    assert (await client.post(url, json=body, headers=auth(tech))).status_code == 204
+    got = (await messages(client, owner))["data"][0]
+    assert got["kind"] == "tech_question" and got["job_id"] == j["id"]
+    assert got["params"]["question"] == "Is the condensate drain clear?"
+    assert got["params"]["note"] == "Water is standing in the tray"
+    assert got["params"]["technician"] == tech["user"]["name"]
+    assert (await messages(client, tech))["data"][0]["kind"] != "tech_question"  # not to themselves
+    # only the technician on the job, and only while it is going on
+    assert (await client.post(url, json=body, headers=auth(owner))).status_code == 403
+    assert (await client.post(url, json={"question": ""}, headers=auth(tech))).status_code == 422
+
+
+async def test_service_history_shows_earlier_jobs_on_the_machine(client):
+    from tests.conftest import invite_and_join, make_owner
+    from tests.test_customers_jobs import TECH, TECH2, new_customer
+
+    owner = await make_owner(client)
+    a = await invite_and_join(client, owner, TECH)
+    b = await invite_and_join(client, owner, TECH2)
+    c = await new_customer(client, owner)
+    site = c["sites"][0]["id"]
+    eq = (
+        await client.post(
+            f"/api/v1/customers/{c['id']}/sites/{site}/equipment",
+            json={"type": "Split AC"},
+            headers=auth(owner),
+        )
+    ).json()
+    old = await new_job(
+        client, owner, c, title="Gas top-up", equipment_id=eq["id"], assigned_to=b["user"]["id"]
+    )
+    assert (await client.post(f"/api/v1/jobs/{old['id']}/start", headers=auth(b))).status_code == 200
+    await new_job(client, owner, c, title="Not started yet", equipment_id=eq["id"])
+    now = await new_job(
+        client, owner, c, title="AC not cooling", equipment_id=eq["id"], assigned_to=a["user"]["id"]
+    )
+    plain = await new_job(client, owner, c, title="No machine", assigned_to=a["user"]["id"])
+
+    # technician A sees the machine's earlier work even though B did it; jobs not started are left out
+    r = await client.get(f"/api/v1/jobs/{now['id']}/equipment-history", headers=auth(a))
+    assert r.status_code == 200 and [x["title"] for x in r.json()["data"]] == ["Gas top-up"]
+    assert r.json()["data"][0]["assignee"]["id"] == b["user"]["id"]
+    assert (await client.get(f"/api/v1/jobs/{plain['id']}/equipment-history", headers=auth(a))).json()[
+        "data"
+    ] == []
+    # someone who can't see the job can't see its history
+    assert (
+        await client.get(f"/api/v1/jobs/{old['id']}/equipment-history", headers=auth(a))
+    ).status_code == 404
