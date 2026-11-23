@@ -32,7 +32,15 @@ export function startLang(): Lang {
   return isLang(nav) ? nav : 'en';
 }
 
+let current: Lang | null = null;
+
+/** The language on screen now: sent to the API so its error messages come back in it (D-137). */
+export function currentLang(): Lang {
+  return (current ??= startLang());
+}
+
 export function rememberLang(lang: Lang): void {
+  current = lang;
   try {
     window.localStorage.setItem(KEY, lang);
   } catch {

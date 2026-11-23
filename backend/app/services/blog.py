@@ -249,7 +249,8 @@ def _ready(p: BlogPost) -> None:
         if missing:
             raise AppError(
                 "post_incomplete",
-                f"Finish the {lang} version first: {', '.join(missing)}.",
+                "Finish the {lang} version first: {missing}.",
+                params={"lang": lang, "missing": ", ".join(missing)},
                 fields={f"{lang}.{f}": "required" for f in missing},
             )
 

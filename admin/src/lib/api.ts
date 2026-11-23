@@ -1,4 +1,5 @@
 /** The KaamNishaan API, as staff. Set VITE_API_URL on Vercel (the Render API address). */
+import { currentLang } from './i18n';
 import { session } from './session';
 
 export const API_URL = (import.meta.env.VITE_API_URL as string | undefined)?.replace(/\/$/, '') || 'http://localhost:8000';
@@ -18,7 +19,7 @@ export class ApiError extends Error {
 type Init = { method?: string; body?: unknown; auth?: boolean; file?: Blob };
 
 async function send<T>(path: string, init: Init, token?: string): Promise<T> {
-  const headers: Record<string, string> = {};
+  const headers: Record<string, string> = { 'Accept-Language': currentLang() };
   if (init.body !== undefined) headers['Content-Type'] = 'application/json';
   if (init.file) headers['Content-Type'] = init.file.type || 'application/octet-stream';
   if (token) headers.Authorization = `Bearer ${token}`;
@@ -70,7 +71,9 @@ export async function api<T>(path: string, init: Init = {}): Promise<T> {
 /** Downloads a file the API makes (CSV export) with the staff token, and saves it. */
 export async function download(path: string, fallbackName: string): Promise<void> {
   const go = (token?: string) =>
-    fetch(`${API_URL}/api/v1${path}`, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
+    fetch(`${API_URL}/api/v1${path}`, {
+      headers: { 'Accept-Language': currentLang(), ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+    });
   let res: Response;
   try {
     res = await go(session.get()?.access_token);

@@ -70,13 +70,17 @@ def _check(key: str, lang: str, value: str | None, limit: int = 2000) -> str | N
         return None  # empty = back to the built-in text
     if len(value) > limit:
         raise AppError(
-            "validation_error", f"At most {limit} characters.", fields={f"{key}.{lang}": "too_long"}
+            "validation_error",
+            "At most {limit} characters.",
+            fields={f"{key}.{lang}": "too_long"},
+            params={"limit": limit},
         )
     if _placeholders(value) != text_keys()[key]:
         need = ", ".join("{" + p + "}" for p in text_keys()[key].split(",") if p) or "none"
         raise AppError(
             "validation_error",
-            f"Keep the same {{…}} parts as the original ({need}).",
+            "Keep the same {{…}} parts as the original ({need}).",
+            params={"need": need},
             fields={f"{key}.{lang}": "placeholders"},
         )
     return value
