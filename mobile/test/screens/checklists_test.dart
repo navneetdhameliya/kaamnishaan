@@ -289,7 +289,7 @@ void main() {
       args: const PhotoDetailArguments(jobId: 'j1', customer: 'Green Valley Clinic'),
     );
     await c.load();
-    expect((c.isSaved, c.choices('before').map((e) => e.id)), (true, ['b2', 'b1'])); // newest first
+    expect((c.isSaved, c.choices('before').map((e) => e.id).toList()), (true, ['b2', 'b1'])); // newest first
     await _ignoreToast(c.onUseTap); // already in the report: nothing is sent
     verifyNever(() => jobs.deletePair(any()));
     c.onPick(c.choices('before').first);
