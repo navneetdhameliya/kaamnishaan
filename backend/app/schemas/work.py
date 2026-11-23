@@ -225,6 +225,15 @@ class CancelBody(_In):
     reason: str = Field(min_length=1, max_length=300)
 
 
+class AskManagerBody(_In):
+    """A technician isn't sure how to answer ("Not sure? Ask your manager", M24)."""
+
+    question: str = Field(
+        min_length=1, max_length=300, description="The checklist question, as shown to them"
+    )
+    note: str | None = Field(default=None, max_length=500, description="What they want to ask, if anything")
+
+
 class CustomerRef(BaseModel):
     id: uuid.UUID
     name: str

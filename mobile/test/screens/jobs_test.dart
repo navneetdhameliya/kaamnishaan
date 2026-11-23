@@ -358,6 +358,26 @@ void main() {
       expect(c.canContinue, isFalse);
     });
 
+    test('the Equipment card lists earlier jobs on the machine with date and technician', () async {
+      final earlier = JobListItemModel(
+        id: 'j0', number: 'J-0990', title: 'Filter cleaning', status: 'completed',
+        scheduledAt: DateTime(2026, 8, 12, 10), customer: const CustomerRefModel(id: 'c1', name: 'Green Valley Clinic'),
+        assignee: const PersonRefModel(id: 'u1', name: 'Ramesh Patel'),
+        isQuickJob: false, version: 3, updatedAt: DateTime(2026, 8, 12),
+      );
+      final unassigned = job(id: 'j00', title: 'First install', status: 'completed', at: DateTime(2025, 3, 2, 9));
+      when(() => jobs.equipmentHistory(any())).thenAnswer(
+        (_) async => ApiSuccess<JobListModel>(JobListModel(data: [earlier, unassigned], meta: const ListMetaModel())),
+      );
+      final c = details(jobOut());
+      await c.loadHistory();
+      verify(() => jobs.equipmentHistory('j1')).called(1);
+      expect(c.history.value?.map((j) => j.id), ['j0', 'j00']);
+      expect(c.historyLine(earlier), '12 Aug 2026 · Ramesh Patel');
+      expect(c.historyLine(unassigned), '2 Mar 2025'); // nobody on it: the date alone
+      c.onClose();
+    });
+
     test('Navigate opens maps to the site; Call phones the contact; the speaker reads it', () async {
       final opened = <Uri>[];
       final c = details(jobOut(), opened: opened);

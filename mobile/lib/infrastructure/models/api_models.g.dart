@@ -7540,6 +7540,33 @@ class AskInModel {
       };
 }
 
+/// A technician isn't sure how to answer ("Not sure? Ask your manager", M24).
+AskManagerBodyModel askManagerBodyModelFromJson(String str) => AskManagerBodyModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String askManagerBodyModelToJson(AskManagerBodyModel data) => json.encode(data.toJson());
+
+class AskManagerBodyModel {
+  /// What they want to ask, if anything
+  final String? note;
+  /// The checklist question, as shown to them
+  final String question;
+
+  const AskManagerBodyModel({
+    this.note,
+    required this.question,
+  });
+
+  factory AskManagerBodyModel.fromJson(Map<String, dynamic> json) => AskManagerBodyModel(
+        note: json['note'] as String?,
+        question: json['question'] as String,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'note': note,
+        'question': question,
+      };
+}
+
 AskOutModel askOutModelFromJson(String str) => AskOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String askOutModelToJson(AskOutModel data) => json.encode(data.toJson());
@@ -12098,7 +12125,7 @@ class NotificationOutModel {
   final DateTime createdAt;
   final String id;
   final String? jobId;
-  /// One of: job_assigned, report_submitted, changes_requested, report_approved, report_shared, review_received, low_rating, support_reply, announcement
+  /// One of: job_assigned, report_submitted, changes_requested, report_approved, report_shared, review_received, low_rating, support_reply, tech_question, announcement
   final String kind;
   /// Names for the sentence the app writes in its own language: customer, job, report, note, scheduled_at (ISO), technician
   final Map<String, dynamic> params;

@@ -10354,6 +10354,37 @@
         "title": "AskIn",
         "type": "object"
       },
+      "AskManagerBody": {
+        "additionalProperties": false,
+        "description": "A technician isn't sure how to answer (\"Not sure? Ask your manager\", M24).",
+        "properties": {
+          "note": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "What they want to ask, if anything",
+            "title": "Note"
+          },
+          "question": {
+            "description": "The checklist question, as shown to them",
+            "maxLength": 300,
+            "minLength": 1,
+            "title": "Question",
+            "type": "string"
+          }
+        },
+        "required": [
+          "question"
+        ],
+        "title": "AskManagerBody",
+        "type": "object"
+      },
       "AskOut": {
         "properties": {
           "answer": {
@@ -16702,6 +16733,7 @@
               "review_received",
               "low_rating",
               "support_reply",
+              "tech_question",
               "announcement"
             ],
             "title": "Kind",
@@ -35765,6 +35797,58 @@
         ]
       }
     },
+    "/api/v1/jobs/{job_id}/ask-manager": {
+      "post": {
+        "description": "The technician on the job asks the owners and managers about a checklist question (a message).",
+        "operationId": "ask_manager_api_v1_jobs__job_id__ask_manager_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AskManagerBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Ask Manager",
+        "tags": [
+          "jobs"
+        ]
+      }
+    },
     "/api/v1/jobs/{job_id}/assign": {
       "post": {
         "operationId": "assign_api_v1_jobs__job_id__assign_post",
@@ -36104,6 +36188,55 @@
         "summary": "Detach Checklist",
         "tags": [
           "checklists"
+        ]
+      }
+    },
+    "/api/v1/jobs/{job_id}/equipment-history": {
+      "get": {
+        "description": "Earlier jobs on this job's machine (M15 \"Service history\"), newest first, up to 20.",
+        "operationId": "equipment_history_api_v1_jobs__job_id__equipment_history_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "required": true,
+            "schema": {
+              "format": "uuid",
+              "title": "Job Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobList"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Equipment History",
+        "tags": [
+          "jobs"
         ]
       }
     },

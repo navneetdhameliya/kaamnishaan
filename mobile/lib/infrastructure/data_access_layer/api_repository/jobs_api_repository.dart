@@ -95,6 +95,12 @@ abstract class IJobsApiRepository {
 
   /// Deletes a job nobody has started.
   Future<ApiResult<void>> delete(String jobId);
+
+  /// Earlier jobs on this job's machine, newest first (whoever did them).
+  Future<ApiResult<JobListModel>> equipmentHistory(String jobId);
+
+  /// "Not sure? Ask your manager": a message to the office about [question], with the technician's [note].
+  Future<ApiResult<void>> askManager(String jobId, {required String question, String? note});
 }
 
 class JobsApiRepository implements IJobsApiRepository {
@@ -229,5 +235,17 @@ class JobsApiRepository implements IJobsApiRepository {
   @override
   Future<ApiResult<void>> delete(String jobId) => guard(() async {
         await provider.deleteJob(jobId);
+      });
+
+  @override
+  Future<ApiResult<JobListModel>> equipmentHistory(String jobId) =>
+      guard(() async => JobListModel.fromJson(_map(await provider.getEquipmentHistory(jobId))));
+
+  @override
+  Future<ApiResult<void>> askManager(String jobId, {required String question, String? note}) => guard(() async {
+        await provider.postAskManager(jobId, {
+          'question': question,
+          if (note != null && note.trim().isNotEmpty) 'note': note.trim(),
+        });
       });
 }

@@ -10,6 +10,7 @@ class ChecklistQuestionBinding extends Bindings {
       () => ChecklistQuestionController(
         checklists: Get.find(),
         files: Get.find(),
+        jobs: Get.find(),
         queue: Get.find(),
         speech: Get.find(),
         translation: Get.find(),

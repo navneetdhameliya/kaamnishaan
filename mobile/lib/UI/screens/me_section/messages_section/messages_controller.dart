@@ -88,6 +88,7 @@ class MessagesController extends GetxController {
         'review_received' => LangKeys.msgReviewTitle.tr,
         'low_rating' => LangKeys.msgLowTitle.tr,
         'support_reply' => LangKeys.msgSupportTitle.tr,
+        'tech_question' => LangKeys.msgQuestionTitle.tr,
         'announcement' => _inLanguage(n, 'title'),
         _ => LangKeys.msgApprovedTitle.tr,
       };
@@ -122,6 +123,18 @@ class MessagesController extends GetxController {
         return note.isEmpty
             ? LangKeys.msgChangesBodyPlain.trParams({'who': _who(n), 'customer': customer})
             : LangKeys.msgChangesBody.trParams({'who': _who(n), 'customer': customer, 'note': note});
+      case 'tech_question':
+        final tech = _p(n, 'technician');
+        final note = _p(n, 'note');
+        final words = {
+          'technician': tech.isEmpty ? LangKeys.msgTechnician.tr : tech.split(' ').first,
+          'customer': customer,
+          'question': _p(n, 'question'),
+          'note': note,
+        };
+        return note.isEmpty
+            ? LangKeys.msgQuestionBody.trParams(words)
+            : LangKeys.msgQuestionBodyNote.trParams(words);
       case 'report_shared':
         return LangKeys.msgSharedBody.trParams({'customer': customer});
       case 'review_received':
@@ -149,7 +162,7 @@ class MessagesController extends GetxController {
 
   MessageTone tone(NotificationOutModel n) => switch (n.kind) {
         'job_assigned' => MessageTone.job,
-        'report_submitted' => MessageTone.review,
+        'report_submitted' || 'tech_question' => MessageTone.review,
         'changes_requested' || 'low_rating' => MessageTone.problem,
         'support_reply' || 'announcement' => MessageTone.news,
         _ => MessageTone.done,
@@ -166,7 +179,7 @@ class MessagesController extends GetxController {
     if (job == null) return;
     final customer = _p(n, 'customer');
     switch (n.kind) {
-      case 'job_assigned':
+      case 'job_assigned' || 'tech_question':
         await Get.toNamed(RoutesConstants.jobDetailsScreen, arguments: JobArguments(id: job, customer: customer));
       case 'changes_requested':
         await Get.toNamed(RoutesConstants.captureHubScreen, arguments: JobArguments(id: job, customer: customer));

@@ -884,6 +884,7 @@ void main() {
       ChecklistQuestionController(dictation: fakeDictation(), 
         checklists: checklists,
         files: MockFilesRepository(),
+        jobs: MockJobsRepository(),
         queue: queue,
         speech: FakeSpeech(),
         translation: translation(),

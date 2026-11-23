@@ -112,6 +112,28 @@ void main() {
     expect(c.tone(job), MessageTone.job);
   });
 
+  test('a technician\'s "Not sure?" question reads plainly and opens the job', () async {
+    final c = open([
+      message('5', 'tech_question', now, params: {
+        'customer': 'Green Valley Clinic',
+        'technician': 'Ramesh Patel',
+        'question': 'Is the air filter clean?',
+        'note': 'It looks new already',
+      }),
+      message('6', 'tech_question', now, params: {
+        'customer': 'Mehta house',
+        'technician': 'Ramesh Patel',
+        'question': 'Gas pressure?',
+      }),
+    ]);
+    await c.load();
+    final [withNote, plain] = c.items.toList();
+    expect(c.title(withNote), 'Question from the job');
+    expect(c.body(withNote), 'Ramesh at Green Valley Clinic isn’t sure: “Is the air filter clean?” — It looks new already');
+    expect(c.body(plain), 'Ramesh at Mehta house isn’t sure: “Gas pressure?”');
+    expect(c.tone(plain), MessageTone.review);
+  });
+
   test('opening the list marks everything read, but this visit still shows which were new', () async {
     final c = open([
       message('1', 'report_approved', now, params: {'customer': 'Mehta house'}),

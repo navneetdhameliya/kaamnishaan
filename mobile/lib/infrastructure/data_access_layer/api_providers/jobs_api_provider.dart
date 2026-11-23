@@ -18,6 +18,8 @@ abstract class IJobsApiProvider {
   Future<dynamic> postAssign(String id, Map<String, dynamic> body);
   Future<dynamic> postCancel(String id, Map<String, dynamic> body);
   Future<dynamic> deleteJob(String id);
+  Future<dynamic> getEquipmentHistory(String id);
+  Future<dynamic> postAskManager(String id, Map<String, dynamic> body);
 }
 
 class JobsApiProvider implements IJobsApiProvider {
@@ -78,4 +80,11 @@ class JobsApiProvider implements IJobsApiProvider {
 
   @override
   Future<dynamic> deleteJob(String id) => _client.delete(APIConstant.jobAPIEP(id));
+
+  @override
+  Future<dynamic> getEquipmentHistory(String id) => _client.get(APIConstant.jobEquipmentHistoryAPIEP(id));
+
+  @override
+  Future<dynamic> postAskManager(String id, Map<String, dynamic> body) =>
+      _client.post(APIConstant.jobAskManagerAPIEP(id), body: body);
 }
