@@ -128,6 +128,7 @@ class PublicChecklist(BaseModel):
 class PublicCompany(BaseModel):
     name: str
     logo_url: str | None
+    phone: str | None = Field(default=None, description="The company's number for Call, if it set one")
 
 
 class Acknowledgement(BaseModel):

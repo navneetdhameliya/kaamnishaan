@@ -47,6 +47,9 @@ abstract class ICompanyApiRepository {
   /// M39: "Technicians can share reports" (owner only).
   Future<ApiResult<CompanyOutModel>> setTechniciansCanShare(bool on);
 
+  /// The number customers see as Call on their report page; '' takes it off (D-145).
+  Future<ApiResult<CompanyOutModel>> setContactPhone(String phone);
+
   /// The plans with prices in [currency], names in [locale] (M39 plan row).
   Future<ApiResult<PlansOutModel>> plans({required String currency, required String locale});
 }
@@ -113,6 +116,11 @@ class CompanyApiRepository implements ICompanyApiRepository {
   @override
   Future<ApiResult<CompanyOutModel>> setTechniciansCanShare(bool on) => guard(
         () async => CompanyOutModel.fromJson(_map(await provider.patchSettings({'technicians_can_share': on}))),
+      );
+
+  @override
+  Future<ApiResult<CompanyOutModel>> setContactPhone(String phone) => guard(
+        () async => CompanyOutModel.fromJson(_map(await provider.patchSettings({'contact_phone': phone}))),
       );
 
   @override

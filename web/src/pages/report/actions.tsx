@@ -1,9 +1,10 @@
-import { Check, CircleAlert, Clock, MessageSquareWarning, Share, ShieldOff } from 'lucide-react';
+import { Check, CircleAlert, Clock, MessageSquareWarning, Phone, Send, Share, ShieldOff } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 
 import { Button, Card } from '../../components/ui';
 import { api, ApiError } from '../../lib/api';
 import { day, type T } from '../../lib/i18n';
+import { rv } from '../../site/motion';
 import type { NewLinkOut, PublicReport } from '../../lib/types';
 import { PdfButton, type PageCtx } from './parts';
 
@@ -90,6 +91,95 @@ export function Acknowledge({ ctx, onDone }: { ctx: PageCtx; onDone: (a: PublicR
             {t('web.r.acknowledge')}
           </Button>
           <PdfButton ctx={ctx} variant="outline-light" />
+        </div>
+      )}
+    </section>
+  );
+}
+
+/** W27 "Questions about this job?": Call the company (when it set a number) and "Report a problem" (D-145). */
+export function ContactCompany({ ctx }: { ctx: PageCtx }) {
+  const { report, t } = ctx;
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
+  const [contact, setContact] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [sent, setSent] = useState(false);
+  const phone = report.company.phone;
+  const field =
+    'mt-4 w-full rounded-lg border border-border-strong bg-bg-surface px-12 py-12 text-latin-body outline-none transition-colors focus:border-action-primary';
+
+  async function submit(e: FormEvent) {
+    e.preventDefault();
+    if (!message.trim()) return;
+    setBusy(true);
+    setError(null);
+    try {
+      await api(`/public/reports/${ctx.token}/issue`, {
+        method: 'POST',
+        body: { message: message.trim(), contact: contact.trim() || null },
+      });
+      setSent(true);
+    } catch (err) {
+      setError(err instanceof ApiError ? err.message : t('web.r.error'));
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  return (
+    <section {...rv('up')} className="rounded-xl border border-border-default bg-bg-surface p-24 md:p-32">
+      <h2 className="text-web-m-h3 md:text-web-h3">{t('web.r.questions', { company: report.company.name })}</h2>
+      <p className="mt-8 text-latin-body text-text-secondary">
+        {phone ? t('web.r.questions_body_call') : t('web.r.questions_body')}
+      </p>
+      {sent ? (
+        <p role="status" className="mt-20 flex gap-8 rounded-lg bg-status-success-bg p-12 text-latin-label-sm text-status-success">
+          <Check width={18} height={18} className="shrink-0" aria-hidden />
+          {t('web.r.problem_sent', { company: report.company.name })}
+        </p>
+      ) : open ? (
+        <form onSubmit={submit} className="mt-20 flex flex-col gap-12">
+          <label className="text-latin-label-sm font-semibold">
+            {t('web.r.problem_what')}
+            <textarea
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              maxLength={2000}
+              rows={4}
+              autoFocus
+              className={field}
+            />
+          </label>
+          <label className="text-latin-label-sm font-semibold">
+            {t('web.r.problem_contact')}
+            <input value={contact} onChange={(e) => setContact(e.target.value)} maxLength={120} className={field} />
+          </label>
+          {error && <p className="text-latin-label-sm text-status-danger">{error}</p>}
+          <div className="flex flex-col gap-12 md:flex-row">
+            <Button type="submit" disabled={busy || !message.trim()} icon={<Send width={18} height={18} />}>
+              {t('web.r.problem_send')}
+            </Button>
+            <Button variant="ghost" type="button" onClick={() => setOpen(false)}>
+              {t('web.r.cancel')}
+            </Button>
+          </div>
+        </form>
+      ) : (
+        <div className="mt-20 flex flex-col gap-12 md:flex-row">
+          {phone && (
+            <a
+              href={`tel:${phone.replace(/[^+0-9]/g, '')}`}
+              className="inline-flex items-center justify-center gap-8 rounded-lg bg-action-primary px-20 py-12 text-latin-label font-semibold text-text-on-action transition hover:-translate-y-[1px] hover:bg-action-primary-pressed"
+            >
+              <Phone width={18} height={18} aria-hidden />
+              {t('web.r.call', { phone })}
+            </a>
+          )}
+          <Button variant="secondary" onClick={() => setOpen(true)} icon={<MessageSquareWarning width={18} height={18} />}>
+            {t('web.r.problem')}
+          </Button>
         </div>
       )}
     </section>

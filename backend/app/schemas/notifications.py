@@ -18,6 +18,7 @@ NotificationKind = Literal[
     "support_reply",
     "tech_question",
     "plan_limit",
+    "customer_issue",
     "announcement",
 ]
 

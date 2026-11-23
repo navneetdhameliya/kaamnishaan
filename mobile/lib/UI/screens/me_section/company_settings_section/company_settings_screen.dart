@@ -7,6 +7,7 @@ import '../../../common_widgets/custom_inkwell.dart';
 import '../../../common_widgets/kn_bottom_sheet.dart';
 import '../../../common_widgets/kn_brand_mark.dart';
 import '../../../common_widgets/kn_cover_image.dart';
+import '../../../common_widgets/kn_custom_button.dart';
 import '../../../common_widgets/kn_select_card.dart';
 import '../../../common_widgets/kn_title_bar.dart';
 import '../../../commons/behaviour/behaviour.dart';
@@ -36,6 +37,58 @@ class CompanySettingsScreen extends GetView<CompanySettingsController> {
             const SizedBox(height: KnSize.space8),
           ],
         ],
+      ),
+    );
+  }
+
+  void _openPhone() {
+    if (!controller.onPhoneTap()) return;
+    showKnBottomSheet<void>(
+      title: LangKeys.settingsContactPhone.tr,
+      child: Builder(
+        builder: (context) {
+          final kn = context.kn;
+          final text = context.knText;
+          return Obx(
+            () => Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                CustomBaseTextWidget(LangKeys.settingsContactPhoneHint.tr, style: text.caption, color: kn.textSecondary),
+                const SizedBox(height: KnSize.space12),
+                TextField(
+                  key: const ValueKey('settings-phone-box'),
+                  controller: controller.phoneBox,
+                  keyboardType: TextInputType.phone,
+                  maxLength: 20,
+                  autofocus: true,
+                  style: text.body,
+                  decoration: InputDecoration(
+                    counterText: '',
+                    hintText: '+91 98250 00000',
+                    filled: true,
+                    fillColor: kn.bgSurface,
+                    prefixIcon: Icon(LucideIcons.phone, size: 20, color: kn.textSecondary),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(KnSize.radiusMd)),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(KnSize.radiusMd),
+                      borderSide: BorderSide(color: kn.borderStrong),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: KnSize.space16),
+                KnCustomButton(
+                  key: const ValueKey('settings-phone-save'),
+                  text: LangKeys.commonSave.tr,
+                  loading: controller.saving.value,
+                  onTap: () async {
+                    if (await controller.onPhoneSave()) Get.back<void>();
+                  },
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
@@ -133,6 +186,13 @@ class CompanySettingsScreen extends GetView<CompanySettingsController> {
                             ? const SizedBox.square(dimension: 24, child: CircularProgressIndicator(strokeWidth: 2.5))
                             : _logo(28),
                         onTap: controller.onLogoTap,
+                      ),
+                      _Row(
+                        key: const ValueKey('settings-phone'),
+                        icon: LucideIcons.phone,
+                        label: LangKeys.settingsContactPhone.tr,
+                        value: controller.contactPhone.isEmpty ? LangKeys.settingsContactPhoneNone.tr : controller.contactPhone,
+                        onTap: _openPhone,
                       ),
                       _Row(
                         key: const ValueKey('settings-plan'),

@@ -17,7 +17,7 @@ export interface PublicReport {
   approved_by: string | null;
   approved_at: string | null;
   completed_at: string | null;
-  company: { name: string; logo_url: string | null };
+  company: { name: string; logo_url: string | null; phone: string | null };
   language: string;
   lang: string;
   languages: string[];

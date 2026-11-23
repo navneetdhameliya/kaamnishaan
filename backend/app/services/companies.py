@@ -90,6 +90,8 @@ async def update_settings(
     db: AsyncSession, company: Company, body: CompanySettingsUpdate, actor: User, role: str
 ) -> Company:
     changes = body.model_dump(exclude_none=True)
+    if "contact_phone" in changes:  # "" takes the number off the report page
+        changes["contact_phone"] = changes["contact_phone"].strip() or None
     before = {}
     if "report_language" in changes:
         before["report_language"] = company.report_language

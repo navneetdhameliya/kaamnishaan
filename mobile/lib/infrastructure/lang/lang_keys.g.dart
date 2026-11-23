@@ -2416,6 +2416,8 @@ abstract final class LangKeys {
   static const adminNoInApp = 'admin.no.in_app';
   /// Report needs changes
   static const adminNoKindChangesRequested = 'admin.no.kind.changes_requested';
+  /// Customer reports a problem
+  static const adminNoKindCustomerIssue = 'admin.no.kind.customer_issue';
   /// New job given
   static const adminNoKindJobAssigned = 'admin.no.kind.job_assigned';
   /// Low rating (1–3 stars)
@@ -5312,6 +5314,12 @@ abstract final class LangKeys {
   static const msgChangesBodyPlain = 'msg.changes_body_plain';
   /// Changes asked
   static const msgChangesTitle = 'msg.changes_title';
+  /// {customer} about {report}: “{message}”
+  static const msgIssueBody = 'msg.issue_body';
+  /// {customer} about {report}: “{message}” · Contact: {contact}
+  static const msgIssueBodyContact = 'msg.issue_body_contact';
+  /// A customer reported a problem
+  static const msgIssueTitle = 'msg.issue_title';
   /// New job
   static const msgJobTitle = 'msg.job_title';
   /// New job for today
@@ -6140,6 +6148,14 @@ abstract final class LangKeys {
   static const sentTitle = 'sent.title';
   /// Company
   static const settingsCompany = 'settings.company';
+  /// Phone for customers
+  static const settingsContactPhone = 'settings.contact_phone';
+  /// Shown as Call on the reports customers get. Leave empty to hide it.
+  static const settingsContactPhoneHint = 'settings.contact_phone_hint';
+  /// Not set
+  static const settingsContactPhoneNone = 'settings.contact_phone_none';
+  /// Phone saved.
+  static const settingsContactPhoneSaved = 'settings.contact_phone_saved';
   /// Country
   static const settingsCountry = 'settings.country';
   /// The country sets prices and phone numbers, so it can't be changed here.
@@ -9408,6 +9424,10 @@ abstract final class LangKeys {
   static const webRBeforeAfter = 'web.r.before_after';
   /// Link looks broken? Open it from the original message, or check that the whole link was copied.
   static const webRBroken = 'web.r.broken';
+  /// Call {phone}
+  static const webRCall = 'web.r.call';
+  /// Cancel
+  static const webRCancel = 'web.r.cancel';
   /// Checklist results
   static const webRChecklist = 'web.r.checklist';
   /// Checklist {a} of {b}
@@ -9452,6 +9472,22 @@ abstract final class LangKeys {
   static const webRPowered = 'web.r.powered';
   /// Privacy
   static const webRPrivacy = 'web.r.privacy';
+  /// Report a problem
+  static const webRProblem = 'web.r.problem';
+  /// Your phone or email (optional)
+  static const webRProblemContact = 'web.r.problem_contact';
+  /// Send
+  static const webRProblemSend = 'web.r.problem_send';
+  /// Thanks. {company} has your message and will get back to you.
+  static const webRProblemSent = 'web.r.problem_sent';
+  /// What isn’t right?
+  static const webRProblemWhat = 'web.r.problem_what';
+  /// Questions about this job?
+  static const webRQuestions = 'web.r.questions';
+  /// Tell the company if something isn’t right. They’ll get back to you.
+  static const webRQuestionsBody = 'web.r.questions_body';
+  /// Call the company, or tell them what isn’t right and they’ll get back to you.
+  static const webRQuestionsBodyCall = 'web.r.questions_body_call';
   /// Report #{n}
   static const webRReportN = 'web.r.report_n';
   /// {company} turned this link off. Ask them for a new one.
