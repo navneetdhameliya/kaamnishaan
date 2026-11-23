@@ -13,6 +13,7 @@ abstract class IJobsApiProvider {
   Future<dynamic> postNote(String evidenceId, Map<String, dynamic> body);
   Future<dynamic> deleteEvidence(String evidenceId);
   Future<dynamic> postPair(String jobId, Map<String, dynamic> body);
+  Future<dynamic> deletePair(String pairId);
   Future<dynamic> postJob(Map<String, dynamic> body);
   Future<dynamic> getTechnicians({String? jobId, Map<String, dynamic>? query});
   Future<dynamic> postAssign(String id, Map<String, dynamic> body);
@@ -60,6 +61,9 @@ class JobsApiProvider implements IJobsApiProvider {
   @override
   Future<dynamic> postPair(String jobId, Map<String, dynamic> body) =>
       _client.post(APIConstant.photoPairsAPIEP(jobId), body: body);
+
+  @override
+  Future<dynamic> deletePair(String pairId) => _client.delete(APIConstant.photoPairAPIEP(pairId));
 
   @override
   Future<dynamic> postJob(Map<String, dynamic> body) => _client.post(APIConstant.jobsAPIEP, body: body);

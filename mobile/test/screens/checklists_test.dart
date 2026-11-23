@@ -267,6 +267,42 @@ void main() {
     expect(c.pairId.value, 'p1');
   });
 
+  test('M22 "Choose photos": picking another pair replaces the one in the report', () async {
+    final saved = PairOutModel(id: 'p1', before: ev('b1', 'before', 50), after: ev('a1', 'after', 58), useInReport: true);
+    when(() => jobs.evidence(any())).thenAnswer(
+      (_) async => ApiSuccess<EvidenceListModel>(
+        EvidenceListModel(
+          data: [ev('b1', 'before', 50), ev('b2', 'before', 55), ev('a1', 'after', 58), ev('a2', 'after', 59)],
+          meta: const ListMetaModel(),
+          pairs: [saved],
+        ),
+      ),
+    );
+    when(() => jobs.deletePair(any())).thenAnswer((_) async => const ApiSuccess<void>(null));
+    when(() => jobs.addPair(jobId: any(named: 'jobId'), beforeId: any(named: 'beforeId'), afterId: any(named: 'afterId'), subject: any(named: 'subject')))
+        .thenAnswer((_) async => ApiSuccess<PairOutModel>(PairOutModel(id: 'p2', before: ev('b2', 'before', 55), after: ev('a1', 'after', 58), useInReport: true)));
+    final c = PhotoPairController(
+      jobs: jobs,
+      share: FakeShare(),
+      session: SessionService(tokens: MemoryTokenStorage(), repository: MockAuthRepository()),
+      translation: translation,
+      args: const PhotoDetailArguments(jobId: 'j1', customer: 'Green Valley Clinic'),
+    );
+    await c.load();
+    expect(c.isSaved, isTrue);
+    expect(c.choices('before').map((e) => e.id), ['b2', 'b1']); // newest first
+    await _ignoreToast(c.onUseTap); // already in the report: nothing is sent
+    verifyNever(() => jobs.deletePair(any()));
+    c.onPick(c.choices('before').first);
+    expect((c.before.value?.id, c.after.value?.id, c.isSaved), ('b2', 'a1', false));
+    await _ignoreToast(c.onUseTap);
+    verifyInOrder([
+      () => jobs.deletePair('p1'),
+      () => jobs.addPair(jobId: 'j1', beforeId: 'b2', afterId: 'a1', subject: null),
+    ]);
+    expect((c.pairId.value, c.isSaved), ('p2', true));
+  });
+
   test('M23 shows the stage, time and the latest note', () async {
     when(() => jobs.photo(any())).thenAnswer(
       (_) async => ApiSuccess<EvidenceDetailModel>(

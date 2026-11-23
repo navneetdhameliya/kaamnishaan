@@ -13,9 +13,11 @@ import '../../../../infrastructure/shared/share_rules.dart';
 import '../../../../infrastructure/shared/photo_pairs.dart';
 import '../../../../infrastructure/shared/time_utils.dart';
 import '../../../common_widgets/kn_toast.dart';
+import 'custom_widgets/pair_picker_sheet.dart';
 
 /// M22 Before and after: one before and one after photo side by side with a line to drag.
-/// Uses the pair already saved, else the same checklist shot, else the latest of each (D-60).
+/// Uses the pair already saved, else the same checklist shot, else the latest of each (D-60);
+/// "Choose photos" picks another before and after by hand (D-144).
 class PhotoPairController extends GetxController {
   PhotoPairController({
     required this.jobs,
@@ -43,6 +45,13 @@ class PhotoPairController extends GetxController {
   final RxBool loaded = false.obs;
   final RxBool saving = false.obs;
 
+  /// Every photo of the job, for "Choose photos".
+  final RxList<EvidenceOutModel> photos = <EvidenceOutModel>[].obs;
+
+  /// The photos of the pair saved for the report, to tell when the shown pair differs from it.
+  String? _savedBefore;
+  String? _savedAfter;
+
   @override
   void onInit() {
     super.onInit();
@@ -54,14 +63,33 @@ class PhotoPairController extends GetxController {
     loaded.value = true;
     final list = result.dataOrNull;
     if (list == null) return KnToast.error(result.errorOrNull!.message);
+    photos.assignAll(list.data);
     final chosen = ChosenPair.pick(list);
     before.value = chosen.before;
     after.value = chosen.after;
     pairId.value = chosen.saved?.id;
+    _savedBefore = chosen.saved?.before.id;
+    _savedAfter = chosen.saved?.after.id;
     subject.value = chosen.saved?.subject ?? '';
   }
 
   bool get ready => before.value != null && after.value != null;
+
+  /// The pair on screen is the one saved for the report.
+  bool get isSaved => pairId.value != null && before.value?.id == _savedBefore && after.value?.id == _savedAfter;
+
+  /// The job's [stage] photos that can be shown, newest first.
+  List<EvidenceOutModel> choices(String stage) =>
+      photos.where((e) => e.stage == stage && e.processing != 'failed').toList()
+        ..sort((a, b) => b.takenAt.compareTo(a.takenAt));
+
+  /// "Choose photos": pick another before and after by hand.
+  void onChooseTap() {
+    if (choices('before').isEmpty || choices('after').isEmpty) return KnToast.info(LangKeys.pairNeedBoth.tr);
+    showPairPickerSheet(this);
+  }
+
+  void onPick(EvidenceOutModel e) => (e.stage == 'before' ? before : after).value = e;
 
   String get title => subject.value.isNotEmpty ? subject.value : (args.place ?? args.customer);
 
@@ -85,8 +113,18 @@ class PhotoPairController extends GetxController {
 
   Future<void> onUseTap() async {
     if (!ready) return KnToast.info(LangKeys.pairNeedBoth.tr);
-    if (pairId.value != null) return KnToast.success(LangKeys.pairUsed.tr);
+    if (isSaved) return KnToast.success(LangKeys.pairUsed.tr);
     saving.value = true;
+    final old = pairId.value;
+    if (old != null) {
+      // one pair per report from the app: the new choice replaces the old one
+      final removed = await jobs.deletePair(old);
+      if (removed.errorOrNull case final e?) {
+        saving.value = false;
+        return KnToast.error(e.message);
+      }
+      pairId.value = null;
+    }
     final result = await jobs.addPair(
       jobId: args.jobId,
       beforeId: before.value!.id,
@@ -97,6 +135,8 @@ class PhotoPairController extends GetxController {
     final pair = result.dataOrNull;
     if (pair == null) return KnToast.error(result.errorOrNull!.message);
     pairId.value = pair.id;
+    _savedBefore = pair.before.id;
+    _savedAfter = pair.after.id;
     KnToast.success(LangKeys.pairUsed.tr);
     Get.back<bool>(result: true);
   }

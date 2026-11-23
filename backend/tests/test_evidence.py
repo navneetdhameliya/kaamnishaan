@@ -303,3 +303,20 @@ async def test_companies_never_see_each_others_photos(client, started):
         headers=auth(other_owner),
     )
     assert r.status_code == 404
+
+
+def test_report_shows_a_pair_even_when_none_was_saved():
+    """D-144: the customer's report uses the pair the app shows: same checklist shot, else the latest of each."""
+    from datetime import UTC, datetime
+    from types import SimpleNamespace as N
+
+    from app.services.report_view import auto_pair
+
+    def ph(id, stage, hour, slot=None):
+        return N(id=id, stage=stage, taken_at=datetime(2026, 11, 23, hour, tzinfo=UTC), shot_slot=slot)
+
+    b_unit, b_late = ph("b1", "before", 9, "outdoor_unit"), ph("b2", "before", 10)
+    a_unit, a_late = ph("a1", "after", 11, "outdoor_unit"), ph("a2", "after", 12)
+    assert [x.id for x in auto_pair([b_unit, b_late, a_unit, a_late])] == ["b1", "a1"]
+    assert [x.id for x in auto_pair([b_unit, b_late, a_late])] == ["b2", "a2"]
+    assert auto_pair([b_unit, b_late]) is None
