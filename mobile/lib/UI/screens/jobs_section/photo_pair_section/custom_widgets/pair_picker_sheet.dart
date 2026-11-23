@@ -75,7 +75,7 @@ class _Thumb extends StatelessWidget {
         width: 88,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(KnSize.radiusMd),
-          border: Border.all(color: selected ? kn.brandPrimary : kn.borderDefault, width: selected ? 3 : 1),
+          border: Border.all(color: selected ? kn.actionPrimary : kn.borderDefault, width: selected ? 3 : 1),
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(KnSize.radiusMd - 1),
@@ -89,8 +89,8 @@ class _Thumb extends StatelessWidget {
                   top: 4,
                   child: CircleAvatar(
                     radius: 11,
-                    backgroundColor: kn.brandPrimary,
-                    child: Icon(LucideIcons.check, size: 14, color: kn.textOnBrand),
+                    backgroundColor: kn.actionPrimary,
+                    child: Icon(LucideIcons.check, size: 14, color: kn.textOnAction),
                   ),
                 ),
             ],
