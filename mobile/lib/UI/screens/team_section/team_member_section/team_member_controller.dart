@@ -21,16 +21,17 @@ class TeamMemberController extends GetxController {
     required this.session,
     MemberOutModel? member,
     Future<bool> Function(Uri)? openUrl,
-    Future<bool> Function({required String title, required String body, required String action})? confirm,
+    this.confirm,
   })  : member = Rxn<MemberOutModel>(member ?? Get.arguments as MemberOutModel),
-        _openUrl = openUrl ?? launchUrl,
-        _confirm = confirm;
+        _openUrl = openUrl ?? launchUrl;
 
   final ICompanyApiRepository company;
   final SessionService session;
   final Rxn<MemberOutModel> member;
   final Future<bool> Function(Uri) _openUrl;
-  final Future<bool> Function({required String title, required String body, required String action})? _confirm;
+
+  /// Asks before a change (tests answer here); null shows the confirm dialog.
+  final Future<bool> Function({required String title, required String body, required String action})? confirm;
 
   final RxBool loading = true.obs;
 
@@ -125,7 +126,7 @@ class TeamMemberController extends GetxController {
   // ---- actions -----------------------------------------------------------------------------
 
   Future<bool> _ask({required String title, required String body, required String action, bool danger = false}) =>
-      _confirm?.call(title: title, body: body, action: action) ??
+      confirm?.call(title: title, body: body, action: action) ??
       showKnConfirmDialog(
         title: title,
         body: body,
