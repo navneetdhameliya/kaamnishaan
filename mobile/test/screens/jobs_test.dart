@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/capture_hub_section/capture_hub_controller.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/job_details_section/job_details_controller.dart';
+import 'package:kaamnishaan/UI/screens/home_section/home_shell_section/home_shell_controller.dart';
 import 'package:kaamnishaan/UI/screens/jobs_section/job_list_section/job_list_controller.dart';
+import 'package:kaamnishaan/UI/screens/jobs_section/quick_job_section/quick_job_controller.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/api_repository/jobs_api_repository.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_exception.dart';
 import 'package:kaamnishaan/infrastructure/data_access_layer/networks/api_result.dart';
@@ -222,6 +224,107 @@ void main() {
       c.confirmDelete = () async => true;
       await _quietRun(c.onDeleteTap);
       verify(() => jobs.delete('j1')).called(1);
+    });
+  });
+
+  group('Quick job and the Capture button', () {
+    QuickJobController quick() => QuickJobController(
+          jobs: jobs,
+          dictation: fakeDictation(),
+          clock: () => DateTime(2026, 11, 23, 10, 5),
+        );
+
+    Invocation? made;
+
+    void stubCreate(ApiResult<JobOutModel> Function() answer) => when(
+          () => jobs.create(
+            title: any(named: 'title'),
+            scheduledAt: any(named: 'scheduledAt'),
+            clientUuid: any(named: 'clientUuid'),
+            customerId: any(named: 'customerId'),
+            newCustomer: any(named: 'newCustomer'),
+            newCustomerPhone: any(named: 'newCustomerPhone'),
+            address: any(named: 'address'),
+            technicianId: any(named: 'technicianId'),
+            checklistIds: any(named: 'checklistIds'),
+          ),
+        ).thenAnswer((i) async {
+          made = i;
+          return answer();
+        });
+
+    setUpAll(() {
+      registerFallbackValue(DateTime(2026));
+      registerFallbackValue(<String>[]);
+    });
+
+    test('needs the work and the customer, then makes the job and starts it', () async {
+      stubCreate(() => ApiSuccess<JobOutModel>(jobOut(actions: const ['start'])));
+      when(() => jobs.start(any(), lat: any(named: 'lat'), lng: any(named: 'lng')))
+          .thenAnswer((_) async => ApiSuccess<JobOutModel>(jobOut(status: 'in_progress', actions: const [])));
+      final c = quick();
+      await c.onStartTap();
+      expect(c.errors.keys.toSet(), {'work', 'customer'});
+      c.work.text = ' Gas top-up ';
+      c.customer.text = 'Raju Tea Stall';
+      c.phone.text = '98250 22222';
+      await _quietRun(c.onStartTap);
+      final sent = made!.namedArguments;
+      expect(
+        [sent[#title], sent[#scheduledAt], sent[#newCustomer], sent[#newCustomerPhone], sent[#address]],
+        ['Gas top-up', DateTime(2026, 11, 23, 10, 5), 'Raju Tea Stall', '98250 22222', null],
+      );
+      verify(() => jobs.start('j1')).called(1);
+      expect(c.saving.value, isFalse);
+    });
+
+    test('a wrong phone shows under the phone; a failed start does not make the job twice', () async {
+      stubCreate(() => const ApiFailure<JobOutModel>(ApiException(code: 'invalid_phone', message: 'x')));
+      final c = quick()
+        ..work.text = 'Gas top-up'
+        ..customer.text = 'Raju';
+      c.phone.text = '12';
+      await c.onStartTap();
+      expect(c.errors['phone'], "This phone number doesn't look right.");
+
+      stubCreate(() => ApiSuccess<JobOutModel>(jobOut()));
+      when(() => jobs.start(any(), lat: any(named: 'lat'), lng: any(named: 'lng')))
+          .thenAnswer((_) async => const ApiFailure<JobOutModel>(ApiException(code: 'x', message: 'Try again.')));
+      c.phone.clear();
+      await _quietRun(c.onStartTap);
+      await _quietRun(c.onStartTap);
+      verify(() => jobs.start('j1')).called(2);
+      verify(
+        () => jobs.create(
+          title: any(named: 'title'),
+          scheduledAt: any(named: 'scheduledAt'),
+          clientUuid: any(named: 'clientUuid'),
+          newCustomer: any(named: 'newCustomer'),
+          newCustomerPhone: any(named: 'newCustomerPhone'),
+          address: any(named: 'address'),
+        ),
+      ).called(2); // the failed phone try and one real job: the second Start only starts it
+    });
+
+    test('Capture with no job going on offers today\'s next jobs', () {
+      final j = jobOut();
+      final shell = HomeShellController(session: session)
+        ..nextJobs = () => [
+              JobListItemModel(
+                id: 'j2',
+                number: j.number,
+                title: j.title,
+                status: 'assigned',
+                scheduledAt: j.scheduledAt,
+                customer: j.customer,
+                isQuickJob: false,
+                version: 1,
+                updatedAt: j.updatedAt,
+              ),
+            ];
+      final [next] = shell.captureJobs;
+      final line = shell.jobLine(next); // the date library puts a narrow space before AM
+      expect((line.startsWith('11:30'), line.endsWith(' · AC not cooling')), (true, true));
     });
   });
 

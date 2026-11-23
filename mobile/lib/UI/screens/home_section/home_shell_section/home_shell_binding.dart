@@ -38,6 +38,10 @@ class HomeShellBinding extends Bindings {
         () => TodayController(repository: Get.find(), session: Get.find(), prefs: Get.find(), translation: Get.find()),
       );
       shell.currentJob = () => Get.isRegistered<TodayController>() ? Get.find<TodayController>().data.value?.currentJob : null;
+      shell.nextJobs = () => Get.isRegistered<TodayController>() ? Get.find<TodayController>().nextUp : const [];
+      shell.reloadToday = () async {
+        if (Get.isRegistered<TodayController>()) await Get.find<TodayController>().load();
+      };
     }
   }
 }
