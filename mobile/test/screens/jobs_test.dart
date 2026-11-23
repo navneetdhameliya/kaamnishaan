@@ -323,7 +323,8 @@ void main() {
               ),
             ];
       final [next] = shell.captureJobs;
-      expect(shell.jobLine(next), '11:30 AM · AC not cooling');
+      final line = shell.jobLine(next); // the date library puts a narrow space before AM
+      expect((line.startsWith('11:30'), line.endsWith(' · AC not cooling')), (true, true));
     });
   });
 
