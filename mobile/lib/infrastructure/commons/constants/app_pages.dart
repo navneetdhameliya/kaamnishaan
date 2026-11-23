@@ -52,6 +52,8 @@ import '../../../UI/screens/jobs_section/job_list_section/job_list_binding.dart'
 import '../../../UI/screens/jobs_section/job_list_section/job_list_screen.dart';
 import '../../../UI/screens/jobs_section/new_job_section/new_job_binding.dart';
 import '../../../UI/screens/jobs_section/new_job_section/new_job_screen.dart';
+import '../../../UI/screens/jobs_section/quick_job_section/quick_job_binding.dart';
+import '../../../UI/screens/jobs_section/quick_job_section/quick_job_screen.dart';
 import '../../../UI/screens/jobs_section/photo_details_section/photo_details_binding.dart';
 import '../../../UI/screens/jobs_section/photo_details_section/photo_details_screen.dart';
 import '../../../UI/screens/jobs_section/photo_gallery_section/photo_gallery_binding.dart';
@@ -230,6 +232,7 @@ abstract final class AppPages {
     GetPage(name: RoutesConstants.reportReviewScreen, page: () => const ReportReviewScreen(), binding: ReportReviewBinding()),
     GetPage(name: RoutesConstants.reportPdfScreen, page: () => const ReportPdfScreen(), binding: ReportPdfBinding()),
     GetPage(name: RoutesConstants.newJobScreen, page: () => const NewJobScreen(), binding: NewJobBinding()),
+    GetPage(name: RoutesConstants.quickJobScreen, page: () => const QuickJobScreen(), binding: QuickJobBinding()),
     GetPage(
       name: RoutesConstants.assignTechnicianScreen,
       page: () => const AssignTechnicianScreen(),

@@ -9466,4 +9466,40 @@ abstract final class LangKeys {
   static const jfClear = 'jf.clear';
   /// Show jobs
   static const jfShow = 'jf.show';
+  /// What are you working on?
+  static const capTitle = 'cap.title';
+  /// No job is going on. Open one of today's jobs to start it, or start a quick job.
+  static const capSub = 'cap.sub';
+  /// Photos and checklists belong to a job. Make one, or open one from the list.
+  static const capSubManager = 'cap.sub_manager';
+  /// Quick job
+  static const capQuickJob = 'cap.quick_job';
+  /// Work that wasn't planned: a customer asked on the spot
+  static const capQuickJobSub = 'cap.quick_job_sub';
+  /// New job
+  static const capNewJob = 'cap.new_job';
+  /// Make a job and give it to a technician
+  static const capNewJobSub = 'cap.new_job_sub';
+  /// All jobs
+  static const capAllJobs = 'cap.all_jobs';
+  /// Open a job to see or add its proof
+  static const capAllJobsSub = 'cap.all_jobs_sub';
+  /// Quick job
+  static const qjTitle = 'qj.title';
+  /// For work that wasn't planned. It goes to your manager like any other job.
+  static const qjSub = 'qj.sub';
+  /// What is the work?
+  static const qjWork = 'qj.work';
+  /// AC not cooling
+  static const qjWorkHint = 'qj.work_hint';
+  /// Say or type what the work is.
+  static const qjWorkNeeded = 'qj.work_needed';
+  /// Customer
+  static const qjCustomer = 'qj.customer';
+  /// Say or type the customer's name.
+  static const qjCustomerNeeded = 'qj.customer_needed';
+  /// Customer's phone (optional)
+  static const qjPhone = 'qj.phone';
+  /// Address (optional)
+  static const qjAddress = 'qj.address';
 }
