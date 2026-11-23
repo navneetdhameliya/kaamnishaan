@@ -33,6 +33,10 @@ import '../../../UI/screens/checklists_section/checklist_question_section/checkl
 import '../../../UI/screens/checklists_section/checklists_section/checklists_binding.dart';
 import '../../../UI/screens/checklists_section/checklists_section/checklists_screen.dart';
 import '../../../UI/screens/customer_section/customer_details_section/customer_details_binding.dart';
+import '../../../UI/screens/customer_section/customer_edit_section/customer_edit_binding.dart';
+import '../../../UI/screens/customer_section/customer_edit_section/customer_edit_screen.dart';
+import '../../../UI/screens/customer_section/customer_list_section/customer_list_binding.dart';
+import '../../../UI/screens/customer_section/customer_list_section/customer_list_screen.dart';
 import '../../../UI/screens/customer_section/customer_details_section/customer_details_screen.dart';
 import '../../../UI/screens/home_section/home_shell_section/home_shell_binding.dart';
 import '../../../UI/screens/home_section/home_shell_section/home_shell_screen.dart';
@@ -234,6 +238,16 @@ abstract final class AppPages {
       name: RoutesConstants.customerScreen,
       page: () => const CustomerDetailsScreen(),
       binding: CustomerDetailsBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.customersScreen,
+      page: () => const CustomerListScreen(),
+      binding: CustomerListBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.customerEditScreen,
+      page: () => const CustomerEditScreen(),
+      binding: CustomerEditBinding(),
     ),
     GetPage(
       name: RoutesConstants.companySettingsScreen,

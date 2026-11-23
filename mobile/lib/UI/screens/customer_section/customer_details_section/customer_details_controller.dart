@@ -12,7 +12,7 @@ import '../../../../infrastructure/shared/text_utils.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// M18 Customer details: who they are, the main contact (call, email, map), their jobs,
-/// and "New job for this customer".
+/// "New job for this customer", and the pencil to edit them.
 class CustomerDetailsController extends GetxController {
   CustomerDetailsController({
     required this.customers,
@@ -172,5 +172,11 @@ class CustomerDetailsController extends GetxController {
   }
 
   /// Editing a customer comes later.
-  void onEditTap() => KnToast.info(LangKeys.commonComingSoon.tr);
+  /// Edit customer: the name, phone, email, address and note; the page shows the change at once.
+  Future<void> onEditTap() async {
+    final c = customer.value;
+    if (c == null) return;
+    final saved = await Get.toNamed<CustomerOutModel?>(RoutesConstants.customerEditScreen, arguments: c);
+    if (saved != null) customer.value = saved;
+  }
 }

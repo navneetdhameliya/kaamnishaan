@@ -77,6 +77,10 @@ abstract final class APIConstant {
   static const String customersAPIEP = '/customers';
   static String customerAPIEP(String id) => '/customers/$id';
   static String customerJobsAPIEP(String id) => '/customers/$id/jobs';
+  static String customerContactsAPIEP(String id) => '/customers/$id/contacts';
+  static String customerContactAPIEP(String id, String contactId) => '/customers/$id/contacts/$contactId';
+  static String customerSitesAPIEP(String id) => '/customers/$id/sites';
+  static String customerSiteAPIEP(String id, String siteId) => '/customers/$id/sites/$siteId';
 
   // checklists
   static const String checklistTemplatesAPIEP = '/checklist-templates';

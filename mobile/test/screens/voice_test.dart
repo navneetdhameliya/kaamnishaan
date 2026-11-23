@@ -61,7 +61,8 @@ void main() {
     ).init();
   });
 
-  tearDown(() {
+  tearDown(() async {
+    await queue.process(); // a send started by the test may still be reading a file in the folder
     queue.onClose();
     tmp.deleteSync(recursive: true);
   });
