@@ -16,7 +16,8 @@ from app.models.base import Base, IdMixin, TimestampMixin
 
 KINDS = (
     "job_assigned", "report_submitted", "changes_requested", "report_approved", "report_shared",
-    "review_received", "low_rating", "support_reply", "tech_question", "plan_limit", "announcement",
+    "review_received", "low_rating", "support_reply", "tech_question", "plan_limit", "customer_issue",
+    "announcement",
 )  # fmt: skip
 
 

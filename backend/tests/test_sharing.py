@@ -304,6 +304,29 @@ async def test_report_a_problem(client, ready):
         await client.post(f"/api/v1/public/reports/{token}/issue", json={"message": "Still leaking"})
     r = await client.post(f"/api/v1/public/reports/{token}/issue", json={"message": "Hello?"})
     assert r.status_code == 429
+    # D-145: the office sees it in Messages too (no email service yet)
+    items = (await client.get("/api/v1/notifications", headers=auth(ready["owner"]))).json()["data"]
+    [first, *_] = [n for n in reversed(items) if n["kind"] == "customer_issue"]
+    assert (
+        first["params"]["message"] == "The AC is leaking again"
+        and first["params"]["contact"] == "98250 11111"
+    )
+    assert first["params"]["report"] == "R-1001" and first["params"]["customer"] and first["job_id"]
+
+
+async def test_report_page_shows_the_company_number_once_set(client, ready):
+    _, token = await shared_link(client, ready)
+    page = (await client.get(f"/api/v1/public/reports/{token}")).json()
+    assert page["company"]["phone"] is None  # no Call button until the owner sets a number
+    url = "/api/v1/company/settings"
+    bad = await client.patch(url, json={"contact_phone": "call me"}, headers=auth(ready["owner"]))
+    assert bad.status_code == 422
+    r = await client.patch(url, json={"contact_phone": " +91 98250 22222 "}, headers=auth(ready["owner"]))
+    assert r.status_code == 200 and r.json()["settings"]["contact_phone"] == "+91 98250 22222"
+    page = (await client.get(f"/api/v1/public/reports/{token}")).json()
+    assert page["company"]["phone"] == "+91 98250 22222"
+    await client.patch(url, json={"contact_phone": ""}, headers=auth(ready["owner"]))
+    assert (await client.get(f"/api/v1/public/reports/{token}")).json()["company"]["phone"] is None
 
 
 async def test_other_companies_cannot_touch_sharing(client, ready):

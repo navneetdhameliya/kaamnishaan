@@ -8588,23 +8588,28 @@ CompanySettingsModel companySettingsModelFromJson(String str) => CompanySettings
 String companySettingsModelToJson(CompanySettingsModel data) => json.encode(data.toJson());
 
 class CompanySettingsModel {
+  /// Shown on the customer's report page as Call (D-145); none = no button
+  final String? contactPhone;
   final bool? techniciansCanRequestReviews;
   final bool? techniciansCanShare;
   final bool? techsSeeReviews;
 
   const CompanySettingsModel({
+    this.contactPhone,
     this.techniciansCanRequestReviews,
     this.techniciansCanShare,
     this.techsSeeReviews,
   });
 
   factory CompanySettingsModel.fromJson(Map<String, dynamic> json) => CompanySettingsModel(
+        contactPhone: json['contact_phone'] as String?,
         techniciansCanRequestReviews: json['technicians_can_request_reviews'] as bool?,
         techniciansCanShare: json['technicians_can_share'] as bool?,
         techsSeeReviews: json['techs_see_reviews'] as bool?,
       );
 
   Map<String, dynamic> toJson() => {
+        'contact_phone': contactPhone,
         'technicians_can_request_reviews': techniciansCanRequestReviews,
         'technicians_can_share': techniciansCanShare,
         'techs_see_reviews': techsSeeReviews,
@@ -8616,6 +8621,8 @@ CompanySettingsUpdateModel companySettingsUpdateModelFromJson(String str) => Com
 String companySettingsUpdateModelToJson(CompanySettingsUpdateModel data) => json.encode(data.toJson());
 
 class CompanySettingsUpdateModel {
+  /// The number customers call; an empty string takes it off the report page
+  final String? contactPhone;
   /// One of: en, hi, gu, es, fr
   final String? reportLanguage;
   final bool? techniciansCanRequestReviews;
@@ -8623,6 +8630,7 @@ class CompanySettingsUpdateModel {
   final bool? techsSeeReviews;
 
   const CompanySettingsUpdateModel({
+    this.contactPhone,
     this.reportLanguage,
     this.techniciansCanRequestReviews,
     this.techniciansCanShare,
@@ -8630,6 +8638,7 @@ class CompanySettingsUpdateModel {
   });
 
   factory CompanySettingsUpdateModel.fromJson(Map<String, dynamic> json) => CompanySettingsUpdateModel(
+        contactPhone: json['contact_phone'] as String?,
         reportLanguage: json['report_language'] as String?,
         techniciansCanRequestReviews: json['technicians_can_request_reviews'] as bool?,
         techniciansCanShare: json['technicians_can_share'] as bool?,
@@ -8637,6 +8646,7 @@ class CompanySettingsUpdateModel {
       );
 
   Map<String, dynamic> toJson() => {
+        'contact_phone': contactPhone,
         'report_language': reportLanguage,
         'technicians_can_request_reviews': techniciansCanRequestReviews,
         'technicians_can_share': techniciansCanShare,
@@ -12125,7 +12135,7 @@ class NotificationOutModel {
   final DateTime createdAt;
   final String id;
   final String? jobId;
-  /// One of: job_assigned, report_submitted, changes_requested, report_approved, report_shared, review_received, low_rating, support_reply, tech_question, plan_limit, announcement
+  /// One of: job_assigned, report_submitted, changes_requested, report_approved, report_shared, review_received, low_rating, support_reply, tech_question, plan_limit, customer_issue, announcement
   final String kind;
   /// Names for the sentence the app writes in its own language: customer, job, report, note, scheduled_at (ISO), technician
   final Map<String, dynamic> params;
@@ -13093,20 +13103,25 @@ String publicCompanyModelToJson(PublicCompanyModel data) => json.encode(data.toJ
 class PublicCompanyModel {
   final String? logoUrl;
   final String name;
+  /// The company's number for Call, if it set one
+  final String? phone;
 
   const PublicCompanyModel({
     this.logoUrl,
     required this.name,
+    this.phone,
   });
 
   factory PublicCompanyModel.fromJson(Map<String, dynamic> json) => PublicCompanyModel(
         logoUrl: json['logo_url'] as String?,
         name: json['name'] as String,
+        phone: json['phone'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
         'logo_url': logoUrl,
         'name': name,
+        'phone': phone,
       };
 }
 

@@ -158,6 +158,24 @@ void main() {
     expect((c.tone(near), c.tone(reached), c.tone(blocked)), (MessageTone.news, MessageTone.problem, MessageTone.problem));
   });
 
+  test('a customer\'s "Report a problem" reads plainly, with their contact when they gave one', () async {
+    final c = open([
+      message('10', 'customer_issue', now, params: {
+        'customer': 'Green Valley Clinic',
+        'report': 'R-1001',
+        'message': 'The AC is leaking again',
+        'contact': '98250 11111',
+      }),
+      message('11', 'customer_issue', now, params: {'customer': 'Mehta house', 'report': 'R-1002', 'message': 'Noisy'}),
+    ]);
+    await c.load();
+    final [withContact, plain] = c.items.toList();
+    expect(c.title(plain), 'A customer reported a problem');
+    expect(c.body(withContact), 'Green Valley Clinic about R-1001: “The AC is leaking again” · Contact: 98250 11111');
+    expect(c.body(plain), 'Mehta house about R-1002: “Noisy”');
+    expect(c.tone(plain), MessageTone.problem);
+  });
+
   test('opening the list marks everything read, but this visit still shows which were new', () async {
     final c = open([
       message('1', 'report_approved', now, params: {'customer': 'Mehta house'}),

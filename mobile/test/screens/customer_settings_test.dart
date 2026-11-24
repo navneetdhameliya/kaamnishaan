@@ -41,7 +41,7 @@ final clinic = CustomerOutModel(
   version: 1,
 );
 
-CompanyOutModel company({String plan = 'professional', bool share = true}) => CompanyOutModel(
+CompanyOutModel company({String plan = 'professional', bool share = true, String? phone}) => CompanyOutModel(
       id: 'c1',
       name: 'BrightAir Services',
       trade: 'hvac',
@@ -52,7 +52,7 @@ CompanyOutModel company({String plan = 'professional', bool share = true}) => Co
       plan: plan,
       status: 'trial',
       trialEndsAt: DateTime(2026, 12, 1, 12),
-      settings: CompanySettingsModel(techniciansCanShare: share),
+      settings: CompanySettingsModel(techniciansCanShare: share, contactPhone: phone),
     );
 
 void main() {
@@ -163,6 +163,21 @@ void main() {
       await _ignoreApp(() => c.onShareChanged(false));
       verify(() => repo.setTechniciansCanShare(false)).called(1);
       expect(c.techniciansCanShare, isFalse); // the session has the new company
+    });
+
+    test('the owner sets the phone customers see as Call on their report', () async {
+      final c = open('owner');
+      expect(c.contactPhone, '');
+      expect(c.onPhoneTap(), isTrue);
+      c.phoneBox.text = ' +91 98250 22222 ';
+      when(() => repo.setContactPhone(any())).thenAnswer(
+        (_) async => ApiSuccess<CompanyOutModel>(company(phone: '+91 98250 22222')),
+      );
+      await _ignoreApp(c.onPhoneSave);
+      verify(() => repo.setContactPhone('+91 98250 22222')).called(1);
+      expect(c.contactPhone, '+91 98250 22222');
+      expect(c.onPhoneTap() && c.phoneBox.text == '+91 98250 22222', isTrue); // opens with the number as it is
+      c.onClose();
     });
 
     test('managers can look but not change', () async {

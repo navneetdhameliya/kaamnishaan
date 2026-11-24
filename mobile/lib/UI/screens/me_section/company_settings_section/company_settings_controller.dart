@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -15,7 +16,7 @@ import '../../../../infrastructure/shared/money_text.dart';
 import '../../../common_widgets/kn_photo_source_sheet.dart';
 import '../../../common_widgets/kn_toast.dart';
 
-/// M39 Company settings: trade, country, logo, plan and "Technicians can share reports".
+/// M39 Company settings: trade, country, logo, plan, the phone for customers and "Technicians can share reports".
 /// Everyone in the office can look; only the owner can change (the server checks too).
 class CompanySettingsController extends GetxController {
   CompanySettingsController({
@@ -38,10 +39,19 @@ class CompanySettingsController extends GetxController {
   final RxBool savingLogo = false.obs;
   final RxBool saving = false.obs;
 
+  /// The "Phone for customers" sheet's box.
+  final TextEditingController phoneBox = TextEditingController();
+
   @override
   void onInit() {
     super.onInit();
     loadPlan();
+  }
+
+  @override
+  void onClose() {
+    phoneBox.dispose();
+    super.onClose();
   }
 
   Future<void> loadPlan() async {
@@ -94,6 +104,9 @@ class CompanySettingsController extends GetxController {
     return LangKeys.settingsTrialEnds.trParams({'date': DateFormat('d MMM', translation.currentCode).format(end.toLocal())});
   }
 
+  /// Shown as Call on the customer's report page (D-145); '' when none is set.
+  String get contactPhone => company?.settings.contactPhone ?? '';
+
   bool get techniciansCanShare => company?.settings.techniciansCanShare ?? false;
 
   // ---- actions -----------------------------------------------------------------------------
@@ -137,6 +150,17 @@ class CompanySettingsController extends GetxController {
     if (!isOwner) return KnToast.info(LangKeys.billOwnerOnlyToast.tr);
     await Get.toNamed<void>(RoutesConstants.billingScreen);
   }
+
+  /// Opens the phone sheet for the owner, with the number as it is.
+  bool onPhoneTap() {
+    if (!_ownerOnly()) return false;
+    phoneBox.text = contactPhone;
+    return true;
+  }
+
+  /// Saves the number ('' hides Call); the sheet closes when it is saved.
+  Future<bool> onPhoneSave() =>
+      _save(() => companies.setContactPhone(phoneBox.text.trim()), message: LangKeys.settingsContactPhoneSaved.tr);
 
   Future<void> onShareChanged(bool on) async {
     if (!_ownerOnly()) return;

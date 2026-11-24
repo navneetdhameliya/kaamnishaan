@@ -11807,6 +11807,18 @@
       },
       "CompanySettings": {
         "properties": {
+          "contact_phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Shown on the customer's report page as Call (D-145); none = no button",
+            "title": "Contact Phone"
+          },
           "technicians_can_request_reviews": {
             "default": true,
             "title": "Technicians Can Request Reviews",
@@ -11829,6 +11841,20 @@
       "CompanySettingsUpdate": {
         "additionalProperties": false,
         "properties": {
+          "contact_phone": {
+            "anyOf": [
+              {
+                "maxLength": 20,
+                "pattern": "^(\\+?[0-9][0-9 ()-]{5,19})?$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The number customers call; an empty string takes it off the report page",
+            "title": "Contact Phone"
+          },
           "report_language": {
             "anyOf": [
               {
@@ -16735,6 +16761,7 @@
               "support_reply",
               "tech_question",
               "plan_limit",
+              "customer_issue",
               "announcement"
             ],
             "title": "Kind",
@@ -17864,6 +17891,18 @@
           "name": {
             "title": "Name",
             "type": "string"
+          },
+          "phone": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The company's number for Call, if it set one",
+            "title": "Phone"
           }
         },
         "required": [

@@ -527,7 +527,9 @@ async def public_report(db: AsyncSession, token: str, lang: str | None) -> Publi
         approved_at=rep.approved_at,
         completed_at=v.job.completed_at,
         company=PublicCompany(
-            name=v.company.name, logo_url=s.presign_get(v.company.logo_key) if v.company.logo_key else None
+            name=v.company.name,
+            logo_url=s.presign_get(v.company.logo_key) if v.company.logo_key else None,
+            phone=(v.company.settings or {}).get("contact_phone"),
         ),
         language=rep.language,
         lang=lang,
@@ -680,6 +682,22 @@ async def report_issue(db: AsyncSession, token: str, message: str, contact: str 
     )
     db.add(issue)
     job = await db.get(Job, rep.job_id)
+    # D-145: the office sees it in the app's Messages (email waits for the email service)
+    await notifications.notify(
+        db,
+        company_id=rep.company_id,
+        to=await notifications.reviewers(db, rep.company_id),
+        kind="customer_issue",
+        actor_id=None,
+        job=job,
+        report_id=rep.id,
+        params={
+            **await notifications.job_params(db, job),
+            "report": rlabel(rep.number),
+            "message": message[:300],
+            "contact": contact,
+        },
+    )
     await _tell_team(
         db,
         rep.company_id,

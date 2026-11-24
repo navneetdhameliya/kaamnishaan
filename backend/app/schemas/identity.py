@@ -118,6 +118,9 @@ class CompanySettings(BaseModel):
     technicians_can_share: bool = False
     technicians_can_request_reviews: bool = True
     techs_see_reviews: bool = True
+    contact_phone: str | None = Field(
+        default=None, description="Shown on the customer's report page as Call (D-145); none = no button"
+    )
 
 
 class CompanyOut(BaseModel):
@@ -236,6 +239,12 @@ class CompanySettingsUpdate(_In):
     technicians_can_request_reviews: bool | None = None
     techs_see_reviews: bool | None = None
     report_language: Locale | None = None
+    contact_phone: str | None = Field(
+        default=None,
+        max_length=20,
+        pattern=r"^(\+?[0-9][0-9 ()-]{5,19})?$",
+        description="The number customers call; an empty string takes it off the report page",
+    )
 
 
 # ---- team & invites --------------------------------------------------------------------
