@@ -70,6 +70,19 @@ class Principal:
             raise Forbidden("forbidden", "You don't have permission to do this.", {"needs": permission})
 
 
+PLATFORMS = {"android", "ios", "ipados", "macos", "web"}
+
+
+def _note_device(request: Request, sess: AuthSession) -> None:
+    """Signed-in devices show the platform and app version the app sends (D-146); written when they change."""
+    platform = (request.headers.get("x-platform") or "").lower()
+    version = (request.headers.get("x-app-version") or "")[:32] or None
+    if platform in PLATFORMS and sess.platform != platform:
+        sess.platform = platform
+    if version and sess.app_version != version:
+        sess.app_version = version
+
+
 async def get_principal(
     request: Request,
     creds: HTTPAuthorizationCredentials | None = Depends(bearer),
@@ -84,6 +97,7 @@ async def get_principal(
     user = await db.get(User, uuid.UUID(claims["sub"]))
     if not user or user.status == "disabled":
         raise Unauthorized("account_disabled", "This account is turned off.")
+    _note_device(request, sess)
     p = Principal(user=user, session_id=sess.id)
     if claims.get("cid"):
         # role comes from the database, not the token, so changes apply immediately

@@ -15071,6 +15071,90 @@ class ShotPromptModel {
       };
 }
 
+/// One place the user is signed in (D-146).
+SignedInDeviceModel signedInDeviceModelFromJson(String str) => SignedInDeviceModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String signedInDeviceModelToJson(SignedInDeviceModel data) => json.encode(data.toJson());
+
+class SignedInDeviceModel {
+  final String? appVersion;
+  /// The device asking
+  final bool current;
+  final String id;
+  final DateTime? lastUsedAt;
+  /// android, ios, ipados, macos or web
+  final String? platform;
+  final DateTime signedInAt;
+
+  const SignedInDeviceModel({
+    this.appVersion,
+    required this.current,
+    required this.id,
+    this.lastUsedAt,
+    this.platform,
+    required this.signedInAt,
+  });
+
+  factory SignedInDeviceModel.fromJson(Map<String, dynamic> json) => SignedInDeviceModel(
+        appVersion: json['app_version'] as String?,
+        current: json['current'] as bool,
+        id: json['id'] as String,
+        lastUsedAt: json['last_used_at'] == null ? null : DateTime.parse(json['last_used_at'] as String),
+        platform: json['platform'] as String?,
+        signedInAt: DateTime.parse(json['signed_in_at'] as String),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'app_version': appVersion,
+        'current': current,
+        'id': id,
+        'last_used_at': lastUsedAt?.toIso8601String(),
+        'platform': platform,
+        'signed_in_at': signedInAt.toIso8601String(),
+      };
+}
+
+SignedInDevicesModel signedInDevicesModelFromJson(String str) => SignedInDevicesModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String signedInDevicesModelToJson(SignedInDevicesModel data) => json.encode(data.toJson());
+
+class SignedInDevicesModel {
+  final List<SignedInDeviceModel> data;
+
+  const SignedInDevicesModel({
+    required this.data,
+  });
+
+  factory SignedInDevicesModel.fromJson(Map<String, dynamic> json) => SignedInDevicesModel(
+        data: (json['data'] as List).map((e) => SignedInDeviceModel.fromJson(e as Map<String, dynamic>)).toList(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'data': data.map((e) => e.toJson()).toList(),
+      };
+}
+
+SignedOutModel signedOutModelFromJson(String str) => SignedOutModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String signedOutModelToJson(SignedOutModel data) => json.encode(data.toJson());
+
+class SignedOutModel {
+  /// How many devices were signed out
+  final int signedOut;
+
+  const SignedOutModel({
+    required this.signedOut,
+  });
+
+  factory SignedOutModel.fromJson(Map<String, dynamic> json) => SignedOutModel(
+        signedOut: (json['signed_out'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'signed_out': signedOut,
+      };
+}
+
 SiteBriefModel siteBriefModelFromJson(String str) => SiteBriefModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String siteBriefModelToJson(SiteBriefModel data) => json.encode(data.toJson());

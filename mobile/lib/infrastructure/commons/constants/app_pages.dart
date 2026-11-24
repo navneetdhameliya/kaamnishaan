@@ -72,6 +72,8 @@ import '../../../UI/screens/me_section/delete_account_section/delete_account_bin
 import '../../../UI/screens/me_section/delete_account_section/delete_account_screen.dart';
 import '../../../UI/screens/me_section/language_settings_section/language_settings_binding.dart';
 import '../../../UI/screens/me_section/language_settings_section/language_settings_screen.dart';
+import '../../../UI/screens/me_section/signed_in_devices_section/signed_in_devices_binding.dart';
+import '../../../UI/screens/me_section/signed_in_devices_section/signed_in_devices_screen.dart';
 import '../../../UI/screens/me_section/help_new_section/help_new_binding.dart';
 import '../../../UI/screens/me_section/help_new_section/help_new_screen.dart';
 import '../../../UI/screens/me_section/help_section/help_binding.dart';
@@ -228,6 +230,11 @@ abstract final class AppPages {
       name: RoutesConstants.languageSettingsScreen,
       page: () => const LanguageSettingsScreen(),
       binding: LanguageSettingsBinding(),
+    ),
+    GetPage(
+      name: RoutesConstants.signedInDevicesScreen,
+      page: () => const SignedInDevicesScreen(),
+      binding: SignedInDevicesBinding(),
     ),
     GetPage(name: RoutesConstants.reportReviewScreen, page: () => const ReportReviewScreen(), binding: ReportReviewBinding()),
     GetPage(name: RoutesConstants.reportPdfScreen, page: () => const ReportPdfScreen(), binding: ReportPdfBinding()),

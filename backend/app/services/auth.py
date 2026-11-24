@@ -13,7 +13,7 @@ from sqlalchemy import func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.config import get_settings
-from app.core.errors import AppError, Conflict, Forbidden, Gone, RateLimited, Unauthorized
+from app.core.errors import AppError, Conflict, Forbidden, Gone, NotFound, RateLimited, Unauthorized
 from app.core.security import (
     ACCESS_TTL,
     REFRESH_TTL,
@@ -31,7 +31,7 @@ from app.core.security import (
 )
 from app.models import AuthSession, Company, LoginAttempt, Membership, OtpChallenge, User
 from app.providers.messaging import send_email, send_sms
-from app.schemas.identity import SessionOut
+from app.schemas.identity import SessionOut, SignedInDevice, SignedInDevices, SignedOut
 from app.services import audit, platform, team
 from app.services import email as email_svc
 from app.services.views import active_memberships, choices, me_out
@@ -426,3 +426,55 @@ async def logout(db: AsyncSession, session_id: uuid.UUID) -> None:
     sess = await db.get(AuthSession, session_id)
     if sess and not sess.revoked_at:
         sess.revoked_at = now()
+
+
+# ---- signed-in devices (D-146) ------------------------------------------------------------------
+
+
+def _open(user_id: uuid.UUID):
+    return (AuthSession.user_id == user_id, AuthSession.revoked_at.is_(None), AuthSession.expires_at > now())
+
+
+async def devices(db: AsyncSession, user: User, current: uuid.UUID) -> SignedInDevices:
+    """Where the user is signed in now: this device first, then the most recently used."""
+    rows = (await db.scalars(select(AuthSession).where(*_open(user.id)))).all()
+    rows = sorted(rows, key=lambda s: (s.id != current, -(s.last_used_at or s.created_at).timestamp()))
+    return SignedInDevices(
+        data=[
+            SignedInDevice(
+                id=s.id,
+                platform=s.platform,
+                app_version=s.app_version,
+                signed_in_at=s.created_at,
+                last_used_at=s.last_used_at,
+                current=s.id == current,
+            )
+            for s in rows
+        ]
+    )
+
+
+async def sign_out_device(db: AsyncSession, user: User, current: uuid.UUID, session_id: uuid.UUID) -> None:
+    """Signs one of the user's other devices out; its next request asks to sign in again."""
+    if session_id == current:
+        raise Conflict("this_device", "To sign out this device, use Log out.")
+    sess = await db.scalar(select(AuthSession).where(AuthSession.id == session_id, *_open(user.id)))
+    if not sess:
+        raise NotFound("device_not_found", "That device is already signed out.")
+    sess.revoked_at = now()
+    await audit.record(
+        db, "auth.device_signed_out", actor_id=user.id, target_type="session", target_id=sess.id
+    )
+
+
+async def sign_out_others(db: AsyncSession, user: User, current: uuid.UUID) -> SignedOut:
+    """ "Sign out everywhere else": every session but this one ends now (a lost phone, a shared tablet)."""
+    result = await db.execute(
+        update(AuthSession).where(*_open(user.id), AuthSession.id != current).values(revoked_at=now())
+    )
+    n = result.rowcount or 0
+    if n:
+        await audit.record(
+            db, "auth.signed_out_others", actor_id=user.id, target_type="user", target_id=user.id
+        )
+    return SignedOut(signed_out=n)

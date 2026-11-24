@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../commons/constants/apis/api_constant.dart';
 import '../../config/env.dart';
@@ -14,6 +15,7 @@ class ApiClient {
     required this.tokens,
     required this.language,
     required this.deviceId,
+    this.appVersion,
     this.onSessionExpired,
     this.onCompanySuspended,
     String? baseUrl,
@@ -42,6 +44,9 @@ class ApiClient {
   final ITokenStorage tokens;
   final String Function() language;
   final Future<String> Function() deviceId;
+
+  /// "1.4.0", sent so Signed-in devices can show it; none in tests.
+  final Future<String?> Function()? appVersion;
   final void Function()? onSessionExpired;
 
   /// KaamNishaan paused the company (403 company_suspended): the app shows the paused screen.
@@ -81,6 +86,10 @@ class ApiClient {
   Future<void> _onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     options.headers['Accept-Language'] = language();
     options.headers['X-Device-Id'] = await deviceId();
+    // Me → Signed-in devices shows these (D-146)
+    options.headers['X-Platform'] = kIsWeb ? 'web' : defaultTargetPlatform.name;
+    final version = await appVersion?.call();
+    if (version != null) options.headers['X-App-Version'] = version;
     if (options.extra[_noAuth] != true) {
       final token = await tokens.readAccess();
       if (token != null) options.headers['Authorization'] = 'Bearer $token';

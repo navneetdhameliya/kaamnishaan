@@ -184,6 +184,25 @@ class MyInvite(BaseModel):
     status: Literal["pending", "expired"]
 
 
+class SignedInDevice(BaseModel):
+    """One place the user is signed in (D-146)."""
+
+    id: uuid.UUID
+    platform: str | None = Field(default=None, description="android, ios, ipados, macos or web")
+    app_version: str | None = None
+    signed_in_at: datetime
+    last_used_at: datetime | None
+    current: bool = Field(description="The device asking")
+
+
+class SignedInDevices(BaseModel):
+    data: list[SignedInDevice]
+
+
+class SignedOut(BaseModel):
+    signed_out: int = Field(description="How many devices were signed out")
+
+
 class SessionOut(BaseModel):
     access_token: str
     refresh_token: str

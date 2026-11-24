@@ -155,8 +155,6 @@ class DashboardController extends GetxController {
     if (made == true) await load();
   }
 
-  void onComingSoonTap() => KnToast.info(LangKeys.commonComingSoon.tr);
-
   /// Messages (M42): reports sent for review and more.
   Future<void> onBellTap() async {
     await Get.toNamed(RoutesConstants.messagesScreen);

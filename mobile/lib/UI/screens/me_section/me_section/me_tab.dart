@@ -250,6 +250,12 @@ class MeTab extends GetView<MeController> {
                             onTap: controller.onHelpTap,
                           ),
                           MeRow(
+                            key: const ValueKey('me-devices'),
+                            icon: LucideIcons.smartphone,
+                            label: LangKeys.meDevices.tr,
+                            onTap: controller.onDevicesTap,
+                          ),
+                          MeRow(
                             key: const ValueKey('log-out'),
                             icon: LucideIcons.logOut,
                             label: LangKeys.commonLogOut.tr,

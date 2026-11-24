@@ -20,6 +20,15 @@ abstract class IAuthApiRepository {
   Future<ApiResult<SessionOutModel>> refreshSession();
   Future<ApiResult<SessionOutModel>> switchCompany(String companyId);
   Future<ApiResult<void>> logout();
+
+  /// Me → Signed-in devices (D-146): where this account is signed in, this device first.
+  Future<ApiResult<SignedInDevicesModel>> devices();
+
+  /// Signs one other device out.
+  Future<ApiResult<void>> signOutDevice(String sessionId);
+
+  /// "Sign out everywhere else"; how many devices were signed out.
+  Future<ApiResult<int>> signOutOthers();
   Future<ApiResult<MeOutModel>> updateProfile({String? name, String? trade, String? avatarUploadId});
   Future<ApiResult<MyInviteListModel>> myInvites();
 
@@ -94,6 +103,19 @@ class AuthApiRepository implements IAuthApiRepository {
   Future<ApiResult<void>> logout() => guard(() async {
         await provider.postLogout();
       });
+
+  @override
+  Future<ApiResult<SignedInDevicesModel>> devices() =>
+      guard(() async => SignedInDevicesModel.fromJson(_map(await provider.getSessions())));
+
+  @override
+  Future<ApiResult<void>> signOutDevice(String sessionId) => guard(() async {
+        await provider.deleteSession(sessionId);
+      });
+
+  @override
+  Future<ApiResult<int>> signOutOthers() =>
+      guard(() async => SignedOutModel.fromJson(_map(await provider.postSignOutOthers())).signedOut);
 
   @override
   Future<ApiResult<MeOutModel>> updateProfile({String? name, String? trade, String? avatarUploadId}) =>

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../commons/constants/app_routes.dart';
@@ -68,6 +69,7 @@ abstract final class AppServices {
       tokens: tokens,
       language: () => translation.currentCode,
       deviceId: prefs.deviceId,
+      appVersion: _appVersion,
       onSessionExpired: () async {
         if (Get.isRegistered<SessionService>()) await Get.find<SessionService>().clear();
         Get.offAllNamed(RoutesConstants.welcomeScreen);
@@ -129,3 +131,10 @@ abstract final class AppServices {
     ready = true;
   }
 }
+
+Future<String?>? _version;
+
+/// The app's version, read once (Signed-in devices shows it, D-146).
+Future<String?> _appVersion() =>
+    _version ??= PackageInfo.fromPlatform().then<String?>((p) => p.version).catchError((Object _) => null);
+

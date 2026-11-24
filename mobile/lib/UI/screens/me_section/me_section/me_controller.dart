@@ -8,7 +8,6 @@ import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/services/photo_queue_service.dart';
 import '../../../../infrastructure/services/session_service.dart';
-import '../../../common_widgets/kn_toast.dart';
 import '../../auth_section/profile_setup_section/profile_setup_controller.dart';
 
 /// One number on the Me card ("14 Jobs done").
@@ -170,15 +169,16 @@ class MeController extends GetxController {
     session.me.refresh();
   }
 
-  /// Help comes with its own step.
-  void onComingSoonTap() => KnToast.info(LangKeys.commonComingSoon.tr);
-
   /// M47 Help: requests to KaamNishaan support.
   Future<void> onHelpTap() async {
     await Get.toNamed(RoutesConstants.helpScreen);
   }
 
-  /// Log out now; the screen asks first when things are still waiting to send.
+  /// D-146: where this account is signed in; sign out a lost phone.
+  Future<void> onDevicesTap() async {
+    await Get.toNamed<void>(RoutesConstants.signedInDevicesScreen);
+  }
+
   /// D-130: what deleting the account means, then delete it for good.
   Future<void> onDeleteAccountTap() async {
     await Get.toNamed<void>(RoutesConstants.deleteAccountScreen);
