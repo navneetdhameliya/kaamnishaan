@@ -5,6 +5,7 @@ import '../../../../infrastructure/commons/constants/app_routes.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/checklists_api_repository.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
+import '../../../../infrastructure/shared/plan_gate.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// Owners and managers: the company's checklists and KaamNishaan's, and "New checklist" (opens M26).
@@ -63,7 +64,12 @@ class ChecklistLibraryController extends GetxController {
     await load();
   }
 
-  void startNew() => name.clear();
+  /// "New checklist": your own checklists come with the plan (D-147); false keeps the sheet shut.
+  bool startNew() {
+    if (!PlanGate.check(PlanFeature.ownChecklists)) return false;
+    name.clear();
+    return true;
+  }
 
   /// Creates the draft; true when it worked (the sheet closes and the builder opens).
   Future<bool> onCreate() async {

@@ -156,6 +156,7 @@ async def build_report_pdf(ctx, report_id: str) -> str:
     """Build the customer PDF after approval (M34). Safe to run twice; failures can be retried."""
     from app.models import Evidence
     from app.providers.storage import get_storage, sha256
+    from app.services import plan_features
     from app.services.report_pdf import build_pdf
     from app.services.report_view import customer_view
     from app.tasks.photos import ensure_web_copy
@@ -177,7 +178,9 @@ async def build_report_pdf(ctx, report_id: str) -> str:
             for e in (await db.execute(select(Evidence).where(Evidence.job_id == rep.job_id))).scalars():
                 await ensure_web_copy(e)
             logo = await storage.read(view.company.logo_key) if view.company.logo_key else None
-            data, pages = build_pdf(view, rep.language, images, logo)
+            data, pages = build_pdf(
+                view, rep.language, images, logo, branded=plan_features.has(view.company, "branded_pdf")
+            )
             key = f"{rep.company_id}/reports/{rep.id}/R-{rep.number}.pdf"
             await storage.write(key, data, "application/pdf")
             rep.pdf_key, rep.pdf_pages, rep.pdf_size, rep.pdf_sha256 = key, pages, len(data), sha256(data)

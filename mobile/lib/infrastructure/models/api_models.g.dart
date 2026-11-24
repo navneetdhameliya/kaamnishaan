@@ -8422,6 +8422,8 @@ String companyOutModelToJson(CompanyOutModel data) => json.encode(data.toJson())
 class CompanyOutModel {
   final String country;
   final String currency;
+  /// What the plan switches on: ai_assistant, custom_checklists, branded_pdf (D-147)
+  final List<String>? features;
   final String id;
   final String? logoUrl;
   final String name;
@@ -8437,6 +8439,7 @@ class CompanyOutModel {
   const CompanyOutModel({
     required this.country,
     required this.currency,
+    this.features,
     required this.id,
     this.logoUrl,
     required this.name,
@@ -8452,6 +8455,7 @@ class CompanyOutModel {
   factory CompanyOutModel.fromJson(Map<String, dynamic> json) => CompanyOutModel(
         country: json['country'] as String,
         currency: json['currency'] as String,
+        features: json['features'] == null ? null : (json['features'] as List).map((e) => e as String).toList(),
         id: json['id'] as String,
         logoUrl: json['logo_url'] as String?,
         name: json['name'] as String,
@@ -8467,6 +8471,7 @@ class CompanyOutModel {
   Map<String, dynamic> toJson() => {
         'country': country,
         'currency': currency,
+        'features': features,
         'id': id,
         'logo_url': logoUrl,
         'name': name,

@@ -27,9 +27,9 @@ MAX_PHOTOS = 9
 
 
 class _Pdf(FPDF):
-    def __init__(self, view: CustomerView, lang: str):
+    def __init__(self, view: CustomerView, lang: str, branded: bool = True):
         super().__init__(format="A4")
-        self.view, self.lang = view, lang
+        self.view, self.lang, self.branded = view, lang, branded
         for key, fam in FAMILIES.items():
             self.add_font(key, "", str(FONTS / f"{fam}-Regular.ttf"))
             self.add_font(key, "B", str(FONTS / f"{fam}-Bold.ttf"))
@@ -62,8 +62,10 @@ class _Pdf(FPDF):
 
     def footer(self) -> None:
         v = self.view
-        self.set_y(-15)
+        self.set_y(-19 if not self.branded else -15)
         self.font(7.5, color=MUTED)
+        if not self.branded:  # D-147: plans without a branded PDF carry KaamNishaan's line
+            self.cell(self.epw, 4, label(self.lang, "made_with"), new_x="LMARGIN", new_y="NEXT")
         locked = label(self.lang, "locked", date=fmt_date(v.local(v.report.submitted_at), self.lang))
         self.cell(self.epw * 0.8, 4, locked)
         self.cell(self.epw * 0.2, 4, f"{v.number} · {label(self.lang, 'page', n=self.page_no())}", align="R")
@@ -83,10 +85,15 @@ def _image_box(pdf: _Pdf, data: bytes | None, x: float, y: float, w: float, h: f
     pdf.cell(w, 4.5, caption)
 
 
-def build_pdf(view: CustomerView, lang: str, images: dict, logo: bytes | None = None) -> tuple[bytes, int]:
+def build_pdf(
+    view: CustomerView, lang: str, images: dict, logo: bytes | None = None, branded: bool = True
+) -> tuple[bytes, int]:
+    """[branded] False (D-147): no company logo, and "Made with KaamNishaan" in the footer."""
+    if not branded:
+        logo = None
     """images: evidence id -> thumbnail bytes. Returns (pdf bytes, page count)."""
     rep = view.report
-    pdf = _Pdf(view, lang)
+    pdf = _Pdf(view, lang, branded)
     pdf.set_title(f"{label(lang, 'title')} {view.number}")
     pdf.set_author(view.company.name)
     pdf.set_creator("KaamNishaan")

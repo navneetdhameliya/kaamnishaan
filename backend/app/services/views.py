@@ -9,6 +9,7 @@ from app.core.permissions import permissions_for
 from app.models import Company, Membership, User
 from app.providers.storage import get_storage
 from app.schemas.identity import CompanyChoice, CompanyOut, CompanySettings, MeOut
+from app.services import plan_features
 
 
 def company_out(c: Company) -> CompanyOut:
@@ -26,6 +27,7 @@ def company_out(c: Company) -> CompanyOut:
         status=c.status,
         trial_ends_at=c.trial_ends_at,
         settings=CompanySettings(**{k: v for k, v in s.items() if k in CompanySettings.model_fields}),
+        features=plan_features.features(c),
     )
 
 
