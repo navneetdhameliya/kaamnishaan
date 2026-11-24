@@ -4736,6 +4736,44 @@ abstract final class LangKeys {
   static const delTitle = 'del.title';
   /// I understand my account is deleted for good.
   static const delUnderstood = 'del.understood';
+  /// Android phone
+  static const devicesAndroid = 'devices.android';
+  /// App {version}
+  static const devicesApp = 'devices.app';
+  /// Couldn’t load your devices.
+  static const devicesFailed = 'devices.failed';
+  /// iPad
+  static const devicesIpad = 'devices.ipad';
+  /// iPhone
+  static const devicesIphone = 'devices.iphone';
+  /// Mac
+  static const devicesMac = 'devices.mac';
+  /// Sign out everywhere else
+  static const devicesOthers = 'devices.others';
+  /// Every other phone, tablet and browser has to sign in again. This device stays signed in. Use this if a phone is lost.
+  static const devicesOthersBody = 'devices.others_body';
+  /// Sign out everywhere else?
+  static const devicesOthersTitle = 'devices.others_title';
+  /// Try again
+  static const devicesRetry = 'devices.retry';
+  /// Sign out
+  static const devicesSignOut = 'devices.sign_out';
+  /// That device is signed out.
+  static const devicesSignedOut = 'devices.signed_out';
+  /// Signed out of {count} other devices.
+  static const devicesSignedOutN = 'devices.signed_out_n';
+  /// Where your account is signed in now
+  static const devicesSubtitle = 'devices.subtitle';
+  /// This device
+  static const devicesThis = 'devices.this';
+  /// Signed-in devices
+  static const devicesTitle = 'devices.title';
+  /// Device
+  static const devicesUnknown = 'devices.unknown';
+  /// Used {when}
+  static const devicesUsed = 'devices.used';
+  /// Web browser
+  static const devicesWeb = 'devices.web';
   /// Couldn't turn that into words. Try again, or type it.
   static const dictateFailed = 'dictate.failed';
   /// Listening… tap the square to stop
@@ -5248,6 +5286,8 @@ abstract final class LangKeys {
   static const meCustomers = 'me.customers';
   /// Delete account
   static const meDeleteAccount = 'me.delete_account';
+  /// Signed-in devices
+  static const meDevices = 'me.devices';
   /// Edit profile
   static const meEditProfile = 'me.edit_profile';
   /// Help

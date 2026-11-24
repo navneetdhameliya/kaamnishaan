@@ -10,6 +10,9 @@ abstract class IAuthApiProvider {
   Future<dynamic> postForgotPassword(Map<String, dynamic> body);
   Future<dynamic> postSwitchCompany(Map<String, dynamic> body);
   Future<dynamic> postLogout();
+  Future<dynamic> getSessions();
+  Future<dynamic> deleteSession(String id);
+  Future<dynamic> postSignOutOthers();
   Future<dynamic> getMe();
   Future<dynamic> postSendVerification();
   Future<dynamic> patchEmail(String email);
@@ -50,6 +53,15 @@ class AuthApiProvider implements IAuthApiProvider {
 
   @override
   Future<dynamic> postLogout() => _client.post(APIConstant.logoutAPIEP);
+
+  @override
+  Future<dynamic> getSessions() => _client.get(APIConstant.sessionsAPIEP);
+
+  @override
+  Future<dynamic> deleteSession(String id) => _client.delete(APIConstant.sessionAPIEP(id));
+
+  @override
+  Future<dynamic> postSignOutOthers() => _client.post(APIConstant.signOutOthersAPIEP);
 
   @override
   Future<dynamic> getMe() => _client.get(APIConstant.meAPIEP);

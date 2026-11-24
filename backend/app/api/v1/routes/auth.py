@@ -1,3 +1,5 @@
+import uuid
+
 from fastapi import APIRouter, Depends, Request, Response, status
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -13,6 +15,8 @@ from app.schemas.identity import (
     RefreshBody,
     Register,
     SessionOut,
+    SignedInDevices,
+    SignedOut,
     SwitchCompany,
     TokenBody,
 )
@@ -94,4 +98,32 @@ async def switch_company(
 @router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
 async def logout(p: Principal = Depends(get_principal), db: AsyncSession = Depends(get_db)) -> Response:
     await auth.logout(db, p.session_id)
+    return Response(status_code=204)
+
+
+@router.get("/sessions", response_model=SignedInDevices)
+async def devices(
+    p: Principal = Depends(get_principal), db: AsyncSession = Depends(get_db)
+) -> SignedInDevices:
+    """Me → Signed-in devices: where this account is signed in now (D-146)."""
+    return await auth.devices(db, p.user, p.session_id)
+
+
+@router.post("/sessions/sign-out-others", response_model=SignedOut)
+async def sign_out_others(
+    p: Principal = Depends(get_principal), db: AsyncSession = Depends(get_db)
+) -> SignedOut:
+    """Sign out everywhere else: every device but this one has to sign in again."""
+    out = await auth.sign_out_others(db, p.user, p.session_id)
+    await db.commit()
+    return out
+
+
+@router.delete("/sessions/{session_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def sign_out_device(
+    session_id: uuid.UUID, p: Principal = Depends(get_principal), db: AsyncSession = Depends(get_db)
+) -> Response:
+    """Signs one other device out."""
+    await auth.sign_out_device(db, p.user, p.session_id, session_id)
+    await db.commit()
     return Response(status_code=204)

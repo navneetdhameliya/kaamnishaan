@@ -200,3 +200,36 @@ async def test_profile_and_preferences(client):
     dev = {"push_token": "fcm-token-123456", "platform": "ipados", "app_version": "1.0.0"}
     assert (await client.post("/api/v1/devices", json=dev, headers=auth(s))).status_code == 204
     assert (await client.post("/api/v1/devices", json=dev, headers=auth(s))).status_code == 204  # upsert
+
+
+async def test_signed_in_devices_and_sign_out_everywhere_else(client):
+    """D-146: Me → Signed-in devices lists where the account is signed in; one or all others can be signed out."""
+    phone = (await _register(client)).json()
+    login = {"email": "asha@brightair.in", "password": "Cool1234"}
+    tablet = (await client.post("/api/v1/auth/login", json=login)).json()
+    laptop = (await client.post("/api/v1/auth/login", json=login)).json()
+    android = {**auth(phone), "X-Platform": "android", "X-App-Version": "1.4.0"}
+    r = (await client.get("/api/v1/auth/sessions", headers=android)).json()["data"]
+    assert len(r) == 3 and r[0]["current"] and (r[0]["platform"], r[0]["app_version"]) == ("android", "1.4.0")
+    assert not any(d["current"] for d in r[1:])
+
+    # signing out this device is Log out's job
+    me = r[0]["id"]
+    assert (await client.delete(f"/api/v1/auth/sessions/{me}", headers=auth(phone))).status_code == 409
+    # sign out the tablet only
+    tablet_id = next(
+        d["id"]
+        for d in (await client.get("/api/v1/auth/sessions", headers=auth(tablet))).json()["data"]
+        if d["current"]
+    )
+    assert (await client.delete(f"/api/v1/auth/sessions/{tablet_id}", headers=auth(phone))).status_code == 204
+    assert (await client.get("/api/v1/me", headers=auth(tablet))).status_code == 401
+    gone = await client.delete(f"/api/v1/auth/sessions/{tablet_id}", headers=auth(phone))
+    assert gone.status_code == 404 and gone.json()["error"]["code"] == "device_not_found"
+
+    # everywhere else: the laptop is out, this phone stays in
+    out = await client.post("/api/v1/auth/sessions/sign-out-others", headers=auth(phone))
+    assert out.json() == {"signed_out": 1}
+    assert (await client.get("/api/v1/me", headers=auth(laptop))).status_code == 401
+    assert (await client.get("/api/v1/me", headers=auth(phone))).status_code == 200
+    assert len((await client.get("/api/v1/auth/sessions", headers=auth(phone))).json()["data"]) == 1

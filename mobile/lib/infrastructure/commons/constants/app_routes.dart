@@ -38,6 +38,7 @@ abstract final class RoutesConstants {
   static const String reportEditorScreen = '/report/edit';
   static const String reportSentScreen = '/report/sent';
   static const String languageSettingsScreen = '/settings/language';
+  static const String signedInDevicesScreen = '/settings/devices';
   static const String myReportsScreen = '/my-reports';
   static const String waitingToSendScreen = '/waiting-to-send';
   static const String messagesScreen = '/messages';
