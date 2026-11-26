@@ -107,7 +107,7 @@ async def test_the_monthly_limit_pauses_chat(client, ready, fake_assistant):
             await c.execute(text("update plans set ai_questions_monthly = 1000 where code = 'professional'"))
 
 
-async def test_failures_are_not_counted_and_only_the_office_may_ask(client, ready, fake_assistant):
+async def test_failures_are_not_counted_and_technicians_see_only_their_jobs(client, ready, fake_assistant):
     owner = ready["owner"]
     fake_assistant.fail = True
     r = await client.post("/api/v1/assistant/ask", json={"text": "Hi"}, headers=auth(owner))
@@ -115,14 +115,21 @@ async def test_failures_are_not_counted_and_only_the_office_may_ask(client, read
     assert (await client.get("/api/v1/assistant", headers=auth(owner))).json()["used"] == 0
     async with engine.begin() as c:  # but A20 shows the failed call
         assert tuple((await c.execute(text("SELECT task, ok FROM ai_usage"))).one()) == ("assistant", False)
-    assert (await client.get("/api/v1/assistant", headers=auth(ready["tech"]))).status_code == 403
+    fake_assistant.fail = False
+    # D-150: a technician asks about their own jobs only
+    assert (await client.get("/api/v1/assistant", headers=auth(ready["tech"]))).status_code == 200
+    r = await client.post(
+        "/api/v1/assistant/ask", json={"text": "What is left on my job?"}, headers=auth(ready["tech"])
+    )
+    assert r.status_code == 200, r.text
+    assert [j["customer"] for j in fake_assistant.contexts[-1]["context"]["jobs"]] == [
+        ready["customer"]["name"]
+    ]
     tech2 = await invite_and_join(client, owner, "+919898989898")
-    assert (
-        await client.post("/api/v1/assistant/ask", json={"text": "Hi"}, headers=auth(tech2))
-    ).status_code == 403
+    await client.post("/api/v1/assistant/ask", json={"text": "Hi"}, headers=auth(tech2))
+    assert fake_assistant.contexts[-1]["context"]["jobs"] == []  # none of the other technician's jobs
     # another company sees none of this
     other = await make_owner(client, email="x@other.in", company="Other Co")
-    fake_assistant.fail = False
     await client.post("/api/v1/assistant/ask", json={"text": "Hi"}, headers=auth(other))
     assert all(
         j["customer"] != ready["customer"]["name"] for j in fake_assistant.contexts[-1]["context"]["jobs"]

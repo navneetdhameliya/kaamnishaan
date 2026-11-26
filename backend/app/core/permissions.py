@@ -13,7 +13,10 @@ OWNER = _SHARED | {
     "company.manage", "billing.manage", "team.invite_manager", "team.manage_managers", "audit.view",
 }  # fmt: skip
 MANAGER = set(_SHARED)
-TECHNICIAN = {"jobs.create_quick", "jobs.view_own", "evidence.capture", "reports.edit_own", "reports.submit"}
+TECHNICIAN = {
+    "jobs.create_quick", "jobs.view_own", "evidence.capture", "reports.edit_own", "reports.submit",
+    "ai.assistant",  # about their own jobs (D-150)
+}  # fmt: skip
 
 
 def permissions_for(
