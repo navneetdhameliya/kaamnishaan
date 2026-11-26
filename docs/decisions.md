@@ -157,7 +157,7 @@
 
 ## Still open
 - Deleting a closed company's data (photos, voice notes, reports, customers) 30 days after the owner deletes their account, as the privacy policy promises (D-130). Needs the owner's OK before it is built, because it removes data for good.
-- Step 4a leaves for later: the other admin pages (A06–A40; Companies list and details done in Step 4b, Users in Step 4c, website leads in Step 4d), alerts in the top bar, email reset links (needs the email service). Done since: staff and roles (A10), your sessions with "log out everywhere", and top-bar search for companies and people (step 6).
+- Step 4a leaves for later: the other admin pages (A06–A40; Companies list and details done in Step 4b, Users in Step 4c, website leads in Step 4d), email reset links (needs the email service). Done since: staff and roles (A10), your sessions with "log out everywhere", and in the top bar search for companies and people and a bell with the dashboard's "Needs attention" (step 6).
 - Step 3e leaves for later: telling the team about a new demo or message (email or WhatsApp to the office), confirming demos with a real calendar invite and video link, Reschedule, the admin list of leads.
 - Step 3d leaves for later: a web workspace to open after log in (the app is the workspace for now), "Log in with phone" on the web, the store links (set them on Render when the apps are published).
 - Step 3c leaves for later: W06–W07 legal pages, W08–W17 feature pages, W31, W18–W23 industry pages, W24 About, W25–W26 blog, the trust bar and testimonials (need real customers), the payment provider behind annual billing, the tablet-specific layouts (the phone and desktop layouts stretch to fit).

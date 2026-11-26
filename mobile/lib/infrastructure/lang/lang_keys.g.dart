@@ -314,6 +314,8 @@ abstract final class LangKeys {
   static const adminAiTotal = 'admin.ai.total';
   /// Voice minutes
   static const adminAiVoice = 'admin.ai.voice';
+  /// Needs attention
+  static const adminAlertsTitle = 'admin.alerts.title';
   /// Active technicians
   static const adminAnActive = 'admin.an.active';
   /// Reports sent by industry

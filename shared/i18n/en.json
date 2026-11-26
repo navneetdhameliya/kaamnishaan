@@ -155,6 +155,7 @@
   "admin.ai.task.translation": "Translation",
   "admin.ai.total": "Total AI cost",
   "admin.ai.voice": "Voice minutes",
+  "admin.alerts.title": "Needs attention",
   "admin.an.active": "Active technicians",
   "admin.an.by_industry": "Reports sent by industry",
   "admin.an.chart_label": "Bar chart: {n} reports sent in this period",

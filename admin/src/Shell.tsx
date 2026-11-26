@@ -42,6 +42,7 @@ import { api } from './lib/api';
 import type { Lang, T } from './lib/i18n';
 import { session } from './lib/session';
 import type { StaffOut } from './lib/types';
+import { TopAlerts } from './TopAlerts';
 import { TopSearch } from './TopSearch';
 import { cx, Initials, LangSelect, Link, navigate } from './ui';
 
@@ -238,6 +239,7 @@ export function Shell({ t, lang, onLang, path, staff, crumb, title, actions, chi
           </div>
           <div className="flex flex-wrap items-center gap-12">
             <TopSearch t={t} />
+            <TopAlerts t={t} lang={lang} path={path} />
             {actions}
             {/* pages that keep their own state put their buttons here (see PageActions) */}
             <div id="kn-page-actions" className="contents" />
