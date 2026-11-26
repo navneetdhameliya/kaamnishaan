@@ -24717,6 +24717,37 @@
         ]
       }
     },
+    "/api/v1/admin/alerts": {
+      "get": {
+        "description": "The top bar's bell (A04): the same \"Needs attention\" list as the dashboard.",
+        "operationId": "alerts_api_v1_admin_alerts_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/AdminAttentionRow"
+                  },
+                  "title": "Response Alerts Api V1 Admin Alerts Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Alerts",
+        "tags": [
+          "admin"
+        ]
+      }
+    },
     "/api/v1/admin/analytics": {
       "get": {
         "description": "Reports sent, review time, approved first time, active technicians, compared with the period before.",
