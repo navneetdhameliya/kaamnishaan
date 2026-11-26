@@ -169,7 +169,7 @@
 - Step 2n leaves for later: changing the company name or country, billing (M41).
 - Step 2m leaves for later: SMS text in each language (needs DLT templates).
 - Step 2l leaves for later: distance to the job.
-- Step 2k leaves for later: the "…" menu on report review, editing the customer's contact from Share.
+- Step 2k leaves for later: editing the customer's contact from Share.
 - Step 2j leaves for later: phone push alerts, My reviews (M44), Help, asking the customer for a review, New job and the job filters sheet; M15's review states come with reviews.
 - M12/M13 not shown yet: distance to the job ("2.4 km", needs location), "Driving" status (needs live location), customer ratings card (comes with reviews), notifications (bell). The manager's Jobs tab opens "comes in the next update" for now.
 - M07 owner card shows the owner's initials (the Figma sample photo is a placeholder; no photo exists at sign-up). "Open email app" opens the Mail inbox on iPhone, the email app's compose screen on Android. The reset link opens the website's reset page; opening it inside the app needs app links (later, with the domain). SMS code auto-fill needs the SMS-retriever plugin and an app hash in the SMS text (later). "Choose company" has no Figma design yet. The invite card can't show the inviter's role (not in the API).

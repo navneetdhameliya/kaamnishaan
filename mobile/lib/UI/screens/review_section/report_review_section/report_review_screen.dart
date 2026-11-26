@@ -5,7 +5,9 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/shared/text_utils.dart';
 import '../../../common_widgets/common_shimmer.dart';
+import '../../../common_widgets/custom_inkwell.dart';
 import '../../../common_widgets/kn_back_button.dart';
+import '../../../common_widgets/kn_bottom_sheet.dart';
 import '../../../common_widgets/kn_custom_button.dart';
 import '../../../common_widgets/kn_initials_avatar.dart';
 import '../../../common_widgets/kn_screen_footer.dart';
@@ -25,6 +27,31 @@ class ReportReviewScreen extends GetView<ReportReviewController> {
     controller.prepareChanges();
     final sent = await showChangesSheet(controller);
     if (sent == true) Get.back<bool>(result: true);
+  }
+
+  /// M33 "…": open the job, see the PDF, or edit the report (when it can still change).
+  void _openMore() {
+    Widget item(String key, IconData icon, String label, VoidCallback onTap) => ListTile(
+          key: ValueKey(key),
+          leading: Icon(icon),
+          title: CustomBaseTextWidget(label, style: Get.context!.knText.body),
+          onTap: () {
+            Get.back<void>();
+            onTap();
+          },
+        );
+    showKnBottomSheet<void>(
+      title: LangKeys.reviewMore.tr,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          item('review-more-job', LucideIcons.briefcase, LangKeys.reviewMoreJob.tr, controller.onOpenJobTap),
+          item('review-more-pdf', LucideIcons.fileText, LangKeys.reviewMorePdf.tr, controller.onSeePdfTap),
+          if (controller.canEdit)
+            item('review-more-edit', LucideIcons.pencil, LangKeys.reviewMoreEdit.tr, controller.onEditTap),
+        ],
+      ),
+    );
   }
 
   @override
@@ -121,6 +148,17 @@ class ReportReviewScreen extends GetView<ReportReviewController> {
                           ],
                         ),
                       ),
+                      if (r != null)
+                        CustomInkWell(
+                          key: const ValueKey('review-more'),
+                          onTap: _openMore,
+                          borderRadius: BorderRadius.circular(22),
+                          semanticLabel: LangKeys.reviewMore.tr,
+                          child: SizedBox.square(
+                            dimension: 44,
+                            child: Icon(LucideIcons.ellipsis, size: 22, color: kn.textPrimary),
+                          ),
+                        ),
                     ],
                   ),
                   const SizedBox(height: KnSize.space16),

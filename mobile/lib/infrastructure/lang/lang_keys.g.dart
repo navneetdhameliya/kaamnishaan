@@ -6026,6 +6026,14 @@ abstract final class LangKeys {
   static const reviewIfNoRating = 'review.if_no_rating';
   /// Link sent with report
   static const reviewLinkSent = 'review.link_sent';
+  /// More
+  static const reviewMore = 'review.more';
+  /// Edit the report
+  static const reviewMoreEdit = 'review.more_edit';
+  /// Open the job
+  static const reviewMoreJob = 'review.more_job';
+  /// See the PDF
+  static const reviewMorePdf = 'review.more_pdf';
   /// Add the customer's phone or email to ask for a review.
   static const reviewNoContact = 'review.no_contact';
   /// {what} · no photo

@@ -219,6 +219,11 @@ class ReportReviewController extends GetxController {
 
   void onSeePdfTap() => Get.toNamed(RoutesConstants.reportPdfScreen, arguments: args);
 
+  /// The "…" menu: the job behind the report (its photos, notes and history).
+  Future<void> onOpenJobTap() async {
+    await Get.toNamed<void>(RoutesConstants.jobDetailsScreen, arguments: JobArguments(id: args.jobId, customer: args.customer));
+  }
+
   void onShareTap() => Get.toNamed(RoutesConstants.shareReportScreen, arguments: args);
 
   // ---- ask for changes ---------------------------------------------------------------------
