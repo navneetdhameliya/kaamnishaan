@@ -167,7 +167,7 @@
 - Step 2q leaves for later: paying online (plan changes, top-ups, auto top-up, invoices, payment method, cancel plan, "payment failed"), the "plan limit reached" screen and stopping reports at the limit, credits for the Day 5 AI call (no calls are made yet).
 - Step 2p leaves for later: the AI review call itself (needs a voice provider) and credits for it, push and email alerts for low ratings (in-app only now), "Delivery problems" and "AI call did not connect" screens (288:5298, 288:5416), the W29 website rating page, a scheduler calling the reminder endpoint (needs KN_CRON_KEY set on Render and the scheduler).
 - Step 2o leaves for later: the Day 2 reminder and Day 5 AI call worker, credits, review settings (M46), the manager's Reviews screens and replies (M45), the W29 rating page on the website, a message to the technician when a review arrives.
-- Step 2n leaves for later: changing the company name or country, billing (M41).
+- Step 2n leaves for later: billing (M41). The company name is changed in Company settings (owner). The country stays fixed after sign-up, because it sets prices, currency and phone numbers; moving a company to another country is done by KaamNishaan support.
 - Step 2m leaves for later: SMS text in each language (needs DLT templates).
 - Step 2l leaves for later: distance to the job.
 - Step 2j leaves for later: phone push alerts, My reviews (M44), Help, asking the customer for a review, New job and the job filters sheet; M15's review states come with reviews.

@@ -44,6 +44,9 @@ abstract class ICompanyApiRepository {
   /// M39: the company's trade (owner only).
   Future<ApiResult<CompanyOutModel>> setTrade(String trade);
 
+  /// M39: the company's name, as customers see it on reports (owner only).
+  Future<ApiResult<CompanyOutModel>> rename(String name);
+
   /// M39: "Technicians can share reports" (owner only).
   Future<ApiResult<CompanyOutModel>> setTechniciansCanShare(bool on);
 
@@ -112,6 +115,10 @@ class CompanyApiRepository implements ICompanyApiRepository {
   @override
   Future<ApiResult<CompanyOutModel>> setTrade(String trade) =>
       guard(() async => CompanyOutModel.fromJson(_map(await provider.patchCompany({'trade': trade}))));
+
+  @override
+  Future<ApiResult<CompanyOutModel>> rename(String name) =>
+      guard(() async => CompanyOutModel.fromJson(_map(await provider.patchCompany({'name': name}))));
 
   @override
   Future<ApiResult<CompanyOutModel>> setTechniciansCanShare(bool on) => guard(

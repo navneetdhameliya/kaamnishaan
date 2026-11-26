@@ -6232,6 +6232,12 @@ abstract final class LangKeys {
   static const settingsLogo = 'settings.logo';
   /// Logo saved
   static const settingsLogoSaved = 'settings.logo_saved';
+  /// Company name
+  static const settingsName = 'settings.name';
+  /// Customers see this name on their reports and messages.
+  static const settingsNameHint = 'settings.name_hint';
+  /// Name saved.
+  static const settingsNameSaved = 'settings.name_saved';
   /// Owner only
   static const settingsOwnerOnly = 'settings.owner_only';
   /// Only the owner can change this.

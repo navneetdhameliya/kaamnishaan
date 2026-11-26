@@ -41,10 +41,21 @@ class CompanySettingsScreen extends GetView<CompanySettingsController> {
     );
   }
 
-  void _openPhone() {
-    if (!controller.onPhoneTap()) return;
+  /// A one-box sheet: the company name or the phone for customers.
+  void _editSheet({
+    required String title,
+    String? hint,
+    required TextEditingController box,
+    required String boxKey,
+    required String saveKey,
+    required IconData icon,
+    required int maxLength,
+    TextInputType keyboard = TextInputType.text,
+    String? placeholder,
+    required Future<bool> Function() onSave,
+  }) {
     showKnBottomSheet<void>(
-      title: LangKeys.settingsContactPhone.tr,
+      title: title,
       child: Builder(
         builder: (context) {
           final kn = context.kn;
@@ -54,21 +65,23 @@ class CompanySettingsScreen extends GetView<CompanySettingsController> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                CustomBaseTextWidget(LangKeys.settingsContactPhoneHint.tr, style: text.caption, color: kn.textSecondary),
-                const SizedBox(height: KnSize.space12),
+                if (hint != null) ...[
+                  CustomBaseTextWidget(hint, style: text.caption, color: kn.textSecondary),
+                  const SizedBox(height: KnSize.space12),
+                ],
                 TextField(
-                  key: const ValueKey('settings-phone-box'),
-                  controller: controller.phoneBox,
-                  keyboardType: TextInputType.phone,
-                  maxLength: 20,
+                  key: ValueKey(boxKey),
+                  controller: box,
+                  keyboardType: keyboard,
+                  maxLength: maxLength,
                   autofocus: true,
                   style: text.body,
                   decoration: InputDecoration(
                     counterText: '',
-                    hintText: '+91 98250 00000',
+                    hintText: placeholder,
                     filled: true,
                     fillColor: kn.bgSurface,
-                    prefixIcon: Icon(LucideIcons.phone, size: 20, color: kn.textSecondary),
+                    prefixIcon: Icon(icon, size: 20, color: kn.textSecondary),
                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(KnSize.radiusMd)),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(KnSize.radiusMd),
@@ -78,11 +91,11 @@ class CompanySettingsScreen extends GetView<CompanySettingsController> {
                 ),
                 const SizedBox(height: KnSize.space16),
                 KnCustomButton(
-                  key: const ValueKey('settings-phone-save'),
+                  key: ValueKey(saveKey),
                   text: LangKeys.commonSave.tr,
                   loading: controller.saving.value,
                   onTap: () async {
-                    if (await controller.onPhoneSave()) Get.back<void>();
+                    if (await onSave()) Get.back<void>();
                   },
                 ),
               ],
@@ -90,6 +103,36 @@ class CompanySettingsScreen extends GetView<CompanySettingsController> {
           );
         },
       ),
+    );
+  }
+
+  void _openPhone() {
+    if (!controller.onPhoneTap()) return;
+    _editSheet(
+      title: LangKeys.settingsContactPhone.tr,
+      hint: LangKeys.settingsContactPhoneHint.tr,
+      box: controller.phoneBox,
+      boxKey: 'settings-phone-box',
+      saveKey: 'settings-phone-save',
+      icon: LucideIcons.phone,
+      maxLength: 20,
+      keyboard: TextInputType.phone,
+      placeholder: '+91 98250 00000',
+      onSave: controller.onPhoneSave,
+    );
+  }
+
+  void _openName() {
+    if (!controller.onNameTap()) return;
+    _editSheet(
+      title: LangKeys.settingsName.tr,
+      hint: LangKeys.settingsNameHint.tr,
+      box: controller.nameBox,
+      boxKey: 'settings-name-box',
+      saveKey: 'settings-name-save',
+      icon: LucideIcons.building,
+      maxLength: 120,
+      onSave: controller.onNameSave,
     );
   }
 
@@ -163,6 +206,13 @@ class CompanySettingsScreen extends GetView<CompanySettingsController> {
                 _Card(
                   child: Column(
                     children: [
+                      _Row(
+                        key: const ValueKey('settings-name'),
+                        icon: LucideIcons.building,
+                        label: LangKeys.settingsName.tr,
+                        value: controller.companyName,
+                        onTap: _openName,
+                      ),
                       _Row(
                         key: const ValueKey('settings-trade'),
                         icon: LucideIcons.briefcase,
