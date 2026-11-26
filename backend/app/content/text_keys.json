@@ -2570,6 +2570,8 @@
 "job.delete_body":"",
 "job.delete_title":"",
 "job.deleted":"",
+"job.distance_km":"n",
+"job.distance_m":"n",
 "job.equipment":"",
 "job.last_service":"date",
 "job.menu":"",

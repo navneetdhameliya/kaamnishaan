@@ -2571,6 +2571,8 @@
   "job.delete_body": "તેને કોઈએ શરૂ કર્યું નથી. તે દરેક યાદીમાંથી જશે અને પાછું નહીં આવે.",
   "job.delete_title": "આ કામ કાઢી નાખવું છે?",
   "job.deleted": "કામ કાઢી નાખ્યું.",
+  "job.distance_km": "{n} કિમી દૂર",
+  "job.distance_m": "{n} મી દૂર",
   "job.equipment": "મશીન",
   "job.last_service": "છેલ્લી સર્વિસ {date}",
   "job.menu": "કામના વિકલ્પો",

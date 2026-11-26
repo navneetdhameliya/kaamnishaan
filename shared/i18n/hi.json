@@ -2571,6 +2571,8 @@
   "job.delete_body": "इसे किसी ने शुरू नहीं किया है। यह हर सूची से हट जाएगा और वापस नहीं आएगा।",
   "job.delete_title": "यह काम हटाएँ?",
   "job.deleted": "काम हटा दिया गया।",
+  "job.distance_km": "{n} किमी दूर",
+  "job.distance_m": "{n} मी दूर",
   "job.equipment": "मशीन",
   "job.last_service": "पिछली सर्विस {date}",
   "job.menu": "काम के विकल्प",

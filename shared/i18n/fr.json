@@ -2571,6 +2571,8 @@
   "job.delete_body": "Personne ne l'a commencée. Elle disparaît de toutes les listes et ne peut pas être récupérée.",
   "job.delete_title": "Supprimer cette intervention ?",
   "job.deleted": "Intervention supprimée.",
+  "job.distance_km": "à {n} km",
+  "job.distance_m": "à {n} m",
   "job.equipment": "Équipement",
   "job.last_service": "dernier entretien {date}",
   "job.menu": "Options de l'intervention",

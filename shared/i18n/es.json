@@ -2571,6 +2571,8 @@
   "job.delete_body": "Nadie lo ha empezado. Desaparece de todas las listas y no se puede recuperar.",
   "job.delete_title": "¿Borrar este trabajo?",
   "job.deleted": "Trabajo borrado.",
+  "job.distance_km": "a {n} km",
+  "job.distance_m": "a {n} m",
   "job.equipment": "Equipo",
   "job.last_service": "último servicio {date}",
   "job.menu": "Opciones del trabajo",

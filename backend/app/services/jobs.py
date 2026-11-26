@@ -551,6 +551,12 @@ async def start(
         raise Conflict("invalid_transition", "This job can't be started now.", {"status": j.status})
     j.status, j.started_at, j.start_lat, j.start_lng = "in_progress", now(), lat, lng
     j.version += 1
+    if lat is not None and lng is not None and j.site_id:
+        # D-153: a site with no place yet learns it from where its first job was started,
+        # so later jobs there can show how far away they are
+        site = await db.get(Site, j.site_id)
+        if site and site.lat is None and site.lng is None:
+            site.lat, site.lng = lat, lng
     db.add(_event(p, j, "started", "assigned", {"lat": lat, "lng": lng} if lat is not None else {}))
     await db.flush()
     return j

@@ -2571,6 +2571,8 @@
   "job.delete_body": "Nobody has started it. It goes from every list and can't be brought back.",
   "job.delete_title": "Delete this job?",
   "job.deleted": "Job deleted.",
+  "job.distance_km": "{n} km away",
+  "job.distance_m": "{n} m away",
   "job.equipment": "Equipment",
   "job.last_service": "last service {date}",
   "job.menu": "Job options",

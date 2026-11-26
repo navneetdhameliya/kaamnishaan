@@ -5146,6 +5146,10 @@ abstract final class LangKeys {
   static const jobDeleteTitle = 'job.delete_title';
   /// Job deleted.
   static const jobDeleted = 'job.deleted';
+  /// {n} km away
+  static const jobDistanceKm = 'job.distance_km';
+  /// {n} m away
+  static const jobDistanceM = 'job.distance_m';
   /// Equipment
   static const jobEquipment = 'job.equipment';
   /// last service {date}

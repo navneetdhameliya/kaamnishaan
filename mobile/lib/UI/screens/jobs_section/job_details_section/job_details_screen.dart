@@ -185,6 +185,10 @@ class JobDetailsScreen extends GetView<JobDetailsController> {
           const SizedBox(height: KnSize.space2),
           CustomBaseTextWidget(controller.address, style: text.body, color: kn.textSecondary),
         ],
+        if (controller.distance.value case final d?) ...[
+          const SizedBox(height: KnSize.space2),
+          CustomBaseTextWidget(d, key: const ValueKey('job-distance'), style: text.caption, color: kn.textSecondary),
+        ],
         const SizedBox(height: KnSize.space12),
         Row(
           children: [

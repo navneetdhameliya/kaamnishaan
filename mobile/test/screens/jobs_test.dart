@@ -358,6 +358,24 @@ void main() {
       expect(c.canContinue, isFalse);
     });
 
+    test('an open job shows how far away the site is (D-153)', () async {
+      when(() => jobs.job(any())).thenAnswer((_) async => ApiSuccess<JobOutModel>(jobOut()));
+      final c = JobDetailsController(
+        repository: jobs,
+        session: session,
+        speech: speech,
+        translation: translation,
+        location: FakeLocation((lat: 21.17, lng: 72.852)), // about 2.3 km east of the site
+        args: const JobArguments(id: 'j1', customer: 'Green Valley Clinic'),
+      );
+      await c.load();
+      await Future<void>.delayed(Duration.zero);
+      expect(c.distance.value, '2.3 km away');
+      expect(JobDetailsController.distanceText(345), '350 m away');
+      expect(JobDetailsController.distanceText(18400), '18 km away');
+      c.onClose();
+    });
+
     test('the Equipment card lists earlier jobs on the machine with date and technician', () async {
       final earlier = JobListItemModel(
         id: 'j0', number: 'J-0990', title: 'Filter cleaning', status: 'completed',
