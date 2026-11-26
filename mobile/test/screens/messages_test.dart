@@ -176,6 +176,24 @@ void main() {
     expect(c.tone(plain), MessageTone.problem);
   });
 
+  test('a customer asking for the next service reads plainly and opens the job', () async {
+    final c = open([
+      message('12', 'service_request', now, params: {
+        'customer': 'Green Valley Clinic',
+        'when': 'next_month',
+        'note': 'Before summer',
+        'contact': '98250 33333',
+      }),
+      message('13', 'service_request', now, params: {'customer': 'Mehta house', 'when': 'asap'}),
+    ]);
+    await c.load();
+    final [full, plain] = c.items.toList();
+    expect(c.title(plain), 'A customer wants the next service');
+    expect(c.body(full), 'Green Valley Clinic (Next month) — call to plan it. “Before summer” Contact: 98250 33333');
+    expect(c.body(plain), 'Mehta house (As soon as possible) — call to plan it.');
+    expect(c.tone(plain), MessageTone.review);
+  });
+
   test('opening the list marks everything read, but this visit still shows which were new', () async {
     final c = open([
       message('1', 'report_approved', now, params: {'customer': 'Mehta house'}),

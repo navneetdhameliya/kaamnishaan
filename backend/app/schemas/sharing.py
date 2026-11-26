@@ -163,6 +163,10 @@ class PublicReport(BaseModel):
     pdf_ready: bool
     fingerprint: str | None = Field(description="SHA-256 of the PDF")
     review: "PublicReviewState | None" = Field(default=None, description="The rating part of the page (W29)")
+    praise: list["PublicPraise"] = Field(
+        default_factory=list,
+        description="Up to 3 recent good reviews of the company, when it shows them (D-149)",
+    )
 
 
 class AcknowledgeIn(_In):
@@ -173,6 +177,21 @@ class AcknowledgeIn(_In):
 class IssueIn(_In):
     message: str = Field(min_length=3, max_length=1000)
     contact: str | None = Field(default=None, max_length=160)
+
+
+class PublicPraise(BaseModel):
+    rating: int
+    comment: str
+    name: str | None = Field(description="The reviewer's first name, if they gave one")
+    at: datetime
+
+
+class ServiceRequestIn(_In):
+    """W27 "Book next service" (D-149)."""
+
+    when: Literal["asap", "this_month", "next_month", "later"] = "asap"
+    note: str | None = Field(default=None, max_length=500)
+    contact: str | None = Field(default=None, max_length=160, description="A phone or email to call back on")
 
 
 class IssueOut(BaseModel):

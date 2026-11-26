@@ -34,6 +34,7 @@ from app.providers.storage import get_storage
 from app.schemas.sharing import (
     Acknowledgement,
     ChannelOut,
+    IssueOut,
     MessageOut,
     NewLinkOut,
     PdfOut,
@@ -46,6 +47,7 @@ from app.schemas.sharing import (
     PublicReport,
     Recipient,
     SendIn,
+    ServiceRequestIn,
     ShareInfo,
     ShareLinkOut,
 )
@@ -507,6 +509,12 @@ async def _review_state(db: AsyncSession, rep: Report):
     return await reviews.public_state(db, rep)
 
 
+async def _praise(db: AsyncSession, rep: Report):
+    from app.services import reviews
+
+    return await reviews.public_praise(db, rep.company_id, rep.job_id)
+
+
 async def public_report(db: AsyncSession, token: str, lang: str | None) -> PublicReport:
     link, rep = await _link(db, token)
     t = now()
@@ -559,6 +567,7 @@ async def public_report(db: AsyncSession, token: str, lang: str | None) -> Publi
         pdf_ready=rep.pdf_status == "ready",
         fingerprint=rep.pdf_sha256,
         review=await _review_state(db, rep),
+        praise=await _praise(db, rep),
     )
 
 
@@ -707,3 +716,45 @@ async def report_issue(db: AsyncSession, token: str, message: str, contact: str 
     await db.flush()
     await db.refresh(issue)
     return issue
+
+
+async def request_service(db: AsyncSession, token: str, body: ServiceRequestIn) -> IssueOut:
+    """W27 "Book next service" (D-149): kept with the customer's messages about the report, and the office
+    gets it in Messages to call back and plan the visit. Same daily limit as "Report a problem"."""
+    link, rep = await _link(db, token, allow_expired=True)
+    since = now() - timedelta(days=1)
+    count = (
+        await db.execute(
+            select(func.count()).where(ReportIssue.share_link_id == link.id, ReportIssue.created_at > since)
+        )
+    ).scalar_one()
+    if count >= ISSUES_PER_DAY:
+        raise RateLimited(
+            "rate_limited", "Thanks, we already have your messages. The company will contact you."
+        )
+    note = body.note or ""
+    issue = ReportIssue(
+        company_id=rep.company_id, report_id=rep.id, share_link_id=link.id, kind="next_service",
+        message=f"[{body.when}] {note}".strip(), contact=body.contact,
+    )  # fmt: skip
+    db.add(issue)
+    job = await db.get(Job, rep.job_id)
+    await notifications.notify(
+        db,
+        company_id=rep.company_id,
+        to=await notifications.reviewers(db, rep.company_id),
+        kind="service_request",
+        actor_id=None,
+        job=job,
+        report_id=rep.id,
+        params={
+            **await notifications.job_params(db, job),
+            "report": rlabel(rep.number),
+            "when": body.when,
+            "note": note[:300],
+            "contact": body.contact,
+        },
+    )
+    await db.flush()
+    await db.refresh(issue)
+    return IssueOut(id=issue.id, received_at=issue.created_at)

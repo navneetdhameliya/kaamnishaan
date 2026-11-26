@@ -110,6 +110,11 @@ class PublicReviewState(BaseModel):
     can_rate: bool
     rated: bool
     rating: int | None = None
+    # D-149 "Edit your review": for 7 days, until the company replies; the customer's answers to start from
+    can_edit: bool = False
+    technician_rating: int | None = None
+    tags: list[str] = Field(default_factory=list)
+    comment: str | None = None
     technician: str | None = Field(default=None, description="The technician's first name, for 'Rate Ramesh'")
     positive_tags: list[str] = Field(default_factory=lambda: list(POSITIVE_TAGS))
     negative_tags: list[str] = Field(default_factory=lambda: list(NEGATIVE_TAGS))

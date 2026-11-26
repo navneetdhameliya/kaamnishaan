@@ -2432,6 +2432,8 @@ abstract final class LangKeys {
   static const adminNoKindReportSubmitted = 'admin.no.kind.report_submitted';
   /// Customer left a rating
   static const adminNoKindReviewReceived = 'admin.no.kind.review_received';
+  /// Customer asks for the next service
+  static const adminNoKindServiceRequest = 'admin.no.kind.service_request';
   /// Support replied
   static const adminNoKindSupportReply = 'admin.no.kind.support_reply';
   /// Technician asks a question
@@ -5390,6 +5392,12 @@ abstract final class LangKeys {
   static const msgReviewBody = 'msg.review_body';
   /// New review
   static const msgReviewTitle = 'msg.review_title';
+  /// {customer} ({when}) — call to plan it.{note}{contact}
+  static const msgServiceBody = 'msg.service_body';
+  ///  Contact: {contact}
+  static const msgServiceContact = 'msg.service_contact';
+  /// A customer wants the next service
+  static const msgServiceTitle = 'msg.service_title';
   /// {customer} report was sent to the customer.
   static const msgSharedBody = 'msg.shared_body';
   /// {technician} sent the {customer} report.
@@ -9524,6 +9532,8 @@ abstract final class LangKeys {
   static const webRPhotosStamped = 'web.r.photos_stamped';
   /// Powered by KaamNishaan
   static const webRPowered = 'web.r.powered';
+  /// What other customers say about {company}
+  static const webRPraise = 'web.r.praise';
   /// Privacy
   static const webRPrivacy = 'web.r.privacy';
   /// Report a problem
@@ -9550,6 +9560,24 @@ abstract final class LangKeys {
   static const webRRevokedTitle = 'web.r.revoked_title';
   /// Secure link · works until {date}
   static const webRSecure = 'web.r.secure';
+  /// Book next service
+  static const webRService = 'web.r.service';
+  /// As soon as possible
+  static const webRServiceAsap = 'web.r.service_asap';
+  /// Later
+  static const webRServiceLater = 'web.r.service_later';
+  /// Next month
+  static const webRServiceNextMonth = 'web.r.service_next_month';
+  /// Anything they should know? (optional)
+  static const webRServiceNote = 'web.r.service_note';
+  /// Ask them to call me
+  static const webRServiceSend = 'web.r.service_send';
+  /// Thanks. {company} will call you to plan the next visit.
+  static const webRServiceSent = 'web.r.service_sent';
+  /// This month
+  static const webRServiceThisMonth = 'web.r.service_this_month';
+  /// When would suit you?
+  static const webRServiceWhen = 'web.r.service_when';
   /// Show all {n} checks
   static const webRShowAll = 'web.r.show_all';
   /// Service report · secured by KaamNishaan
@@ -9578,6 +9606,8 @@ abstract final class LangKeys {
   static const webRateCallMe = 'web.rate.call_me';
   /// The manager is told right away and calls you within 1 working day.
   static const webRateCallMeSub = 'web.rate.call_me_sub';
+  /// Edit your review
+  static const webRateEdit = 'web.rate.edit';
   /// Post on Google
   static const webRateGoogle = 'web.rate.google';
   /// Help {company} by posting your review on Google too.

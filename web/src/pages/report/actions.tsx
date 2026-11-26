@@ -1,7 +1,7 @@
-import { Check, CircleAlert, Clock, MessageSquareWarning, Phone, Send, Share, ShieldOff } from 'lucide-react';
+import { CalendarPlus, Check, CircleAlert, Clock, MessageSquareWarning, Phone, Send, Share, ShieldOff } from 'lucide-react';
 import { useState, type FormEvent } from 'react';
 
-import { Button, Card } from '../../components/ui';
+import { Button, Card, Stars } from '../../components/ui';
 import { api, ApiError } from '../../lib/api';
 import { day, type T } from '../../lib/i18n';
 import { rv } from '../../site/motion';
@@ -105,22 +105,32 @@ export function ContactCompany({ ctx }: { ctx: PageCtx }) {
   const [contact, setContact] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [sent, setSent] = useState(false);
+  const [sent, setSent] = useState<'problem' | 'service' | null>(null);
+  const [mode, setMode] = useState<'problem' | 'service'>('problem');
+  const [when, setWhen] = useState<'asap' | 'this_month' | 'next_month' | 'later'>('asap');
   const phone = report.company.phone;
   const field =
     'mt-4 w-full rounded-lg border border-border-strong bg-bg-surface px-12 py-12 text-latin-body outline-none transition-colors focus:border-action-primary';
 
   async function submit(e: FormEvent) {
     e.preventDefault();
-    if (!message.trim()) return;
+    if (mode === 'problem' && !message.trim()) return;
     setBusy(true);
     setError(null);
     try {
-      await api(`/public/reports/${ctx.token}/issue`, {
-        method: 'POST',
-        body: { message: message.trim(), contact: contact.trim() || null },
-      });
-      setSent(true);
+      if (mode === 'problem') {
+        await api(`/public/reports/${ctx.token}/issue`, {
+          method: 'POST',
+          body: { message: message.trim(), contact: contact.trim() || null },
+        });
+      } else {
+        // D-149 "Book next service": the office calls back to plan it
+        await api(`/public/reports/${ctx.token}/service-request`, {
+          method: 'POST',
+          body: { when, note: message.trim() || null, contact: contact.trim() || null },
+        });
+      }
+      setSent(mode);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : t('web.r.error'));
     } finally {
@@ -137,12 +147,32 @@ export function ContactCompany({ ctx }: { ctx: PageCtx }) {
       {sent ? (
         <p role="status" className="mt-20 flex gap-8 rounded-lg bg-status-success-bg p-12 text-latin-label-sm text-status-success">
           <Check width={18} height={18} className="shrink-0" aria-hidden />
-          {t('web.r.problem_sent', { company: report.company.name })}
+          {t(sent === 'service' ? 'web.r.service_sent' : 'web.r.problem_sent', { company: report.company.name })}
         </p>
       ) : open ? (
         <form onSubmit={submit} className="mt-20 flex flex-col gap-12">
+          {mode === 'service' && (
+            <fieldset>
+              <legend className="text-latin-label-sm font-semibold">{t('web.r.service_when')}</legend>
+              <div className="mt-8 flex flex-wrap gap-8">
+                {(['asap', 'this_month', 'next_month', 'later'] as const).map((w) => (
+                  <button
+                    key={w}
+                    type="button"
+                    aria-pressed={when === w}
+                    onClick={() => setWhen(w)}
+                    className={`min-h-[40px] rounded-full border px-16 text-latin-label-sm font-semibold transition hover:-translate-y-[1px] ${
+                      when === w ? 'border-action-primary bg-action-primary text-text-on-action' : 'border-border-strong bg-bg-surface'
+                    }`}
+                  >
+                    {t(`web.r.service_${w}`)}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+          )}
           <label className="text-latin-label-sm font-semibold">
-            {t('web.r.problem_what')}
+            {t(mode === 'service' ? 'web.r.service_note' : 'web.r.problem_what')}
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -158,8 +188,12 @@ export function ContactCompany({ ctx }: { ctx: PageCtx }) {
           </label>
           {error && <p className="text-latin-label-sm text-status-danger">{error}</p>}
           <div className="flex flex-col gap-12 md:flex-row">
-            <Button type="submit" disabled={busy || !message.trim()} icon={<Send width={18} height={18} />}>
-              {t('web.r.problem_send')}
+            <Button
+              type="submit"
+              disabled={busy || (mode === 'problem' && !message.trim())}
+              icon={<Send width={18} height={18} />}
+            >
+              {t(mode === 'service' ? 'web.r.service_send' : 'web.r.problem_send')}
             </Button>
             <Button variant="ghost" type="button" onClick={() => setOpen(false)}>
               {t('web.r.cancel')}
@@ -177,11 +211,51 @@ export function ContactCompany({ ctx }: { ctx: PageCtx }) {
               {t('web.r.call', { phone })}
             </a>
           )}
-          <Button variant="secondary" onClick={() => setOpen(true)} icon={<MessageSquareWarning width={18} height={18} />}>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setMode('service');
+              setOpen(true);
+            }}
+            icon={<CalendarPlus width={18} height={18} />}
+          >
+            {t('web.r.service')}
+          </Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setMode('problem');
+              setOpen(true);
+            }}
+            icon={<MessageSquareWarning width={18} height={18} />}
+          >
             {t('web.r.problem')}
           </Button>
         </div>
       )}
+    </section>
+  );
+}
+
+/** W27 "What other customers say": recent good reviews, when the company shows them (D-149). */
+export function Praise({ ctx }: { ctx: PageCtx }) {
+  const { report, t } = ctx;
+  if (!report.praise?.length) return null;
+  return (
+    <section {...rv('up')} className="rounded-xl border border-border-default bg-bg-surface p-24 md:p-32">
+      <h2 className="text-web-m-h3 md:text-web-h3">{t('web.r.praise', { company: report.company.name })}</h2>
+      <ul className="mt-16 grid gap-12 md:grid-cols-3">
+        {report.praise.map((p) => (
+          <li
+            key={p.at}
+            className="rounded-lg bg-action-secondary p-16 transition hover:-translate-y-[2px] hover:shadow-md"
+          >
+            <Stars value={p.rating} size={14} />
+            <p className="mt-8 text-latin-body">“{p.comment}”</p>
+            {p.name && <p className="mt-8 text-latin-caption text-text-secondary">— {p.name}</p>}
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

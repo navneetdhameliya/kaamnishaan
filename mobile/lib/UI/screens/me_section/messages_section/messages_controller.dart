@@ -90,6 +90,7 @@ class MessagesController extends GetxController {
         'support_reply' => LangKeys.msgSupportTitle.tr,
         'tech_question' => LangKeys.msgQuestionTitle.tr,
         'customer_issue' => LangKeys.msgIssueTitle.tr,
+        'service_request' => LangKeys.msgServiceTitle.tr,
         'plan_limit' => switch (_p(n, 'stage')) {
             'near' => LangKeys.msgLimitNearTitle.tr,
             'blocked' => LangKeys.msgLimitBlockedTitle.tr,
@@ -141,6 +142,20 @@ class MessagesController extends GetxController {
         return note.isEmpty
             ? LangKeys.msgQuestionBody.trParams(words)
             : LangKeys.msgQuestionBodyNote.trParams(words);
+      case 'service_request':
+        final note = _p(n, 'note');
+        final contact = _p(n, 'contact');
+        return LangKeys.msgServiceBody.trParams({
+          'customer': customer,
+          'when': switch (_p(n, 'when')) {
+            'this_month' => LangKeys.webRServiceThisMonth.tr,
+            'next_month' => LangKeys.webRServiceNextMonth.tr,
+            'later' => LangKeys.webRServiceLater.tr,
+            _ => LangKeys.webRServiceAsap.tr,
+          },
+          'note': note.isEmpty ? '' : ' “$note”',
+          'contact': contact.isEmpty ? '' : LangKeys.msgServiceContact.trParams({'contact': contact}),
+        });
       case 'customer_issue':
         final contact = _p(n, 'contact');
         final words = {'customer': customer, 'report': _p(n, 'report'), 'message': _p(n, 'message'), 'contact': contact};
@@ -186,7 +201,7 @@ class MessagesController extends GetxController {
 
   MessageTone tone(NotificationOutModel n) => switch (n.kind) {
         'job_assigned' => MessageTone.job,
-        'report_submitted' || 'tech_question' => MessageTone.review,
+        'report_submitted' || 'tech_question' || 'service_request' => MessageTone.review,
         'changes_requested' || 'low_rating' || 'customer_issue' => MessageTone.problem,
         'plan_limit' => _p(n, 'stage') == 'near' ? MessageTone.news : MessageTone.problem,
         'support_reply' || 'announcement' => MessageTone.news,
@@ -208,7 +223,7 @@ class MessagesController extends GetxController {
     if (job == null) return;
     final customer = _p(n, 'customer');
     switch (n.kind) {
-      case 'job_assigned' || 'tech_question' || 'customer_issue':
+      case 'job_assigned' || 'tech_question' || 'customer_issue' || 'service_request':
         await Get.toNamed(RoutesConstants.jobDetailsScreen, arguments: JobArguments(id: job, customer: customer));
       case 'changes_requested':
         await Get.toNamed(RoutesConstants.captureHubScreen, arguments: JobArguments(id: job, customer: customer));

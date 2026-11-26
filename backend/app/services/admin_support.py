@@ -287,6 +287,7 @@ RULE_TO = {
     "tech_question": "office",
     "plan_limit": "owner",
     "customer_issue": "office",
+    "service_request": "office",
     "support_reply": "person",
 }
 EMAIL_ONLY = ("trial_ending", "weekly_summary")  # need the email service (D-96)

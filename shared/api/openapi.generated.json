@@ -16770,6 +16770,7 @@
               "tech_question",
               "plan_limit",
               "customer_issue",
+              "service_request",
               "announcement"
             ],
             "title": "Kind",
@@ -18020,6 +18021,43 @@
         "title": "PublicPhoto",
         "type": "object"
       },
+      "PublicPraise": {
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "comment": {
+            "title": "Comment",
+            "type": "string"
+          },
+          "name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The reviewer's first name, if they gave one",
+            "title": "Name"
+          },
+          "rating": {
+            "title": "Rating",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "rating",
+          "comment",
+          "name",
+          "at"
+        ],
+        "title": "PublicPraise",
+        "type": "object"
+      },
       "PublicReport": {
         "properties": {
           "acknowledged": {
@@ -18171,6 +18209,14 @@
             ],
             "title": "Photos Locked At"
           },
+          "praise": {
+            "description": "Up to 3 recent good reviews of the company, when it shows them (D-149)",
+            "items": {
+              "$ref": "#/components/schemas/PublicPraise"
+            },
+            "title": "Praise",
+            "type": "array"
+          },
           "review": {
             "anyOf": [
               {
@@ -18247,9 +18293,25 @@
       },
       "PublicReviewState": {
         "properties": {
+          "can_edit": {
+            "default": false,
+            "title": "Can Edit",
+            "type": "boolean"
+          },
           "can_rate": {
             "title": "Can Rate",
             "type": "boolean"
+          },
+          "comment": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Comment"
           },
           "negative_tags": {
             "items": {
@@ -18280,6 +18342,13 @@
             ],
             "title": "Rating"
           },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Tags",
+            "type": "array"
+          },
           "technician": {
             "anyOf": [
               {
@@ -18291,6 +18360,17 @@
             ],
             "description": "The technician's first name, for 'Rate Ramesh'",
             "title": "Technician"
+          },
+          "technician_rating": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Technician Rating"
           }
         },
         "required": [
@@ -20632,6 +20712,50 @@
           "refs"
         ],
         "title": "SentenceLink",
+        "type": "object"
+      },
+      "ServiceRequestIn": {
+        "additionalProperties": false,
+        "description": "W27 \"Book next service\" (D-149).",
+        "properties": {
+          "contact": {
+            "anyOf": [
+              {
+                "maxLength": 160,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "A phone or email to call back on",
+            "title": "Contact"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "maxLength": 500,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "when": {
+            "default": "asap",
+            "enum": [
+              "asap",
+              "this_month",
+              "next_month",
+              "later"
+            ],
+            "title": "When",
+            "type": "string"
+          }
+        },
+        "title": "ServiceRequestIn",
         "type": "object"
       },
       "SessionOut": {
@@ -38529,6 +38653,60 @@
         "tags": [
           "customer report page"
         ]
+      },
+      "put": {
+        "description": "W29 \"Edit your review\": for 7 days, until the company replies (D-149).",
+        "operationId": "edit_review_api_v1_public_reports__token__review_put",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "title": "Token",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RatedOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "description": "review_locked"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Edit Review",
+        "tags": [
+          "customer report page"
+        ]
       }
     },
     "/api/v1/public/reports/{token}/review/stop": {
@@ -38562,6 +38740,59 @@
           }
         },
         "summary": "Stop Asking",
+        "tags": [
+          "customer report page"
+        ]
+      }
+    },
+    "/api/v1/public/reports/{token}/service-request": {
+      "post": {
+        "description": "W27 \"Book next service\": the office gets a message to call back and plan it (D-149).",
+        "operationId": "book_next_service_api_v1_public_reports__token__service_request_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "token",
+            "required": true,
+            "schema": {
+              "title": "Token",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ServiceRequestIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IssueOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Book Next Service",
         "tags": [
           "customer report page"
         ]

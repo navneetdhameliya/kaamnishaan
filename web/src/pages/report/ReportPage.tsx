@@ -5,7 +5,7 @@ import { Badge, Initials, LanguageSelect } from '../../components/ui';
 import { api, ApiError } from '../../lib/api';
 import { isLang, rememberLang, startLang, translator, type Lang } from '../../lib/i18n';
 import type { PublicReport } from '../../lib/types';
-import { Acknowledge, ContactCompany, LinkProblem } from './actions';
+import { Acknowledge, ContactCompany, LinkProblem, Praise } from './actions';
 import { AllPhotos, BeforeAfter, Checklist, Footer, PdfButton, TechnicianCard, TitleBlock, TopBar, WorkAndAdvice, type PageCtx } from './parts';
 import { RatingCard } from './RatingCard';
 import { useRevealOnScroll } from '../../site/motion';
@@ -146,6 +146,7 @@ export default function ReportPage({ token }: { token: string }) {
         <Checklist ctx={ctx} />
         <WorkAndAdvice ctx={ctx} />
         <Acknowledge ctx={ctx} onDone={(a) => setReport({ ...report, acknowledged: a })} />
+        <Praise ctx={ctx} />
         <ContactCompany ctx={ctx} />
       </main>
       <Footer t={t} />

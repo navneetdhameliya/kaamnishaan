@@ -43,6 +43,7 @@ from app.schemas.reviews import (
     ReviewOut,
     TagCount,
 )
+from app.schemas.sharing import PublicPraise
 from app.schemas.work import PersonRef
 from app.services import audit, messages, moderation, platform, sharing
 from app.services.reports import DONE, rlabel
@@ -307,7 +308,25 @@ async def public_state(db: AsyncSession, rep: Report) -> PublicReviewState:
         rated=review is not None,
         rating=review.rating if review else None,
         technician=(tech.name or "").split(" ")[0] or None if tech else None,
+        can_edit=bool(review) and await _editable(db, review),
+        technician_rating=review.technician_rating if review else None,
+        tags=list(review.tags or []) if review else [],
+        comment=review.comment if review else None,
     )
+
+
+EDIT_DAYS = 7  # D-149
+
+
+async def _editable(db: AsyncSession, review: Review) -> bool:
+    """A review from the link can be changed for 7 days, until the company has replied to it."""
+    if (
+        review.source != "link"
+        or review.status == "hidden"
+        or now() - review.created_at > timedelta(days=EDIT_DAYS)
+    ):
+        return False
+    return not (await db.execute(select(ReviewReply.id).where(ReviewReply.review_id == review.id))).first()
 
 
 async def _for_link(db: AsyncSession, token: str) -> tuple[Report, Job, ReviewRequest]:
@@ -345,6 +364,34 @@ async def rate(db: AsyncSession, token: str, body: ReviewIn) -> RatedOut:
     await db.flush()
     s = await settings_for(db, job.company_id)
     if not reason:  # a held review reaches the company when KaamNishaan publishes it (A37)
+        await tell(db, review)
+    return RatedOut(review_id=review.id, google_review_url=s.google_review_url if body.rating >= 4 else None)
+
+
+async def edit(db: AsyncSession, token: str, body: ReviewIn) -> RatedOut:
+    """W29 "Edit your review" (D-149): the customer changes stars, tags or words; checked again like a
+    new one. The company is told again only when the stars drop to a low rating."""
+    rep, job, req = await _for_link(db, token)
+    review = (await db.execute(select(Review).where(Review.request_id == req.id))).scalar_one_or_none()
+    if review is None:
+        raise NotFound("not_rated", "This job hasn't been rated yet.")
+    if not await _editable(db, review):
+        raise Conflict("review_locked", "This review can't be changed any more.")
+    contact = await db.get(CustomerContact, req.contact_id) if req.contact_id else None
+    comment, original, reason = await _checked(db, body.comment or None, job.company_id, contact)
+    was = review.rating
+    review.rating, review.technician_rating, review.tags = body.rating, body.technician_rating, body.tags
+    review.comment, review.comment_original = comment, original
+    review.public_allowed, review.wants_call_back = body.public_allowed, body.wants_call_back
+    if body.name:
+        review.reviewer_name = body.name
+    if reason:
+        review.status, review.flag_reason = "flagged", reason
+    db.add(ReviewRequestEvent(request_id=req.id, step="rated", channel="edit"))
+    await db.flush()
+    s = await settings_for(db, job.company_id)
+    low = s.low_rating_threshold
+    if not reason and body.rating <= low < was:
         await tell(db, review)
     return RatedOut(review_id=review.id, google_review_url=s.google_review_url if body.rating >= 4 else None)
 
@@ -560,3 +607,36 @@ async def get_review(db: AsyncSession, p: Principal, review_id: uuid.UUID) -> Re
         public_allowed=r.public_allowed,
         wants_call_back=r.wants_call_back,
     )
+
+
+async def public_praise(db: AsyncSession, company_id: uuid.UUID, job_id: uuid.UUID) -> list[PublicPraise]:
+    """D-149: with "Show good reviews" on (M46), the report page shows up to 3 recent 4-5 star reviews with
+    words, from customers who said they may be shown; first names only, never this job's own."""
+    s = await settings_for(db, company_id)
+    if not s.show_public_reviews:
+        return []
+    rows = (
+        await db.scalars(
+            select(Review)
+            .where(
+                Review.company_id == company_id,
+                Review.job_id != job_id,
+                Review.status == "published",
+                Review.public_allowed.is_(True),
+                Review.rating >= 4,
+                Review.comment.is_not(None),
+                Review.comment != "",
+            )
+            .order_by(Review.created_at.desc())
+            .limit(3)
+        )
+    ).all()
+    return [
+        PublicPraise(
+            rating=r.rating,
+            comment=r.comment,
+            name=(r.reviewer_name or "").split(" ")[0] or None,
+            at=r.created_at,
+        )
+        for r in rows
+    ]
