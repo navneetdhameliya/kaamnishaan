@@ -1601,6 +1601,8 @@ class AdminCompanyDetailModel {
   final double? approvalMinutesMedian;
   /// One of: trial, active, past_due, suspended, cancelled, near_limit
   final String badge;
+  /// The owner closed it (D-154)
+  final DateTime? closedAt;
   final String country;
   final DateTime createdAt;
   final String currency;
@@ -1623,6 +1625,9 @@ class AdminCompanyDetailModel {
   final String? ownerPhone;
   final String? ownerUserId;
   final AdminPlanInfoModel plan;
+  /// When its data is deleted, 30 days after closing
+  final DateTime? purgeAt;
+  final DateTime? purgedAt;
   final String reportLanguage;
   final int reportsThisCycle;
   /// One of: trial, active, past_due, suspended, cancelled
@@ -1642,6 +1647,7 @@ class AdminCompanyDetailModel {
     this.aiCostPerReportUsd,
     this.approvalMinutesMedian,
     required this.badge,
+    this.closedAt,
     required this.country,
     required this.createdAt,
     required this.currency,
@@ -1661,6 +1667,8 @@ class AdminCompanyDetailModel {
     this.ownerPhone,
     this.ownerUserId,
     required this.plan,
+    this.purgeAt,
+    this.purgedAt,
     required this.reportLanguage,
     required this.reportsThisCycle,
     required this.status,
@@ -1678,6 +1686,7 @@ class AdminCompanyDetailModel {
         aiCostPerReportUsd: json['ai_cost_per_report_usd'] == null ? null : (json['ai_cost_per_report_usd'] as num).toDouble(),
         approvalMinutesMedian: json['approval_minutes_median'] == null ? null : (json['approval_minutes_median'] as num).toDouble(),
         badge: json['badge'] as String,
+        closedAt: json['closed_at'] == null ? null : DateTime.parse(json['closed_at'] as String),
         country: json['country'] as String,
         createdAt: DateTime.parse(json['created_at'] as String),
         currency: json['currency'] as String,
@@ -1697,6 +1706,8 @@ class AdminCompanyDetailModel {
         ownerPhone: json['owner_phone'] as String?,
         ownerUserId: json['owner_user_id'] as String?,
         plan: AdminPlanInfoModel.fromJson(json['plan'] as Map<String, dynamic>),
+        purgeAt: json['purge_at'] == null ? null : DateTime.parse(json['purge_at'] as String),
+        purgedAt: json['purged_at'] == null ? null : DateTime.parse(json['purged_at'] as String),
         reportLanguage: json['report_language'] as String,
         reportsThisCycle: (json['reports_this_cycle'] as num).toInt(),
         status: json['status'] as String,
@@ -1714,6 +1725,7 @@ class AdminCompanyDetailModel {
         'ai_cost_per_report_usd': aiCostPerReportUsd,
         'approval_minutes_median': approvalMinutesMedian,
         'badge': badge,
+        'closed_at': closedAt?.toIso8601String(),
         'country': country,
         'created_at': createdAt.toIso8601String(),
         'currency': currency,
@@ -1733,6 +1745,8 @@ class AdminCompanyDetailModel {
         'owner_phone': ownerPhone,
         'owner_user_id': ownerUserId,
         'plan': plan.toJson(),
+        'purge_at': purgeAt?.toIso8601String(),
+        'purged_at': purgedAt?.toIso8601String(),
         'report_language': reportLanguage,
         'reports_this_cycle': reportsThisCycle,
         'status': status,

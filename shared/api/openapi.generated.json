@@ -2291,6 +2291,19 @@
             "title": "Badge",
             "type": "string"
           },
+          "closed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The owner closed it (D-154)",
+            "title": "Closed At"
+          },
           "country": {
             "title": "Country",
             "type": "string"
@@ -2427,6 +2440,31 @@
           },
           "plan": {
             "$ref": "#/components/schemas/AdminPlanInfo"
+          },
+          "purge_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "When its data is deleted, 30 days after closing",
+            "title": "Purge At"
+          },
+          "purged_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Purged At"
           },
           "report_language": {
             "title": "Report Language",
@@ -34378,6 +34416,58 @@
         "summary": "Follow Up Credits",
         "tags": [
           "billing"
+        ]
+      }
+    },
+    "/api/v1/cron/purge-closed-companies": {
+      "post": {
+        "description": "D-154: delete the data of companies closed more than 30 days ago. For a daily scheduler, with\nX-Cron-Key.",
+        "operationId": "purge_closed_api_v1_cron_purge_closed_companies_post",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "x-cron-key",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "X-Cron-Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "title": "Response Purge Closed Api V1 Cron Purge Closed Companies Post",
+                  "type": "object"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Purge Closed",
+        "tags": [
+          "reviews"
         ]
       }
     },

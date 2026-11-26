@@ -38,6 +38,7 @@ from app.services.team import INVITE_TTL
 NEAR_LIMIT = 0.9
 QUIET_AFTER = timedelta(days=14)
 STATUSES = ("trial", "active", "past_due", "suspended", "cancelled")
+PURGE_AFTER = timedelta(days=30)  # D-154, the same as app.services.purge.AFTER
 SORTS = ("reports", "name", "newest", "technicians")
 ROLE_ORDER = {"owner": 0, "manager": 1, "technician": 2}
 
@@ -396,6 +397,9 @@ async def company(db: AsyncSession, company_id: uuid.UUID, *, lang: str) -> Admi
         status=c.status,
         suspended_at=c.suspended_at,
         suspend_reason=c.suspend_reason,
+        closed_at=c.closed_at,
+        purge_at=c.closed_at + PURGE_AFTER if c.closed_at and not c.purged_at else None,
+        purged_at=c.purged_at,
         badge=_badge(c, reports, plan),
         trial_ends_at=c.trial_ends_at,
         created_at=c.created_at,

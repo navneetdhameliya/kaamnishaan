@@ -121,6 +121,16 @@ def _cron(x_cron_key: str | None = Header(default=None)) -> None:
         raise Forbidden("forbidden", "The cron key is missing or wrong.")
 
 
+@router.post("/cron/purge-closed-companies", dependencies=[Depends(_cron)])
+async def purge_closed(db: AsyncSession = Depends(get_db)) -> dict:
+    """D-154: delete the data of companies closed more than 30 days ago. For a daily scheduler, with
+    X-Cron-Key."""
+    from app.services import purge
+
+    done = await purge.purge_due(db)
+    return {"purged": len(done)}
+
+
 @router.post("/cron/review-followups", dependencies=[Depends(_cron)])
 async def run_followups(db: AsyncSession = Depends(get_db)) -> dict:
     """Send every Day 2 review reminder, run every Day 5 AI call and send every announcement that is due

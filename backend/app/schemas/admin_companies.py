@@ -82,6 +82,11 @@ class AdminCompanyDetail(BaseModel):
     industry_slug: str | None
     status: CompanyStatus
     suspended_at: datetime | None
+    closed_at: datetime | None = Field(default=None, description="The owner closed it (D-154)")
+    purge_at: datetime | None = Field(
+        default=None, description="When its data is deleted, 30 days after closing"
+    )
+    purged_at: datetime | None = None
     suspend_reason: str | None
     badge: CompanyBadge
     trial_ends_at: datetime | None

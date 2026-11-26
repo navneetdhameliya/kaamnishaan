@@ -87,6 +87,10 @@ class Company(IdMixin, TimestampMixin, Base):
     suspended_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     suspended_from: Mapped[str | None] = mapped_column(String(16))  # the status to go back to
     suspend_reason: Mapped[str | None] = mapped_column(String(300))
+    # D-154: when the owner closed the company (deleted their account), and when its data was deleted
+    # for good, 30 days later; the row itself stays as the record that the company existed
+    closed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True), index=True)
+    purged_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     settings: Mapped[dict] = mapped_column(JSONB, default=dict, server_default=text("'{}'::jsonb"))
     created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
 
