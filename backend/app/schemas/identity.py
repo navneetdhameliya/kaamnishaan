@@ -136,6 +136,10 @@ class CompanyOut(BaseModel):
     status: str
     trial_ends_at: datetime | None
     settings: CompanySettings
+    features: list[str] = Field(
+        default_factory=list,
+        description="What the plan switches on: ai_assistant, custom_checklists, branded_pdf (D-147)",
+    )
 
 
 class MeOut(BaseModel):

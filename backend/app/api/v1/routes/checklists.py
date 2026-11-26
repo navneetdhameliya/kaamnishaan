@@ -3,7 +3,7 @@ import uuid
 from fastapi import APIRouter, Depends, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.v1.routes.jobs import member
+from app.api.v1.routes.jobs import member, with_feature
 from app.core.deps import Principal, get_db
 from app.schemas.checklists import (
     AnswerIn,
@@ -28,6 +28,7 @@ from app.services.jobs import get_job
 from app.tasks import enqueue
 
 router = APIRouter()
+OWN_CHECKLISTS = with_feature("custom_checklists")  # making and changing your own (D-147)
 
 
 # ---- templates (M26) ------------------------------------------------------------------------
@@ -43,7 +44,7 @@ async def list_templates(
 
 @router.post("/checklist-templates", response_model=TemplateOut, status_code=201, tags=["checklists"])
 async def create_template(
-    body: TemplateCreate, p: Principal = Depends(member), db: AsyncSession = Depends(get_db)
+    body: TemplateCreate, p: Principal = Depends(OWN_CHECKLISTS), db: AsyncSession = Depends(get_db)
 ) -> TemplateOut:
     return await svc.template_out(db, p, await svc.create_template(db, p, body), body.language)
 
@@ -63,7 +64,7 @@ async def get_template(
 async def patch_template(
     template_id: uuid.UUID,
     body: TemplatePatch,
-    p: Principal = Depends(member),
+    p: Principal = Depends(OWN_CHECKLISTS),
     db: AsyncSession = Depends(get_db),
 ) -> TemplateOut:
     return await svc.template_out(db, p, await svc.update_template(db, p, template_id, body), None)
@@ -76,7 +77,7 @@ async def patch_template(
     tags=["checklists"],
 )
 async def copy_template(
-    template_id: uuid.UUID, p: Principal = Depends(member), db: AsyncSession = Depends(get_db)
+    template_id: uuid.UUID, p: Principal = Depends(OWN_CHECKLISTS), db: AsyncSession = Depends(get_db)
 ) -> TemplateOut:
     """Copy a KaamNishaan (or own) checklist so the company can change it."""
     return await svc.template_out(db, p, await svc.copy_template(db, p, template_id), None)
@@ -91,7 +92,7 @@ async def copy_template(
 async def add_question(
     template_id: uuid.UUID,
     body: QuestionIn,
-    p: Principal = Depends(member),
+    p: Principal = Depends(OWN_CHECKLISTS),
     db: AsyncSession = Depends(get_db),
 ) -> TemplateOut:
     q = await svc.add_question(db, p, template_id, body)
@@ -109,7 +110,7 @@ async def patch_question(
     template_id: uuid.UUID,
     question_id: uuid.UUID,
     body: QuestionPatch,
-    p: Principal = Depends(member),
+    p: Principal = Depends(OWN_CHECKLISTS),
     db: AsyncSession = Depends(get_db),
 ) -> TemplateOut:
     q, words_changed = await svc.update_question(db, p, template_id, question_id, body)
@@ -125,7 +126,7 @@ async def patch_question(
 async def delete_question(
     template_id: uuid.UUID,
     question_id: uuid.UUID,
-    p: Principal = Depends(member),
+    p: Principal = Depends(OWN_CHECKLISTS),
     db: AsyncSession = Depends(get_db),
 ) -> Response:
     await svc.delete_question(db, p, template_id, question_id)

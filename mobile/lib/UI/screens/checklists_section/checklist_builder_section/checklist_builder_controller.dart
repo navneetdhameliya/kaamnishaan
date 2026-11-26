@@ -7,6 +7,7 @@ import '../../../../infrastructure/data_access_layer/networks/api_result.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/services/image_picker_service.dart';
+import '../../../../infrastructure/shared/plan_gate.dart';
 import '../../../common_widgets/kn_dictation.dart';
 import '../../../common_widgets/kn_toast.dart';
 
@@ -484,6 +485,7 @@ class ChecklistBuilderController extends GetxController {
 
   /// A KaamNishaan checklist: copy it, then the copy opens here.
   Future<void> onCopy() async {
+    if (!PlanGate.check(PlanFeature.ownChecklists)) return; // changing a copy is "your own checklist" (D-147)
     busy.value = true;
     final ok = _take(await checklists.copy(templateId.value));
     busy.value = false;

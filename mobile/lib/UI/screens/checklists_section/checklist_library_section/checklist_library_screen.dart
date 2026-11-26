@@ -21,7 +21,7 @@ class ChecklistLibraryScreen extends GetView<ChecklistLibraryController> {
   const ChecklistLibraryScreen({super.key});
 
   void _new() {
-    controller.startNew();
+    if (!controller.startNew()) return;
     showKnBottomSheet<void>(
       title: LangKeys.cbNew.tr,
       child: SingleChildScrollView(

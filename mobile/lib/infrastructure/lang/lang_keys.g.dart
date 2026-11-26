@@ -5750,6 +5750,18 @@ abstract final class LangKeys {
   static const plTitle = 'pl.title';
   /// Upgrade to {name} · {price}
   static const plUpgrade = 'pl.upgrade';
+  /// Ask the owner to upgrade.
+  static const planAskOwner = 'plan.ask_owner';
+  /// The AI assistant comes with the Professional plan and up.
+  static const planAssistant = 'plan.assistant';
+  /// Your logo on the PDF comes with the Starter plan and up.
+  static const planBranded = 'plan.branded';
+  /// Making your own checklists comes with the Business plan and up. KaamNishaan’s checklists work on every plan.
+  static const planChecklists = 'plan.checklists';
+  /// Not in your plan
+  static const planNotIncluded = 'plan.not_included';
+  /// See plans
+  static const planSeePlans = 'plan.see_plans';
   /// Change photo
   static const profileChangePhoto = 'profile.change_photo';
   /// Choose from gallery

@@ -76,6 +76,8 @@ class Company(IdMixin, TimestampMixin, Base):
     report_language: Mapped[str] = mapped_column(str_enum(*LOCALES, name="locale"), default="en")
     logo_key: Mapped[str | None] = mapped_column(String(255))
     plan_code: Mapped[str] = mapped_column(ForeignKey("plans.code"), default="professional")
+    # loaded with the company so its plan's features are at hand (D-147)
+    plan: Mapped["Plan"] = relationship(lazy="selectin", viewonly=True)  # noqa: F821
     status: Mapped[str] = mapped_column(
         str_enum("trial", "active", "past_due", "suspended", "cancelled", name="company_status"),
         default="trial",

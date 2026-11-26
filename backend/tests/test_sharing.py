@@ -373,3 +373,11 @@ async def test_customer_copy_has_no_gps(client, ready):
         assert original.getexif().get_ifd(0x8825)  # the evidence keeps its GPS
     with Image.open(io.BytesIO(await s.read(keys.web_key))) as web:
         assert not web.getexif() and max(web.size) == 1600
+
+
+def test_unbranded_pdf_says_made_with_kaamnishaan():
+    """D-147: on the Free plan the PDF has no company logo and carries KaamNishaan's line."""
+    from app.services.report_labels import label
+
+    assert label("en", "made_with") == "Made with KaamNishaan · kaamnishaan.com"
+    assert "KaamNishaan" in label("hi", "made_with") and "KaamNishaan" in label("fr", "made_with")

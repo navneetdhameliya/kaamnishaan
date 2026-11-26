@@ -8,6 +8,7 @@ import '../../../../infrastructure/lang/translation_service.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
 import '../../../../infrastructure/services/photo_queue_service.dart';
 import '../../../../infrastructure/services/session_service.dart';
+import '../../../../infrastructure/shared/plan_gate.dart';
 import '../../auth_section/profile_setup_section/profile_setup_controller.dart';
 
 /// One number on the Me card ("14 Jobs done").
@@ -134,8 +135,9 @@ class MeController extends GetxController {
     load();
   }
 
-  /// M36 Ask KaamNishaan AI (owners and managers).
+  /// M36 Ask KaamNishaan AI (owners and managers), on plans that have it (D-147).
   Future<void> onAssistantTap() async {
+    if (!PlanGate.check(PlanFeature.assistant, session: session)) return;
     await Get.toNamed<void>(RoutesConstants.assistantScreen);
   }
 

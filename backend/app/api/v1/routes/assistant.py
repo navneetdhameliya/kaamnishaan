@@ -7,9 +7,10 @@ from app.core.deps import Principal, get_db
 from app.schemas.assistant import AskIn, AskOut, AssistantOut
 from app.services import assistant
 
-from .jobs import member
+from .jobs import member, with_feature
 
 router = APIRouter(tags=["assistant"])
+WITH_ASSISTANT = with_feature("ai_assistant")  # D-147: Professional and up
 
 
 @router.get("/assistant", response_model=AssistantOut)
@@ -19,6 +20,10 @@ async def chat(p: Principal = Depends(member), db: AsyncSession = Depends(get_db
 
 
 @router.post("/assistant/ask", response_model=AskOut)
-async def ask(body: AskIn, p: Principal = Depends(member), db: AsyncSession = Depends(get_db)) -> AskOut:
+async def ask(
+    body: AskIn,
+    p: Principal = Depends(WITH_ASSISTANT),
+    db: AsyncSession = Depends(get_db),
+) -> AskOut:
     """Ask about the company's jobs. 402 ai_limit_reached when this month's questions are used up."""
     return await assistant.ask(db, p, body.text)

@@ -20,6 +20,7 @@ from app.schemas.work import (
     Timeline,
 )
 from app.services import jobs as svc
+from app.services import plan_features
 
 router = APIRouter(prefix="/jobs", tags=["jobs"])
 Status = Literal[
@@ -31,6 +32,16 @@ async def member(p: Principal = Depends(get_principal)) -> Principal:
     if not p.company:
         raise Forbidden("no_company", "Choose a company first.")
     return p
+
+
+def with_feature(feature: str):
+    """A member whose plan includes [feature] (D-147); else 402 plan_feature_needed."""
+
+    async def dep(p: Principal = Depends(member), db: AsyncSession = Depends(get_db)) -> Principal:
+        await plan_features.require(db, p.company, feature)
+        return p
+
+    return dep
 
 
 @router.get("", response_model=JobList)
