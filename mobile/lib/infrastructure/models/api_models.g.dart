@@ -12140,7 +12140,7 @@ class NotificationOutModel {
   final DateTime createdAt;
   final String id;
   final String? jobId;
-  /// One of: job_assigned, report_submitted, changes_requested, report_approved, report_shared, review_received, low_rating, support_reply, tech_question, plan_limit, customer_issue, announcement
+  /// One of: job_assigned, report_submitted, changes_requested, report_approved, report_shared, review_received, low_rating, support_reply, tech_question, plan_limit, customer_issue, service_request, announcement
   final String kind;
   /// Names for the sentence the app writes in its own language: customer, job, report, note, scheduled_at (ISO), technician
   final Map<String, dynamic> params;
@@ -13222,6 +13222,39 @@ class PublicPhotoModel {
       };
 }
 
+PublicPraiseModel publicPraiseModelFromJson(String str) => PublicPraiseModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String publicPraiseModelToJson(PublicPraiseModel data) => json.encode(data.toJson());
+
+class PublicPraiseModel {
+  final DateTime at;
+  final String comment;
+  /// The reviewer's first name, if they gave one
+  final String? name;
+  final int rating;
+
+  const PublicPraiseModel({
+    required this.at,
+    required this.comment,
+    this.name,
+    required this.rating,
+  });
+
+  factory PublicPraiseModel.fromJson(Map<String, dynamic> json) => PublicPraiseModel(
+        at: DateTime.parse(json['at'] as String),
+        comment: json['comment'] as String,
+        name: json['name'] as String?,
+        rating: (json['rating'] as num).toInt(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'at': at.toIso8601String(),
+        'comment': comment,
+        'name': name,
+        'rating': rating,
+      };
+}
+
 PublicReportModel publicReportModelFromJson(String str) => PublicReportModel.fromJson(json.decode(str) as Map<String, dynamic>);
 
 String publicReportModelToJson(PublicReportModel data) => json.encode(data.toJson());
@@ -13250,6 +13283,8 @@ class PublicReportModel {
   final bool pdfReady;
   final List<PublicPhotoModel> photos;
   final DateTime? photosLockedAt;
+  /// Up to 3 recent good reviews of the company, when it shows them (D-149)
+  final List<PublicPraiseModel>? praise;
   /// The rating part of the page (W29)
   final PublicReviewStateModel? review;
   final String? summary;
@@ -13278,6 +13313,7 @@ class PublicReportModel {
     required this.pdfReady,
     required this.photos,
     this.photosLockedAt,
+    this.praise,
     this.review,
     this.summary,
     this.technician,
@@ -13306,6 +13342,7 @@ class PublicReportModel {
         pdfReady: json['pdf_ready'] as bool,
         photos: (json['photos'] as List).map((e) => PublicPhotoModel.fromJson(e as Map<String, dynamic>)).toList(),
         photosLockedAt: json['photos_locked_at'] == null ? null : DateTime.parse(json['photos_locked_at'] as String),
+        praise: json['praise'] == null ? null : (json['praise'] as List).map((e) => PublicPraiseModel.fromJson(e as Map<String, dynamic>)).toList(),
         review: json['review'] == null ? null : PublicReviewStateModel.fromJson(json['review'] as Map<String, dynamic>),
         summary: json['summary'] as String?,
         technician: json['technician'] as String?,
@@ -13334,6 +13371,7 @@ class PublicReportModel {
         'pdf_ready': pdfReady,
         'photos': photos.map((e) => e.toJson()).toList(),
         'photos_locked_at': photosLockedAt?.toIso8601String(),
+        'praise': praise?.map((e) => e.toJson()).toList(),
         'review': review?.toJson(),
         'summary': summary,
         'technician': technician,
@@ -13347,39 +13385,55 @@ PublicReviewStateModel publicReviewStateModelFromJson(String str) => PublicRevie
 String publicReviewStateModelToJson(PublicReviewStateModel data) => json.encode(data.toJson());
 
 class PublicReviewStateModel {
+  final bool? canEdit;
   final bool canRate;
+  final String? comment;
   final List<String>? negativeTags;
   final List<String>? positiveTags;
   final bool rated;
   final int? rating;
+  final List<String>? tags;
   /// The technician's first name, for 'Rate Ramesh'
   final String? technician;
+  final int? technicianRating;
 
   const PublicReviewStateModel({
+    this.canEdit,
     required this.canRate,
+    this.comment,
     this.negativeTags,
     this.positiveTags,
     required this.rated,
     this.rating,
+    this.tags,
     this.technician,
+    this.technicianRating,
   });
 
   factory PublicReviewStateModel.fromJson(Map<String, dynamic> json) => PublicReviewStateModel(
+        canEdit: json['can_edit'] as bool?,
         canRate: json['can_rate'] as bool,
+        comment: json['comment'] as String?,
         negativeTags: json['negative_tags'] == null ? null : (json['negative_tags'] as List).map((e) => e as String).toList(),
         positiveTags: json['positive_tags'] == null ? null : (json['positive_tags'] as List).map((e) => e as String).toList(),
         rated: json['rated'] as bool,
         rating: json['rating'] == null ? null : (json['rating'] as num).toInt(),
+        tags: json['tags'] == null ? null : (json['tags'] as List).map((e) => e as String).toList(),
         technician: json['technician'] as String?,
+        technicianRating: json['technician_rating'] == null ? null : (json['technician_rating'] as num).toInt(),
       );
 
   Map<String, dynamic> toJson() => {
+        'can_edit': canEdit,
         'can_rate': canRate,
+        'comment': comment,
         'negative_tags': negativeTags,
         'positive_tags': positiveTags,
         'rated': rated,
         'rating': rating,
+        'tags': tags,
         'technician': technician,
+        'technician_rating': technicianRating,
       };
 }
 
@@ -14833,6 +14887,37 @@ class SentenceLinkModel {
         'refs': refs,
         'section': section,
         'text': text,
+      };
+}
+
+/// W27 "Book next service" (D-149).
+ServiceRequestInModel serviceRequestInModelFromJson(String str) => ServiceRequestInModel.fromJson(json.decode(str) as Map<String, dynamic>);
+
+String serviceRequestInModelToJson(ServiceRequestInModel data) => json.encode(data.toJson());
+
+class ServiceRequestInModel {
+  /// A phone or email to call back on
+  final String? contact;
+  final String? note;
+  /// One of: asap, this_month, next_month, later
+  final String? when;
+
+  const ServiceRequestInModel({
+    this.contact,
+    this.note,
+    this.when,
+  });
+
+  factory ServiceRequestInModel.fromJson(Map<String, dynamic> json) => ServiceRequestInModel(
+        contact: json['contact'] as String?,
+        note: json['note'] as String?,
+        when: json['when'] as String?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'contact': contact,
+        'note': note,
+        'when': when,
       };
 }
 

@@ -174,6 +174,13 @@ class MeTab extends GetView<MeController> {
                               label: LangKeys.meMyReviews.tr,
                               onTap: controller.onMyReviewsTap,
                             ),
+                          if (technician)
+                            MeRow(
+                              key: const ValueKey('me-assistant-tech'),
+                              icon: LucideIcons.sparkles,
+                              label: LangKeys.aiTitle.tr,
+                              onTap: controller.onAssistantTap, // about their own jobs (D-150)
+                            ),
                           if (technician || controller.waiting > 0)
                             MeRow(
                               key: const ValueKey('me-waiting'),

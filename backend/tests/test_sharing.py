@@ -5,7 +5,7 @@ import jwt
 import pytest
 from sqlalchemy import text
 
-from app.core.db import SessionLocal
+from app.core.db import SessionLocal, engine
 from app.providers.messaging import outbox
 from tests.conftest import auth, invite_and_join, make_owner
 from tests.test_reports import make_report, ready  # noqa: F401 - the `ready` fixture
@@ -381,3 +381,25 @@ def test_unbranded_pdf_says_made_with_kaamnishaan():
 
     assert label("en", "made_with") == "Made with KaamNishaan · kaamnishaan.com"
     assert "KaamNishaan" in label("hi", "made_with") and "KaamNishaan" in label("fr", "made_with")
+
+
+async def test_a_number_typed_in_share_is_kept_for_next_time(client, ready):
+    """D-151: Share fills a missing phone on the customer, and never changes one already saved."""
+    rep = await approved(client, ready)
+    async with engine.begin() as c:
+        await c.execute(text("update customer_contacts set phone = null"))
+    r = await client.post(
+        f"/api/v1/reports/{rep['id']}/send",
+        json={"channels": ["sms"], "phone": "98250 44444"},
+        headers=auth(ready["owner"]),
+    )
+    assert r.status_code == 200, r.text
+    async with engine.begin() as c:
+        assert (await c.execute(text("select phone from customer_contacts"))).scalar_one() == "+919825044444"
+    await client.post(
+        f"/api/v1/reports/{rep['id']}/send",
+        json={"channels": ["sms"], "phone": "98250 55555"},
+        headers=auth(ready["owner"]),
+    )
+    async with engine.begin() as c:  # a one-off number doesn't replace the saved one
+        assert (await c.execute(text("select phone from customer_contacts"))).scalar_one() == "+919825044444"

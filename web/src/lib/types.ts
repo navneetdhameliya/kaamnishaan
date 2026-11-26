@@ -18,6 +18,7 @@ export interface PublicReport {
   approved_at: string | null;
   completed_at: string | null;
   company: { name: string; logo_url: string | null; phone: string | null };
+  praise: { rating: number; comment: string; name: string | null; at: string }[];
   language: string;
   lang: string;
   languages: string[];
@@ -42,6 +43,10 @@ export interface PublicReviewState {
   technician: string | null;
   positive_tags: string[];
   negative_tags: string[];
+  can_edit: boolean;
+  technician_rating: number | null;
+  tags: string[];
+  comment: string | null;
 }
 
 export interface ReviewIn {

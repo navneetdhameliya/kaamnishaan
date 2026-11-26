@@ -594,6 +594,10 @@ class FakeShare implements IShareService {
 
   final bool works;
   final List<(List<String>, String?)> shared = [];
+  final List<String> texts = [];
+
+  @override
+  Future<void> shareText(String text) async => texts.add(text);
 
   @override
   Future<bool> sharePictures(List<String> urls, {String? text}) async {

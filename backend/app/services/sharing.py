@@ -19,6 +19,7 @@ from app.core.errors import AppError, Conflict, Gone, NotFound, RateLimited
 from app.core.security import normalize_phone, now
 from app.models import (
     Company,
+    Customer,
     CustomerContact,
     Job,
     JobEvent,
@@ -34,6 +35,7 @@ from app.providers.storage import get_storage
 from app.schemas.sharing import (
     Acknowledgement,
     ChannelOut,
+    IssueOut,
     MessageOut,
     NewLinkOut,
     PdfOut,
@@ -46,6 +48,7 @@ from app.schemas.sharing import (
     PublicReport,
     Recipient,
     SendIn,
+    ServiceRequestIn,
     ShareInfo,
     ShareLinkOut,
 )
@@ -167,6 +170,34 @@ async def _contact(db: AsyncSession, job: Job) -> CustomerContact | None:
             .limit(1)
         )
     ).scalar_one_or_none()
+
+
+async def _remember_contact(
+    db: AsyncSession,
+    job: Job,
+    contact: CustomerContact | None,
+    name: str | None,
+    phone: str | None,
+    email: str | None,
+) -> CustomerContact | None:
+    """A phone or email typed in Share (M35) is kept on the customer for next time, filling only what is
+    missing; a number already saved is never changed from here (D-151)."""
+    if not phone and not email:
+        return contact
+    if contact is None:
+        customer = await db.get(Customer, job.customer_id)
+        contact = CustomerContact(
+            company_id=job.company_id, customer_id=job.customer_id,
+            name=name or (customer.name if customer else ""), phone=phone, email=email, is_primary=True,
+        )  # fmt: skip
+        db.add(contact)
+        await db.flush()
+        return contact
+    if phone and not contact.phone:
+        contact.phone = phone
+    if email and not contact.email:
+        contact.email = email
+    return contact
 
 
 async def current_link(db: AsyncSession, rep: Report) -> ShareLink | None:
@@ -437,6 +468,9 @@ async def send(db: AsyncSession, p: Principal, report_id: uuid.UUID, body: SendI
         raise AppError(
             "contact_missing", "Add the customer's phone or email to send the report.", fields=missing
         )
+    contact = await _remember_contact(
+        db, job, contact, name, phone if body.phone else None, email if body.email else None
+    )
     link = await _ensure_link(db, rep, channels[0], p.user.id, name, phone, email)
     texts = _texts(
         company.name, rep, job, link_url(link), name, link.expires_at.astimezone(), await messages.load(db)
@@ -507,6 +541,12 @@ async def _review_state(db: AsyncSession, rep: Report):
     return await reviews.public_state(db, rep)
 
 
+async def _praise(db: AsyncSession, rep: Report):
+    from app.services import reviews
+
+    return await reviews.public_praise(db, rep.company_id, rep.job_id)
+
+
 async def public_report(db: AsyncSession, token: str, lang: str | None) -> PublicReport:
     link, rep = await _link(db, token)
     t = now()
@@ -559,6 +599,7 @@ async def public_report(db: AsyncSession, token: str, lang: str | None) -> Publi
         pdf_ready=rep.pdf_status == "ready",
         fingerprint=rep.pdf_sha256,
         review=await _review_state(db, rep),
+        praise=await _praise(db, rep),
     )
 
 
@@ -707,3 +748,45 @@ async def report_issue(db: AsyncSession, token: str, message: str, contact: str 
     await db.flush()
     await db.refresh(issue)
     return issue
+
+
+async def request_service(db: AsyncSession, token: str, body: ServiceRequestIn) -> IssueOut:
+    """W27 "Book next service" (D-149): kept with the customer's messages about the report, and the office
+    gets it in Messages to call back and plan the visit. Same daily limit as "Report a problem"."""
+    link, rep = await _link(db, token, allow_expired=True)
+    since = now() - timedelta(days=1)
+    count = (
+        await db.execute(
+            select(func.count()).where(ReportIssue.share_link_id == link.id, ReportIssue.created_at > since)
+        )
+    ).scalar_one()
+    if count >= ISSUES_PER_DAY:
+        raise RateLimited(
+            "rate_limited", "Thanks, we already have your messages. The company will contact you."
+        )
+    note = body.note or ""
+    issue = ReportIssue(
+        company_id=rep.company_id, report_id=rep.id, share_link_id=link.id, kind="next_service",
+        message=f"[{body.when}] {note}".strip(), contact=body.contact,
+    )  # fmt: skip
+    db.add(issue)
+    job = await db.get(Job, rep.job_id)
+    await notifications.notify(
+        db,
+        company_id=rep.company_id,
+        to=await notifications.reviewers(db, rep.company_id),
+        kind="service_request",
+        actor_id=None,
+        job=job,
+        report_id=rep.id,
+        params={
+            **await notifications.job_params(db, job),
+            "report": rlabel(rep.number),
+            "when": body.when,
+            "note": note[:300],
+            "contact": body.contact,
+        },
+    )
+    await db.flush()
+    await db.refresh(issue)
+    return IssueOut(id=issue.id, received_at=issue.created_at)

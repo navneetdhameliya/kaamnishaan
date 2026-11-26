@@ -155,8 +155,8 @@ function PlanMix({ t, lang, data }: { t: T; lang: Lang; data: DashboardOut }) {
   );
 }
 
-function Attention({ t, lang, data }: { t: T; lang: Lang; data: DashboardOut }) {
-  if (!data.attention.length) return <p className="text-latin-label-sm text-text-secondary">{t('admin.dash.all_clear')}</p>;
+export function Attention({ t, lang, rows }: { t: T; lang: Lang; rows: DashboardOut['attention'] }) {
+  if (!rows.length) return <p className="text-latin-label-sm text-text-secondary">{t('admin.dash.all_clear')}</p>;
   const look = {
     near_limit: { bg: 'bg-status-warning-bg', fg: 'text-status-warning', icon: AlertCircle },
     past_due: { bg: 'bg-status-danger-bg', fg: 'text-status-danger', icon: AlertCircle },
@@ -165,7 +165,7 @@ function Attention({ t, lang, data }: { t: T; lang: Lang; data: DashboardOut }) 
   } as const;
   return (
     <ul className="flex flex-col gap-12">
-      {data.attention.map((a, i) => {
+      {rows.map((a, i) => {
         const l = look[a.kind];
         const Icon = l.icon;
         const n = num(a.count, lang);
@@ -351,7 +351,7 @@ export function Dashboard({ t, lang, days }: { t: T; lang: Lang; days: Range }) 
       </div>
       <div className="grid gap-24 lg:grid-cols-2 xl:grid-cols-3">
         <Panel i={7} title={t('admin.dash.attention')}>
-          <Attention t={t} lang={lang} data={data} />
+          <Attention t={t} lang={lang} rows={data.attention} />
         </Panel>
         <Panel i={8} title={t('admin.dash.top')}>
           <TopCompanies t={t} lang={lang} data={data} />

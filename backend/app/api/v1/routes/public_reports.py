@@ -20,6 +20,7 @@ from app.schemas.sharing import (
     IssueOut,
     NewLinkOut,
     PublicReport,
+    ServiceRequestIn,
 )
 from app.services import reviews, sharing
 from app.tasks import enqueue
@@ -75,6 +76,20 @@ async def report_problem(token: str, body: IssueIn, db: AsyncSession = Depends(g
 async def rate_job(token: str, body: ReviewIn, db: AsyncSession = Depends(get_db)) -> RatedOut:
     """W29: the customer rates the service and the technician, ticks tags and writes a few words."""
     return await reviews.rate(db, token, body)
+
+
+@router.put("/{token}/review", response_model=RatedOut, responses={409: {"description": "review_locked"}})
+async def edit_review(token: str, body: ReviewIn, db: AsyncSession = Depends(get_db)) -> RatedOut:
+    """W29 "Edit your review": for 7 days, until the company replies (D-149)."""
+    return await reviews.edit(db, token, body)
+
+
+@router.post("/{token}/service-request", response_model=IssueOut, status_code=201)
+async def book_next_service(
+    token: str, body: ServiceRequestIn, db: AsyncSession = Depends(get_db)
+) -> IssueOut:
+    """W27 "Book next service": the office gets a message to call back and plan it (D-149)."""
+    return await sharing.request_service(db, token, body)
 
 
 @router.post("/{token}/review/stop", status_code=204)

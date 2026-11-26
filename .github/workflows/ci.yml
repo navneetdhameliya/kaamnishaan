@@ -66,6 +66,9 @@ jobs:
         with: { node-version: 22, cache: npm, cache-dependency-path: "${{ matrix.app }}/package-lock.json" }
       - run: npm ci
       - run: npm run build
+      # website page tests (the customer's report page); the admin has none yet
+      - if: matrix.app == 'web'
+        run: npm test
 
   mobile:
     name: Mobile (analyze + test)

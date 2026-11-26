@@ -39,8 +39,9 @@ class CompanySettingsController extends GetxController {
   final RxBool savingLogo = false.obs;
   final RxBool saving = false.obs;
 
-  /// The "Phone for customers" sheet's box.
+  /// The "Phone for customers" and "Company name" sheets' boxes.
   final TextEditingController phoneBox = TextEditingController();
+  final TextEditingController nameBox = TextEditingController();
 
   @override
   void onInit() {
@@ -51,6 +52,7 @@ class CompanySettingsController extends GetxController {
   @override
   void onClose() {
     phoneBox.dispose();
+    nameBox.dispose();
     super.onClose();
   }
 
@@ -149,6 +151,23 @@ class CompanySettingsController extends GetxController {
   Future<void> onPlanTap() async {
     if (!isOwner) return KnToast.info(LangKeys.billOwnerOnlyToast.tr);
     await Get.toNamed<void>(RoutesConstants.billingScreen);
+  }
+
+  String get companyName => company?.name ?? '';
+
+  /// Opens the name sheet for the owner.
+  bool onNameTap() {
+    if (!_ownerOnly()) return false;
+    nameBox.text = companyName;
+    return true;
+  }
+
+  /// Saves the new name; nothing to send when it is empty or the same.
+  Future<bool> onNameSave() async {
+    final n = nameBox.text.trim();
+    if (n.isEmpty) return false;
+    if (n == companyName) return true;
+    return _save(() => companies.rename(n), message: LangKeys.settingsNameSaved.tr);
   }
 
   /// Opens the phone sheet for the owner, with the number as it is.

@@ -29,9 +29,10 @@ from app.services.reports import rlabel
 
 log = logging.getLogger("kn.assistant")
 
-PROMPT = """You help the office of a small field service company with questions about their own jobs.
-The second message is JSON with today's date and the company's jobs (customer, address, date, status,
-technician, photos, proof steps still missing, and the report with its summary and work done).
+PROMPT = """You help people at a small field service company with questions about their jobs (a
+technician sees only their own). The second message is JSON with today's date and the jobs (customer,
+address, date, status, technician, photos, proof steps still missing, and the report with its summary
+and work done).
 
 Rules:
 - Answer only from that JSON. If it isn't there, say you couldn't find it in the company's jobs.
@@ -48,8 +49,16 @@ MATCHED_JOBS = 20
 
 
 def _office(p: Principal) -> None:
-    if "jobs.view_all" not in p.permissions:
-        raise Forbidden("forbidden", "Only owners and managers can use the assistant.")
+    """Owners and managers ask about the company; technicians about their own jobs (D-150)."""
+    if "jobs.view_all" not in p.permissions and "jobs.view_own" not in p.permissions:
+        raise Forbidden("forbidden", "Only people in the company can use the assistant.")
+
+
+def _scope(p: Principal):
+    """The jobs this person may ask about: all the company's, or a technician's own (D-150)."""
+    if "jobs.view_all" in p.permissions:
+        return Job.company_id == p.company_id
+    return (Job.company_id == p.company_id) & (Job.assigned_to == p.user.id)
 
 
 async def _usage(db: AsyncSession, p: Principal) -> tuple[int, int | None, datetime]:
@@ -111,7 +120,7 @@ async def _jobs(db: AsyncSession, p: Principal, question: str) -> list[Job]:
         (
             await db.execute(
                 select(Job)
-                .where(Job.company_id == p.company_id)
+                .where(_scope(p))
                 .order_by(func.coalesce(Job.scheduled_at, Job.created_at).desc())
                 .limit(RECENT_JOBS)
             )
@@ -126,7 +135,7 @@ async def _jobs(db: AsyncSession, p: Principal, question: str) -> list[Job]:
                 await db.execute(
                     select(Job)
                     .join(Customer, Customer.id == Job.customer_id)
-                    .where(Job.company_id == p.company_id, or_(*like))
+                    .where(_scope(p), or_(*like))
                     .order_by(func.coalesce(Job.scheduled_at, Job.created_at).desc())
                     .limit(MATCHED_JOBS)
                 )
@@ -216,7 +225,7 @@ async def _out(db: AsyncSession, p: Principal, msgs: list[AssistantMessage]) -> 
                 select(Report, Job, Customer.name)
                 .join(Job, Job.id == Report.job_id)
                 .join(Customer, Customer.id == Job.customer_id)
-                .where(Report.id.in_(report_ids), Report.company_id == p.company_id)
+                .where(Report.id.in_(report_ids), Report.company_id == p.company_id, _scope(p))
             )
         ).all()
     }
@@ -226,7 +235,7 @@ async def _out(db: AsyncSession, p: Principal, msgs: list[AssistantMessage]) -> 
             await db.execute(
                 select(Job, Customer.name)
                 .join(Customer, Customer.id == Job.customer_id)
-                .where(Job.id.in_(job_ids), Job.company_id == p.company_id)
+                .where(Job.id.in_(job_ids), _scope(p))
             )
         ).all()
     }

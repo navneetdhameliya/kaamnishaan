@@ -314,6 +314,8 @@ abstract final class LangKeys {
   static const adminAiTotal = 'admin.ai.total';
   /// Voice minutes
   static const adminAiVoice = 'admin.ai.voice';
+  /// Needs attention
+  static const adminAlertsTitle = 'admin.alerts.title';
   /// Active technicians
   static const adminAnActive = 'admin.an.active';
   /// Reports sent by industry
@@ -2432,6 +2434,8 @@ abstract final class LangKeys {
   static const adminNoKindReportSubmitted = 'admin.no.kind.report_submitted';
   /// Customer left a rating
   static const adminNoKindReviewReceived = 'admin.no.kind.review_received';
+  /// Customer asks for the next service
+  static const adminNoKindServiceRequest = 'admin.no.kind.service_request';
   /// Support replied
   static const adminNoKindSupportReply = 'admin.no.kind.support_reply';
   /// Technician asks a question
@@ -3320,6 +3324,10 @@ abstract final class LangKeys {
   static const adminSbTrials = 'admin.sb.trials';
   /// {n} end this week
   static const adminSbTrialsEnd = 'admin.sb.trials_end';
+  /// Search companies and people
+  static const adminSearchHint = 'admin.search.hint';
+  /// Nothing found.
+  static const adminSearchNone = 'admin.search.none';
   /// Your session ended. Please log in again.
   static const adminSessionEnded = 'admin.session_ended';
   /// Hi {name}. Choose a password, then connect an authenticator app such as Google Authenticator or Microsoft Authenticator.
@@ -5138,6 +5146,10 @@ abstract final class LangKeys {
   static const jobDeleteTitle = 'job.delete_title';
   /// Job deleted.
   static const jobDeleted = 'job.deleted';
+  /// {n} km away
+  static const jobDistanceKm = 'job.distance_km';
+  /// {n} m away
+  static const jobDistanceM = 'job.distance_m';
   /// Equipment
   static const jobEquipment = 'job.equipment';
   /// last service {date}
@@ -5390,6 +5402,12 @@ abstract final class LangKeys {
   static const msgReviewBody = 'msg.review_body';
   /// New review
   static const msgReviewTitle = 'msg.review_title';
+  /// {customer} ({when}) — call to plan it.{note}{contact}
+  static const msgServiceBody = 'msg.service_body';
+  ///  Contact: {contact}
+  static const msgServiceContact = 'msg.service_contact';
+  /// A customer wants the next service
+  static const msgServiceTitle = 'msg.service_title';
   /// {customer} report was sent to the customer.
   static const msgSharedBody = 'msg.shared_body';
   /// {technician} sent the {customer} report.
@@ -6018,6 +6036,14 @@ abstract final class LangKeys {
   static const reviewIfNoRating = 'review.if_no_rating';
   /// Link sent with report
   static const reviewLinkSent = 'review.link_sent';
+  /// More
+  static const reviewMore = 'review.more';
+  /// Edit the report
+  static const reviewMoreEdit = 'review.more_edit';
+  /// Open the job
+  static const reviewMoreJob = 'review.more_job';
+  /// See the PDF
+  static const reviewMorePdf = 'review.more_pdf';
   /// Add the customer's phone or email to ask for a review.
   static const reviewNoContact = 'review.no_contact';
   /// {what} · no photo
@@ -6216,6 +6242,12 @@ abstract final class LangKeys {
   static const settingsLogo = 'settings.logo';
   /// Logo saved
   static const settingsLogoSaved = 'settings.logo_saved';
+  /// Company name
+  static const settingsName = 'settings.name';
+  /// Customers see this name on their reports and messages.
+  static const settingsNameHint = 'settings.name_hint';
+  /// Name saved.
+  static const settingsNameSaved = 'settings.name_saved';
   /// Owner only
   static const settingsOwnerOnly = 'settings.owner_only';
   /// Only the owner can change this.
@@ -6268,6 +6300,8 @@ abstract final class LangKeys {
   static const shareMakeLink = 'share.make_link';
   /// More
   static const shareMore = 'share.more';
+  /// Your report from the job for {customer}: {url}
+  static const shareMoreText = 'share.more_text';
   /// Name
   static const shareName = 'share.name';
   /// No phone or email saved
@@ -9522,6 +9556,8 @@ abstract final class LangKeys {
   static const webRPhotosStamped = 'web.r.photos_stamped';
   /// Powered by KaamNishaan
   static const webRPowered = 'web.r.powered';
+  /// What other customers say about {company}
+  static const webRPraise = 'web.r.praise';
   /// Privacy
   static const webRPrivacy = 'web.r.privacy';
   /// Report a problem
@@ -9548,6 +9584,24 @@ abstract final class LangKeys {
   static const webRRevokedTitle = 'web.r.revoked_title';
   /// Secure link · works until {date}
   static const webRSecure = 'web.r.secure';
+  /// Book next service
+  static const webRService = 'web.r.service';
+  /// As soon as possible
+  static const webRServiceAsap = 'web.r.service_asap';
+  /// Later
+  static const webRServiceLater = 'web.r.service_later';
+  /// Next month
+  static const webRServiceNextMonth = 'web.r.service_next_month';
+  /// Anything they should know? (optional)
+  static const webRServiceNote = 'web.r.service_note';
+  /// Ask them to call me
+  static const webRServiceSend = 'web.r.service_send';
+  /// Thanks. {company} will call you to plan the next visit.
+  static const webRServiceSent = 'web.r.service_sent';
+  /// This month
+  static const webRServiceThisMonth = 'web.r.service_this_month';
+  /// When would suit you?
+  static const webRServiceWhen = 'web.r.service_when';
   /// Show all {n} checks
   static const webRShowAll = 'web.r.show_all';
   /// Service report · secured by KaamNishaan
@@ -9576,6 +9630,8 @@ abstract final class LangKeys {
   static const webRateCallMe = 'web.rate.call_me';
   /// The manager is told right away and calls you within 1 working day.
   static const webRateCallMeSub = 'web.rate.call_me_sub';
+  /// Edit your review
+  static const webRateEdit = 'web.rate.edit';
   /// Post on Google
   static const webRateGoogle = 'web.rate.google';
   /// Help {company} by posting your review on Google too.

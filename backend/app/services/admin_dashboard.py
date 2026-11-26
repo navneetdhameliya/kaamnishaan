@@ -135,7 +135,61 @@ async def dashboard(db: AsyncSession, *, days: int, lang: str) -> AdminDashboard
         for c, i, count in top_rows
     ]
 
-    # ---- needs attention ------------------------------------------------------------------------
+    attention = await needs_attention(db, plans, t)
+
+    # ---- recent activity --------------------------------------------------------------------------
+    events: list[AdminActivityRow] = []
+    for name, at in (
+        await db.execute(
+            select(Company.name, Company.created_at).order_by(Company.created_at.desc()).limit(6)
+        )
+    ).all():
+        events.append(AdminActivityRow(kind="company_created", title=name, at=at))
+    for kind, name, company, number, at in (
+        await db.execute(
+            select(Lead.kind, Lead.name, Lead.company, Lead.number, Lead.created_at)
+            .order_by(Lead.created_at.desc())
+            .limit(6)
+        )
+    ).all():
+        title = name if kind == "newsletter" else f"{company or name} · KN-{number}"
+        if kind in ("demo", "contact", "newsletter"):
+            events.append(AdminActivityRow(kind=f"lead_{kind}", title=title, at=at))
+    # each person once, when they first set up (a later reset is not "joining" again)
+    joined = func.min(AuditLog.created_at).label("at")
+    for name, at in (
+        await db.execute(
+            select(StaffUser.name, joined)
+            .join(StaffUser, StaffUser.id == AuditLog.staff_id)
+            .where(AuditLog.action == "staff.setup_done")
+            .group_by(StaffUser.id)
+            .order_by(joined.desc())
+            .limit(3)
+        )
+    ).all():
+        events.append(AdminActivityRow(kind="staff_joined", title=name, at=at))
+    events.sort(key=lambda e: e.at, reverse=True)
+
+    return AdminDashboardOut(
+        days=days,
+        since=since,
+        active_companies=AdminStat(value=companies_now, previous=companies_now - companies_new),
+        technicians=AdminStat(value=techs_now, previous=techs_now - techs_new),
+        reports_sent=AdminStat(value=sent_now, previous=sent_before),
+        ai_cost_usd=AdminStat(value=round(cost_now, 4), previous=round(cost_before, 4)),
+        ai_cost_per_report_usd=round(cost_now / drafted, 4) if drafted else None,
+        monthly_revenue=[AdminMoney(currency=k, amount_minor=v) for k, v in sorted(revenue.items())],
+        reports_per_day=per_day,
+        plan_mix=mix,
+        top_companies=top,
+        attention=attention,
+        activity=events[:6],
+    )
+
+
+async def needs_attention(db: AsyncSession, plans: list, t: datetime) -> list[AdminAttentionRow]:
+    """A03 "Needs attention", also behind the top bar's bell (A04): companies near their report limit,
+    payments past due, trials ending soon and new leads."""
     attention: list[AdminAttentionRow] = []
     limits = {p.code: p.report_limit_monthly for p in plans if p.report_limit_monthly}
     near: list[tuple[float, Company, int, int]] = []
@@ -190,52 +244,9 @@ async def dashboard(db: AsyncSession, *, days: int, lang: str) -> AdminDashboard
     if new_leads:
         name, company = new_leads[0]
         attention.append(AdminAttentionRow(kind="new_leads", count=len(new_leads), example=company or name))
+    return attention
 
-    # ---- recent activity --------------------------------------------------------------------------
-    events: list[AdminActivityRow] = []
-    for name, at in (
-        await db.execute(
-            select(Company.name, Company.created_at).order_by(Company.created_at.desc()).limit(6)
-        )
-    ).all():
-        events.append(AdminActivityRow(kind="company_created", title=name, at=at))
-    for kind, name, company, number, at in (
-        await db.execute(
-            select(Lead.kind, Lead.name, Lead.company, Lead.number, Lead.created_at)
-            .order_by(Lead.created_at.desc())
-            .limit(6)
-        )
-    ).all():
-        title = name if kind == "newsletter" else f"{company or name} · KN-{number}"
-        if kind in ("demo", "contact", "newsletter"):
-            events.append(AdminActivityRow(kind=f"lead_{kind}", title=title, at=at))
-    # each person once, when they first set up (a later reset is not "joining" again)
-    joined = func.min(AuditLog.created_at).label("at")
-    for name, at in (
-        await db.execute(
-            select(StaffUser.name, joined)
-            .join(StaffUser, StaffUser.id == AuditLog.staff_id)
-            .where(AuditLog.action == "staff.setup_done")
-            .group_by(StaffUser.id)
-            .order_by(joined.desc())
-            .limit(3)
-        )
-    ).all():
-        events.append(AdminActivityRow(kind="staff_joined", title=name, at=at))
-    events.sort(key=lambda e: e.at, reverse=True)
 
-    return AdminDashboardOut(
-        days=days,
-        since=since,
-        active_companies=AdminStat(value=companies_now, previous=companies_now - companies_new),
-        technicians=AdminStat(value=techs_now, previous=techs_now - techs_new),
-        reports_sent=AdminStat(value=sent_now, previous=sent_before),
-        ai_cost_usd=AdminStat(value=round(cost_now, 4), previous=round(cost_before, 4)),
-        ai_cost_per_report_usd=round(cost_now / drafted, 4) if drafted else None,
-        monthly_revenue=[AdminMoney(currency=k, amount_minor=v) for k, v in sorted(revenue.items())],
-        reports_per_day=per_day,
-        plan_mix=mix,
-        top_companies=top,
-        attention=attention,
-        activity=events[:6],
-    )
+async def alerts(db: AsyncSession) -> list[AdminAttentionRow]:
+    plans = (await db.execute(select(Plan))).scalars().all()
+    return await needs_attention(db, list(plans), now())

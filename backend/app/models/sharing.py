@@ -72,7 +72,9 @@ class ReportIssue(IdMixin, Base):
     company_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("companies.id", ondelete="CASCADE"), index=True)
     report_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("reports.id", ondelete="CASCADE"), index=True)
     share_link_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("share_links.id", ondelete="SET NULL"))
-    kind: Mapped[str] = mapped_column(str_enum("problem", "new_link", name="report_issue_kind"))
+    kind: Mapped[str] = mapped_column(
+        str_enum("problem", "new_link", "next_service", name="report_issue_kind")
+    )
     message: Mapped[str | None] = mapped_column(Text)
     contact: Mapped[str | None] = mapped_column(String(160))
     status: Mapped[str] = mapped_column(

@@ -7,7 +7,7 @@ from sqlalchemy import text
 
 from app.core.db import engine
 from app.services import plan_features
-from tests.conftest import auth
+from tests.conftest import auth, invite_and_join
 from tests.test_reports import ready  # noqa: F401 - the `ready` fixture
 
 
@@ -23,11 +23,21 @@ async def test_trial_has_everything_then_the_plan_decides(client, ready):
     owner = ready["owner"]
     me = (await client.get("/api/v1/me", headers=auth(owner))).json()
     assert me["company"]["status"] == "trial"
-    assert sorted(me["company"]["features"]) == ["ai_assistant", "branded_pdf", "custom_checklists"]
+    assert sorted(me["company"]["features"]) == [
+        "ai_assistant",
+        "branded_pdf",
+        "custom_checklists",
+        "manager_approvals",
+    ]
 
     await _on_plan(me["company"]["id"], "starter")
     me = (await client.get("/api/v1/me", headers=auth(owner))).json()
     assert me["company"]["features"] == ["branded_pdf"]
+    # D-148: on Starter only the owner approves; managers still see, edit and share
+    manager = await invite_and_join(client, owner, "+919811100077", role="manager")
+    perms = (await client.get("/api/v1/me", headers=auth(manager))).json()["permissions"]
+    assert "reports.approve" not in perms and {"reports.edit", "reports.share"} <= set(perms)
+    assert "reports.approve" in me["permissions"]
 
     r = await client.post("/api/v1/assistant/ask", json={"text": "How many jobs?"}, headers=auth(owner))
     assert r.status_code == 402
@@ -44,6 +54,8 @@ async def test_trial_has_everything_then_the_plan_decides(client, ready):
     assert (await client.get("/api/v1/checklist-templates", headers=auth(owner))).status_code == 200
 
     await _on_plan(me["company"]["id"], "business")
+    perms = (await client.get("/api/v1/me", headers=auth(manager))).json()["permissions"]
+    assert "reports.approve" in perms
     r = await client.post("/api/v1/checklist-templates", json={"name": "Filters"}, headers=auth(owner))
     assert r.status_code == 201, r.text
 

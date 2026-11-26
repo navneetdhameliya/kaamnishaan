@@ -1,4 +1,4 @@
-import { Check, Lock, Send, Share } from 'lucide-react';
+import { Check, Lock, Pencil, Send, Share } from 'lucide-react';
 import { useState, type ReactNode } from 'react';
 
 import { Button, Initials, Stars, TagChip, cx } from '../../components/ui';
@@ -12,10 +12,13 @@ const LOW = 2;
 export function RatingCard({ ctx, review }: { ctx: PageCtx; review: PublicReviewState }) {
   const { t, report } = ctx;
   const company = report.company.name;
-  const [rating, setRating] = useState(0);
-  const [techRating, setTechRating] = useState(0);
-  const [tags, setTags] = useState<string[]>([]);
-  const [comment, setComment] = useState('');
+  // "Edit your review" (D-149) starts from what the customer sent
+  const [rating, setRating] = useState(review.rating ?? 0);
+  const [techRating, setTechRating] = useState(review.technician_rating ?? 0);
+  const [tags, setTags] = useState<string[]>(review.tags ?? []);
+  const [comment, setComment] = useState(review.comment ?? '');
+  const [editing, setEditing] = useState(false);
+  const [rated, setRated] = useState(review.rated);
   const [publicOk, setPublicOk] = useState(true);
   const [callMe, setCallMe] = useState(false);
   const [missing, setMissing] = useState(false);
@@ -58,8 +61,10 @@ export function RatingCard({ ctx, review }: { ctx: PageCtx; review: PublicReview
     setBusy(true);
     setError(null);
     try {
-      const out = await api<RatedOut>(`/public/reports/${ctx.token}/review`, { method: 'POST', body });
+      const out = await api<RatedOut>(`/public/reports/${ctx.token}/review`, { method: rated ? 'PUT' : 'POST', body });
       setDone({ sent: body, out });
+      setRated(true);
+      setEditing(false);
     } catch (err) {
       setError(err instanceof ApiError ? err.message : t('web.r.error'));
     } finally {
@@ -82,8 +87,28 @@ export function RatingCard({ ctx, review }: { ctx: PageCtx; review: PublicReview
 
   if (stopped) return shell('border-border-default', <p className="text-latin-body">{t('web.rate.stopped')}</p>);
 
-  if (review.rated && !done) {
-    return shell('border-border-default', <p className="text-latin-body">{t('web.rate.already')}</p>);
+  const editButton = (review.can_edit || done) && (
+    <button
+      type="button"
+      onClick={() => {
+        setDone(null);
+        setEditing(true);
+      }}
+      className="mt-16 inline-flex min-h-[44px] items-center gap-8 rounded-lg px-12 text-latin-label font-semibold text-action-primary transition hover:bg-action-secondary"
+    >
+      <Pencil width={16} height={16} aria-hidden />
+      {t('web.rate.edit')}
+    </button>
+  );
+
+  if (review.rated && !done && !editing) {
+    return shell(
+      'border-border-default',
+      <>
+        <p className="text-latin-body">{t('web.rate.already')}</p>
+        {editButton}
+      </>,
+    );
   }
 
   if (done) {
@@ -127,6 +152,7 @@ export function RatingCard({ ctx, review }: { ctx: PageCtx; review: PublicReview
             </a>
           </div>
         )}
+        {editButton}
       </>,
     );
   }

@@ -1,7 +1,8 @@
 """What a company's plan switches on (D-147).
 
 Each plan's `features` (set in the plans table, shown on the pricing page) decides three things in the app:
-the AI assistant, making your own checklists, and the company's logo on the PDF. A company on trial gets
+the AI assistant, making your own checklists, the company's logo on the PDF, and managers approving
+reports (D-148). A company on trial gets
 them all, so it can try everything before choosing a plan."""
 
 from sqlalchemy import select
@@ -10,7 +11,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.core.errors import PlanLimit
 from app.models import Company, Plan
 
-GATED = ("ai_assistant", "custom_checklists", "branded_pdf")
+GATED = ("ai_assistant", "custom_checklists", "branded_pdf", "manager_approvals")
 
 
 def features(c: Company) -> list[str]:

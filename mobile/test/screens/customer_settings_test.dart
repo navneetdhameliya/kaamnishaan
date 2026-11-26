@@ -180,6 +180,22 @@ void main() {
       c.onClose();
     });
 
+    test('the owner renames the company; an empty or unchanged name sends nothing', () async {
+      final c = open('owner');
+      expect(c.onNameTap(), isTrue);
+      expect(c.nameBox.text, c.companyName);
+      c.nameBox.text = '   ';
+      expect(await c.onNameSave(), isFalse);
+      c.nameBox.text = c.companyName;
+      expect(await c.onNameSave(), isTrue);
+      verifyNever(() => repo.rename(any()));
+      when(() => repo.rename(any())).thenAnswer((_) async => ApiSuccess<CompanyOutModel>(company()));
+      c.nameBox.text = ' BrightAir Cooling ';
+      await _ignoreApp(c.onNameSave);
+      verify(() => repo.rename('BrightAir Cooling')).called(1);
+      c.onClose();
+    });
+
     test('managers can look but not change', () async {
       final c = open('manager');
       expect(c.isOwner, isFalse);

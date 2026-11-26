@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:math' as math;
+
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -48,6 +51,9 @@ class JobDetailsController extends GetxController {
   final Future<bool> Function(Uri uri) _openUrl;
 
   final Rxn<JobOutModel> job = Rxn<JobOutModel>();
+
+  /// How far the phone is from the site, e.g. "2.4 km away" (D-153); null when not known.
+  final RxnString distance = RxnString();
   final RxBool loading = false.obs;
   final RxBool starting = false.obs;
   final RxBool askingReview = false.obs;
@@ -283,9 +289,38 @@ class JobDetailsController extends GetxController {
     final data = result.dataOrNull;
     if (data != null) {
       job.value = data;
+      unawaited(_measure(data));
     } else {
       KnToast.error(result.errorOrNull!.message);
     }
+  }
+
+  /// Open jobs only: once you are on site (or done) the distance says nothing.
+  Future<void> _measure(JobOutModel j) async {
+    final s = j.site;
+    final loc = location;
+    if (loc == null || s?.lat == null || s?.lng == null || !const {'unassigned', 'assigned'}.contains(j.status)) {
+      return;
+    }
+    final here = await loc.current();
+    if (here == null) return;
+    distance.value = distanceText(metersBetween(here.lat, here.lng, s!.lat!, s.lng!));
+  }
+
+  /// "350 m away", "2.4 km away", "18 km away".
+  static String distanceText(double m) {
+    if (m < 1000) return LangKeys.jobDistanceM.trParams({'n': '${(m / 10).round() * 10}'});
+    final km = m / 1000;
+    return LangKeys.jobDistanceKm.trParams({'n': km < 10 ? km.toStringAsFixed(1) : '${km.round()}'});
+  }
+
+  /// Straight-line distance (haversine), in metres.
+  static double metersBetween(double lat1, double lng1, double lat2, double lng2) {
+    const r = 6371000.0;
+    double rad(double d) => d * math.pi / 180;
+    final dLat = rad(lat2 - lat1), dLng = rad(lng2 - lng1);
+    final a = math.pow(math.sin(dLat / 2), 2) + math.cos(rad(lat1)) * math.cos(rad(lat2)) * math.pow(math.sin(dLng / 2), 2);
+    return 2 * r * math.asin(math.sqrt(a));
   }
 
   Future<void> onNavigateTap() async {

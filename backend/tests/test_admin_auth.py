@@ -169,6 +169,9 @@ async def test_dashboard_counts_from_the_database(client, days):
     kinds = [a["kind"] for a in d["activity"]]
     assert "company_created" in kinds and "lead_contact" in kinds and "staff_joined" in kinds
     assert any(a["kind"] == "new_leads" and a["count"] == 1 for a in d["attention"])
+    # the top bar's bell shows the same list (A04)
+    bell = (await client.get(f"{A}/alerts", headers=auth(out))).json()
+    assert bell == d["attention"]
     assert (await client.get(f"{A}/dashboard", params={"days": 5}, headers=auth(out))).status_code == 422
 
 

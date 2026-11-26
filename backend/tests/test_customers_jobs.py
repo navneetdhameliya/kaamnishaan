@@ -150,6 +150,9 @@ async def test_job_lifecycle_and_timeline(client):
         f"/api/v1/jobs/{j['id']}/start", json={"lat": 21.17, "lng": 72.83}, headers=auth(tech)
     )
     assert r.status_code == 200 and r.json()["status"] == "in_progress" and r.json()["started_at"]
+    # D-153: the site had no place, so it learns it from where the job was started
+    site = (await client.get(f"/api/v1/jobs/{j['id']}", headers=auth(owner))).json()["site"]
+    assert (site["lat"], site["lng"]) == (21.17, 72.83)
     again = await client.post(f"/api/v1/jobs/{j['id']}/start", headers=auth(tech))
     assert again.status_code == 200  # a retry from the offline queue is safe
 

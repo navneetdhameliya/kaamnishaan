@@ -19,6 +19,7 @@ NotificationKind = Literal[
     "tech_question",
     "plan_limit",
     "customer_issue",
+    "service_request",
     "announcement",
 ]
 

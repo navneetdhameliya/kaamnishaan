@@ -93,6 +93,7 @@ from app.schemas.checklists import QuestionIn, QuestionPatch
 from app.schemas.identity import Locale, Ok
 from app.schemas.reports import ReportStatus
 from app.schemas.staff import (
+    AdminAttentionRow,
     AdminDashboardOut,
     StaffCodeIn,
     StaffDevices,
@@ -228,6 +229,14 @@ async def ai_usage(
             "validation_error", "Some fields are not valid.", fields={"days": "choose_7_30_90"}, status=422
         )
     return await admin_ai.usage(db, days=days)
+
+
+@router.get("/alerts", response_model=list[AdminAttentionRow])
+async def alerts(
+    _: Staff = Depends(get_staff), db: AsyncSession = Depends(get_db)
+) -> list[AdminAttentionRow]:
+    """The top bar's bell (A04): the same "Needs attention" list as the dashboard."""
+    return await admin_dashboard.alerts(db)
 
 
 @router.get("/dashboard", response_model=AdminDashboardOut)
