@@ -3132,6 +3132,7 @@
   "share.email_off": "El correo aún no está activado. Envíe por SMS o WhatsApp, o copie el enlace.",
   "share.make_link": "Crear enlace",
   "share.more": "Más",
+  "share.more_text": "Tu informe del trabajo para {customer}: {url}",
   "share.name": "Nombre",
   "share.no_contact": "No hay teléfono ni correo guardado",
   "share.no_contact_body": "Añade un teléfono o correo para enviar este informe",

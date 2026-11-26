@@ -179,15 +179,21 @@ class _JobSource extends StatelessWidget {
                 const SizedBox(width: KnSize.space8),
               ],
               if (job.missing.isNotEmpty)
-                Container(
-                  width: 64,
-                  height: 56,
-                  decoration: BoxDecoration(
-                    color: kn.statusWarningBg,
-                    borderRadius: BorderRadius.circular(KnSize.radiusSm),
-                    border: Border.all(color: kn.statusWarning),
+                CustomInkWell(
+                  key: ValueKey('ai-missing-${job.id}'),
+                  onTap: () => controller.onMissingTap(job),
+                  borderRadius: BorderRadius.circular(KnSize.radiusSm),
+                  semanticLabel: controller.missingLine(job),
+                  child: Container(
+                    width: 64,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      color: kn.statusWarningBg,
+                      borderRadius: BorderRadius.circular(KnSize.radiusSm),
+                      border: Border.all(color: kn.statusWarning),
+                    ),
+                    child: Icon(LucideIcons.camera, size: 20, color: kn.statusWarning),
                   ),
-                  child: Icon(LucideIcons.camera, size: 20, color: kn.statusWarning),
                 ),
             ],
           ),

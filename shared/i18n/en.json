@@ -3132,6 +3132,7 @@
   "share.email_off": "Email isn't switched on yet. Send by SMS or WhatsApp, or copy the link.",
   "share.make_link": "Make link",
   "share.more": "More",
+  "share.more_text": "Your report from the job for {customer}: {url}",
   "share.name": "Name",
   "share.no_contact": "No phone or email saved",
   "share.no_contact_body": "Add a phone or email to send this report",

@@ -10,6 +10,9 @@ import 'package:share_plus/share_plus.dart';
 abstract class IShareService {
   /// Shares the pictures at [urls] (in order) with [text]; false when they couldn't be fetched.
   Future<bool> sharePictures(List<String> urls, {String? text});
+
+  /// Opens the share sheet with [text] (a report link for "More").
+  Future<void> shareText(String text);
 }
 
 class ShareService implements IShareService {
@@ -19,6 +22,11 @@ class ShareService implements IShareService {
 
   final Dio _dio;
   final Future<Directory> Function() _temp;
+
+  @override
+  Future<void> shareText(String text) async {
+    await SharePlus.instance.share(ShareParams(text: text, sharePositionOrigin: _middle()));
+  }
 
   @override
   Future<bool> sharePictures(List<String> urls, {String? text}) async {

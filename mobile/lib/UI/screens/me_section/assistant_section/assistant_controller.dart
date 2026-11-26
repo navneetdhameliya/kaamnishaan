@@ -228,4 +228,9 @@ class AssistantController extends GetxController {
   Future<void> onJobTap(SourceJobModel j) async {
     await Get.toNamed<void>(RoutesConstants.jobDetailsScreen, arguments: JobArguments(id: j.id, customer: j.customer, title: j.title));
   }
+
+  /// The camera tile under "Missing: …" opens the job's proof screen, to add what is missing.
+  Future<void> onMissingTap(SourceJobModel j) async {
+    await Get.toNamed<void>(RoutesConstants.captureHubScreen, arguments: JobArguments(id: j.id, customer: j.customer, title: j.title));
+  }
 }

@@ -6268,6 +6268,8 @@ abstract final class LangKeys {
   static const shareMakeLink = 'share.make_link';
   /// More
   static const shareMore = 'share.more';
+  /// Your report from the job for {customer}: {url}
+  static const shareMoreText = 'share.more_text';
   /// Name
   static const shareName = 'share.name';
   /// No phone or email saved

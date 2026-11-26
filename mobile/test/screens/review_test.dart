@@ -231,6 +231,29 @@ void main() {
       return ShareReportController(reports: reports, args: args)..onInit();
     }
 
+    test('"More" opens the phone\'s share sheet with the report link', () async {
+      final sheet = FakeShare();
+      when(() => reports.share(any())).thenAnswer(
+        (_) async => ApiSuccess<ShareInfoModel>(info(to: const RecipientModel(name: 'Dr. Anita Rao', phone: '+15550100444'))),
+      );
+      when(() => reports.createLink(any())).thenAnswer(
+        (_) async => ApiSuccess<ShareLinkOutModel>(
+          ShareLinkOutModel(
+            channel: 'copy', createdAt: DateTime(2026, 11, 26), expiresAt: DateTime(2026, 12, 26),
+            id: 'l1', openCount: 0, status: 'active', url: 'https://kaamnishaan.com/r/abc',
+          ),
+        ),
+      );
+      when(() => reports.pdf(any())).thenAnswer(
+        (_) async => const ApiSuccess<PdfOutModel>(PdfOutModel(status: 'ready', filename: 'r.pdf', pages: 3, size: 2400000)),
+      );
+      when(() => reports.report(any())).thenAnswer((_) async => ApiSuccess<ReportOutModel>(reportOut(status: 'approved')));
+      final c = ShareReportController(reports: reports, args: args, share: sheet)..onInit();
+      await c.load();
+      await c.onMoreTap();
+      expect(sheet.texts.single, 'Your report from the job for Dr. Anita Rao: https://kaamnishaan.com/r/abc');
+    });
+
     test('SMS is picked when the customer has a phone, and the send goes out', () async {
       final c = share(info(to: const RecipientModel(name: 'Dr. Anita Rao', phone: '+15550100444')));
       await c.load();

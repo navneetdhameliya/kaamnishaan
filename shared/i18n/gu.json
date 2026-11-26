@@ -3132,6 +3132,7 @@
   "share.email_off": "ઇમેઇલ હજી ચાલુ નથી. SMS કે WhatsApp થી મોકલો, અથવા લિંક કૉપી કરો.",
   "share.make_link": "લિંક બનાવો",
   "share.more": "વધુ",
+  "share.more_text": "{customer}ના કામનો તમારો રિપોર્ટ: {url}",
   "share.name": "નામ",
   "share.no_contact": "કોઈ ફોન કે ઈમેલ સેવ નથી",
   "share.no_contact_body": "આ રિપોર્ટ મોકલવા ફોન કે ઈમેલ ઉમેરો",

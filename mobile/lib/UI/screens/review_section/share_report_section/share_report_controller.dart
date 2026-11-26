@@ -6,13 +6,19 @@ import '../../../../infrastructure/commons/constants/app_routes.dart';
 import '../../../../infrastructure/data_access_layer/api_repository/reports_api_repository.dart';
 import '../../../../infrastructure/lang/lang_keys.g.dart';
 import '../../../../infrastructure/models/api_models.g.dart';
+import '../../../../infrastructure/services/share_service.dart';
 import '../../../../infrastructure/shared/job_arguments.dart';
 import '../../../common_widgets/kn_toast.dart';
 
 /// M35 Share report: who gets it, by SMS, email or WhatsApp, and the secure link (copy or turn off).
 /// With no phone or email saved, one can be typed here and is used for this send.
 class ShareReportController extends GetxController {
-  ShareReportController({required this.reports, ReportArguments? args}) : args = args ?? Get.arguments as ReportArguments;
+  ShareReportController({required this.reports, ReportArguments? args, IShareService? share})
+      : args = args ?? Get.arguments as ReportArguments,
+        _share = share ?? (Get.isRegistered<IShareService>() ? Get.find<IShareService>() : null);
+
+  /// The phone's share sheet for "More" (none in tests: the link is copied instead).
+  final IShareService? _share;
 
   final IReportsApiRepository reports;
   final ReportArguments args;
@@ -190,8 +196,14 @@ class ShareReportController extends GetxController {
     KnToast.success(LangKeys.shareCopied.tr);
   }
 
-  /// "More": the link is copied, to paste in any app.
-  Future<void> onMoreTap() => onCopyTap();
+  /// "More": the phone's share sheet with the report link, for any other app.
+  Future<void> onMoreTap() async {
+    final share = _share;
+    if (share == null) return onCopyTap();
+    final l = await _ensureLink();
+    if (l == null) return;
+    await share.shareText(LangKeys.shareMoreText.trParams({'customer': name, 'url': l.url}));
+  }
 
   Future<void> onTurnOffTap() async {
     final l = link;

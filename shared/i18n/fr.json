@@ -3132,6 +3132,7 @@
   "share.email_off": "L’e-mail n’est pas encore activé. Envoyez par SMS ou WhatsApp, ou copiez le lien.",
   "share.make_link": "Créer le lien",
   "share.more": "Plus",
+  "share.more_text": "Votre rapport d’intervention pour {customer} : {url}",
   "share.name": "Nom",
   "share.no_contact": "Aucun téléphone ni e-mail enregistré",
   "share.no_contact_body": "Ajoutez un téléphone ou un e-mail pour envoyer ce rapport",
