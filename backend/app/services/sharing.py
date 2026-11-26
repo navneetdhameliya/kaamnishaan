@@ -19,6 +19,7 @@ from app.core.errors import AppError, Conflict, Gone, NotFound, RateLimited
 from app.core.security import normalize_phone, now
 from app.models import (
     Company,
+    Customer,
     CustomerContact,
     Job,
     JobEvent,
@@ -169,6 +170,34 @@ async def _contact(db: AsyncSession, job: Job) -> CustomerContact | None:
             .limit(1)
         )
     ).scalar_one_or_none()
+
+
+async def _remember_contact(
+    db: AsyncSession,
+    job: Job,
+    contact: CustomerContact | None,
+    name: str | None,
+    phone: str | None,
+    email: str | None,
+) -> CustomerContact | None:
+    """A phone or email typed in Share (M35) is kept on the customer for next time, filling only what is
+    missing; a number already saved is never changed from here (D-151)."""
+    if not phone and not email:
+        return contact
+    if contact is None:
+        customer = await db.get(Customer, job.customer_id)
+        contact = CustomerContact(
+            company_id=job.company_id, customer_id=job.customer_id,
+            name=name or (customer.name if customer else ""), phone=phone, email=email, is_primary=True,
+        )  # fmt: skip
+        db.add(contact)
+        await db.flush()
+        return contact
+    if phone and not contact.phone:
+        contact.phone = phone
+    if email and not contact.email:
+        contact.email = email
+    return contact
 
 
 async def current_link(db: AsyncSession, rep: Report) -> ShareLink | None:
@@ -439,6 +468,9 @@ async def send(db: AsyncSession, p: Principal, report_id: uuid.UUID, body: SendI
         raise AppError(
             "contact_missing", "Add the customer's phone or email to send the report.", fields=missing
         )
+    contact = await _remember_contact(
+        db, job, contact, name, phone if body.phone else None, email if body.email else None
+    )
     link = await _ensure_link(db, rep, channels[0], p.user.id, name, phone, email)
     texts = _texts(
         company.name, rep, job, link_url(link), name, link.expires_at.astimezone(), await messages.load(db)
