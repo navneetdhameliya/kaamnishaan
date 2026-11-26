@@ -117,7 +117,7 @@ async def delete(db: AsyncSession, user: User, reason: str | None) -> None:
         if x.closes:
             company = await db.get(Company, x.company_id)
             if company and company.status != "cancelled":
-                company.status = "cancelled"
+                company.status, company.closed_at = "cancelled", t  # its data goes in 30 days (D-154)
                 await audit.record(
                     db,
                     "company.closed_by_owner",

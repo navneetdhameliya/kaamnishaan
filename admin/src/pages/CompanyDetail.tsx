@@ -166,6 +166,14 @@ export function CompanyDetail({ t, lang, id, onName }: { t: T; lang: Lang; id: s
           {notice}
         </p>
       )}
+      {(d.purge_at || d.purged_at) && (
+        <p role="note" className="flex items-start gap-12 rounded-lg bg-status-warning-bg px-16 py-12 text-latin-label-sm font-semibold text-status-warning">
+          <Lock width={18} height={18} className="mt-[2px] shrink-0" aria-hidden />
+          {d.purged_at
+            ? t('admin.cf.purged_banner', { date: day(d.purged_at, lang) })
+            : t('admin.cf.purge_banner', { closed: day(d.closed_at ?? '', lang), date: day(d.purge_at ?? '', lang) })}
+        </p>
+      )}
       {d.status === 'suspended' && (
         <p role="note" className="flex items-start gap-12 rounded-lg bg-status-danger-bg px-16 py-12 text-latin-label-sm font-semibold text-status-danger">
           <Lock width={18} height={18} className="mt-[2px] shrink-0" aria-hidden />

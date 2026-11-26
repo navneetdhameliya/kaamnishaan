@@ -450,6 +450,8 @@
 "admin.cf.plan_sub_create":"n",
 "admin.cf.plan_sub_edit":"",
 "admin.cf.plan_trial":"n,plan",
+"admin.cf.purge_banner":"closed,date",
+"admin.cf.purged_banner":"date",
 "admin.cf.reactivate":"",
 "admin.cf.reactivate_title":"",
 "admin.cf.save":"",

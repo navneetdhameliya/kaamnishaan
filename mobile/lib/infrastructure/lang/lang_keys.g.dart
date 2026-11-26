@@ -906,6 +906,10 @@ abstract final class LangKeys {
   static const adminCfPlanSubEdit = 'admin.cf.plan_sub_edit';
   /// {plan} · {n}-day trial
   static const adminCfPlanTrial = 'admin.cf.plan_trial';
+  /// The owner closed this company on {closed}. Its data (photos, voice notes, reports, customers) is deleted for good on {date}.
+  static const adminCfPurgeBanner = 'admin.cf.purge_banner';
+  /// This company was closed and its data was deleted on {date}. Only this record is kept.
+  static const adminCfPurgedBanner = 'admin.cf.purged_banner';
   /// Turn back on
   static const adminCfReactivate = 'admin.cf.reactivate';
   /// Turn the company back on
@@ -4706,7 +4710,7 @@ abstract final class LangKeys {
   static const delBody = 'del.body';
   /// Delete my account
   static const delButton = 'del.button';
-  /// You are the only person in {company}, so the company closes too.
+  /// You are the only person in {company}, so the company closes too. Its photos, voice notes, reports and customers are deleted for good 30 days later.
   static const delCloses = 'del.closes';
   /// Your account is deleted. Thank you for using KaamNishaan.
   static const delDone = 'del.done';

@@ -112,6 +112,9 @@ export interface CompanyDetail {
   industry_slug: string | null;
   status: CompanyStatus;
   suspended_at: string | null;
+  closed_at?: string | null;
+  purge_at?: string | null;
+  purged_at?: string | null;
   suspend_reason: string | null;
   badge: CompanyBadge;
   trial_ends_at: string | null;
