@@ -1659,6 +1659,8 @@
   "admin.sb.trial_days": "Essai · {n} jours",
   "admin.sb.trials": "Essais",
   "admin.sb.trials_end": "{n} se terminent cette semaine",
+  "admin.search.hint": "Rechercher entreprises et personnes",
+  "admin.search.none": "Aucun résultat.",
   "admin.session_ended": "Votre session est terminée. Veuillez vous reconnecter.",
   "admin.setup.body": "Bonjour {name}. Choisissez un mot de passe, puis connectez une application comme Google Authenticator ou Microsoft Authenticator.",
   "admin.setup.codes_body": "Si vous perdez votre téléphone, chaque code permet une connexion. Ils ne s’affichent qu’ici : gardez-les en lieu sûr, par exemple dans un gestionnaire de mots de passe.",

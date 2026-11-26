@@ -1659,6 +1659,8 @@
   "admin.sb.trial_days": "ट्रायल · {n} दिन",
   "admin.sb.trials": "ट्रायल",
   "admin.sb.trials_end": "{n} इस हफ़्ते ख़त्म",
+  "admin.search.hint": "कंपनियाँ और लोग खोजें",
+  "admin.search.none": "कुछ नहीं मिला।",
   "admin.session_ended": "आपका सत्र खत्म हो गया। कृपया फिर से लॉग इन करें।",
   "admin.setup.body": "नमस्ते {name}। एक पासवर्ड चुनें, फिर Google Authenticator या Microsoft Authenticator जैसा ऑथेंटिकेटर ऐप जोड़ें।",
   "admin.setup.codes_body": "फ़ोन खो जाने पर हर कोड से एक बार लॉग इन कर सकते हैं। ये सिर्फ़ अभी दिखेंगे, इसलिए इन्हें पासवर्ड मैनेजर जैसी सुरक्षित जगह रखें।",

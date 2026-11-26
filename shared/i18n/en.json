@@ -1659,6 +1659,8 @@
   "admin.sb.trial_days": "Trial · {n} days",
   "admin.sb.trials": "Trials",
   "admin.sb.trials_end": "{n} end this week",
+  "admin.search.hint": "Search companies and people",
+  "admin.search.none": "Nothing found.",
   "admin.session_ended": "Your session ended. Please log in again.",
   "admin.setup.body": "Hi {name}. Choose a password, then connect an authenticator app such as Google Authenticator or Microsoft Authenticator.",
   "admin.setup.codes_body": "If you lose your phone, each code lets you log in once. They are shown only now, so keep them somewhere safe, like a password manager.",

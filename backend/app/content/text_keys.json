@@ -1658,6 +1658,8 @@
 "admin.sb.trial_days":"n",
 "admin.sb.trials":"",
 "admin.sb.trials_end":"n",
+"admin.search.hint":"",
+"admin.search.none":"",
 "admin.session_ended":"",
 "admin.setup.body":"name",
 "admin.setup.codes_body":"",

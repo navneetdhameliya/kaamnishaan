@@ -1659,6 +1659,8 @@
   "admin.sb.trial_days": "ટ્રાયલ · {n} દિવસ",
   "admin.sb.trials": "ટ્રાયલ",
   "admin.sb.trials_end": "{n} આ અઠવાડિયે પૂરા",
+  "admin.search.hint": "કંપનીઓ અને લોકો શોધો",
+  "admin.search.none": "કંઈ મળ્યું નહીં.",
   "admin.session_ended": "તમારું સત્ર પૂરું થયું. કૃપા કરીને ફરી લૉગ ઇન કરો.",
   "admin.setup.body": "નમસ્તે {name}. પાસવર્ડ પસંદ કરો, પછી Google Authenticator કે Microsoft Authenticator જેવી ઑથેન્ટિકેટર ઍપ જોડો.",
   "admin.setup.codes_body": "ફોન ખોવાઈ જાય તો દરેક કોડથી એક વાર લૉગ ઇન કરી શકો છો. આ ફક્ત અત્યારે જ દેખાશે, તેથી પાસવર્ડ મેનેજર જેવી સલામત જગ્યાએ રાખો.",

@@ -3322,6 +3322,10 @@ abstract final class LangKeys {
   static const adminSbTrials = 'admin.sb.trials';
   /// {n} end this week
   static const adminSbTrialsEnd = 'admin.sb.trials_end';
+  /// Search companies and people
+  static const adminSearchHint = 'admin.search.hint';
+  /// Nothing found.
+  static const adminSearchNone = 'admin.search.none';
   /// Your session ended. Please log in again.
   static const adminSessionEnded = 'admin.session_ended';
   /// Hi {name}. Choose a password, then connect an authenticator app such as Google Authenticator or Microsoft Authenticator.

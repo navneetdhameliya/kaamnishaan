@@ -1659,6 +1659,8 @@
   "admin.sb.trial_days": "Prueba · {n} días",
   "admin.sb.trials": "Pruebas",
   "admin.sb.trials_end": "{n} terminan esta semana",
+  "admin.search.hint": "Buscar empresas y personas",
+  "admin.search.none": "No se encontró nada.",
   "admin.session_ended": "Tu sesión ha terminado. Inicia sesión de nuevo.",
   "admin.setup.body": "Hola, {name}. Elige una contraseña y conecta una app de autenticación como Google Authenticator o Microsoft Authenticator.",
   "admin.setup.codes_body": "Si pierdes el teléfono, cada código te deja iniciar sesión una vez. Solo se muestran ahora: guárdalos en un lugar seguro, como un gestor de contraseñas.",

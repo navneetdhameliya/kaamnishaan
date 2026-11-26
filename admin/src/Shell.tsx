@@ -42,6 +42,7 @@ import { api } from './lib/api';
 import type { Lang, T } from './lib/i18n';
 import { session } from './lib/session';
 import type { StaffOut } from './lib/types';
+import { TopSearch } from './TopSearch';
 import { cx, Initials, LangSelect, Link, navigate } from './ui';
 
 export type NavItem = { key: string; path: string; icon: LucideIcon; ready?: boolean; hidden?: boolean };
@@ -236,6 +237,7 @@ export function Shell({ t, lang, onLang, path, staff, crumb, title, actions, chi
             <h1 className="truncate text-[24px] font-bold leading-[30px]">{title}</h1>
           </div>
           <div className="flex flex-wrap items-center gap-12">
+            <TopSearch t={t} />
             {actions}
             {/* pages that keep their own state put their buttons here (see PageActions) */}
             <div id="kn-page-actions" className="contents" />
