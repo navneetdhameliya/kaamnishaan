@@ -16,11 +16,17 @@ MANAGER = set(_SHARED)
 TECHNICIAN = {"jobs.create_quick", "jobs.view_own", "evidence.capture", "reports.edit_own", "reports.submit"}
 
 
-def permissions_for(role: str | None, company_settings: dict | None = None) -> set[str]:
+def permissions_for(
+    role: str | None, company_settings: dict | None = None, features: list[str] | None = None
+) -> set[str]:
+    """[features]: what the plan switches on (D-147). Without "manager_approvals" (Free, Starter) only the
+    owner approves reports; managers still see, edit and share them (D-148)."""
     s = company_settings or {}
     if role == "owner":
         return set(OWNER)
     if role == "manager":
+        if features is not None and "manager_approvals" not in features:
+            return MANAGER - {"reports.approve"}
         return set(MANAGER)
     if role == "technician":
         perms = set(TECHNICIAN)

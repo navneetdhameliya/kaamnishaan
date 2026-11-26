@@ -564,7 +564,7 @@ async def submit(db: AsyncSession, p: Principal, report_id: uuid.UUID) -> Report
     db.add(_version(rep, "technician" if _is_author(p, job) else "manager", "submitted", p.user.id))
     db.add(_job_event(p, job, "report_submitted", before, {"report": rlabel(rep.number)}))
     await notifications.notify(
-        db, company_id=p.company_id, to=await notifications.reviewers(db, p.company_id),
+        db, company_id=p.company_id, to=await notifications.reviewers(db, p.company_id, approving=True),
         kind="report_submitted", actor_id=p.user.id, job=job, report_id=rep.id,
         params={
             **await notifications.job_params(db, job), "report": rlabel(rep.number), "technician": p.user.name

@@ -45,7 +45,13 @@ def me_out(user: User, company: Company | None = None, membership: Membership | 
         theme=user.theme,
         role=role,
         company=company_out(company) if company else None,
-        permissions=sorted(permissions_for(role, company.settings if company else None)),
+        permissions=sorted(
+            permissions_for(
+                role,
+                company.settings if company else None,
+                plan_features.features(company) if company else None,
+            )
+        ),
     )
 
 

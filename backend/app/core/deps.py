@@ -15,6 +15,7 @@ from app.core.permissions import permissions_for
 from app.core.security import decode_access_token, now
 from app.core.staff_security import decode_staff_token
 from app.models import AuthSession, Company, Membership, StaffSession, StaffUser, User
+from app.services import plan_features
 
 # Shows the "Authorize" button on /docs; we raise our own error shape when the token is missing.
 bearer = HTTPBearer(
@@ -114,7 +115,9 @@ async def get_principal(
         ).first()
         if row:
             p.membership, p.company = row
-            p.permissions = permissions_for(p.membership.role, p.company.settings)
+            p.permissions = permissions_for(
+                p.membership.role, p.company.settings, plan_features.features(p.company)
+            )
     request.state.principal = p
     return p
 

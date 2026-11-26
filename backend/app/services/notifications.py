@@ -57,13 +57,22 @@ async def job_params(db: AsyncSession, job: Job) -> dict[str, str | None]:
     }
 
 
-async def reviewers(db: AsyncSession, company_id: uuid.UUID) -> list[uuid.UUID]:
-    """Owners and managers of the company: they review reports."""
+async def reviewers(db: AsyncSession, company_id: uuid.UUID, approving: bool = False) -> list[uuid.UUID]:
+    """Owners and managers of the company. [approving]: who can approve a report, so the owners only on
+    plans without manager approvals (D-148)."""
+    roles = ("owner", "manager")
+    if approving:
+        from app.models import Company
+        from app.services import plan_features
+
+        company = await db.get(Company, company_id)
+        if company and not plan_features.has(company, "manager_approvals"):
+            roles = ("owner",)
     rows = await db.execute(
         select(Membership.user_id).where(
             Membership.company_id == company_id,
             Membership.status == "active",
-            Membership.role.in_(("owner", "manager")),
+            Membership.role.in_(roles),
         )
     )
     return list(rows.scalars())
